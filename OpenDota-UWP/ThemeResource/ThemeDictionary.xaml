@@ -1,0 +1,109 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OpenDota_UWP.ThemeResource">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <ResourceDictionary.MergedDictionaries>
+                <!--<Windows10version1809:ColorPaletteResources Accent="#FFCC4D11" AltHigh="#FF000000" AltLow="#FF000000" AltMedium="#FF000000" AltMediumHigh="#FF000000" AltMediumLow="#FF000000" BaseHigh="#FFFFFFFF" BaseLow="#FF2F7BAD" BaseMedium="#FF8DBFDF" BaseMediumHigh="#FFA5D0EC" BaseMediumLow="#FF5E9DC6" ChromeAltLow="#FFA5D0EC" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FFA5D0EC" ChromeBlackMedium="#FF000000" ChromeBlackMediumLow="#FF000000" ChromeDisabledHigh="#FF2F7BAD" ChromeDisabledLow="#FF8DBFDF" ChromeGray="#FF76AED3" ChromeHigh="#FF76AED3" ChromeLow="#FF093B73" ChromeMedium="#FF134B82" ChromeMediumLow="#FF266B9F" ChromeWhite="#FFFFFFFF" ListLow="#FF134B82" ListMedium="#FF2F7BAD" />-->
+                <ResourceDictionary>
+                    <Color x:Key="SystemChromeAltMediumHighColor">#CC0D2644</Color>
+                    <Color x:Key="SystemChromeAltHighColor">#FF0D2644</Color>
+                    <Color x:Key="SystemRevealListLowColor">#FF134B82</Color>
+                    <Color x:Key="SystemRevealListMediumColor">#FF2F7BAD</Color>
+                    <Color x:Key="RegionColor">#272839</Color>
+                    <Color x:Key="GoldText">Gold</Color>
+                    <Color x:Key="GrayText">LightGray</Color>
+                    <Color x:Key="SimpleColor">White</Color>
+                    <SolidColorBrush x:Key="RegionBrush"
+                                     Color="{StaticResource RegionColor}" />
+                    <Color x:Key="SlideColor">#272839</Color>
+                    <BitmapImage x:Key="LogoImage"
+                                 UriSource="ms-appx:///Assets/Icons/Logo_dark.png" />
+                    <BitmapImage x:Key="AppBarButtonImage1"
+                                 UriSource="ms-appx:///Assets/Icons/heroes_dark.png" />
+                    <BitmapImage x:Key="AppBarButtonImage2"
+                                 UriSource="ms-appx:///Assets/Icons/items_dark.png" />
+                    <BitmapImage x:Key="AppBarButtonImage3"
+                                 UriSource="ms-appx:///Assets/Icons/matches_dark.png" />
+                    <BitmapImage x:Key="AboutImage1"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyMail_dark.png" />
+                    <BitmapImage x:Key="AboutImage2"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyQQ_dark.png" />
+                    <BitmapImage x:Key="AboutImage3"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyWechat_dark.png" />
+                    <BitmapImage x:Key="AboutImage4"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MySteam_dark.png" />
+                    <BitmapImage x:Key="AboutImage5"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref1_dark.png" />
+                    <BitmapImage x:Key="AboutImage6"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref2_dark.png" />
+                    <BitmapImage x:Key="AboutImage7"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref3_dark.png" />
+                    <BitmapImage x:Key="AboutImage8"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref4_dark.png" />
+                    <BitmapImage x:Key="AboutImage9"
+                                 UriSource="ms-appx:///Assets/Icons/GitHub_dark.png" />
+                    <BitmapImage x:Key="AboutImage10"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref5_dark.png" />
+                    <BitmapImage x:Key="NoNetwork"
+                                 UriSource="ms-appx:///Assets/Icons/nonetwork_dark.png" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ColorPaletteResources Accent="#FFCC4D11" AltHigh="#FFFFFFFF" AltLow="#FFFFFFFF" AltMedium="#FFFFFFFF" AltMediumHigh="#FFFFFFFF" AltMediumLow="#FFFFFFFF" BaseHigh="#FF000000" BaseLow="#FF7CBEE0" BaseMedium="#FF3282A8" BaseMediumHigh="#FF005A83" BaseMediumLow="#FF196E96" ChromeAltLow="#FF005A83" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FF7CBEE0" ChromeBlackMedium="#FF005A83" ChromeBlackMediumLow="#FF3282A8" ChromeDisabledHigh="#FF7CBEE0" ChromeDisabledLow="#FF3282A8" ChromeGray="#FF196E96" ChromeHigh="#FF7CBEE0" ChromeLow="#FFC1E9FE" ChromeMedium="#FFB3E0F8" ChromeMediumLow="#FFC1E9FE" ChromeWhite="#FFFFFFFF" ListLow="#FFB3E0F8" ListMedium="#FF7CBEE0" />-->
+                <ResourceDictionary>
+                    <Color x:Key="SystemChromeAltMediumHighColor">#CCCFEAFF</Color>
+                    <Color x:Key="SystemChromeAltHighColor">#FFCFEAFF</Color>
+                    <Color x:Key="SystemRevealListLowColor">#FFB3E0F8</Color>
+                    <Color x:Key="SystemRevealListMediumColor">#FF7CBEE0</Color>
+                    <!--<RevealBackgroundBrush x:Key="SystemControlHighlightListLowRevealBackgroundBrush" TargetTheme="Light" Color="{ThemeResource SystemRevealListMediumColor}" FallbackColor="{ StaticResource SystemListMediumColor}" />-->
+                    <Color x:Key="RegionColor">#d9d9d9</Color>
+                    <Color x:Key="GoldText">Goldenrod</Color>
+                    <Color x:Key="GrayText">Black</Color>
+                    <Color x:Key="SimpleColor">Black</Color>
+                    <SolidColorBrush x:Key="RegionBrush"
+                                     Color="{StaticResource RegionColor}" />
+                    <Color x:Key="SlideColor">#DD88001B</Color>
+                    <BitmapImage x:Key="LogoImage"
+                                 UriSource="ms-appx:///Assets/Icons/Logo_light.png" />
+                    <BitmapImage x:Key="AppBarButtonImage1"
+                                 UriSource="ms-appx:///Assets/Icons/heroes_dark.png" />
+                    <BitmapImage x:Key="AppBarButtonImage2"
+                                 UriSource="ms-appx:///Assets/Icons/items_dark.png" />
+                    <BitmapImage x:Key="AppBarButtonImage3"
+                                 UriSource="ms-appx:///Assets/Icons/matches_dark.png" />
+                    <BitmapImage x:Key="AboutImage1"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyMail_light.png" />
+                    <BitmapImage x:Key="AboutImage2"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyQQ_light.png" />
+                    <BitmapImage x:Key="AboutImage3"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MyWechat_light.png" />
+                    <BitmapImage x:Key="AboutImage4"
+                                 UriSource="ms-appx:///Assets/ConnectMe/MySteam_light.png" />
+                    <BitmapImage x:Key="AboutImage5"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref1_light.png" />
+                    <BitmapImage x:Key="AboutImage6"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref2_light.png" />
+                    <BitmapImage x:Key="AboutImage7"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref3_light.png" />
+                    <BitmapImage x:Key="AboutImage8"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref4_light.png" />
+                    <BitmapImage x:Key="AboutImage9"
+                                 UriSource="ms-appx:///Assets/Icons/GitHub_light.png" />
+                    <BitmapImage x:Key="AboutImage10"
+                                 UriSource="ms-appx:///Assets/Icons/Reference/ref5_light.png" />
+                    <BitmapImage x:Key="NoNetwork"
+                                 UriSource="ms-appx:///Assets/Icons/nonetwork_light.png" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <!--<ResourceDictionary x:Key="HighContrast">
+            <StaticResource x:Key="RegionColor" ResourceKey="SystemColorWindowColor" />
+            <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
+        </ResourceDictionary>-->
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

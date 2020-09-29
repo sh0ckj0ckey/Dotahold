@@ -1,0 +1,1001 @@
+﻿<Page
+    x:Class="OpenDota_UWP.Views.MatchInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OpenDota_UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:lvc="using:LiveCharts.Uwp" xmlns:helpers="using:OpenDota_UWP.Helpers">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition x:Name="navigationTransition">
+                <EntranceNavigationTransitionInfo />
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Name="ShowCopySuccess">
+                <DoubleAnimation From="0"
+                                 To="1"
+                                 Duration="00:00:0.2"
+                                 Storyboard.TargetName="ShowSuccessScaleTransform"
+                                 Storyboard.TargetProperty="ScaleY">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase Amplitude="0.2"
+                                  EasingMode="EaseInOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <ScrollViewer x:Name="MatchInfoScrollViewer"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,2,0,0">
+                    <Grid Margin="0,0,0,12">
+                        <!--<Polygon Points="0,0,256,0,216,48,0,48" Fill="SaddleBrown" Margin="8,0"/>-->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets"
+                                       Text="&#xECCB;"
+                                       FontWeight="Bold"
+                                       FontSize="16"
+                                       VerticalAlignment="Center"
+                                       Margin="16,0,0,0" />
+                            <TextBlock Text="Match ID:"
+                                       FontSize="18"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"
+                                       Margin="4,0,6,0" />
+                            <HyperlinkButton Click="HyperlinkButton_Click" Margin="0,2,0,-2"
+                                             ToolTipService.ToolTip="Click to copy match ID to clipboard">
+                                <TextBlock x:Name="MatchIDTextBlock"
+                                           Text="—"
+                                           FontFamily="Consolas"
+                                           FontSize="18"
+                                           VerticalAlignment="Center" />
+                            </HyperlinkButton>
+                            <Grid x:Name="CopySuccessGrid"
+                                  Height="32"
+                                  Width="auto"
+                                  Margin="32,0"
+                                  Visibility="Collapsed">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform x:Name="ShowSuccessScaleTransform"
+                                                    CenterY="16" />
+                                </Grid.RenderTransform>
+                                <Rectangle RadiusX="6"
+                                           RadiusY="6"
+                                           Fill="Gray"
+                                           Opacity="0.1"
+                                           Margin="-16,0" />
+                                <TextBlock FontFamily="Segoe MDL2 Assets"
+                                           FontSize="14"
+                                           Text="&#xE16F;"
+                                           Opacity="0.9"
+                                           VerticalAlignment="Center" />
+                                <TextBlock FontSize="12"
+                                           Text="Copied to clipboard"
+                                           Margin="20,0,4,0"
+                                           VerticalAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+                <GridView Margin="12"
+                          SelectionMode="None"
+                          animations:ReorderGridAnimation.Duration="256"
+                          HorizontalAlignment="Center"
+                          IsItemClickEnabled="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <GridViewItem Height="64"
+                                  Width="108">
+                        <Grid Height="64"
+                              Width="108">
+                            <Rectangle Fill="Gray"
+                                       Opacity="0.1" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Start time"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Opacity="0.7"
+                                           Margin="6" />
+                                <TextBlock x:Name="MatchData_BeginTimeTextBlock"
+                                           Text="Loading..."
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Height="64"
+                                  Width="108">
+                        <Grid Height="64"
+                              Width="108">
+                            <Rectangle Fill="Gray"
+                                       Opacity="0.1" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Duration"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Opacity="0.7"
+                                           Margin="6" />
+                                <TextBlock x:Name="MatchData_GameTimeTextBlock"
+                                           Text="Loading..."
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Height="64"
+                                  Width="108">
+                        <Grid Height="64"
+                              Width="108">
+                            <Rectangle Fill="Gray"
+                                       Opacity="0.1" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="First blood"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Opacity="0.7"
+                                           Margin="6" />
+                                <TextBlock x:Name="MatchData_FBTextBlock"
+                                           Text="Loading..."
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Height="64"
+                                  Width="108">
+                        <Grid Height="64"
+                              Width="108">
+                            <Rectangle Fill="Gray"
+                                       Opacity="0.1" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Level"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Opacity="0.7"
+                                           Margin="6" />
+                                <TextBlock x:Name="MatchData_LevelTextBlock"
+                                           Text="Loading..."
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                    <GridViewItem Height="64"
+                                  Width="108">
+                        <Grid Height="64"
+                              Width="108">
+                            <Rectangle Fill="Gray"
+                                       Opacity="0.1" />
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Game Mode"
+                                           FontSize="12"
+                                           HorizontalAlignment="Center"
+                                           Opacity="0.7"
+                                           Margin="6" />
+                                <TextBlock x:Name="MatchData_GameModeTextBlock"
+                                           TextWrapping="Wrap"
+                                           Text="Loading..."
+                                           HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </GridViewItem>
+                </GridView>
+                <Grid>
+                    <Rectangle Fill="ForestGreen"
+                               Height="2"
+                               Margin="16,0"
+                               VerticalAlignment="Top"/>
+                    <Polygon Fill="ForestGreen"
+                             Points="0,0,98,0,98,3,76,38,0,38"
+                             Margin="16,0"/>
+                    <TextBlock FontSize="14"
+                               Foreground="{ThemeResource RegionBrush}"
+                               Text="Radiant"
+                               Margin="22,0,0,0" />
+                    <TextBlock x:Name="RadiantWinTextBlock"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{ThemeResource RegionBrush}"
+                               Text="..."
+                               VerticalAlignment="Bottom"
+                               Margin="22,0" />
+                    <TextBlock x:Name="RadiantScoreTextBlock"
+                               Opacity="0.8"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Text="KILLED: Loading..."
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               Margin="72,0" />
+                </Grid>
+                <ProgressRing x:Name="RadiantProgressRing"
+                              Height="36"
+                              Width="36"
+                              IsActive="True" />
+                <ListView x:Name="RadiantListView"
+                          ItemsSource="{x:Bind radiantPlayers}"
+                          MinWidth="586"
+                          MaxWidth="960"
+                          Margin="16,8"
+                          SelectionChanged="RadiantListView_SelectionChanged"
+                          ScrollViewer.VerticalScrollMode="Disabled"
+                          HorizontalContentAlignment="Stretch"
+                          HorizontalAlignment="Stretch">
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListView.Template>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="helpers:PlayersInfoViewModel">
+                            <Grid Height="72"
+                                  HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="204" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="0" />
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.ColumnSpan="3"
+                                           Grid.RowSpan="2"
+                                           Margin="-12,2,-12,2"
+                                           Fill="Gray"
+                                           Opacity="0.1" />
+                                <Image Grid.Column="0"
+                                       Height="52"
+                                       Margin="-4,4">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{x:Bind HeroPhoto}"
+                                                     DecodePixelHeight="52"
+                                                     DecodePixelType="Logical" />
+                                    </Image.Source>
+                                </Image>
+                                <Grid Height="28"
+                                      Width="28"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Bottom"
+                                      Margin="-8,2">
+                                    <Polygon Fill="Black"
+                                             Opacity="0.9"
+                                             Points="-8,21,24,-8,24,21" />
+                                    <TextBlock Text="{x:Bind Level}"
+                                               FontFamily="Arial"
+                                               Foreground="White"
+                                               FontSize="13"
+                                               Opacity="0.7"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                </Grid>
+                                <Grid Grid.Column="1"
+                                      Margin="16,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2" />
+                                        <RowDefinition Height="1.5*" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition Height="8" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="1"
+                                               Foreground="{x:Bind Color}"
+                                               FontWeight="Bold"
+                                               Text="{x:Bind PlayerName,Mode=TwoWay}"
+                                               FontSize="18"
+                                               Opacity="0.8"
+                                               VerticalAlignment="Bottom" />
+                                    <TextBlock Grid.Row="2"
+                                               Opacity="0.7"
+                                               Text="{x:Bind Fight_rate}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Grid.Row="3"
+                                               Opacity="0.7"
+                                               Text="{x:Bind Damage_rate}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                                <StackPanel Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal">
+                                    <Grid Width="78">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0"
+                                                   FontSize="11"
+                                                   Opacity="0.5"
+                                                   Text="{x:Bind LD}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom" />
+                                        <TextBlock Grid.Row="1"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"
+                                                   Opacity="0.8"
+                                                   Text="{x:Bind K_D_A}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom" />
+                                        <TextBlock Grid.Row="2"
+                                                   FontSize="13"
+                                                   Opacity="0.7"
+                                                   Text="{x:Bind KDA}"
+                                                   HorizontalAlignment="Left" />
+                                    </Grid>
+                                    <Grid Width="108"
+                                          Margin="8,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Grid.Column="0"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="1"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="2"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="0"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="1"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="2"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Image Grid.Column="0"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_0}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="1"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_1}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="2"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_2}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="0"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_3}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="1"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_4}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="2"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_5}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                    </Grid>
+                                    <Grid Margin="6,0">
+                                        <TextBlock Text="?"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="36" />
+                                        <Ellipse x:Name="PlayerPhotoEllipse"
+                                                 Height="58"
+                                                 Width="58"
+                                                 Stroke="{ThemeResource SimpleColor}"
+                                                 StrokeThickness="1.5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush>
+                                                    <ImageBrush.ImageSource>
+                                                        <BitmapImage UriSource="{x:Bind PlayerPhoto,Mode=TwoWay}"
+                                                                     DecodePixelHeight="58"
+                                                                     DecodePixelType="Logical" />
+                                                    </ImageBrush.ImageSource>
+                                                </ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </StackPanel>
+                                <!--<Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="Gray" Opacity="0.3"/>-->
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Margin="0,12,0,0">
+                    <Rectangle Fill="Firebrick"
+                               Height="2"
+                               Margin="16,0"
+                               VerticalAlignment="Top"/>
+                    <Polygon Fill="Firebrick"
+                             Points="0,0,98,0,98,3,76,38,0,38"
+                             Margin="16,0"/>
+                    <TextBlock FontSize="14"
+                               Foreground="{ThemeResource RegionBrush}"
+                               Text="Dire"
+                               Margin="22,0,0,0" />
+                    <TextBlock x:Name="DireWinTextBlock"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{ThemeResource RegionBrush}"
+                               Text="..."
+                               VerticalAlignment="Bottom"
+                               Margin="22,0" />
+                    <TextBlock x:Name="DireScoreTextBlock"
+                               Opacity="0.8"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Text="KILLED: Loading..."
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               Margin="72,0" />
+                </Grid>
+                <ProgressRing x:Name="DireProgressRing"
+                              Height="36"
+                              Width="36"
+                              IsActive="True" />
+                <ListView x:Name="DireListView"
+                          ItemsSource="{x:Bind direPlayers}"
+                          MinWidth="586"
+                          MaxWidth="960"
+                          Margin="16,8"
+                          SelectionChanged="DireListView_SelectionChanged"
+                          ScrollViewer.VerticalScrollMode="Disabled">
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListView.Template>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="helpers:PlayersInfoViewModel">
+                            <Grid Height="72"
+                                  HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="204" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="0" />
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.ColumnSpan="3"
+                                           Grid.RowSpan="2"
+                                           Margin="-12,2,-12,2"
+                                           Fill="Gray"
+                                           Opacity="0.1" />
+                                <Image x:Name="DirePlayerImage"
+                                       Grid.Column="0"
+                                       Height="52"
+                                       Margin="-4,4">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{x:Bind HeroPhoto}"
+                                                     DecodePixelHeight="52"
+                                                     DecodePixelType="Logical" />
+                                    </Image.Source>
+                                </Image>
+                                <Grid Height="28"
+                                      Width="28"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Bottom"
+                                      Margin="-8,2">
+                                    <Polygon Fill="Black"
+                                             Opacity="0.9"
+                                             Points="-8,21,24,-8,24,21" />
+                                    <TextBlock Text="{x:Bind Level}"
+                                               FontFamily="Arial"
+                                               Foreground="White"
+                                               FontSize="13"
+                                               Opacity="0.7"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center" />
+                                </Grid>
+                                <Grid Grid.Column="1"
+                                      Margin="16,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2" />
+                                        <RowDefinition Height="1.5*" />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition Height="8" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="1"
+                                               Foreground="{x:Bind Color}"
+                                               FontWeight="Bold"
+                                               Text="{x:Bind PlayerName,Mode=TwoWay}"
+                                               FontSize="18"
+                                               Opacity="0.8"
+                                               VerticalAlignment="Bottom" />
+                                    <TextBlock Grid.Row="2"
+                                               Opacity="0.7"
+                                               Text="{x:Bind Fight_rate}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Grid.Row="3"
+                                               Opacity="0.7"
+                                               Text="{x:Bind Damage_rate}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                                <StackPanel Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal">
+                                    <Grid Width="78">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0"
+                                                   FontSize="11"
+                                                   Opacity="0.5"
+                                                   Text="{x:Bind LD}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom" />
+                                        <TextBlock Grid.Row="1"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"
+                                                   Opacity="0.8"
+                                                   Text="{x:Bind K_D_A}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom" />
+                                        <TextBlock Grid.Row="2"
+                                                   FontSize="13"
+                                                   Opacity="0.7"
+                                                   Text="{x:Bind KDA}"
+                                                   HorizontalAlignment="Left" />
+                                    </Grid>
+                                    <Grid Width="108"
+                                          Margin="8,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Grid.Column="0"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="1"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="2"
+                                                   Grid.Row="0"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="0"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="1"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Rectangle Grid.Column="2"
+                                                   Grid.Row="1"
+                                                   Margin="1"
+                                                   Fill="Gray"
+                                                   Opacity="0.3" />
+                                        <Image Grid.Column="0"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_0}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="1"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_1}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="2"
+                                               Grid.Row="0"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_2}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="0"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_3}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="1"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_4}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                        <Image Grid.Column="2"
+                                               Grid.Row="1"
+                                               Stretch="Uniform"
+                                               Margin="1">
+                                            <Image.Source>
+                                                <BitmapImage UriSource="{x:Bind Item_5}"
+                                                             DecodePixelWidth="52"
+                                                             DecodePixelType="Logical" />
+                                            </Image.Source>
+                                        </Image>
+                                    </Grid>
+                                    <Grid Margin="6,0">
+                                        <TextBlock Text="?"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="36" />
+                                        <Ellipse x:Name="PlayerPhotoEllipse"
+                                                 Height="58"
+                                                 Width="58"
+                                                 Stroke="{ThemeResource SimpleColor}"
+                                                 StrokeThickness="1.5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush>
+                                                    <ImageBrush.ImageSource>
+                                                        <BitmapImage UriSource="{x:Bind PlayerPhoto,Mode=TwoWay}"
+                                                                     DecodePixelHeight="58"
+                                                                     DecodePixelType="Logical" />
+                                                    </ImageBrush.ImageSource>
+                                                </ImageBrush>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Margin="0,48,0,8">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE9D2;"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="16,2,6,0" />
+                        <TextBlock Text="Radiant Advantage"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Margin="0,6" />
+                    </StackPanel>
+                </Grid>
+                <!--<Grid x:Name="ChartGrid" Visibility="Collapsed">
+                    <lvc:CartesianChart x:Name="DataChart" Series="{Binding SeriesCollection}" Margin="48,8" Height="512">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis LabelFormatter="{Binding YFormatter}"/>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Labels="{Binding Labels}"/>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                    <TextBlock Text="↑天辉" Foreground="MediumSeaGreen" FontSize="21" VerticalAlignment="Top" FontFamily="STKaiti" FontWeight="Bold" Margin="4,28,0,0"/>
+                    <TextBlock Text="↓夜魇" Foreground="OrangeRed" FontSize="21" VerticalAlignment="Bottom" FontFamily="STKaiti" FontWeight="Bold" Margin="4,0,0,52"/>
+                </Grid>-->
+                <StackPanel x:Name="NoChartNoteStackPanel"
+                            Visibility="Visible"
+                            Height="128"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Image Source="/Assets/Icons/nochart.png"
+                           Height="42" />
+                    <TextBlock Text="Nothing to show yet."
+                               Foreground="Gray"
+                               FontSize="18"
+                               FontWeight="Black"
+                               VerticalAlignment="Center"
+                               Margin="12,4,0,0" />
+                </StackPanel>
+                <Grid x:Name="ChartGrid"
+                      Visibility="Collapsed"
+                      Height="572"
+                      Margin="24,0"
+                      HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="56" />
+                    </Grid.RowDefinitions>
+                    <!--标注零线的文字-->
+                    <TextBlock x:Name="GraphTextBlock0"
+                               Grid.Column="0"
+                               Grid.RowSpan="5"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Text="0"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               Opacity="0.7" />
+                    <!--标注分割线的文字-->
+                    <TextBlock x:Name="GraphTextBlock1"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="0"
+                               FontFamily="Consolas"
+                               FontSize="12"
+                               Opacity="0.7"
+                               Margin="0,-48,8,0" />
+                    <TextBlock x:Name="GraphTextBlock2"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="0"
+                               FontFamily="Consolas"
+                               FontSize="12"
+                               Opacity="0.7"
+                               Margin="0,-36,8,0" />
+                    <TextBlock x:Name="GraphTextBlock3"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="0"
+                               FontFamily="Consolas"
+                               FontSize="12"
+                               Opacity="0.7"
+                               Margin="0,0,8,0" />
+                    <TextBlock x:Name="GraphTextBlock4"
+                               Grid.Column="0"
+                               Grid.Row="3"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="0"
+                               FontFamily="Consolas"
+                               FontSize="12"
+                               Opacity="0.7"
+                               Margin="0,36,8,0" />
+                    <TextBlock x:Name="GraphTextBlock5"
+                               Grid.Column="0"
+                               Grid.Row="4"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="0"
+                               FontFamily="Consolas"
+                               FontSize="12"
+                               Opacity="0.7"
+                               Margin="0,48,8,0" />
+                    <Grid Grid.Column="1"
+                          Grid.RowSpan="5">
+                        <TextBlock Text="Radiant"
+                                   Foreground="MediumSeaGreen"
+                                   FontSize="26"
+                                   VerticalAlignment="Top"
+                                   FontFamily="STKaiti"
+                                   FontWeight="Bold"
+                                   Margin="4,21,0,0" />
+                        <TextBlock Text="Dire"
+                                   Foreground="OrangeRed"
+                                   FontSize="26"
+                                   VerticalAlignment="Bottom"
+                                   FontFamily="STKaiti"
+                                   FontWeight="Bold"
+                                   Margin="4,0,0,16" />
+                        <!--背景颜色-->
+                        <Rectangle Height="484"
+                                   Width="564"
+                                   HorizontalAlignment="Left"
+                                   Fill="Gray"
+                                   Opacity="0.1" />
+                        <!--绘制折线区域-->
+                        <Canvas Height="480"
+                                Width="560"
+                                HorizontalAlignment="Left">
+                            <!--三条平均分割线-->
+                            <Polyline Stroke="Gray"
+                                      Points="0,120,560,120"
+                                      Opacity="0.7" />
+                            <Polyline Stroke="Gray"
+                                      Points="0,240,560,240"
+                                      Opacity="0.7" />
+                            <Polyline Stroke="Gray"
+                                      Points="0,360,560,360"
+                                      Opacity="0.7" />
+                            <!--零线-->
+                            <Polyline x:Name="ZeroPolyline"
+                                      Stroke="{ThemeResource GrayText}"
+                                      StrokeDashArray="4"
+                                      StrokeThickness="2"
+                                      Opacity="0.8" />
+                            <!--两条数据走势线-->
+                            <Polyline x:Name="GoldPolyline"
+                                      Stroke="{ThemeResource GoldText}"
+                                      StrokeThickness="2" />
+                            <Polyline x:Name="XpPolyline"
+                                      Stroke="DeepSkyBlue"
+                                      StrokeThickness="2" />
+                        </Canvas>
+                    </Grid>
+                    <StackPanel Grid.Row="5"
+                                Grid.Column="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Top">
+                        <Ellipse Height="12"
+                                 Width="12"
+                                 Fill="Gold"
+                                 Stroke="{ThemeResource SimpleColor}"
+                                 VerticalAlignment="Center" />
+                        <TextBlock Text="Gold"
+                                   Margin="8,0"
+                                   VerticalAlignment="Center" />
+                        <Ellipse Height="12"
+                                 Width="12"
+                                 Fill="DeepSkyBlue"
+                                 Stroke="{ThemeResource SimpleColor}"
+                                 Margin="12,0,0,0"
+                                 VerticalAlignment="Center" />
+                        <TextBlock Text="Experience"
+                                   Margin="8,0"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE15E;"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="16,2,6,0" />
+                        <TextBlock Text="Others"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Margin="0,6" />
+                    </StackPanel>
+                </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource TextBlockButtonStyle}"
+                            FontWeight="Black"
+                            Foreground="OrangeRed"
+                            Content="Teamfight Log (JSON)"
+                            Margin="24,12"
+                            FontSize="15"
+                            Click="Button_Click" />
+                    <HyperlinkButton x:Name="DownloadHyperlinkButton"
+                                     Content="Dowmload replay(.dem)" />
+                </StackPanel>
+                <StackPanel x:Name="TeamFightWaitStackPanel"
+                            Orientation="Horizontal"
+                            Margin="0,8"
+                            HorizontalAlignment="Center"
+                            Visibility="Collapsed">
+                    <ProgressRing x:Name="TeamFightProgressRing"
+                                  Height="24"
+                                  Width="24"
+                                  IsActive="False"
+                                  VerticalAlignment="Center" />
+                    <TextBlock Text="Loading JSON..."
+                               VerticalAlignment="Center" />
+                </StackPanel>
+                <TextBox x:Name="TeamFightTextBox"
+                         Margin="16,4,16,0"
+                         Height="auto"
+                         IsReadOnly="True"
+                         Foreground="{ThemeResource GrayText}"
+                         FontFamily="Consolas"
+                         FontSize="16"
+                         BorderThickness="0"
+                         TextWrapping="Wrap"
+                         Visibility="Collapsed" />
+            </StackPanel>
+        </ScrollViewer>
+        <Grid x:Name="MaskGrid"
+              Visibility="Collapsed"
+              Background="{ThemeResource RegionBrush}"
+              Margin="0,146,0,0">
+            <Image Source="{ThemeResource LogoImage}"
+                   Height="96"
+                   Opacity="0.7" />
+        </Grid>
+    </Grid>
+</Page>

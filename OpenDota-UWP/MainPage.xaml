@@ -1,0 +1,529 @@
+﻿<Page
+    x:Class="OpenDota_UWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OpenDota_UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Name="ShowHero" x:FieldModifier="public">
+                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
+                             Storyboard.TargetName="ShowRectangle1ScaleTransform"
+                             Storyboard.TargetProperty="ScaleX">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="ShowItem" x:FieldModifier="public">
+                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
+                             Storyboard.TargetName="ShowRectangle2ScaleTransform"
+                             Storyboard.TargetProperty="ScaleX">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="ShowMatch" x:FieldModifier="public">
+                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
+                             Storyboard.TargetName="ShowRectangle3ScaleTransform"
+                             Storyboard.TargetProperty="ScaleX">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Style x:Key="EllipseButton" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource ButtonBackground}"/>
+                <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+                <Setter Property="Padding" Value="8,4,8,4"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+                <Setter Property="UseSystemFocusVisuals" Value="False"/>
+                <Setter Property="FocusVisualMargin" Value="-3"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="RootGrid" CornerRadius="100">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter" CornerRadius="100" AutomationProperties.AccessibilityView="Raw" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource RegionBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Grid.RowSpan="2">
+            <Rectangle.Fill>
+                <AcrylicBrush TintColor="{ThemeResource SlideColor}" TintOpacity="0.7" FallbackColor="{ThemeResource SlideColor}" BackgroundSource="HostBackdrop"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle Grid.Column="1" Grid.RowSpan="2">
+            <Rectangle.Fill>
+                <AcrylicBrush TintColor="{ThemeResource RegionColor}" TintOpacity="0.6" BackgroundSource="HostBackdrop"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Grid Grid.Column="0"
+              Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="84"/>
+                <RowDefinition Height="84"/>
+                <RowDefinition Height="84"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1"
+                    Height="56"
+                    Background="Transparent"
+                    Width="64"
+                    BorderThickness="0"
+                    ToolTipService.ToolTip="Heroes"
+                    VerticalAlignment="Center"
+                    FocusVisualSecondaryThickness="0"
+                    Click="AppBarButton_Click">
+                <Grid Height="56" Margin="0,-42,0,-42">
+                    <controls:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Width="36" Height="36" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage1}"/>
+                    </controls:DropShadowPanel>
+                    <Rectangle x:Name="HeroRectangle"
+                               HorizontalAlignment="Left"
+                               Height="16" Width="3" Margin="-14,0,0,0"
+                               Fill="White">
+                        <Rectangle.RenderTransform>
+                            <ScaleTransform x:Name="ShowRectangle1ScaleTransform" CenterX="0"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Grid>
+            </Button>
+            <Button Grid.Row="2"
+                    Height="56"
+                    Width="64"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ToolTipService.ToolTip="Items"
+                    VerticalAlignment="Center"
+                    FocusVisualSecondaryThickness="0"
+                    Click="AppBarButton_Click_1">
+                <Grid Height="56" Margin="0,-42,0,-42">
+                    <controls:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Width="36" Margin="0,0,0,2" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage2}"/>
+                    </controls:DropShadowPanel>
+                    <Rectangle x:Name="ItemRectangle"
+                               HorizontalAlignment="Left"
+                               Height="16" Width="0" Margin="-14,0,0,0"
+                               Fill="White">
+                        <Rectangle.RenderTransform>
+                            <ScaleTransform x:Name="ShowRectangle2ScaleTransform" CenterX="0"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Grid>
+            </Button>
+            <Button Grid.Row="3"
+                    Height="56"
+                    Width="64"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ToolTipService.ToolTip="Matches"
+                    VerticalAlignment="Center"
+                    FocusVisualSecondaryThickness="0"
+                    Click="AppBarButton_Click_2">
+                <Grid Height="56" Margin="0,-42,0,-42">
+                    <controls:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Width="36" Margin="0,0,0,4" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage3}"/>
+                    </controls:DropShadowPanel>
+                    <Rectangle x:Name="MatchRectangle"
+                               HorizontalAlignment="Left"
+                               Height="16" Width="0" Margin="-14,0,0,0"
+                               Fill="White">
+                        <Rectangle.RenderTransform>
+                            <ScaleTransform x:Name="ShowRectangle3ScaleTransform" CenterX="0"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Grid>
+            </Button>
+            <Button Grid.Row="4"
+                    Margin="0,0,0,8"
+                    Style="{StaticResource TextBlockButtonStyle}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    BorderThickness="0"
+                    ToolTipService.ToolTip="Setting"
+                    Foreground="White"
+                    Click="AppBarButton_Click_3"
+                    FontFamily="Segoe UI Symbol"
+                    Content="&#xE115;"
+                    FontSize="22"/>
+        </Grid>
+        <controls:DropShadowPanel Grid.Column="2" Grid.RowSpan="2" BlurRadius="10" Color="Black">
+            <Rectangle Fill="Black" Width="8" HorizontalAlignment="Left"/>
+        </controls:DropShadowPanel>
+        <Grid Grid.Column="2" Grid.RowSpan="2">
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="HostBackdrop"/>
+            </Grid.Background>
+        </Grid>
+        <Frame x:Name="MainFrame"
+               Grid.Column="2"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Height="Auto"
+               HorizontalAlignment="Stretch"
+               Margin="0"/>
+        <Image Grid.Column="1"
+               Grid.ColumnSpan="2"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Height="42" UseLayoutRounding="False"
+               Margin="16,12"
+               Source="/Assets/Icons/Dota2.png"/>
+        <Grid x:Name="RealTitleGrid" 
+              Grid.Column="0"
+              Grid.ColumnSpan="2">
+            <Rectangle Fill="Transparent"/>
+        </Grid>
+        <Grid x:Name="AboutGrid"
+              Grid.ColumnSpan="3"
+              Grid.RowSpan="2"
+              Visibility="Collapsed">
+            <Grid.Resources>
+                <Storyboard x:Name="SettingGridPopIn">
+                    <PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="320" Storyboard.TargetName="SettingPop" Duration="00:00:1"/>
+                </Storyboard>
+                <Storyboard x:Name="SettingGridPopOut" Completed="SettingGridPopOut_Completed">
+                    <PopOutThemeAnimation Storyboard.TargetName="SettingPop" Duration="00:00:0.1"/>
+                </Storyboard>
+            </Grid.Resources>
+            <Rectangle Tapped="Rectangle_Tapped" Fill="#272839" Opacity="0.6"/>
+            <controls:DropShadowPanel x:Name="SettingPop" BlurRadius="36" Width="480" Height="640" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                      BorderThickness="0"
+                      Background="{ThemeResource RegionBrush}"
+                      Width="480" Height="640">
+                    <Pivot x:Name="AboutPivot" Grid.Row="0">
+                        <PivotItem Header="GENERAL">
+                            <StackPanel>
+                                <TextBlock Text="Theme" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                                <RadioButton x:Name="DarkRadioButton" Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"/>
+                                <RadioButton x:Name="LightRadioButton" Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button CornerRadius="4" Content="Clear Cache"/>
+                                    <Button CornerRadius="4" Content="Export Log" Click="Button_Click_2"/>
+                                </StackPanel>
+                                <TextBlock Text="Feedback" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                                <HyperlinkButton Margin="12,0" Content="Rate app in the Store" Click="HyperlinkButton_Click"/>
+                                <HyperlinkButton Margin="12,0" Content="Email me" NavigateUri="mailto:yaoyiming123@live.com"/>
+                                <TextBlock HorizontalAlignment="Left" FontFamily="Consolas" Text="Have a nice day." Margin="12,16,0,0"/>
+                                <TextBlock HorizontalAlignment="Left" FontFamily="Consolas" Text="2016-2020 NoMewing." Margin="12,8"/>
+                            </StackPanel>
+                        </PivotItem>
+                        <PivotItem Header="WHAT'S NEW">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <TextBlock Width="420" Margin="0,12" HorizontalAlignment="Center" TextWrapping="WrapWholeWords">
+                                        <Bold><Underline FontSize="18">2020/9/13 Update: </Underline></Bold><LineBreak />
+                                        ● Bugs fixed and UI changed as you see.<LineBreak />
+                                        <LineBreak /><Bold><Underline>2019/6/19 Update: </Underline></Bold><LineBreak />
+                                        ● 代码作了一定程度的优化；<LineBreak />
+                                        ● 界面微调<LineBreak />
+                                        <LineBreak />
+                                        <Bold><Underline>2019/4/13 Update: </Underline></Bold><LineBreak />
+                                        ● 资源文件更新；<LineBreak />
+                                        ● 界面微调<LineBreak />
+                                        <LineBreak />
+                                        <Bold><Underline>2019/2/1 Update: </Underline></Bold><LineBreak/>
+                                        ● 欢迎战神玛尔斯加入 Dota2；<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2019/2/1 Update: </Underline></Bold><LineBreak/>
+                                        ● 加入新的天梯徽章；<LineBreak/>
+                                        ● 修改英雄属性计算公式；<LineBreak/>
+                                        ● 使用了新的绑定账号页面；<LineBreak/>
+                                        ● 界面微调<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/11/25 Update: </Underline></Bold><LineBreak/>
+                                        ● 加入新物品显示；<LineBreak/>
+                                        ● 修改英雄属性计算公式<LineBreak/>
+                                        ● bug 修复<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/11/18 Update: </Underline></Bold><LineBreak/>
+                                        ● 加入了白天模式，可以在设置中切换；<LineBreak/>
+                                        ● UI 微调<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/9/29 Update: </Underline></Bold><LineBreak/>
+                                        ● 将“关于”按钮移到了左下角，并加入了“更新日志”板块；<LineBreak/>
+                                        ● 现在可以点击比赛详情中的玩家列表来查看其具体数据<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/9/6 Update: </Underline></Bold><LineBreak/>
+                                        ● 加入了动态磁贴功能，绑定账号后将会显示您的一些信息<LineBreak/>
+                                        <Italic FontSize="11">*最近完美世界Dota2官网偶尔出现数据无法获取现象，如果您遇到了无法显示资料的问题，请去官网查看确认问题</Italic><LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/9/4 Update: </Underline></Bold><LineBreak/>
+                                        ● 后台加入了天涯墨客的图像资源；<LineBreak/>
+                                        ● 又修复了一个导致闪退的 Bug，抱歉<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/8/5 Update: </Underline></Bold><LineBreak/>
+                                        ● 数据源的格式变化导致此应用闪退的问题得以修复<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/7/30 Update: </Underline></Bold><LineBreak/>
+                                        ● 更新了新赛季的分段徽章；<LineBreak/>
+                                        ● 英雄资料页面改进；<LineBreak/>
+                                        ● 提高了英雄头像的加载速度；<LineBreak/>
+                                        ● 修复了某些情况下无法显示玩家头像的 bug；<LineBreak/>
+                                        ● UI 微调<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/6/8 Update: </Underline></Bold><LineBreak/>
+                                        ● 界面微调；<LineBreak/>
+                                        ● 修复小 bug；<LineBreak/>
+                                        ● 新的天梯徽章将在下次更新提供<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/4/21 Update: </Underline></Bold><LineBreak/>
+                                        ● “英雄”栏目修改了数据来源，现在数据更加准确和丰富；<LineBreak/>
+                                        ● UI 调整，似乎更加精致了；<LineBreak/>
+                                        ● 提升了稳定性和流畅性<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/4/13 Update: </Underline></Bold><LineBreak/>
+                                        ● 跟随游戏客户端 7.13 版本更新了英雄属性加成的计算公式；<LineBreak/>
+                                        ● 修复了一些可能导致应用崩溃的问题<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/4/7 Update: </Underline></Bold><LineBreak/>
+                                        ● UI 进行了改进，现在您的眼睛会更舒服；<LineBreak/>
+                                        ● 现在您可以查看您的最近 20 场比赛数据；<LineBreak/>
+                                        ● 加入了一些动画，修复了一些小问题<LineBreak/>
+                                        <LineBreak/>
+                                        <Bold><Underline>2018/3/8 Update: </Underline></Bold><LineBreak/>
+                                        ● 上线基本比赛数据查询功能；<LineBreak/>
+                                        ● 修复了物品信息可能显示英文的问题；<LineBreak/>
+                                        ● 提升了稳定性<LineBreak/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </PivotItem>
+                        <!--<PivotItem Header="备注">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel>
+                                    <TextBlock FontSize="18" Text="英雄属性换算" Margin="4"/>
+                                    <TextBlock FontSize="16" Text="7.21版本更新" Margin="6,0" Opacity="0.7"/>
+                                    <TextBlock Text="    • 英雄不再从主属性中获得25%的额外收益"/>
+                                    <TextBlock Text="    • 所有英雄的主属性成长系数提高15%"/>
+                                    <TextBlock Text="    • 每点力量提供生命值从18提升至20"/>
+                                    <TextBlock/>
+                                    <TextBlock FontSize="16" Text="7.20版本更新" Margin="6,0" Opacity="0.7"/>
+                                    <TextBlock Text="    • 护甲减伤公式更改为: (0.052 * 护甲)/(0.9 + 0.048 * 护甲)"/>
+                                    <TextBlock Text="    • 魔法恢复: 每点智力现在提供0.05点/秒魔法回复"/>
+                                    <TextBlock Text="    • 魔法恢复: 移除0.9点/秒基础魔法恢复(现在由基础智力包括)"/>
+                                    <TextBlock Text="    • 生命恢复: 每点力量现在提供0.09点/秒生命恢复"/>
+                                    <TextBlock Text="    • 生命恢复: 基础恢复数值减少1.5(现在由基础力量包括)"/>
+                                    <TextBlock/>
+                                    <TextBlock FontSize="16" Text="7.13版本更新" Margin="6,0" Opacity="0.7"/>
+                                    <TextBlock FontSize="12" Text="• 移除力量、敏捷和智力型英雄的独特加成，现在加成效果对所有类型的英雄有效" Margin="8,2" Opacity="0.7"/>
+                                    <TextBlock FontSize="12" Text="• 移除力量型英雄根据属性获得的状态抗性加成" Margin="8,2" Opacity="0.7"/>
+                                    <TextBlock FontSize="12" Text="• 力量/智力/敏捷属性的加成调整如下（主属性依然提供+1攻击力）" Margin="8,2" Opacity="0.7"/>
+                                    <TextBlock FontSize="12" Text="• 现在主属性会使加成效果提升25%" Margin="8,2,8,6" Opacity="0.7"/>
+                                    <TextBlock Text="   力量" FontWeight="Bold" Margin="4,2"/>
+                                    <TextBlock Text="    • +18生命                （力量型英雄+25%: 22.5）"/>
+                                    <TextBlock Text="    • +0.55%生命恢复   （力量型英雄+25%: 0.68%）"/>
+                                    <TextBlock Text="    • +0.08%魔法抗性   （力量型英雄+25%: 0.1%）"/>
+                                    <TextBlock Text="   敏捷" FontWeight="Bold" Margin="4"/>
+                                    <TextBlock Text="    • +0.16护甲             （敏捷型英雄+25%: 0.2）"/>
+                                    <TextBlock Text="    • +1.0攻击速度        （敏捷型英雄+25%: 1.25）"/>
+                                    <TextBlock Text="    • +0.05%移动速度   （敏捷型英雄+25%: 0.062%）"/>
+                                    <TextBlock Text="   智力" FontWeight="Bold" Margin="4"/>
+                                    <TextBlock Text="    • +12魔法                （智力型英雄+25%: 15）"/>
+                                    <TextBlock Text="    • +1.8%魔法恢复     （智力型英雄+25%: 2.25%）"/>
+                                    <TextBlock Text="    • +0.07%技能增强   （智力型英雄+25%: 0.087%）"/>
+                                    <TextBlock TextWrapping="Wrap" 
+                                           Foreground="Gray"
+                                           FontSize="14"
+                                           Opacity="0.8"
+                                           Margin="0,8"
+                                           Text="* 以上为Dota2官方给出的换算数据，因为小数的问题会导致有些数据(比如护甲)与游戏内数据有所偏差"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </PivotItem>-->
+                        <PivotItem Header="ABOUT">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel Margin="0,0,0,16">
+                                    <TextBlock Text="Version" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                    <Image Grid.Row="1" Height="96" Source="{ThemeResource LogoImage}"/>
+                                    <TextBlock Text="OpenDota For Windows 10"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           Margin="4"/>
+                                    <!--——————版本号——————-->
+                                    <TextBlock Text="v 3.4.0"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,8"
+                                               Opacity="0.7"
+                                               FontStyle="Italic"/>
+                                    <TextBlock Text="Contact me" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="Outlook">
+                                            <Button.Flyout>
+                                                <Flyout>
+                                                    <HyperlinkButton Content="yaoyiming123@live.com" NavigateUri="mailto:yaoyiming123@live.com"/>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <Image Source="{ThemeResource AboutImage1}" Width="21" Height="21"/>
+                                        </Button>
+                                        <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="QQ">
+                                            <Button.Flyout>
+                                                <Flyout>
+                                                    <StackPanel>
+                                                        <Image Source="/Assets/ConnectMe/MyQQQR.jpg" Width="256"/>
+                                                        <TextBlock Text="QQ: 1095979350" FontWeight="Bold" FontSize="18" FontFamily="Arial" Margin="4,16,4,-4" Opacity="0.6"/>
+                                                    </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <Image Source="{ThemeResource AboutImage2}" Width="20" Height="20"/>
+                                        </Button>
+                                        <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="WeChat">
+                                            <Button.Flyout>
+                                                <Flyout>
+                                                    <StackPanel>
+                                                        <Image Source="/Assets/ConnectMe/MyWeChatQR.jpg" Width="256"/>
+                                                    </StackPanel>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                            <Image Source="{ThemeResource AboutImage3}" Width="21" Height="21"/>
+                                        </Button>
+                                        <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="Steam" Click="Button_Click_1">
+                                            <Image Source="{ThemeResource AboutImage4}" Width="21" Height="21"/>
+                                        </Button>
+                                    </StackPanel>
+                                    <TextBlock Text="Data Sources" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Image Width="32" Source="/Assets/Pictures/dota2logo.png" Margin="8,0"/>
+                                        <HyperlinkButton NavigateUri="http://www.dota2.com/" Content="www.dota2.com" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Image Width="32" Height="24" Source="/Assets/Pictures/opendota.png" Margin="8,0"/>
+                                        <HyperlinkButton NavigateUri="https://www.opendota.com/" Content="www.opendota.com" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Image Width="32" Source="/Assets/Pictures/dotapedia.png" Margin="8,0"/>
+                                        <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Text="GitHub" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                    <Button HorizontalAlignment="Center" Click="Button_Click" Style="{StaticResource EllipseButton}" Height="48" Width="48">
+                                        <Image Source="{ThemeResource AboutImage9}" Height="32"/>
+                                    </Button>
+                                    <TextBlock Text="References" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Image Source="{ThemeResource AboutImage7}" Height="22" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Microsoft.Toolkit.Uwp" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Image Source="{ThemeResource AboutImage8}" Height="28" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Newtonsoft.Json" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Image Source="{ThemeResource AboutImage5}" Height="32" VerticalAlignment="Center"/>
+                                        <TextBlock Text="MaterialLibs" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Image Source="{ThemeResource AboutImage6}" Height="24" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Microsoft.UI.XAML" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <Image Source="{ThemeResource AboutImage10}" Height="18" VerticalAlignment="Center"/>
+                                        <TextBlock Text=" Live Charts" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Developed by" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Ellipse Margin="0,0,8,0" Width="32" Height="32">
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="/Assets/Pictures/me.jpg"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                        <TextBlock Text="YeaMion" CharacterSpacing="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </PivotItem>
+                    </Pivot>
+                    <AppBarButton Grid.Row="0"
+                                  HorizontalAlignment="Right"
+                                  Height="44"
+                                  Width="48"
+                                  Icon="Cancel"
+                                  Click="AppBarButton_Click_4"/>
+                </Grid>
+            </controls:DropShadowPanel>
+        </Grid>
+    </Grid>
+</Page>

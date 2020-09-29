@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{7ACBCE5F-98B4-474A-A65E-4AD74F952225}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenDota_UWP</RootNamespace>
+    <AssemblyName>OpenDota-UWP</AssemblyName>
+    <DefaultLanguage>en-us</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>3B13097F48661BBB726418E4E03085E73182AA20</PackageCertificateThumbprint>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\Shock Jockey\Desktop\</AppxPackageDir>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CacheManager.cs" />
+    <Compile Include="Helpers\ConstantsHelper.cs" />
+    <Compile Include="Helpers\CrawlerHelper.cs" />
+    <Compile Include="Helpers\DialogShower.cs" />
+    <Compile Include="Helpers\DotaHeroHelper.cs" />
+    <Compile Include="Helpers\DotaItemHelper.cs" />
+    <Compile Include="Helpers\DotaMatchHelper.cs" />
+    <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
+    <Compile Include="Helpers\ImageLoader.cs" />
+    <Compile Include="Helpers\LogHelper.cs" />
+    <Compile Include="Helpers\NetworkCheckHelper.cs" />
+    <Compile Include="Helpers\StorageFileHelper.cs" />
+    <Compile Include="ViewModels\AsyncBitmapImage.cs" />
+    <Compile Include="ViewModels\DotaItemsViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\HeroInfoPage.xaml.cs">
+      <DependentUpon>HeroInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemInfoPage.xaml.cs">
+      <DependentUpon>ItemInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemsPage.xaml.cs">
+      <DependentUpon>ItemsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DotaHeroes.cs" />
+    <Compile Include="Models\DotaItemsModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\BlankPage.xaml.cs">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HeroesPage.xaml.cs">
+      <DependentUpon>HeroesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MatchesPage.xaml.cs">
+      <DependentUpon>MatchesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MatchInfoPage.xaml.cs">
+      <DependentUpon>MatchInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MatchPlayerPage.xaml.cs">
+      <DependentUpon>MatchPlayerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NoNetworkPage.xaml.cs">
+      <DependentUpon>NoNetworkPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\ConnectMe\MyMail_dark.png" />
+    <Content Include="Assets\ConnectMe\MyMail_light.png" />
+    <Content Include="Assets\ConnectMe\MyQQQR.jpg" />
+    <Content Include="Assets\ConnectMe\MyQQ_dark.png" />
+    <Content Include="Assets\ConnectMe\MyQQ_light.png" />
+    <Content Include="Assets\ConnectMe\MySteam_dark.png" />
+    <Content Include="Assets\ConnectMe\MySteam_light.png" />
+    <Content Include="Assets\ConnectMe\MyWeChatQR.jpg" />
+    <Content Include="Assets\ConnectMe\MyWechat_dark.png" />
+    <Content Include="Assets\ConnectMe\MyWechat_light.png" />
+    <Content Include="Assets\ConnectMe\MyWeiboQR.png" />
+    <Content Include="Assets\ConnectMe\MyWeibo_dark.png" />
+    <Content Include="Assets\ConnectMe\MyWeibo_light.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_abaddon.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_abyssal_underlord.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_alchemist.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_ancient_apparition.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_antimage.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_arc_warden.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_axe.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_bane.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_batrider.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_beastmaster.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_bloodseeker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_bounty_hunter.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_brewmaster.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_bristleback.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_broodmother.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_centaur.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_chaos_knight.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_chen.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_clinkz.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_crystal_maiden.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_dark_seer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_dark_willow.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_dazzle.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_death_prophet.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_disruptor.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_doom_bringer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_dragon_knight.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_drow_ranger.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_earthshaker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_earth_spirit.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_elder_titan.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_ember_spirit.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_enchantress.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_enigma.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_faceless_void.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_furion.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_grimstroke.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_gyrocopter.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_huskar.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_invoker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_jakiro.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_juggernaut.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_keeper_of_the_light.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_kunkka.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_legion_commander.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_leshrac.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_lich.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_life_stealer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_lina.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_lion.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_lone_druid.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_luna.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_lycan.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_magnataur.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_mars.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_medusa.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_meepo.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_mirana.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_monkey_king.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_morphling.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_naga_siren.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_necrolyte.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_nevermore.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_night_stalker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_nyx_assassin.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_obsidian_destroyer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_ogre_magi.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_omniknight.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_oracle.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_pangolier.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_phantom_assassin.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_phantom_lancer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_phoenix.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_puck.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_pudge.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_pugna.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_queenofpain.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_rattletrap.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_razor.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_riki.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_rubick.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_sand_king.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_shadow_demon.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_shadow_shaman.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_shredder.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_silencer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_skeleton_king.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_skywrath_mage.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_slardar.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_slark.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_sniper.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_spectre.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_spirit_breaker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_storm_spirit.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_sven.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_techies.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_templar_assassin.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_terrorblade.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_tidehunter.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_tinker.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_tiny.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_treant.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_troll_warlord.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_tusk.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_undying.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_ursa.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_vengefulspirit.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_venomancer.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_viper.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_visage.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_warlock.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_weaver.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_windrunner.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_winter_wyvern.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_wisp.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_witch_doctor.png" />
+    <Content Include="Assets\HeroesPhotoIcon\Miniheroes_zuus.png" />
+    <Content Include="Assets\HeroesPhotoVert\abaddon_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\abyssal_underlord_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\alchemist_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\ancient_apparition_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\antimage_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\arc_warden_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\axe_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\bane_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\batrider_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\beastmaster_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\bloodseeker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\bounty_hunter_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\brewmaster_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\bristleback_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\broodmother_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\centaur_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\chaos_knight_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\chen_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\clinkz_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\crystal_maiden_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\dark_seer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\dark_willow_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\dazzle_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\death_prophet_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\disruptor_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\doom_bringer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\dragon_knight_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\drow_ranger_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\earthshaker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\earth_spirit_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\elder_titan_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\ember_spirit_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\enchantress_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\enigma_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\faceless_void_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\furion_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\grimstroke_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\gyrocopter_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\huskar_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\invoker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\jakiro_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\juggernaut_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\keeper_of_the_light_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\kunkka_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\legion_commander_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\leshrac_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\lich_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\life_stealer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\lina_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\lion_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\lone_druid_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\luna_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\lycan_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\magnataur_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\mars_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\medusa_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\meepo_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\mirana_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\monkey_king_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\morphling_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\naga_siren_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\necrolyte_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\nevermore_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\night_stalker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\nyx_assassin_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\obsidian_destroyer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\ogre_magi_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\omniknight_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\oracle_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\pangolier_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\phantom_assassin_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\phantom_lancer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\phoenix_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\puck_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\pudge_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\pugna_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\queenofpain_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\rattletrap_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\razor_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\riki_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\rubick_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\sand_king_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\shadow_demon_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\shadow_shaman_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\shredder_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\silencer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\skeleton_king_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\skywrath_mage_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\slardar_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\slark_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\sniper_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\spectre_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\spirit_breaker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\storm_spirit_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\sven_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\techies_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\templar_assassin_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\terrorblade_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\tidehunter_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\tinker_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\tiny_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\treant_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\troll_warlord_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\tusk_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\undying_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\ursa_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\vengefulspirit_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\venomancer_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\viper_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\visage_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\warlock_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\weaver_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\windrunner_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\winter_wyvern_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\wisp_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\witch_doctor_vert.jpg" />
+    <Content Include="Assets\HeroesPhotoVert\zuus_vert.jpg" />
+    <Content Include="Assets\HeroesPhoto\abaddon_full.png" />
+    <Content Include="Assets\HeroesPhoto\abyssal_underlord_full.png" />
+    <Content Include="Assets\HeroesPhoto\alchemist_full.png" />
+    <Content Include="Assets\HeroesPhoto\ancient_apparition_full.png" />
+    <Content Include="Assets\HeroesPhoto\antimage_full.png" />
+    <Content Include="Assets\HeroesPhoto\arc_warden_full.png" />
+    <Content Include="Assets\HeroesPhoto\axe_full.png" />
+    <Content Include="Assets\HeroesPhoto\bane_full.png" />
+    <Content Include="Assets\HeroesPhoto\batrider_full.png" />
+    <Content Include="Assets\HeroesPhoto\beastmaster_full.png" />
+    <Content Include="Assets\HeroesPhoto\bloodseeker_full.png" />
+    <Content Include="Assets\HeroesPhoto\bounty_hunter_full.png" />
+    <Content Include="Assets\HeroesPhoto\brewmaster_full.png" />
+    <Content Include="Assets\HeroesPhoto\bristleback_full.png" />
+    <Content Include="Assets\HeroesPhoto\broodmother_full.png" />
+    <Content Include="Assets\HeroesPhoto\centaur_full.png" />
+    <Content Include="Assets\HeroesPhoto\chaos_knight_full.png" />
+    <Content Include="Assets\HeroesPhoto\chen_full.png" />
+    <Content Include="Assets\HeroesPhoto\clinkz_full.png" />
+    <Content Include="Assets\HeroesPhoto\crystal_maiden_full.png" />
+    <Content Include="Assets\HeroesPhoto\dark_seer_full.png" />
+    <Content Include="Assets\HeroesPhoto\dark_willow_full.png" />
+    <Content Include="Assets\HeroesPhoto\dazzle_full.png" />
+    <Content Include="Assets\HeroesPhoto\death_prophet_full.png" />
+    <Content Include="Assets\HeroesPhoto\disruptor_full.png" />
+    <Content Include="Assets\HeroesPhoto\doom_bringer_full.png" />
+    <Content Include="Assets\HeroesPhoto\dragon_knight_full.png" />
+    <Content Include="Assets\HeroesPhoto\drow_ranger_full.png" />
+    <Content Include="Assets\HeroesPhoto\earthshaker_full.png" />
+    <Content Include="Assets\HeroesPhoto\earth_spirit_full.png" />
+    <Content Include="Assets\HeroesPhoto\elder_titan_full.png" />
+    <Content Include="Assets\HeroesPhoto\ember_spirit_full.png" />
+    <Content Include="Assets\HeroesPhoto\enchantress_full.png" />
+    <Content Include="Assets\HeroesPhoto\enigma_full.png" />
+    <Content Include="Assets\HeroesPhoto\faceless_void_full.png" />
+    <Content Include="Assets\HeroesPhoto\furion_full.png" />
+    <Content Include="Assets\HeroesPhoto\grimstroke_full.png" />
+    <Content Include="Assets\HeroesPhoto\gyrocopter_full.png" />
+    <Content Include="Assets\HeroesPhoto\huskar_full.png" />
+    <Content Include="Assets\HeroesPhoto\invoker_full.png" />
+    <Content Include="Assets\HeroesPhoto\jakiro_full.png" />
+    <Content Include="Assets\HeroesPhoto\juggernaut_full.png" />
+    <Content Include="Assets\HeroesPhoto\keeper_of_the_light_full.png" />
+    <Content Include="Assets\HeroesPhoto\kunkka_full.png" />
+    <Content Include="Assets\HeroesPhoto\legion_commander_full.png" />
+    <Content Include="Assets\HeroesPhoto\leshrac_full.png" />
+    <Content Include="Assets\HeroesPhoto\lich_full.png" />
+    <Content Include="Assets\HeroesPhoto\life_stealer_full.png" />
+    <Content Include="Assets\HeroesPhoto\lina_full.png" />
+    <Content Include="Assets\HeroesPhoto\lion_full.png" />
+    <Content Include="Assets\HeroesPhoto\lone_druid_full.png" />
+    <Content Include="Assets\HeroesPhoto\luna_full.png" />
+    <Content Include="Assets\HeroesPhoto\lycan_full.png" />
+    <Content Include="Assets\HeroesPhoto\magnataur_full.png" />
+    <Content Include="Assets\HeroesPhoto\mars_full.png" />
+    <Content Include="Assets\HeroesPhoto\medusa_full.png" />
+    <Content Include="Assets\HeroesPhoto\meepo_full.png" />
+    <Content Include="Assets\HeroesPhoto\mirana_full.png" />
+    <Content Include="Assets\HeroesPhoto\monkey_king_full.png" />
+    <Content Include="Assets\HeroesPhoto\morphling_full.png" />
+    <Content Include="Assets\HeroesPhoto\naga_siren_full.png" />
+    <Content Include="Assets\HeroesPhoto\necrolyte_full.png" />
+    <Content Include="Assets\HeroesPhoto\nevermore_full.png" />
+    <Content Include="Assets\HeroesPhoto\night_stalker_full.png" />
+    <Content Include="Assets\HeroesPhoto\nyx_assassin_full.png" />
+    <Content Include="Assets\HeroesPhoto\obsidian_destroyer_full.png" />
+    <Content Include="Assets\HeroesPhoto\ogre_magi_full.png" />
+    <Content Include="Assets\HeroesPhoto\omniknight_full.png" />
+    <Content Include="Assets\HeroesPhoto\oracle_full.png" />
+    <Content Include="Assets\HeroesPhoto\pangolier_full.png" />
+    <Content Include="Assets\HeroesPhoto\phantom_assassin_full.png" />
+    <Content Include="Assets\HeroesPhoto\phantom_lancer_full.png" />
+    <Content Include="Assets\HeroesPhoto\phoenix_full.png" />
+    <Content Include="Assets\HeroesPhoto\puck_full.png" />
+    <Content Include="Assets\HeroesPhoto\pudge_full.png" />
+    <Content Include="Assets\HeroesPhoto\pugna_full.png" />
+    <Content Include="Assets\HeroesPhoto\queenofpain_full.png" />
+    <Content Include="Assets\HeroesPhoto\rattletrap_full.png" />
+    <Content Include="Assets\HeroesPhoto\razor_full.png" />
+    <Content Include="Assets\HeroesPhoto\riki_full.png" />
+    <Content Include="Assets\HeroesPhoto\rubick_full.png" />
+    <Content Include="Assets\HeroesPhoto\sand_king_full.png" />
+    <Content Include="Assets\HeroesPhoto\shadow_demon_full.png" />
+    <Content Include="Assets\HeroesPhoto\shadow_shaman_full.png" />
+    <Content Include="Assets\HeroesPhoto\shredder_full.png" />
+    <Content Include="Assets\HeroesPhoto\silencer_full.png" />
+    <Content Include="Assets\HeroesPhoto\skeleton_king_full.png" />
+    <Content Include="Assets\HeroesPhoto\skywrath_mage_full.png" />
+    <Content Include="Assets\HeroesPhoto\slardar_full.png" />
+    <Content Include="Assets\HeroesPhoto\slark_full.png" />
+    <Content Include="Assets\HeroesPhoto\sniper_full.png" />
+    <Content Include="Assets\HeroesPhoto\spectre_full.png" />
+    <Content Include="Assets\HeroesPhoto\spirit_breaker_full.png" />
+    <Content Include="Assets\HeroesPhoto\storm_spirit_full.png" />
+    <Content Include="Assets\HeroesPhoto\sven_full.png" />
+    <Content Include="Assets\HeroesPhoto\techies_full.png" />
+    <Content Include="Assets\HeroesPhoto\templar_assassin_full.png" />
+    <Content Include="Assets\HeroesPhoto\terrorblade_full.png" />
+    <Content Include="Assets\HeroesPhoto\tidehunter_full.png" />
+    <Content Include="Assets\HeroesPhoto\tinker_full.png" />
+    <Content Include="Assets\HeroesPhoto\tiny_full.png" />
+    <Content Include="Assets\HeroesPhoto\treant_full.png" />
+    <Content Include="Assets\HeroesPhoto\troll_warlord_full.png" />
+    <Content Include="Assets\HeroesPhoto\tusk_full.png" />
+    <Content Include="Assets\HeroesPhoto\undying_full.png" />
+    <Content Include="Assets\HeroesPhoto\ursa_full.png" />
+    <Content Include="Assets\HeroesPhoto\vengefulspirit_full.png" />
+    <Content Include="Assets\HeroesPhoto\venomancer_full.png" />
+    <Content Include="Assets\HeroesPhoto\viper_full.png" />
+    <Content Include="Assets\HeroesPhoto\visage_full.png" />
+    <Content Include="Assets\HeroesPhoto\warlock_full.png" />
+    <Content Include="Assets\HeroesPhoto\weaver_full.png" />
+    <Content Include="Assets\HeroesPhoto\windrunner_full.png" />
+    <Content Include="Assets\HeroesPhoto\winter_wyvern_full.png" />
+    <Content Include="Assets\HeroesPhoto\wisp_full.png" />
+    <Content Include="Assets\HeroesPhoto\witch_doctor_full.png" />
+    <Content Include="Assets\HeroesPhoto\zuus_full.png" />
+    <Content Include="Assets\Icons\agility.png" />
+    <Content Include="Assets\Icons\ancientcamp.png" />
+    <Content Include="Assets\Icons\apm.png" />
+    <Content Include="Assets\Icons\attack.png" />
+    <Content Include="Assets\Icons\buyback.png" />
+    <Content Include="Assets\Icons\campstack.png" />
+    <Content Include="Assets\Icons\cooldown.png" />
+    <Content Include="Assets\Icons\courier.png" />
+    <Content Include="Assets\Icons\creep.png" />
+    <Content Include="Assets\Icons\creepcamp.png" />
+    <Content Include="Assets\Icons\dead.png" />
+    <Content Include="Assets\Icons\defend.png" />
+    <Content Include="Assets\Icons\denied.png" />
+    <Content Include="Assets\Icons\Dota2.png" />
+    <Content Include="Assets\Icons\efficiency.png" />
+    <Content Include="Assets\Icons\GitHub_dark.png" />
+    <Content Include="Assets\Icons\GitHub_light.png" />
+    <Content Include="Assets\Icons\gold.png" />
+    <Content Include="Assets\Icons\heroes_dark.png" />
+    <Content Include="Assets\Icons\heroes_light.png" />
+    <Content Include="Assets\Icons\intelligence.png" />
+    <Content Include="Assets\Icons\items_dark.png" />
+    <Content Include="Assets\Icons\items_light.png" />
+    <Content Include="Assets\Icons\Logo_dark.png" />
+    <Content Include="Assets\Icons\Logo_light.png" />
+    <Content Include="Assets\Icons\mana.png" />
+    <Content Include="Assets\Icons\matches_dark.png" />
+    <Content Include="Assets\Icons\matches_light.png" />
+    <Content Include="Assets\Icons\MyMailIcon %281%29.png" />
+    <Content Include="Assets\Icons\MyMailIcon %282%29.png" />
+    <Content Include="Assets\Icons\MyMailIcon %283%29.png" />
+    <Content Include="Assets\Icons\MyMailIcon %284%29.png" />
+    <Content Include="Assets\Icons\necronomicon.png" />
+    <Content Include="Assets\Icons\nochart.png" />
+    <Content Include="Assets\Icons\nonetwork_dark.png" />
+    <Content Include="Assets\Icons\nonetwork_light.png" />
+    <Content Include="Assets\Icons\observer_ward.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\abyssal_underlord_atrophy_aura.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\legion_commander_duel.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\lion_finger_of_death.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\moon_shard.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\pudge_flesh_heap.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\silencer_glaives_of_wisdom.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\slark_essence_shift.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\tome_of_knowledge.png" />
+    <Content Include="Assets\Icons\PermanentBuffs\ultimate_scepter.png" />
+    <Content Include="Assets\Icons\Reference\ref1_dark.png" />
+    <Content Include="Assets\Icons\Reference\ref1_light.png" />
+    <Content Include="Assets\Icons\Reference\ref2_dark.png" />
+    <Content Include="Assets\Icons\Reference\ref2_light.png" />
+    <Content Include="Assets\Icons\Reference\ref3_dark.png" />
+    <Content Include="Assets\Icons\Reference\ref3_light.png" />
+    <Content Include="Assets\Icons\Reference\ref4_dark.png" />
+    <Content Include="Assets\Icons\Reference\ref4_light.png" />
+    <Content Include="Assets\Icons\Reference\ref5_dark.png" />
+    <Content Include="Assets\Icons\Reference\ref5_light.png" />
+    <Content Include="Assets\Icons\roshan.png" />
+    <Content Include="Assets\Icons\runes.png" />
+    <Content Include="Assets\Icons\runes2.png" />
+    <Content Include="Assets\Icons\sentry_ward.png" />
+    <Content Include="Assets\Icons\strength.png" />
+    <Content Include="Assets\Icons\talent.jpg" />
+    <Content Include="Assets\Icons\tower.png" />
+    <Content Include="Assets\Icons\towerdamage.png" />
+    <Content Include="Assets\Icons\tp.png" />
+    <Content Include="Assets\LargeTile.scale-100.png" />
+    <Content Include="Assets\LargeTile.scale-125.png" />
+    <Content Include="Assets\LargeTile.scale-150.png" />
+    <Content Include="Assets\LargeTile.scale-200.png" />
+    <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\Pictures\background1.jpg" />
+    <Content Include="Assets\Pictures\dota2logo.png" />
+    <Content Include="Assets\Pictures\dotapedia.png" />
+    <Content Include="Assets\Pictures\hero_test.png" />
+    <Content Include="Assets\Pictures\item_test.png" />
+    <Content Include="Assets\Pictures\null.png" />
+    <Content Include="Assets\Pictures\opendota.png" />
+    <Content Include="Assets\Pictures\tutorial1.png" />
+    <Content Include="Assets\Pictures\tutorial2.png" />
+    <Content Include="Assets\Pictures\me.jpg" />
+    <Content Include="Assets\RankMedal\SeasonalRank0-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank1-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank2-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank3-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank4-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank5-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank6-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-5.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-6.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank7-7.png" />
+    <Content Include="Assets\RankMedal\SeasonalRankTop0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRankTop1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRankTop2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRankTop3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRankTop4.png" />
+    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\SmallTile.scale-100.png" />
+    <Content Include="Assets\SmallTile.scale-125.png" />
+    <Content Include="Assets\SmallTile.scale-150.png" />
+    <Content Include="Assets\SmallTile.scale-200.png" />
+    <Content Include="Assets\SmallTile.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Properties\Default.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="ThemeResource\ContentDialogStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HeroInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ThemeResource\ThemeDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BlankPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HeroesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchPlayerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NoNetworkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="LiveCharts">
+      <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="LiveCharts.Uwp">
+      <Version>0.8.0</Version>
+    </PackageReference>
+    <PackageReference Include="MaterialLibs">
+      <Version>0.1.31</Version>
+    </PackageReference>
+    <PackageReference Include="MetroLog">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BackgroundTasks\BackgroundTasks.csproj">
+      <Project>{bc62c5d7-f2d6-4c99-bfda-5c36d26db18c}</Project>
+      <Name>BackgroundTasks</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
