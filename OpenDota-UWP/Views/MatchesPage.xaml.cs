@@ -318,22 +318,22 @@ namespace OpenDota_UWP.Views
 
             SeriesCollection = new SeriesCollection
             {
-                new PieSeries
-                {
-                    Title = "WIN",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.win) },
-                    DataLabels = true,
-                    FontSize = 18,
-                    Fill = new SolidColorBrush(Colors.ForestGreen)
-                },
-                new PieSeries
-                {
-                    Title = "LOSE",
-                    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.lose) },
-                    DataLabels = true,
-                    FontSize = 18,
-                    Fill = new SolidColorBrush(Colors.Firebrick)
-                }
+                //new PieSeries
+                //{
+                //    Title = "WIN",
+                //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.win) },
+                //    DataLabels = true,
+                //    FontSize = 18,
+                //    Fill = new SolidColorBrush(Colors.ForestGreen)
+                //},
+                //new PieSeries
+                //{
+                //    Title = "LOSE",
+                //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.lose) },
+                //    DataLabels = true,
+                //    FontSize = 18,
+                //    Fill = new SolidColorBrush(Colors.Firebrick)
+                //}
             };
             DataContext = this;
 

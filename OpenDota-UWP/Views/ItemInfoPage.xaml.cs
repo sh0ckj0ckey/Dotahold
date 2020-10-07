@@ -25,38 +25,38 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemInfoPage : Page
     {
-        DotaItems SelectedItem;
-        public ObservableCollection<DotaItems> Components = new ObservableCollection<DotaItems>();
+        //DotaItems SelectedItem;
+        //public ObservableCollection<DotaItems> Components = new ObservableCollection<DotaItems>();
 
         public ItemInfoPage()
         {
-            SelectedItem = ItemsPage.SelectedItem;
-            this.InitializeComponent();
-            InitializeComponents();
-            if (Components.Count > 0)
-            {
-                ComponentsGridView.Header = "合成需要:";
-            }
-            else
-            {
-                ComponentsGridView.Header = "";
-            }
-            if (SelectedItem.Info == "")
-            {
-                InfoTextBlock.Visibility = Visibility.Collapsed;
-            }
-            if (SelectedItem.Attributes == "")
-            {
-                AttributesTextBlock.Visibility = Visibility.Collapsed;
-            }
-            if (SelectedItem.Tips == "")
-            {
-                TipsTextBlock.Visibility = Visibility.Collapsed;
-            }
-            if (SelectedItem.Background == "")
-            {
-                BackgroundGrid.Visibility = Visibility.Collapsed;
-            }
+            //SelectedItem = ItemsPage.SelectedItem;
+            //this.InitializeComponent();
+            //InitializeComponents();
+            //if (Components.Count > 0)
+            //{
+            //    ComponentsGridView.Header = "合成需要:";
+            //}
+            //else
+            //{
+            //    ComponentsGridView.Header = "";
+            //}
+            //if (SelectedItem.Info == "")
+            //{
+            //    InfoTextBlock.Visibility = Visibility.Collapsed;
+            //}
+            //if (SelectedItem.Attributes == "")
+            //{
+            //    AttributesTextBlock.Visibility = Visibility.Collapsed;
+            //}
+            //if (SelectedItem.Tips == "")
+            //{
+            //    TipsTextBlock.Visibility = Visibility.Collapsed;
+            //}
+            //if (SelectedItem.Background == "")
+            //{
+            //    BackgroundGrid.Visibility = Visibility.Collapsed;
+            //}
         }
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace OpenDota_UWP.Views
         /// </summary>
         private void InitializeComponents()
         {
-            foreach (string item in SelectedItem.Components)
-            {
-                if (item != "null")
-                {
-                    Components.Add(new DotaItems("", item));
-                }
-            }
+            //foreach (string item in SelectedItem.Components)
+            //{
+            //    if (item != "null")
+            //    {
+            //        Components.Add(new DotaItems("", item));
+            //    }
+            //}
         }
     }
 }

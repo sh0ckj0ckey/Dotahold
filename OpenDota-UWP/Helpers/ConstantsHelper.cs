@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ColorCode.Compilation.Languages;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,16 @@ namespace OpenDota_UWP.Helpers
         public static ConstantsHelper Instance => _lazyVM.Value;
 
 
-        public void GetItemsConstant()
+        public async Task<Dictionary<string, Models.DotaItemModel>> GetItemsConstant()
         {
             if (true) // if Time > 24h, then download new file;or return local file
             {
-                DownloadConstant<>
+                var items = await DownloadConstant<Dictionary<string, Models.DotaItemModel>>("items");
+                return items;
+            }
+            else // return local file
+            {
+                return null;
             }
         }
 
@@ -35,11 +41,18 @@ namespace OpenDota_UWP.Helpers
             {
                 var response = await http.GetAsync(new Uri(url));
                 string jsonMessage = await response.Content.ReadAsStringAsync();
-                var constantModel = JsonConvert.DeserializeObject<T>(jsonMessage);
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore,
+                };
+
+                var constantModel = JsonConvert.DeserializeObject<T>(jsonMessage, jsonSerializerSettings);
 
                 if (constantModel != null)
                 {
-                    await StorageFileHelper.WriteAsync(constantModel, resource + ".dota");
+                    // !!!!!!!!!!!!!!!这里有异常
+                    // await StorageFileHelper.WriteAsync(constantModel, resource + ".dota");
                     return constantModel;
                 }
             }

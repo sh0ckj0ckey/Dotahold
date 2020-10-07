@@ -23,7 +23,7 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    <Grid Background="{ThemeResource RegionBrush}">
+    <!--<Grid Background="{ThemeResource RegionBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,64,0,0">
             <Grid Height="auto" VerticalAlignment="Center" Margin="24,0">
                 <Grid.RowDefinitions>
@@ -121,5 +121,5 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-    </Grid>
+    </Grid>-->
 </Page>

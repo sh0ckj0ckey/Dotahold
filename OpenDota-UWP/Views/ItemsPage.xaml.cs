@@ -1,5 +1,6 @@
 ﻿using OpenDota_UWP.Helpers;
 using OpenDota_UWP.Models;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,14 +28,15 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
-        public static DotaItems SelectedItem = new DotaItems();
+        //public static DotaItems SelectedItem = new DotaItems();
         public static string json = "";
         public static string jsonComponents = "";
-
+        DotaItemsViewModel VM = null;
 
         public ItemsPage()
         {
             this.InitializeComponent();
+            VM = DotaItemsViewModel.Instance;
 
             if (NetworkCheckHelper.CheckNetwork() == false)
             {
@@ -44,17 +46,17 @@ namespace OpenDota_UWP.Views
             }
             else
             {
-                if (AllItems.Count == 0)
-                {
-                    try
-                    {
-                        AddAllItems();
-                    }
-                    catch
-                    {
-                        AddAllItems();
-                    }
-                }
+                //if (AllItems.Count == 0)
+                //{
+                //    try
+                //    {
+                //        AddAllItems();
+                //    }
+                //    catch
+                //    {
+                //        AddAllItems();
+                //    }
+                //}
             }
         }
 
@@ -136,13 +138,13 @@ namespace OpenDota_UWP.Views
         #region
         private void ItemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ItemsListView.SelectedIndex == -1)
-            {
-                return;
-            }
-            SelectedItem = AllItems[ItemsListView.SelectedIndex];
-            GetItemInfo();
-            ItemsListView.SelectedIndex = -1;
+            //if (ItemsListView.SelectedIndex == -1)
+            //{
+            //    return;
+            //}
+            //SelectedItem = AllItems[ItemsListView.SelectedIndex];
+            //GetItemInfo();
+            //ItemsListView.SelectedIndex = -1;
         }
 
         #endregion
@@ -152,25 +154,25 @@ namespace OpenDota_UWP.Views
         /// </summary>
         public void GetItemInfo()
         {
-            ItemPicture.Visibility = Visibility.Collapsed;
-            string regex = ("\"" + SelectedItem.ID + "\":{\"id\":\"[\\d]*?\",\"img\":\"[\\s\\S]*?\",\"dname\":\"([\\s\\S]*?)\",\"qual\":[\\s\\S]*?,\"cost\":([\\s\\S]*?),\"desc\":\"([\\s\\S]*?)\",\"notes\":\"([\\s\\S]*?)\",\"attrib\":\"([\\s\\S]*?)\",\"mc\":([\\s\\S]*?),\"cd\":([\\s\\S]*?),\"lore\":\"([\\s\\S]*?)\",\"components\":[\\s\\S]*?,\"created\":[\\s\\S]*?}");
-            Match match = Regex.Match(json, regex);
+            //ItemPicture.Visibility = Visibility.Collapsed;
+            //string regex = ("\"" + SelectedItem.ID + "\":{\"id\":\"[\\d]*?\",\"img\":\"[\\s\\S]*?\",\"dname\":\"([\\s\\S]*?)\",\"qual\":[\\s\\S]*?,\"cost\":([\\s\\S]*?),\"desc\":\"([\\s\\S]*?)\",\"notes\":\"([\\s\\S]*?)\",\"attrib\":\"([\\s\\S]*?)\",\"mc\":([\\s\\S]*?),\"cd\":([\\s\\S]*?),\"lore\":\"([\\s\\S]*?)\",\"components\":[\\s\\S]*?,\"created\":[\\s\\S]*?}");
+            //Match match = Regex.Match(json, regex);
 
-            string regexComponents = ("\"" + SelectedItem.ID + "\":{\"id\":[\\s\\S]*?,\"components\":([\\s\\S]*?),\"created\":[\\s\\S]*?}");
-            Match matchComponents = Regex.Match(jsonComponents, regexComponents);
+            //string regexComponents = ("\"" + SelectedItem.ID + "\":{\"id\":[\\s\\S]*?,\"components\":([\\s\\S]*?),\"created\":[\\s\\S]*?}");
+            //Match matchComponents = Regex.Match(jsonComponents, regexComponents);
 
-            SelectedItem.Name = UnicodeToString(match.Groups[1].Value);
-            SelectedItem.Price = UnicodeToString(match.Groups[2].Value).Replace("\"", "");
-            SelectedItem.Info = UnicodeToString(match.Groups[3].Value.Replace(" \\/", "").Replace("<br>", "\r\n").Replace("<br />", "").Replace("<\\/h1>", "").Replace("<h1>", "").Replace("<span class=\\\"attribVal\\\">", "").Replace("<\\/span>", "").Replace("<span class=\\\"attribValText\\\">", "")
-                .Replace("\\/", "/").Replace("\t", "\r\n").Replace("\\\\", "\\").Replace("\\r", "").Replace("\\n", "").Replace("<span class=\\\"GameplayValues GameplayVariable\\\">", "").Replace("<font color='#e03e2e'>", "\r\n").Replace("</font>", ""));
-            SelectedItem.Tips = UnicodeToString(match.Groups[4].Value.Replace(" \\/", "").Replace("\\\\", "\\").Replace("<br>", "\r\n").Replace("\\r", "").Replace("\\n", ""));
-            SelectedItem.Attributes = UnicodeToString(match.Groups[5].Value.Replace("\\/", "/").Replace("<span class=\\\"attribVal\\\">", "").Replace("</span>", "").Replace("<\\/span>", "").Replace("<span class=\\\"attribValText\\\">", "")
-                .Replace("\\\\", "\\").Replace("<br>", "\r\n").Replace("< br>", "\r\n").Replace("\\r", "").Replace("\\n", "").Replace("<br />", "\r\n").Replace("<p class=\\\"pop_skill_p\\\">", "").Replace("<span class=\\\"color_yellow\\\">", "").Replace("</p>", "").Replace("+", "\r\n+"));
-            SelectedItem.Mana = UnicodeToString(match.Groups[6].Value.Replace("false", "0").Replace("\"\"", "0").Replace("\"", ""));
-            SelectedItem.CoolDown = UnicodeToString(match.Groups[7].Value.Replace("false", "0").Replace("\"\"", "0").Replace("\"", ""));
-            SelectedItem.Background = UnicodeToString(match.Groups[8].Value).Replace("\\n", "\n");
-            SelectedItem.Components = matchComponents.Groups[1].Value.Replace("[", "").Replace("]", "").Replace("\"", "").Replace("\\", "").Split(',');
-            ItemFrame.Navigate(typeof(ItemInfoPage));
+            //SelectedItem.Name = UnicodeToString(match.Groups[1].Value);
+            //SelectedItem.Price = UnicodeToString(match.Groups[2].Value).Replace("\"", "");
+            //SelectedItem.Info = UnicodeToString(match.Groups[3].Value.Replace(" \\/", "").Replace("<br>", "\r\n").Replace("<br />", "").Replace("<\\/h1>", "").Replace("<h1>", "").Replace("<span class=\\\"attribVal\\\">", "").Replace("<\\/span>", "").Replace("<span class=\\\"attribValText\\\">", "")
+            //    .Replace("\\/", "/").Replace("\t", "\r\n").Replace("\\\\", "\\").Replace("\\r", "").Replace("\\n", "").Replace("<span class=\\\"GameplayValues GameplayVariable\\\">", "").Replace("<font color='#e03e2e'>", "\r\n").Replace("</font>", ""));
+            //SelectedItem.Tips = UnicodeToString(match.Groups[4].Value.Replace(" \\/", "").Replace("\\\\", "\\").Replace("<br>", "\r\n").Replace("\\r", "").Replace("\\n", ""));
+            //SelectedItem.Attributes = UnicodeToString(match.Groups[5].Value.Replace("\\/", "/").Replace("<span class=\\\"attribVal\\\">", "").Replace("</span>", "").Replace("<\\/span>", "").Replace("<span class=\\\"attribValText\\\">", "")
+            //    .Replace("\\\\", "\\").Replace("<br>", "\r\n").Replace("< br>", "\r\n").Replace("\\r", "").Replace("\\n", "").Replace("<br />", "\r\n").Replace("<p class=\\\"pop_skill_p\\\">", "").Replace("<span class=\\\"color_yellow\\\">", "").Replace("</p>", "").Replace("+", "\r\n+"));
+            //SelectedItem.Mana = UnicodeToString(match.Groups[6].Value.Replace("false", "0").Replace("\"\"", "0").Replace("\"", ""));
+            //SelectedItem.CoolDown = UnicodeToString(match.Groups[7].Value.Replace("false", "0").Replace("\"\"", "0").Replace("\"", ""));
+            //SelectedItem.Background = UnicodeToString(match.Groups[8].Value).Replace("\\n", "\n");
+            //SelectedItem.Components = matchComponents.Groups[1].Value.Replace("[", "").Replace("]", "").Replace("\"", "").Replace("\\", "").Split(',');
+            //ItemFrame.Navigate(typeof(ItemInfoPage));
         }
 
         /// <summary>

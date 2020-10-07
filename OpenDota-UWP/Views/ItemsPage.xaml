@@ -39,10 +39,16 @@
         <Rectangle Grid.Column="0"
                    Fill="{ThemeResource RegionBrush}"
                    Opacity="0.5" />
-        <ListView x:Name="ItemsListView"
-                  ItemsSource="{x:Bind AllItems}"
-                  SelectionChanged="ItemsListView_SelectionChanged">
-            <ListView.ItemTemplate>
+        <GridView x:Name="ItemsGridView"
+                  ItemsSource="{x:Bind VM.vAllItems}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:DotaItemModel">
+                    <Grid>
+                        <Image Source="{x:Bind img}" Height="36"/>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <!--<ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DotaItems">
                     <Grid Height="64">
                         <Grid.ColumnDefinitions>
@@ -69,8 +75,8 @@
                                            Margin="12" />
                     </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListView.ItemTemplate>-->
+        </GridView>
         <StackPanel x:Name="ProgressStackPanel"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -80,7 +86,7 @@
                           IsActive="False"
                           Margin="0,16" />
             <TextBlock x:Name="NetworkSlowTextBlock"
-                       Text="连接至Steam服务器可能出现问题"
+                       Text="An error occurred while connecting to the server"
                        FontSize="12"
                        FontWeight="Light"
                        Opacity="0.7"
