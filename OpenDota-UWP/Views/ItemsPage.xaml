@@ -26,8 +26,8 @@
     </Page.Transitions>
     <Grid Background="{ThemeResource RegionBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="480" />
-            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="420" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Rectangle Grid.ColumnSpan="2">
             <Rectangle.Fill>
@@ -39,15 +39,37 @@
         <Rectangle Grid.Column="0"
                    Fill="{ThemeResource RegionBrush}"
                    Opacity="0.5" />
-        <GridView x:Name="ItemsGridView"
+        
+        <ListView x:Name="ItemsGridView" Margin="0,128,0,0"
                   ItemsSource="{x:Bind VM.vAllItems}">
-            <GridView.ItemTemplate>
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DotaItemModel">
-                    <Grid>
-                        <Image Source="{x:Bind img}" Height="36"/>
+                    <Grid Height="64">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Height="48">
+                            <Rectangle.Fill>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="{x:Bind img}"
+                                                     DecodePixelHeight="48"
+                                                     DecodePixelType="Logical" />
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1"
+                                           Text="{x:Bind dname}"
+                                           VerticalAlignment="Center"
+                                           FontFamily="Century"
+                                           FontSize="20"
+                                           FontWeight="Light"
+                                           Margin="12,0" />
                     </Grid>
                 </DataTemplate>
-            </GridView.ItemTemplate>
+            </ListView.ItemTemplate>
             <!--<ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DotaItems">
                     <Grid Height="64">
@@ -76,7 +98,7 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>-->
-        </GridView>
+        </ListView>
         <StackPanel x:Name="ProgressStackPanel"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">

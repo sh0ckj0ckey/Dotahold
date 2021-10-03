@@ -28,7 +28,7 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
-        //public static DotaItems SelectedItem = new DotaItems();
+        private DotaItems SelectedItem = new DotaItems();
         public static string json = "";
         public static string jsonComponents = "";
         DotaItemsViewModel VM = null;
@@ -77,58 +77,58 @@ namespace OpenDota_UWP.Views
         /// <summary>
         /// 将所有的物品添加到列表
         /// </summary>
-        private async void AddAllItems()
-        {
-            ItemProgressRing.Visibility = Visibility.Visible;
-            ItemProgressRing.IsActive = true;
+        //private async void AddAllItems()
+        //{
+        //    ItemProgressRing.Visibility = Visibility.Visible;
+        //    ItemProgressRing.IsActive = true;
 
-            if (json == null || json == "")
-            {
-                try
-                {
-                    json = await DotaItemHelper.GetItemDataAsync();
-                }
-                catch
-                {
-                    NetworkSlowTextBlock.Visibility = Visibility.Visible;
-                    try
-                    {
-                        NetworkSlowTextBlock.Visibility = Visibility.Visible;
-                        json = await DotaItemHelper.GetItemDataAsync();
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                }
-            }
+        //    if (json == null || json == "")
+        //    {
+        //        try
+        //        {
+        //            json = await VM.GetItemDataAsync();
+        //        }
+        //        catch
+        //        {
+        //            NetworkSlowTextBlock.Visibility = Visibility.Visible;
+        //            try
+        //            {
+        //                NetworkSlowTextBlock.Visibility = Visibility.Visible;
+        //                json = await VM.GetItemDataAsync();
+        //            }
+        //            catch
+        //            {
+        //                return;
+        //            }
+        //        }
+        //    }
 
-            if (jsonComponents == null || jsonComponents == "")
-            {
-                try
-                {
-                    jsonComponents = await DotaItemHelper.GetItemDataENAsync();
-                }
-                catch
-                {
-                    NetworkSlowTextBlock.Visibility = Visibility.Visible;
-                    try
-                    {
-                        NetworkSlowTextBlock.Visibility = Visibility.Visible;
-                        json = await DotaItemHelper.GetItemDataENAsync();
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                }
-            }
+        //    if (jsonComponents == null || jsonComponents == "")
+        //    {
+        //        try
+        //        {
+        //            jsonComponents = await VM.GetItemDataENAsync();
+        //        }
+        //        catch
+        //        {
+        //            NetworkSlowTextBlock.Visibility = Visibility.Visible;
+        //            try
+        //            {
+        //                NetworkSlowTextBlock.Visibility = Visibility.Visible;
+        //                json = await VM.GetItemDataENAsync();
+        //            }
+        //            catch
+        //            {
+        //                return;
+        //            }
+        //        }
+        //    }
 
 
-            ItemProgressRing.IsActive = false;
-            ItemProgressRing.Visibility = Visibility.Collapsed;
-            ProgressStackPanel.Visibility = Visibility.Collapsed;
-        }
+        //    ItemProgressRing.IsActive = false;
+        //    ItemProgressRing.Visibility = Visibility.Collapsed;
+        //    ProgressStackPanel.Visibility = Visibility.Collapsed;
+        //}
 
         /// <summary>
         /// 点击列表显示信息

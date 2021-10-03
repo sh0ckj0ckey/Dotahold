@@ -47,6 +47,7 @@
                         Style="{ThemeResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
+                        CornerRadius="21"
                         Click="Button_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -69,6 +70,7 @@
                         Style="{ThemeResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
+                        CornerRadius="21"
                         Click="Button_Click_1">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -91,6 +93,7 @@
                         Style="{ThemeResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
+                        CornerRadius="21"
                         Click="Button_Click_2">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">

@@ -24,14 +24,42 @@ namespace OpenDota_UWP.ViewModels
         public async void InitialDotaItems()
         {
             var items = await ConstantsHelper.Instance.GetItemsConstant();
-
+            ObservableCollection<Models.DotaItemModel> dotaItems = new ObservableCollection<Models.DotaItemModel>();
             // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
             foreach (var item in items)
             {
                 item.Value.img = "https://steamcdn-a.akamaihd.net/" + item.Value.img;
-                vAllItems.Add(item.Value);
+                dotaItems.Add(item.Value);
+            }
+            var temp = dotaItems.OrderBy(item => item.id);
+            vAllItems.Clear();
+            foreach (var item in temp)
+            {
+                vAllItems.Add(item);
             }
         }
+
+        ///// <summary>
+        ///// 通过API获取物品信息
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<string> GetItemDataAsync()
+        //{
+        //    string url = "http://www.dota2.com.cn/items/json";
+        //    Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
+        //    var response = await http.GetAsync(new Uri(url));
+        //    var jsonMessage = await response.Content.ReadAsStringAsync();
+        //    return jsonMessage;
+        //}
+
+        //public async Task<string> GetItemDataENAsync()
+        //{
+        //    string url = String.Format("http://www.dota2.com/jsfeed/itemdata");
+        //    Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
+        //    var response = await http.GetAsync(new Uri(url));
+        //    var jsonMessage = await response.Content.ReadAsStringAsync();
+        //    return jsonMessage;
+        //}
 
     }
 }

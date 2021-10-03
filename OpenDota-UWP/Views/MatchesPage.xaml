@@ -762,21 +762,23 @@
                                                                   OffsetZ="8"
                                                                   BlurRadius="12"
                                                                   ShadowOpacity="0.5">
-                                            <Ellipse Grid.Column="0"
+                                            <Grid>
+                                                <Ellipse Grid.Column="0"
                                                      StrokeThickness="0"
                                                      Stroke="White"
                                                      Width="62"
                                                      Height="62">
-                                                <Ellipse.Fill>
-                                                    <ImageBrush Stretch="UniformToFill">
-                                                        <ImageBrush.ImageSource>
-                                                            <BitmapImage UriSource="{x:Bind HeroPhoto}"
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush Stretch="UniformToFill">
+                                                            <ImageBrush.ImageSource>
+                                                                <BitmapImage UriSource="{x:Bind HeroPhoto}"
                                                                          DecodePixelWidth="62"
                                                                          DecodePixelType="Logical" />
-                                                        </ImageBrush.ImageSource>
-                                                    </ImageBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
+                                                            </ImageBrush.ImageSource>
+                                                        </ImageBrush>
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                            </Grid>
                                         </controls:DropShadowPanel>
                                         <Grid Grid.Column="1">
                                             <Grid.RowDefinitions>
