@@ -37,33 +37,33 @@ namespace OpenDota_UWP
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        private const string taskName = "MatchBackgroundTask";
-        private const string taskEntryPoint = "BackgroundTasks.MatchBackgroundTask";
+        //private const string taskName = "MatchBackgroundTask";
+        //private const string taskEntryPoint = "BackgroundTasks.MatchBackgroundTask";
 
-        private async void RegisterBackgroundTask()
-        {
-            var backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
-            if (backgroundAccessStatus == BackgroundAccessStatus.Unspecified ||
-                backgroundAccessStatus == BackgroundAccessStatus.DeniedByUser)
-            {
-                return;
-            }
-            foreach (var task in BackgroundTaskRegistration.AllTasks)
-            {
-                if (task.Value.Name == taskName)
-                {
-                    task.Value.Unregister(true);
-                }
-            }
+        //private async void RegisterBackgroundTask()
+        //{
+        //    var backgroundAccessStatus = await BackgroundExecutionManager.RequestAccessAsync();
+        //    if (backgroundAccessStatus == BackgroundAccessStatus.Unspecified ||
+        //        backgroundAccessStatus == BackgroundAccessStatus.DeniedByUser)
+        //    {
+        //        return;
+        //    }
+        //    foreach (var task in BackgroundTaskRegistration.AllTasks)
+        //    {
+        //        if (task.Value.Name == taskName)
+        //        {
+        //            task.Value.Unregister(true);
+        //        }
+        //    }
 
-            BackgroundTaskBuilder taskBuilder = new BackgroundTaskBuilder
-            {
-                Name = taskName,
-                TaskEntryPoint = taskEntryPoint
-            };
-            taskBuilder.SetTrigger(new TimeTrigger(15, false));
-            _ = taskBuilder.Register();
-        }
+        //    BackgroundTaskBuilder taskBuilder = new BackgroundTaskBuilder
+        //    {
+        //        Name = taskName,
+        //        TaskEntryPoint = taskEntryPoint
+        //    };
+        //    taskBuilder.SetTrigger(new TimeTrigger(15, false));
+        //    _ = taskBuilder.Register();
+        //}
 
         /// <summary>
         /// 在应用程序由最终用户正常启动时进行调用。
@@ -73,7 +73,7 @@ namespace OpenDota_UWP
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             RegisterExceptionHandlingSynchronizationContext();
-            RegisterBackgroundTask();
+            //RegisterBackgroundTask();
 
             Frame rootFrame = Window.Current.Content as Frame;
 

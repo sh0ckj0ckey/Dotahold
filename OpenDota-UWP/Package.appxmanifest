@@ -9,12 +9,12 @@
   <Identity
     Name="22189NoMewing.Dota2"
     Publisher="CN=Administrator"
-    Version="3.2.1.0" />
+    Version="4.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="2cb6ab15-9744-477f-8f5b-962b18e5373c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>OpenDota UWP</DisplayName>
+    <DisplayName>OpenDota+</DisplayName>
     <PublisherDisplayName>No Mewing</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -32,12 +32,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="OpenDota_UWP.App">
       <uap:VisualElements
-        DisplayName="OpenDota"
+        DisplayName="OpenDota+"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="OpenDota-UWP"
+        Description="OpenDota+, powered by OpenDota"
         BackgroundColor="#2e2d45">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="OpenDota" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="OpenDota+" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
@@ -45,20 +45,12 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#2e2d45"/>
-        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badgeAndTileText"/>
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
           <uap:Rotation Preference="portrait"/>
           <uap:Rotation Preference="landscapeFlipped"/>
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
-      <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTasks.MatchBackgroundTask">
-          <BackgroundTasks>
-            <Task Type="timer"/>
-          </BackgroundTasks>
-        </Extension>
-      </Extensions>
     </Application>
   </Applications>
 
