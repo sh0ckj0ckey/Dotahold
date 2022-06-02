@@ -15,22 +15,22 @@
 ### 截图
 
 #### 浏览英雄列表
-![1.png](Assets/1.jpg)
+![1.png](ASSETS/1.jpg)
 
 #### 了解英雄数据
-![2.png](Assets/2.jpg)
+![2.png](ASSETS/2.jpg)
 
 #### 支持黑白模式
-![3.png](Assets/3.jpg)
+![3.png](ASSETS/3.jpg)
 
 #### 物品装备资料
-![4.png](Assets/4.jpg)
+![4.png](ASSETS/4.jpg)
 
 #### 回顾最近比赛
-![5.png](Assets/5.jpg)
+![5.png](ASSETS/5.jpg)
 
 #### 查看数据总结
-![6.png](Assets/6.jpg)
+![6.png](ASSETS/6.jpg)
 
 ### 引用
 | 名字 | 许可类型 | 项目网站 |
@@ -38,7 +38,6 @@
 | UWP Community Toolkit | [MIT License](https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md) | [github.com/Microsoft/UWPCommunityToolkit ](https://github.com/Microsoft/UWPCommunityToolkit) |
 | Microsoft.UI.Xaml | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [github.com/Microsoft/microsoft-ui-xaml](https://github.com/Microsoft/microsoft-ui-xaml) |
 | Json.NET | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [newtonsoft.com](https://www.newtonsoft.com/json) |
-|
 
 
 ### 更新日志
