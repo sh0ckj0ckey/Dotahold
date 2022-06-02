@@ -6,8 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations" 
     xmlns:models="using:OpenDota_UWP.Models">
 
     <Page.Resources>
@@ -114,13 +112,11 @@
                        Opacity="0.7"
                        Visibility="Collapsed" />
         </StackPanel>
-        <controls:DropShadowPanel Grid.Column="1"
-                                  BlurRadius="10"
-                                  Color="Black">
+        <Border Grid.Column="1">
             <Rectangle Fill="{ThemeResource RegionBrush}"
                        Width="8"
                        HorizontalAlignment="Left" />
-        </controls:DropShadowPanel>
+        </Border>
         <Rectangle Grid.Column="1"
                    Fill="{ThemeResource RegionBrush}"
                    Stretch="UniformToFill" />

@@ -1,5 +1,4 @@
-﻿using ColorCode.Compilation.Languages;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +57,6 @@ namespace OpenDota_UWP.Helpers
             }
             catch (Exception e1)
             {
-                LogHelper.Log(e1.Message);
             }
             return default;
         }

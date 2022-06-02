@@ -47,11 +47,6 @@ namespace OpenDota_UWP.Views
 
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                return;
-            }
-
             ID = DotaMatchHelper.GetSteamID();
             //读取用户ID，如果为空就显示绑定页面
             if (ID == "")
@@ -431,15 +426,8 @@ namespace OpenDota_UWP.Views
         {
             DotaMatchHelper.PostRefreshAsync(ID);
             this.NavigationCacheMode = NavigationCacheMode.Disabled;
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
+            
                 this.Frame.Navigate(typeof(MatchesPage));
-            }
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
@@ -458,7 +446,6 @@ namespace OpenDota_UWP.Views
         /// </summary>
         public void BindAccount()
         {
-            BackgroundParticleCanvas.Paused = false;
             BindGrid.Visibility = Visibility.Visible;
             BindingGridPopIn.Begin();
             string id = DotaMatchHelper.GetSteamID();
@@ -480,7 +467,6 @@ namespace OpenDota_UWP.Views
 
         private void BindingGridPopOut_Completed(object sender, object e)
         {
-            BackgroundParticleCanvas.Paused = true;
             BindGrid.Visibility = Visibility.Collapsed;
         }
 
@@ -517,17 +503,9 @@ namespace OpenDota_UWP.Views
                     {
                         DotaMatchHelper.SetSteamID(SteamIDTextBox.Text);
                         this.NavigationCacheMode = NavigationCacheMode.Disabled;
-                        if (NetworkCheckHelper.CheckNetwork() == false)
-                        {
-                            //断网
-                            this.Frame.Navigate(typeof(NoNetworkPage));
-                        }
-                        else
-                        {
+                        
                             this.Frame.Navigate(typeof(MatchesPage));
-                        }
                         this.NavigationCacheMode = NavigationCacheMode.Enabled;
-                        BackgroundParticleCanvas.Paused = true;
                     }
                     catch
                     {
@@ -551,17 +529,8 @@ namespace OpenDota_UWP.Views
                 {
                     DotaMatchHelper.SetSteamID(SteamIDTextBox.Text);
                     this.NavigationCacheMode = NavigationCacheMode.Disabled;
-                    if (NetworkCheckHelper.CheckNetwork() == false)
-                    {
-                        //断网
-                        this.Frame.Navigate(typeof(NoNetworkPage));
-                    }
-                    else
-                    {
                         this.Frame.Navigate(typeof(MatchesPage));
-                    }
                     this.NavigationCacheMode = NavigationCacheMode.Enabled;
-                    BackgroundParticleCanvas.Paused = true;
                 }
                 catch
                 {
@@ -608,15 +577,7 @@ namespace OpenDota_UWP.Views
         private void RecentMatchListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MatchPicture.Visibility = Visibility.Collapsed;
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                MatchInfoFrame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
                 MatchInfoFrame.Navigate(typeof(MatchInfoPage), recentMatchesObservableCollection[RecentMatchListView.SelectedIndex]);
-            }
         }
 
         /// <summary>

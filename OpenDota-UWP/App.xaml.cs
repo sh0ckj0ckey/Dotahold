@@ -146,15 +146,14 @@ namespace OpenDota_UWP
             Debug.WriteLine("Instance caused this exception: " + e.Exception.InnerException);
             Debug.WriteLine("\n stack trace: " + e.Exception.StackTrace);
             //DialogShower.ShowDialog("Exception Message:", "Instance caused this exception: " + e.Exception.InnerException + "\n stack trace: " + e.Exception.StackTrace);
-            LogHelper.Log("OnUnhandledException::" + e.Exception.InnerException + "\n stack trace: " + e.Exception.StackTrace);
+            //LogHelper.Log("OnUnhandledException::" + e.Exception.InnerException + "\n stack trace: " + e.Exception.StackTrace);
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
         {
-            // 后台线程异常，执行到这里的应用就会闪退
-            // 但是我不知道怎么阻止闪退...
+            // 后台线程异常
             //DialogShower.ShowDialog("Async process Exception: ", e.ExceptionObject.ToString());
-            LogHelper.Log("CurrentDomain_UnhandledException(Async process Exception)::" + e.ExceptionObject.ToString());
+            //LogHelper.Log("CurrentDomain_UnhandledException(Async process Exception)::" + e.ExceptionObject.ToString());
         }
 
         private void RegisterExceptionHandlingSynchronizationContext()
@@ -167,7 +166,7 @@ namespace OpenDota_UWP
             e.Handled = true;
             Debug.WriteLine("Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message);
             //DialogShower.ShowDialog("The application encountered an exception:", e.Exception.Message);
-            LogHelper.Log("SynchronizationContext_UnhandledException::" + e.Exception.Message);
+            //LogHelper.Log("SynchronizationContext_UnhandledException::" + e.Exception.Message);
         }
     }
 }

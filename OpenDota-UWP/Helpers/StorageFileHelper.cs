@@ -51,7 +51,7 @@ namespace OpenDota_UWP.Helpers
             }
             catch (Exception e)
             {
-                LogHelper.Log(e.Message);
+                //LogHelper.Log(e.Message);
             }
             return "";
         }

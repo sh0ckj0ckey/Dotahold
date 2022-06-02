@@ -71,15 +71,7 @@ namespace OpenDota_UWP
             Current = this;
 
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                MainFrame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
                 MainFrame.Navigate(typeof(HeroesPage), 1);
-            }
         }
 
         /// <summary>
@@ -93,15 +85,7 @@ namespace OpenDota_UWP
             ItemRectangle.Width = 0;
             MatchRectangle.Width = 0;
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                MainFrame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
-                MainFrame.Navigate(typeof(HeroesPage), 1);
-            }
+            MainFrame.Navigate(typeof(HeroesPage), 1);
         }
 
         /// <summary>
@@ -115,15 +99,7 @@ namespace OpenDota_UWP
             ItemRectangle.Width = 3;
             MatchRectangle.Width = 0;
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                MainFrame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
                 MainFrame.Navigate(typeof(ItemsPage));
-            }
         }
 
         /// <summary>
@@ -137,15 +113,7 @@ namespace OpenDota_UWP
             ItemRectangle.Width = 0;
             MatchRectangle.Width = 3;
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                MainFrame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
                 MainFrame.Navigate(typeof(MatchesPage));
-            }
         }
 
         /// <summary>
@@ -236,7 +204,7 @@ namespace OpenDota_UWP
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            LogHelper.ShowLogFolder();
+            //LogHelper.ShowLogFolder();
         }
     }
 }

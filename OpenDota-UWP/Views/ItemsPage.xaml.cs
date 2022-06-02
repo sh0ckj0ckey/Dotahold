@@ -38,26 +38,17 @@ namespace OpenDota_UWP.Views
             this.InitializeComponent();
             VM = DotaItemsViewModel.Instance;
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-                return;
-            }
-            else
-            {
-                //if (AllItems.Count == 0)
-                //{
-                //    try
-                //    {
-                //        AddAllItems();
-                //    }
-                //    catch
-                //    {
-                //        AddAllItems();
-                //    }
-                //}
-            }
+            //if (AllItems.Count == 0)
+            //{
+            //    try
+            //    {
+            //        AddAllItems();
+            //    }
+            //    catch
+            //    {
+            //        AddAllItems();
+            //    }
+            //}
         }
 
         /// <summary>

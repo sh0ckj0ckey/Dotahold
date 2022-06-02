@@ -5,8 +5,7 @@
     xmlns:local="using:OpenDota_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:helpers="using:OpenDota_UWP.Helpers"
+    xmlns:helpers="using:OpenDota_UWP.Helpers"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -775,10 +774,10 @@
                            Fill="Gray"
                            Opacity="0.2" />
                 <!--英雄头像-->
-                <controls:DropShadowPanel Grid.Column="0"
-                                          Grid.ColumnSpan="2"
-                                          Width="156"
-                                          VerticalAlignment="Center">
+                <Border Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Width="156"
+                        VerticalAlignment="Center">
                     <Image Width="156"
                            Stretch="Uniform">
                         <Image.Source>
@@ -786,7 +785,7 @@
                                          UriSource="{x:Bind SelectedHero.Pic}" />
                         </Image.Source>
                     </Image>
-                </controls:DropShadowPanel>
+                </Border>
                 <!--英雄背景-->
                 <ScrollViewer Grid.Column="2"
                               VerticalAlignment="Top"
@@ -843,7 +842,7 @@
                     </Pivot.HeaderTemplate>
                     <PivotItem Header="STATS">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <controls:WrapPanel x:Name="BasicInformWrapPanel"
+                            <StackPanel x:Name="BasicInformWrapPanel"
                                                 Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
                                 <Grid MaxWidth="480"
@@ -858,7 +857,6 @@
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top">
                                         <GridView MaxWidth="384"
-                                                  animations:ReorderGridAnimation.Duration="256"
                                                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                                   ScrollViewer.VerticalScrollMode="Disabled"
                                                   IsItemClickEnabled="True"
@@ -995,7 +993,6 @@
                                     </Slider>
                                     <GridView Grid.Row="2"
                                               Margin="4,6,6,0"
-                                              animations:ReorderGridAnimation.Duration="256"
                                               ScrollViewer.VerticalScrollMode="Disabled"
                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                               IsItemClickEnabled="True"
@@ -1952,12 +1949,12 @@
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
-                            </controls:WrapPanel>
+                            </StackPanel>
                         </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="ABILITIES&amp;TALENT">
                         <ScrollViewer>
-                            <controls:WrapPanel x:Name="AbiNTalWrapPanel"
+                            <StackPanel x:Name="AbiNTalWrapPanel"
                                                 Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
                                 <ListView x:Name="HeroAbilityListView"
@@ -2233,7 +2230,7 @@
                                         </Grid>
                                     </ListViewItem>
                                 </ListView>
-                            </controls:WrapPanel>
+                            </StackPanel>
                         </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="RANKINGS">

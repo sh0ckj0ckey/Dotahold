@@ -1,5 +1,4 @@
-﻿using MaterialLibs.Helpers;
-using OpenDota_UWP.Helpers;
+﻿using OpenDota_UWP.Helpers;
 using OpenDota_UWP.Models;
 using System;
 using System.Collections.Generic;
@@ -66,17 +65,10 @@ namespace OpenDota_UWP.Views
                 }
             }
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                return;
-            }
-            else
-            {
-                LoadAllHeroesList();
+            LoadAllHeroesList();
 
-                //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
-                //await APIHelper.DownloadHeroAttributesDataAsync();
-            }
+            //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
+            //await APIHelper.DownloadHeroAttributesDataAsync();
             MainPage.Current.ShowHero.Begin();
 
             base.OnNavigatedTo(e);
@@ -399,18 +391,10 @@ namespace OpenDota_UWP.Views
 
         private void Rectangle_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (sender is UIElement s)
-            {
-                VisualHelper.SetScale(s, "1.15,1.15,1.15");
-            }
         }
 
         private void Rectangle_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (sender is UIElement s)
-            {
-                VisualHelper.SetScale(s, "1,1,1");
-            }
         }
 
         private void HeroesGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -616,41 +600,18 @@ namespace OpenDota_UWP.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
-                this.Frame.Navigate(typeof(HeroesPage), 1);
-            }
+            this.Frame.Navigate(typeof(HeroesPage), 1);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
-                this.Frame.Navigate(typeof(HeroesPage), 2);
-            }
+            this.Frame.Navigate(typeof(HeroesPage), 2);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-            }
-            else
-            {
-                this.Frame.Navigate(typeof(HeroesPage), 3);
-            }
+
+            this.Frame.Navigate(typeof(HeroesPage), 3);
         }
     }
 }

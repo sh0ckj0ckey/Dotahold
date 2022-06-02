@@ -260,7 +260,7 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <controls:DropShadowPanel Grid.Column="0"
+                        <Border Grid.Column="0"
                                                   Grid.RowSpan="3"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center">
@@ -268,7 +268,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Source="{x:Bind HeroPlayerInfo.Hero_photo}" />
-                        </controls:DropShadowPanel>
+                        </Border>
                         <StackPanel Grid.Column="1"
                                     Grid.Row="0"
                                     Orientation="Horizontal">
@@ -555,11 +555,11 @@
                           ItemContainerStyle="{StaticResource ItemContainerStyle}"
                           ScrollViewer.VerticalScrollMode="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
+                    <!--<ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel />
                         </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
+                    </ListView.ItemsPanel>-->
                     <ListViewItem Height="auto">
                         <Grid Height="24"
                               Padding="2">
@@ -986,7 +986,6 @@
                            Margin="4,16,0,4" />
                 <GridView SelectionMode="None"
                           IsItemClickEnabled="True"
-                          animations:ReorderGridAnimation.Duration="256"
                           ItemsSource="{x:Bind abilityNames}"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollMode="Disabled">
@@ -1020,11 +1019,11 @@
                           SelectionMode="None"
                           IsItemClickEnabled="True"
                           ItemContainerStyle="{StaticResource ItemContainerStyle}">
-                    <ListView.ItemsPanel>
+                    <!--<ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel />
                         </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
+                    </ListView.ItemsPanel>-->
                     <ListViewItem Height="56">
                         <Grid Height="52">
                             <Grid.RowDefinitions>

@@ -46,15 +46,7 @@ namespace OpenDota_UWP.Views
                 return;
             }
 
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                return;
-            }
-            else
-            {
                 ShowHero();
-            }
         }
 
         /// <summary>
@@ -373,12 +365,7 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NetworkCheckHelper.CheckNetwork() == false)
-            {
-                //断网
-                this.Frame.Navigate(typeof(NoNetworkPage));
-            }
-            else if (this.Frame.CanGoBack)
+            if (this.Frame.CanGoBack)
             {
                 this.Frame.GoBack();
             }

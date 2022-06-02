@@ -6,9 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:OpenDota_UWP.Models"
-    xmlns:m_helper="using:MaterialLibs.Helpers"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -120,7 +117,6 @@
             <GridView Grid.Row="2"
                       x:Name="HeroesGridView"
                       Height="Auto"
-                      animations:ReorderGridAnimation.Duration="256"
                       ItemsSource="{x:Bind HeroesObservableCollection}"
                       ItemClick="HeroesGridView_ItemClick"
                       IsItemClickEnabled="True"
@@ -135,25 +131,18 @@
                 </GridView.ItemContainerTransitions>
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="model:DotaHeroes">
-                        <controls:DropShadowPanel Margin="4"
+                        <Border Margin="4"
                                                   HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Color="Black"
-                                                  ShadowOpacity="0.4"
-                                                  OffsetY="2">
+                                                  VerticalAlignment="Center">
                             <Grid x:Name="SourceImage"
                                   BorderThickness="0"
                                   Width="96"
                                   Height="112"
-                                  m_helper:VisualHelper.Clip="0,0,0,0"
                                   Background="{ThemeResource RegionColor}">
                                 <Rectangle Stretch="Fill"
                                            Width="96"
                                            Height="112"
                                            StrokeThickness="0"
-                                           m_helper:VisualHelper.CenterPoint="Bind"
-                                           m_helper:ImplicitHelper.Targets="Offset,Scale"
-                                           m_helper:ImplicitHelper.Duration="0:0:0.33"
                                            PointerEntered="Rectangle_PointerEntered"
                                            PointerExited="Rectangle_PointerExited">
                                     <Rectangle.Fill>
@@ -183,7 +172,7 @@
                                            Margin="3"
                                            Opacity="0.8" />
                             </Grid>
-                        </controls:DropShadowPanel>
+                        </Border>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>

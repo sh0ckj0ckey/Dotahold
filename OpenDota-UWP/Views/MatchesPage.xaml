@@ -6,11 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:lvc="using:LiveCharts.Uwp"
-    xmlns:m_helper="using:MaterialLibs.Helpers"
-    xmlns:controls1="using:MaterialLibs.Controls" xmlns:helpers="using:OpenDota_UWP.Helpers">
+    xmlns:helpers="using:OpenDota_UWP.Helpers">
 
     <Page.Transitions>
         <TransitionCollection>
@@ -232,13 +229,11 @@
                             <ColumnDefinition Width="0" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <controls:DropShadowPanel Grid.Column="2"
-                                                  BlurRadius="10"
-                                                  Color="Black">
+                        <Border Grid.Column="2">
                             <Rectangle Fill="{ThemeResource RegionBrush}"
                                        Width="8"
                                        HorizontalAlignment="Left" />
-                        </controls:DropShadowPanel>
+                        </Border>
                         <Rectangle Grid.Column="2"
                                    Width="28"
                                    Fill="{ThemeResource RegionBrush}"
@@ -405,7 +400,6 @@
                             </StackPanel>
                             <GridView Grid.Row="1"
                                       Margin="8"
-                                      animations:ReorderGridAnimation.Duration="256"
                                       SelectionMode="None"
                                       IsItemClickEnabled="True">
                                 <GridViewItem Height="auto"
@@ -432,7 +426,6 @@
                             <GridView Grid.Row="1"
                                       Margin="180,8,0,0"
                                       SelectionMode="None"
-                                      animations:ReorderGridAnimation.Duration="256"
                                       IsItemClickEnabled="True">
                                 <GridViewItem Height="72"
                                               Width="128">
@@ -701,13 +694,11 @@
                         <ColumnDefinition Width="0" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <controls:DropShadowPanel Grid.Column="2"
-                                              BlurRadius="10"
-                                              Color="Black">
+                    <Border Grid.Column="2">
                         <Rectangle Fill="{ThemeResource RegionBrush}"
                                    Width="8"
                                    HorizontalAlignment="Left" />
-                    </controls:DropShadowPanel>
+                    </Border>
                     <Rectangle Grid.Column="2"
                                Width="28"
                                Fill="{ThemeResource RegionBrush}"
@@ -757,11 +748,8 @@
                                                    Opacity="0.1"
                                                    Fill="Gray"
                                                    Margin="0,2,0,2" />
-                                        <controls:DropShadowPanel VerticalAlignment="Center"
-                                                                  HorizontalAlignment="Center"
-                                                                  OffsetZ="8"
-                                                                  BlurRadius="12"
-                                                                  ShadowOpacity="0.5">
+                                        <Border VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
                                             <Grid>
                                                 <Ellipse Grid.Column="0"
                                                      StrokeThickness="0"
@@ -779,7 +767,7 @@
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </Grid>
-                                        </controls:DropShadowPanel>
+                                        </Border>
                                         <Grid Grid.Column="1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="1.6*" />
@@ -1263,15 +1251,9 @@
                                           Duration="00:00:0.1" />
                 </Storyboard>
             </Grid.Resources>
-            <controls1:ParticleCanvas x:Name="BackgroundParticleCanvas"
-                                      Paused="True"
-                                      IsPointerEnable="True"
-                                      LineColor="DarkGray"
-                                      ParticleColor="Gray" />
-            <controls:DropShadowPanel x:Name="BindingPop"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"
-                                      BlurRadius="18">
+            <Border x:Name="BindingPop"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
                 <Grid Height="256"
                       Width="480"
                       Background="{ThemeResource RegionBrush}">
@@ -1393,7 +1375,7 @@
                                VerticalAlignment="Center"
                                Margin="48,0" />
                 </Grid>
-            </controls:DropShadowPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>
