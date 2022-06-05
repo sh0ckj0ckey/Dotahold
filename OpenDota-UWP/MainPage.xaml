@@ -7,40 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <Storyboard x:Name="ShowHero" x:FieldModifier="public">
-                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
-                             Storyboard.TargetName="ShowRectangle1ScaleTransform"
-                             Storyboard.TargetProperty="ScaleX">
-                    <DoubleAnimation.EasingFunction>
-                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
-                    </DoubleAnimation.EasingFunction>
-                </DoubleAnimation>
-            </Storyboard>
-            <Storyboard x:Name="ShowItem" x:FieldModifier="public">
-                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
-                             Storyboard.TargetName="ShowRectangle2ScaleTransform"
-                             Storyboard.TargetProperty="ScaleX">
-                    <DoubleAnimation.EasingFunction>
-                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
-                    </DoubleAnimation.EasingFunction>
-                </DoubleAnimation>
-            </Storyboard>
-            <Storyboard x:Name="ShowMatch" x:FieldModifier="public">
-                <DoubleAnimation From="0" To="1" Duration="00:00:0.3"
-                             Storyboard.TargetName="ShowRectangle3ScaleTransform"
-                             Storyboard.TargetProperty="ScaleX">
-                    <DoubleAnimation.EasingFunction>
-                        <BackEase Amplitude="0" EasingMode="EaseInOut"/>
-                    </DoubleAnimation.EasingFunction>
-                </DoubleAnimation>
-            </Storyboard>
-        </ResourceDictionary>
-    </Page.Resources>
     <Grid Background="{ThemeResource RegionBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -70,70 +36,34 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Button Grid.Row="1"
-                    Height="56"
-                    Background="Transparent"
-                    Width="64"
-                    BorderThickness="0"
-                    ToolTipService.ToolTip="Heroes"
-                    VerticalAlignment="Center"
-                    FocusVisualSecondaryThickness="0"
+                    Width="56" Height="56" CornerRadius="6" Style="{StaticResource ButtonRevealStyle}" BorderThickness="0"
+                    Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="36" Height="36" UseLayoutRounding="False" Source="{ThemeResource AppBarButtonImage1}"/>
-                    <Rectangle x:Name="HeroRectangle"
-                               HorizontalAlignment="Left"
-                               Height="16" Width="3" Margin="-14,0,0,0"
-                               Fill="White">
-                        <Rectangle.RenderTransform>
-                            <ScaleTransform x:Name="ShowRectangle1ScaleTransform" CenterX="0"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage1}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="2"
-                    Height="56"
-                    Width="64"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    ToolTipService.ToolTip="Items"
-                    VerticalAlignment="Center"
-                    FocusVisualSecondaryThickness="0"
+                    Width="56" Height="56" CornerRadius="6" Style="{StaticResource ButtonRevealStyle}" BorderThickness="0"
+                    Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_1">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="36" Margin="0,0,0,2" UseLayoutRounding="False" Source="{ThemeResource AppBarButtonImage2}"/>
-                    <Rectangle x:Name="ItemRectangle"
-                               HorizontalAlignment="Left"
-                               Height="16" Width="0" Margin="-14,0,0,0"
-                               Fill="White">
-                        <Rectangle.RenderTransform>
-                            <ScaleTransform x:Name="ShowRectangle2ScaleTransform" CenterX="0"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage2}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="3"
-                    Height="56"
-                    Width="64"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    ToolTipService.ToolTip="Matches"
-                    VerticalAlignment="Center"
-                    FocusVisualSecondaryThickness="0"
+                    Width="56" Height="56" CornerRadius="6" Style="{StaticResource ButtonRevealStyle}" BorderThickness="0"
+                    Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_2">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="36" Margin="0,0,0,4" UseLayoutRounding="False" Source="{ThemeResource AppBarButtonImage3}"/>
-                    <Rectangle x:Name="MatchRectangle"
-                               HorizontalAlignment="Left"
-                               Height="16" Width="0" Margin="-14,0,0,0"
-                               Fill="White">
-                        <Rectangle.RenderTransform>
-                            <ScaleTransform x:Name="ShowRectangle3ScaleTransform" CenterX="0"/>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage3}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="4"
-                    Margin="0,0,0,8"
+                    Margin="0,0,0,16"
                     Style="{StaticResource TextBlockButtonStyle}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
@@ -143,7 +73,7 @@
                     Click="AppBarButton_Click_3"
                     FontFamily="Segoe UI Symbol"
                     Content="&#xE115;"
-                    FontSize="22"/>
+                    FontSize="20"/>
         </Grid>
         <Grid Grid.Column="2" Grid.RowSpan="2">
             <Grid.Background>

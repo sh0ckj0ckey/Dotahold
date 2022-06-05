@@ -81,7 +81,6 @@ namespace OpenDota_UWP.Views
             {
                 navigationTransition.DefaultNavigationTransitionInfo = transition;
             }
-            MainPage.Current.ShowMatch.Begin();
             //SharedData.Share.PlayerID = DotaMatchHelper.GetSteamID();
 
             //this.RegisterBackgroundTask();

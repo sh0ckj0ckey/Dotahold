@@ -18,11 +18,11 @@
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Image Source="{ThemeResource NoNetwork}"
-                   Height="84"
+                   Height="50"
                    Opacity="0.7"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" Margin="16"/>
-            <TextBlock Text="Internet not working" Opacity="0.7" FontWeight="Black" FontSize="16" HorizontalAlignment="Center" CharacterSpacing="72"/>
+            <TextBlock Text="Internet not working" Opacity="0.7" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" CharacterSpacing="32"/>
             <HyperlinkButton Opacity="0.5" Content="Please check and retry" Foreground="{ThemeResource SimpleColor}" FontSize="12" HorizontalAlignment="Center" Click="HyperlinkButton_Click"/>
         </StackPanel>
     </Grid>

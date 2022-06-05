@@ -29,10 +29,14 @@ namespace OpenDota_UWP.Views
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
+            try
             {
-                this.Frame.GoBack();
+                if (this.Frame.CanGoBack)
+                {
+                    this.Frame.GoBack();
+                }
             }
+            catch { }
         }
     }
 }

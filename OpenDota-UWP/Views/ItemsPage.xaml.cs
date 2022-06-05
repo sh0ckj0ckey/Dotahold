@@ -61,7 +61,6 @@ namespace OpenDota_UWP.Views
             {
                 navigationTransition.DefaultNavigationTransitionInfo = transition;
             }
-            MainPage.Current.ShowItem.Begin();
             base.OnNavigatedTo(e);
         }
 

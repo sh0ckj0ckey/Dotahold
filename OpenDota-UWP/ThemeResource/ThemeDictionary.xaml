@@ -15,17 +15,17 @@
                     <Color x:Key="GoldText">Gold</Color>
                     <Color x:Key="GrayText">LightGray</Color>
                     <Color x:Key="SimpleColor">White</Color>
-                    <SolidColorBrush x:Key="RegionBrush"
-                                     Color="{StaticResource RegionColor}" />
                     <Color x:Key="SlideColor">#272839</Color>
+                    <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
+
                     <BitmapImage x:Key="LogoImage"
-                                 UriSource="ms-appx:///Assets/Icons/Logo_dark.png" />
+                                 UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
                     <BitmapImage x:Key="AppBarButtonImage1"
-                                 UriSource="ms-appx:///Assets/Icons/heroes_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark.png" />
                     <BitmapImage x:Key="AppBarButtonImage2"
-                                 UriSource="ms-appx:///Assets/Icons/items_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark.png" />
                     <BitmapImage x:Key="AppBarButtonImage3"
-                                 UriSource="ms-appx:///Assets/Icons/matches_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_dark.png" />
                     <BitmapImage x:Key="AboutImage1"
                                  UriSource="ms-appx:///Assets/ConnectMe/MyMail_dark.png" />
                     <BitmapImage x:Key="AboutImage2"
@@ -47,7 +47,7 @@
                     <BitmapImage x:Key="AboutImage10"
                                  UriSource="ms-appx:///Assets/Icons/Reference/ref5_dark.png" />
                     <BitmapImage x:Key="NoNetwork"
-                                 UriSource="ms-appx:///Assets/Icons/nonetwork_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/icon_nonetwork_dark.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -64,17 +64,17 @@
                     <Color x:Key="GoldText">Goldenrod</Color>
                     <Color x:Key="GrayText">Black</Color>
                     <Color x:Key="SimpleColor">Black</Color>
-                    <SolidColorBrush x:Key="RegionBrush"
-                                     Color="{StaticResource RegionColor}" />
                     <Color x:Key="SlideColor">#DD88001B</Color>
+                    <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
+
                     <BitmapImage x:Key="LogoImage"
-                                 UriSource="ms-appx:///Assets/Icons/Logo_light.png" />
+                                 UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
                     <BitmapImage x:Key="AppBarButtonImage1"
-                                 UriSource="ms-appx:///Assets/Icons/heroes_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_light.png" />
                     <BitmapImage x:Key="AppBarButtonImage2"
-                                 UriSource="ms-appx:///Assets/Icons/items_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_light.png" />
                     <BitmapImage x:Key="AppBarButtonImage3"
-                                 UriSource="ms-appx:///Assets/Icons/matches_dark.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_light.png" />
                     <BitmapImage x:Key="AboutImage1"
                                  UriSource="ms-appx:///Assets/ConnectMe/MyMail_light.png" />
                     <BitmapImage x:Key="AboutImage2"
@@ -96,7 +96,7 @@
                     <BitmapImage x:Key="AboutImage10"
                                  UriSource="ms-appx:///Assets/Icons/Reference/ref5_light.png" />
                     <BitmapImage x:Key="NoNetwork"
-                                 UriSource="ms-appx:///Assets/Icons/nonetwork_light.png" />
+                                 UriSource="ms-appx:///Assets/Icons/icon_nonetwork_light.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

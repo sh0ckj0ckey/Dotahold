@@ -69,7 +69,6 @@ namespace OpenDota_UWP.Views
 
             //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
             //await APIHelper.DownloadHeroAttributesDataAsync();
-            MainPage.Current.ShowHero.Begin();
 
             base.OnNavigatedTo(e);
         }

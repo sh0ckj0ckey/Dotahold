@@ -71,7 +71,7 @@ namespace OpenDota_UWP
             Current = this;
 
 
-                MainFrame.Navigate(typeof(HeroesPage), 1);
+            MainFrame.Navigate(typeof(HeroesPage), 1);
         }
 
         /// <summary>
@@ -81,10 +81,6 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            HeroRectangle.Width = 3;
-            ItemRectangle.Width = 0;
-            MatchRectangle.Width = 0;
-
             MainFrame.Navigate(typeof(HeroesPage), 1);
         }
 
@@ -95,11 +91,7 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            HeroRectangle.Width = 0;
-            ItemRectangle.Width = 3;
-            MatchRectangle.Width = 0;
-
-                MainFrame.Navigate(typeof(ItemsPage));
+            MainFrame.Navigate(typeof(ItemsPage));
         }
 
         /// <summary>
@@ -109,11 +101,7 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click_2(object sender, RoutedEventArgs e)
         {
-            HeroRectangle.Width = 0;
-            ItemRectangle.Width = 0;
-            MatchRectangle.Width = 3;
-
-                MainFrame.Navigate(typeof(MatchesPage));
+            MainFrame.Navigate(typeof(MatchesPage));
         }
 
         /// <summary>

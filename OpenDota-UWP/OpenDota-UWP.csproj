@@ -604,6 +604,7 @@
     <Content Include="Assets\Icons\Tab\tabicon_match_light_un.png" />
     <Content Include="Assets\Icons\tutorial1.png" />
     <Content Include="Assets\Icons\tutorial2.png" />
+    <Content Include="Assets\Logos\BlackLogo.png" />
     <Content Include="Assets\Logos\Dota2.png" />
     <Content Include="Assets\PermanentBuffs\abyssal_underlord_atrophy_aura.png" />
     <Content Include="Assets\PermanentBuffs\legion_commander_duel.png" />
