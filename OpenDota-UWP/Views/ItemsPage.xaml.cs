@@ -31,12 +31,17 @@ namespace OpenDota_UWP.Views
         private DotaItems SelectedItem = new DotaItems();
         public static string json = "";
         public static string jsonComponents = "";
-        DotaItemsViewModel VM = null;
+        DotaItemsViewModel ViewModel = null;
 
         public ItemsPage()
         {
             this.InitializeComponent();
-            VM = DotaItemsViewModel.Instance;
+            ViewModel = DotaItemsViewModel.Instance;
+
+            FrameShadow.Receivers.Add(ItemsListGrid);
+            ItemGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
+
+            ItemFrame.Navigate(typeof(BlankPage));
 
             //if (AllItems.Count == 0)
             //{

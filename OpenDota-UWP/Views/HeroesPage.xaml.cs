@@ -34,11 +34,6 @@ namespace OpenDota_UWP.Views
 
         public static DotaHeroes SelectedHero;
 
-        /// <summary>
-        /// 选择的英雄的主属性
-        /// </summary>
-        public static int selectedHeroPA = 0; // 1:str 2:agi 3:int
-
         public HeroesPage()
         {
             this.InitializeComponent();
@@ -52,17 +47,6 @@ namespace OpenDota_UWP.Views
             if (e.Parameter is NavigationTransitionInfo transition)
             {
                 navigationTransition.DefaultNavigationTransitionInfo = transition;
-            }
-            if (e.Parameter.GetType().Equals(typeof(int)))
-            {
-                try
-                {
-                    selectedHeroPA = (int)e.Parameter;
-                }
-                catch
-                {
-                    selectedHeroPA = 1;
-                }
             }
 
             LoadAllHeroesList();
@@ -342,24 +326,6 @@ namespace OpenDota_UWP.Views
                 #endregion
             }
 
-            // 根据选择的英雄类型加载指定的英雄列表
-            switch (selectedHeroPA)
-            {
-                case 0:
-                case 1:
-                    ShowStrHero();
-                    break;
-                case 2:
-                    ShowAgiHero();
-                    break;
-                case 3:
-                    ShowIntHero();
-                    break;
-                default:
-                    ShowStrHero();
-                    break;
-            }
-
             WaitStackPanel.Visibility = Visibility.Collapsed;
             WaitProgressRing.IsActive = false;
 
@@ -412,7 +378,6 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void ShowStrHero()
         {
-            selectedHeroPA = 1;
             StrTextBlock.Opacity = 1;
             StrTextBlock.FontWeight = FontWeights.Bold;
             AgiTextBlock.Opacity = 0.7;
@@ -430,7 +395,6 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void ShowAgiHero()
         {
-            selectedHeroPA = 2;
             StrTextBlock.Opacity = 0.7;
             StrTextBlock.FontWeight = FontWeights.Medium;
             AgiTextBlock.Opacity = 1;
@@ -448,7 +412,6 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void ShowIntHero()
         {
-            selectedHeroPA = 3;
             StrTextBlock.Opacity = 0.7;
             StrTextBlock.FontWeight = FontWeights.Medium;
             AgiTextBlock.Opacity = 0.7;
@@ -599,18 +562,18 @@ namespace OpenDota_UWP.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(HeroesPage), 1);
+            this.Frame.Navigate(typeof(HeroesPage));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(HeroesPage), 2);
+            this.Frame.Navigate(typeof(HeroesPage));
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
-            this.Frame.Navigate(typeof(HeroesPage), 3);
+            this.Frame.Navigate(typeof(HeroesPage));
         }
     }
 }

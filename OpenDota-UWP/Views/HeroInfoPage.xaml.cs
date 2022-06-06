@@ -105,26 +105,26 @@ namespace OpenDota_UWP.Views
             ManaRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_mana_regen) + 0.05 * ConvertString2Double(heroAttr.Base_int)).ToString("f1");
 
             double DmgAddition = 0;
-            switch (HeroesPage.selectedHeroPA)
-            {
-                case 1:
-                    DmgAddition = ConvertString2Double(heroAttr.Base_str);
-                    StrTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-                    StrEllipse.Visibility = Visibility.Visible;
-                    break;
-                case 2:
-                    DmgAddition = ConvertString2Double(heroAttr.Base_agi);
-                    AgiTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-                    AgiEllipse.Visibility = Visibility.Visible;
-                    break;
-                case 3:
-                    DmgAddition = ConvertString2Double(heroAttr.Base_int);
-                    IntTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-                    IntEllipse.Visibility = Visibility.Visible;
-                    break;
-                default:
-                    break;
-            }
+            //switch (HeroesPage.selectedHeroPA)
+            //{
+            //    case 1:
+            //        DmgAddition = ConvertString2Double(heroAttr.Base_str);
+            //        StrTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
+            //        StrEllipse.Visibility = Visibility.Visible;
+            //        break;
+            //    case 2:
+            //        DmgAddition = ConvertString2Double(heroAttr.Base_agi);
+            //        AgiTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
+            //        AgiEllipse.Visibility = Visibility.Visible;
+            //        break;
+            //    case 3:
+            //        DmgAddition = ConvertString2Double(heroAttr.Base_int);
+            //        IntTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
+            //        IntEllipse.Visibility = Visibility.Visible;
+            //        break;
+            //    default:
+            //        break;
+            //}
             DmgTextBlock.Text = (ConvertString2Double(heroAttr.Base_attack_min) + DmgAddition) + " - " + (ConvertString2Double(heroAttr.Base_attack_max) + DmgAddition);
             AttackRangeTextBlock.Text = heroAttr.Attack_range;
             AttkRateTextBlock.Text = heroAttr.Attack_rate;

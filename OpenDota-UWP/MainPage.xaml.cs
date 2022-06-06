@@ -33,45 +33,43 @@ namespace OpenDota_UWP
 
         public MainPage()
         {
-            this.InitializeComponent();
-
-            //初次启动显示更新日志
-            if (SaveContainer.Values["first"] == null || SaveContainer.Values["first"].ToString() == "yes")
+            try
             {
-                AboutGrid.Visibility = Visibility.Visible;
-                SettingGridPopIn.Begin();
-                AboutPivot.SelectedIndex = 1;
-                SaveContainer.Values["first"] = "no";
+                this.InitializeComponent();
+
+                Current = this;
+
+                SettingShadow.Receivers.Add(SettingPopBackground);
+                SettingPop.Translation += new System.Numerics.Vector3(0, 0, 36);
+                FrameShadow.Receivers.Add(SideBarGrid);
+                MainFrame.Translation += new System.Numerics.Vector3(0, 0, 36);
+
+                //设置标题栏样式
+                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
+                titleBar.ButtonInactiveBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
+
+
+                //自动切换主题
+                if (SaveContainer.Values["theme"] == null || SaveContainer.Values["theme"].ToString() == "dark")
+                {
+                    this.RequestedTheme = ElementTheme.Dark;
+                    ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
+                    DarkRadioButton.IsChecked = true;
+                }
+                else
+                {
+                    this.RequestedTheme = ElementTheme.Light;
+                    ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
+                    LightRadioButton.IsChecked = true;
+                }
+
+
+                MainFrame.Navigate(typeof(HeroesPage));
             }
-
-            //自动切换主题
-            if (SaveContainer.Values["theme"] == null || SaveContainer.Values["theme"].ToString() == "dark")
-            {
-                this.RequestedTheme = ElementTheme.Dark;
-                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
-                DarkRadioButton.IsChecked = true;
-            }
-            else
-            {
-                this.RequestedTheme = ElementTheme.Light;
-                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
-                LightRadioButton.IsChecked = true;
-            }
-
-            //设置标题栏样式
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
-            titleBar.ButtonInactiveBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
-            Window.Current.SetTitleBar(RealTitleGrid);
-
-            // SetTile(DotaMatchHelper.GetSteamID());
-
-            Current = this;
-
-
-            MainFrame.Navigate(typeof(HeroesPage), 1);
+            catch { }
         }
 
         /// <summary>
@@ -81,7 +79,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(typeof(HeroesPage), 1);
+            try
+            {
+                MainFrame.Navigate(typeof(HeroesPage));
+            }
+            catch { }
         }
 
         /// <summary>
@@ -91,7 +93,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(typeof(ItemsPage));
+            try
+            {
+                MainFrame.Navigate(typeof(ItemsPage));
+            }
+            catch { }
         }
 
         /// <summary>
@@ -101,7 +107,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click_2(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(typeof(MatchesPage));
+            try
+            {
+                MainFrame.Navigate(typeof(MatchesPage));
+            }
+            catch { }
         }
 
         /// <summary>
@@ -111,19 +121,31 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void AppBarButton_Click_3(object sender, RoutedEventArgs e)
         {
-            AboutGrid.Visibility = Visibility.Visible;
-            SettingGridPopIn.Begin();
-            AboutPivot.SelectedIndex = 0;
+            try
+            {
+                SettingPopGrid.Visibility = Visibility.Visible;
+                SettingGridPopIn.Begin();
+                SettingPivot.SelectedIndex = 0;
+            }
+            catch { }
         }
 
         private void AppBarButton_Click_4(object sender, RoutedEventArgs e)
         {
-            SettingGridPopOut.Begin();
+            try
+            {
+                SettingGridPopOut.Begin();
+            }
+            catch { }
         }
 
         private void SettingGridPopOut_Completed(object sender, object e)
         {
-            AboutGrid.Visibility = Visibility.Collapsed;
+            try
+            {
+                SettingPopGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -133,7 +155,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            SettingGridPopOut.Begin();
+            try
+            {
+                SettingGridPopOut.Begin();
+            }
+            catch { }
         }
 
         /// <summary>
@@ -143,9 +169,13 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            this.RequestedTheme = ElementTheme.Dark;
-            ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
-            SaveContainer.Values["theme"] = "dark";
+            try
+            {
+                this.RequestedTheme = ElementTheme.Dark;
+                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
+                SaveContainer.Values["theme"] = "dark";
+            }
+            catch { }
         }
 
         /// <summary>
@@ -155,9 +185,13 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
         {
-            this.RequestedTheme = ElementTheme.Light;
-            ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
-            SaveContainer.Values["theme"] = "light";
+            try
+            {
+                this.RequestedTheme = ElementTheme.Light;
+                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
+                SaveContainer.Values["theme"] = "light";
+            }
+            catch { }
         }
 
         /// <summary>
@@ -167,7 +201,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/YeaMion/OpenDota-UWP"));
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn"));
+            }
+            catch { }
         }
 
         /// <summary>
@@ -177,7 +215,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NSKQN4V8X94"));
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NSKQN4V8X94"));
+            }
+            catch { }
         }
 
         /// <summary>
@@ -187,12 +229,11 @@ namespace OpenDota_UWP
         /// <param name="e"></param>
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            //LogHelper.ShowLogFolder();
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
+            }
+            catch { }
         }
     }
 }

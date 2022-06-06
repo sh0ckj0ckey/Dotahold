@@ -70,11 +70,11 @@
                     <BitmapImage x:Key="LogoImage"
                                  UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
                     <BitmapImage x:Key="AppBarButtonImage1"
-                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_light.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark.png" />
                     <BitmapImage x:Key="AppBarButtonImage2"
-                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_light.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark.png" />
                     <BitmapImage x:Key="AppBarButtonImage3"
-                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_light.png" />
+                                 UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_dark.png" />
                     <BitmapImage x:Key="AboutImage1"
                                  UriSource="ms-appx:///Assets/ConnectMe/MyMail_light.png" />
                     <BitmapImage x:Key="AboutImage2"
