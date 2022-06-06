@@ -57,11 +57,15 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is NavigationTransitionInfo transition)
+            try
             {
-                navigationTransition.DefaultNavigationTransitionInfo = transition;
+                if (e.Parameter is NavigationTransitionInfo transition)
+                {
+                    navigationTransition.DefaultNavigationTransitionInfo = transition;
+                }
+                base.OnNavigatedTo(e);
             }
-            base.OnNavigatedTo(e);
+            catch { }
         }
 
         /// <summary>

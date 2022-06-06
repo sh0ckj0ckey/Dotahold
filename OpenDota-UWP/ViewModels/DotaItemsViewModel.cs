@@ -13,8 +13,19 @@ namespace OpenDota_UWP.ViewModels
         private static Lazy<DotaItemsViewModel> _lazyVM = new Lazy<DotaItemsViewModel>(() => new DotaItemsViewModel());
         public static DotaItemsViewModel Instance => _lazyVM.Value;
 
-        public ObservableCollection<Models.DotaItemModel> vAllItems { get; set; } = new ObservableCollection<Models.DotaItemModel>();
+        // 所有物品
+        public List<Models.DotaItemModel> vAllItems { get; set; } = new List<Models.DotaItemModel>();
 
+        // 列表展示的物品
+        public ObservableCollection<Models.DotaItemModel> vItemsList { get; set; } = new ObservableCollection<Models.DotaItemModel>();
+
+        // 是否正在加载物品列表
+        private bool _bLoadingItems = false;
+        public bool bLoadingItems
+        {
+            get { return _bLoadingItems; }
+            set { Set("bLoadingItems", ref _bLoadingItems, value); }
+        }
 
         public DotaItemsViewModel()
         {
@@ -23,20 +34,23 @@ namespace OpenDota_UWP.ViewModels
 
         public async void InitialDotaItems()
         {
-            var items = await ConstantsHelper.Instance.GetItemsConstant();
-            ObservableCollection<Models.DotaItemModel> dotaItems = new ObservableCollection<Models.DotaItemModel>();
-            // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
-            foreach (var item in items)
+            try
             {
-                item.Value.img = "https://steamcdn-a.akamaihd.net/" + item.Value.img;
-                dotaItems.Add(item.Value);
+                bLoadingItems = true;
+
+                vAllItems?.Clear();
+                vItemsList?.Clear();
+                var items = await ConstantsHelper.Instance.GetItemsConstant();
+                // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
+                foreach (var item in items)
+                {
+                    item.Value.img = "https://steamcdn-a.akamaihd.net/" + item.Value.img;
+                    vAllItems.Add(item.Value);
+                    vItemsList.Add(item.Value);
+                }
             }
-            var temp = dotaItems.OrderBy(item => item.id);
-            vAllItems.Clear();
-            foreach (var item in temp)
-            {
-                vAllItems.Add(item);
-            }
+            catch { }
+            finally { bLoadingItems = false; }
         }
 
         ///// <summary>

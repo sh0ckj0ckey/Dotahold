@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 
 /// <summary>
-/// Copy from https://github.com/tobiichiamane/pixivfs-uwp by tobiichiamane
+/// https://github.com/tobiichiamane/pixivfs-uwp by tobiichiamane
 /// </summary>
 namespace OpenDota_UWP.Helpers
 {

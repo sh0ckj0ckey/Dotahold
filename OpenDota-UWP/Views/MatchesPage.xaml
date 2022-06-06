@@ -848,7 +848,7 @@
                            Grid.Column="2"
                            Source="{ThemeResource LogoImage}"
                            Height="96"
-                           Opacity="0.6" />
+                           Opacity="0.1" />
                     <Frame x:Name="MatchInfoFrame"
                            Grid.Column="2" />
                 </Grid>

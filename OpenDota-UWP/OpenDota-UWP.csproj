@@ -132,6 +132,7 @@
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\CrawlerHelper.cs" />
+    <Compile Include="Helpers\DataCourier.cs" />
     <Compile Include="Helpers\DialogShower.cs" />
     <Compile Include="Helpers\DotaHeroHelper.cs" />
     <Compile Include="Helpers\DotaMatchHelper.cs" />

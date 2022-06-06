@@ -8,13 +8,6 @@
     mc:Ignorable="d"
     xmlns:models="using:OpenDota_UWP.Models">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition x:Name="navigationTransition">
@@ -24,108 +17,53 @@
     </Page.Transitions>
     <Grid Background="{ThemeResource RegionBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MaxWidth="420" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.ColumnSpan="2">
-            <Rectangle.Fill>
-                <AcrylicBrush TintColor="{ThemeResource RegionColor}"
-                              TintOpacity="0.8"
-                              BackgroundSource="HostBackdrop" />
-            </Rectangle.Fill>
-        </Rectangle>
-        <Rectangle Grid.Column="0"
-                   Fill="{ThemeResource RegionBrush}"
-                   Opacity="0.5" />
-        
         <ListView x:Name="ItemsGridView" Margin="0,128,0,0"
-                  ItemsSource="{x:Bind VM.vAllItems}">
+                  ItemsSource="{x:Bind VM.vItemsList}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:DotaItemModel">
-                    <Grid Height="64">
+                    <Grid Height="60">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="64" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Height="48">
-                            <Rectangle.Fill>
-                                <ImageBrush>
+                        <Grid Height="42" Width="56" CornerRadius="6">
+                            <Grid.Background>
+                                <ImageBrush Stretch="UniformToFill">
                                     <ImageBrush.ImageSource>
                                         <BitmapImage UriSource="{x:Bind img}"
-                                                     DecodePixelHeight="48"
-                                                     DecodePixelType="Logical" />
+                                                     DecodePixelHeight="42"
+                                                     DecodePixelType="Logical"/>
                                     </ImageBrush.ImageSource>
                                 </ImageBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                            </Grid.Background>
+                        </Grid>
                         <TextBlock Grid.Column="1"
-                                           Text="{x:Bind dname}"
-                                           VerticalAlignment="Center"
-                                           FontFamily="Century"
-                                           FontSize="20"
-                                           FontWeight="Light"
-                                           Margin="12,0" />
+                                   Text="{x:Bind dname}"
+                                   VerticalAlignment="Center"
+                                   FontFamily="Century"
+                                   FontSize="16"
+                                   Margin="12,0"
+                                   CharacterSpacing="32"/>
+                        <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Background="#26666666"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <!--<ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:DotaItems">
-                    <Grid Height="64">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Height="48">
-                            <Rectangle.Fill>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage UriSource="{x:Bind Pic}"
-                                                             DecodePixelHeight="48"
-                                                             DecodePixelType="Logical" />
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1"
-                                           Text="{x:Bind Name}"
-                                           VerticalAlignment="Center"
-                                           FontFamily="STKaiti"
-                                           FontSize="21"
-                                           FontWeight="Light"
-                                           Margin="12" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>-->
         </ListView>
-        <StackPanel x:Name="ProgressStackPanel"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Height="72" Width="128" CornerRadius="6"
+              Visibility="{x:Bind VM.bLoadingItems}">
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource RegionBrush}" TintColor="Transparent" />
+            </Grid.Background>
             <ProgressRing x:Name="ItemProgressRing"
-                          Height="48"
-                          Width="48"
-                          IsActive="False"
-                          Margin="0,16" />
-            <TextBlock x:Name="NetworkSlowTextBlock"
-                       Text="An error occurred while connecting to the server"
-                       FontSize="12"
-                       FontWeight="Light"
-                       Opacity="0.7"
-                       Visibility="Collapsed" />
-        </StackPanel>
-        <Border Grid.Column="1">
-            <Rectangle Fill="{ThemeResource RegionBrush}"
-                       Width="8"
-                       HorizontalAlignment="Left" />
-        </Border>
-        <Rectangle Grid.Column="1"
-                   Fill="{ThemeResource RegionBrush}"
-                   Stretch="UniformToFill" />
-        <Image Grid.Column="1"
-               x:Name="ItemPicture"
-               Height="92"
-               Opacity="0.6"
-               Source="{ThemeResource LogoImage}" />
-        <Frame Grid.Column="1"
-               x:Name="ItemFrame" />
+                          Height="32"
+                          Width="32"
+                          IsActive="{x:Bind VM.bLoadingItems}"/>
+        </Grid>
+        <Frame x:Name="ItemFrame" Grid.Column="1"/>
     </Grid>
 </Page>
