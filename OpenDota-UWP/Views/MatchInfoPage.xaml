@@ -195,13 +195,13 @@
                              Points="0,0,98,0,98,3,76,38,0,38"
                              Margin="16,0"/>
                     <TextBlock FontSize="14"
-                               Foreground="{ThemeResource RegionBrush}"
+                               Foreground="{ThemeResource APPLICATION_BK}"
                                Text="Radiant"
                                Margin="22,0,0,0" />
                     <TextBlock x:Name="RadiantWinTextBlock"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="{ThemeResource RegionBrush}"
+                               Foreground="{ThemeResource APPLICATION_BK}"
                                Text="..."
                                VerticalAlignment="Bottom"
                                Margin="22,0" />
@@ -447,7 +447,7 @@
                                         <Ellipse x:Name="PlayerPhotoEllipse"
                                                  Height="58"
                                                  Width="58"
-                                                 Stroke="{ThemeResource SimpleColor}"
+                                                 Stroke="{ThemeResource SIMPLETEXT_FR}"
                                                  StrokeThickness="1.5">
                                             <Ellipse.Fill>
                                                 <ImageBrush>
@@ -475,13 +475,13 @@
                              Points="0,0,98,0,98,3,76,38,0,38"
                              Margin="16,0"/>
                     <TextBlock FontSize="14"
-                               Foreground="{ThemeResource RegionBrush}"
+                               Foreground="{ThemeResource APPLICATION_BK}"
                                Text="Dire"
                                Margin="22,0,0,0" />
                     <TextBlock x:Name="DireWinTextBlock"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="{ThemeResource RegionBrush}"
+                               Foreground="{ThemeResource APPLICATION_BK}"
                                Text="..."
                                VerticalAlignment="Bottom"
                                Margin="22,0" />
@@ -726,7 +726,7 @@
                                         <Ellipse x:Name="PlayerPhotoEllipse"
                                                  Height="58"
                                                  Width="58"
-                                                 Stroke="{ThemeResource SimpleColor}"
+                                                 Stroke="{ThemeResource SIMPLETEXT_FR}"
                                                  StrokeThickness="1.5">
                                             <Ellipse.Fill>
                                                 <ImageBrush>
@@ -920,7 +920,7 @@
                         <Ellipse Height="12"
                                  Width="12"
                                  Fill="Gold"
-                                 Stroke="{ThemeResource SimpleColor}"
+                                 Stroke="{ThemeResource SIMPLETEXT_FR}"
                                  VerticalAlignment="Center" />
                         <TextBlock Text="Gold"
                                    Margin="8,0"
@@ -928,7 +928,7 @@
                         <Ellipse Height="12"
                                  Width="12"
                                  Fill="DeepSkyBlue"
-                                 Stroke="{ThemeResource SimpleColor}"
+                                 Stroke="{ThemeResource SIMPLETEXT_FR}"
                                  Margin="12,0,0,0"
                                  VerticalAlignment="Center" />
                         <TextBlock Text="Experience"
@@ -989,9 +989,9 @@
         </ScrollViewer>
         <Grid x:Name="MaskGrid"
               Visibility="Collapsed"
-              Background="{ThemeResource RegionBrush}"
+              Background="{ThemeResource APPLICATION_BK}"
               Margin="0,146,0,0">
-            <Image Source="{ThemeResource LogoImage}"
+            <Image Source="{ThemeResource BLANKPLACEHOLDER_IMG}"
                    Height="96"
                    Opacity="0.7" />
         </Grid>

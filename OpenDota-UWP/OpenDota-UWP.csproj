@@ -129,6 +129,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EqualToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\CrawlerHelper.cs" />

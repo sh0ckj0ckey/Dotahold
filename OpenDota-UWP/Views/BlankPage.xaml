@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="{ThemeResource RegionBrush}">
-        <Image Source="{ThemeResource LogoImage}" Height="100" Opacity="0.1"/>
-        <TextBlock Text="www.opendota.com" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16" CharacterSpacing="36"
-                   Opacity="0.1" FontWeight="Medium" FontSize="14"/>
+    <Grid Background="{ThemeResource APPLICATION_BK}">
+        <Image Source="{ThemeResource BLANKPLACEHOLDER_IMG}" Height="100" Opacity="0.1"/>
+        <TextBlock Text="www.opendota.com" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" CharacterSpacing="36"
+                   Opacity="0.1" FontWeight="Medium" FontSize="16"/>
     </Grid>
 </Page>

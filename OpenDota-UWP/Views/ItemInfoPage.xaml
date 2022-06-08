@@ -23,7 +23,7 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    <!--<Grid Background="{ThemeResource RegionBrush}">
+    <!--<Grid Background="{ThemeResource APPLICATION_BK}">
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,64,0,0">
             <Grid Height="auto" VerticalAlignment="Center" Margin="24,0">
                 <Grid.RowDefinitions>

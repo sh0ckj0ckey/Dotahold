@@ -30,14 +30,15 @@ namespace OpenDota_UWP
     {
         public static MainPage Current;
         public static ApplicationDataContainer SaveContainer = ApplicationData.Current.LocalSettings;
+        ViewModels.DotaViewModel ViewModel = null;
 
         public MainPage()
         {
             try
             {
                 this.InitializeComponent();
-
                 Current = this;
+                ViewModel = ViewModels.DotaViewModel.Instance;
 
                 SettingShadow.Receivers.Add(SettingPopBackground);
                 SettingPop.Translation += new System.Numerics.Vector3(0, 0, 36);
@@ -81,7 +82,11 @@ namespace OpenDota_UWP
         {
             try
             {
-                MainFrame.Navigate(typeof(HeroesPage));
+                if (ViewModel.iSideMenuTabIndex != 0)
+                {
+                    MainFrame.Navigate(typeof(HeroesPage));
+                    ViewModel.iSideMenuTabIndex = 0;
+                }
             }
             catch { }
         }
@@ -95,7 +100,11 @@ namespace OpenDota_UWP
         {
             try
             {
-                MainFrame.Navigate(typeof(ItemsPage));
+                if (ViewModel.iSideMenuTabIndex != 1)
+                {
+                    MainFrame.Navigate(typeof(ItemsPage));
+                    ViewModel.iSideMenuTabIndex = 1;
+                }
             }
             catch { }
         }
@@ -109,7 +118,11 @@ namespace OpenDota_UWP
         {
             try
             {
-                MainFrame.Navigate(typeof(MatchesPage));
+                if (ViewModel.iSideMenuTabIndex != 2)
+                {
+                    MainFrame.Navigate(typeof(MatchesPage));
+                    ViewModel.iSideMenuTabIndex = 2;
+                }
             }
             catch { }
         }
@@ -232,6 +245,20 @@ namespace OpenDota_UWP
             try
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 访问 GitHub Issues
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn/issues"));
             }
             catch { }
         }

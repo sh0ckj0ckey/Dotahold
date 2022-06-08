@@ -4,20 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:OpenDota_UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:converters="using:OpenDota_UWP.Converters"
     mc:Ignorable="d">
     <Page.Resources>
+        <converters:EqualToVisibilityConverter x:Key="Eq2VisConverter"/>
+
         <ThemeShadow x:Name="SettingShadow"/>
         <ThemeShadow x:Name="FrameShadow"/>
     </Page.Resources>
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="SideBarGrid" Grid.Column="0">
             <Grid.Background>
-                <AcrylicBrush TintColor="{ThemeResource SlideColor}" TintOpacity="0.7" FallbackColor="{ThemeResource SlideColor}" BackgroundSource="HostBackdrop"/>
+                <AcrylicBrush TintColor="{ThemeResource SIDEMEDU_BK}" TintOpacity="0.7" FallbackColor="{ThemeResource SIDEMEDU_BK}" BackgroundSource="HostBackdrop"/>
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -32,7 +35,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage1}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_UNSELECT_IMG}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=0, Mode=OneWay}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="2"
@@ -41,7 +46,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_1">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage2}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_UNSELECT_IMG}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=1, Mode=OneWay}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="3"
@@ -50,7 +57,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_2">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource AppBarButtonImage3}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_UNSELECT_IMG}"/>
+                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=2, Mode=OneWay}"/>
                 </Grid>
             </Button>
             <Button Grid.Row="4"
@@ -66,10 +75,10 @@
                     Content="&#xE115;"
                     FontSize="20"/>
         </Grid>
-        <Frame x:Name="MainFrame" Grid.Column="1" Background="{ThemeResource RegionBrush}" Shadow="{StaticResource FrameShadow}"
+        <Frame x:Name="MainFrame" Grid.Column="1" Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource FrameShadow}"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <Grid x:Name="SettingPopGrid" Grid.ColumnSpan="2" Visibility="Collapsed">
+        <Grid x:Name="SettingPopGrid" Grid.ColumnSpan="2" Visibility="Visible">
             <Grid.Resources>
                 <Storyboard x:Name="SettingGridPopIn">
                     <PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="320" Storyboard.TargetName="SettingPop" Duration="00:00:1"/>
@@ -81,125 +90,132 @@
             <Rectangle x:Name="SettingPopBackground" Fill="#66000000" Tapped="Rectangle_Tapped"/>
             <Grid x:Name="SettingPop" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Background="{ThemeResource RegionBrush}" Shadow="{StaticResource SettingShadow}"
+                  Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource SettingShadow}"
                   Width="480" Height="640" CornerRadius="6">
-                <Pivot x:Name="SettingPivot" Grid.Row="0">
+                <Grid.BackgroundTransition>
+                    <BrushTransition/>
+                </Grid.BackgroundTransition>
+                <Pivot x:Name="SettingPivot">
+                    <Pivot.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" CharacterSpacing="32"/>
+                        </DataTemplate>
+                    </Pivot.HeaderTemplate>
                     <PivotItem Header="GENERAL">
                         <StackPanel>
-                            <TextBlock Text="Theme" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                            <TextBlock Text="Appearance" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
                             <RadioButton x:Name="DarkRadioButton" Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"/>
                             <RadioButton x:Name="LightRadioButton" Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"/>
+                            <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
                             <StackPanel Orientation="Horizontal">
-                                <Button CornerRadius="4" Content="Clear Cache"/>
+                                <Button CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xEA99;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                            <TextBlock Text="Clear Cache"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
-                            <TextBlock Text="Feedback" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
-                            <HyperlinkButton Margin="12,0" Content="Rate app in the Store" Click="HyperlinkButton_Click"/>
-                            <HyperlinkButton Margin="12,0" Content="Email me" NavigateUri="mailto:yaoyiming123@live.com"/>
                         </StackPanel>
+                    </PivotItem>
+                    <PivotItem Header="FEEDBACK">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="84"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="84"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Grid.Row="0" Source="/Assets/Icons/About/photo.png" Height="72" Width="72" HorizontalAlignment="Left"/>
+                            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <TextBlock Text="If you encounter any problems" CharacterSpacing="30" Opacity="0.7" HorizontalAlignment="Left"/>
+                                <TextBlock Text="or want to make some suggestions" CharacterSpacing="30" Opacity="0.7" HorizontalAlignment="Left"/>
+                                <TextBlock Text="please let me know 💕" CharacterSpacing="30" Opacity="0.7" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,96">
+                                <Button Height="42" Width="120" CornerRadius="18" Style="{StaticResource ButtonRevealStyle}">
+                                    <Button.Flyout>
+                                        <Flyout>
+                                            <HyperlinkButton Content="yaoyiming123@live.com" ToolTipService.ToolTip="Click to send me an email " NavigateUri="mailto:yaoyiming123@live.com"/>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Image Source="/Assets/Icons/About/icon_mail.png" Width="20" Height="20" Margin="0,0,0,0"/>
+                                        <TextBlock Text="Send Email" VerticalAlignment="Center" FontSize="13" Margin="8,0,0,0" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Height="42" Width="132" CornerRadius="18" Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2" Margin="12,0,12,0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Width="24" Height="24" Margin="0,0,0,0"/>
+                                        <TextBlock Text="Report issue" VerticalAlignment="Center" FontSize="13" Margin="8,0,2,0" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Height="42" Width="42" CornerRadius="21" Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_1">
+                                    <Image Source="{ThemeResource ABOUT_FEEDBACK_STEAM_IMG}" Width="20" Height="20" Margin="0,0,0,0"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </PivotItem>
                     <PivotItem Header="ABOUT">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="0,0,0,16">
-                                <TextBlock Text="Version" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
-                                <Image Grid.Row="1" Height="96" Source="{ThemeResource LogoImage}"/>
-                                <TextBlock Text="OpenDota For Windows 10"
-                                           FontWeight="Bold"
+                                <TextBlock Text="Version" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,24,0,8"/>
+                                <Image Grid.Row="1" Height="80" Source="/Assets/Logos/Logo.png"/>
+                                <TextBlock Text="OpenDota+"
+                                           FontWeight="Medium" FontSize="15" CharacterSpacing="32"
                                            HorizontalAlignment="Center"
-                                           Margin="4"/>
-                                <!--——————版本号——————-->
-                                <TextBlock Text="v 4.0.0"
-                                               HorizontalAlignment="Center"
-                                               Margin="0,0,0,8"
-                                               Opacity="0.7"
-                                               FontStyle="Italic"/>
-                                <TextBlock Text="Contact me" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                           Margin="4,4,4,0"/>
+                                <TextBlock Text="v4.0.0"
+                                           HorizontalAlignment="Center" FontWeight="Medium"
+                                           Opacity="0.5" FontFamily="Consolas"/>
+                                <HyperlinkButton HorizontalAlignment="Center" Content="Rate &amp; Review on Microsoft Store" Click="HyperlinkButton_Click"/>
+                                <TextBlock Text="Data Sources" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="Outlook">
-                                        <Button.Flyout>
-                                            <Flyout>
-                                                <HyperlinkButton Content="yaoyiming123@live.com" NavigateUri="mailto:yaoyiming123@live.com"/>
-                                            </Flyout>
-                                        </Button.Flyout>
-                                        <Image Source="{ThemeResource AboutImage1}" Width="21" Height="21"/>
-                                    </Button>
-                                    <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="QQ">
-                                        <Button.Flyout>
-                                            <Flyout>
-                                                <StackPanel>
-                                                    <Image Source="/Assets/ConnectMe/MyQQQR.jpg" Width="256"/>
-                                                    <TextBlock Text="QQ: 1095979350" FontWeight="Bold" FontSize="18" FontFamily="Arial" Margin="4,16,4,-4" Opacity="0.6"/>
-                                                </StackPanel>
-                                            </Flyout>
-                                        </Button.Flyout>
-                                        <Image Source="{ThemeResource AboutImage2}" Width="20" Height="20"/>
-                                    </Button>
-                                    <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="WeChat">
-                                        <Button.Flyout>
-                                            <Flyout>
-                                                <StackPanel>
-                                                    <Image Source="/Assets/ConnectMe/MyWeChatQR.jpg" Width="256"/>
-                                                </StackPanel>
-                                            </Flyout>
-                                        </Button.Flyout>
-                                        <Image Source="{ThemeResource AboutImage3}" Width="21" Height="21"/>
-                                    </Button>
-                                    <Button Height="48" Width="48" BorderThickness="0" Background="{ThemeResource RegionBrush}" Margin="6,0" ToolTipService.ToolTip="Steam" Click="Button_Click_1">
-                                        <Image Source="{ThemeResource AboutImage4}" Width="21" Height="21"/>
-                                    </Button>
-                                </StackPanel>
-                                <TextBlock Text="Data Sources" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image Width="32" Source="/Assets/Pictures/dota2logo.png" Margin="8,0"/>
+                                    <Image Width="32" Source="/Assets/Icons/About/icon_dota2.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="http://www.dota2.com/" Content="www.dota2.com" HorizontalAlignment="Center"/>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image Width="32" Height="24" Source="/Assets/Pictures/opendota.png" Margin="8,0"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4">
+                                    <Image Width="24" Source="/Assets/Icons/About/icon_opendota.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="https://www.opendota.com/" Content="www.opendota.com" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image Width="32" Source="/Assets/Pictures/dotapedia.png" Margin="8,0"/>
+                                    <Image Width="32" Source="/Assets/Icons/About/icon_dotapedia.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" HorizontalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Text="GitHub" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
-                                <Button HorizontalAlignment="Center" Click="Button_Click" Height="48" Width="48">
-                                    <Image Source="{ThemeResource AboutImage9}" Height="32"/>
+                                <TextBlock Text="GitHub" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                <Button HorizontalAlignment="Center" Click="Button_Click" Height="48" Width="48" CornerRadius="24">
+                                    <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Height="32"/>
                                 </Button>
-                                <TextBlock Text="References" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Image Source="{ThemeResource AboutImage7}" Height="22" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="References" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                    <Image Source="{ThemeResource ABOUT_REF_TOOLKIT_IMG}" Height="24" Margin="0,0,4,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.Toolkit.Uwp" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Image Source="{ThemeResource AboutImage8}" Height="28" VerticalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                    <Image Source="{ThemeResource ABOUT_REF_JSON_IMG}" Height="20" Margin="0,0,4,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Newtonsoft.Json" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Image Source="{ThemeResource AboutImage5}" Height="32" VerticalAlignment="Center"/>
-                                    <TextBlock Text="MaterialLibs" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Image Source="{ThemeResource AboutImage6}" Height="24" VerticalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                    <Image Source="{ThemeResource ABOUT_REF_XAML_IMG}" Height="28" Margin="0,0,2,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.UI.XAML" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Image Source="{ThemeResource AboutImage10}" Height="18" VerticalAlignment="Center"/>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                    <Image Source="{ThemeResource ABOUT_REF_CHART_IMG}" Height="20" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                     <TextBlock Text=" Live Charts" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Text="Developed by" FontWeight="Black" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8"/>
+                                <TextBlock Text="Developer" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Ellipse Margin="0,0,8,0" Width="32" Height="32">
-                                        <Ellipse.Fill>
-                                            <ImageBrush ImageSource="/Assets/Pictures/me.jpg"/>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <TextBlock Text="YeaMion" CharacterSpacing="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Image Height="25" Margin="0,0,6,0" Source="/Assets/Icons/About/photo.png"/>
+                                    <TextBlock Text="sh0ckj0ckey" CharacterSpacing="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
                     </PivotItem>
                 </Pivot>
-                <AppBarButton Grid.Row="0"
-                              HorizontalAlignment="Right" VerticalAlignment="Top"
+                <AppBarButton HorizontalAlignment="Right" VerticalAlignment="Top"
                               Height="40" Width="40" Icon="Cancel" CornerRadius="6" Margin="4"
                               Click="AppBarButton_Click_4"/>
             </Grid>

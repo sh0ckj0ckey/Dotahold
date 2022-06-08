@@ -705,7 +705,7 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid Margin="0,64,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -824,7 +824,7 @@
                 </ScrollViewer>
                 <ProgressRing x:Name="HeroBioProgressRing"
                               Grid.Column="2"
-                              Foreground="{ThemeResource SimpleColor}"
+                              Foreground="{ThemeResource SIMPLETEXT_FR}"
                               Height="36"
                               Width="36"
                               IsActive="True" />
@@ -2100,7 +2100,7 @@
                                                      Height="42"
                                                      Stroke="DarkGoldenrod"
                                                      StrokeThickness="3"
-                                                     Fill="{ThemeResource RegionBrush}" />
+                                                     Fill="{ThemeResource APPLICATION_BK}" />
                                             <TextBlock Grid.Column="1"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -2136,7 +2136,7 @@
                                                      Height="42"
                                                      Stroke="DarkGoldenrod"
                                                      StrokeThickness="3"
-                                                     Fill="{ThemeResource RegionBrush}" />
+                                                     Fill="{ThemeResource APPLICATION_BK}" />
                                             <TextBlock Grid.Column="1"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -2172,7 +2172,7 @@
                                                      Height="42"
                                                      Stroke="DarkGoldenrod"
                                                      StrokeThickness="3"
-                                                     Fill="{ThemeResource RegionBrush}" />
+                                                     Fill="{ThemeResource APPLICATION_BK}" />
                                             <TextBlock Grid.Column="1"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -2208,7 +2208,7 @@
                                                      Height="42"
                                                      Stroke="DarkGoldenrod"
                                                      StrokeThickness="3"
-                                                     Fill="{ThemeResource RegionBrush}" />
+                                                     Fill="{ThemeResource APPLICATION_BK}" />
                                             <TextBlock Grid.Column="1"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -2313,7 +2313,7 @@
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center" />
                                             <Ellipse Grid.Column="1"
-                                                     Stroke="{ThemeResource SimpleColor}"
+                                                     Stroke="{ThemeResource SIMPLETEXT_FR}"
                                                      Height="42"
                                                      Width="42">
                                                 <Ellipse.Fill>
@@ -2525,7 +2525,7 @@
                         VerticalAlignment="Top"
                         Margin="48,10"
                         Visibility="Visible"
-                        Foreground="{ThemeResource SimpleColor}"
+                        Foreground="{ThemeResource SIMPLETEXT_FR}"
                         FontFamily="Segoe UI Symbol"
                         FontSize="18"
                         FontWeight="Bold"
@@ -2538,7 +2538,7 @@
                         VerticalAlignment="Top"
                         Margin="48,10"
                         Visibility="Collapsed"
-                        Foreground="{ThemeResource SimpleColor}"
+                        Foreground="{ThemeResource SIMPLETEXT_FR}"
                         FontFamily="Segoe UI Symbol"
                         FontSize="18"
                         FontWeight="Bold"

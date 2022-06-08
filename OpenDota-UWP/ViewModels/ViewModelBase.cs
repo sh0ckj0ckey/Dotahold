@@ -25,6 +25,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     field = newValue;
                     RaisePropertyChanged(propertyName);
+                    return true;
                 }
 
             }

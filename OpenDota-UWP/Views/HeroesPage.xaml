@@ -21,7 +21,7 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid Background="{ThemeResource APPLICATION_BK}">
         <TextBlock Text="Better to run than curse the road."
                    FontWeight="Black"
                    FontSize="24"
@@ -41,7 +41,7 @@
                 <Button Height="42"
                         Width="Auto"
                         Margin="4,0"
-                        Style="{ThemeResource ButtonRevealStyle}"
+                        Style="{StaticResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
                         CornerRadius="21"
@@ -64,7 +64,7 @@
                 <Button Height="42"
                         Width="Auto"
                         Margin="4,0"
-                        Style="{ThemeResource ButtonRevealStyle}"
+                        Style="{StaticResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
                         CornerRadius="21"
@@ -87,7 +87,7 @@
                 <Button Height="42"
                         Width="Auto"
                         Margin="4,0"
-                        Style="{ThemeResource ButtonRevealStyle}"
+                        Style="{StaticResource ButtonRevealStyle}"
                         Background="#22808080"
                         BorderThickness="1.7"
                         CornerRadius="21"
@@ -107,12 +107,6 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Grid Margin="12,0" Padding="8,0" Background="PaleVioletRed">
-                    <TextBlock VerticalAlignment="Center" Text="记得在DialogStyle里面改一下，给对话框加个背景半透明图片，dota的漫画或者logo之类的作为底图"/>
-                </Grid>
-                <Grid Margin="12,0" Padding="8,0" Background="PaleVioletRed">
-                    <TextBlock VerticalAlignment="Center" Text="加一个记录日志Log的类"/>
-                </Grid>
             </StackPanel>
             <GridView Grid.Row="2"
                       x:Name="HeroesGridView"
@@ -138,7 +132,7 @@
                                   BorderThickness="0"
                                   Width="96"
                                   Height="112"
-                                  Background="{ThemeResource RegionColor}">
+                                  Background="{ThemeResource APPLICATION_BK}">
                                 <Rectangle Stretch="Fill"
                                            Width="96"
                                            Height="112"

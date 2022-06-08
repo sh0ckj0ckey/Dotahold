@@ -113,7 +113,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid.RowDefinitions>
             <RowDefinition Height="172" />
             <RowDefinition />
@@ -137,7 +137,7 @@
                 Margin="16,36"
                 ToolTipService.ToolTip="Menu"
                 Style="{StaticResource TextBlockButtonStyle}"
-                Foreground="{ThemeResource SimpleColor}">
+                Foreground="{ThemeResource SIMPLETEXT_FR}">
             <Button.Content>
                 <TextBlock FontFamily="Segoe UI Symbol"
                            Text="&#xE0C2;"
@@ -230,13 +230,13 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="2">
-                            <Rectangle Fill="{ThemeResource RegionBrush}"
+                            <Rectangle Fill="{ThemeResource APPLICATION_BK}"
                                        Width="8"
                                        HorizontalAlignment="Left" />
                         </Border>
                         <Rectangle Grid.Column="2"
                                    Width="28"
-                                   Fill="{ThemeResource RegionBrush}"
+                                   Fill="{ThemeResource APPLICATION_BK}"
                                    HorizontalAlignment="Left"
                                    Margin="0,-12" />
                         <StackPanel Orientation="Vertical">
@@ -272,7 +272,7 @@
                                            FontSize="18" 
                                            Margin="6,0"/>
                                 <Rectangle Grid.Column="1" 
-                                           Fill="{ThemeResource SimpleColor}"
+                                           Fill="{ThemeResource SIMPLETEXT_FR}"
                                            Width="1" 
                                            RadiusX="5" 
                                            RadiusY="5"/>
@@ -288,7 +288,7 @@
                                 <Canvas.RenderTransform>
                                     <ScaleTransform x:Name="ShowPieChartScaleTransform" CenterX="114" CenterY="114"/>
                                 </Canvas.RenderTransform>
-                                <controls:DropShadowPanel Color="{ThemeResource SimpleColor}" Opacity="1" BlurRadius="10" Canvas.Top="36" Canvas.Left="36">
+                                <controls:DropShadowPanel Color="{ThemeResource SIMPLETEXT_FR}" Opacity="1" BlurRadius="10" Canvas.Top="36" Canvas.Left="36">
                                     <Ellipse Width="192"
                                              Height="192"
                                              Fill="Transparent"
@@ -300,7 +300,7 @@
                                          Canvas.Top="36"
                                          Canvas.Left="36">
                                 </Ellipse>
-                                <Polyline x:Name="RatePolyline" Canvas.Left="132" Canvas.Top="36" StrokeThickness="8" Points="0,0,0,96,0,192" Stroke="{ThemeResource RegionBrush}"/>
+                                <Polyline x:Name="RatePolyline" Canvas.Left="132" Canvas.Top="36" StrokeThickness="8" Points="0,0,0,96,0,192" Stroke="{ThemeResource APPLICATION_BK}"/>
                                 <Path x:Name="RightPieChart" Canvas.Left="132" Canvas.Top="36">
                                     <Path.Data>
                                         <GeometryGroup>
@@ -695,13 +695,13 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="2">
-                        <Rectangle Fill="{ThemeResource RegionBrush}"
+                        <Rectangle Fill="{ThemeResource APPLICATION_BK}"
                                    Width="8"
                                    HorizontalAlignment="Left" />
                     </Border>
                     <Rectangle Grid.Column="2"
                                Width="28"
-                               Fill="{ThemeResource RegionBrush}"
+                               Fill="{ThemeResource APPLICATION_BK}"
                                HorizontalAlignment="Left"
                                Margin="0,-12" />
                     <Grid>
@@ -846,7 +846,7 @@
                     </Grid>
                     <Image x:Name="MatchPicture"
                            Grid.Column="2"
-                           Source="{ThemeResource LogoImage}"
+                           Source="{ThemeResource BLANKPLACEHOLDER_IMG}"
                            Height="96"
                            Opacity="0.1" />
                     <Frame x:Name="MatchInfoFrame"
@@ -1235,7 +1235,7 @@
               Visibility="Collapsed"
               Grid.RowSpan="2">
             <Grid.Background>
-                <SolidColorBrush Color="{ThemeResource RegionColor}"
+                <SolidColorBrush Color="{ThemeResource APPLICATION_BK}"
                                  Opacity="0.9" />
             </Grid.Background>
             <Grid.Resources>
@@ -1256,7 +1256,7 @@
                     VerticalAlignment="Center">
                 <Grid Height="256"
                       Width="480"
-                      Background="{ThemeResource RegionBrush}">
+                      Background="{ThemeResource APPLICATION_BK}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="48" />
@@ -1288,7 +1288,7 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Margin="12,0"
-                            Foreground="{ThemeResource SimpleColor}"
+                            Foreground="{ThemeResource SIMPLETEXT_FR}"
                             Style="{StaticResource TextBlockButtonStyle}"
                             ToolTipService.ToolTip="Waht ID？">
                         <Button.Flyout>

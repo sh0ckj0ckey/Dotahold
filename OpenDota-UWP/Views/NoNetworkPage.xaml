@@ -14,16 +14,16 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Background="{ThemeResource RegionBrush}">
+    <Grid Background="{ThemeResource APPLICATION_BK}">
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <Image Source="{ThemeResource NoNetwork}"
+            <Image Source="{ThemeResource NONETWORKPLACEHOLDER_IMG}"
                    Height="50"
                    Opacity="0.7"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" Margin="16"/>
             <TextBlock Text="Internet not working" Opacity="0.7" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" CharacterSpacing="32"/>
-            <HyperlinkButton Opacity="0.5" Content="Please check and retry" Foreground="{ThemeResource SimpleColor}" FontSize="12" HorizontalAlignment="Center" Click="HyperlinkButton_Click"/>
+            <HyperlinkButton Opacity="0.5" Content="Please check and retry" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="12" HorizontalAlignment="Center" Click="HyperlinkButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>
