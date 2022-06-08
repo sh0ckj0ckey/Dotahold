@@ -78,7 +78,7 @@
         <Frame x:Name="MainFrame" Grid.Column="1" Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource FrameShadow}"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <Grid x:Name="SettingPopGrid" Grid.ColumnSpan="2" Visibility="Visible">
+        <Grid x:Name="SettingPopGrid" Grid.ColumnSpan="2" Visibility="Collapsed">
             <Grid.Resources>
                 <Storyboard x:Name="SettingGridPopIn">
                     <PopInThemeAnimation FromHorizontalOffset="0" FromVerticalOffset="320" Storyboard.TargetName="SettingPop" Duration="00:00:1"/>
