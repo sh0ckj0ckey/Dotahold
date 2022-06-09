@@ -129,6 +129,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
@@ -140,7 +141,10 @@
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Helpers\ImageLoader.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
+    <Compile Include="Models\DotaHeroes.cs" />
+    <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="ViewModels\AsyncBitmapImage.cs" />
+    <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -156,8 +160,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\DotaHeroes.cs" />
-    <Compile Include="Models\DotaItemsModel.cs" />
+    <Compile Include="Models\DotaItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
@@ -799,6 +802,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>

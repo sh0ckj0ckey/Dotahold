@@ -29,7 +29,6 @@ namespace OpenDota_UWP
     public sealed partial class MainPage : Page
     {
         public static MainPage Current;
-        public static ApplicationDataContainer SaveContainer = ApplicationData.Current.LocalSettings;
         ViewModels.DotaViewModel ViewModel = null;
 
         public MainPage()
@@ -45,28 +44,7 @@ namespace OpenDota_UWP
                 FrameShadow.Receivers.Add(SideBarGrid);
                 MainFrame.Translation += new System.Numerics.Vector3(0, 0, 36);
 
-                //设置标题栏样式
-                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                coreTitleBar.ExtendViewIntoTitleBar = true;
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                titleBar.ButtonBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
-                titleBar.ButtonInactiveBackgroundColor = new Color() { A = 0, R = 39, G = 40, B = 57 };
-
-
-                //自动切换主题
-                if (SaveContainer.Values["theme"] == null || SaveContainer.Values["theme"].ToString() == "dark")
-                {
-                    this.RequestedTheme = ElementTheme.Dark;
-                    ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
-                    DarkRadioButton.IsChecked = true;
-                }
-                else
-                {
-                    this.RequestedTheme = ElementTheme.Light;
-                    ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
-                    LightRadioButton.IsChecked = true;
-                }
-
+                SetTitleBar();
 
                 MainFrame.Navigate(typeof(HeroesPage));
             }
@@ -74,7 +52,39 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
-        /// 英雄
+        /// 设置标题栏样式
+        /// </summary>
+        private void SetTitleBar()
+        {
+            try
+            {
+                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveForegroundColor = Colors.Gray;
+                titleBar.ButtonHoverBackgroundColor = new Color() { A = 33, R = 0, G = 0, B = 0 };
+                titleBar.ButtonPressedBackgroundColor = new Color() { A = 55, R = 0, G = 0, B = 0 };
+
+                if (ViewModel.eAppTheme == ElementTheme.Light)
+                {
+                    titleBar.ButtonForegroundColor = Colors.Black;
+                    titleBar.ButtonHoverForegroundColor = Colors.Black;
+                    titleBar.ButtonPressedForegroundColor = Colors.Black;
+                }
+                else
+                {
+                    titleBar.ButtonForegroundColor = Colors.White;
+                    titleBar.ButtonHoverForegroundColor = Colors.White;
+                    titleBar.ButtonPressedForegroundColor = Colors.White;
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 英雄 Tab
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -92,7 +102,7 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
-        /// 物品
+        /// 物品 Tab
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -110,7 +120,7 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
-        /// 比赛
+        /// 比赛 Tab
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -128,7 +138,7 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
-        /// 关于此应用
+        /// 打开设置
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -143,7 +153,26 @@ namespace OpenDota_UWP
             catch { }
         }
 
+        /// <summary>
+        /// 关闭设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AppBarButton_Click_4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SettingGridPopOut.Begin();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击空白关闭设置窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
             {
@@ -162,20 +191,6 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
-        /// 点击空白也可以关闭设置窗口
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            try
-            {
-                SettingGridPopOut.Begin();
-            }
-            catch { }
-        }
-
-        /// <summary>
         /// 切换夜间主题
         /// </summary>
         /// <param name="sender"></param>
@@ -184,9 +199,7 @@ namespace OpenDota_UWP
         {
             try
             {
-                this.RequestedTheme = ElementTheme.Dark;
-                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.White;
-                SaveContainer.Values["theme"] = "dark";
+                Switch2DarkMode();
             }
             catch { }
         }
@@ -200,9 +213,45 @@ namespace OpenDota_UWP
         {
             try
             {
-                this.RequestedTheme = ElementTheme.Light;
-                ApplicationView.GetForCurrentView().TitleBar.ButtonForegroundColor = Colors.Black;
-                SaveContainer.Values["theme"] = "light";
+                Switch2LightMode();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 切换到白天主题
+        /// </summary>
+        public void Switch2LightMode()
+        {
+            try
+            {
+                ViewModel.eAppTheme = ElementTheme.Light;
+
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonForegroundColor = Colors.Black;
+                titleBar.ButtonHoverForegroundColor = Colors.Black;
+                titleBar.ButtonPressedForegroundColor = Colors.Black;
+
+                App.AppSettingContainer.Values["Theme"] = "Light";
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 切换到夜间主题
+        /// </summary>
+        public void Switch2DarkMode()
+        {
+            try
+            {
+                ViewModel.eAppTheme = ElementTheme.Dark;
+
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.ButtonHoverForegroundColor = Colors.White;
+                titleBar.ButtonPressedForegroundColor = Colors.White;
+
+                App.AppSettingContainer.Values["Theme"] = "Dark";
             }
             catch { }
         }

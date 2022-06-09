@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,8 @@ namespace OpenDota_UWP
     /// </summary>
     sealed partial class App : Application
     {
+        public static ApplicationDataContainer AppSettingContainer = ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -111,8 +114,12 @@ namespace OpenDota_UWP
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            RegisterExceptionHandlingSynchronizationContext();
-            base.OnActivated(args);
+            try
+            {
+                RegisterExceptionHandlingSynchronizationContext();
+                base.OnActivated(args);
+            }
+            catch { }
         }
 
         /// <summary>
@@ -122,7 +129,8 @@ namespace OpenDota_UWP
         ///<param name="e">有关导航失败的详细信息</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            e.Handled = true;
+            //throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         /// <summary>

@@ -6,12 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:OpenDota_UWP.Models"
-    mc:Ignorable="d">
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d" NavigationCacheMode="Required">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Width="128" Height="72">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill">
+                                <ImageBrush.ImageSource>
+                                    <BitmapImage UriSource="{x:Bind img}"
+                                                 DecodePixelWidth="128"
+                                                 DecodePixelType="Logical"/>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock Grid.Column="1" Text="{x:Bind localized_name}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="13"/>
+                </Grid>
+            </DataTemplate>
+
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>
@@ -21,179 +47,90 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
+
     <Grid Background="{ThemeResource APPLICATION_BK}">
-        <TextBlock Text="Better to run than curse the road."
-                   FontWeight="Black"
-                   FontSize="24"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
-                   Margin="48"
-                   Opacity="0.1"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="64"/>
-                <RowDefinition Height="64"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
-                        Margin="16,16,0,0">
-                <Button Height="42"
-                        Width="Auto"
-                        Margin="4,0"
-                        Style="{StaticResource ButtonRevealStyle}"
-                        Background="#22808080"
-                        BorderThickness="1.7"
-                        CornerRadius="21"
-                        Click="Button_Click">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Assets/Icons/strength.png"
-                                   Height="18"
-                                   VerticalAlignment="Center"/>
-                            <TextBlock x:Name="StrTextBlock"
-                                       Text="STRENGTH"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,1"
-                                       CharacterSpacing="48"
-                                       FontWeight="Medium"
-                                       Opacity="0.7" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Height="42"
-                        Width="Auto"
-                        Margin="4,0"
-                        Style="{StaticResource ButtonRevealStyle}"
-                        Background="#22808080"
-                        BorderThickness="1.7"
-                        CornerRadius="21"
-                        Click="Button_Click_1">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Assets/Icons/agility.png"
-                                   Height="18"
-                                   VerticalAlignment="Center" />
-                            <TextBlock x:Name="AgiTextBlock"
-                                       Text="AGILITY"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,1"
-                                       CharacterSpacing="48"
-                                       FontWeight="Medium"
-                                       Opacity="0.7"/>
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-                <Button Height="42"
-                        Width="Auto"
-                        Margin="4,0"
-                        Style="{StaticResource ButtonRevealStyle}"
-                        Background="#22808080"
-                        BorderThickness="1.7"
-                        CornerRadius="21"
-                        Click="Button_Click_2">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Assets/Icons/intelligence.png"
-                                   Height="18"
-                                   VerticalAlignment="Center" />
-                            <TextBlock x:Name="IntTextBlock"
-                                       Text="INTELLIGENCE"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,1"
-                                       CharacterSpacing="48"
-                                       FontWeight="Medium"
-                                       Opacity="0.7" />
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-            <GridView Grid.Row="2"
-                      x:Name="HeroesGridView"
-                      Height="Auto"
-                      ItemsSource="{x:Bind HeroesObservableCollection}"
-                      ItemClick="HeroesGridView_ItemClick"
-                      IsItemClickEnabled="True"
-                      SelectionMode="None"
-                      BorderThickness="0"
-                      Padding="4"
-                      Margin="16">
-                <GridView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition />
-                    </TransitionCollection>
-                </GridView.ItemContainerTransitions>
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="model:DotaHeroes">
-                        <Border Margin="4"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center">
-                            <Grid x:Name="SourceImage"
-                                  BorderThickness="0"
-                                  Width="96"
-                                  Height="112"
-                                  Background="{ThemeResource APPLICATION_BK}">
-                                <Rectangle Stretch="Fill"
-                                           Width="96"
-                                           Height="112"
-                                           StrokeThickness="0"
-                                           PointerEntered="Rectangle_PointerEntered"
-                                           PointerExited="Rectangle_PointerExited">
-                                    <Rectangle.Fill>
-                                        <ImageBrush>
-                                            <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="{x:Bind LargePic}"
-                                                             DecodePixelWidth="62"
-                                                             DecodePixelType="Logical" />
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle Width="96"
-                                           Height="24"
-                                           VerticalAlignment="Bottom">
-                                    <Rectangle.Fill>
-                                        <AcrylicBrush BackgroundSource="Backdrop"
-                                                      TintColor="LightGray"
-                                                      TintOpacity="0.2" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <TextBlock Text="{x:Bind Name}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Bottom"
-                                           Foreground="Snow"
-                                           FontSize="13"
-                                           Margin="3"
-                                           Opacity="0.8" />
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
-        </Grid>
-        <StackPanel x:Name="WaitStackPanel"
-                    x:FieldModifier="Public"
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Visibility="Collapsed">
-            <ProgressRing x:Name="WaitProgressRing"
-                          x:FieldModifier="Public"
-                          Height="72"
-                          Width="72"
-                          IsActive="False" />
-            <TextBlock Text="Loading..."
-                       HorizontalAlignment="Center"
-                       Margin="6" />
-            <TextBlock x:Name="NetworkSlowTextBlock"
-                       x:FieldModifier="Public"
-                       Text="Something went wrong while connecting to Steam server"
-                       FontSize="12"
-                       FontWeight="Light"
-                       Opacity="0.7"
-                       HorizontalAlignment="Center"
-                       Visibility="Collapsed" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
+                   Text="Heroes" FontWeight="Bold" FontSize="28" CharacterSpacing="40"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Border Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+                HorizontalAlignment="Stretch"
+                Margin="16,0,6,0"
+                Background="#22808080"
+                CornerRadius="12">
+                <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
+                    <Image Source="/Assets/Icons/Hero/hero_strength.png"
+                       Height="23"
+                       VerticalAlignment="Center"/>
+                    <TextBlock x:Name="StrTextBlock"
+                           Text="STRENGTH"
+                           VerticalAlignment="Center"
+                           Margin="6,0,0,0"
+                           CharacterSpacing="40"
+                           FontWeight="Medium"/>
+                </StackPanel>
+            </Border>
+            <Border Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+                HorizontalAlignment="Stretch"
+                Margin="6,0"
+                Background="#22808080"
+                CornerRadius="12">
+                <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
+                    <Image Source="/Assets/Icons/Hero/hero_agility.png"
+                       Height="23"
+                       VerticalAlignment="Center"/>
+                    <TextBlock x:Name="AgiTextBlock"
+                           Text="AGILITY"
+                           VerticalAlignment="Center"
+                           Margin="6,0,0,0"
+                           CharacterSpacing="40"
+                           FontWeight="Medium"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+                HorizontalAlignment="Stretch"
+                Margin="6,0,16,0"
+                Background="#22808080"
+                CornerRadius="12">
+                <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
+                    <Image Source="/Assets/Icons/Hero/hero_intelligence.png"
+                       Height="23"
+                       VerticalAlignment="Center"/>
+                    <TextBlock x:Name="IntTextBlock"
+                           Text="INTELLIGENCE"
+                           VerticalAlignment="Center"
+                           Margin="6,0,0,0"
+                           CharacterSpacing="40"
+                           FontWeight="Medium"/>
+                </StackPanel>
+            </Border>
         </StackPanel>
+        <GridView Grid.Row="2" Visibility="Collapsed"
+                   SelectionMode="None"
+                   IsItemClickEnabled="True"
+                   ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
+                   ItemTemplate="{StaticResource HeroItemTemplate}"/>
+        <controls:AdaptiveGridView Grid.Row="2" Grid.Column="1"
+                                   StretchContentForSingleRow="False"
+                                   OneRowModeEnabled="False"
+                                   ItemHeight="72"
+                                   DesiredWidth="128"
+                                   SelectionMode="None"
+                                   IsItemClickEnabled="True"
+                                   ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
+                                   ItemTemplate="{StaticResource HeroItemTemplate}"/>
+        <controls:AdaptiveGridView Grid.Row="2" Grid.Column="2"
+                                   StretchContentForSingleRow="False"
+                                   OneRowModeEnabled="False"
+                                   ItemHeight="48" Visibility="Collapsed"
+                                   DesiredWidth="128"
+                                   SelectionMode="None"
+                                   IsItemClickEnabled="True"
+                                   ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
+                                   ItemTemplate="{StaticResource HeroItemTemplate}"/>
     </Grid>
 </Page>

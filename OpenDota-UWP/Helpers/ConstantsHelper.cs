@@ -26,6 +26,19 @@ namespace OpenDota_UWP.Helpers
             }
         }
 
+        public async Task<Dictionary<string, Models.DotaHeroModel>> GetHeroesConstant()
+        {
+            if (true) // if Time > 24h, then download new file;or return local file
+            {
+                var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
+                return heroes;
+            }
+            else // return local file
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// 下载指定的Constant json文件，存储到本地，然后返回这个对象
         /// (根据需要的频率去调用更新)
@@ -55,9 +68,7 @@ namespace OpenDota_UWP.Helpers
                     return constantModel;
                 }
             }
-            catch (Exception e1)
-            {
-            }
+            catch { }
             return default;
         }
 

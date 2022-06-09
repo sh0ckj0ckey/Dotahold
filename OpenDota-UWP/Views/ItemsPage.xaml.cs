@@ -28,32 +28,25 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
-        private DotaItems SelectedItem = new DotaItems();
         public static string json = "";
         public static string jsonComponents = "";
         DotaItemsViewModel ViewModel = null;
+        DotaViewModel MainViewModel = null;
 
         public ItemsPage()
         {
-            this.InitializeComponent();
-            ViewModel = DotaItemsViewModel.Instance;
+            try
+            {
+                this.InitializeComponent();
+                ViewModel = DotaItemsViewModel.Instance;
+                MainViewModel = DotaViewModel.Instance;
 
-            FrameShadow.Receivers.Add(ItemsListGrid);
-            ItemGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
+                FrameShadow.Receivers.Add(ItemsListGrid);
+                ItemGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
 
-            ItemFrame.Navigate(typeof(BlankPage));
-
-            //if (AllItems.Count == 0)
-            //{
-            //    try
-            //    {
-            //        AddAllItems();
-            //    }
-            //    catch
-            //    {
-            //        AddAllItems();
-            //    }
-            //}
+                ItemFrame.Navigate(typeof(BlankPage));
+            }
+            catch { }
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <Color x:Key="APPLICATION_BK">#272839</Color>
-                    <Color x:Key="SIDEMEDU_BK">#272839</Color>
+                    <Color x:Key="SIDEMEDU_BK">#1e1e2c</Color>
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
                     <Color x:Key="SIMPLETEXT_FR">White</Color>
                     <Color x:Key="TEXTBOX_FR">#FFFFFF</Color>

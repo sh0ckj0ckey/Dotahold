@@ -14,6 +14,7 @@ namespace OpenDota_UWP.ViewModels
         public static DotaItemsViewModel Instance => _lazyVM.Value;
 
         // 所有物品
+        public Dictionary<string, Models.DotaItemModel> mapAllItems { get; set; } = new Dictionary<string, Models.DotaItemModel>();
         public List<Models.DotaItemModel> vAllItems { get; set; } = new List<Models.DotaItemModel>();
 
         // 列表展示的物品
@@ -38,13 +39,14 @@ namespace OpenDota_UWP.ViewModels
             {
                 bLoadingItems = true;
 
+                mapAllItems?.Clear();
                 vAllItems?.Clear();
                 vItemsList?.Clear();
-                var items = await ConstantsHelper.Instance.GetItemsConstant();
+                mapAllItems = await ConstantsHelper.Instance.GetItemsConstant();
                 // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
-                foreach (var item in items)
+                foreach (var item in mapAllItems)
                 {
-                    item.Value.img = "https://steamcdn-a.akamaihd.net/" + item.Value.img;
+                    item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
                     vAllItems.Add(item.Value);
                     vItemsList.Add(item.Value);
                 }

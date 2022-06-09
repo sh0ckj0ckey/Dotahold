@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:models="using:OpenDota_UWP.Models">
+    xmlns:models="using:OpenDota_UWP.Models"
+    RequestedTheme="{x:Bind MainViewModel.eAppTheme,Mode=OneWay}" NavigationCacheMode="Required">
     <Page.Resources>
         <ThemeShadow x:Name="FrameShadow"/>
     </Page.Resources>
@@ -18,6 +19,9 @@
         </TransitionCollection>
     </Page.Transitions>
     <Grid Background="{ThemeResource APPLICATION_BK}">
+        <Grid.BackgroundTransition>
+            <BrushTransition />
+        </Grid.BackgroundTransition>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MaxWidth="360" />
             <ColumnDefinition Width="2.3*" />
@@ -29,7 +33,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
-                       Text="Items" FontWeight="Bold" FontSize="28" CharacterSpacing="42"/>
+                       Text="Items" FontWeight="Bold" FontSize="28" CharacterSpacing="40"/>
             <TextBox Grid.Row="1" Height="34" Margin="12,8,12,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" Template="{StaticResource CornerTextBoxTemplate}"/>
             <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.vItemsList}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
@@ -56,11 +60,21 @@
                                        Text="{x:Bind dname}"
                                        VerticalAlignment="Center"
                                        FontFamily="Century"
-                                       FontSize="16"
+                                       FontSize="16" ToolTipService.ToolTip="{x:Bind dname}"
                                        Margin="12,0"
-                                       CharacterSpacing="32"
+                                       CharacterSpacing="10"
                                        TextTrimming="CharacterEllipsis"/>
-                            <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Background="#26666666"/>
+                            <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Margin="12,0,0,0" Background="#20666666">
+                                <!--<Grid.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStopCollection>
+                                            <GradientStop Color="#06666666" Offset="0.0"/>
+                                            <GradientStop Color="#26666666" Offset="0.1"/>
+                                            <GradientStop Color="#06666666" Offset="0.9"/>
+                                        </GradientStopCollection>
+                                    </LinearGradientBrush>
+                                </Grid.Background>-->
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

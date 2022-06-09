@@ -6,14 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:converters="using:OpenDota_UWP.Converters"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    RequestedTheme="{x:Bind ViewModel.eAppTheme,Mode=OneWay}">
     <Page.Resources>
         <converters:EqualToVisibilityConverter x:Key="Eq2VisConverter"/>
+        <converters:EqualToBoolConverter x:Key="Eq2BConverter"/>
 
         <ThemeShadow x:Name="SettingShadow"/>
         <ThemeShadow x:Name="FrameShadow"/>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
+        <Grid.BackgroundTransition>
+            <BrushTransition />
+        </Grid.BackgroundTransition>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64"/>
             <ColumnDefinition/>
@@ -104,8 +109,10 @@
                     <PivotItem Header="GENERAL">
                         <StackPanel>
                             <TextBlock Text="Appearance" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
-                            <RadioButton x:Name="DarkRadioButton" Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"/>
-                            <RadioButton x:Name="LightRadioButton" Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"/>
+                            <RadioButton Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"
+                                         IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Dark,Mode=OneWay}"/>
+                            <RadioButton Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"
+                                         IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Light,Mode=OneWay}"/>
                             <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
                             <StackPanel Orientation="Horizontal">
                                 <Button CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">
