@@ -37,8 +37,8 @@
             <TextBox Grid.Row="1" Height="34" Margin="12,8,12,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" Template="{StaticResource CornerTextBoxTemplate}"/>
             <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.vItemsList}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
-                      HorizontalAlignment="Stretch" SelectionMode="Single" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
-                      SelectionChanged="ItemsListView_SelectionChanged">
+                      HorizontalAlignment="Stretch" SelectionMode="None" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaItemModel">
                         <Grid Height="60">

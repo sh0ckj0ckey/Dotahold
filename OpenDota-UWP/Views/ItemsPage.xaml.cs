@@ -69,24 +69,18 @@ namespace OpenDota_UWP.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        #region
-        private void ItemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
-                if (sender is ListView list)
+                if (e.ClickedItem is Models.DotaItemModel item)
                 {
-                    if (list.SelectedIndex >= 0 && list.SelectedItem is Models.DotaItemModel item)
-                    {
-                        ViewModel.CurrentItem = item;
-                        ItemFrame.Navigate(typeof(ItemInfoPage));
-                    }
+                    ViewModel.CurrentItem = item;
+                    ItemFrame.Navigate(typeof(ItemInfoPage));
                 }
             }
             catch { }
         }
-
-        #endregion
 
         /// <summary>
         /// Unicode转换汉字

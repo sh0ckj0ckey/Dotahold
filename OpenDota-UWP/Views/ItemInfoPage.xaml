@@ -32,7 +32,7 @@
             <BrushTransition />
         </Grid.BackgroundTransition>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="60,0">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                     <Grid Height="62" Width="85" CornerRadius="6">
                         <Grid.Background>
@@ -48,7 +48,7 @@
                     <StackPanel Orientation="Vertical">
                         <TextBlock Grid.Column="2" FontFamily="Century" Margin="12,0,2,0"
                                    Text="{x:Bind ViewModel.CurrentItem.dname,Mode=OneWay}"
-                                   FontSize="24" CharacterSpacing="20"/>
+                                   FontSize="24" CharacterSpacing="20" FontWeight="Bold"/>
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                             <Image Grid.Column="2"
                                    Height="17" VerticalAlignment="Center"
