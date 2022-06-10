@@ -31,11 +31,6 @@ namespace OpenDota_UWP.Views
         DotaHeroesViewModel ViewModel = null;
         DotaViewModel MainViewModel = null;
 
-        /// <summary>
-        /// 三种属性的英雄根据情况放到这个集合里面
-        /// </summary>
-        public ObservableCollection<DotaHeroes> HeroesObservableCollection = new ObservableCollection<DotaHeroes>();
-
         public static DotaHeroes SelectedHero;
 
         public HeroesPage()
@@ -54,57 +49,46 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is NavigationTransitionInfo transition)
-            {
-                navigationTransition.DefaultNavigationTransitionInfo = transition;
-            }
-
-            //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
-            //await APIHelper.DownloadHeroAttributesDataAsync();
-
-            base.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            if (HeroesObservableCollection != null)
-            {
-                HeroesObservableCollection.Clear();
-                HeroesObservableCollection = null;
-            }
-
-            base.OnNavigatedFrom(e);
-        }
-
-        /// <summary>
-        /// 弹出对话框
-        /// </summary>
-        /// <param name="content"></param>
-        /// <param name="title"></param>
-        public async void ShowDialog(string content)
-        {
-            var dialog = new ContentDialog()
-            {
-                Title = ":(",
-                Content = content,
-                PrimaryButtonText = "好的",
-                FullSizeDesired = false,
-            };
-
-            dialog.PrimaryButtonClick += (_s, _e) => { };
             try
             {
-                await dialog.ShowAsync();
+                if (e.Parameter is NavigationTransitionInfo transition)
+                {
+                    navigationTransition.DefaultNavigationTransitionInfo = transition;
+                }
+
+                //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
+                //await APIHelper.DownloadHeroAttributesDataAsync();
+
+                base.OnNavigatedTo(e);
             }
             catch { }
         }
 
-        private void Rectangle_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                ViewModel.iHeroAttrTabIndex = 0;
+            }
+            catch { }
         }
 
-        private void Rectangle_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                ViewModel.iHeroAttrTabIndex = 1;
+            }
+            catch { }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.iHeroAttrTabIndex = 2;
+            }
+            catch { }
         }
     }
 }

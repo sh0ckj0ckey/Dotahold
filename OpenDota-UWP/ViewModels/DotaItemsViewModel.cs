@@ -33,7 +33,7 @@ namespace OpenDota_UWP.ViewModels
             InitialDotaItems();
         }
 
-        public async void InitialDotaItems()
+        private async void InitialDotaItems()
         {
             try
             {

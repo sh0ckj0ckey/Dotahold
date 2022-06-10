@@ -46,7 +46,21 @@ namespace OpenDota_UWP
 
                 SetTitleBar();
 
-                MainFrame.Navigate(typeof(HeroesPage));
+                if (ViewModel.iStartupTabIndex == 1)
+                {
+                    MainFrame.Navigate(typeof(ItemsPage));
+                    ViewModel.iSideMenuTabIndex = 1;
+                }
+                else if (ViewModel.iStartupTabIndex == 2)
+                {
+                    MainFrame.Navigate(typeof(MatchesPage));
+                    ViewModel.iSideMenuTabIndex = 2;
+                }
+                else
+                {
+                    MainFrame.Navigate(typeof(HeroesPage));
+                    ViewModel.iSideMenuTabIndex = 0;
+                }
             }
             catch { }
         }
@@ -308,6 +322,19 @@ namespace OpenDota_UWP
             try
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn/issues"));
+            }
+            catch { }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                int index = StartupPageComboBox.SelectedIndex;
+                if (ViewModel.iStartupTabIndex != index)
+                {
+                    App.AppSettingContainer.Values["StartupPage"] = index;
+                }
             }
             catch { }
         }

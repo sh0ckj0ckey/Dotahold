@@ -15,6 +15,10 @@
                     <Color x:Key="TEXTBOX_FOCUS_BK">#20FFFFFF</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FR">#80FFFFFF</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FOCUS_FR">#50FFFFFF</Color>
+                    <Color x:Key="COMBOBOX_NORMAL_BK">#16FFFFFF</Color>
+                    <Color x:Key="COMBOBOX_HOVER_BK">#20FFFFFF</Color>
+                    <Color x:Key="COMBOBOX_PRESS_BK">#18FFFFFF</Color>
+                    <Color x:Key="HEROTAB_BTN_BK">#20808080</Color>
 
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
@@ -48,6 +52,10 @@
                     <Color x:Key="TEXTBOX_FOCUS_BK">#50E6E6E6</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FR">#66000000</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FOCUS_FR">#40000000</Color>
+                    <Color x:Key="COMBOBOX_NORMAL_BK">#B3E6E6E6</Color>
+                    <Color x:Key="COMBOBOX_HOVER_BK">#E6E6E6E6</Color>
+                    <Color x:Key="COMBOBOX_PRESS_BK">#99FFFFFF</Color>
+                    <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
 
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />

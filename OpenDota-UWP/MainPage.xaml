@@ -10,6 +10,7 @@
     RequestedTheme="{x:Bind ViewModel.eAppTheme,Mode=OneWay}">
     <Page.Resources>
         <converters:EqualToVisibilityConverter x:Key="Eq2VisConverter"/>
+        <converters:UnequalToVisibilityConverter x:Key="Ueq2VisConverter"/>
         <converters:EqualToBoolConverter x:Key="Eq2BConverter"/>
 
         <ThemeShadow x:Name="SettingShadow"/>
@@ -40,8 +41,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_UNSELECT_IMG}"/>
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}"
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_UNSELECT_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Ueq2VisConverter}, ConverterParameter=0, Mode=OneWay}"/>
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}"
                            Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=0, Mode=OneWay}"/>
                 </Grid>
             </Button>
@@ -51,8 +53,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_1">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_UNSELECT_IMG}"/>
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}"
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_UNSELECT_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Ueq2VisConverter}, ConverterParameter=1, Mode=OneWay}"/>
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}"
                            Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=1, Mode=OneWay}"/>
                 </Grid>
             </Button>
@@ -62,8 +65,9 @@
                     FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0"
                     Click="AppBarButton_Click_2">
                 <Grid Height="56" Margin="0,-42,0,-42">
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_UNSELECT_IMG}"/>
-                    <Image Width="25" Height="25" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}"
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_UNSELECT_IMG}"
+                           Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Ueq2VisConverter}, ConverterParameter=2, Mode=OneWay}"/>
+                    <Image Width="26" Height="26" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}"
                            Visibility="{x:Bind ViewModel.iSideMenuTabIndex, Converter={StaticResource Eq2VisConverter}, ConverterParameter=2, Mode=OneWay}"/>
                 </Grid>
             </Button>
@@ -108,11 +112,27 @@
                     </Pivot.HeaderTemplate>
                     <PivotItem Header="GENERAL">
                         <StackPanel>
-                            <TextBlock Text="Appearance" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                            <TextBlock Text="Customize" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                            <TextBlock Text="Appearance" FontWeight="Medium" FontSize="15" Margin="12,4,0,4"/>
                             <RadioButton Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"
                                          IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Dark,Mode=OneWay}"/>
                             <RadioButton Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"
                                          IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Light,Mode=OneWay}"/>
+                            <TextBlock Text="Startup Page" FontWeight="Medium" FontSize="15" Margin="12,8,0,6"/>
+                            <ComboBox x:Name="StartupPageComboBox" Style="{StaticResource CustomComboBoxStyle}" Margin="12,4,0,0" MinWidth="128" 
+                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}"
+                                      SelectedIndex="{x:Bind ViewModel.iStartupTabIndex,Mode=OneWay}"
+                                      SelectionChanged="ComboBox_SelectionChanged">
+                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                    <TextBlock Text="Heroes"/>
+                                </ComboBoxItem>
+                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                    <TextBlock Text="Items"/>
+                                </ComboBoxItem>
+                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                    <TextBlock Text="Matches"/>
+                                </ComboBoxItem>
+                            </ComboBox>
                             <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
                             <StackPanel Orientation="Horizontal">
                                 <Button CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">

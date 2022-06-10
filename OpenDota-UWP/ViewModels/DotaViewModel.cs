@@ -28,6 +28,22 @@ namespace OpenDota_UWP.ViewModels
             set { Set("eAppTheme", ref _eAppTheme, value); }
         }
 
+        // 设置的启动页面: 0-Heroes 1-Items 2-Matches
+        private int _iStartupTabIndex = 0;
+        public int iStartupTabIndex
+        {
+            get { return _iStartupTabIndex; }
+            set
+            {
+                if (value > 2 || value < 0)
+                {
+                    return;
+                }
+                Set("iStartupTabIndex", ref _iStartupTabIndex, value);
+            }
+        }
+
+
         // 用来弹窗的样式
         private Style _customDialogStyle = null;
 
@@ -62,6 +78,29 @@ namespace OpenDota_UWP.ViewModels
                     else
                     {
                         this.eAppTheme = ElementTheme.Dark;
+                    }
+                }
+                catch { }
+
+                // 读取设置的启动页面
+                try
+                {
+                    if (App.AppSettingContainer?.Values["StartupPage"] == null ||
+                        App.AppSettingContainer?.Values["StartupPage"].ToString() == "0")
+                    {
+                        iStartupTabIndex = 0;
+                    }
+                    else if (App.AppSettingContainer?.Values["StartupPage"].ToString() == "1")
+                    {
+                        iStartupTabIndex = 1;
+                    }
+                    else if (App.AppSettingContainer?.Values["StartupPage"].ToString() == "2")
+                    {
+                        iStartupTabIndex = 2;
+                    }
+                    else
+                    {
+                        iStartupTabIndex = 0;
                     }
                 }
                 catch { }

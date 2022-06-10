@@ -10,13 +10,15 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:converter="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
                 <Grid Width="128" Height="72" Margin="4" Background="Transparent">
                     <Grid.Resources>
@@ -47,7 +49,7 @@
                             <AcrylicBrush TintColor="Transparent" TintTransitionDuration="0:0:0.3" FallbackColor="#80000000" BackgroundSource="Backdrop"/>
                         </Grid.Background>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"
-                                   Text="{x:Bind localized_name}" FontSize="14" CharacterSpacing="40"
+                                   Text="{x:Bind localized_name}" FontSize="14" CharacterSpacing="40" Padding="4,0"
                                    TextWrapping="WrapWholeWords" HorizontalTextAlignment="Center"/>
                     </Grid>
                     <interactivity:Interaction.Behaviors>
@@ -61,6 +63,9 @@
                 </Grid>
             </DataTemplate>
 
+            <converter:EqualToHeroTabBackgroundConverter x:Key="Eq2BK"/>
+            <converter:EqualToHeroTabBorderBrushConverter x:Key="Eq2BD"/>
+            <converter:EqualToVisibilityConverter x:Key="Eq2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>
@@ -80,10 +85,12 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                    Text="Heroes" FontWeight="Bold" FontSize="28" CharacterSpacing="40"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+            <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
+                    BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=0,Mode=OneWay}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}"
                     Margin="16,0,6,0"
-                    Background="#22808080"
-                    CornerRadius="12">
+                    CornerRadius="12"
+                    Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Source="/Assets/Icons/Hero/hero_strength.png"
                        Height="23"
@@ -96,10 +103,12 @@
                            FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+            <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
+                    BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=1,Mode=OneWay}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}"
                     Margin="6,0"
-                    Background="#22808080"
-                    CornerRadius="12">
+                    CornerRadius="12"
+                    Click="Button_Click_1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Source="/Assets/Icons/Hero/hero_agility.png"
                        Height="23"
@@ -112,10 +121,12 @@
                            FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2" BorderBrush="#66808080"
+            <Button Width="164" Height="42" BorderThickness="0,0,0,2"
+                    BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=2,Mode=OneWay}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}"
                     Margin="6,0,16,0"
-                    Background="#22808080"
-                    CornerRadius="12">
+                    CornerRadius="12"
+                    Click="Button_Click_2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Image Source="/Assets/Icons/Hero/hero_intelligence.png"
                        Height="23"
@@ -129,10 +140,33 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <GridView Grid.Row="2"
+        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"/>
+                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                  animations:ItemsReorderAnimation.Duration="00:00:00.4"/>
+        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
+                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                  animations:ItemsReorderAnimation.Duration="00:00:00.4"/>
+        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
+                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                  animations:ItemsReorderAnimation.Duration="00:00:00.4"/>
+        <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+              Height="72" Width="128" CornerRadius="6" Margin="0,-80,0,0"
+              Visibility="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}">
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
+            </Grid.Background>
+            <ProgressRing x:Name="ItemProgressRing"
+                          Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                          IsActive="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}"/>
+        </Grid>
     </Grid>
 </Page>

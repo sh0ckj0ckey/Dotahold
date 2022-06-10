@@ -29,12 +29,20 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bLoadingHeroes", ref _bLoadingHeroes, value); }
         }
 
+        // 英雄属性Tab
+        private int _iHeroAttrTabIndex = 0;
+        public int iHeroAttrTabIndex
+        {
+            get { return _iHeroAttrTabIndex; }
+            set { Set("iHeroAttrTabIndex", ref _iHeroAttrTabIndex, value); }
+        }
+
         public DotaHeroesViewModel()
         {
             InitialDotaHeroes();
         }
 
-        public async void InitialDotaHeroes()
+        private async void InitialDotaHeroes()
         {
             try
             {

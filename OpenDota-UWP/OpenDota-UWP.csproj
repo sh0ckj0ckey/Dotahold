@@ -130,7 +130,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\EqualToBoolConverter.cs" />
+    <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
+    <Compile Include="Converters\EqualToHeroTabBorderBrushConverter.cs" />
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
+    <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Helpers\CrawlerHelper.cs" />
@@ -802,6 +805,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>
