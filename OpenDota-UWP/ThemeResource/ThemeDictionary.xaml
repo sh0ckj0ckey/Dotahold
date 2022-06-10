@@ -19,6 +19,7 @@
                     <Color x:Key="COMBOBOX_HOVER_BK">#20FFFFFF</Color>
                     <Color x:Key="COMBOBOX_PRESS_BK">#18FFFFFF</Color>
                     <Color x:Key="HEROTAB_BTN_BK">#20808080</Color>
+                    <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
 
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
@@ -56,6 +57,7 @@
                     <Color x:Key="COMBOBOX_HOVER_BK">#E6E6E6E6</Color>
                     <Color x:Key="COMBOBOX_PRESS_BK">#99FFFFFF</Color>
                     <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
+                    <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
 
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />

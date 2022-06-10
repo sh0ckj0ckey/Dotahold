@@ -28,6 +28,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bLoadingItems", ref _bLoadingItems, value); }
         }
 
+        // 当前选中的物品
+        private Models.DotaItemModel _CurrentItem = null;
+        public Models.DotaItemModel CurrentItem
+        {
+            get { return _CurrentItem; }
+            set { Set("CurrentItem", ref _CurrentItem, value); }
+        }
+
         public DotaItemsViewModel()
         {
             InitialDotaItems();
@@ -46,36 +54,58 @@ namespace OpenDota_UWP.ViewModels
                 // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
                 foreach (var item in mapAllItems)
                 {
-                    item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
-                    vAllItems.Add(item.Value);
-                    vItemsList.Add(item.Value);
+                    try
+                    {
+                        item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
+
+                        if (item.Value.cost != null)
+                        {
+                            var cost = item.Value.cost.ToString().ToLower();
+                            item.Value.cost = (cost == "false" || cost == "true") ? "0" : cost;
+                        }
+                        else
+                        {
+                            item.Value.cost = "0";
+                        }
+
+                        if (item.Value.cd != null)
+                        {
+                            var cd = item.Value.cd.ToString().ToLower();
+                            item.Value.cd = (cd == "false" || cd == "true") ? "0" : cd;
+                        }
+                        else
+                        {
+                            item.Value.cd = "0";
+                        }
+
+                        if (item.Value.tier != null)
+                        {
+                            var tier = item.Value.tier.ToString().ToLower();
+                            item.Value.tier = (tier == "false" || tier == "true") ? "0" : tier;
+                        }
+                        else
+                        {
+                            item.Value.tier = "0";
+                        }
+
+                        if (item.Value.mc != null)
+                        {
+                            var mc = item.Value.mc.ToString().ToLower();
+                            item.Value.mc = (mc == "false" || mc == "true") ? "0" : mc;
+                        }
+                        else
+                        {
+                            item.Value.mc = "0";
+                        }
+
+                        vAllItems.Add(item.Value);
+                        vItemsList.Add(item.Value);
+                    }
+                    catch { }
                 }
             }
             catch { }
             finally { bLoadingItems = false; }
         }
-
-        ///// <summary>
-        ///// 通过API获取物品信息
-        ///// </summary>
-        ///// <returns></returns>
-        //public async Task<string> GetItemDataAsync()
-        //{
-        //    string url = "http://www.dota2.com.cn/items/json";
-        //    Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
-        //    var response = await http.GetAsync(new Uri(url));
-        //    var jsonMessage = await response.Content.ReadAsStringAsync();
-        //    return jsonMessage;
-        //}
-
-        //public async Task<string> GetItemDataENAsync()
-        //{
-        //    string url = String.Format("http://www.dota2.com/jsfeed/itemdata");
-        //    Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
-        //    var response = await http.GetAsync(new Uri(url));
-        //    var jsonMessage = await response.Content.ReadAsStringAsync();
-        //    return jsonMessage;
-        //}
-
     }
 }

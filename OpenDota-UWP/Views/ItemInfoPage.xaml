@@ -5,8 +5,8 @@
     xmlns:local="using:OpenDota_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:models="using:OpenDota_UWP.Models"
+    xmlns:models="using:OpenDota_UWP.Models" 
+    xmlns:converter="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -14,6 +14,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converter:IntToBoolConverter x:Key="Int2Bool"/>
+            <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
+            <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>
@@ -23,103 +27,104 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
-    <!--<Grid Background="{ThemeResource APPLICATION_BK}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,64,0,0">
-            <Grid Height="auto" VerticalAlignment="Center" Margin="24,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <controls:DropShadowPanel Grid.Column="1" VerticalAlignment="Center">
-                        <Image Grid.Column="1"
-                           Source="{x:Bind SelectedItem.Pic}" 
-                           Height="72"/>
-                    </controls:DropShadowPanel>
-                    <TextBlock Grid.Column="2"
-                               Text="{x:Bind SelectedItem.Name}"
-                               FontSize="24"
-                               FontFamily="STKaiti"
-                               Height="24"
-                               Margin="24,-28,0,0"/>
-                    <Image Grid.Column="2"
-                           Height="18"
-                           HorizontalAlignment="Left"
-                           Margin="28,42,0,0"
-                           Source="/Assets/Icons/gold.png"/>
-                    <TextBlock Grid.Column="2"
-                           Height="28"
-                           HorizontalAlignment="Left"
-                           Margin="64,42,0,0"
-                           FontSize="18"
-                           Text="{x:Bind SelectedItem.Price}"
-                           Opacity="0.7"/>
-                </Grid>
-                <StackPanel Grid.Row="1" Margin="32,8">
-                    <TextBlock Text="{x:Bind SelectedItem.Info}"
-                               x:Name="InfoTextBlock"
-                               TextWrapping="WrapWholeWords"
-                               Opacity="0.8"
-                               Height="auto"
-                               Margin="0,4"/>
-                    <TextBlock Text="{x:Bind SelectedItem.Tips}"
-                               x:Name="TipsTextBlock"
-                               TextWrapping="WrapWholeWords"
-                               Foreground="ForestGreen"
-                               Margin="0,4"
-                               Height="auto"/>
-                    <TextBlock Text="{x:Bind SelectedItem.Attributes}"
-                               x:Name="AttributesTextBlock"
-                               TextWrapping="WrapWholeWords"
-                               Height="auto"
-                               Margin="0,4"/>
-                    <StackPanel Orientation="Horizontal" Margin="6">
-                        <Image Source="/Assets/Icons/mana.png"
-                               Stretch="Fill"
-                               Width="14"
-                               Height="14"/>
-                        <TextBlock Text="{x:Bind SelectedItem.Mana}"
-                                   Margin="4,0,12,0"/>
-                        <Image Source="/Assets/Icons/cooldown.png"
-                               Stretch="Fill"
-                               Width="14"
-                               Height="14"/>
-                        <TextBlock Text="{x:Bind SelectedItem.CoolDown}"
-                                   Margin="4,0"/>
-                    </StackPanel>
-                    <Grid x:Name="BackgroundGrid" Margin="0.4">
-                        <Rectangle Fill="Gray" Opacity="0.2" RadiusX="5" RadiusY="5"/>
-                        <TextBlock Text="{x:Bind SelectedItem.Background}"
-                               Opacity="0.6"
-                               Margin="8,12"
-                               TextWrapping="WrapWholeWords"/>
+    <Grid Background="{ThemeResource APPLICATION_BK}">
+        <Grid.BackgroundTransition>
+            <BrushTransition />
+        </Grid.BackgroundTransition>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <Grid Height="62" Width="85" CornerRadius="6">
+                        <Grid.Background>
+                            <ImageBrush Stretch="UniformToFill">
+                                <ImageBrush.ImageSource>
+                                    <BitmapImage UriSource="{x:Bind ViewModel.CurrentItem.img,Mode=OneWay}"
+                                                 DecodePixelWidth="85"
+                                                 DecodePixelType="Logical"/>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Grid.Background>
                     </Grid>
-                    <GridView x:Name="ComponentsGridView" ItemsSource="{x:Bind Components}" SelectionMode="None" Margin="0,12">
-                        <GridView.ItemTemplate>
-                            <DataTemplate x:DataType="models:DotaItems">
-                                <Grid Height="44" Width="60" Margin="6">
-                                    <Rectangle Height="48" RadiusX="3" RadiusY="3">
-                                        <Rectangle.Fill>
-                                            <ImageBrush>
-                                                <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{x:Bind Pic}"
-                                                                 DecodePixelHeight="48"
-                                                                 DecodePixelType="Logical"/>
-                                                </ImageBrush.ImageSource>
-                                            </ImageBrush>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                </Grid>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Grid.Column="2" FontFamily="Century" Margin="12,0,2,0"
+                                   Text="{x:Bind ViewModel.CurrentItem.dname,Mode=OneWay}"
+                                   FontSize="24" CharacterSpacing="20"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <Image Grid.Column="2"
+                                   Height="17" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="12,0,8,0"
+                                   Source="/Assets/Icons/Data/icon_gold.png"/>
+                            <TextBlock Grid.Column="2"
+                                       Height="28" VerticalAlignment="Center"
+                                       FontSize="18"
+                                       Text="{x:Bind ViewModel.CurrentItem.cost,Mode=OneWay}"
+                                       Opacity="0.7"/>
+                            <StackPanel Margin="12,0" Orientation="Horizontal" Background="{ThemeResource ITEMINFO_TIER_BK}" HorizontalAlignment="Left" Height="18" CornerRadius="4" Padding="8,2" 
+                                        Visibility="{x:Bind ViewModel.CurrentItem.tier,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                                <TextBlock Text="T" FontSize="12" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind ViewModel.CurrentItem.tier,Mode=OneWay}" FontWeight="Medium" FontSize="12" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-            </Grid>
+                <TextBlock Text="{x:Bind sHintInfo,Mode=OneWay}"
+                           TextWrapping="WrapWholeWords"
+                           Opacity="0.8"
+                           CharacterSpacing="20"
+                           Margin="0,4"
+                           Visibility="{x:Bind sHintInfo,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind ViewModel.CurrentItem.notes,Mode=OneWay}"
+                           x:Name="TipsTextBlock"
+                           TextWrapping="WrapWholeWords"
+                           Foreground="ForestGreen"
+                           Margin="0,4"
+                           CharacterSpacing="20"
+                           Visibility="{x:Bind ViewModel.CurrentItem.notes,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind sAttribInfo,Mode=OneWay}"
+                           TextWrapping="WrapWholeWords"
+                           CharacterSpacing="20"
+                           Margin="0,4"
+                           Visibility="{x:Bind sAttribInfo,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
+                <StackPanel Orientation="Horizontal" Margin="6">
+                    <Image Source="/Assets/Icons/Data/icon_mana.png" Stretch="Uniform" Width="14" Height="14"
+                           Visibility="{x:Bind ViewModel.CurrentItem.mc,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentItem.mc,Mode=OneWay}"
+                               Margin="4,0,12,0" Visibility="{x:Bind ViewModel.CurrentItem.mc,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                    <Image Source="/Assets/Icons/Data/icon_cooldown.png" Stretch="Uniform" Width="14" Height="14"
+                           Visibility="{x:Bind ViewModel.CurrentItem.cd,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentItem.cd,Mode=OneWay}"
+                               Margin="4,0" Visibility="{x:Bind ViewModel.CurrentItem.cd,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                </StackPanel>
+                <Grid x:Name="BackgroundGrid" Background="#20808080" CornerRadius="6"
+                      Visibility="{x:Bind ViewModel.CurrentItem.lore,Converter={StaticResource Str2Vis},Mode=OneWay}">
+                    <TextBlock Text="{x:Bind ViewModel.CurrentItem.lore,Mode=OneWay}"
+                               Opacity="0.6"
+                               Margin="12,10" CharacterSpacing="20"
+                               TextWrapping="WrapWholeWords"/>
+                </Grid>
+                <TextBlock Text="Recipe" FontWeight="Medium" CharacterSpacing="20" FontSize="15" Margin="4,18,0,4"
+                           Visibility="{x:Bind bHasComponents,Mode=OneWay}"/>
+                <GridView x:Name="ComponentsGridView" ItemsSource="{x:Bind vComponentsList,Mode=OneWay}" SelectionMode="None" 
+                          IsItemClickEnabled="True" ItemClick="ComponentsGridView_ItemClick"
+                          Visibility="{x:Bind bHasComponents,Mode=OneWay}">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DotaItemModel">
+                            <Grid Height="34" Width="45" Margin="4,0" CornerRadius="4" ToolTipService.ToolTip="{x:Bind dname,Mode=OneWay}">
+                                <Grid.Background>
+                                    <ImageBrush Stretch="UniformToFill">
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage UriSource="{x:Bind img,Mode=OneWay}"
+                                                         DecodePixelHeight="34"
+                                                         DecodePixelType="Logical"/>
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </StackPanel>
         </ScrollViewer>
-    </Grid>-->
+    </Grid>
 </Page>

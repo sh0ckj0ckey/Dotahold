@@ -133,6 +133,9 @@
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBorderBrushConverter.cs" />
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
