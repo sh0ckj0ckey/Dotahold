@@ -1,7 +1,4 @@
-﻿using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Uwp;
-using OpenDota_UWP.Helpers;
+﻿using OpenDota_UWP.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +36,7 @@ namespace OpenDota_UWP.Views
         private ObservableCollection<RecentMatchViewModel> recentMatchesObservableCollection = new ObservableCollection<RecentMatchViewModel>();
         List<HeroUsingInfo> heroUsingInfos = null;
         private ObservableCollection<HeroUsingInfoViewModel> heroUsingInfoObservableCollection = new ObservableCollection<HeroUsingInfoViewModel>();
-        public SeriesCollection SeriesCollection { get; set; }
+        //public SeriesCollection SeriesCollection { get; set; }
 
         public MatchesPage()
         {
@@ -310,25 +307,25 @@ namespace OpenDota_UWP.Views
         {
             wL = await DotaMatchHelper.GetPlayerWLAsync(id);
 
-            SeriesCollection = new SeriesCollection
-            {
-                //new PieSeries
-                //{
-                //    Title = "WIN",
-                //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.win) },
-                //    DataLabels = true,
-                //    FontSize = 18,
-                //    Fill = new SolidColorBrush(Colors.ForestGreen)
-                //},
-                //new PieSeries
-                //{
-                //    Title = "LOSE",
-                //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.lose) },
-                //    DataLabels = true,
-                //    FontSize = 18,
-                //    Fill = new SolidColorBrush(Colors.Firebrick)
-                //}
-            };
+            //SeriesCollection = new SeriesCollection
+            //{
+            //    //new PieSeries
+            //    //{
+            //    //    Title = "WIN",
+            //    //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.win) },
+            //    //    DataLabels = true,
+            //    //    FontSize = 18,
+            //    //    Fill = new SolidColorBrush(Colors.ForestGreen)
+            //    //},
+            //    //new PieSeries
+            //    //{
+            //    //    Title = "LOSE",
+            //    //    Values = new ChartValues<ObservableValue> { new ObservableValue(wL.lose) },
+            //    //    DataLabels = true,
+            //    //    FontSize = 18,
+            //    //    Fill = new SolidColorBrush(Colors.Firebrick)
+            //    //}
+            //};
             DataContext = this;
 
             double rate = wL.win / (wL.win + wL.lose);

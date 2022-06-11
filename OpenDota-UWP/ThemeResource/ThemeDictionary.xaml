@@ -37,6 +37,11 @@
                     <BitmapImage x:Key="ABOUT_REF_JSON_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_json_dark.png" />
                     <BitmapImage x:Key="ABOUT_REF_TOOLKIT_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_toolkit_dark.png" />
                     <BitmapImage x:Key="ABOUT_REF_XAML_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_xaml_dark.png" />
+                    <BitmapImage x:Key="ABOUT_REF_BEHAVIOR_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_behavior_dark.png" />
+
+                    <BitmapImage x:Key="HERO_TAB_STR_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_strength.png" />
+                    <BitmapImage x:Key="HERO_TAB_AGI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_agility.png" />
+                    <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_intelligence.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -75,6 +80,11 @@
                     <BitmapImage x:Key="ABOUT_REF_JSON_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_json_light.png" />
                     <BitmapImage x:Key="ABOUT_REF_TOOLKIT_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_toolkit_light.png" />
                     <BitmapImage x:Key="ABOUT_REF_XAML_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_xaml_light.png" />
+                    <BitmapImage x:Key="ABOUT_REF_BEHAVIOR_IMG" UriSource="ms-appx:///Assets/Icons/Ref/icon_ref_behavior_light.png" />
+
+                    <BitmapImage x:Key="HERO_TAB_STR_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_strength.png" />
+                    <BitmapImage x:Key="HERO_TAB_AGI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_agility.png" />
+                    <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_intelligence.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

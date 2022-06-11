@@ -152,6 +152,7 @@
     <Compile Include="ViewModels\AsyncBitmapImage.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
+    <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
     <Compile Include="ViewModels\DotaViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\HeroInfoPage.xaml.cs">
@@ -592,6 +593,8 @@
     <Content Include="Assets\Icons\icon_nochart.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
+    <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
+    <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />
     <Content Include="Assets\Icons\patchnote_cover.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_chart_dark.png" />
@@ -800,11 +803,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LiveCharts">
-      <Version>0.9.7</Version>
-    </PackageReference>
-    <PackageReference Include="LiveCharts.Uwp">
-      <Version>0.8.0</Version>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Uno">
+      <Version>2.0.0-beta.300</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
@@ -814,6 +814,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>

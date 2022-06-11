@@ -6,12 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:OpenDota_UWP.Models"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:converter="using:OpenDota_UWP.Converters"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
     xmlns:media="using:Microsoft.Xaml.Interactions.Media"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:converter="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required">
     <Page.Resources>
         <ResourceDictionary>
@@ -87,12 +87,12 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=0,Mode=OneWay}"
-                    Background="{ThemeResource HEROTAB_BTN_BK}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="16,0,6,0"
                     CornerRadius="12"
                     Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Assets/Icons/Hero/hero_strength.png"
+                    <Image Source="{ThemeResource HERO_TAB_STR_IMG}"
                        Height="23"
                        VerticalAlignment="Center"/>
                     <TextBlock x:Name="StrTextBlock"
@@ -105,12 +105,12 @@
             </Button>
             <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=1,Mode=OneWay}"
-                    Background="{ThemeResource HEROTAB_BTN_BK}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0"
                     CornerRadius="12"
                     Click="Button_Click_1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Assets/Icons/Hero/hero_agility.png"
+                    <Image Source="{ThemeResource HERO_TAB_AGI_IMG}"
                        Height="23"
                        VerticalAlignment="Center"/>
                     <TextBlock x:Name="AgiTextBlock"
@@ -123,12 +123,12 @@
             </Button>
             <Button Width="164" Height="42" BorderThickness="0,0,0,2"
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=2,Mode=OneWay}"
-                    Background="{ThemeResource HEROTAB_BTN_BK}"
+                    Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0,16,0"
                     CornerRadius="12"
                     Click="Button_Click_2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="/Assets/Icons/Hero/hero_intelligence.png"
+                    <Image Source="{ThemeResource HERO_TAB_INT_IMG}"
                        Height="23"
                        VerticalAlignment="Center"/>
                     <TextBlock x:Name="IntTextBlock"

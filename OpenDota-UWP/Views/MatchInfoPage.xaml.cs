@@ -1,5 +1,4 @@
-﻿using LiveCharts;
-using OpenDota_UWP.Helpers;
+﻿using OpenDota_UWP.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +19,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -35,7 +36,7 @@ namespace OpenDota_UWP.Views
         private List<PlayersInfoViewModel> radiantPlayersList = new List<PlayersInfoViewModel>();
         private List<PlayersInfoViewModel> direPlayersList = new List<PlayersInfoViewModel>();
 
-        public SeriesCollection SeriesCollection { get; set; }
+        public ISeries[] Series { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 

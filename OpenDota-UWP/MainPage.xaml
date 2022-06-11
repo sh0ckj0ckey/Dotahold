@@ -233,6 +233,10 @@
                                     <Image Source="{ThemeResource ABOUT_REF_CHART_IMG}" Height="20" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                     <TextBlock Text=" Live Charts" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                    <Image Source="{ThemeResource ABOUT_REF_BEHAVIOR_IMG}" Height="20" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Microsoft.Xaml.Behaviors" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
                                 <TextBlock Text="Developer" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image Height="25" Margin="0,0,6,0" Source="/Assets/Icons/About/photo.png"/>

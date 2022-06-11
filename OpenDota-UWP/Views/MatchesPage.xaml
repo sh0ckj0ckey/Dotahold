@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:lvc="using:LiveCharts.Uwp"
+    xmlns:lvc="using:LiveChartsCore"
     xmlns:helpers="using:OpenDota_UWP.Helpers" NavigationCacheMode="Required">
 
     <Page.Transitions>
@@ -21,95 +21,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="OkButton"
-                   TargetType="Button">
-                <Setter Property="Background"
-                        Value="#FF88001B" />
-                <Setter Property="Foreground"
-                        Value="White" />
-                <Setter Property="Padding"
-                        Value="12,6" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Left" />
-                <Setter Property="VerticalAlignment"
-                        Value="Center" />
-                <Setter Property="FontFamily"
-                        Value="{ThemeResource ContentControlThemeFontFamily}" />
-                <Setter Property="FontWeight"
-                        Value="Normal" />
-                <Setter Property="FontSize"
-                        Value="14" />
-                <Setter Property="FocusVisualMargin"
-                        Value="-3" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              AutomationProperties.AccessibilityView="Raw"
-                                              CornerRadius="16"
-                                              Background="{TemplateBinding Background}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTransitions="{TemplateBinding ContentTransitions}"
-                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Padding="{TemplateBinding Padding}"
-                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
-                                            <Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver">
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetName="ContentPresenter"
-                                                                Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                                From="#DD88001B"
-                                                                To="#BB88001B"
-                                                                Duration="0:0:.2">
-                                                </ColorAnimation>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed">
-                                            <Storyboard>
-                                                <ColorAnimation Storyboard.TargetName="ContentPresenter"
-                                                                Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
-                                                                From="#DD88001B"
-                                                                To="#AA88001B"
-                                                                Duration="0:0:.2" />
-                                                <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Disabled">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                               Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="{ThemeResource ButtonBackgroundDisabled}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                               Storyboard.TargetProperty="BorderBrush">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="{ThemeResource ButtonBorderBrushDisabled}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
-                                                                               Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"
-                                                                            Value="{ThemeResource ButtonForegroundDisabled}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                            </ContentPresenter>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+
         </ResourceDictionary>
     </Page.Resources>
 
@@ -1348,7 +1260,6 @@
                     <Button x:Name="OKButton"
                             Grid.Row="3"
                             IsEnabled="False"
-                            Style="{StaticResource OkButton}"
                             Height="38"
                             Width="Auto"
                             HorizontalAlignment="Center"
