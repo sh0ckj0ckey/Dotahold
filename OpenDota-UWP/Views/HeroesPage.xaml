@@ -161,15 +161,9 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
 
-                                <Grid x:Name="ContentHolder" CornerRadius="9" Background="Transparent"
-                                      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6"
+                                <Grid CornerRadius="10" Background="Transparent"
+                                      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8"
                                       ToolkitUI:VisualExtensions.NormalizedCenterPoint="0.5">
-                                    <ToolkitUI:Effects.Shadow>
-                                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="20"
-                                                                         Color="Black"
-                                                                         Offset="1,1"
-                                                                         Opacity="0.1"/>
-                                    </ToolkitUI:Effects.Shadow>
                                     <Animation:Explicit.Animations>
                                         <Animation:AnimationSet x:Name="GridScaleUp">
                                             <Animation:ScaleAnimation To="1.1"
@@ -184,23 +178,30 @@
                                                                       EasingMode="EaseOut"/>
                                         </Animation:AnimationSet>
                                     </Animation:Explicit.Animations>
-                                    <ContentPresenter x:Name="ContentPresenter"
-                                                      Background="Transparent"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Padding="{TemplateBinding Padding}"
-                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      AutomationProperties.AccessibilityView="Raw" />
+                                    <Grid x:Name="ContentHolder" Background="Transparent">
+                                        <ToolkitUI:Effects.Shadow>
+                                            <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="20"
+                                                                         Color="Black"
+                                                                         Offset="4,4"
+                                                                         Opacity="1"/>
+                                        </ToolkitUI:Effects.Shadow>
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                                          Background="Transparent"
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                          Padding="{TemplateBinding Padding}"
+                                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          AutomationProperties.AccessibilityView="Raw" />
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
-
-
+            
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
                 <Grid Width="128" Height="72" Margin="4" Background="Transparent">
                     <Border Width="128" Height="72" CornerRadius="6">
@@ -214,14 +215,14 @@
                             </ImageBrush>
                         </Border.Background>
                     </Border>
-                    <Grid x:Name="HeroMaskGrid" CornerRadius="6" Opacity="0">
+                    <!--<Grid x:Name="HeroMaskGrid" CornerRadius="6" Opacity="0">
                         <Grid.Background>
                             <AcrylicBrush TintColor="Transparent" TintTransitionDuration="0:0:0.3" FallbackColor="#80000000" BackgroundSource="Backdrop"/>
                         </Grid.Background>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"
                                    Text="{x:Bind localized_name}" FontSize="14" CharacterSpacing="40" Padding="4,0"
                                    TextWrapping="WrapWholeWords" HorizontalTextAlignment="Center"/>
-                    </Grid>
+                    </Grid>-->
                 </Grid>
             </DataTemplate>
 
