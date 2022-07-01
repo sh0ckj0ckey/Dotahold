@@ -161,8 +161,8 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
 
-                                <Grid CornerRadius="10" Background="Transparent"
-                                      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8"
+                                <Grid Margin="10" Background="Transparent"
+                                      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                       ToolkitUI:VisualExtensions.NormalizedCenterPoint="0.5">
                                     <Animation:Explicit.Animations>
                                         <Animation:AnimationSet x:Name="GridScaleUp">
@@ -178,14 +178,14 @@
                                                                       EasingMode="EaseOut"/>
                                         </Animation:AnimationSet>
                                     </Animation:Explicit.Animations>
-                                    <Grid x:Name="ContentHolder" Background="Transparent">
-                                        <ToolkitUI:Effects.Shadow>
-                                            <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="20"
+                                    <ToolkitUI:Effects.Shadow>
+                                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="20"
                                                                          Color="Black"
-                                                                         Offset="4,4"
-                                                                         Opacity="1"/>
-                                        </ToolkitUI:Effects.Shadow>
-                                        <ContentPresenter x:Name="ContentPresenter"
+                                                                         Offset="0,0,8"
+                                                                         Opacity="0.2"/>
+                                    </ToolkitUI:Effects.Shadow>
+                                    <Grid x:Name="ContentHolder">
+                                        <ContentPresenter x:Name="ContentPresenter" CornerRadius="10"
                                                           Background="Transparent"
                                                           Content="{TemplateBinding Content}"
                                                           ContentTransitions="{TemplateBinding ContentTransitions}"
