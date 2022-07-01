@@ -44,7 +44,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GridViewItem">
-                            <Grid x:Name="RootGrid" Background="Transparent" CornerRadius="6">
+                            <Grid x:Name="RootGrid" Background="Transparent" CornerRadius="0">
                                 <Interactivity:Interaction.Behaviors>
                                     <Core:EventTriggerBehavior EventName="PointerEntered">
                                         <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=GridScaleUp}"/>
@@ -59,7 +59,7 @@
                                             <VisualTransition From="PointerOver" To="Normal" GeneratedDuration="0:0:0">
                                                 <Storyboard>
                                                     <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.Opacity)">
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.5">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseIn"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
@@ -71,12 +71,12 @@
                                                         </EasingDoubleKeyFrame>
                                                     </DoubleAnimationUsingKeyFrames>
                                                     <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.BlurRadius)">
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="30">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="20">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseIn"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
                                                         </EasingDoubleKeyFrame>
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="20">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="10">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseOut"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
@@ -101,19 +101,19 @@
                                                             <CubicEase EasingMode="EaseIn"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="1">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="0.5">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseOut"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
                                                 </DoubleAnimationUsingKeyFrames>
                                                 <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.BlurRadius)">
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="20">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="10">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseIn"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="30">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="20">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseOut"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
@@ -166,26 +166,26 @@
                                       ToolkitUI:VisualExtensions.NormalizedCenterPoint="0.5">
                                     <Animation:Explicit.Animations>
                                         <Animation:AnimationSet x:Name="GridScaleUp">
-                                            <Animation:ScaleAnimation To="1.1"
-                                                                      Duration="0:0:0.2"
-                                                                      EasingType="Linear"
+                                            <Animation:ScaleAnimation To="1.2"
+                                                                      Duration="0:0:0.3"
+                                                                      EasingType="Default"
                                                                       EasingMode="EaseOut"/>
                                         </Animation:AnimationSet>
                                         <Animation:AnimationSet x:Name="GridScaleDown">
                                             <Animation:ScaleAnimation To="1"
-                                                                      Duration="0:0:0.2"
-                                                                      EasingType="Linear"
+                                                                      Duration="0:0:0.3"
+                                                                      EasingType="Default"
                                                                       EasingMode="EaseOut"/>
                                         </Animation:AnimationSet>
                                     </Animation:Explicit.Animations>
                                     <ToolkitUI:Effects.Shadow>
-                                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="20"
+                                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
                                                                          Color="Black"
                                                                          Offset="0,0,8"
                                                                          Opacity="0.2"/>
                                     </ToolkitUI:Effects.Shadow>
                                     <Grid x:Name="ContentHolder">
-                                        <ContentPresenter x:Name="ContentPresenter" CornerRadius="10"
+                                        <ContentPresenter x:Name="ContentPresenter" CornerRadius="0"
                                                           Background="Transparent"
                                                           Content="{TemplateBinding Content}"
                                                           ContentTransitions="{TemplateBinding ContentTransitions}"
@@ -203,8 +203,8 @@
             </Style>
             
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
-                <Grid Width="128" Height="72" Margin="4" Background="Transparent">
-                    <Border Width="128" Height="72" CornerRadius="6">
+                <Grid Width="128" Height="72" Margin="0" Background="Transparent">
+                    <Border Width="128" Height="72" CornerRadius="0">
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill">
                                 <ImageBrush.ImageSource>
@@ -215,10 +215,10 @@
                             </ImageBrush>
                         </Border.Background>
                     </Border>
-                    <!--<Grid x:Name="HeroMaskGrid" CornerRadius="6" Opacity="0">
-                        <Grid.Background>
+                    <!--<Grid x:Name="HeroMaskGrid" CornerRadius="0" Opacity="1" VerticalAlignment="Bottom" MinHeight="30">
+                        --><!--<Grid.Background>
                             <AcrylicBrush TintColor="Transparent" TintTransitionDuration="0:0:0.3" FallbackColor="#80000000" BackgroundSource="Backdrop"/>
-                        </Grid.Background>
+                        </Grid.Background>--><!--
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"
                                    Text="{x:Bind localized_name}" FontSize="14" CharacterSpacing="40" Padding="4,0"
                                    TextWrapping="WrapWholeWords" HorizontalTextAlignment="Center"/>
