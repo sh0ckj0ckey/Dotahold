@@ -204,6 +204,14 @@
             
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
                 <Grid Width="128" Height="72" Margin="0" Background="Transparent">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="PointerEntered">
+                            <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=ShowHeroName}"/>
+                        </Core:EventTriggerBehavior>
+                        <Core:EventTriggerBehavior EventName="PointerExited">
+                            <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=HideHeroName}"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
                     <Border Width="128" Height="72" CornerRadius="0">
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill">
@@ -216,8 +224,21 @@
                         </Border.Background>
                     </Border>
                     <Grid x:Name="HeroMaskGrid" CornerRadius="0" Opacity="1" VerticalAlignment="Bottom" MinHeight="30">
+                        <Animation:Explicit.Animations>
+                            <Animation:AnimationSet x:Name="ShowHeroName">
+                                <Animation:OffsetAnimation To="0,80,0"
+                                                           Duration="0:0:0.3"
+                                                           EasingType="Default"
+                                                           EasingMode="EaseOut"/>
+                            </Animation:AnimationSet>
+                            <Animation:AnimationSet x:Name="HideHeroName">
+                                <Animation:ScaleAnimation To="0,0,0"
+                                                          Duration="0:0:0.3"
+                                                          EasingType="Default"
+                                                          EasingMode="EaseOut"/>
+                            </Animation:AnimationSet>
+                        </Animation:Explicit.Animations>
                         <Grid.Background>
-                            <!--<AcrylicBrush TintColor="Transparent" TintTransitionDuration="0:0:0.3" FallbackColor="#80000000" BackgroundSource="Backdrop"/>-->
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStopCollection>
                                     <GradientStop Color="#00000000" Offset="0.2"/>
@@ -225,8 +246,8 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush>
                         </Grid.Background>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Medium"
-                                   Text="{x:Bind localized_name}" FontSize="14" CharacterSpacing="0" Padding="2,0,2,3"
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Medium" Foreground="White"
+                                   Text="{x:Bind localized_name}" FontSize="{x:Bind localized_name,Converter={StaticResource Str2FS}}" CharacterSpacing="20" Padding="2,0,2,3"
                                    TextWrapping="WrapWholeWords" HorizontalTextAlignment="Center"/>
                     </Grid>
                 </Grid>
@@ -235,6 +256,7 @@
             <converter:EqualToHeroTabBackgroundConverter x:Key="Eq2BK"/>
             <converter:EqualToHeroTabBorderBrushConverter x:Key="Eq2BD"/>
             <converter:EqualToVisibilityConverter x:Key="Eq2Vis"/>
+            <converter:StringLengthToFontSizeConverter x:Key="Str2FS"/>
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>

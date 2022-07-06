@@ -133,6 +133,7 @@
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBorderBrushConverter.cs" />
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringLengthToFontSizeConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
