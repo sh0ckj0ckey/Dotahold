@@ -161,12 +161,12 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
 
-                                <Grid Margin="6" Background="Transparent"
+                                <Grid Margin="4,4" Background="Transparent"
                                       BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                       ToolkitUI:VisualExtensions.NormalizedCenterPoint="0.5">
                                     <Animation:Explicit.Animations>
                                         <Animation:AnimationSet x:Name="GridScaleUp">
-                                            <Animation:ScaleAnimation To="1.2"
+                                            <Animation:ScaleAnimation To="1.1"
                                                                       Duration="0:0:0.3"
                                                                       EasingType="Default"
                                                                       EasingMode="EaseOut"/>
@@ -203,53 +203,16 @@
             </Style>
             
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
-                <Grid Width="128" Height="72" Margin="0" Background="Transparent">
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="PointerEntered">
-                            <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=ShowHeroName}"/>
-                        </Core:EventTriggerBehavior>
-                        <Core:EventTriggerBehavior EventName="PointerExited">
-                            <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=HideHeroName}"/>
-                        </Core:EventTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                    <Border Width="128" Height="72" CornerRadius="0">
+                <Grid Width="128" Height="72" Margin="0" Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
+                    <Border x:Name="HeroPhotoImg" Width="128" Height="72" CornerRadius="0">
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill">
                                 <ImageBrush.ImageSource>
-                                    <BitmapImage UriSource="{x:Bind img}"
-                                                 DecodePixelWidth="128"
-                                                 DecodePixelType="Logical"/>
+                                    <BitmapImage UriSource="{x:Bind img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
                                 </ImageBrush.ImageSource>
                             </ImageBrush>
                         </Border.Background>
                     </Border>
-                    <Grid x:Name="HeroMaskGrid" CornerRadius="0" Opacity="1" VerticalAlignment="Bottom" MinHeight="30">
-                        <Animation:Explicit.Animations>
-                            <Animation:AnimationSet x:Name="ShowHeroName">
-                                <Animation:OffsetAnimation To="0,80,0"
-                                                           Duration="0:0:0.3"
-                                                           EasingType="Default"
-                                                           EasingMode="EaseOut"/>
-                            </Animation:AnimationSet>
-                            <Animation:AnimationSet x:Name="HideHeroName">
-                                <Animation:ScaleAnimation To="0,0,0"
-                                                          Duration="0:0:0.3"
-                                                          EasingType="Default"
-                                                          EasingMode="EaseOut"/>
-                            </Animation:AnimationSet>
-                        </Animation:Explicit.Animations>
-                        <Grid.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStopCollection>
-                                    <GradientStop Color="#00000000" Offset="0.2"/>
-                                    <GradientStop Color="#8C000000" Offset="0.7"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush>
-                        </Grid.Background>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontWeight="Medium" Foreground="White"
-                                   Text="{x:Bind localized_name}" FontSize="{x:Bind localized_name,Converter={StaticResource Str2FS}}" CharacterSpacing="20" Padding="2,0,2,3"
-                                   TextWrapping="WrapWholeWords" HorizontalTextAlignment="Center"/>
-                    </Grid>
                 </Grid>
             </DataTemplate>
 
@@ -337,19 +300,21 @@
                   ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" 
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  Padding="20,12"/>
+                  Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded"/>
         <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"/>
+                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1"/>
         <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"/>
+                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2"/>
         <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="72" Width="128" CornerRadius="6" Margin="0,-80,0,0"
               Visibility="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}">

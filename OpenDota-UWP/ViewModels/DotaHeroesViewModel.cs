@@ -37,6 +37,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("iHeroAttrTabIndex", ref _iHeroAttrTabIndex, value); }
         }
 
+        // 当前选中的英雄
+        private Models.DotaHeroModel _CurrentHero = null;
+        public Models.DotaHeroModel CurrentHero
+        {
+            get { return _CurrentHero; }
+            set { Set("CurrentHero", ref _CurrentHero, value); }
+        }
+
         public DotaHeroesViewModel()
         {
             InitialDotaHeroes();

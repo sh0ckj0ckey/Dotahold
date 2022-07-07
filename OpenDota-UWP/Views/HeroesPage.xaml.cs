@@ -28,6 +28,9 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class HeroesPage : Page
     {
+        // 用来抑制页面跳转时其他的动画的，这样可以避免其他动画和 Connected Animation 出现奇怪的冲突
+        private SuppressNavigationTransitionInfo snti = new SuppressNavigationTransitionInfo();
+
         DotaHeroesViewModel ViewModel = null;
         DotaViewModel MainViewModel = null;
 
@@ -87,6 +90,85 @@ namespace OpenDota_UWP.Views
             try
             {
                 ViewModel.iHeroAttrTabIndex = 2;
+            }
+            catch { }
+        }
+
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (sender is GridView collection &&
+                    collection.ContainerFromItem(e.ClickedItem) is GridViewItem container &&
+                    e.ClickedItem is Models.DotaHeroModel hero)
+                {
+                    ViewModel.CurrentHero = hero;
+                    collection.PrepareConnectedAnimation("animateHeroInfoPhoto", hero, "HeroPhotoImg");
+                    //ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("ConnectedAnimation", container);
+                    Frame.Navigate(typeof(HeroInfoPage), null, snti);
+                }
+            }
+            catch { }
+        }
+
+        private void GridView_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ViewModel.iHeroAttrTabIndex == 0 && sender is GridView gv)
+                {
+                    HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
+                }
+            }
+            catch { }
+        }
+
+        private void GridView_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ViewModel.iHeroAttrTabIndex == 1 && sender is GridView gv)
+                {
+                    HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
+                }
+            }
+            catch { }
+        }
+
+        private void GridView_Loaded_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ViewModel.iHeroAttrTabIndex == 2 && sender is GridView gv)
+                {
+                    HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
+                }
+            }
+            catch { }
+        }
+
+        private async void HandleAnimationBackFromHeroInfo(GridView gv, Models.DotaHeroModel item)
+        {
+            try
+            {
+                if (item != null)
+                {
+                    gv.ScrollIntoView(item, ScrollIntoViewAlignment.Default);
+                    gv.UpdateLayout();
+
+                    ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animateBackHeroPhoto");
+                    if (animation != null)
+                    {
+                        // Setup the "back" configuration if the API is present. 
+                        if (Windows.Foundation.Metadata.ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+                        {
+                            animation.Configuration = new DirectConnectedAnimationConfiguration();
+                        }
+                        await gv.TryStartConnectedAnimationAsync(animation, item, "HeroPhotoImg");
+                    }
+
+                    gv.Focus(FocusState.Programmatic);
+                }
             }
             catch { }
         }

@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:OpenDota_UWP.Helpers"
-    mc:Ignorable="d" NavigationCacheMode="Required">
+    mc:Ignorable="d" NavigationCacheMode="Disabled">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -708,27 +708,23 @@
     <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid Margin="0,64,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="156" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <!--返回按钮-->
-            <AppBarButton Margin="16,0,0,0"
-                          Width="42"
-                          Height="42"
-                          HorizontalAlignment="Left"
-                          Click="AppBarButton_Click"
-                          ToolTipService.ToolTip="Go Back">
-                <AppBarButton.Content>
+            <Button Margin="16,0,0,0" Width="42" Height="42" CornerRadius="6"
+                    HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
+                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
+                <Button.Content>
                     <TextBlock Text="&#xF0D5;"
-                               FontWeight="Bold"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
                                VerticalAlignment="Center" />
-                </AppBarButton.Content>
-            </AppBarButton>
+                </Button.Content>
+            </Button>
             <!--英雄名称和定位-->
-            <StackPanel Grid.Row="0"
+            <!--<StackPanel Grid.Row="0"
                         Margin="64,0,0,0"
                         Orientation="Horizontal">
                 <TextBlock Text="{x:Bind SelectedHero.Name}"
@@ -761,75 +757,22 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-            </StackPanel>
+            </StackPanel>-->
             <!--英雄头像和背景介绍-->
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="128" />
-                    <ColumnDefinition Width="96" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Rectangle Grid.Column="1"
-                           Grid.ColumnSpan="2"
-                           Fill="Gray"
-                           Opacity="0.2" />
                 <!--英雄头像-->
-                <Border Grid.Column="0"
+                <Border x:Name="HeroPhotoBorder" Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Width="156"
+                        Width="128" Height="72"
                         VerticalAlignment="Center">
-                    <Image Width="156"
-                           Stretch="Uniform">
+                    <Image Width="128" Height="72" Stretch="Uniform">
                         <Image.Source>
-                            <BitmapImage DecodePixelWidth="156"
-                                         UriSource="{x:Bind SelectedHero.Pic}" />
+                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
                         </Image.Source>
                     </Image>
                 </Border>
-                <!--英雄背景-->
-                <ScrollViewer Grid.Column="2"
-                              VerticalAlignment="Top"
-                              HorizontalAlignment="Left"
-                              Margin="12"
-                              VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Margin="0,4,0,-4">
-                            <TextBlock FontFamily="Segoe MDL2 Assets"
-                                       Text="&#xE9B2;"
-                                       FontSize="28"
-                                       Margin="4"
-                                       FontWeight="Bold" />
-                            <TextBlock x:Name="DialogueTextBlock"
-                                       Text="{x:Bind SelectedHero.Dialogue}"
-                                       FontWeight="Black"
-                                       FontSize="18" />
-                            <TextBlock FontFamily="Segoe MDL2 Assets"
-                                       Text="&#xE9B1;"
-                                       FontSize="28"
-                                       Margin="4"
-                                       FontWeight="Bold" />
-                        </StackPanel>
-                        <TextBlock x:Name="HeroInfoTextBlock"
-                                   Text=""
-                                   FontSize="16"
-                                   FontWeight="Normal"
-                                   Opacity="0.7"
-                                   TextWrapping="WrapWholeWords"
-                                   HorizontalAlignment="Left"
-                                   Margin="0,4,18,4" />
-                    </StackPanel>
-                </ScrollViewer>
-                <ProgressRing x:Name="HeroBioProgressRing"
-                              Grid.Column="2"
-                              Foreground="{ThemeResource SIMPLETEXT_FR}"
-                              Height="36"
-                              Width="36"
-                              IsActive="True" />
             </Grid>
-            <!--详细信息-->
+            <!--详细信息--><!--
             <Grid Grid.Row="2"
                   Margin="12,12,0,0">
                 <Pivot>
@@ -2520,33 +2463,7 @@
                         </Grid>
                     </PivotItem>
                 </Pivot>
-                <Button x:Name="LeftButton"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="48,10"
-                        Visibility="Visible"
-                        Foreground="{ThemeResource SIMPLETEXT_FR}"
-                        FontFamily="Segoe UI Symbol"
-                        FontSize="18"
-                        FontWeight="Bold"
-                        Content="&#xE176;"
-                        Style="{StaticResource TextBlockButtonStyle}"
-                        ToolTipService.ToolTip="Left"
-                        Click="LeftButton_Click" />
-                <Button x:Name="CenterButton"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="48,10"
-                        Visibility="Collapsed"
-                        Foreground="{ThemeResource SIMPLETEXT_FR}"
-                        FontFamily="Segoe UI Symbol"
-                        FontSize="18"
-                        FontWeight="Bold"
-                        Content="&#xE177;"
-                        Style="{StaticResource TextBlockButtonStyle}"
-                        ToolTipService.ToolTip="Center"
-                        Click="CenterButton_Click" />
-            </Grid>
+            </Grid>-->
         </Grid>
     </Grid>
 </Page>
