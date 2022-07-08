@@ -36,21 +36,37 @@ namespace OpenDota_UWP.ViewModels
             set { Set("CurrentItem", ref _CurrentItem, value); }
         }
 
+        // 是否已经成功加载过装备列表
+        private bool _bLoadedDotaItems = false;
+
         public DotaItemsViewModel()
         {
-            InitialDotaItems();
+            LoadDotaItems();
         }
 
-        private async void InitialDotaItems()
+        public async void LoadDotaItems()
         {
             try
             {
+                if (_bLoadedDotaItems)
+                    return;
+
+                _bLoadedDotaItems = true;
+
                 bLoadingItems = true;
 
                 mapAllItems?.Clear();
                 vAllItems?.Clear();
                 vItemsList?.Clear();
                 mapAllItems = await ConstantsHelper.Instance.GetItemsConstant();
+
+                if (mapAllItems == null || mapAllItems.Count <= 0)
+                {
+                    bLoadingItems = false;
+                    _bLoadedDotaItems = false;
+                    return;
+                }
+
                 // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
                 foreach (var item in mapAllItems)
                 {
@@ -103,8 +119,9 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
                 }
+
             }
-            catch { }
+            catch { _bLoadedDotaItems = false; }
             finally { bLoadingItems = false; }
         }
     }

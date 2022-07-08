@@ -30,12 +30,11 @@ namespace OpenDota_UWP.Views
         DotaHeroesViewModel ViewModel = null;
         DotaViewModel MainViewModel = null;
 
-        DotaHeroes SelectedHero;
-        HeroAttr heroAttr = null;
-        bool InitializeFinished = false;
-        ObservableCollection<HeroAbility> abilitiesObservableCollection = new ObservableCollection<HeroAbility>();
-        List<RankPlayer> rankPlayers;
-        ObservableCollection<RankPlayer> rankPlayersObservableCollection = new ObservableCollection<RankPlayer>();
+        //HeroAttr heroAttr = null;
+        //bool InitializeFinished = false;
+        //ObservableCollection<HeroAbility> abilitiesObservableCollection = new ObservableCollection<HeroAbility>();
+        //List<RankPlayer> rankPlayers;
+        //ObservableCollection<RankPlayer> rankPlayersObservableCollection = new ObservableCollection<RankPlayer>();
         public HeroInfoPage()
         {
             this.InitializeComponent();
@@ -84,18 +83,18 @@ namespace OpenDota_UWP.Views
         /// </summary>
         public async void ShowHero()
         {
-            string html = await CrawlerHelper.InitializeHtml(HeroesPage.SelectedHero.ID);
-            if (html == "gg")
-            {
-                //ShowDialog("Something went wrong, plz retry...");
-                return;
-            }
-            //ShowTheHeroBio(html);
-            //ShowTheHeroTalent(html);
-            //ShowTheHeroAbility(html);
-            //ShowTheHeroAttr();
-            //ShowPlayersBoard();
-            InitializeFinished = true;
+            //string html = await CrawlerHelper.InitializeHtml(HeroesPage.SelectedHero.ID);
+            //if (html == "gg")
+            //{
+            //    //ShowDialog("Something went wrong, plz retry...");
+            //    return;
+            //}
+            ////ShowTheHeroBio(html);
+            ////ShowTheHeroTalent(html);
+            ////ShowTheHeroAbility(html);
+            ////ShowTheHeroAttr();
+            ////ShowPlayersBoard();
+            //InitializeFinished = true;
         }
 
         /// <summary>

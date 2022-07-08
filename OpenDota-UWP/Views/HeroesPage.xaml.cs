@@ -54,15 +54,14 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                base.OnNavigatedTo(e);
+
                 if (e.Parameter is NavigationTransitionInfo transition)
                 {
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                //判断是否需要下载新的数据，不用的话直接从DotaHeroHelper._data即可访问整个json，需要的话调用下载方法
-                //await APIHelper.DownloadHeroAttributesDataAsync();
-
-                base.OnNavigatedTo(e);
+                ViewModel?.LoadDotaHeroes();
             }
             catch { }
         }
@@ -102,9 +101,8 @@ namespace OpenDota_UWP.Views
                     collection.ContainerFromItem(e.ClickedItem) is GridViewItem container &&
                     e.ClickedItem is Models.DotaHeroModel hero)
                 {
-                    ViewModel.CurrentHero = hero;
+                    ViewModel.PickHero(hero);
                     collection.PrepareConnectedAnimation("animateHeroInfoPhoto", hero, "HeroPhotoImg");
-                    //ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("ConnectedAnimation", container);
                     Frame.Navigate(typeof(HeroInfoPage), null, snti);
                 }
             }

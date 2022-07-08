@@ -140,15 +140,14 @@
     <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
-    <Compile Include="Helpers\CrawlerHelper.cs" />
     <Compile Include="Helpers\DataCourier.cs" />
     <Compile Include="Helpers\DialogShower.cs" />
-    <Compile Include="Helpers\DotaHeroHelper.cs" />
     <Compile Include="Helpers\DotaMatchHelper.cs" />
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Helpers\ImageLoader.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
     <Compile Include="Models\DotaHeroes.cs" />
+    <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="ViewModels\AsyncBitmapImage.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />

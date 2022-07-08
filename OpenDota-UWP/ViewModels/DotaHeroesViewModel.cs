@@ -29,6 +29,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bLoadingHeroes", ref _bLoadingHeroes, value); }
         }
 
+        // 是否正在加载英雄详情
+        private bool _bLoadingHeroeInfo = false;
+        public bool bLoadingHeroeInfo
+        {
+            get { return _bLoadingHeroeInfo; }
+            set { Set("bLoadingHeroeInfo", ref _bLoadingHeroeInfo, value); }
+        }
+
         // 英雄属性Tab
         private int _iHeroAttrTabIndex = 0;
         public int iHeroAttrTabIndex
@@ -42,18 +50,26 @@ namespace OpenDota_UWP.ViewModels
         public Models.DotaHeroModel CurrentHero
         {
             get { return _CurrentHero; }
-            set { Set("CurrentHero", ref _CurrentHero, value); }
+            private set { Set("CurrentHero", ref _CurrentHero, value); }
         }
+
+        // 是否已经成功加载过英雄列表
+        private bool _bLoadedDotaHeroes = false;
 
         public DotaHeroesViewModel()
         {
-            InitialDotaHeroes();
+            LoadDotaHeroes();
         }
 
-        private async void InitialDotaHeroes()
+        public async void LoadDotaHeroes()
         {
             try
             {
+                if (_bLoadedDotaHeroes)
+                    return;
+
+                _bLoadedDotaHeroes = true;
+
                 bLoadingHeroes = true;
 
                 mapAllHeroes?.Clear();
@@ -61,7 +77,15 @@ namespace OpenDota_UWP.ViewModels
                 vAgiHeroesList?.Clear();
                 vIntHeroesList?.Clear();
                 mapAllHeroes = await ConstantsHelper.Instance.GetHeroesConstant();
-                // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
+
+                if (mapAllHeroes == null || mapAllHeroes.Count <= 0)
+                {
+                    bLoadingHeroes = false;
+                    _bLoadedDotaHeroes = false;
+                    return;
+                }
+
+                // 处理图片下载等流程，然后逐个添加到列表里面
                 foreach (var item in mapAllHeroes)
                 {
                     item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
@@ -80,8 +104,27 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
             }
-            catch { }
+            catch { _bLoadedDotaHeroes = false; }
             finally { bLoadingHeroes = false; }
+        }
+
+        public void PickHero(Models.DotaHeroModel selectedHero)
+        {
+            try
+            {
+                this.CurrentHero = selectedHero;
+                ReqHeroInfo(this.CurrentHero.id);
+            }
+            catch { }
+        }
+
+        private void ReqHeroInfo(int heroId)
+        {
+            try
+            {
+
+            }
+            catch { }
         }
     }
 }

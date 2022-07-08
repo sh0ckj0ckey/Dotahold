@@ -13,30 +13,44 @@ namespace OpenDota_UWP.Helpers
         public static ConstantsHelper Instance => _lazyVM.Value;
 
 
-        public async Task<Dictionary<string, Models.DotaItemModel>> GetItemsConstant()
-        {
-            if (true) // if Time > 24h, then download new file;or return local file
-            {
-                var items = await DownloadConstant<Dictionary<string, Models.DotaItemModel>>("items");
-                return items;
-            }
-            else // return local file
-            {
-                return null;
-            }
-        }
-
         public async Task<Dictionary<string, Models.DotaHeroModel>> GetHeroesConstant()
         {
-            if (true) // if Time > 24h, then download new file;or return local file
+            try
             {
-                var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
-                return heroes;
+                if (true)
+                {
+                    // if Time > 24h, then download new file
+                    var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
+                    return heroes;
+                }
+                else
+                {
+                    // return local file
+                    return null;
+                }
             }
-            else // return local file
+            catch { }
+            return null;
+        }
+
+        public async Task<Dictionary<string, Models.DotaItemModel>> GetItemsConstant()
+        {
+            try
             {
-                return null;
+                if (true)
+                {
+                    // if Time > 24h, then download new file
+                    var items = await DownloadConstant<Dictionary<string, Models.DotaItemModel>>("items");
+                    return items;
+                }
+                else
+                {
+                    // return local file
+                    return null;
+                }
             }
+            catch { }
+            return null;
         }
 
         /// <summary>

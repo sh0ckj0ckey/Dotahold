@@ -15,7 +15,8 @@ namespace OpenDota_UWP.Helpers
 {
     public class DotaMatchHelper
     {
-        private const string Key = "35F60D2EBD3EB6A9DF438C75E2C18ABB";
+        // 从文件读取，git提交时忽略
+        private const string Key = "";
 
         public static Dictionary<string, string> PlayersNameCache = new Dictionary<string, string>();
         public static Dictionary<string, string> PlayersPhotoCache = new Dictionary<string, string>();

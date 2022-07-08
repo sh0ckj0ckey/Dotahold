@@ -55,11 +55,14 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                base.OnNavigatedTo(e);
+
                 if (e.Parameter is NavigationTransitionInfo transition)
                 {
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
-                base.OnNavigatedTo(e);
+
+                ViewModel?.LoadDotaItems();
             }
             catch { }
         }
