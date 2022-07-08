@@ -8,7 +8,7 @@
     xmlns:helpers="using:OpenDota_UWP.Helpers" 
     xmlns:ToolkitUI="using:Microsoft.Toolkit.Uwp.UI" 
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
-    mc:Ignorable="d" NavigationCacheMode="Disabled">
+    mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
             <Storyboard x:Name="ShowBackgroundImage">
                 <DoubleAnimation Storyboard.TargetName="BackgroundImageGrid"
                                  Storyboard.TargetProperty="Opacity"
-                                 To="1" Duration="0:0:0.3">
+                                 From="0" To="1" Duration="0:0:0.5">
                 </DoubleAnimation>
             </Storyboard>
         </ResourceDictionary>
@@ -36,7 +36,7 @@
                 <Grid.Background>
                     <ImageBrush Stretch="UniformToFill">
                         <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
+                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
                         </ImageBrush.ImageSource>
                     </ImageBrush>
                 </Grid.Background>
@@ -73,12 +73,12 @@
                         </ToolkitUI:Effects.Shadow>
                         <Image Width="128" Height="72" Stretch="Uniform">
                             <Image.Source>
-                                <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
+                                <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
                             </Image.Source>
                         </Image>
                     </Border>
                     <TextBlock x:Name="HeroNameTextBlock" 
-                               Text="{x:Bind ViewModel.CurrentHero.localized_name}"
+                               Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                                FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                FontSize="24" CharacterSpacing="20" Margin="12,0,0,0"/>
                 </StackPanel>

@@ -239,7 +239,7 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                    Text="Heroes" FontWeight="Bold" FontSize="28" CharacterSpacing="40"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
+            <Button Width="164" Height="38" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=0,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="16,0,6,0"
@@ -257,7 +257,7 @@
                            FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2" 
+            <Button Width="164" Height="38" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=1,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0"
@@ -275,7 +275,7 @@
                                FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="42" BorderThickness="0,0,0,2"
+            <Button Width="164" Height="38" BorderThickness="0,0,0,2"
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=2,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0,16,0"

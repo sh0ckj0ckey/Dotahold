@@ -149,6 +149,9 @@
     <Compile Include="Models\DotaHeroes.cs" />
     <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
+    <Compile Include="UI\SomethingWrongControl.xaml.cs">
+      <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AsyncBitmapImage.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
@@ -183,9 +186,6 @@
     </Compile>
     <Compile Include="Views\MatchPlayerPage.xaml.cs">
       <DependentUpon>MatchPlayerPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NoNetworkPage.xaml.cs">
-      <DependentUpon>NoNetworkPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -757,6 +757,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\SomethingWrongControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HeroInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -794,10 +798,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MatchPlayerPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NoNetworkPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
