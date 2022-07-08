@@ -87,9 +87,13 @@
                 </Border>
                 <Grid Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
                 </Grid>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
                     <TextBlock x:Name="HeroNameTextBlock" HorizontalAlignment="Left" VerticalAlignment="Center"
