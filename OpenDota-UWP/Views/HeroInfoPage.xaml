@@ -18,9 +18,9 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Storyboard x:Name="ShowBackgroundImage">
-                <DoubleAnimation Storyboard.TargetName="BackgroundImageGrid"
+                <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder"
                                  Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.5">
+                                 From="0" To="1" Duration="0:0:0.3">
                 </DoubleAnimation>
             </Storyboard>
 
@@ -37,14 +37,16 @@
                 <RowDefinition Height="156" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid x:Name="BackgroundImageGrid" Grid.Row="0" Grid.RowSpan="3" Opacity="0">
-                <Grid.Background>
-                    <ImageBrush Stretch="UniformToFill">
-                        <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
-                        </ImageBrush.ImageSource>
-                    </ImageBrush>
-                </Grid.Background>
+            <Grid Grid.Row="0" Grid.RowSpan="3">
+                <Border x:Name="BackgroundImageBorder">
+                    <Border.Background>
+                        <ImageBrush Stretch="UniformToFill">
+                            <ImageBrush.ImageSource>
+                                <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Border.Background>
+                </Border>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.Background>
                         <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
@@ -85,7 +87,7 @@
                         </Image.Source>
                     </Image>
                 </Border>
-                <Grid Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Grid x:Name="HeroNameGrid" Grid.Column="1" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -94,22 +96,18 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                </Grid>
-                <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBlock x:Name="HeroNameTextBlock" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <TextBlock x:Name="HeroNameTextBlock" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                                FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                               FontSize="24" CharacterSpacing="20" TextTrimming="CharacterEllipsis"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0.7">
-                        <Image Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
-                               Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
-                        <Image Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
-                               Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
-                        <TextBlock x:Name="HeroRoleTextBlock" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Medium"
-                                   Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
-                                   FontSize="16" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
-                    </StackPanel>
-                </StackPanel>
+                               FontSize="26" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                    <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
+                           Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
+                    <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
+                           Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
+                    <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
+                               Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
+                               FontSize="16" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
+                </Grid>
             </Grid>
             <!--详细信息-->
             <!--
