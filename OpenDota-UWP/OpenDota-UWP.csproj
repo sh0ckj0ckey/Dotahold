@@ -829,6 +829,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fonts\Radiance.ttf" />
+    <Content Include="Fonts\Radiance-SemiBold.ttf" />
+    <Content Include="Fonts\Reaver-Bold.ttf" />
     <None Include="OpenDota-UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />

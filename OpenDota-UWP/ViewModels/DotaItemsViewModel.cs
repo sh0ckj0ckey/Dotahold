@@ -41,7 +41,7 @@ namespace OpenDota_UWP.ViewModels
 
         public DotaItemsViewModel()
         {
-            LoadDotaItems();
+            //LoadDotaItems();
         }
 
         public async void LoadDotaItems()

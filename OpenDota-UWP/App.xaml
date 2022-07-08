@@ -920,6 +920,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
             <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
                 <Setter Property="Padding" Value="12,5,0,7"/>
                 <Setter Property="MaxDropDownHeight" Value="504"/>

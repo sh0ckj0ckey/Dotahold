@@ -58,7 +58,7 @@ namespace OpenDota_UWP.ViewModels
 
         public DotaHeroesViewModel()
         {
-            LoadDotaHeroes();
+            //LoadDotaHeroes();
         }
 
         public async void LoadDotaHeroes()

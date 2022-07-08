@@ -57,10 +57,11 @@ namespace OpenDota_UWP.Views
 
             try
             {
+                ShowBackgroundImage?.Begin();
                 ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animateHeroInfoPhoto");
                 if (animation != null)
                 {
-                    animation.TryStart(HeroPhotoBorder);
+                    animation.TryStart(HeroPhotoBorder, new UIElement[] { HeroNameTextBlock });
                 }
             }
             catch { }
