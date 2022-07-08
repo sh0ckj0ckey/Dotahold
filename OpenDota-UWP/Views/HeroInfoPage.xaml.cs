@@ -61,7 +61,7 @@ namespace OpenDota_UWP.Views
                 ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animateHeroInfoPhoto");
                 if (animation != null)
                 {
-                    animation.TryStart(HeroPhotoBorder, new UIElement[] { HeroNameTextBlock });
+                    animation.TryStart(HeroPhotoBorder, new UIElement[] { HeroNameTextBlock, HeroRoleTextBlock });
                 }
             }
             catch { }

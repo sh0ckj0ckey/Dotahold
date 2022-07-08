@@ -16,7 +16,7 @@ namespace OpenDota_UWP.Converters
             {
                 if (value != null && parameter != null)
                 {
-                    return value.ToString() == parameter.ToString();
+                    return value.ToString().ToLower() == parameter.ToString().ToLower();
                 }
             }
             catch { }

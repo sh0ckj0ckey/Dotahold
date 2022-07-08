@@ -129,6 +129,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringArrayToStringConverter.cs" />
     <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBorderBrushConverter.cs" />

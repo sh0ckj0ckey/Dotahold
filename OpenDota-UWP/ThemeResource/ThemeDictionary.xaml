@@ -42,6 +42,9 @@
                     <BitmapImage x:Key="HERO_TAB_STR_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_strength.png" />
                     <BitmapImage x:Key="HERO_TAB_AGI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_agility.png" />
                     <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_intelligence.png" />
+
+                    <BitmapImage x:Key="HERO_ATTKTYPE_MELLE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_melee_dark.png" />
+                    <BitmapImage x:Key="HERO_ATTKTYPE_RANGE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_ranged_dark.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -85,6 +88,9 @@
                     <BitmapImage x:Key="HERO_TAB_STR_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_strength.png" />
                     <BitmapImage x:Key="HERO_TAB_AGI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_agility.png" />
                     <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_intelligence.png" />
+
+                    <BitmapImage x:Key="HERO_ATTKTYPE_MELLE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_melee_light.png" />
+                    <BitmapImage x:Key="HERO_ATTKTYPE_RANGE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_ranged_light.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

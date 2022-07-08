@@ -8,6 +8,7 @@
     xmlns:helpers="using:OpenDota_UWP.Helpers" 
     xmlns:ToolkitUI="using:Microsoft.Toolkit.Uwp.UI" 
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:Converter="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -22,6 +23,10 @@
                                  From="0" To="1" Duration="0:0:0.5">
                 </DoubleAnimation>
             </Storyboard>
+
+            <Converter:StringArrayToStringConverter x:Key="strArr2Str"/>
+            <Converter:EqualToBoolConverter x:Key="Eql2Bool"/>
+            <Converter:EqualToVisibilityConverter x:Key="Eql2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
@@ -60,30 +65,50 @@
             </Button>
             <!--英雄头像和背景介绍-->
             <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <!--英雄头像-->
-                    <Border x:Name="HeroPhotoBorder" Grid.Column="0" Grid.ColumnSpan="2"
-                            Width="128" Height="72" Margin="64,0,0,0"
-                            VerticalAlignment="Center">
-                        <ToolkitUI:Effects.Shadow>
-                            <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
-                                                             Color="Black"
-                                                             Offset="0,0,8"
-                                                             Opacity="0.2"/>
-                        </ToolkitUI:Effects.Shadow>
-                        <Image Width="128" Height="72" Stretch="Uniform">
-                            <Image.Source>
-                                <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
-                            </Image.Source>
-                        </Image>
-                    </Border>
-                    <TextBlock x:Name="HeroNameTextBlock" 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="192"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--英雄头像-->
+                <Border x:Name="HeroPhotoBorder" Grid.Column="0"
+                        Width="128" Height="72" Margin="64,0,0,0"
+                        VerticalAlignment="Center">
+                    <ToolkitUI:Effects.Shadow>
+                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
+                                                         Color="Black"
+                                                         Offset="0,0,8"
+                                                         Opacity="0.2"/>
+                    </ToolkitUI:Effects.Shadow>
+                    <Image Width="128" Height="72" Stretch="Uniform">
+                        <Image.Source>
+                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+                <Grid Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock x:Name="HeroNameTextBlock" HorizontalAlignment="Left" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                                FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                               FontSize="24" CharacterSpacing="20" Margin="12,0,0,0"/>
+                               FontSize="24" CharacterSpacing="20" TextTrimming="CharacterEllipsis"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="0.7">
+                        <Image Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
+                               Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
+                        <Image Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
+                               Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
+                        <TextBlock x:Name="HeroRoleTextBlock" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Medium"
+                                   Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
+                                   FontSize="16" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
-            <!--详细信息--><!--
+            <!--详细信息-->
+            <!--
             <Grid Grid.Row="2"
                   Margin="12,12,0,0">
                 <Pivot>
