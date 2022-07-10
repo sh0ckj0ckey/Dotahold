@@ -65,6 +65,28 @@
                                VerticalAlignment="Center" />
                 </Button.Content>
             </Button>
+            <!--英雄榜按钮-->
+            <Button Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="6"
+                    HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
+                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
+                <Button.Content>
+                    <TextBlock Text="&#xE179;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="16"
+                               VerticalAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <!--背景故事按钮-->
+            <Button Grid.Row="1" Margin="0,0,96,0" Width="42" Height="42" CornerRadius="6"
+                    HorizontalAlignment="Right" ToolTipService.ToolTip="Read History"
+                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_1">
+                <Button.Content>
+                    <TextBlock Text="&#xE736;"
+                               FontFamily="Segoe MDL2 Assets"
+                               FontSize="16"
+                               VerticalAlignment="Center" />
+                </Button.Content>
+            </Button>
             <!--英雄头像和背景介绍-->
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

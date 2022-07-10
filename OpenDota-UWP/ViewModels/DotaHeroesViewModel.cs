@@ -118,11 +118,11 @@ namespace OpenDota_UWP.ViewModels
             catch { }
         }
 
-        private void ReqHeroInfo(int heroId)
+        private void ReqHeroInfo(int heroId, string language = "english")
         {
             try
             {
-
+                string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
             }
             catch { }
         }
