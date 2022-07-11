@@ -43,6 +43,15 @@ namespace OpenDota_UWP.Views
             {
                 ViewModel = DotaHeroesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
+
+                ViewModel.ActPopInHeroInfoGrid += () =>
+                {
+                    try
+                    {
+                        PopInHeroInfoStoryboard?.Begin();
+                    }
+                    catch { }
+                };
             }
             catch { }
         }

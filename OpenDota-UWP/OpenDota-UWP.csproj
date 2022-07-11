@@ -129,11 +129,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Converters\StringArrayToStringConverter.cs" />
     <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBorderBrushConverter.cs" />
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringFormatter.cs" />
     <Compile Include="Converters\StringLengthToFontSizeConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />

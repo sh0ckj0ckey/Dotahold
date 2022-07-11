@@ -21,7 +21,7 @@ namespace OpenDota_UWP.Converters
 
                 if (parameter != null && value != null && parameter.ToString() == "-")
                 {
-                    return int.Parse(value?.ToString() ?? "") <= 0 ? Visibility.Visible : Visibility.Collapsed;
+                    return int.Parse(value?.ToString() ?? "0") <= 0 ? Visibility.Visible : Visibility.Collapsed;
                 }
 
                 if (parameter != null && value != null)

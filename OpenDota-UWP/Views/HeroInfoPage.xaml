@@ -10,6 +10,7 @@
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:Converter="using:OpenDota_UWP.Converters" 
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:OpenDota_UWP.UI"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -18,16 +19,30 @@
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Converter:StringArrayToStringConverter x:Key="strArr2Str"/>
+            <Converter:EqualToBoolConverter x:Key="Eql2Bool"/>
+            <Converter:EqualToVisibilityConverter x:Key="Eql2Vis"/>
+            <Converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+            <Converter:IntToVisibilityConverter x:Key="Int2Vis"/>
+            <Converter:DoubleToStringConverter x:Key="Double2Str"/>
+
             <Storyboard x:Name="ShowBackgroundImage">
                 <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.3">
                 </DoubleAnimation>
             </Storyboard>
-
-            <Converter:StringArrayToStringConverter x:Key="strArr2Str"/>
-            <Converter:EqualToBoolConverter x:Key="Eql2Bool"/>
-            <Converter:EqualToVisibilityConverter x:Key="Eql2Vis"/>
+            
+            <Storyboard x:Name="PopInHeroInfoStoryboard">
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
@@ -60,7 +75,7 @@
                     HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
                 <Button.Content>
-                    <TextBlock Text="&#xF0D5;"
+                    <TextBlock Text="&#xF0D5;" Foreground="White"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
                                VerticalAlignment="Center" />
@@ -71,7 +86,7 @@
                     HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
                 <Button.Content>
-                    <TextBlock Text="&#xE179;"
+                    <TextBlock Text="&#xE179;" Foreground="White"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
                                VerticalAlignment="Center" />
@@ -82,7 +97,7 @@
                     HorizontalAlignment="Right" ToolTipService.ToolTip="Read History"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_1">
                 <Button.Content>
-                    <TextBlock Text="&#xE736;"
+                    <TextBlock Text="&#xE736;" Foreground="White"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
                                VerticalAlignment="Center" />
@@ -121,7 +136,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="HeroNameTextBlock" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
-                               FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="White"
                                FontSize="26" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                     <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
                            Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
@@ -129,503 +144,220 @@
                            Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
                     <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
                                Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
-                               FontSize="16" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
+                               FontSize="16" Foreground="White" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
                 </Grid>
             </Grid>
             <!--详细信息-->
-            <ScrollViewer Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                    <Grid Height="Auto" HorizontalAlignment="Stretch">
-                        <ListView IsItemClickEnabled="False" SelectionMode="None"
-                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                                  Margin="0,16">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ToolkitUICtrl:WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
+            <Grid x:Name="HeroInfoGrid" Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="HeroInfoGridTranslation" Y="60"/>
+                </Grid.RenderTransform>
+                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid Height="Auto" HorizontalAlignment="Stretch">
+                            <ListView IsItemClickEnabled="False" SelectionMode="None"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                                      Margin="0,16">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ToolkitUICtrl:WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
 
-                            <ListViewItem Margin="16,0,-12,0">
-                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="58~62" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="52,0,-12,0">
+                                    <Grid Width="112" Height="60" BorderBrush="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="2" CornerRadius="6">
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="18"/>
+                                                <RowDefinition Height="18"/>
+                                                <RowDefinition Height="18"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Icons/Hero/hero_strength.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <Image Grid.Row="1" Grid.Column="0" Source="/Assets/Icons/Hero/hero_agility.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <Image Grid.Row="2" Grid.Column="0" Source="/Assets/Icons/Hero/hero_intelligence.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.str_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.int_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.str_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.int_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="108" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="1.7" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="156" Height="60" Background="Transparent" CornerRadius="6" 
+                                          BorderBrush="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="2">
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid Width="146" Height="20" Margin="0,0,0,6" CornerRadius="4">
+                                                <Grid.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Color="#80286323" Offset="0"/>
+                                                            <GradientStop Color="#807AF03C" Offset="0.5"/>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                                <ToolkitUICtrl:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center" BlurRadius="6">
+                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </ToolkitUICtrl:DropShadowPanel>
+                                                <TextBlock FontWeight="Normal" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                    <Run Text="+"/>
+                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                            <Grid Width="146" Height="20" Margin="0,0,0,0" CornerRadius="4">
+                                                <Grid.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Color="#801056DB" Offset="0"/>
+                                                            <GradientStop Color="#8073F5FE" Offset="0.5"/>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                                <ToolkitUICtrl:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center" BlurRadius="6">
+                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </ToolkitUICtrl:DropShadowPanel>
+                                                <TextBlock FontWeight="Normal" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                    <Run Text="+"/>
+                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay}"/>
+                                                </TextBlock>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="200" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_min,Mode=OneWay}"/>
+                                                <Run Text="~"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_max,Mode=OneWay}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="1100" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="108" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_rate,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="6" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_range,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_magic_resist.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="25%" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                                    <Grid Width="132" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="1100" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.armor,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,-12,0">
-                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="0.7" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_magic_resist.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.magic_resistance,Mode=OneWay}"/>
+                                                <Run Text="%"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
 
-                            <ListViewItem Margin="0,0,12,0">
-                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="1800/800" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </ListViewItem>
-                        </ListView>
-                        <Rectangle HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTMASK_BK}"/>
-                    </Grid>
-                </StackPanel>
-            </ScrollViewer>
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.movement_speed,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
+
+                                <ListViewItem Margin="0,0,-12,0">
+                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.turn_rate,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
+
+                                <ListViewItem Margin="0,0,12,0">
+                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                        <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_day,Mode=OneWay}"/>
+                                                <Run Text="/"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_night,Mode=OneWay}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </ListViewItem>
+                            </ListView>
+                            <Rectangle IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                            <Rectangle IsHitTestVisible="False" HorizontalAlignment="Left" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+                <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+            </Grid>
+            <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                <ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
+            </Grid>
             <!--
             <Grid Grid.Row="2"
                   Margin="12,12,0,0">
                 <Pivot>
-                    <Pivot.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}"
-                                       FontSize="20"
-                                       FontWeight="Bold" />
-                        </DataTemplate>
-                    </Pivot.HeaderTemplate>
                     <PivotItem Header="STATS">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel x:Name="BasicInformWrapPanel"
                                                 Orientation="Horizontal"
                                                 HorizontalAlignment="Center">
-                                <Grid MaxWidth="480"
-                                      Margin="8,0,16,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="56" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0"
-                                          Margin="6,16,36,0"
-                                          HorizontalAlignment="Left"
-                                          VerticalAlignment="Top">
-                                        <GridView MaxWidth="384"
-                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                                  ScrollViewer.VerticalScrollMode="Disabled"
-                                                  IsItemClickEnabled="True"
-                                                  SelectionMode="None">
-                                            <GridViewItem Width="96"
-                                                          Height="48"
-                                                          ToolTipService.ToolTip="Strength">
-                                                <Grid Width="96"
-                                                      Height="48">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="48" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Rectangle Grid.ColumnSpan="2"
-                                                               Opacity="0.1"
-                                                               Fill="Gray" />
-                                                    <Image Grid.Column="0"
-                                                           Width="26"
-                                                           Height="26"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           Source="/Assets/Icons/strength.png" />
-                                                    <Ellipse x:Name="StrEllipse"
-                                                             Grid.Column="0"
-                                                             Width="28"
-                                                             Height="28"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Stroke="LightGray"
-                                                             StrokeThickness="2"
-                                                             Visibility="Collapsed" />
-                                                    <TextBlock x:Name="StrTextBlock"
-                                                               Grid.Column="1"
-                                                               HorizontalAlignment="Left"
-                                                               VerticalAlignment="Center"
-                                                               FontSize="18"
-                                                               Text="0" />
-                                                </Grid>
-                                            </GridViewItem>
-                                            <GridViewItem Width="96"
-                                                          Height="48"
-                                                          ToolTipService.ToolTip="Agility">
-                                                <Grid Width="96"
-                                                      Height="48">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="48" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Rectangle Grid.ColumnSpan="2"
-                                                               Opacity="0.1"
-                                                               Fill="Gray" />
-                                                    <Image Grid.Column="0"
-                                                           Width="26"
-                                                           Height="26"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           Source="/Assets/Icons/agility.png" />
-                                                    <Ellipse x:Name="AgiEllipse"
-                                                             Grid.Column="0"
-                                                             Width="28"
-                                                             Height="28"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Stroke="LightGray"
-                                                             StrokeThickness="2"
-                                                             Visibility="Collapsed" />
-                                                    <TextBlock x:Name="AgiTextBlock"
-                                                               Grid.Column="1"
-                                                               HorizontalAlignment="Left"
-                                                               VerticalAlignment="Center"
-                                                               FontSize="18"
-                                                               Text="0" />
-                                                </Grid>
-                                            </GridViewItem>
-                                            <GridViewItem Width="96"
-                                                          Height="48"
-                                                          ToolTipService.ToolTip="Intelligence">
-                                                <Grid Width="96"
-                                                      Height="48">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="48" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Rectangle Grid.ColumnSpan="2"
-                                                               Opacity="0.1"
-                                                               Fill="Gray" />
-                                                    <Image Grid.Column="0"
-                                                           Width="26"
-                                                           Height="26"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"
-                                                           Source="/Assets/Icons/intelligence.png" />
-                                                    <Ellipse x:Name="IntEllipse"
-                                                             Grid.Column="0"
-                                                             Width="28"
-                                                             Height="28"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Stroke="LightGray"
-                                                             StrokeThickness="2"
-                                                             Visibility="Collapsed" />
-                                                    <TextBlock x:Name="IntTextBlock"
-                                                               Grid.Column="1"
-                                                               HorizontalAlignment="Left"
-                                                               VerticalAlignment="Center"
-                                                               FontSize="18"
-                                                               Text="0" />
-                                                </Grid>
-                                            </GridViewItem>
-                                        </GridView>
-                                    </Grid>
-                                    <Slider Style="{StaticResource SliderStyle1}"
-                                            x:Name="LevelSlider"
-                                            Grid.Row="1"
-                                            Margin="12,0,36,0"
-                                            Maximum="25"
-                                            Minimum="1"
-                                            HorizontalAlignment="Stretch"
-                                            MaxWidth="384"
-                                            TickFrequency="5"
-                                            TickPlacement="Outside"
-                                            BorderBrush="White"
-                                            ValueChanged="LevelSlider_ValueChanged">
-                                        <Slider.Header>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Level "
-                                                           FontWeight="Bold"
-                                                           Foreground="Goldenrod" />
-                                                <TextBlock Text="{Binding Value, ElementName=LevelSlider}"
-                                                           FontWeight="Bold"
-                                                           Foreground="Goldenrod" />
-                                            </StackPanel>
-                                        </Slider.Header>
-                                    </Slider>
-                                    <GridView Grid.Row="2"
-                                              Margin="4,6,6,0"
-                                              ScrollViewer.VerticalScrollMode="Disabled"
-                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                              IsItemClickEnabled="True"
-                                              SelectionMode="None">
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Base Attack"
-                                                               Margin="6" />
-                                                    <TextBlock x:Name="DmgTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Armor"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="ArmorTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Move Speed"
-                                                               Margin="6" />
-                                                    <TextBlock x:Name="MsTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Health"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="HealthTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Mana"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="ManaTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Health Regen"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="HealthRegenTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Mana Regen"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="ManaRegenTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Attack Speed"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="AttkRateTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Attack Range"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="AttackRangeTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Turn rate"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="TurnRateTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="Projectile Speed"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="ProjectileSpeedTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                        <GridViewItem Width="128"
-                                                      Height="84">
-                                            <Grid Width="128"
-                                                  Height="84">
-                                                <Rectangle Margin="2"
-                                                           Fill="Gray"
-                                                           Opacity="0.1" />
-                                                <StackPanel VerticalAlignment="Center"
-                                                            HorizontalAlignment="Center">
-                                                    <TextBlock Text="CM Enabled"
-                                                               Margin="3" />
-                                                    <TextBlock x:Name="CMModeTextBlock"
-                                                               Text="0"
-                                                               HorizontalAlignment="Center"
-                                                               Opacity="0.8" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </GridViewItem>
-                                    </GridView>
-                                </Grid>
                                 <Grid HorizontalAlignment="Stretch">
                                     <ListView IsItemClickEnabled="True"
                                               SelectionMode="None"
@@ -1360,287 +1092,6 @@
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </PivotItem>
-                    <PivotItem Header="ABILITIES&amp;TALENT">
-                        <ScrollViewer>
-                            <StackPanel x:Name="AbiNTalWrapPanel"
-                                                Orientation="Horizontal"
-                                                HorizontalAlignment="Center">
-                                <ListView x:Name="HeroAbilityListView"
-                                          Width="432"
-                                          Margin="0,0,16,0"
-                                          SelectionMode="None"
-                                          HorizontalContentAlignment="Stretch"
-                                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          ScrollViewer.VerticalScrollMode="Disabled">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="helpers:HeroAbility">
-                                            <ListViewItem Height="auto"
-                                                          Margin="2"
-                                                          HorizontalContentAlignment="Stretch">
-                                                <ListViewItem.Background>
-                                                    <SolidColorBrush Color="Gray"
-                                                                     Opacity="0.1" />
-                                                </ListViewItem.Background>
-                                                <Grid Margin="-4,8"
-                                                      HorizontalAlignment="Stretch"
-                                                      VerticalAlignment="Center">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="auto" />
-                                                        <RowDefinition Height="auto" />
-                                                        <RowDefinition Height="auto" />
-                                                        <RowDefinition Height="auto" />
-                                                        <RowDefinition Height="auto" />
-                                                    </Grid.RowDefinitions>
-                                                    <Rectangle x:Name="AbilityImage"
-                                                               Grid.Column="0"
-                                                               Grid.Row="0"
-                                                               Height="84"
-                                                               Width="84"
-                                                               Margin="6,6,12,6"
-                                                               HorizontalAlignment="Left"
-                                                               VerticalAlignment="Center">
-                                                        <Rectangle.Fill>
-                                                            <ImageBrush>
-                                                                <ImageBrush.ImageSource>
-                                                                    <BitmapImage UriSource="{x:Bind PictureUrl}"
-                                                                                 DecodePixelWidth="84"
-                                                                                 DecodePixelType="Logical" />
-                                                                </ImageBrush.ImageSource>
-                                                            </ImageBrush>
-                                                        </Rectangle.Fill>
-                                                    </Rectangle>
-                                                    <StackPanel Grid.Column="1"
-                                                                Grid.Row="0">
-                                                        <TextBlock x:Name="AbilityName"
-                                                                   Text="{x:Bind Name}"
-                                                                   FontFamily="simsun"
-                                                                   FontSize="21"
-                                                                   FontWeight="Bold"
-                                                                   Margin="0,4" />
-                                                        <TextBlock x:Name="AbilityBio"
-                                                                   Text="{x:Bind Intro}"
-                                                                   TextWrapping="WrapWholeWords"
-                                                                   Opacity="0.8"
-                                                                   FontSize="14"
-                                                                   FontWeight="Light" />
-                                                    </StackPanel>
-                                                    <TextBlock x:Name="AbilityTips"
-                                                               Grid.Row="1"
-                                                               Grid.ColumnSpan="2"
-                                                               Text="{x:Bind Tips}"
-                                                               TextWrapping="WrapWholeWords"
-                                                               Opacity="0.8"
-                                                               FontSize="14"
-                                                               Foreground="ForestGreen"
-                                                               Margin="6,0" />
-                                                    <StackPanel Grid.Row="2"
-                                                                Grid.ColumnSpan="2"
-                                                                Margin="6"
-                                                                Orientation="Horizontal">
-                                                        <Image Source="/Assets/Icons/mana.png"
-                                                               Stretch="Fill"
-                                                               Width="14"
-                                                               Height="14" />
-                                                        <TextBlock Text="{x:Bind Mana}"
-                                                                   Margin="4,0,12,0"
-                                                                   Opacity="0.8" />
-                                                        <Image Source="/Assets/Icons/cooldown.png"
-                                                               Stretch="Fill"
-                                                               Width="14"
-                                                               Height="14" />
-                                                        <TextBlock Text="{x:Bind CoolDown}"
-                                                                   Margin="4,0"
-                                                                   Opacity="0.8" />
-                                                    </StackPanel>
-                                                    <TextBlock x:Name="AbilityAttribute"
-                                                               Grid.Column="0"
-                                                               Grid.Row="3"
-                                                               Grid.ColumnSpan="2"
-                                                               Margin="6"
-                                                               TextWrapping="Wrap"
-                                                               Text="{x:Bind Info}"
-                                                               Opacity="0.8" />
-                                                    <Rectangle Grid.Column="0"
-                                                               Grid.Row="4"
-                                                               Grid.ColumnSpan="2"
-                                                               Margin="2,4"
-                                                               Width="420"
-                                                               Fill="Gray"
-                                                               Opacity="0.1"
-                                                               RadiusX="3"
-                                                               RadiusY="3" />
-                                                    <TextBlock x:Name="AbilityBackground"
-                                                               Grid.Column="0"
-                                                               Grid.Row="4"
-                                                               Grid.ColumnSpan="2"
-                                                               Margin="16"
-                                                               Opacity="0.7"
-                                                               TextWrapping="WrapWholeWords"
-                                                               Text="{x:Bind Background}" />
-                                                </Grid>
-                                            </ListViewItem>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <ListView Width="432"
-                                          HorizontalAlignment="Center"
-                                          HorizontalContentAlignment="Stretch"
-                                          VerticalAlignment="Top"
-                                          SelectionMode="None"
-                                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                          ScrollViewer.VerticalScrollMode="Disabled">
-                                    <ListViewItem Background="#22808080"
-                                                  HorizontalContentAlignment="Stretch"
-                                                  Margin="2"
-                                                  Height="72">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="72" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Ellipse Grid.Column="1"
-                                                     Width="42"
-                                                     Height="42"
-                                                     Stroke="DarkGoldenrod"
-                                                     StrokeThickness="3"
-                                                     Fill="{ThemeResource APPLICATION_BK}" />
-                                            <TextBlock Grid.Column="1"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Text="25" />
-                                            <TextBlock x:Name="Talent_25_leftTextBlock"
-                                                       Text="Left talent-LVL25"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="0"
-                                                       HorizontalAlignment="Right"
-                                                       VerticalAlignment="Center" />
-                                            <TextBlock x:Name="Talent_25_rightTextBlock"
-                                                       Text="Right talent-LVL25"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="2"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem Background="#22808080"
-                                                  HorizontalContentAlignment="Stretch"
-                                                  Margin="2"
-                                                  Height="72">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="72" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Ellipse Grid.Column="1"
-                                                     Width="42"
-                                                     Height="42"
-                                                     Stroke="DarkGoldenrod"
-                                                     StrokeThickness="3"
-                                                     Fill="{ThemeResource APPLICATION_BK}" />
-                                            <TextBlock Grid.Column="1"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Text="20" />
-                                            <TextBlock x:Name="Talent_20_leftTextBlock"
-                                                       Text="Left talent-LVL20"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="0"
-                                                       HorizontalAlignment="Right"
-                                                       VerticalAlignment="Center" />
-                                            <TextBlock x:Name="Talent_20_rightTextBlock"
-                                                       Text="Right talent-LVL20"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="2"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem Background="#22808080"
-                                                  HorizontalContentAlignment="Stretch"
-                                                  Margin="2"
-                                                  Height="72">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="72" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Ellipse Grid.Column="1"
-                                                     Width="42"
-                                                     Height="42"
-                                                     Stroke="DarkGoldenrod"
-                                                     StrokeThickness="3"
-                                                     Fill="{ThemeResource APPLICATION_BK}" />
-                                            <TextBlock Grid.Column="1"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Text="15" />
-                                            <TextBlock x:Name="Talent_15_leftTextBlock"
-                                                       Text="Left talent-LVL15"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="0"
-                                                       HorizontalAlignment="Right"
-                                                       VerticalAlignment="Center" />
-                                            <TextBlock x:Name="Talent_15_rightTextBlock"
-                                                       Text="Right talent-LVL15"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="2"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem Background="#22808080"
-                                                  HorizontalContentAlignment="Stretch"
-                                                  Margin="2"
-                                                  Height="72">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="72" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Ellipse Grid.Column="1"
-                                                     Width="42"
-                                                     Height="42"
-                                                     Stroke="DarkGoldenrod"
-                                                     StrokeThickness="3"
-                                                     Fill="{ThemeResource APPLICATION_BK}" />
-                                            <TextBlock Grid.Column="1"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Text="10" />
-                                            <TextBlock x:Name="Talent_10_leftTextBlock"
-                                                       Text="Left talent-LVL10"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="0"
-                                                       HorizontalAlignment="Right"
-                                                       VerticalAlignment="Center" />
-                                            <TextBlock x:Name="Talent_10_rightTextBlock"
-                                                       Text="Right talent-LVL10"
-                                                       TextAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Grid.Column="2"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center" />
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
                             </StackPanel>
                         </ScrollViewer>
                     </PivotItem>

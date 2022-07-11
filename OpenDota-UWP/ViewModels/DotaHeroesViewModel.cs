@@ -75,12 +75,15 @@ namespace OpenDota_UWP.ViewModels
         }
 
         // 当前选中的英雄的详情
-        private Models.DotaHeroInfoModel _CurrentHeroInfo = null;
-        public Models.DotaHeroInfoModel CurrentHeroInfo
+        private Models.Hero _CurrentHeroInfo = null;
+        public Models.Hero CurrentHeroInfo
         {
             get { return _CurrentHeroInfo; }
             private set { Set("CurrentHeroInfo", ref _CurrentHeroInfo, value); }
         }
+
+        // 获取到英雄详情后触发动画
+        public Action ActPopInHeroInfoGrid { get; set; } = null;
 
         // 是否已经成功加载过英雄列表
         private bool _bLoadedDotaHeroes = false;
@@ -144,13 +147,18 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 this.CurrentHero = selectedHero;
-                CurrentHeroInfo = await ReqHeroInfo(this.CurrentHero.id);
+                var info = await ReqHeroInfo(this.CurrentHero.id);
+
+                CurrentHeroInfo = info?.result?.data?.heroes?.Length > 0 ? info?.result?.data?.heroes[0] : null;
+                
                 if (CurrentHeroInfo == null)
                     bFailedHeroInfo = true;
                 else
                     bFailedHeroInfo = false;
+
+                ActPopInHeroInfoGrid?.Invoke();
             }
-            catch { }
+            catch { bFailedHeroInfo = true; }
         }
 
         private async Task<Models.DotaHeroInfoModel> ReqHeroInfo(int heroId, string language = "english")

@@ -8,29 +8,23 @@ using Windows.UI.Xaml.Media;
 
 namespace OpenDota_UWP.Converters
 {
-    internal class IntToBoolConverter : IValueConverter
+    internal class DoubleToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
-                if (parameter == null && value != null)
+                string val = value.ToString();
+                if (val.Contains("."))
                 {
-                    return int.Parse(value.ToString()) > 0;
-                }
-
-                if (parameter != null && value != null && parameter.ToString() == "-")
-                {
-                    return int.Parse(value?.ToString() ?? "0") <= 0;
-                }
-
-                if (parameter != null && value != null)
-                {
-                    return parameter.ToString() == value.ToString();
+                    if (value is double v)
+                    {
+                        return v.ToString("f1");
+                    }
                 }
             }
             catch { }
-            return false;
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
