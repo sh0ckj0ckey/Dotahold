@@ -12,6 +12,7 @@ namespace OpenDota_UWP.Helpers
         private static Lazy<ConstantsHelper> _lazyVM = new Lazy<ConstantsHelper>(() => new ConstantsHelper());
         public static ConstantsHelper Instance => _lazyVM.Value;
 
+        private Windows.Web.Http.HttpClient constantsHttpClient = new Windows.Web.Http.HttpClient();
 
         public async Task<Dictionary<string, Models.DotaHeroModel>> GetHeroesConstant()
         {
@@ -62,10 +63,9 @@ namespace OpenDota_UWP.Helpers
         private async Task<T> DownloadConstant<T>(string resource)
         {
             string url = "https://api.opendota.com/api/constants/" + resource;
-            Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
             try
             {
-                var response = await http.GetAsync(new Uri(url));
+                var response = await constantsHttpClient.GetAsync(new Uri(url));
                 string jsonMessage = await response.Content.ReadAsStringAsync();
                 JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                 {
@@ -77,7 +77,6 @@ namespace OpenDota_UWP.Helpers
 
                 if (constantModel != null)
                 {
-                    // !!!!!!!!!!!!!!!这里有异常
                     // await StorageFileHelper.WriteAsync(constantModel, resource + ".dota");
                     return constantModel;
                 }
@@ -625,11 +624,6 @@ namespace OpenDota_UWP.Helpers
             "-","-","-","-","-","-","-"
             //多加了几个空白，防止以后增加新的模式导致ID超出索引
         };
-
-        ///<summary>
-        ///这个字典存放着三围数据
-        ///</summary>
-        public static Dictionary<string, Models.DotaHeroes> dotaHerosDictionary = new Dictionary<string, Models.DotaHeroes>();
 
         /// <summary>
         /// 技能编号与名字
@@ -2534,6 +2528,10 @@ namespace OpenDota_UWP.Helpers
             {"10002", "roshan_halloween_fireball"}
         };
 
+        ///<summary>
+        ///这个字典存放着三围数据
+        ///</summary>
+        public static Dictionary<string, Models.DotaHeroes> dotaHerosDictionary = new Dictionary<string, Models.DotaHeroes>();
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using OpenDota_UWP.Helpers;
+﻿using Newtonsoft.Json;
+using OpenDota_UWP.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,9 @@ namespace OpenDota_UWP.ViewModels
         public ObservableCollection<Models.DotaHeroModel> vAgiHeroesList { get; set; } = new ObservableCollection<Models.DotaHeroModel>();
         public ObservableCollection<Models.DotaHeroModel> vIntHeroesList { get; set; } = new ObservableCollection<Models.DotaHeroModel>();
 
+        // 缓存拉取过的英雄详情
+        private Dictionary<int, Models.DotaHeroInfoModel> dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
+
         // 是否正在加载英雄列表
         private bool _bLoadingHeroes = false;
         public bool bLoadingHeroes
@@ -29,12 +33,29 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bLoadingHeroes", ref _bLoadingHeroes, value); }
         }
 
-        // 是否正在加载英雄详情
-        private bool _bLoadingHeroeInfo = false;
-        public bool bLoadingHeroeInfo
+        // 英雄列表加载是否失败
+        private bool _bFailedHeroes = false;
+        public bool bFailedHeroes
         {
-            get { return _bLoadingHeroeInfo; }
-            set { Set("bLoadingHeroeInfo", ref _bLoadingHeroeInfo, value); }
+            get { return _bFailedHeroes; }
+            set { Set("bFailedHeroes", ref _bFailedHeroes, value); }
+        }
+
+
+        // 是否正在加载英雄详情
+        private bool _bLoadingHeroInfo = false;
+        public bool bLoadingHeroInfo
+        {
+            get { return _bLoadingHeroInfo; }
+            set { Set("bLoadingHeroInfo", ref _bLoadingHeroInfo, value); }
+        }
+
+        // 英雄详情加载是否失败
+        private bool _bFailedHeroInfo = false;
+        public bool bFailedHeroInfo
+        {
+            get { return _bFailedHeroInfo; }
+            set { Set("bFailedHeroInfo", ref _bFailedHeroInfo, value); }
         }
 
         // 英雄属性Tab
@@ -53,8 +74,18 @@ namespace OpenDota_UWP.ViewModels
             private set { Set("CurrentHero", ref _CurrentHero, value); }
         }
 
+        // 当前选中的英雄的详情
+        private Models.DotaHeroInfoModel _CurrentHeroInfo = null;
+        public Models.DotaHeroInfoModel CurrentHeroInfo
+        {
+            get { return _CurrentHeroInfo; }
+            private set { Set("CurrentHeroInfo", ref _CurrentHeroInfo, value); }
+        }
+
         // 是否已经成功加载过英雄列表
         private bool _bLoadedDotaHeroes = false;
+
+        private Windows.Web.Http.HttpClient heroInfoHttpClient = new Windows.Web.Http.HttpClient();
 
         public DotaHeroesViewModel()
         {
@@ -108,23 +139,55 @@ namespace OpenDota_UWP.ViewModels
             finally { bLoadingHeroes = false; }
         }
 
-        public void PickHero(Models.DotaHeroModel selectedHero)
+        public async void PickHero(Models.DotaHeroModel selectedHero)
         {
             try
             {
                 this.CurrentHero = selectedHero;
-                ReqHeroInfo(this.CurrentHero.id);
+                CurrentHeroInfo = await ReqHeroInfo(this.CurrentHero.id);
+                if (CurrentHeroInfo == null)
+                    bFailedHeroInfo = true;
+                else
+                    bFailedHeroInfo = false;
             }
             catch { }
         }
 
-        private void ReqHeroInfo(int heroId, string language = "english")
+        private async Task<Models.DotaHeroInfoModel> ReqHeroInfo(int heroId, string language = "english")
         {
             try
             {
+                if (dictHeroInfos.ContainsKey(heroId))
+                    return dictHeroInfos[heroId];
+
+                bLoadingHeroInfo = true;
+                bFailedHeroInfo = false;
+
                 string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
+
+                try
+                {
+                    var response = await heroInfoHttpClient.GetAsync(new Uri(url));
+                    string jsonMessage = await response.Content.ReadAsStringAsync();
+                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                    };
+
+                    var infoModel = JsonConvert.DeserializeObject<Models.DotaHeroInfoModel>(jsonMessage, jsonSerializerSettings);
+
+                    if (infoModel != null)
+                    {
+                        dictHeroInfos.Add(heroId, infoModel);
+                        return infoModel;
+                    }
+                }
+                catch { }
             }
             catch { }
+            finally { bLoadingHeroInfo = false; }
+            return null;
         }
     }
 }

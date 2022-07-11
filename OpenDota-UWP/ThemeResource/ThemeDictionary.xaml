@@ -21,6 +21,14 @@
                     <Color x:Key="HEROTAB_BTN_BK">#20808080</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
 
+                    <Color x:Key="HEROINFO_LISTITEM_BK">#20F3F4F8</Color>
+                    <LinearGradientBrush x:Key="HEROINFO_LISTMASK_BK" StartPoint="1,0" EndPoint="0,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#272839" Offset="0"/>
+                            <GradientStop Color="#00272839" Offset="0.7"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABITEMS_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark_un.png" />
@@ -67,6 +75,14 @@
                     <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
 
+                    <Color x:Key="HEROINFO_LISTITEM_BK">#20000000</Color>
+                    <LinearGradientBrush x:Key="HEROINFO_LISTMASK_BK" StartPoint="1,0" EndPoint="0,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#F3F4F8" Offset="0"/>
+                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                    
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABITEMS_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark_un.png" />

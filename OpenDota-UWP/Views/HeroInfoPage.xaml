@@ -8,7 +8,8 @@
     xmlns:helpers="using:OpenDota_UWP.Helpers" 
     xmlns:ToolkitUI="using:Microsoft.Toolkit.Uwp.UI" 
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
-    xmlns:Converter="using:OpenDota_UWP.Converters"
+    xmlns:Converter="using:OpenDota_UWP.Converters" 
+    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -132,6 +133,113 @@
                 </Grid>
             </Grid>
             <!--详细信息-->
+            <ScrollViewer Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <Grid Height="Auto" HorizontalAlignment="Stretch">
+                        <ListView IsItemClickEnabled="False" SelectionMode="None"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                                  Margin="0,16">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ToolkitUICtrl:WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                            <ListViewItem Margin="16,0,-12,0">
+                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="58~62" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="108" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="1.7" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="200" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="1100" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="112" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="6" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_magic_resist.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="25%" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="1100" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="0.7" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+
+                            <ListViewItem Margin="0,0,12,0">
+                                <Grid Width="128" Height="56" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="1800/800" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                        </ListView>
+                        <Rectangle HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTMASK_BK}"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
             <!--
             <Grid Grid.Row="2"
                   Margin="12,12,0,0">
