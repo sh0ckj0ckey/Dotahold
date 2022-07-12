@@ -30,6 +30,8 @@ namespace OpenDota_UWP.Views
         DotaHeroesViewModel ViewModel = null;
         DotaViewModel MainViewModel = null;
 
+        private Style _customDialogStyle = null;
+
         //HeroAttr heroAttr = null;
         //bool InitializeFinished = false;
         //ObservableCollection<HeroAbility> abilitiesObservableCollection = new ObservableCollection<HeroAbility>();
@@ -473,9 +475,32 @@ namespace OpenDota_UWP.Views
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (_customDialogStyle == null)
+                {
+                    _customDialogStyle = (Style)Application.Current.Resources["CustomDialogStyle"];
+                }
 
+                ContentDialog dialog = new ContentDialog();
+
+                if (_customDialogStyle != null)
+                {
+                    dialog.Style = _customDialogStyle;
+                }
+
+                dialog.Title = ViewModel.CurrentHero.localized_name;
+                dialog.PrimaryButtonText = "Close";
+                dialog.IsPrimaryButtonEnabled = false;
+                dialog.IsSecondaryButtonEnabled = false;
+                dialog.Content = new UI.HeroHistoryDialogContent();
+                dialog.RequestedTheme = MainViewModel.eAppTheme;
+
+                _ = await dialog.ShowAsync();
+            }
+            catch { }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

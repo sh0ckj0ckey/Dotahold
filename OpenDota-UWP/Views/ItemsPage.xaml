@@ -84,13 +84,13 @@
         </Grid>
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center"
-              Height="72" Width="128" CornerRadius="6"
+              Height="56" Width="96" CornerRadius="6"
               Visibility="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}">
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
             <ProgressRing x:Name="ItemProgressRing"
-                          Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                          Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
         </Grid>
         <Grid x:Name="ItemGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}">

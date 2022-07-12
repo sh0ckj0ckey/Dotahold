@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ContentDialogStyle.xaml"/>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml"/>
+                <ResourceDictionary Source="/ThemeResource/CustomDialogStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <ControlTemplate x:Key="CornerTextBoxTemplate" TargetType="TextBox">

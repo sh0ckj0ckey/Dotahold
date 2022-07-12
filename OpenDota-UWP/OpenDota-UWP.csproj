@@ -153,6 +153,9 @@
     <Compile Include="Models\DotaHeroes.cs" />
     <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
+    <Compile Include="UI\HeroHistoryDialogContent.xaml.cs">
+      <DependentUpon>HeroHistoryDialogContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SomethingWrongControl.xaml.cs">
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
@@ -766,6 +769,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ThemeResource\ContentDialogStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ThemeResource\CustomDialogStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\HeroHistoryDialogContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

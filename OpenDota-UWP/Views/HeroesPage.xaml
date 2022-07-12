@@ -221,49 +221,49 @@
             <converter:EqualToVisibilityConverter x:Key="Eq2Vis"/>
             <converter:StringLengthToFontSizeConverter x:Key="Str2FS"/>
 
-            <!--<Storyboard x:Name="SlideInStrHeroesStoryboard">
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+            <Storyboard x:Name="SlideInStrHeroesStoryboard">
+                <DoubleAnimation Storyboard.TargetName="StrHeroesGridViewTranslation" Storyboard.TargetProperty="X" From="-60" To="0" Duration="0:0:1">
                     <DoubleAnimation.EasingFunction>
                         <ExponentialEase Exponent="12" EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                <DoubleAnimation Storyboard.TargetName="StrHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInLeftAgiHeroesStoryboard">
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                <DoubleAnimation Storyboard.TargetName="AgiHeroesGridViewTranslation" Storyboard.TargetProperty="X" From="60" To="0" Duration="0:0:1">
                     <DoubleAnimation.EasingFunction>
                         <ExponentialEase Exponent="12" EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                <DoubleAnimation Storyboard.TargetName="AgiHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInRightAgiHeroesStoryboard">
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                <DoubleAnimation Storyboard.TargetName="AgiHeroesGridViewTranslation" Storyboard.TargetProperty="X" From="-60" To="0" Duration="0:0:1">
                     <DoubleAnimation.EasingFunction>
                         <ExponentialEase Exponent="12" EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                <DoubleAnimation Storyboard.TargetName="AgiHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInIntHeroesStoryboard">
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                <DoubleAnimation Storyboard.TargetName="IntHeroesGridViewTranslation" Storyboard.TargetProperty="X" From="60" To="0" Duration="0:0:1">
                     <DoubleAnimation.EasingFunction>
                         <ExponentialEase Exponent="12" EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                <DoubleAnimation Storyboard.TargetName="IntHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
-            </Storyboard>-->
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>
@@ -338,27 +338,39 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}"
+        <GridView x:Name="StrHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" 
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded"/>
-        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}"
+                  Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded">
+            <GridView.RenderTransform>
+                <TranslateTransform x:Name="StrHeroesGridViewTranslation"/>
+            </GridView.RenderTransform>
+        </GridView>
+        <GridView x:Name="AgiHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
-                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1"/>
-        <GridView Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}"
+                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1">
+            <GridView.RenderTransform>
+                <TranslateTransform x:Name="AgiHeroesGridViewTranslation"/>
+            </GridView.RenderTransform>
+        </GridView>
+        <GridView x:Name="IntHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
-                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2"/>
+                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2">
+            <GridView.RenderTransform>
+                <TranslateTransform x:Name="IntHeroesGridViewTranslation"/>
+            </GridView.RenderTransform>
+        </GridView>
         <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="72" Width="128" CornerRadius="6" Margin="0,-80,0,0"
               Visibility="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}">

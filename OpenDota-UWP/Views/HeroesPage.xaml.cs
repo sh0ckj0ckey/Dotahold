@@ -70,7 +70,11 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                if (ViewModel.iHeroAttrTabIndex == 0) return;
+
                 ViewModel.iHeroAttrTabIndex = 0;
+
+                SlideInStrHeroesStoryboard?.Begin();
             }
             catch { }
         }
@@ -79,7 +83,19 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                if (ViewModel.iHeroAttrTabIndex == 1) return;
+
+                int oldIndex = ViewModel.iHeroAttrTabIndex;
                 ViewModel.iHeroAttrTabIndex = 1;
+
+                if (oldIndex == 0)
+                {
+                    SlideInLeftAgiHeroesStoryboard?.Begin();
+                }
+                else if (oldIndex == 2)
+                {
+                    SlideInRightAgiHeroesStoryboard?.Begin();
+                }
             }
             catch { }
         }
@@ -88,7 +104,10 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                if (ViewModel.iHeroAttrTabIndex == 2) return;
+
                 ViewModel.iHeroAttrTabIndex = 2;
+                SlideInIntHeroesStoryboard?.Begin();
             }
             catch { }
         }

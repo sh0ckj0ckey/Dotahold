@@ -23,7 +23,8 @@
                    Opacity="0.7"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" Margin="16"/>
-            <TextBlock Text="Something went wrong." Opacity="0.7" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" CharacterSpacing="32"/>
+            <TextBlock Text="Something went wrong." Opacity="0.7" FontWeight="Bold" FontSize="16" Margin="0,0,0,60"
+                       HorizontalAlignment="Center" CharacterSpacing="32"/>
         </StackPanel>
     </Grid>
 </UserControl>

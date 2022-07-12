@@ -154,7 +154,7 @@ namespace OpenDota_UWP.ViewModels
                 if (CurrentHeroInfo == null)
                     bFailedHeroInfo = true;
                 else
-                    bFailedHeroInfo = true;
+                    bFailedHeroInfo = false;
 
                 ActPopInHeroInfoGrid?.Invoke();
             }
