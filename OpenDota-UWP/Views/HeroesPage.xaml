@@ -237,7 +237,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
-                   Text="Heroes" FontWeight="Bold" FontSize="28" CharacterSpacing="40"/>
+                   Text="Heroes" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Width="164" Height="38" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=0,Mode=OneWay}"

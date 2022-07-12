@@ -178,7 +178,6 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Icons/Hero/hero_strength.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             <Image Grid.Row="1" Grid.Column="0" Source="/Assets/Icons/Hero/hero_agility.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -186,12 +185,18 @@
                                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.str_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.int_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="+" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.str_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Bind ViewModel.CurrentHeroInfo.int_gain,Mode=OneWay,Converter={StaticResource Double2Str}}" Opacity="0.7" FontSize="12" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                                <Run Text="+"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.str_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                                <Run Text="+"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.agi_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="2" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                                <Run Text="+"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.int_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            </TextBlock>
                                         </Grid>
                                     </Grid>
                                 </ListViewItem>
@@ -210,11 +215,11 @@
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
                                                 <ToolkitUICtrl:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center" BlurRadius="6">
-                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </ToolkitUICtrl:DropShadowPanel>
                                                 <TextBlock FontWeight="Normal" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
-                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay}"/>
+                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                                 </TextBlock>
                                             </Grid>
                                             <Grid Width="146" Height="20" Margin="0,0,0,0" CornerRadius="4">
@@ -227,11 +232,11 @@
                                                     </LinearGradientBrush>
                                                 </Grid.Background>
                                                 <ToolkitUICtrl:DropShadowPanel HorizontalAlignment="Center" VerticalAlignment="Center" BlurRadius="6">
-                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </ToolkitUICtrl:DropShadowPanel>
                                                 <TextBlock FontWeight="Normal" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
-                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay}"/>
+                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                                 </TextBlock>
                                             </Grid>
                                         </StackPanel>
@@ -244,9 +249,9 @@
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
                                             <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_min,Mode=OneWay}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_min,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                                 <Run Text="~"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_max,Mode=OneWay}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_max,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
@@ -257,7 +262,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_rate,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -267,7 +272,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_range,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_range,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -277,7 +282,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -287,7 +292,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.armor,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.armor,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -298,7 +303,7 @@
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
                                             <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.magic_resistance,Mode=OneWay}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.magic_resistance,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                                 <Run Text="%"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -310,7 +315,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.movement_speed,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.movement_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -320,7 +325,7 @@
                                         <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.turn_rate,Mode=OneWay}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.turn_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                                         </StackPanel>
                                     </Grid>
                                 </ListViewItem>
@@ -331,9 +336,9 @@
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
                                             <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_day,Mode=OneWay}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_day,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                                 <Run Text="/"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_night,Mode=OneWay}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_night,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                             </TextBlock>
                                         </StackPanel>
                                     </Grid>
