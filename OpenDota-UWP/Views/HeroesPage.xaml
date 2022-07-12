@@ -220,6 +220,50 @@
             <converter:EqualToHeroTabBorderBrushConverter x:Key="Eq2BD"/>
             <converter:EqualToVisibilityConverter x:Key="Eq2Vis"/>
             <converter:StringLengthToFontSizeConverter x:Key="Str2FS"/>
+
+            <!--<Storyboard x:Name="SlideInStrHeroesStoryboard">
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideInLeftAgiHeroesStoryboard">
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideInRightAgiHeroesStoryboard">
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideInIntHeroesStoryboard">
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+            </Storyboard>-->
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>

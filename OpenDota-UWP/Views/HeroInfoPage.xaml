@@ -75,7 +75,7 @@
                     HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
                 <Button.Content>
-                    <TextBlock Text="&#xF0D5;" Foreground="White"
+                    <TextBlock Text="&#xE652;" Foreground="White"
                                FontFamily="Segoe MDL2 Assets"
                                FontSize="16"
                                VerticalAlignment="Center" />
