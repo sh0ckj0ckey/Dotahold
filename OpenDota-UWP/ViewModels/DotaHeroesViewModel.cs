@@ -165,11 +165,14 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (dictHeroInfos.ContainsKey(heroId))
-                    return dictHeroInfos[heroId];
-
                 bLoadingHeroInfo = true;
                 bFailedHeroInfo = false;
+
+                if (dictHeroInfos.ContainsKey(heroId))
+                {
+                    await Task.Delay(600);
+                    return dictHeroInfos[heroId];
+                }
 
                 string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
 

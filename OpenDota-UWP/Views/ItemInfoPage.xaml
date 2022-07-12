@@ -18,12 +18,23 @@
             <converter:IntToBoolConverter x:Key="Int2Bool"/>
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
+
+            <Storyboard x:Name="PopInItemInfoStoryboard">
+                <DoubleAnimation Storyboard.TargetName="ItemInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:0.8">
+                    <DoubleAnimation.EasingFunction>
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="ItemInfoStackPanel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.4"/>
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition x:Name="navigationTransition">
-                <DrillInNavigationTransitionInfo />
+                <SuppressNavigationTransitionInfo />
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
@@ -32,7 +43,10 @@
             <BrushTransition />
         </Grid.BackgroundTransition>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="60,0">
+            <StackPanel x:Name="ItemInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="60,0">
+                <StackPanel.RenderTransform>
+                    <TranslateTransform x:Name="ItemInfoGridTranslation" Y="60"/>
+                </StackPanel.RenderTransform>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                     <Grid Height="62" Width="85" CornerRadius="6">
                         <Grid.Background>

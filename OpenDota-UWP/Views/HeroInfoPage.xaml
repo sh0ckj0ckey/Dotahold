@@ -155,7 +155,7 @@
                 <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                               Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <Grid Height="Auto" HorizontalAlignment="Stretch">
+                        <Grid Height="Auto" HorizontalAlignment="Stretch" Margin="0,16,0,0">
                             <ListView IsItemClickEnabled="False" SelectionMode="None"
                                       ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                                       ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"

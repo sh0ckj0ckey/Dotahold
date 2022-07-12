@@ -102,12 +102,16 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                base.OnNavigatedTo(e);
+
                 try
                 {
                     if (e.Parameter is NavigationTransitionInfo transition)
                     {
                         navigationTransition.DefaultNavigationTransitionInfo = transition;
                     }
+
+                    PopInItemInfoStoryboard?.Begin();
                 }
                 catch { }
 
@@ -164,8 +168,6 @@ namespace OpenDota_UWP.Views
 
                 }
                 catch { }
-
-                base.OnNavigatedTo(e);
             }
             catch { }
         }
