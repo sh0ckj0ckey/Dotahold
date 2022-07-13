@@ -156,6 +156,9 @@
     <Compile Include="UI\HeroHistoryDialogContent.xaml.cs">
       <DependentUpon>HeroHistoryDialogContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\HeroPlayerRankDialogContent.xaml.cs">
+      <DependentUpon>HeroPlayerRankDialogContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SomethingWrongControl.xaml.cs">
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
@@ -777,6 +780,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\HeroHistoryDialogContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\HeroPlayerRankDialogContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

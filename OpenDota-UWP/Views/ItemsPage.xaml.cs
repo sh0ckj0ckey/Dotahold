@@ -28,8 +28,8 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
-        DotaItemsViewModel ViewModel = null;
-        DotaViewModel MainViewModel = null;
+        private DotaItemsViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         public ItemsPage()
         {

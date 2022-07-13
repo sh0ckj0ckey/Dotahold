@@ -31,8 +31,8 @@ namespace OpenDota_UWP.Views
         // 用来抑制页面跳转时其他的动画的，这样可以避免其他动画和 Connected Animation 出现奇怪的冲突
         private SuppressNavigationTransitionInfo snti = new SuppressNavigationTransitionInfo();
 
-        DotaHeroesViewModel ViewModel = null;
-        DotaViewModel MainViewModel = null;
+        private DotaHeroesViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         public static DotaHeroes SelectedHero;
 

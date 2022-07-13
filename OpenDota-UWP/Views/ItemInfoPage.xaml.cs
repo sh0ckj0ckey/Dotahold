@@ -29,8 +29,8 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemInfoPage : Page, INotifyPropertyChanged
     {
-        DotaItemsViewModel ViewModel = null;
-        DotaViewModel MainViewModel = null;
+        private DotaItemsViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         // 当前物品的配方列表
         private ObservableCollection<Models.DotaItemModel> vComponentsList = new ObservableCollection<Models.DotaItemModel>();

@@ -27,16 +27,11 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class HeroInfoPage : Page
     {
-        DotaHeroesViewModel ViewModel = null;
-        DotaViewModel MainViewModel = null;
+        private DotaHeroesViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         private Style _customDialogStyle = null;
 
-        //HeroAttr heroAttr = null;
-        //bool InitializeFinished = false;
-        //ObservableCollection<HeroAbility> abilitiesObservableCollection = new ObservableCollection<HeroAbility>();
-        //List<RankPlayer> rankPlayers;
-        //ObservableCollection<RankPlayer> rankPlayersObservableCollection = new ObservableCollection<RankPlayer>();
         public HeroInfoPage()
         {
             this.InitializeComponent();
@@ -87,6 +82,10 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
+        /// <summary>
+        /// 重写离开此页面的代码,显示动画
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             if (e.NavigationMode == NavigationMode.Back)
@@ -98,76 +97,6 @@ namespace OpenDota_UWP.Views
                 animation.Configuration = new DirectConnectedAnimationConfiguration();
             }
         }
-
-        /// <summary>
-        /// 加载选择的英雄对应的HTML代码
-        /// </summary>
-        public async void ShowHero()
-        {
-            //string html = await CrawlerHelper.InitializeHtml(HeroesPage.SelectedHero.ID);
-            //if (html == "gg")
-            //{
-            //    //ShowDialog("Something went wrong, plz retry...");
-            //    return;
-            //}
-            ////ShowTheHeroBio(html);
-            ////ShowTheHeroTalent(html);
-            ////ShowTheHeroAbility(html);
-            ////ShowTheHeroAttr();
-            ////ShowPlayersBoard();
-            //InitializeFinished = true;
-        }
-
-        /// <summary>
-        /// 显示英雄三围属性成长
-        /// </summary>
-        //private async void ShowTheHeroAttr()
-        //{
-        //    heroAttr = await DotaHeroHelper.GetHeroAttr(Array.IndexOf(ConstantsHelper.HeroID, SelectedHero.ID).ToString());
-        //    if (heroAttr == null)
-        //    {
-        //        ShowDialog("Sorry, failed to load hero's attr.");
-        //        return;
-        //    }
-        //    //初始属性
-        //    StrTextBlock.Text = heroAttr.Base_str;
-        //    AgiTextBlock.Text = heroAttr.Base_agi;
-        //    IntTextBlock.Text = heroAttr.Base_int;
-
-        //    HealthTextBlock.Text = (200 + ConvertString2Double(heroAttr.Base_str) * 20).ToString("f0");
-        //    ManaTextBlock.Text = (75 + ConvertString2Double(heroAttr.Base_int) * 12).ToString("f0");
-        //    MsTextBlock.Text = (ConvertString2Double(heroAttr.Move_speed) * (1 + ConvertString2Double(heroAttr.Base_agi) * 0.0005)).ToString("f0");
-        //    ArmorTextBlock.Text = (ConvertString2Double(heroAttr.Base_armor) + ConvertString2Double(heroAttr.Base_agi) * 0.16).ToString("f1");
-        //    HealthRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_health_regen) + 0.09 * ConvertString2Double(heroAttr.Base_str)).ToString("f1");
-        //    ManaRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_mana_regen) + 0.05 * ConvertString2Double(heroAttr.Base_int)).ToString("f1");
-
-        //    double DmgAddition = 0;
-        //    //switch (HeroesPage.selectedHeroPA)
-        //    //{
-        //    //    case 1:
-        //    //        DmgAddition = ConvertString2Double(heroAttr.Base_str);
-        //    //        StrTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-        //    //        StrEllipse.Visibility = Visibility.Visible;
-        //    //        break;
-        //    //    case 2:
-        //    //        DmgAddition = ConvertString2Double(heroAttr.Base_agi);
-        //    //        AgiTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-        //    //        AgiEllipse.Visibility = Visibility.Visible;
-        //    //        break;
-        //    //    case 3:
-        //    //        DmgAddition = ConvertString2Double(heroAttr.Base_int);
-        //    //        IntTextBlock.FontWeight = Windows.UI.Text.FontWeights.Bold;
-        //    //        IntEllipse.Visibility = Visibility.Visible;
-        //    //        break;
-        //    //    default:
-        //    //        break;
-        //    //}
-        //    DmgTextBlock.Text = (ConvertString2Double(heroAttr.Base_attack_min) + DmgAddition) + " - " + (ConvertString2Double(heroAttr.Base_attack_max) + DmgAddition);
-        //    AttackRangeTextBlock.Text = heroAttr.Attack_range;
-        //    AttkRateTextBlock.Text = heroAttr.Attack_rate;
-        //    TurnRateTextBlock.Text = heroAttr.Turn_rate;
-        //    ProjectileSpeedTextBlock.Text = heroAttr.Projectile_speed;
-        //    CMModeTextBlock.Text = heroAttr.Cm_enabled == "true" ? "是" : "否";
 
         //    double[] pick = new double[] { ConvertString2Double(heroAttr._1_pick), ConvertString2Double(heroAttr._2_pick), ConvertString2Double(heroAttr._3_pick), ConvertString2Double(heroAttr._4_pick), ConvertString2Double(heroAttr._5_pick), ConvertString2Double(heroAttr._6_pick), ConvertString2Double(heroAttr._7_pick), ConvertString2Double(heroAttr._8_pick) };
         //    double[] win = new double[] { ConvertString2Double(heroAttr._1_win), ConvertString2Double(heroAttr._2_win), ConvertString2Double(heroAttr._3_win), ConvertString2Double(heroAttr._4_win), ConvertString2Double(heroAttr._5_win), ConvertString2Double(heroAttr._6_win), ConvertString2Double(heroAttr._7_win), ConvertString2Double(heroAttr._8_win) };
@@ -215,29 +144,6 @@ namespace OpenDota_UWP.Views
         //    Win_8TextBlock.Text = heroAttr._8_win;
         //    Pick_8TextBlock.Text = heroAttr._8_pick;
         //    Rate_8TextBlock.Text = (100 * ConvertString2Double(heroAttr._8_win) / ConvertString2Double(heroAttr._8_pick)).ToString("f1") + "%";
-        //}
-
-        /// <summary>
-        /// 显示英雄定位和背景
-        /// </summary>
-        //private async void ShowTheHeroBio(string html)
-        //{
-        //    HeroBio heroBio = await CrawlerHelper.GetHeroBio(SelectedHero.ID, html);
-        //    if (heroBio == null)
-        //    {
-        //        return;
-        //    }
-        //    AtkTextBlock.Text = heroBio.Atk;
-        //    RoleTextBlock.Text = heroBio.Role;
-        //    if (heroBio.Bio.Replace(" ", "") == "")
-        //    {
-        //        heroBio.Bio = await CrawlerHelper.GetHeroBioBackup(SelectedHero.ID, html);
-        //    }
-        //    HeroInfoTextBlock.Text = heroBio.Bio;
-
-        //    HeroBioProgressRing.IsActive = false;
-        //    HeroBioProgressRing.Visibility = Visibility.Collapsed;
-        //}
 
         /// <summary>
         /// 显示英雄天赋树
@@ -307,95 +213,6 @@ namespace OpenDota_UWP.Views
         //}
 
         /// <summary>
-        /// 选择英雄榜的页码
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (PlayersIndexGridView.SelectedIndex < 0)
-        //    {
-        //        return;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex < 1)
-        //    {
-        //        LeftHyperlinkButton.IsEnabled = false;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex < 9)
-        //    {
-        //        RightHyperlinkButton.IsEnabled = true;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex > 8)
-        //    {
-        //        RightHyperlinkButton.IsEnabled = false;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex > 0)
-        //    {
-        //        LeftHyperlinkButton.IsEnabled = true;
-        //    }
-
-        //    if (rankPlayers != null && rankPlayers.Count >= 91)
-        //    {
-        //        int start = PlayersIndexGridView.SelectedIndex + 1;
-        //        rankPlayersObservableCollection.Clear();
-        //        for (int i = start * 10 - 10; i < start * 10; i++)
-        //        {
-        //            try
-        //            {
-        //                rankPlayers[i].Rank = i + 1;
-        //                rankPlayersObservableCollection.Add(rankPlayers[i]);
-        //            }
-        //            catch
-        //            {
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// 选择英雄榜前一页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void LeftHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (PlayersIndexGridView.SelectedIndex > 0)
-        //    {
-        //        PlayersIndexGridView.SelectedIndex--;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex < 1)
-        //    {
-        //        LeftHyperlinkButton.IsEnabled = false;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex < 9)
-        //    {
-        //        RightHyperlinkButton.IsEnabled = true;
-        //    }
-        //}
-
-        /// <summary>
-        /// 选择英雄榜后一页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void RightHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (PlayersIndexGridView.SelectedIndex < 9)
-        //    {
-        //        PlayersIndexGridView.SelectedIndex++;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex > 8)
-        //    {
-        //        RightHyperlinkButton.IsEnabled = false;
-        //    }
-        //    if (PlayersIndexGridView.SelectedIndex > 0)
-        //    {
-        //        LeftHyperlinkButton.IsEnabled = true;
-        //    }
-        //}
-
-        /// <summary>
         /// 返回按钮
         /// </summary>
         /// <param name="sender"></param>
@@ -412,18 +229,11 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
-        public double ConvertString2Double(string value)
-        {
-            if (Double.TryParse(value, out double result))
-            {
-                return result;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
+        /// <summary>
+        /// 点击查看英雄背景
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             try
@@ -456,11 +266,48 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 点击查看英雄榜
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (ViewModel?.CurrentHeroInfo == null) return;
 
+                string loc = TrimHeroHistory(ViewModel.CurrentHeroInfo.bio_loc);
+                ViewModel.CurrentHeroInfo.bio_loc = loc;
+
+                if (_customDialogStyle == null)
+                {
+                    _customDialogStyle = (Style)Application.Current.Resources["CustomDialogStyle"];
+                }
+
+                ContentDialog dialog = new ContentDialog();
+
+                if (_customDialogStyle != null)
+                {
+                    dialog.Style = _customDialogStyle;
+                }
+
+                dialog.CloseButtonText = "Close";
+                dialog.IsPrimaryButtonEnabled = false;
+                dialog.IsSecondaryButtonEnabled = false;
+                dialog.Content = new UI.HeroPlayerRankDialogContent();
+                dialog.RequestedTheme = MainViewModel.eAppTheme;
+
+                _ = await dialog.ShowAsync();
+            }
+            catch { }
         }
 
+        /// <summary>
+        /// 处理英雄背景故事字符串，去掉包含的一些标签和多余的转义符
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
         private string TrimHeroHistory(string history)
         {
             try
