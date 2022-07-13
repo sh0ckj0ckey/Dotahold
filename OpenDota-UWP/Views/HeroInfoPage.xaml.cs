@@ -54,6 +54,15 @@ namespace OpenDota_UWP.Views
                     }
                     catch { }
                 };
+
+                ViewModel.ActShowHeroHistoryButton += () =>
+                {
+                    try
+                    {
+                        ShowHeroHistoryButtonStoryboard?.Begin();
+                    }
+                    catch { }
+                };
             }
             catch { }
         }
@@ -419,6 +428,8 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                if (ViewModel?.CurrentHeroInfo == null) return;
+
                 string loc = TrimHeroHistory(ViewModel.CurrentHeroInfo.bio_loc);
                 ViewModel.CurrentHeroInfo.bio_loc = loc;
 
