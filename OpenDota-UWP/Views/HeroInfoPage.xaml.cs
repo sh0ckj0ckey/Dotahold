@@ -419,6 +419,9 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                string loc = TrimHeroHistory(ViewModel.CurrentHeroInfo.bio_loc);
+                ViewModel.CurrentHeroInfo.bio_loc = loc;
+
                 if (_customDialogStyle == null)
                 {
                     _customDialogStyle = (Style)Application.Current.Resources["CustomDialogStyle"];
@@ -445,6 +448,20 @@ namespace OpenDota_UWP.Views
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private string TrimHeroHistory(string history)
+        {
+            try
+            {
+                string strText = System.Text.RegularExpressions.Regex.Replace(history, "<[^>]+>", "");
+                strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
+                strText = strText.Replace("\t", "");
+                strText = strText.Replace("\r", "\n");
+                return strText;
+            }
+            catch { }
+            return history;
         }
     }
 }

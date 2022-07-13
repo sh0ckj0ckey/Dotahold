@@ -13,10 +13,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
-                   FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="18" Margin="8,16,4,4"/>
+                   FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="20" Margin="8,16,4,4"/>
         <Grid Grid.Row="0" Height="1" Background="#50666666" Margin="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
         <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.bio_loc,Mode=OneWay}" Margin="8"
+            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.bio_loc,Mode=OneWay}" Margin="8,8,8,8"
                        FontSize="15" FontWeight="Medium" Opacity="0.8" IsTextSelectionEnabled="True"
                        CharacterSpacing="10" TextWrapping="WrapWholeWords"/>
         </ScrollViewer>
