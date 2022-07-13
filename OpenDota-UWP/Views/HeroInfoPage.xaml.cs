@@ -393,75 +393,15 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
+            try
             {
-                this.Frame.GoBack();
+                if (this.Frame.CanGoBack)
+                {
+                    this.Frame.GoBack();
+                }
             }
+            catch { }
         }
-
-        /// <summary>
-        /// 拖动滑动条
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void LevelSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (InitializeFinished == false || heroAttr == null)
-        //    {
-        //        return;
-        //    }
-        //    StrTextBlock.Text = (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)).ToString("f0");
-        //    AgiTextBlock.Text = (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)).ToString("f0");
-        //    IntTextBlock.Text = (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1)).ToString("f0");
-        //    double DmgAddition = 0;
-
-        //    DmgAddition = Convert.ToInt32(ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1));
-        //    ArmorTextBlock.Text = (ConvertString2Double(heroAttr.Base_armor) + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.16).ToString("f1");
-        //    HealthTextBlock.Text = (200 + 20 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    ManaTextBlock.Text = (75 + 12 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    MsTextBlock.Text = (ConvertString2Double(heroAttr.Move_speed) * (1 + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.0005)).ToString("f0");
-        //    HealthRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_health_regen) + (0.09 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-        //    ManaRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_mana_regen) + (0.05 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-
-        //    // 不再有主属性加成，所以下面这段作废
-        //    //switch (HeroesPage.selectedHeroPA)
-        //    //{
-        //    //    case 1:
-        //    //        DmgAddition = Convert.ToInt32(ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1));
-        //    //        ArmorTextBlock.Text = (ConvertString2Double(heroAttr.Base_armor) + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.16).ToString("f1");
-        //    //        HealthTextBlock.Text = (200 + 20 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    //        ManaTextBlock.Text = (75 + 12 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    //        MsTextBlock.Text = (ConvertString2Double(heroAttr.Move_speed) * (1 + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.0005)).ToString("f0");
-        //    //        HealthRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_health_regen) * (1 + 0.09 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-        //    //        ManaRegenTextBlock.Text = (/*heroAttr.Base_mana_regen * */(/*1 + 0.018*/0.05 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-
-        //    //        break;
-        //    //    case 2:
-        //    //        DmgAddition = Convert.ToInt32(ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1));
-        //    //        ArmorTextBlock.Text = (ConvertString2Double(heroAttr.Base_armor) + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.16).ToString("f1");
-        //    //        HealthTextBlock.Text = (200 + 20 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    //        ManaTextBlock.Text = (75 + 12 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    //        MsTextBlock.Text = (ConvertString2Double(heroAttr.Move_speed) * (1 + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.0005)).ToString("f0");
-        //    //        HealthRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_health_regen) * (1 + 0.09 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-        //    //        ManaRegenTextBlock.Text = (/*heroAttr.Base_mana_regen * */(/*1 + 0.018*/0.05 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-
-        //    //        break;
-        //    //    case 3:
-        //    //        DmgAddition = Convert.ToInt32(ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1));
-        //    //        ArmorTextBlock.Text = (ConvertString2Double(heroAttr.Base_armor) + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.16).ToString("f1");
-        //    //        HealthTextBlock.Text = (200 + 20 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)) + 0.5).ToString("f0");
-        //    //        ManaTextBlock.Text = (75 + 12 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1))).ToString("f0");
-        //    //        MsTextBlock.Text = (ConvertString2Double(heroAttr.Move_speed) * (1 + (ConvertString2Double(heroAttr.Base_agi) + ConvertString2Double(heroAttr.Agi_gain) * (LevelSlider.Value - 1)) * 0.0005)).ToString("f0");
-        //    //        HealthRegenTextBlock.Text = (ConvertString2Double(heroAttr.Base_health_regen) * (1 + 0.09 * (ConvertString2Double(heroAttr.Base_str) + ConvertString2Double(heroAttr.Str_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-        //    //        ManaRegenTextBlock.Text = (/*heroAttr.Base_mana_regen * */(/*1 + 0.0225*/0.05 * (ConvertString2Double(heroAttr.Base_int) + ConvertString2Double(heroAttr.Int_gain) * (LevelSlider.Value - 1)))).ToString("f1");
-
-        //    //        break;
-        //    //    default:
-        //    //        break;
-        //    //}
-
-        //    DmgTextBlock.Text = (ConvertString2Double(heroAttr.Base_attack_min) + DmgAddition) + " - " + (ConvertString2Double(heroAttr.Base_attack_max) + DmgAddition);
-        //}
 
         public double ConvertString2Double(string value)
         {
@@ -491,8 +431,7 @@ namespace OpenDota_UWP.Views
                     dialog.Style = _customDialogStyle;
                 }
 
-                dialog.Title = ViewModel.CurrentHero.localized_name;
-                dialog.PrimaryButtonText = "Close";
+                dialog.CloseButtonText = "Close";
                 dialog.IsPrimaryButtonEnabled = false;
                 dialog.IsSecondaryButtonEnabled = false;
                 dialog.Content = new UI.HeroHistoryDialogContent();

@@ -170,7 +170,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="LayoutRoot" Visibility="Collapsed" Background="{ThemeResource SystemControlPageBackgroundMediumAltMediumBrush}">
-                            <Border x:Name="BackgroundElement"
+                            <Border x:Name="BackgroundElement" Margin="0,16"
                                     Background="{TemplateBinding Background}"
                                     FlowDirection="{TemplateBinding FlowDirection}"
                                     BorderThickness="{ThemeResource ContentDialogBorderWidth}"
@@ -199,7 +199,7 @@
                                                   IsTabStop="False">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="0" />
                                                 <RowDefinition Height="*" />
                                             </Grid.RowDefinitions>
                                             <ContentControl x:Name="Title"
@@ -207,7 +207,6 @@
                                                             Content="{TemplateBinding Title}"
                                                             ContentTemplate="{TemplateBinding TitleTemplate}"
                                                             FontSize="16" CharacterSpacing="36"
-                                                            FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                                             FontWeight="Bold"
                                                             Foreground="{TemplateBinding Foreground}"
                                                             HorizontalAlignment="Left"
