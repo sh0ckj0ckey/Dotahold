@@ -186,31 +186,6 @@ namespace OpenDota_UWP.Views
         //    HeroAbilityListView.ItemsSource = abilitiesObservableCollection;
         //}
 
-        /// <summary>
-        /// 显示英雄榜
-        /// </summary>
-        //private async void ShowPlayersBoard()
-        //{
-        //    rankPlayers = await DotaHeroHelper.GetHeroPlayersAsync(Array.IndexOf(ConstantsHelper.HeroID, SelectedHero.ID).ToString());
-        //    if (rankPlayers == null)
-        //    {
-        //        FailedTextBlock.Visibility = Visibility.Visible;
-        //        PlayersIndexGridView.SelectedIndex = -1;
-        //        PlayersIndexGridView.IsEnabled = false;
-        //        LeftHyperlinkButton.IsEnabled = false;
-        //        RightHyperlinkButton.IsEnabled = false;
-        //        return;
-        //    }
-        //    HeroPlayerProgressRing.IsActive = false;
-        //    HeroPlayerProgressRing.Visibility = Visibility.Collapsed;
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        rankPlayers[i].Rank = i + 1;
-        //        rankPlayersObservableCollection.Add(rankPlayers[i]);
-        //    }
-        //    PlayersListView.ItemsSource = rankPlayersObservableCollection;
-        //    PlayersIndexGridView.SelectedIndex = 0;
-        //}
 
         /// <summary>
         /// 返回按钮
@@ -297,6 +272,8 @@ namespace OpenDota_UWP.Views
                 dialog.IsSecondaryButtonEnabled = false;
                 dialog.Content = new UI.HeroPlayerRankDialogContent();
                 dialog.RequestedTheme = MainViewModel.eAppTheme;
+
+                ViewModel.FetchHeroRanking(ViewModel.CurrentHero.id);
 
                 _ = await dialog.ShowAsync();
             }

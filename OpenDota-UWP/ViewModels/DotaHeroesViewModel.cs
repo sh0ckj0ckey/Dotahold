@@ -25,6 +25,10 @@ namespace OpenDota_UWP.ViewModels
         // 缓存拉取过的英雄详情
         private Dictionary<int, Models.DotaHeroInfoModel> dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
 
+        // 缓存拉取过的英雄排行榜
+        private Dictionary<int, Models.DotaHeroRankingModel> dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
+
+
         // 是否正在加载英雄列表
         private bool _bLoadingHeroes = false;
         public bool bLoadingHeroes
@@ -58,6 +62,24 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bFailedHeroInfo", ref _bFailedHeroInfo, value); }
         }
 
+
+        // 是否正在加载英雄排行榜
+        private bool _bLoadingHeroRanking = false;
+        public bool bLoadingHeroRanking
+        {
+            get { return _bLoadingHeroRanking; }
+            set { Set("bLoadingHeroRanking", ref _bLoadingHeroRanking, value); }
+        }
+
+        // 英雄排行榜加载是否失败
+        private bool _bFailedHeroRanking = false;
+        public bool bFailedHeroRanking
+        {
+            get { return _bFailedHeroRanking; }
+            set { Set("bFailedHeroRanking", ref _bFailedHeroRanking, value); }
+        }
+
+
         // 英雄属性Tab
         private int _iHeroAttrTabIndex = 0;
         public int iHeroAttrTabIndex
@@ -82,6 +104,14 @@ namespace OpenDota_UWP.ViewModels
             private set { Set("CurrentHeroInfo", ref _CurrentHeroInfo, value); }
         }
 
+        // 当前选中的英雄的英雄榜
+        private ObservableCollection<Models.RankingPlayer> _vRankingPlayers = null;
+        public ObservableCollection<Models.RankingPlayer> vRankingPlayers
+        {
+            get { return _vRankingPlayers; }
+            private set { Set("vRankingPlayers", ref _vRankingPlayers, value); }
+        }
+
         // 获取到英雄详情后触发动画
         public Action ActPopInHeroInfoGrid { get; set; } = null;
         public Action ActShowHeroHistoryButton { get; set; } = null;
@@ -90,6 +120,7 @@ namespace OpenDota_UWP.ViewModels
         private bool _bLoadedDotaHeroes = false;
 
         private Windows.Web.Http.HttpClient heroInfoHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient heroRankingHttpClient = new Windows.Web.Http.HttpClient();
 
         public DotaHeroesViewModel()
         {
@@ -151,7 +182,7 @@ namespace OpenDota_UWP.ViewModels
                 var info = await ReqHeroInfo(this.CurrentHero.id);
 
                 CurrentHeroInfo = info?.result?.data?.heroes?.Length > 0 ? info?.result?.data?.heroes[0] : null;
-                
+
                 if (CurrentHeroInfo == null)
                     bFailedHeroInfo = true;
                 else
@@ -163,6 +194,12 @@ namespace OpenDota_UWP.ViewModels
             catch { bFailedHeroInfo = true; }
         }
 
+        /// <summary>
+        /// 请求英雄详细数据信息
+        /// </summary>
+        /// <param name="heroId"></param>
+        /// <param name="language"></param>
+        /// <returns></returns>
         private async Task<Models.DotaHeroInfoModel> ReqHeroInfo(int heroId, string language = "english")
         {
             try
@@ -200,6 +237,83 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
             finally { bLoadingHeroInfo = false; }
+            return null;
+        }
+
+        public async void FetchHeroRanking(int heroId)
+        {
+            try
+            {
+                var ranking = await ReqHeroRanking(heroId);
+
+                if (ranking == null || ranking.rankings == null || ranking.hero_id != this.CurrentHero.id.ToString())
+                    bFailedHeroInfo = true;
+                else
+                {
+                    bFailedHeroInfo = false;
+                    vRankingPlayers?.Clear();
+                    vRankingPlayers = new ObservableCollection<Models.RankingPlayer>();
+
+                    int rank = 1;
+                    foreach (var item in ranking.rankings)
+                    {
+                        try
+                        {
+                            item.iRank = rank;
+                            rank++;
+                            int dotIndex = item.score.IndexOf('.');
+                            string score = dotIndex <= 0 ? item.score : item.score.Substring(0, dotIndex);
+                            item.score = score;
+                            vRankingPlayers.Add(item);
+                        }
+                        catch { }
+                    }
+                }
+            }
+            catch { bFailedHeroInfo = true; }
+        }
+
+        /// <summary>
+        /// 请求英雄榜列表
+        /// </summary>
+        /// <param name="heroId"></param>
+        private async Task<Models.DotaHeroRankingModel> ReqHeroRanking(int heroId)
+        {
+            try
+            {
+                bLoadingHeroRanking = true;
+                bFailedHeroRanking = false;
+
+                if (dictHeroRankings.ContainsKey(heroId))
+                {
+                    await Task.Delay(600);
+                    return dictHeroRankings[heroId];
+                }
+
+                string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
+
+                try
+                {
+                    var response = await heroRankingHttpClient.GetAsync(new Uri(url));
+                    string jsonMessage = await response.Content.ReadAsStringAsync();
+                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                    };
+
+                    var rankingModel = JsonConvert.DeserializeObject<Models.DotaHeroRankingModel>(jsonMessage, jsonSerializerSettings);
+
+                    if (rankingModel != null)
+                    {
+                        dictHeroRankings.Add(heroId, rankingModel);
+                        return rankingModel;
+                    }
+                }
+                catch { }
+            }
+            catch { }
+            finally { bLoadingHeroRanking = false; }
             return null;
         }
     }
