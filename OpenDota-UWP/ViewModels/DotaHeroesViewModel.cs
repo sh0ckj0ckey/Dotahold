@@ -244,15 +244,18 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                vRankingPlayers?.Clear();
+                vRankingPlayers = new ObservableCollection<Models.RankingPlayer>();
+
                 var ranking = await ReqHeroRanking(heroId);
 
                 if (ranking == null || ranking.rankings == null || ranking.hero_id != this.CurrentHero.id.ToString())
+                {
                     bFailedHeroInfo = true;
+                }
                 else
                 {
                     bFailedHeroInfo = false;
-                    vRankingPlayers?.Clear();
-                    vRankingPlayers = new ObservableCollection<Models.RankingPlayer>();
 
                     int rank = 1;
                     foreach (var item in ranking.rankings)

@@ -8,7 +8,7 @@
     xmlns:Models="using:OpenDota_UWP.Models"
     mc:Ignorable="d">
 
-    <Grid MaxHeight="480" Width="560">
+    <Grid MaxHeight="480">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -22,21 +22,21 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" MinWidth="64"/>
+                    <ColumnDefinition Width="Auto" MinWidth="72"/>
                     <ColumnDefinition Width="Auto" MinWidth="56"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
-                           Text="Rank"
+                           Text="Rank" FontWeight="Medium"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Margin="0,0,0,0" />
                 <TextBlock Grid.Column="2"
-                           Text="ID"
+                           Text="ID" FontWeight="Medium"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
-                           Margin="12,0,0,0" />
+                           Margin="0,0,0,0" />
                 <TextBlock Grid.Column="3"
-                           Text="Score"
+                           Text="Score" FontWeight="Medium"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
                            Margin="0,0,0,0" />
@@ -45,17 +45,17 @@
                       HorizontalAlignment="Stretch" SelectionMode="None" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="Models:RankingPlayer">
-                        <Grid Height="48" Margin="0,4,0,0">
+                        <Grid Height="48" Margin="0,4,0,0" MinWidth="460" MaxWidth="460">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="32" />
+                                <ColumnDefinition Width="56" />
                                 <ColumnDefinition Width="38" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="196"/>
+                                <ColumnDefinition Width="128"/>
                                 <ColumnDefinition Width="64" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
                                        Text="{x:Bind iRank,Mode=OneWay}"
-                                       FontSize="14"
+                                       FontSize="14" Margin="0,0,26,0"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />

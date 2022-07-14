@@ -44,8 +44,11 @@
                                  From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
 
-            <Storyboard x:Name="ShowHeroHistoryButtonStoryboard">
+            <Storyboard x:Name="ShowHeroButtonStoryboard">
                 <DoubleAnimation Storyboard.TargetName="HeroHistoryButton"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroRankingButton"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
@@ -100,7 +103,7 @@
                 </Button.Content>
             </Button>
             <!--英雄榜按钮-->
-            <Button Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="6"
+            <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="6" Opacity="0"
                     HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
                 <Button.Content>

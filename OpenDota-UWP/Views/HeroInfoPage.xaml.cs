@@ -54,7 +54,7 @@ namespace OpenDota_UWP.Views
                 {
                     try
                     {
-                        ShowHeroHistoryButtonStoryboard?.Begin();
+                        ShowHeroButtonStoryboard?.Begin();
                     }
                     catch { }
                 };
