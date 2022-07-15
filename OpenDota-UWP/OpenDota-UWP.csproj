@@ -607,6 +607,8 @@
     <Content Include="Assets\Icons\Hero\icon_movement_speed.png" />
     <Content Include="Assets\Icons\Hero\icon_projectile_speed.png" />
     <Content Include="Assets\Icons\Hero\icon_strength.png" />
+    <Content Include="Assets\Icons\Hero\icon_talents_dark.png" />
+    <Content Include="Assets\Icons\Hero\icon_talents_light.png" />
     <Content Include="Assets\Icons\Hero\icon_turn_rate.png" />
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
     <Content Include="Assets\Icons\icon_nochart.png" />

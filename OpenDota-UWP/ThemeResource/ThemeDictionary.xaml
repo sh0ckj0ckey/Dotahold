@@ -59,6 +59,8 @@
 
                     <BitmapImage x:Key="HERO_ATTKTYPE_MELLE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_melee_dark.png" />
                     <BitmapImage x:Key="HERO_ATTKTYPE_RANGE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_ranged_dark.png" />
+
+                    <BitmapImage x:Key="HERO_TALENT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_talents_dark.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -119,6 +121,8 @@
 
                     <BitmapImage x:Key="HERO_ATTKTYPE_MELLE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_melee_dark.png" />
                     <BitmapImage x:Key="HERO_ATTKTYPE_RANGE_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_ranged_dark.png" />
+                    
+                    <BitmapImage x:Key="HERO_TALENT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/icon_talents_dark.png" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
