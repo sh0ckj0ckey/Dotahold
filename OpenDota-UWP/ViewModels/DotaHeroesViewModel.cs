@@ -114,7 +114,7 @@ namespace OpenDota_UWP.ViewModels
 
         // 获取到英雄详情后触发动画
         public Action ActPopInHeroInfoGrid { get; set; } = null;
-        public Action ActShowHeroHistoryButton { get; set; } = null;
+        public Action ActShowHeroInfoButton { get; set; } = null;
 
         // 是否已经成功加载过英雄列表
         private bool _bLoadedDotaHeroes = false;
@@ -189,7 +189,7 @@ namespace OpenDota_UWP.ViewModels
                     bFailedHeroInfo = false;
 
                 ActPopInHeroInfoGrid?.Invoke();
-                ActShowHeroHistoryButton?.Invoke();
+                ActShowHeroInfoButton?.Invoke();
             }
             catch { bFailedHeroInfo = true; }
         }

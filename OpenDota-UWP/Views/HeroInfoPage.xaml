@@ -105,6 +105,7 @@
             <!--英雄榜按钮-->
             <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="6" Opacity="0"
                     HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
+                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
                 <Button.Content>
                     <TextBlock Text="&#xE179;" Foreground="White"

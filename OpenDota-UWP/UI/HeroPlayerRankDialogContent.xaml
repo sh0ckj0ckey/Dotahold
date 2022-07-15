@@ -70,7 +70,8 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                             <Ellipse Grid.Column="1"
-                                     Stroke="#20666666"
+                                     Stroke="#33666666"
+                                     StrokeThickness="2"
                                      Height="36"
                                      Width="36">
                                 <Ellipse.Fill>
@@ -86,9 +87,9 @@
                                        FontSize="14" FontWeight="Medium"
                                        VerticalAlignment="Center"
                                        Margin="10,0,8,0" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="3"
+                            <TextBlock Grid.Column="3" FontFamily="Arial" Margin="0,2,0,0"
                                        Text="{x:Bind account_id,Mode=OneWay}"
-                                       FontSize="14" IsTextSelectionEnabled="True"
+                                       FontSize="12" IsTextSelectionEnabled="True"
                                        HorizontalAlignment="Right" VerticalAlignment="Center"
                                        Opacity="0.8" />
                             <TextBlock Grid.Column="4"

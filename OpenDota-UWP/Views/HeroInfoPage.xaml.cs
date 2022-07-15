@@ -50,7 +50,7 @@ namespace OpenDota_UWP.Views
                     catch { }
                 };
 
-                ViewModel.ActShowHeroHistoryButton += () =>
+                ViewModel.ActShowHeroInfoButton += () =>
                 {
                     try
                     {
