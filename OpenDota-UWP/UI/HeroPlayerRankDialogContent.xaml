@@ -6,9 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:Models="using:OpenDota_UWP.Models"
+    xmlns:Converter="using:OpenDota_UWP.Converters"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
-    <Grid MaxHeight="480">
+    <Grid MaxHeight="520" Background="Transparent" Margin="-14,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -21,9 +31,9 @@
             <Grid Grid.Row="0" Height="36" VerticalAlignment="Top" Background="#20808080">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" MinWidth="72"/>
-                    <ColumnDefinition Width="Auto" MinWidth="56"/>
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="56"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
                            Text="Rank" FontWeight="Medium"
@@ -45,18 +55,18 @@
                       HorizontalAlignment="Stretch" SelectionMode="None" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="Models:RankingPlayer">
-                        <Grid Height="48" Margin="0,4,0,0" MinWidth="460" MaxWidth="460">
+                        <Grid Height="48" Margin="0,4,0,0" MinWidth="482" MaxWidth="482">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="56" />
                                 <ColumnDefinition Width="38" />
-                                <ColumnDefinition Width="196"/>
+                                <ColumnDefinition Width="176"/>
                                 <ColumnDefinition Width="128"/>
                                 <ColumnDefinition Width="64" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0"
                                        Text="{x:Bind iRank,Mode=OneWay}"
                                        FontSize="14" Margin="0,0,26,0"
-                                       FontWeight="Bold"
+                                       FontWeight="Bold" Opacity="0.7"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                             <Ellipse Grid.Column="1"
@@ -79,8 +89,8 @@
                             <TextBlock Grid.Column="3"
                                        Text="{x:Bind account_id,Mode=OneWay}"
                                        FontSize="14" IsTextSelectionEnabled="True"
-                                       FontWeight="Light" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Opacity="0.7" />
+                                       HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Opacity="0.8" />
                             <TextBlock Grid.Column="4"
                                        Text="{x:Bind score,Mode=OneWay}"
                                        FontFamily="Consolas"
@@ -91,5 +101,9 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+        <Grid Grid.Row="1" Width="482" MinHeight="320" Visibility="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+            <ProgressRing Height="32" Width="32" Margin="0,0,0,-60" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay}"/>
+        </Grid>
+        <local:SomethingWrongControl Grid.Row="1" Visibility="{x:Bind ViewModel.bFailedHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Margin="-10"/>
     </Grid>
 </Page>
