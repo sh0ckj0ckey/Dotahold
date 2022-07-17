@@ -56,8 +56,8 @@ namespace OpenDota_UWP.Models
         public double health_regen { get; set; }
         public double max_mana { get; set; }
         public double mana_regen { get; set; }
-        public Ability[] abilities { get; set; }
-        public Talent[] talents { get; set; }
+        public List<Ability> abilities { get; set; }
+        public List<Talent> talents { get; set; }
     }
 
     public class Ability

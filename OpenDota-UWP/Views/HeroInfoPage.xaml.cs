@@ -298,5 +298,35 @@ namespace OpenDota_UWP.Views
             catch { }
             return history;
         }
+
+        private void HeroTalentsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                TalentsPopGrid.Visibility = Visibility.Visible;
+                TalentsPopGridPopIn?.Begin();
+                EnterHeroTalentStoryboard?.Begin();
+            }
+            catch { }
+        }
+
+        private void HeroTalentsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                TalentsPopGridPopOut?.Begin();
+                ExitHeroTalentStoryboard?.Begin();
+            }
+            catch { }
+        }
+
+        private void TalentsPopGridPopOut_Completed(object sender, object e)
+        {
+            try
+            {
+                TalentsPopGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
+        }
     }
 }

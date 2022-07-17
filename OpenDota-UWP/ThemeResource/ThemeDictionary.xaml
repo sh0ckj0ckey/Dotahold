@@ -6,6 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <Color x:Key="APPLICATION_BK">#272839</Color>
+                    <Color x:Key="ACRYLIC_FALLBACK_BK">#272839</Color>
                     <Color x:Key="SIDEMEDU_BK">#1e1e2c</Color>
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
                     <Color x:Key="SIMPLETEXT_FR">White</Color>
@@ -20,6 +21,7 @@
                     <Color x:Key="COMBOBOX_PRESS_BK">#18FFFFFF</Color>
                     <Color x:Key="HEROTAB_BTN_BK">#20808080</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
+                    <Color x:Key="HEROINFO_TALENTS_BK">#2E3044</Color>
 
                     <Color x:Key="HEROINFO_LISTITEM_BK">#14F3F4F8</Color>
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
@@ -68,6 +70,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <Color x:Key="APPLICATION_BK">#F3F4F8</Color>
+                    <Color x:Key="ACRYLIC_FALLBACK_BK">#DD88001B</Color>
                     <Color x:Key="SIDEMEDU_BK">#DD88001B</Color>
                     <Color x:Key="GOLDTEXT_FR">Goldenrod</Color>
                     <Color x:Key="SIMPLETEXT_FR">Black</Color>
@@ -82,6 +85,7 @@
                     <Color x:Key="COMBOBOX_PRESS_BK">#99FFFFFF</Color>
                     <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
+                    <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
 
                     <Color x:Key="HEROINFO_LISTITEM_BK">#08000000</Color>
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">

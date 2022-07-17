@@ -51,7 +51,28 @@
                 <DoubleAnimation Storyboard.TargetName="HeroRankingButton"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroTalentsGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
+
+            <Storyboard x:Name="EnterHeroTalentStoryboard">
+                <DoubleAnimation Storyboard.TargetName="TalentWhiteImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0" Duration="0:0:0.4"/>
+                <DoubleAnimation Storyboard.TargetName="TalentColorImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.4"/>
+            </Storyboard>
+            <Storyboard x:Name="ExitHeroTalentStoryboard">
+                <DoubleAnimation Storyboard.TargetName="TalentWhiteImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.4"/>
+                <DoubleAnimation Storyboard.TargetName="TalentColorImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0" Duration="0:0:0.4"/>
+            </Storyboard>
+            
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
@@ -75,7 +96,7 @@
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.Background>
                         <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
-                                      FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
+                                      FallbackColor="{ThemeResource ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
                     </Grid.Background>
                 </Grid>
             </Grid>
@@ -158,8 +179,29 @@
                                Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
                                FontSize="16" Foreground="White" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
                 </Grid>
-                <Grid x:Name="HeroTalentsGrid" Grid.Column="2" HorizontalAlignment="Center" Margin="4,0,36,0">
-                    <Image Width="54" Source="{ThemeResource HERO_TALENT_IMG}"/>
+                <Grid x:Name="HeroTalentsGrid" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      Background="Transparent" Margin="4,0,36,0" Opacity="0"
+                      Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                      PointerEntered="HeroTalentsGrid_PointerEntered" PointerExited="HeroTalentsGrid_PointerExited">
+                    <Image x:Name="TalentWhiteImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_dark.png" HorizontalAlignment="Left"/>
+                    <Image x:Name="TalentColorImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_light.png" HorizontalAlignment="Left" Opacity="0"/>
+                </Grid>
+
+                <Grid x:Name="TalentsPopGrid" Grid.ColumnSpan="3" Height="148" MinWidth="256" HorizontalAlignment="Right"
+                      Visibility="Collapsed" Margin="0,0,98,0" IsHitTestVisible="False">
+                    <Grid.Resources>
+                        <Storyboard x:Name="TalentsPopGridPopIn">
+                            <PopInThemeAnimation FromHorizontalOffset="60" Storyboard.TargetName="TalentsPopGrid" Duration="00:00:1"/>
+                        </Storyboard>
+                        <Storyboard x:Name="TalentsPopGridPopOut" Completed="TalentsPopGridPopOut_Completed">
+                            <PopOutThemeAnimation Storyboard.TargetName="TalentsPopGrid" Duration="00:00:0.1"/>
+                        </Storyboard>
+                    </Grid.Resources>
+                    <Polyline Points="0,0 8,8 0,16" StrokeThickness="6" Stroke="{ThemeResource HEROINFO_TALENTS_BK}" Fill="{ThemeResource HEROINFO_TALENTS_BK}" StrokeLineJoin="Round"
+                              HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,7,0" Background="{ThemeResource HEROINFO_TALENTS_BK}" CornerRadius="6" BorderThickness="1,0,0,1" BorderBrush="#404040">
+                        
+                    </Border>
                 </Grid>
             </Grid>
             <!--详细信息-->
@@ -218,8 +260,8 @@
                                             <Grid.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                     <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#80286323" Offset="0"/>
-                                                        <GradientStop Color="#807AF03C" Offset="0.5"/>
+                                                        <GradientStop Color="#99286323" Offset="0"/>
+                                                        <GradientStop Color="#997AF03C" Offset="0.5"/>
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
@@ -235,8 +277,8 @@
                                             <Grid.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                     <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#801056DB" Offset="0"/>
-                                                        <GradientStop Color="#8073F5FE" Offset="0.5"/>
+                                                        <GradientStop Color="#991056DB" Offset="0"/>
+                                                        <GradientStop Color="#9973F5FE" Offset="0.5"/>
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
@@ -363,7 +405,7 @@
                                 </ListViewItem>
                             </ListView>
                             <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                            <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                            <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
                         </Grid>
                         <!--英雄技能-->
                     </StackPanel>
