@@ -148,6 +148,15 @@ namespace OpenDota_UWP.Models
         public double[] values_float { get; set; }
         public bool is_percentage { get; set; }
         public string heading_loc { get; set; }
-        public object[] bonuses { get; set; }
+        public Bonuses[] bonuses { get; set; }
+    }
+
+    public class Bonuses
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+        public double operation { get; set; }
     }
 }
+
+

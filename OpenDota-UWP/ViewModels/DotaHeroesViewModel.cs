@@ -28,6 +28,9 @@ namespace OpenDota_UWP.ViewModels
         // 缓存拉取过的英雄排行榜
         private Dictionary<int, Models.DotaHeroRankingModel> dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
 
+        // 缓存拉取过的英雄的bonus键值
+        private Dictionary<int, Dictionary<string, string>> dictHeroBonuses { get; set; } = new Dictionary<int, Dictionary<string, string>>();
+
 
         // 是否正在加载英雄列表
         private bool _bLoadingHeroes = false;
@@ -174,6 +177,10 @@ namespace OpenDota_UWP.ViewModels
             finally { bLoadingHeroes = false; }
         }
 
+        /// <summary>
+        /// 选中英雄并拉取其详细信息
+        /// </summary>
+        /// <param name="selectedHero"></param>
         public async void PickHero(Models.DotaHeroModel selectedHero)
         {
             try
@@ -184,9 +191,14 @@ namespace OpenDota_UWP.ViewModels
                 CurrentHeroInfo = info?.result?.data?.heroes?.Length > 0 ? info?.result?.data?.heroes[0] : null;
 
                 if (CurrentHeroInfo == null)
+                {
                     bFailedHeroInfo = true;
+                }
                 else
+                {
                     bFailedHeroInfo = false;
+                    OrganizeHeroAbilitiesNTalents(selectedHero.id, CurrentHeroInfo);
+                }
 
                 ActPopInHeroInfoGrid?.Invoke();
                 ActShowHeroInfoButton?.Invoke();
@@ -238,6 +250,40 @@ namespace OpenDota_UWP.ViewModels
             catch { }
             finally { bLoadingHeroInfo = false; }
             return null;
+        }
+
+        /// <summary>
+        /// 整理英雄信息中的技能和天赋树相关信息
+        /// </summary>
+        /// <param name="info"></param>
+        private void OrganizeHeroAbilitiesNTalents(int heroId, Models.Hero info)
+        {
+            try
+            {
+                if (info == null) return;
+
+                if (!dictHeroBonuses.ContainsKey(heroId))
+                    dictHeroBonuses.Add(heroId, new Dictionary<string, string>());
+                else if (dictHeroBonuses.ContainsKey(heroId) && dictHeroBonuses[heroId] == null)
+                    dictHeroBonuses[heroId] = new Dictionary<string, string>();
+
+                var bonusDict = dictHeroBonuses[heroId];
+
+                foreach (var ability in info.abilities)
+                {
+                    foreach (var specialVal in ability.special_values)
+                    {
+                        if (specialVal.bonuses != null && specialVal.bonuses.Length > 0)
+                        {
+                            foreach (var bonus in specialVal.bonuses)
+                            {
+                                bonusDict.Add(bonus.name, bonus.value);
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         public async void FetchHeroRanking(int heroId)
