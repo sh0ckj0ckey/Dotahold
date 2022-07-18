@@ -286,6 +286,38 @@ namespace OpenDota_UWP.ViewModels
             catch { }
         }
 
+        //Ri = function(e, t)
+        //{
+        //    var a = e.talents[t],
+        //      n = e.talents[t].name_loc;
+        //    return (
+        //      a.special_values.forEach(function(e) {
+        //        if (e.values_float.length > 0)
+        //        {
+        //            var t = e.values_float[0];
+        //            (t = Math.floor(100 * t) / 100),
+        //          (n = n.replace("{s:" + e.name + "}", "" + t));
+        //        }
+        //    }),
+        //    e.abilities.forEach(function(e) {
+        //        e.special_values.forEach(function(e) {
+        //            var t;
+        //            null === (t = e.bonuses) ||
+        //              void 0 === t ||
+        //              t.forEach(function(t) {
+        //                if (t.name === a.name)
+        //                {
+        //                    var r = t.value;
+        //                    (r = Math.floor(100 * r) / 100),
+        //                (n = n.replace("{s:bonus_" + e.name + "}", "" + r));
+        //                }
+        //            });
+        //        });
+        //    }),
+        //    n
+        //  );
+        //},
+
         public async void FetchHeroRanking(int heroId)
         {
             try
