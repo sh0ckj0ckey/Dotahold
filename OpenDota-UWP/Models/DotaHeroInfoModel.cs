@@ -154,7 +154,7 @@ namespace OpenDota_UWP.Models
     public class Bonuses
     {
         public string name { get; set; }
-        public string value { get; set; }
+        public double value { get; set; }
         public double operation { get; set; }
     }
 }

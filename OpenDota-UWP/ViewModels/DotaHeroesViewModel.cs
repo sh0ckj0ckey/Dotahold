@@ -253,35 +253,46 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
-        /// 整理英雄信息中的技能和天赋树相关信息
+        /// 整理英雄信息中的天赋树相关信息
         /// </summary>
         /// <param name="info"></param>
-        private void OrganizeHeroAbilitiesNTalents(int heroId, Models.Hero info)
+        private void OrganizeHeroTalents(Models.Hero info, int index)
         {
             try
             {
-                if (info == null) return;
-
-                if (!dictHeroBonuses.ContainsKey(heroId))
-                    dictHeroBonuses.Add(heroId, new Dictionary<string, string>());
-                else if (dictHeroBonuses.ContainsKey(heroId) && dictHeroBonuses[heroId] == null)
-                    dictHeroBonuses[heroId] = new Dictionary<string, string>();
-
-                var bonusDict = dictHeroBonuses[heroId];
-
-                foreach (var ability in info.abilities)
+                Models.Talent talent = info.talents[index];
+                string talentNameLoc = talent.name_loc;
+                foreach (var v in talent.special_values)
                 {
-                    foreach (var specialVal in ability.special_values)
+                    try
                     {
-                        if (specialVal.bonuses != null && specialVal.bonuses.Length > 0)
+                        if (v.values_float.Length > 0)
                         {
-                            foreach (var bonus in specialVal.bonuses)
+                            string value = ConvertDouble2String(v.values_float[0]);
+                            talentNameLoc = talentNameLoc.Replace($"{{s:{v.name}}}", value);
+                        }
+                    }
+                    catch { }
+                }
+                foreach (var abi in info.abilities)
+                {
+                    foreach (var v in abi.special_values)
+                    {
+                        if (v.bonuses != null && v.bonuses.Length > 0)
+                        {
+                            foreach (var bonus in v.bonuses)
                             {
-                                bonusDict.Add(bonus.name, bonus.value);
+                                if (bonus.name == talent.name)
+                                {
+                                    string value = ConvertDouble2String(bonus.value);
+                                    talentNameLoc = talentNameLoc.Replace($"{{s:bonus_{v.name}}}", value);
+                                }
                             }
                         }
                     }
                 }
+
+                talent.name_loc = talentNameLoc;
             }
             catch { }
         }
@@ -302,10 +313,10 @@ namespace OpenDota_UWP.ViewModels
         //    e.abilities.forEach(function(e) {
         //        e.special_values.forEach(function(e) {
         //            var t;
-        //            null === (t = e.bonuses) ||
-        //              void 0 === t ||
+        //            null == (t = e.bonuses) ||
+        //              void 0 == t ||
         //              t.forEach(function(t) {
-        //                if (t.name === a.name)
+        //                if (t.name == a.name)
         //                {
         //                    var r = t.value;
         //                    (r = Math.floor(100 * r) / 100),
@@ -396,6 +407,28 @@ namespace OpenDota_UWP.ViewModels
             catch { }
             finally { bLoadingHeroRanking = false; }
             return null;
+        }
+
+
+
+        private string ConvertDouble2String(double val)
+        {
+            try
+            {
+                string str = val.ToString("f1");
+                if (str.EndsWith(".0"))
+                {
+                    return str.Replace(".0", "");
+                }
+                else
+                {
+                    return str;
+                }
+            }
+            catch
+            {
+                return val.ToString();
+            }
         }
     }
 }
