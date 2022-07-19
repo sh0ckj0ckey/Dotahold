@@ -309,38 +309,559 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
         }
+        /*
+        Ri = function(e, t)
+        {
+            var talent = info.talents[t],
+              talentNameLoc = e.talents[t].name_loc;
+            return (
+              talent.special_values.forEach(function(e) {
+                if (e.values_float.length > 0)
+                {
+                    var t = e.values_float[0];
+                    (t = Math.floor(100 * t) / 100),
+                  (talentNameLoc = talentNameLoc.replace("{s:" + e.name + "}", "" + t));
+                }
+            }),
+            info.abilities.forEach(function(e) {
+                info.special_values.forEach(function(e) {
+                    var t;
+                    null == (t = e.bonuses) ||
+                      void 0 == t ||
+                      t.forEach(function(t) {
+                        if (t.name == talent.name)
+                        {
+                            var r = t.value;
+                            (r = Math.floor(100 * r) / 100),
+                        (talentNameLoc = talentNameLoc.replace("{s:bonus_" + e.name + "}", "" + r));
+                        }
+                    });
+                });
+            }),
+            n
+          );
+        },
+        */
 
-        //Ri = function(e, t)
-        //{
-        //    var talent = info.talents[t],
-        //      talentNameLoc = e.talents[t].name_loc;
-        //    return (
-        //      talent.special_values.forEach(function(e) {
-        //        if (e.values_float.length > 0)
-        //        {
-        //            var t = e.values_float[0];
-        //            (t = Math.floor(100 * t) / 100),
-        //          (talentNameLoc = talentNameLoc.replace("{s:" + e.name + "}", "" + t));
-        //        }
-        //    }),
-        //    info.abilities.forEach(function(e) {
-        //        info.special_values.forEach(function(e) {
-        //            var t;
-        //            null == (t = e.bonuses) ||
-        //              void 0 == t ||
-        //              t.forEach(function(t) {
-        //                if (t.name == talent.name)
-        //                {
-        //                    var r = t.value;
-        //                    (r = Math.floor(100 * r) / 100),
-        //                (talentNameLoc = talentNameLoc.replace("{s:bonus_" + e.name + "}", "" + r));
-        //                }
-        //            });
-        //        });
-        //    }),
-        //    n
-        //  );
-        //},
+        /*
+         Ui = Object(d.a)(function (e) {
+          var t = e.heroData,
+            a = Object(o.useState)(!1),
+            n = a[0],
+            r = a[1];
+          if (!t) return null;
+          var i = Xl.getSelectedAbilityIndex(),
+            l =
+              t.abilities.filter(function (e) {
+                return e.ability_is_granted_by_shard;
+              })[0] || void 0,
+            c =
+              t.abilities.filter(function (e) {
+                return 602 != e.id && e.ability_is_granted_by_scepter;
+              })[0] || void 0;
+          l ||
+            (l =
+              t.abilities.filter(function (e) {
+                return e.ability_has_shard;
+              })[0] || void 0),
+            c ||
+              (c =
+                t.abilities.filter(function (e) {
+                  return e.ability_has_scepter;
+                })[0] || void 0);
+          var u = void 0,
+            d = !1,
+            m = !1;
+          if (
+            (-1 == i
+              ? ((d = !0), (u = l))
+              : -2 == i
+              ? ((m = !0), (u = c))
+              : (u = t.abilities[i]),
+            !u)
+          )
+            return null;
+          var p = void 0,
+            _ = void 0,
+            h = void 0,
+            f = void 0,
+            b = void 0;
+          65536 & u.behavior
+            ? (p = "#ability_behavior_aura")
+            : 4 & u.behavior
+            ? (p = "#ability_behavior_no_target")
+            : 8 & u.behavior
+            ? (p = "#ability_behavior_unit_target")
+            : 16 & u.behavior
+            ? (p = "#ability_behavior_point_target")
+            : 32 & u.behavior
+            ? (p = "#ability_behavior_point_aoe")
+            : 128 & u.behavior
+            ? (p = "#ability_behavior_channeled")
+            : 512 & u.behavior
+            ? (p = "#ability_behavior_toggle")
+            : 4096 & u.behavior
+            ? (p = "#ability_behavior_autocast")
+            : 2 & u.behavior && (p = "#ability_behavior_passive"),
+            1 == u.immunity || 3 == u.immunity
+              ? (_ = "#yes")
+              : 2 == u.immunity || 4 == u.immunity
+              ? (_ = "#no")
+              : 5 == u.immunity && (_ = "#ability_immunity_alliesyesenemiesno"),
+            1 == u.target_team
+              ? (h =
+                  7 == (7 & u.target_type)
+                    ? "#ability_target_alliedunitsandubildings"
+                    : 3 == (3 & u.target_type)
+                    ? "#ability_target_alliedunits"
+                    : 5 == (5 & u.target_type)
+                    ? "#ability_target_alliedheroesandbuildings"
+                    : 1 == (1 & u.target_type)
+                    ? "#ability_target_alliedheroes"
+                    : 2 == (2 & u.target_type)
+                    ? "#ability_target_alliedcreeps"
+                    : "#ability_target_allies")
+              : 2 == u.target_team
+              ? (h =
+                  7 == (7 & u.target_type)
+                    ? "#ability_target_enemyunitsandubildings"
+                    : 3 == (3 & u.target_type)
+                    ? "#ability_target_enemyunits"
+                    : 5 == (5 & u.target_type)
+                    ? "#ability_target_enemyheroesandbuildings"
+                    : 1 == (1 & u.target_type)
+                    ? "#ability_target_enemyheroes"
+                    : 2 == (2 & u.target_type)
+                    ? "#ability_target_enemycreeps"
+                    : "#ability_target_enemies")
+              : 3 == u.target_team &&
+                (h =
+                  1 == (1 & u.target_type)
+                    ? "#ability_target_heroes"
+                    : "#ability_target_units"),
+            1 == u.damage
+              ? (f = "#ability_damage_physical")
+              : 2 == u.damage
+              ? (f = "#ability_damage_magical")
+              : 4 == u.damage
+              ? (f = "#ability_damage_pure")
+              : 8 == u.damage && (f = "#ability_damage_hpremoval"),
+            1 == u.dispellable
+              ? (b = "#ability_dispellable_strong")
+              : 2 == u.dispellable
+              ? (b = "#yes")
+              : 3 == u.dispellable && (b = "#no");
+          var y = u.desc_loc,
+            S = u.scepter_loc,
+            O = u.shard_loc;
+          u.special_values.forEach(function (e) {
+            var t =
+              e.values_float.length > 0 ? e.values_float[0].toFixed(1) : "0";
+            (y = y.replace(
+              new RegExp("%" + e.name.toLowerCase() + "%", "g"),
+              t
+            )),
+              (S = S.replace(
+                new RegExp("%" + e.name.toLowerCase() + "%", "g"),
+                t
+              )),
+              (O = O.replace(
+                new RegExp("%" + e.name.toLowerCase() + "%", "g"),
+                t
+              ));
+          }),
+            (y = y.replace(/\%\%/g, "%")),
+            (S = S.replace(/\%\%/g, "%")),
+            (O = O.replace(/\%\%/g, "%"));
+          var C = t.name.replace("npc_dota_hero_", ""),
+            I = u.name;
+          d && (I = C + "_aghanims_shard"), m && (I = C + "_aghanims_scepter");
+          var N = y;
+          d && !u.ability_is_granted_by_shard && (N = O),
+            m && !u.ability_is_granted_by_scepter && (N = S);
+          var T = function (e) {
+              Xl.setSelectedAbilityIndex(e), r(!0);
+            },
+            w = m && u.ability_has_scepter && !u.ability_is_granted_by_scepter,
+            D = d && u.ability_has_shard && !u.ability_is_granted_by_shard,
+            L = m && u.ability_is_granted_by_scepter,
+            k = d && u.ability_is_granted_by_shard;
+          return s.a.createElement(
+            "div",
+            { className: Di.a.HeroAbilities },
+            s.a.createElement(
+              "div",
+              { className: Di.a.AbilityLeft },
+              s.a.createElement(
+                "div",
+                { className: Di.a.VideoContainer },
+                s.a.createElement("div", {
+                  className: Object(v.a)(Di.a.FadeUp, n && Di.a.DoFadeAnim),
+                  onAnimationEnd: function () {
+                    return r(!1);
+                  },
+                }),
+                s.a.createElement(
+                  "video",
+                  {
+                    key: I,
+                    className: Di.a.HeroPortrait,
+                    autoPlay: !0,
+                    preload: "auto",
+                    muted: !0,
+                    loop: !0,
+                    playsInline: !0,
+                    poster: g.a.VIDEO_URL + "abilities/" + C + "/" + I + ".jpg",
+                  },
+                  s.a.createElement("source", {
+                    type: "video/webm",
+                    src: g.a.VIDEO_URL + "abilities/" + C + "/" + I + ".webm",
+                  }),
+                  s.a.createElement("source", {
+                    type: "video/mp4",
+                    src: g.a.VIDEO_URL + "abilities/" + C + "/" + I + ".mp4",
+                  })
+                )
+              ),
+              s.a.createElement(
+                "div",
+                { className: Di.a.AbilitySelector },
+                t.abilities.map(function (e, t) {
+                  return e.ability_is_granted_by_scepter ||
+                    e.ability_is_granted_by_shard ||
+                    602 == e.id ||
+                    322 == e.id
+                    ? null
+                    : s.a.createElement("div", {
+                        key: e.name,
+                        className: Object(v.a)(
+                          Di.a.AbilitySelectable,
+                          t != i && Di.a.NotSelected
+                        ),
+                        style: {
+                          backgroundImage:
+                            "url( " +
+                            g.a.IMG_URL +
+                            "abilities/" +
+                            e.name +
+                            ".png )",
+                        },
+                        onClick: function () {
+                          return T(t);
+                        },
+                      });
+                }),
+                l &&
+                  s.a.createElement(
+                    "div",
+                    {
+                      key: l.name + "_shard",
+                      className: Object(v.a)(
+                        Di.a.AbilitySelectable,
+                        Di.a.Shard,
+                        -1 != i && Di.a.NotSelected
+                      ),
+                      style: {
+                        backgroundImage:
+                          "url( " +
+                          g.a.IMG_URL +
+                          "abilities/" +
+                          l.name +
+                          ".png )",
+                      },
+                      onClick: function () {
+                        return T(-1);
+                      },
+                    },
+                    s.a.createElement("div", {
+                      className: Di.a.SubIcon,
+                      style: {
+                        backgroundImage:
+                          "url( " +
+                          g.a.IMG_URL +
+                          "heroes/stats/aghs_shard.png )",
+                      },
+                    })
+                  ),
+                c &&
+                  s.a.createElement(
+                    "div",
+                    {
+                      key: c.name + "_scepter",
+                      className: Object(v.a)(
+                        Di.a.AbilitySelectable,
+                        Di.a.Scepter,
+                        -2 != i && Di.a.NotSelected
+                      ),
+                      style: {
+                        backgroundImage:
+                          "url( " +
+                          g.a.IMG_URL +
+                          "abilities/" +
+                          c.name +
+                          ".png )",
+                      },
+                      onClick: function () {
+                        return T(-2);
+                      },
+                    },
+                    s.a.createElement("div", {
+                      className: Di.a.SubIcon,
+                      style: {
+                        backgroundImage:
+                          "url( " +
+                          g.a.IMG_URL +
+                          "heroes/stats/aghs_scepter.png )",
+                      },
+                    })
+                  )
+              )
+            ),
+            s.a.createElement(
+              "div",
+              { className: Di.a.AbilityRight },
+              s.a.createElement(
+                "div",
+                { className: Di.a.AbilityInfoContainer },
+                s.a.createElement(
+                  "div",
+                  { className: Di.a.AbilityMain },
+                  s.a.createElement("img", {
+                    className: Di.a.AbilityImage,
+                    src: g.a.IMG_URL + "abilities/" + u.name + ".png",
+                  }),
+                  s.a.createElement(
+                    "div",
+                    { className: Di.a.AbilityInfo },
+                    s.a.createElement(
+                      "div",
+                      { className: Di.a.AbilityName },
+                      u.name_loc
+                    ),
+                    w &&
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.AghType },
+                        Object(E.k)("#ability_upgrade_scepter")
+                      ),
+                    D &&
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.AghType },
+                        Object(E.k)("#ability_upgrade_shard")
+                      ),
+                    L &&
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.AghType },
+                        Object(E.k)("#ability_new_scepter")
+                      ),
+                    k &&
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.AghType },
+                        Object(E.k)("#ability_new_shard")
+                      ),
+                    s.a.createElement(
+                      "div",
+                      { className: Di.a.AbilityDesc },
+                      Object(E.k)(N)
+                    )
+                  )
+                ),
+                s.a.createElement(
+                  "div",
+                  { className: Di.a.AbilityDetails },
+                  s.a.createElement(
+                    "div",
+                    {
+                      className: Object(v.a)(
+                        Di.a.GenericValues,
+                        (w || D) && Di.a.Hidden
+                      ),
+                    },
+                    s.a.createElement(
+                      "div",
+                      { className: Di.a.Column },
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.DetailsValues },
+                        p &&
+                          s.a.createElement(
+                            "div",
+                            { className: Di.a.ValueElement },
+                            Object(E.k)("#hero_ability"),
+                            ":",
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.ValueValue },
+                              Object(E.k)(p)
+                            )
+                          ),
+                        h &&
+                          s.a.createElement(
+                            "div",
+                            { className: Di.a.ValueElement },
+                            Object(E.k)("#hero_affects"),
+                            ":",
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.ValueValue },
+                              Object(E.k)(h)
+                            )
+                          ),
+                        f &&
+                          s.a.createElement(
+                            "div",
+                            { className: Di.a.ValueElement },
+                            Object(E.k)("#ability_damage"),
+                            ":",
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.ValueValue },
+                              Object(E.k)(f)
+                            )
+                          )
+                      )
+                    ),
+                    s.a.createElement(
+                      "div",
+                      { className: Di.a.Column },
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.DetailsValues },
+                        _ &&
+                          s.a.createElement(
+                            "div",
+                            { className: Di.a.ValueElement },
+                            Object(E.k)("#hero_spell_immunity"),
+                            ":",
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.ValueValue },
+                              Object(E.k)(_)
+                            )
+                          ),
+                        b &&
+                          s.a.createElement(
+                            "div",
+                            { className: Di.a.ValueElement },
+                            Object(E.k)("#hero_dispellable"),
+                            ":",
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.ValueValue },
+                              Object(E.k)(b)
+                            )
+                          )
+                      )
+                    )
+                  ),
+                  s.a.createElement(
+                    "div",
+                    {
+                      className: Object(v.a)(
+                        Di.a.SpecificValues,
+                        (w || D) && Di.a.Hidden
+                      ),
+                    },
+                    u.damages.reduce(function (e, t) {
+                      return e + t;
+                    }) > 0 &&
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.SpecialElement },
+                        Object(E.k)("#hero_damage"),
+                        s.a.createElement(
+                          "div",
+                          { className: Di.a.SpecialValue },
+                          u.damages.map(function (e, t) {
+                            return (t > 0 ? " / " : "") + e.toFixed(0);
+                          })
+                        )
+                      ),
+                    u.special_values.map(function (e) {
+                      return 0 == e.heading_loc.length
+                        ? null
+                        : s.a.createElement(
+                            "div",
+                            { key: e.name, className: Di.a.SpecialElement },
+                            Object(E.k)(e.heading_loc),
+                            s.a.createElement(
+                              "div",
+                              { className: Di.a.SpecialValue },
+                              e.values_float.map(function (t, a) {
+                                return (
+                                  (a > 0 ? " / " : "") +
+                                  t.toFixed(1) +
+                                  (e.is_percentage ? "%" : "")
+                                );
+                              })
+                            )
+                          );
+                    })
+                  ),
+                  (u.cooldowns.reduce(function (e, t) {
+                    return e + t;
+                  }) > 0 ||
+                    u.mana_costs.reduce(function (e, t) {
+                      return e + t;
+                    }) > 0) &&
+                    s.a.createElement(
+                      "div",
+                      {
+                        className: Object(v.a)(
+                          Di.a.BottomValues,
+                          (D || D) && Di.a.Hidden
+                        ),
+                      },
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.CooldownContainer },
+                        s.a.createElement("div", {
+                          className: Di.a.CooldownIcon,
+                          style: {
+                            backgroundImage:
+                              "url( " + g.a.IMG_URL + "icons/cooldown.png )",
+                          },
+                        }),
+                        s.a.createElement(
+                          "div",
+                          { className: Di.a.CooldownText },
+                          u.cooldowns.map(function (e, t) {
+                            return (t > 0 ? " / " : "") + e.toFixed(1);
+                          })
+                        )
+                      ),
+                      s.a.createElement(
+                        "div",
+                        { className: Di.a.ManaContainer },
+                        s.a.createElement("div", { className: Di.a.ManaIcon }),
+                        s.a.createElement(
+                          "div",
+                          { className: Di.a.ManaText },
+                          u.mana_costs.map(function (e, t) {
+                            return (t > 0 ? " / " : "") + e.toFixed(0);
+                          })
+                        )
+                      )
+                    ),
+                  s.a.createElement(
+                    "div",
+                    {
+                      className: Object(v.a)(
+                        Di.a.Lore,
+                        (D || D) && Di.a.Hidden
+                      ),
+                    },
+                    u.lore_loc
+                  )
+                )
+              )
+            )
+          );
+        }),
+         */
 
         public async void FetchHeroRanking(int heroId)
         {

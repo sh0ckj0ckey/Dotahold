@@ -37,6 +37,15 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
 
+                    <LinearGradientBrush x:Key="HEROINFO_TALENTS_SPLIT_BK" StartPoint="1,0" EndPoint="0,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#00404040" Offset="0"/>
+                            <GradientStop Color="#E6404040" Offset="0.3"/>
+                            <GradientStop Color="#E6404040" Offset="0.7"/>
+                            <GradientStop Color="#00404040" Offset="1"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABITEMS_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark_un.png" />
@@ -98,6 +107,15 @@
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#F3F4F8" Offset="0"/>
                             <GradientStop Color="#00F3F4F8" Offset="0.7"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="HEROINFO_TALENTS_SPLIT_BK" StartPoint="1,0" EndPoint="0,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#00404040" Offset="0"/>
+                            <GradientStop Color="#26404040" Offset="0.3"/>
+                            <GradientStop Color="#26404040" Offset="0.7"/>
+                            <GradientStop Color="#00404040" Offset="1"/>
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                     
