@@ -21,7 +21,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Page.Resources>
 
@@ -30,20 +29,6 @@
             <RowDefinition Height="172" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Rectangle Opacity="0.5">
-            <Rectangle.Fill>
-                <ImageBrush x:Name="MatchBackgroundImageBrush"
-                            ImageSource="/Assets/Pictures/background1.jpg"
-                            Stretch="UniformToFill" />
-            </Rectangle.Fill>
-        </Rectangle>
-        <Rectangle>
-            <Rectangle.Fill>
-                <AcrylicBrush x:Name="MatchBackgroundAcrylicBrush"
-                              TintColor="Transparent"
-                              BackgroundSource="Backdrop" />
-            </Rectangle.Fill>
-        </Rectangle>
         <Button HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Margin="16,36"
