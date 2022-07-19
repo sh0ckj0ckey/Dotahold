@@ -20,6 +20,7 @@ namespace OpenDota_UWP.Converters
                     if (value is double v)
                     {
                         return v.ToString("f1");
+                        // return (Math.Floor(100 * v) / 100).ToString();
                     }
                 }
             }

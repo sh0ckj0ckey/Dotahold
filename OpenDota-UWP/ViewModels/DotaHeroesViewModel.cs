@@ -28,9 +28,6 @@ namespace OpenDota_UWP.ViewModels
         // 缓存拉取过的英雄排行榜
         private Dictionary<int, Models.DotaHeroRankingModel> dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
 
-        // 缓存拉取过的英雄的bonus键值
-        private Dictionary<int, Dictionary<string, string>> dictHeroBonuses { get; set; } = new Dictionary<int, Dictionary<string, string>>();
-
 
         // 是否正在加载英雄列表
         private bool _bLoadingHeroes = false;
@@ -81,7 +78,6 @@ namespace OpenDota_UWP.ViewModels
             get { return _bFailedHeroRanking; }
             set { Set("bFailedHeroRanking", ref _bFailedHeroRanking, value); }
         }
-
 
         // 英雄属性Tab
         private int _iHeroAttrTabIndex = 0;
@@ -197,7 +193,7 @@ namespace OpenDota_UWP.ViewModels
                 else
                 {
                     bFailedHeroInfo = false;
-                    OrganizeHeroAbilitiesNTalents(selectedHero.id, CurrentHeroInfo);
+                    OrganizeHeroTalents(CurrentHeroInfo);
                 }
 
                 ActPopInHeroInfoGrid?.Invoke();
@@ -256,71 +252,88 @@ namespace OpenDota_UWP.ViewModels
         /// 整理英雄信息中的天赋树相关信息
         /// </summary>
         /// <param name="info"></param>
-        private void OrganizeHeroTalents(Models.Hero info, int index)
+        private void OrganizeHeroTalents(Models.Hero info)
         {
             try
             {
-                Models.Talent talent = info.talents[index];
-                string talentNameLoc = talent.name_loc;
-                foreach (var v in talent.special_values)
+                if (info?.talents == null) return;
+
+                foreach (var talent in info.talents)
                 {
-                    try
+                    string talentNameLoc = talent.name_loc;
+                    foreach (var v in talent.special_values)
                     {
-                        if (v.values_float.Length > 0)
+                        try
                         {
-                            string value = ConvertDouble2String(v.values_float[0]);
-                            talentNameLoc = talentNameLoc.Replace($"{{s:{v.name}}}", value);
-                        }
-                    }
-                    catch { }
-                }
-                foreach (var abi in info.abilities)
-                {
-                    foreach (var v in abi.special_values)
-                    {
-                        if (v.bonuses != null && v.bonuses.Length > 0)
-                        {
-                            foreach (var bonus in v.bonuses)
+                            if (v.values_float.Length > 0)
                             {
-                                if (bonus.name == talent.name)
+                                string value = (Math.Floor(100 * v.values_float[0]) / 100).ToString();
+                                talentNameLoc = talentNameLoc.Replace($"{{s:{v.name}}}", value);
+                            }
+                        }
+                        catch { }
+                    }
+                    foreach (var abi in info.abilities)
+                    {
+                        foreach (var v in abi.special_values)
+                        {
+                            if (v.bonuses != null && v.bonuses.Length > 0)
+                            {
+                                foreach (var bonus in v.bonuses)
                                 {
-                                    string value = ConvertDouble2String(bonus.value);
-                                    talentNameLoc = talentNameLoc.Replace($"{{s:bonus_{v.name}}}", value);
+                                    try
+                                    {
+                                        if (bonus.name == talent.name)
+                                        {
+                                            string value = (Math.Floor(100 * bonus.value) / 100).ToString();
+                                            talentNameLoc = talentNameLoc.Replace($"{{s:bonus_{v.name}}}", value);
+                                        }
+                                    }
+                                    catch { }
                                 }
                             }
                         }
                     }
+
+                    talent.name_loc = talentNameLoc;
                 }
 
-                talent.name_loc = talentNameLoc;
+                info.sTalentNameLoc10L = info?.talents[0]?.name_loc;
+                info.sTalentNameLoc10R = info?.talents[1]?.name_loc;
+                info.sTalentNameLoc15L = info?.talents[2]?.name_loc;
+                info.sTalentNameLoc15R = info?.talents[3]?.name_loc;
+                info.sTalentNameLoc20L = info?.talents[4]?.name_loc;
+                info.sTalentNameLoc20R = info?.talents[5]?.name_loc;
+                info.sTalentNameLoc25L = info?.talents[6]?.name_loc;
+                info.sTalentNameLoc25R = info?.talents[7]?.name_loc;
             }
             catch { }
         }
 
         //Ri = function(e, t)
         //{
-        //    var a = e.talents[t],
-        //      n = e.talents[t].name_loc;
+        //    var talent = info.talents[t],
+        //      talentNameLoc = e.talents[t].name_loc;
         //    return (
-        //      a.special_values.forEach(function(e) {
+        //      talent.special_values.forEach(function(e) {
         //        if (e.values_float.length > 0)
         //        {
         //            var t = e.values_float[0];
         //            (t = Math.floor(100 * t) / 100),
-        //          (n = n.replace("{s:" + e.name + "}", "" + t));
+        //          (talentNameLoc = talentNameLoc.replace("{s:" + e.name + "}", "" + t));
         //        }
         //    }),
-        //    e.abilities.forEach(function(e) {
-        //        e.special_values.forEach(function(e) {
+        //    info.abilities.forEach(function(e) {
+        //        info.special_values.forEach(function(e) {
         //            var t;
         //            null == (t = e.bonuses) ||
         //              void 0 == t ||
         //              t.forEach(function(t) {
-        //                if (t.name == a.name)
+        //                if (t.name == talent.name)
         //                {
         //                    var r = t.value;
         //                    (r = Math.floor(100 * r) / 100),
-        //                (n = n.replace("{s:bonus_" + e.name + "}", "" + r));
+        //                (talentNameLoc = talentNameLoc.replace("{s:bonus_" + e.name + "}", "" + r));
         //                }
         //            });
         //        });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenDota_UWP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace OpenDota_UWP.Models
         public Hero[] heroes { get; set; }
     }
 
-    public class Hero
+    public class Hero : ViewModelBase
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -58,6 +59,73 @@ namespace OpenDota_UWP.Models
         public double mana_regen { get; set; }
         public List<Ability> abilities { get; set; }
         public List<Talent> talents { get; set; }
+
+
+        // 经过处理之后的天赋描述
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc10L = string.Empty;
+        public string sTalentNameLoc10L
+        {
+            get { return _sTalentNameLoc10L; }
+            set { Set("sTalentNameLoc10L", ref _sTalentNameLoc10L, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc10R = string.Empty;
+        public string sTalentNameLoc10R
+        {
+            get { return _sTalentNameLoc10R; }
+            set { Set("sTalentNameLoc10R", ref _sTalentNameLoc10R, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc15L = string.Empty;
+        public string sTalentNameLoc15L
+        {
+            get { return _sTalentNameLoc15L; }
+            set { Set("sTalentNameLoc15L", ref _sTalentNameLoc15L, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc15R = string.Empty;
+        public string sTalentNameLoc15R
+        {
+            get { return _sTalentNameLoc15R; }
+            set { Set("sTalentNameLoc15R", ref _sTalentNameLoc15R, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc20L = string.Empty;
+        public string sTalentNameLoc20L
+        {
+            get { return _sTalentNameLoc20L; }
+            set { Set("sTalentNameLoc20L", ref _sTalentNameLoc20L, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc20R = string.Empty;
+        public string sTalentNameLoc20R
+        {
+            get { return _sTalentNameLoc20R; }
+            set { Set("sTalentNameLoc20R", ref _sTalentNameLoc20R, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc25L = string.Empty;
+        public string sTalentNameLoc25L
+        {
+            get { return _sTalentNameLoc25L; }
+            set { Set("sTalentNameLoc25L", ref _sTalentNameLoc25L, value); }
+        }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sTalentNameLoc25R = string.Empty;
+        public string sTalentNameLoc25R
+        {
+            get { return _sTalentNameLoc25R; }
+            set { Set("sTalentNameLoc25R", ref _sTalentNameLoc25R, value); }
+        }
+
     }
 
     public class Ability

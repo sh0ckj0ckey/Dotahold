@@ -32,6 +32,8 @@ namespace OpenDota_UWP.Views
 
         private Style _customDialogStyle = null;
 
+        private bool _hoveringTalentButton = false;
+
         public HeroInfoPage()
         {
             this.InitializeComponent();
@@ -145,46 +147,6 @@ namespace OpenDota_UWP.Views
         //    Pick_8TextBlock.Text = heroAttr._8_pick;
         //    Rate_8TextBlock.Text = (100 * ConvertString2Double(heroAttr._8_win) / ConvertString2Double(heroAttr._8_pick)).ToString("f1") + "%";
 
-        /// <summary>
-        /// 显示英雄天赋树
-        /// </summary>
-        //private async void ShowTheHeroTalent(string html)
-        //{
-        //    HeroTalent heroTalent = await CrawlerHelper.GetHeroTalent(SelectedHero.ID, html);
-        //    if (heroTalent == null)
-        //    {
-        //        return;
-        //    }
-        //    try
-        //    {
-        //        Talent_25_leftTextBlock.Text = heroTalent.Talent_25_left;
-        //        Talent_25_rightTextBlock.Text = heroTalent.Talent_25_right;
-        //        Talent_20_leftTextBlock.Text = heroTalent.Talent_20_left;
-        //        Talent_20_rightTextBlock.Text = heroTalent.Talent_20_right;
-        //        Talent_15_leftTextBlock.Text = heroTalent.Talent_15_left;
-        //        Talent_15_rightTextBlock.Text = heroTalent.Talent_15_right;
-        //        Talent_10_leftTextBlock.Text = heroTalent.Talent_10_left;
-        //        Talent_10_rightTextBlock.Text = heroTalent.Talent_10_right;
-        //    }
-        //    catch { }
-        //}
-
-        /// <summary>
-        /// 显示英雄技能
-        /// </summary>
-        //private async void ShowTheHeroAbility(string html)
-        //{
-        //    List<HeroAbility> heroAbility = await CrawlerHelper.GetHeroAbility(SelectedHero.ID, html);
-        //    if (heroAbility == null)
-        //    {
-        //        return;
-        //    }
-        //    foreach (HeroAbility item in heroAbility)
-        //    {
-        //        abilitiesObservableCollection.Add(item);
-        //    }
-        //    HeroAbilityListView.ItemsSource = abilitiesObservableCollection;
-        //}
 
 
         /// <summary>
@@ -303,6 +265,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                _hoveringTalentButton = true;
                 TalentsPopGrid.Visibility = Visibility.Visible;
                 TalentsPopGridPopIn?.Begin();
                 EnterHeroTalentStoryboard?.Begin();
@@ -314,6 +277,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                _hoveringTalentButton = false;
                 TalentsPopGridPopOut?.Begin();
                 ExitHeroTalentStoryboard?.Begin();
             }
@@ -324,6 +288,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                if (_hoveringTalentButton) return;
                 TalentsPopGrid.Visibility = Visibility.Collapsed;
             }
             catch { }

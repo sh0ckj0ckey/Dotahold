@@ -25,6 +25,7 @@
             <Converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
             <Converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <Converter:DoubleToStringConverter x:Key="Double2Str"/>
+            <Converter:StringLengthToFontSizeConverter x:Key="Str2FontSize"/>
 
             <Storyboard x:Name="ShowBackgroundImage">
                 <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder"
@@ -200,7 +201,47 @@
                     <Polyline Points="0,0 8,8 0,16" StrokeThickness="6" Stroke="{ThemeResource HEROINFO_TALENTS_BK}" Fill="{ThemeResource HEROINFO_TALENTS_BK}" StrokeLineJoin="Round"
                               HorizontalAlignment="Right" VerticalAlignment="Center"/>
                     <Border HorizontalAlignment="Stretch" Margin="0,0,7,0" Background="{ThemeResource HEROINFO_TALENTS_BK}" CornerRadius="6" BorderThickness="1,0,0,1" BorderBrush="#404040">
-                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25L,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="2" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25R,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20L,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="2" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20R,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="0" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15L,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="2" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15R,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="0" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10L,Mode=OneWay}" FontSize="12"/>
+                            <TextBlock Grid.Column="2" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                                       Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10R,Mode=OneWay}" FontSize="12"/>
+                            <Border Grid.Column="1" Grid.Row="0" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="25" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="2" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="3" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Grid>
             </Grid>
