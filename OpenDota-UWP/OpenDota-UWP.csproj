@@ -163,7 +163,7 @@
     <Compile Include="UI\SomethingWrongControl.xaml.cs">
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AsyncBitmapImage.cs" />
+    <Compile Include="Models\AsyncBitmapImage.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
