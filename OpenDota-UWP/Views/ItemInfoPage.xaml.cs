@@ -126,9 +126,9 @@ namespace OpenDota_UWP.Views
                     {
                         foreach (var item in DotaItemsViewModel.Instance.CurrentItem.components)
                         {
-                            if (DotaItemsViewModel.Instance.mapAllItems.ContainsKey(item))
+                            if (DotaItemsViewModel.Instance.dictAllItems.ContainsKey(item))
                             {
-                                vComponentsList.Add(DotaItemsViewModel.Instance.mapAllItems[item]);
+                                vComponentsList.Add(DotaItemsViewModel.Instance.dictAllItems[item]);
                             }
                         }
                     }

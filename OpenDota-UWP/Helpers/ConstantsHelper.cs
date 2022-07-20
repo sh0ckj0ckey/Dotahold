@@ -14,6 +14,10 @@ namespace OpenDota_UWP.Helpers
 
         private Windows.Web.Http.HttpClient constantsHttpClient = new Windows.Web.Http.HttpClient();
 
+        /// <summary>
+        /// 获取英雄列表
+        /// </summary>
+        /// <returns></returns>
         public async Task<Dictionary<string, Models.DotaHeroModel>> GetHeroesConstant()
         {
             try
@@ -34,6 +38,10 @@ namespace OpenDota_UWP.Helpers
             return null;
         }
 
+        /// <summary>
+        /// 获取物品列表
+        /// </summary>
+        /// <returns></returns>
         public async Task<Dictionary<string, Models.DotaItemModel>> GetItemsConstant()
         {
             try

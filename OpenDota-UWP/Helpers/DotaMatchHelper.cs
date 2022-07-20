@@ -10,118 +10,13 @@ using Windows.Data.Json;
 using Windows.UI.Xaml.Controls;
 using System.Net;
 using Windows.Web.Http;
+using OpenDota_UWP.Models;
 
 namespace OpenDota_UWP.Helpers
 {
     public class DotaMatchHelper
     {
-        // 从文件读取，git提交时忽略
-        private const string Key = "";
 
-        public static Dictionary<string, string> PlayersNameCache = new Dictionary<string, string>();
-        public static Dictionary<string, string> PlayersPhotoCache = new Dictionary<string, string>();
-
-        //用于保存用户的Steam64位ID，以"账号绑定"的形式
-        public static ApplicationDataContainer SteamID = ApplicationData.Current.LocalSettings;
-
-        /// <summary>
-        /// 绑定保存用户的SteamID
-        /// </summary>
-        /// <param name="input"></param>
-        public static void SetSteamID(string input)
-        {
-            //我的Steam64位ID:76561198194624815
-            if (input.Length > 14)
-            {
-                //这说明输入的是64位的,要先转换成32位
-                input = ConvertSteamID(Convert.ToDecimal(input));
-            }
-            SteamID.Values["SteamID"] = input;
-            //SharedData.Share.PlayerID = input;
-        }
-
-        /// <summary>
-        /// 读取保存的用户的SteamID
-        /// </summary>
-        /// <returns></returns>
-        public static string GetSteamID()
-        {
-            if (SteamID.Values["SteamID"] == null)
-            {
-                return "";
-            }
-            return SteamID.Values["SteamID"].ToString();
-        }
-
-        /// <summary>
-        /// 根据Steam64位ID获得32位ID，也可以用户直接输入Dota2客户端内的ID，记得处理一下
-        /// </summary>
-        /// <param name="id_64"></param>
-        /// <returns></returns>
-        public static string ConvertSteamID(decimal id_64)
-        {
-            return (id_64 - 76561197960265728).ToString();
-        }
-
-        /// <summary>
-        /// 获得用户的个人信息
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<PlayerProfile> GetPlayerProfileAsync(string id)
-        {
-            string url = String.Format("https://api.opendota.com/api/players/{0}", id);
-            //http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}
-            HttpClient http = new HttpClient();
-            PlayerProfile player;
-            try
-            {
-                var response = await http.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                {
-                    return null;
-                }
-
-                player = JsonConvert.DeserializeObject<PlayerProfile>(jsonMessage);
-            }
-            catch
-            {
-                return null;
-            }
-            return player;
-        }
-
-        /// <summary>
-        /// 获得用户的胜局败局数
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<WinNLose> GetPlayerWLAsync(string id)
-        {
-            string url = String.Format("https://api.opendota.com/api/players/{0}/wl", id);
-
-            HttpClient http = new HttpClient();
-            WinNLose wl;
-            try
-            {
-                var response = await http.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                {
-                    return new WinNLose() { win = 0, lose = 0 };
-                }
-
-                wl = JsonConvert.DeserializeObject<WinNLose>(jsonMessage);
-            }
-            catch
-            {
-                wl = new WinNLose() { win = 0, lose = 0 };
-            }
-            return wl;
-        }
 
         /// <summary>
         /// 获取比赛总数据统计
@@ -936,23 +831,6 @@ namespace OpenDota_UWP.Helpers
         public int estimate { get; set; }
 
         public Mmr_estimate() { estimate = 0; }
-    }
-
-    /// <summary>
-    /// 用户的胜局败局数量
-    /// </summary>
-    public class WinNLose
-    {
-        /// <summary>
-        /// 胜利
-        /// </summary>
-        public double win { get; set; }
-        /// <summary>
-        /// 失败
-        /// </summary>
-        public double lose { get; set; }
-
-        public WinNLose() { win = 0; lose = 0; }
     }
 
     /// <summary>
