@@ -97,7 +97,6 @@ namespace OpenDota_UWP.Views
                     //ShowDialog("抱歉，可能是查询数据太频繁，请稍后尝试");
                     return;
                 }
-                MatchBackgroundImageBrush.ImageSource = new BitmapImage(new Uri(MatchPlayerProfile.profile.avatarfull));
                 PlayerPhotoBitmapImage.UriSource = new Uri(MatchPlayerProfile.profile.avatarfull);
                 PersonNameTextBlock.Text = MatchPlayerProfile.profile.personaname;
                 GameIDTextBlock.Text = "ID: " + MatchPlayerProfile.profile.account_id.ToString();

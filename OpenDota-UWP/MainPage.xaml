@@ -96,7 +96,7 @@
                     <PopOutThemeAnimation Storyboard.TargetName="SettingPop" Duration="00:00:0.1"/>
                 </Storyboard>
             </Grid.Resources>
-            <Rectangle x:Name="SettingPopBackground" Fill="#66000000" Tapped="Rectangle_Tapped"/>
+            <Rectangle x:Name="SettingPopBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#66000000" Tapped="Rectangle_Tapped"/>
             <Grid x:Name="SettingPop" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
                   HorizontalAlignment="Center" VerticalAlignment="Center"
                   Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource SettingShadow}"
