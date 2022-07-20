@@ -144,11 +144,11 @@
     <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
-    <Compile Include="Helpers\DataCourier.cs" />
     <Compile Include="Helpers\DialogShower.cs" />
     <Compile Include="Helpers\DotaMatchHelper.cs" />
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Helpers\ImageLoader.cs" />
+    <Compile Include="Helpers\SteamApiKey_GitIgnored.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
     <Compile Include="Models\DotaHeroes.cs" />
     <Compile Include="Models\DotaHeroInfoModel.cs" />
