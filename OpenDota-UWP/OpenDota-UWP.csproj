@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
     <Compile Include="Converters\StringArrayToStringConverter.cs" />
     <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Models\DotaHeroRankingModel.cs" />
     <Compile Include="Models\DotaMatchHeroesPlayedModel.cs" />
     <Compile Include="Models\DotaMatchModel.cs" />
+    <Compile Include="Models\DotaMatchPlayerProfileModel.cs" />
     <Compile Include="Models\DotaMatchPlayerTotalsModel.cs" />
     <Compile Include="Models\DotaMatchWinLoseModel.cs" />
     <Compile Include="Models\DotaOnlinePlayersModel.cs" />

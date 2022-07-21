@@ -42,7 +42,9 @@ namespace OpenDota_UWP.ViewModels
                 var wl = await GetPlayerWLAsync(sSteamId);
                 var total = await GetTotalAsync(sSteamId);
 
-                var num = await GetNumberOfCurrentPlayers();
+                var num = await GetNumberOfCurrentPlayersAsync();
+
+                var recentMatches = await GetRecentMatchAsync(sSteamId);
             }
             catch { }
         }
@@ -52,7 +54,7 @@ namespace OpenDota_UWP.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private async Task<PlayerProfile> GetPlayerProfileAsync(string id)
+        private async Task<DotaMatchPlayerProfileModel> GetPlayerProfileAsync(string id)
         {
             try
             {
@@ -61,7 +63,7 @@ namespace OpenDota_UWP.ViewModels
                 var response = await playerInfoHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                var player = JsonConvert.DeserializeObject<PlayerProfile>(jsonMessage);
+                var player = JsonConvert.DeserializeObject<DotaMatchPlayerProfileModel>(jsonMessage);
                 return player;
             }
             catch { }
@@ -119,11 +121,32 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
+        /// 获取最近20场比赛
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private async Task<List<DotaRecentMatchModel>> GetRecentMatchAsync(string id)
+        {
+            try
+            {
+                string url = String.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
+
+                var response = await matchHttpClient.GetAsync(new Uri(url));
+                var jsonMessage = await response.Content.ReadAsStringAsync();
+
+                var matches = JsonConvert.DeserializeObject<DotaRecentMatchesModel>(jsonMessage);
+                return matches.vRecentMatches;
+            }
+            catch { }
+            return null;
+        }
+
+        /// <summary>
         /// 获取玩家常用英雄数据
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private async Task<List<HeroPlayed>> GetHeroUsingAsync(string id)
+        private async Task<List<HeroPlayed>> GetHeroesPlayedAsync(string id)
         {
             try
             {
@@ -144,7 +167,7 @@ namespace OpenDota_UWP.ViewModels
         /// 获取当前在线人数
         /// </summary>
         /// <returns></returns>
-        private async Task<string> GetNumberOfCurrentPlayers()
+        private async Task<string> GetNumberOfCurrentPlayersAsync()
         {
             try
             {

@@ -57,22 +57,22 @@ namespace OpenDota_UWP.Views
             {
                 navigationTransition.DefaultNavigationTransitionInfo = transition;
             }
-            match_id = (e.Parameter as RecentMatchViewModel).Match_ID;
-            MatchIDTextBlock.Text = (e.Parameter as RecentMatchViewModel).Match_ID;
-            MatchData_BeginTimeTextBlock.Text = (e.Parameter as RecentMatchViewModel).Time;
-            MatchData_LevelTextBlock.Text = (e.Parameter as RecentMatchViewModel).Skill == "" ? "—" : (e.Parameter as RecentMatchViewModel).Skill;
-            if (MatchData_LevelTextBlock.Text == "Normal")
-            {
-                MatchData_LevelTextBlock.Opacity = 0.3;
-            }
-            else if (MatchData_LevelTextBlock.Text == "High")
-            {
-                MatchData_LevelTextBlock.Opacity = 0.6;
-            }
-            else if (MatchData_LevelTextBlock.Text == "Very High")
-            {
-                MatchData_LevelTextBlock.Foreground = new SolidColorBrush(Colors.DarkOrange);
-            }
+            //match_id = (e.Parameter as RecentMatchViewModel).Match_ID;
+            //MatchIDTextBlock.Text = (e.Parameter as RecentMatchViewModel).Match_ID;
+            //MatchData_BeginTimeTextBlock.Text = (e.Parameter as RecentMatchViewModel).Time;
+            //MatchData_LevelTextBlock.Text = (e.Parameter as RecentMatchViewModel).Skill == "" ? "—" : (e.Parameter as RecentMatchViewModel).Skill;
+            //if (MatchData_LevelTextBlock.Text == "Normal")
+            //{
+            //    MatchData_LevelTextBlock.Opacity = 0.3;
+            //}
+            //else if (MatchData_LevelTextBlock.Text == "High")
+            //{
+            //    MatchData_LevelTextBlock.Opacity = 0.6;
+            //}
+            //else if (MatchData_LevelTextBlock.Text == "Very High")
+            //{
+            //    MatchData_LevelTextBlock.Foreground = new SolidColorBrush(Colors.DarkOrange);
+            //}
             ShowMatchInfo(match_id);
             ShowPlayers(match_id);
             base.OnNavigatedTo(e);
@@ -231,144 +231,144 @@ namespace OpenDota_UWP.Views
         {
             foreach (PlayersInfoViewModel item in radiant)
             {
-                if (RadiantProgressRing.IsActive)
-                {
-                    RadiantProgressRing.IsActive = false;
-                    RadiantProgressRing.Visibility = Visibility.Collapsed;
-                }
+                //if (RadiantProgressRing.IsActive)
+                //{
+                //    RadiantProgressRing.IsActive = false;
+                //    RadiantProgressRing.Visibility = Visibility.Collapsed;
+                //}
 
-                try
-                {
-                    //先判断一下这一个玩家是不是自己，是的话就不要请求数据了，避免造成超出请求速率限制
-                    if (item.Account_id == MatchesPage.MatchPlayerProfile.profile.account_id.ToString())
-                    {
-                        item.PlayerName = MatchesPage.MatchPlayerProfile.profile.personaname;
-                        item.PlayerPhoto = MatchesPage.MatchPlayerProfile.profile.avatarmedium;
-                        radiantPlayers.Add(item);
-                        continue;
-                    }
-                }
-                catch { }
+                //try
+                //{
+                //    //先判断一下这一个玩家是不是自己，是的话就不要请求数据了，避免造成超出请求速率限制
+                //    if (item.Account_id == MatchesPage.MatchPlayerProfile.profile.account_id.ToString())
+                //    {
+                //        item.PlayerName = MatchesPage.MatchPlayerProfile.profile.personaname;
+                //        item.PlayerPhoto = MatchesPage.MatchPlayerProfile.profile.avatarmedium;
+                //        radiantPlayers.Add(item);
+                //        continue;
+                //    }
+                //}
+                //catch { }
                 //查看是否已经缓存这个账号的信息
-                if (DotaMatchHelper.PlayersNameCache.ContainsKey(item.Account_id))
-                {
-                    item.PlayerName = DotaMatchHelper.PlayersNameCache[item.Account_id];
-                    item.PlayerPhoto = DotaMatchHelper.PlayersPhotoCache[item.Account_id];
-                    radiantPlayers.Add(item);
-                }
-                else
-                {
-                    string url = String.Format("https://api.opendota.com/api/players/{0}", item.Account_id);
-                    HttpClient http = new HttpClient();
-                    List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
-                    try
-                    {
-                        var response = await http.GetAsync(new Uri(url));
-                        var jsonMessage = await response.Content.ReadAsStringAsync();
+                //if (DotaMatchHelper.PlayersNameCache.ContainsKey(item.Account_id))
+                //{
+                //    item.PlayerName = DotaMatchHelper.PlayersNameCache[item.Account_id];
+                //    item.PlayerPhoto = DotaMatchHelper.PlayersPhotoCache[item.Account_id];
+                //    radiantPlayers.Add(item);
+                //}
+                //else
+                //{
+                //    string url = String.Format("https://api.opendota.com/api/players/{0}", item.Account_id);
+                //    HttpClient http = new HttpClient();
+                //    List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
+                //    try
+                //    {
+                //        var response = await http.GetAsync(new Uri(url));
+                //        var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                        if (jsonMessage.StartsWith("{\"error\":}"))
-                        {
-                            item.PlayerName = "Anonymous";
-                            item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
-                        }
-                        else
-                        {
-                            try
-                            {
-                                Match personanameMatch = Regex.Match(jsonMessage, "\\\"personaname\\\":\\\"([\\s\\S]*?)\\\",");
-                                Match photoMatch = Regex.Match(jsonMessage, "\\\"avatarmedium\\\":\\\"([\\s\\S]*?)\\\",");
+                //        if (jsonMessage.StartsWith("{\"error\":}"))
+                //        {
+                //            item.PlayerName = "Anonymous";
+                //            item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
+                //        }
+                //        else
+                //        {
+                //            try
+                //            {
+                //                Match personanameMatch = Regex.Match(jsonMessage, "\\\"personaname\\\":\\\"([\\s\\S]*?)\\\",");
+                //                Match photoMatch = Regex.Match(jsonMessage, "\\\"avatarmedium\\\":\\\"([\\s\\S]*?)\\\",");
 
-                                item.PlayerName = personanameMatch.Groups[1].Value == "" ? "Anonymous" : personanameMatch.Groups[1].Value;
-                                item.PlayerPhoto = photoMatch.Groups[1].Value == "" ? "ms-appx:///Assets/Pictures/null.png" : photoMatch.Groups[1].Value;
-                            }
-                            catch
-                            {
-                                item.PlayerName = "Anonymous";
-                                item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
-                            }
-                        }
-                        radiantPlayers.Add(item);
-                        if (item.PlayerPhoto != "ms-appx:///Assets/Pictures/null.png")
-                        {
-                            DotaMatchHelper.PlayersNameCache.Add(item.Account_id, item.PlayerName);
-                            DotaMatchHelper.PlayersPhotoCache.Add(item.Account_id, item.PlayerPhoto);
-                        }
-                    }
-                    catch
-                    {
-                        ShowDialog("The data query may be too frequent, please try again later.");
-                        return;
-                    }
-                }
+                //                item.PlayerName = personanameMatch.Groups[1].Value == "" ? "Anonymous" : personanameMatch.Groups[1].Value;
+                //                item.PlayerPhoto = photoMatch.Groups[1].Value == "" ? "ms-appx:///Assets/Pictures/null.png" : photoMatch.Groups[1].Value;
+                //            }
+                //            catch
+                //            {
+                //                item.PlayerName = "Anonymous";
+                //                item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
+                //            }
+                //        }
+                //        radiantPlayers.Add(item);
+                //        if (item.PlayerPhoto != "ms-appx:///Assets/Pictures/null.png")
+                //        {
+                //            //DotaMatchHelper.PlayersNameCache.Add(item.Account_id, item.PlayerName);
+                //            //DotaMatchHelper.PlayersPhotoCache.Add(item.Account_id, item.PlayerPhoto);
+                //        }
+                //    }
+                //    catch
+                //    {
+                //        ShowDialog("The data query may be too frequent, please try again later.");
+                //        return;
+                //    }
+                //}
             }
             foreach (PlayersInfoViewModel item in dire)
             {
-                if (DireProgressRing.IsActive)
-                {
-                    DireProgressRing.IsActive = false;
-                    DireProgressRing.Visibility = Visibility.Collapsed;
-                }
+                //if (DireProgressRing.IsActive)
+                //{
+                //    DireProgressRing.IsActive = false;
+                //    DireProgressRing.Visibility = Visibility.Collapsed;
+                //}
 
-                try
-                {
-                    if (item.Account_id == MatchesPage.MatchPlayerProfile.profile.account_id.ToString())
-                    {
-                        item.PlayerName = MatchesPage.MatchPlayerProfile.profile.personaname;
-                        item.PlayerPhoto = MatchesPage.MatchPlayerProfile.profile.avatarmedium;
-                        direPlayers.Add(item);
-                        continue;
-                    }
-                }
-                catch { }
-                if (DotaMatchHelper.PlayersNameCache.ContainsKey(item.Account_id))
-                {
-                    item.PlayerName = DotaMatchHelper.PlayersNameCache[item.Account_id];
-                    item.PlayerPhoto = DotaMatchHelper.PlayersPhotoCache[item.Account_id];
-                    direPlayers.Add(item);
-                }
-                else
-                {
-                    string url = String.Format("https://api.opendota.com/api/players/{0}", item.Account_id);
-                    HttpClient http = new HttpClient();
-                    List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
-                    try
-                    {
-                        var response = await http.GetAsync(new Uri(url));
-                        var jsonMessage = await response.Content.ReadAsStringAsync();
+                //try
+                //{
+                //    if (item.Account_id == MatchesPage.MatchPlayerProfile.profile.account_id.ToString())
+                //    {
+                //        item.PlayerName = MatchesPage.MatchPlayerProfile.profile.personaname;
+                //        item.PlayerPhoto = MatchesPage.MatchPlayerProfile.profile.avatarmedium;
+                //        direPlayers.Add(item);
+                //        continue;
+                //    }
+                //}
+                //catch { }
+                //if (DotaMatchHelper.PlayersNameCache.ContainsKey(item.Account_id))
+                //{
+                //    item.PlayerName = DotaMatchHelper.PlayersNameCache[item.Account_id];
+                //    item.PlayerPhoto = DotaMatchHelper.PlayersPhotoCache[item.Account_id];
+                //    direPlayers.Add(item);
+                //}
+                //else
+                //{
+                //    string url = String.Format("https://api.opendota.com/api/players/{0}", item.Account_id);
+                //    HttpClient http = new HttpClient();
+                //    List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
+                //    try
+                //    {
+                //        var response = await http.GetAsync(new Uri(url));
+                //        var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                        if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                        {
-                            item.PlayerName = "Anonymous";
-                            item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
-                        }
-                        else
-                        {
-                            try
-                            {
-                                Match personanameMatch = Regex.Match(jsonMessage, "\\\"personaname\\\":\\\"([\\s\\S]*?)\\\",");
-                                Match photoMatch = Regex.Match(jsonMessage, "\\\"avatarmedium\\\":\\\"([\\s\\S]*?)\\\",");
-                                item.PlayerName = personanameMatch.Groups[1].Value == "" ? "Anonymous" : personanameMatch.Groups[1].Value;
-                                item.PlayerPhoto = photoMatch.Groups[1].Value == "" ? "ms-appx:///Assets/Pictures/null.png" : photoMatch.Groups[1].Value;
-                            }
-                            catch
-                            {
-                                item.PlayerName = "Anonymous";
-                                item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
-                            }
-                        }
-                        direPlayers.Add(item);
-                        if (item.PlayerPhoto != "ms-appx:///Assets/Pictures/null.png")
-                        {
-                            DotaMatchHelper.PlayersNameCache.Add(item.Account_id, item.PlayerName);
-                            DotaMatchHelper.PlayersPhotoCache.Add(item.Account_id, item.PlayerPhoto);
-                        }
-                    }
-                    catch
-                    {
-                        ShowDialog("The data query may be too frequent, please try again later.");
-                        return;
-                    }
-                }
+                //        if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
+                //        {
+                //            item.PlayerName = "Anonymous";
+                //            item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
+                //        }
+                //        else
+                //        {
+                //            try
+                //            {
+                //                Match personanameMatch = Regex.Match(jsonMessage, "\\\"personaname\\\":\\\"([\\s\\S]*?)\\\",");
+                //                Match photoMatch = Regex.Match(jsonMessage, "\\\"avatarmedium\\\":\\\"([\\s\\S]*?)\\\",");
+                //                item.PlayerName = personanameMatch.Groups[1].Value == "" ? "Anonymous" : personanameMatch.Groups[1].Value;
+                //                item.PlayerPhoto = photoMatch.Groups[1].Value == "" ? "ms-appx:///Assets/Pictures/null.png" : photoMatch.Groups[1].Value;
+                //            }
+                //            catch
+                //            {
+                //                item.PlayerName = "Anonymous";
+                //                item.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
+                //            }
+                //        }
+                //        direPlayers.Add(item);
+                //        if (item.PlayerPhoto != "ms-appx:///Assets/Pictures/null.png")
+                //        {
+                //            DotaMatchHelper.PlayersNameCache.Add(item.Account_id, item.PlayerName);
+                //            DotaMatchHelper.PlayersPhotoCache.Add(item.Account_id, item.PlayerPhoto);
+                //        }
+                //    }
+                //    catch
+                //    {
+                //        ShowDialog("The data query may be too frequent, please try again later.");
+                //        return;
+                //    }
+                //}
             }
         }
 

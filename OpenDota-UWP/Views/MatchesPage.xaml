@@ -93,7 +93,7 @@
                 </Button.Flyout>
             </Button>
             <!--最近5场比赛-->
-            <FlipView Grid.Row="1" CornerRadius="6" Margin="16,24,16,16" Height="180" HorizontalAlignment="Stretch" Background="Transparent" BorderBrush="Black" BorderThickness="1" ItemsSource="{x:Bind , Mode=OneWay}">
+            <FlipView Grid.Row="1" CornerRadius="6" Margin="16,24,16,16" Height="180" HorizontalAlignment="Stretch" Background="Transparent" BorderBrush="Black" BorderThickness="1">
                 <!--<FlipView.ItemTemplate>
                     <DataTemplate x:DataType="data:ControlInfoDataItem">
                         <Grid>
