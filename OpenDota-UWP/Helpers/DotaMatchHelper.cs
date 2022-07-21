@@ -18,81 +18,6 @@ namespace OpenDota_UWP.Helpers
     {
 
 
-        /// <summary>
-        /// 获取比赛总数据统计
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<string[]> GetTotalAsync(string id)
-        {
-            string url = String.Format("https://api.opendota.com/api/players/{0}/totals", id);
-
-            HttpClient http = new HttpClient();
-
-            string[] total = new string[13];
-            try
-            {
-                var response = await http.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                {
-                    return null;
-                }
-
-                Match totalMatch = Regex.Match(jsonMessage, "n\\\":([\\d]*?),\\\"sum");
-                Match killsMatch = Regex.Match(jsonMessage, "kills\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match deadMatch = Regex.Match(jsonMessage, "deaths\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match assistsMatch = Regex.Match(jsonMessage, "assists\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match gpmMatch = Regex.Match(jsonMessage, "gold_per_min\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match xpmMatch = Regex.Match(jsonMessage, "xp_per_min\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match lasthitMatch = Regex.Match(jsonMessage, "last_hits\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match deniesMatch = Regex.Match(jsonMessage, "denies\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match levelMatch = Regex.Match(jsonMessage, "level\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match herodamageMatch = Regex.Match(jsonMessage, "hero_damage\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match towerdamageMatch = Regex.Match(jsonMessage, "tower_damage\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match healingMatch = Regex.Match(jsonMessage, "hero_healing\\\",\\\"n\\\":[\\d]*?,\\\"sum\\\":([\\d]*?)}");
-                Match apmMatch = Regex.Match(jsonMessage, "actions_per_min\\\",\\\"n\\\":([\\d]*?),\\\"sum\\\":([\\d]*?)}");
-
-                //Total
-                double totalCount = Convert.ToDouble(totalMatch.Groups[1].Value);
-
-                //KillAvr
-                total[0] = (Convert.ToDouble(killsMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //DeadAvr
-                total[1] = (Convert.ToDouble(deadMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //AssistAvr
-                total[2] = (Convert.ToDouble(assistsMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //KDA
-                total[3] = ((Convert.ToDouble(killsMatch.Groups[1].Value) + Convert.ToDouble(assistsMatch.Groups[1].Value)) / (Convert.ToDouble(deadMatch.Groups[1].Value))).ToString("f2");
-
-                //GPM
-                total[4] = (Convert.ToDouble(gpmMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //XPM
-                total[5] = (Convert.ToDouble(xpmMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //lasthit
-                total[6] = (Convert.ToDouble(lasthitMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //denies
-                total[7] = (Convert.ToDouble(deniesMatch.Groups[1].Value) / totalCount).ToString("f1");
-
-                //LevelAvr
-                total[8] = (Convert.ToDouble(levelMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //HeroDamageAvr
-                total[9] = (Convert.ToDouble(herodamageMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //TowerDamageAvr
-                total[10] = (Convert.ToDouble(towerdamageMatch.Groups[1].Value) / totalCount).ToString("f1");
-                //HeroHealingAvr
-                total[11] = (Convert.ToDouble(healingMatch.Groups[1].Value) / totalCount).ToString("f1");
-
-                //APM
-                total[12] = (Convert.ToDouble(apmMatch.Groups[2].Value) / Convert.ToDouble(apmMatch.Groups[1].Value)).ToString("f1");
-            }
-            catch
-            {
-                return null;
-            }
-            return total;
-        }
 
         /// <summary>
         /// 获取最近20场比赛
@@ -206,16 +131,6 @@ namespace OpenDota_UWP.Helpers
             return recentMatches;
         }
 
-        /// <summary>
-        /// 请求更新数据
-        /// </summary>
-        /// <param name="id"></param>
-        public async static void PostRefreshAsync(string id)
-        {
-            string url = String.Format("https://api.opendota.com/api/players/{0}/refresh", id);
-            HttpClient http = new HttpClient();
-            await http.PostAsync(new Uri(url), null);
-        }
 
         /// <summary>
         /// 获取指定编号的比赛的详细信息（没解析玩家）
@@ -651,33 +566,7 @@ namespace OpenDota_UWP.Helpers
             return playersInfoList;
         }
 
-        /// <summary>
-        /// 获取玩家常用英雄数据
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<List<HeroUsingInfo>> GetHeroUsingAsync(string id)
-        {
-            string url = String.Format("https://api.opendota.com/api/players/{0}/heroes", id);
-            HttpClient http = new HttpClient();
-            try
-            {
-                var response = await http.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                if (jsonMessage.Length < 256)
-                {
-                    return null;
-                }
-
-                List<HeroUsingInfo> result = JsonConvert.DeserializeObject<List<HeroUsingInfo>>(jsonMessage);
-                return result;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+      
 
         /// <summary>
         /// 判断比赛类型，仅判断是否为普通、天梯、勇士联赛
@@ -699,33 +588,6 @@ namespace OpenDota_UWP.Helpers
             }
         }
 
-        /// <summary>
-        /// 获取当前在线人数
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<string> GetNumberOfCurrentPlayers()
-        {
-            string url = "http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=570&format=json";
-            HttpClient http = new HttpClient();
-            List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
-            try
-            {
-                var response = await http.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                {
-                    return "";
-                }
-
-                Match numberMatch = Regex.Match(jsonMessage, "\\\"player_count\\\":([\\d\\D]*?),");
-                return numberMatch.Groups[1].Value;
-            }
-            catch
-            {
-                return "";
-            }
-        }
     }
 
     /// <summary>

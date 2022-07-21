@@ -153,8 +153,11 @@
     <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="Models\DotaHeroRankingModel.cs" />
+    <Compile Include="Models\DotaMatchHeroesPlayedModel.cs" />
     <Compile Include="Models\DotaMatchModel.cs" />
+    <Compile Include="Models\DotaMatchPlayerTotalsModel.cs" />
     <Compile Include="Models\DotaMatchWinLoseModel.cs" />
+    <Compile Include="Models\DotaOnlinePlayersModel.cs" />
     <Compile Include="UI\HeroHistoryDialogContent.xaml.cs">
       <DependentUpon>HeroHistoryDialogContent.xaml</DependentUpon>
     </Compile>
