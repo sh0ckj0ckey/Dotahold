@@ -378,7 +378,7 @@ namespace OpenDota_UWP.Views
         {
             //DotaMatchHelper.PostRefreshAsync(ID);
             //this.NavigationCacheMode = NavigationCacheMode.Disabled;
-            
+
             //    this.Frame.Navigate(typeof(MatchesPage));
             //this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
@@ -419,7 +419,7 @@ namespace OpenDota_UWP.Views
 
         private void BindingGridPopOut_Completed(object sender, object e)
         {
-           // BindGrid.Visibility = Visibility.Collapsed;
+            // BindGrid.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -429,15 +429,19 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void SteamIDTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //bool a = Regex.IsMatch(SteamIDTextBox.Text, @"^\d+$");
-            //if (a == false)
+            try
             {
-                //OKButton.IsEnabled = false;
+                string input = SteamIDTextBox.Text;
+                if (input.Length > 0 && Regex.IsMatch(input, @"^\d+$"))
+                {
+                    OKButton.IsEnabled = true;
+                }
+                else
+                {
+                    OKButton.IsEnabled = false;
+                }
             }
-            //else
-            {
-                //OKButton.IsEnabled = true;
-            }
+            catch { }
         }
 
         /// <summary>
@@ -447,25 +451,14 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void SteamIDTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            //if (e.Key == Windows.System.VirtualKey.Enter)
-            //{
-            //    if (Regex.IsMatch(SteamIDTextBox.Text, @"^\d+$"))
-            //    {
-            //        try
-            //        {
-            //            DotaMatchHelper.SetSteamID(SteamIDTextBox.Text);
-            //            this.NavigationCacheMode = NavigationCacheMode.Disabled;
-                        
-            //                this.Frame.Navigate(typeof(MatchesPage));
-            //            this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            //        }
-            //        catch
-            //        {
-            //            FailedTextBlock.Visibility = Visibility.Visible;
-            //            SteamIDTextBox.Text = "";
-            //        }
-            //    }
-            //}
+            try
+            {
+                if (e.Key == Windows.System.VirtualKey.Enter)
+                {
+                    SetInputSteamId();
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -475,21 +468,25 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (Regex.IsMatch(SteamIDTextBox.Text, @"^\d+$"))
-            //{
-            //    try
-            //    {
-            //        DotaMatchHelper.SetSteamID(SteamIDTextBox.Text);
-            //        this.NavigationCacheMode = NavigationCacheMode.Disabled;
-            //            this.Frame.Navigate(typeof(MatchesPage));
-            //        this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            //    }
-            //    catch
-            //    {
-            //        FailedTextBlock.Visibility = Visibility.Visible;
-            //        SteamIDTextBox.Text = "";
-            //    }
-            //}
+            SetInputSteamId();
+        }
+
+        private void SetInputSteamId()
+        {
+            try
+            {
+                string input = SteamIDTextBox.Text;
+                if (input.Length > 0 && Regex.IsMatch(input, @"^\d+$"))
+                {
+                    try
+                    {
+                        ViewModel.SetSteamID(input);
+                        ViewModel.InitialDotaMatches();
+                    }
+                    catch { }
+                }
+            }
+            catch { }
         }
 
         /// <summary>

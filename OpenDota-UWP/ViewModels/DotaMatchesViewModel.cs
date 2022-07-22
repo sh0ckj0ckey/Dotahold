@@ -16,7 +16,13 @@ namespace OpenDota_UWP.ViewModels
         private static Lazy<DotaMatchesViewModel> _lazyVM = new Lazy<DotaMatchesViewModel>(() => new DotaMatchesViewModel());
         public static DotaMatchesViewModel Instance => _lazyVM.Value;
 
-        public string sSteamId { get; set; } = string.Empty;
+        // 用户ID
+        private string _sSteamId = string.Empty;
+        public string sSteamId
+        {
+            get { return _sSteamId; }
+            set { Set("sSteamId", ref _sSteamId, value); }
+        }
 
         // 缓存玩家名字和头像
         private Dictionary<string, string> dictPlayersNameCache = new Dictionary<string, string>();
