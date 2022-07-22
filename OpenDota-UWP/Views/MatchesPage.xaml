@@ -82,7 +82,7 @@
                                                     </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
-                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" Glyph="&#xE0E3;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="10" Glyph="&#xE0E3;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                     <ControlTemplate x:Key="HorizontalPreviousTemplate" TargetType="Button">
@@ -118,7 +118,7 @@
                                                     </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
-                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" Glyph="&#xE0E2;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="10" Glyph="&#xE0E2;" HorizontalAlignment="Center" MirroredWhenRightToLeft="True" UseLayoutRounding="False" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                     <ControlTemplate x:Key="VerticalNextTemplate" TargetType="Button">
@@ -154,7 +154,7 @@
                                                     </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
-                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" Glyph="&#xE0E5;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="10" Glyph="&#xE0E5;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                     <ControlTemplate x:Key="VerticalPreviousTemplate" TargetType="Button">
@@ -190,15 +190,15 @@
                                                     </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
-                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" Glyph="&#xE0E4;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
+                                            <FontIcon x:Name="Arrow" Foreground="{ThemeResource FlipViewNextPreviousArrowForeground}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="10" Glyph="&#xE0E4;" HorizontalAlignment="Center" UseLayoutRounding="False" VerticalAlignment="Center"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Grid.Resources>
                                 <ScrollViewer x:Name="ScrollingHost" AutomationProperties.AccessibilityView="Raw" BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalSnapPointsType="MandatorySingle" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="False" IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}" IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}" Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" VerticalSnapPointsType="MandatorySingle" ZoomMode="Disabled">
                                     <ItemsPresenter/>
                                 </ScrollViewer>
-                                <Button x:Name="PreviousButtonHorizontal" HorizontalAlignment="Left" Height="36" IsTabStop="False" Template="{StaticResource HorizontalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="20" Margin="6,0,0,0"/>
-                                <Button x:Name="NextButtonHorizontal" HorizontalAlignment="Right" Height="36" IsTabStop="False" Template="{StaticResource HorizontalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="20" Margin="0,0,6,0"/>
+                                <Button x:Name="PreviousButtonHorizontal" HorizontalAlignment="Left" Height="28" IsTabStop="False" Template="{StaticResource HorizontalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="12" Margin="3,20,0,0"/>
+                                <Button x:Name="NextButtonHorizontal" HorizontalAlignment="Right" Height="28" IsTabStop="False" Template="{StaticResource HorizontalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Center" Width="12" Margin="0,20,3,0"/>
                                 <Button x:Name="PreviousButtonVertical" HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalPreviousTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Top" Width="36" Margin="0,6,0,0"/>
                                 <Button x:Name="NextButtonVertical" HorizontalAlignment="Center" Height="20" IsTabStop="False" Template="{StaticResource VerticalNextTemplate}" UseSystemFocusVisuals="False" VerticalAlignment="Bottom" Width="36" Margin="0,0,0,6"/>
                             </Grid>
@@ -244,9 +244,9 @@
                            Margin="12,2,4,0"/>
             </StackPanel>
             <!--菜单-->
-            <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="42" Height="30" CornerRadius="4"
+            <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
                     Margin="0,0,12,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
-                     Foreground="{ThemeResource SIMPLETEXT_FR}">
+                    Foreground="{ThemeResource SIMPLETEXT_FR}">
                 <Button.Content>
                     <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>
                 </Button.Content>
@@ -278,20 +278,26 @@
                 </Button.Flyout>
             </Button>
             <!--最近5场比赛-->
-            <FlipView Style="{StaticResource RecentMatchesFlipViewStyle}" Grid.Row="1" CornerRadius="6" Margin="16,24,16,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
+            <FlipView Style="{StaticResource RecentMatchesFlipViewStyle}" Grid.Row="1" CornerRadius="6" Margin="10,24,16,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
                       HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
                 <FlipView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaRecentMatchModel">
                         <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="6">
                             <Grid Background="#20FFFFFF" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="{x:Bind sHeroName,Mode=OneWay}" FontWeight="Bold" Margin="16,8,4,0" TextTrimming="CharacterEllipsis"
+                                <TextBlock Grid.Row="0" Text="{x:Bind sHeroName,Mode=OneWay}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
                                            FontSize="16" CharacterSpacing="60" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
+                                <TextBlock Grid.Row="1" Text="K/D/A: 12/4/8" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
+                                           FontSize="13" CharacterSpacing="60"/>
+                                <TextBlock Grid.Row="2" Text="Last Hits: 213" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
+                                           FontSize="13" CharacterSpacing="60"/>
+                                <TextBlock Grid.Row="3" Text="1 day ago" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
+                                           FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
                             </Grid>
                             <Image Width="220" Source="{x:Bind sHeroCoverImage,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                         </Grid>
