@@ -16,9 +16,6 @@ namespace OpenDota_UWP.ViewModels
         private static Lazy<DotaMatchesViewModel> _lazyVM = new Lazy<DotaMatchesViewModel>(() => new DotaMatchesViewModel());
         public static DotaMatchesViewModel Instance => _lazyVM.Value;
 
-        //用于保存用户的Steam64位ID，以"账号绑定"的形式
-        public ApplicationDataContainer DotaSettings = ApplicationData.Current.LocalSettings;
-
         public string sSteamId { get; set; } = string.Empty;
 
         // 缓存玩家名字和头像
@@ -27,6 +24,33 @@ namespace OpenDota_UWP.ViewModels
 
         private Windows.Web.Http.HttpClient playerInfoHttpClient = new Windows.Web.Http.HttpClient();
         private Windows.Web.Http.HttpClient matchHttpClient = new Windows.Web.Http.HttpClient();
+
+        // 用户信息
+        private DotaMatchPlayerProfileModel _PlayerProfile = null;
+        public DotaMatchPlayerProfileModel PlayerProfile
+        {
+            get { return _PlayerProfile; }
+            set { Set("PlayerProfile", ref _PlayerProfile, value); }
+        }
+
+        // 用户胜负场数
+        private DotaMatchWinLoseModel _PlayerWinLose = null;
+        public DotaMatchWinLoseModel PlayerWinLose
+        {
+            get { return _PlayerWinLose; }
+            set { Set("PlayerWinLose", ref _PlayerWinLose, value); }
+        }
+
+        // 用户统计数据
+        private List<DotaMatchPlayerTotalModel> _PlayerTotals = null;
+        public List<DotaMatchPlayerTotalModel> PlayerTotals
+        {
+            get { return _PlayerTotals; }
+            set { Set("PlayerTotals", ref _PlayerTotals, value); }
+        }
+
+        public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
+        public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
         public DotaMatchesViewModel()
         {
@@ -38,13 +62,32 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 sSteamId = GetSteamID();
-                var profile = await GetPlayerProfileAsync(sSteamId);
-                var wl = await GetPlayerWLAsync(sSteamId);
-                var total = await GetTotalAsync(sSteamId);
+
+                if (!string.IsNullOrEmpty(sSteamId))
+                {
+                    PlayerProfile = await GetPlayerProfileAsync(sSteamId);
+                    PlayerWinLose = await GetPlayerWLAsync(sSteamId);
+                    PlayerTotals = await GetTotalAsync(sSteamId);
+
+                    var recentMatches = await GetRecentMatchAsync(sSteamId);
+                    vRecentMatchesForFlip.Clear();
+                    vRecentMatches.Clear();
+                    foreach (var item in recentMatches)
+                    {
+                        if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                        {
+                            item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
+                                DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                            item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                        }
+
+                        vRecentMatches.Add(item);
+                        if (vRecentMatchesForFlip.Count < 5)
+                            vRecentMatchesForFlip.Add(item);
+                    }
+                }
 
                 var num = await GetNumberOfCurrentPlayersAsync();
-
-                var recentMatches = await GetRecentMatchAsync(sSteamId);
             }
             catch { }
         }
@@ -96,7 +139,7 @@ namespace OpenDota_UWP.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private async Task<DotaMatchPlayerTotalsModel> GetTotalAsync(string id)
+        private async Task<List<DotaMatchPlayerTotalModel>> GetTotalAsync(string id)
         {
             try
             {
@@ -105,9 +148,9 @@ namespace OpenDota_UWP.ViewModels
                 var response = await playerInfoHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                var totals = JsonConvert.DeserializeObject<DotaMatchPlayerTotalsModel>(jsonMessage);
+                var totals = JsonConvert.DeserializeObject<List<DotaMatchPlayerTotalModel>>(jsonMessage);
 
-                if (totals != null && totals.vTotals.Count > 0)
+                if (totals != null && totals.Count > 0)
                 {
 
                 }
@@ -134,8 +177,8 @@ namespace OpenDota_UWP.ViewModels
                 var response = await matchHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                var matches = JsonConvert.DeserializeObject<DotaRecentMatchesModel>(jsonMessage);
-                return matches.vRecentMatches;
+                var matches = JsonConvert.DeserializeObject<List<DotaRecentMatchModel>>(jsonMessage);
+                return matches;
             }
             catch { }
             return null;
@@ -216,7 +259,7 @@ namespace OpenDota_UWP.ViewModels
                     decimal id64 = Convert.ToDecimal(steamId);
                     steamId = (id64 - 76561197960265728).ToString();
                 }
-                DotaSettings.Values["SteamID"] = steamId;
+                App.AppSettingContainer.Values["SteamID"] = steamId;
                 sSteamId = steamId;
             }
             catch { }
@@ -230,9 +273,9 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (DotaSettings.Values["SteamID"] != null)
+                if (App.AppSettingContainer?.Values["SteamID"] != null)
                 {
-                    return DotaSettings.Values["SteamID"].ToString();
+                    return App.AppSettingContainer?.Values["SteamID"].ToString();
                 }
             }
             catch { }

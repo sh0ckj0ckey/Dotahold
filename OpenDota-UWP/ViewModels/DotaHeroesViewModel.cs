@@ -15,7 +15,7 @@ namespace OpenDota_UWP.ViewModels
         public static DotaHeroesViewModel Instance => _lazyVM.Value;
 
         // 所有英雄
-        public Dictionary<string, Models.DotaHeroModel> mapAllHeroes { get; set; } = new Dictionary<string, Models.DotaHeroModel>();
+        public Dictionary<string, Models.DotaHeroModel> dictAllHeroes { get; set; } = new Dictionary<string, Models.DotaHeroModel>();
 
         // 列表展示的英雄
         public ObservableCollection<Models.DotaHeroModel> vStrHeroesList { get; set; } = new ObservableCollection<Models.DotaHeroModel>();
@@ -137,13 +137,13 @@ namespace OpenDota_UWP.ViewModels
 
                 bLoadingHeroes = true;
 
-                mapAllHeroes?.Clear();
+                dictAllHeroes?.Clear();
                 vStrHeroesList?.Clear();
                 vAgiHeroesList?.Clear();
                 vIntHeroesList?.Clear();
-                mapAllHeroes = await ConstantsHelper.Instance.GetHeroesConstant();
+                dictAllHeroes = await ConstantsHelper.Instance.GetHeroesConstant();
 
-                if (mapAllHeroes == null || mapAllHeroes.Count <= 0)
+                if (dictAllHeroes == null || dictAllHeroes.Count <= 0)
                 {
                     bLoadingHeroes = false;
                     _bLoadedDotaHeroes = false;
@@ -151,7 +151,7 @@ namespace OpenDota_UWP.ViewModels
                 }
 
                 // 处理图片下载等流程，然后逐个添加到列表里面
-                foreach (var item in mapAllHeroes)
+                foreach (var item in dictAllHeroes)
                 {
                     item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
                     string attr = item.Value.primary_attr.ToLower();

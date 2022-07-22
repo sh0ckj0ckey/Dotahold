@@ -1,4 +1,5 @@
 ﻿using OpenDota_UWP.Helpers;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,42 +30,18 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class MatchesPage : Page
     {
-        //public static PlayerProfile MatchPlayerProfile = new PlayerProfile();
-        //public WinNLose wL = new WinNLose();
-        private string ID = "";
-        private string SteamCommunityLink = "";
-        //private ObservableCollection<RecentMatchViewModel> recentMatchesObservableCollection = new ObservableCollection<RecentMatchViewModel>();
-        List<HeroUsingInfo> heroUsingInfos = null;
-        private ObservableCollection<HeroUsingInfoViewModel> heroUsingInfoObservableCollection = new ObservableCollection<HeroUsingInfoViewModel>();
+        private DotaMatchesViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         public MatchesPage()
         {
-            this.InitializeComponent();
-
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            //ID = DotaMatchHelper.GetSteamID();
-            ////读取用户ID，如果为空就显示绑定页面
-            //if (ID == "")
-            //{
-            //    BindAccount();
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        ShowPlayerProfileAsync(ID);
-            //        ShowPieChart(ID);
-            //        ShowPlayerTotalDataAsync(ID);
-            //        ShowRecentMatches(ID);
-            //        ShowHeroUsingInfo(ID);
-            //    }
-            //    catch
-            //    {
-            //        ShowDialog("Sorry, something went wrong while fetching data.");
-            //        this.Frame.Navigate(typeof(BlankPage));
-            //    }
-            //}
+            try
+            {
+                this.InitializeComponent();
+                ViewModel = DotaMatchesViewModel.Instance;
+                MainViewModel = DotaViewModel.Instance;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -73,14 +50,16 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is NavigationTransitionInfo transition)
+            try
             {
-                navigationTransition.DefaultNavigationTransitionInfo = transition;
-            }
-            //SharedData.Share.PlayerID = DotaMatchHelper.GetSteamID();
+                base.OnNavigatedTo(e);
 
-            //this.RegisterBackgroundTask();
-            base.OnNavigatedTo(e);
+                if (e.Parameter is NavigationTransitionInfo transition)
+                {
+                    navigationTransition.DefaultNavigationTransitionInfo = transition;
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -201,7 +180,6 @@ namespace OpenDota_UWP.Views
             }
             catch
             {
-                ShowDialog("Sorry, something went wrong while connecting to server.");
                 this.Frame.Navigate(typeof(BlankPage));
                 return;
             }
@@ -274,7 +252,6 @@ namespace OpenDota_UWP.Views
             }
             catch
             {
-                ShowDialog("Sorry, something went wrong while connecting to server.");
                 return;
             }
         }
@@ -379,17 +356,17 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            if (SteamCommunityLink != "")
-            {
-                try
-                {
-                    await Windows.System.Launcher.LaunchUriAsync(new Uri(SteamCommunityLink));
-                }
-                catch
-                {
-                    SteamCommunityLinkMenuFlyoutItem.IsEnabled = false;
-                }
-            }
+            //if (SteamCommunityLink != "")
+            //{
+            //    try
+            //    {
+            //        await Windows.System.Launcher.LaunchUriAsync(new Uri(SteamCommunityLink));
+            //    }
+            //    catch
+            //    {
+            //        SteamCommunityLinkMenuFlyoutItem.IsEnabled = false;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -437,12 +414,12 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void BackAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            BindingGridPopOut.Begin();
+            //BindingGridPopOut.Begin();
         }
 
         private void BindingGridPopOut_Completed(object sender, object e)
         {
-            BindGrid.Visibility = Visibility.Collapsed;
+           // BindGrid.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -452,14 +429,14 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void SteamIDTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            bool a = Regex.IsMatch(SteamIDTextBox.Text, @"^\d+$");
-            if (a == false)
+            //bool a = Regex.IsMatch(SteamIDTextBox.Text, @"^\d+$");
+            //if (a == false)
             {
-                OKButton.IsEnabled = false;
+                //OKButton.IsEnabled = false;
             }
-            else
+            //else
             {
-                OKButton.IsEnabled = true;
+                //OKButton.IsEnabled = true;
             }
         }
 
@@ -516,22 +493,6 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
-        /// 指向MMR单元格(GridViewItem)的时候显示注释
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridViewItem_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            MMRTitleTextBlock.Text = "NOT RANK";
-            MMRTitleTextBlock.FontSize = 12;
-        }
-        private void GridViewItem_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            MMRTitleTextBlock.Text = "MMR";
-            MMRTitleTextBlock.FontSize = 14;
-        }
-
-        /// <summary>
         /// 显示 "无法显示数据?" 提示框
         /// </summary>
         /// <param name="sender"></param>
@@ -562,75 +523,45 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (UsingIndexGridView.SelectedIndex < 0)
-            {
-                return;
-            }
-            if (UsingIndexGridView.SelectedIndex < 1)
-            {
-                LeftHyperlinkButton.IsEnabled = false;
-            }
-            if (UsingIndexGridView.SelectedIndex < 11)
-            {
-                RightHyperlinkButton.IsEnabled = true;
-            }
-            if (UsingIndexGridView.SelectedIndex > 10)
-            {
-                RightHyperlinkButton.IsEnabled = false;
-            }
-            if (UsingIndexGridView.SelectedIndex > 0)
-            {
-                LeftHyperlinkButton.IsEnabled = true;
-            }
+            //if (UsingIndexGridView.SelectedIndex < 0)
+            //{
+            //    return;
+            //}
+            //if (UsingIndexGridView.SelectedIndex < 1)
+            //{
+            //    LeftHyperlinkButton.IsEnabled = false;
+            //}
+            //if (UsingIndexGridView.SelectedIndex < 11)
+            //{
+            //    RightHyperlinkButton.IsEnabled = true;
+            //}
+            //if (UsingIndexGridView.SelectedIndex > 10)
+            //{
+            //    RightHyperlinkButton.IsEnabled = false;
+            //}
+            //if (UsingIndexGridView.SelectedIndex > 0)
+            //{
+            //    LeftHyperlinkButton.IsEnabled = true;
+            //}
 
-            if (heroUsingInfos != null)
-            {
-                int start = UsingIndexGridView.SelectedIndex + 1;
-                heroUsingInfoObservableCollection.Clear();
-                for (int i = start * 10 - 10; i < start * 10; i++)
-                {
-                    try
-                    {
-                        HeroUsingInfoViewModel heroUsingInfoOverview = new HeroUsingInfoViewModel(heroUsingInfos[i]);
-                        heroUsingInfoOverview.Time = ComputeTime(heroUsingInfos[i].last_played);
-                        heroUsingInfoObservableCollection.Add(heroUsingInfoOverview);
-                    }
-                    catch
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        private void LeftHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (UsingIndexGridView.SelectedIndex > 0)
-            {
-                UsingIndexGridView.SelectedIndex--;
-            }
-            if (UsingIndexGridView.SelectedIndex < 1)
-            {
-                LeftHyperlinkButton.IsEnabled = false;
-            }
-            if (UsingIndexGridView.SelectedIndex < 11)
-            {
-                RightHyperlinkButton.IsEnabled = true;
-            }
-        }
-        private void RightHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (UsingIndexGridView.SelectedIndex < 11)
-            {
-                UsingIndexGridView.SelectedIndex++;
-            }
-            if (UsingIndexGridView.SelectedIndex > 10)
-            {
-                RightHyperlinkButton.IsEnabled = false;
-            }
-            if (UsingIndexGridView.SelectedIndex > 0)
-            {
-                LeftHyperlinkButton.IsEnabled = true;
-            }
+            //if (heroUsingInfos != null)
+            //{
+            //    int start = UsingIndexGridView.SelectedIndex + 1;
+            //    heroUsingInfoObservableCollection.Clear();
+            //    for (int i = start * 10 - 10; i < start * 10; i++)
+            //    {
+            //        try
+            //        {
+            //            HeroUsingInfoViewModel heroUsingInfoOverview = new HeroUsingInfoViewModel(heroUsingInfos[i]);
+            //            heroUsingInfoOverview.Time = ComputeTime(heroUsingInfos[i].last_played);
+            //            heroUsingInfoObservableCollection.Add(heroUsingInfoOverview);
+            //        }
+            //        catch
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>
@@ -645,8 +576,8 @@ namespace OpenDota_UWP.Views
                 return "—";
             }
             string time = "";
-            TimeSpan timed = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            double duration = (Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds) - Convert.ToInt64(tm));
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            double duration = (Convert.ToInt64(ts.TotalSeconds) - Convert.ToInt64(tm));
             if (duration / 31536000 >= 1)
             {
                 time = Convert.ToInt32(duration / 31536000) + " years ago";
@@ -677,27 +608,5 @@ namespace OpenDota_UWP.Views
             }
             return time;
         }
-
-        /// <summary>
-        /// 显示程序异常对话框，自定义内容
-        /// </summary>
-        public static async void ShowDialog(string content)
-        {
-            var dialog = new ContentDialog()
-            {
-                Title = ":(",
-                Content = content,
-                PrimaryButtonText = "Okay",
-                FullSizeDesired = false
-            };
-
-            dialog.PrimaryButtonClick += (_s, _e) => { };
-            try
-            {
-                await dialog.ShowAsync();
-            }
-            catch { }
-        }
-
     }
 }

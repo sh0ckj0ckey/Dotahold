@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace OpenDota_UWP.Models
 {
-    public class DotaMatchPlayerTotalsModel
-    {
-        public List<Total> vTotals { get; set; }
-    }
+    //public class DotaMatchPlayerTotalsModel
+    //{
+    //    public List<DotaMatchPlayerTotalModel> vTotals { get; set; }
+    //}
 
-    public class Total
+    public class DotaMatchPlayerTotalModel
     {
         public string field { get; set; }
         public int n { get; set; }

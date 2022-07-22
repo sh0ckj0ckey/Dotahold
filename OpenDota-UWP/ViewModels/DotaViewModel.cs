@@ -43,10 +43,6 @@ namespace OpenDota_UWP.ViewModels
             }
         }
 
-
-        // 用来弹窗的样式
-        private Style _customDialogStyle = null;
-
         public DotaViewModel()
         {
             try
