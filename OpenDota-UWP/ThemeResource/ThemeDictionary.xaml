@@ -7,6 +7,8 @@
                 <ResourceDictionary>
                     <Color x:Key="APPLICATION_BK">#272839</Color>
                     <Color x:Key="ACRYLIC_FALLBACK_BK">#272839</Color>
+                    <Color x:Key="COMMON_BUTTON_BK">#14F3F4F8</Color>
+                    <Color x:Key="COMMON_TEXTBOX_BD">#33F3F4F8</Color>
                     <Color x:Key="COMMON_ITEM_BK">#14F3F4F8</Color>
                     <Color x:Key="SIDEMEDU_BK">#1e1e2c</Color>
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
@@ -25,6 +27,11 @@
                     <Color x:Key="HEROINFO_TALENTS_BK">#2E3044</Color>
 
                     <Color x:Key="HEROINFO_LISTITEM_BK">#14F3F4F8</Color>
+
+                    <Color x:Key="PLAYERPROFILE_AVATAR_BD">#404040</Color>
+                    
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#10FFFFFF</Color>
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
                     
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>
@@ -82,6 +89,8 @@
                 <ResourceDictionary>
                     <Color x:Key="APPLICATION_BK">#F3F4F8</Color>
                     <Color x:Key="ACRYLIC_FALLBACK_BK">#DD88001B</Color>
+                    <Color x:Key="COMMON_BUTTON_BK">#DD88001B</Color>
+                    <Color x:Key="COMMON_TEXTBOX_BD">#DD88001B</Color>
                     <Color x:Key="COMMON_ITEM_BK">#08000000</Color>
                     <Color x:Key="SIDEMEDU_BK">#DD88001B</Color>
                     <Color x:Key="GOLDTEXT_FR">Goldenrod</Color>
@@ -100,6 +109,11 @@
                     <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
 
                     <Color x:Key="HEROINFO_LISTITEM_BK">#08000000</Color>
+
+                    <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08666666</Color>
+                    
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#FFFFFF</Color>
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BD">#08666666</Color>
                     
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>

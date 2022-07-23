@@ -40,6 +40,11 @@ namespace OpenDota_UWP.Views
                 this.InitializeComponent();
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
+
+                FrameShadow.Receivers.Add(PlayerProfileGrid);
+                MatchGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
+
+                MatchFrame.Navigate(typeof(BlankPage));
             }
             catch { }
         }
@@ -57,6 +62,11 @@ namespace OpenDota_UWP.Views
                 if (e.Parameter is NavigationTransitionInfo transition)
                 {
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
+                }
+
+                if (string.IsNullOrEmpty(ViewModel.sSteamId))
+                {
+                    BindAccount();
                 }
             }
             catch { }
@@ -383,6 +393,8 @@ namespace OpenDota_UWP.Views
             //this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
+        #region 游戏ID绑定
+
         /// <summary>
         /// 更改绑定
         /// </summary>
@@ -390,36 +402,11 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
         {
-            BindAccount();
-        }
-
-        /// <summary>
-        /// 显示绑定新账号窗口
-        /// </summary>
-        public void BindAccount()
-        {
-            //BindGrid.Visibility = Visibility.Visible;
-            //BindingGridPopIn.Begin();
-            //string id = DotaMatchHelper.GetSteamID();
-            //if (id == "")
-            //{
-            //    BackAppBarButton.IsEnabled = false;
-            //}
-        }
-
-        /// <summary>
-        /// 取消绑定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BackAppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            //BindingGridPopOut.Begin();
-        }
-
-        private void BindingGridPopOut_Completed(object sender, object e)
-        {
-            // BindGrid.Visibility = Visibility.Collapsed;
+            try
+            {
+                BindAccount();
+            }
+            catch { }
         }
 
         /// <summary>
@@ -468,7 +455,47 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SetInputSteamId();
+            try
+            {
+                SetInputSteamId();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 显示绑定新账号窗口
+        /// </summary>
+        public void BindAccount()
+        {
+            try
+            {
+                BindGrid.Visibility = Visibility.Visible;
+                BindingGridPopIn.Begin();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 取消绑定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HideBindingAccountGrid();
+            }
+            catch { }
+        }
+
+        private void BindingGridPopOut_Completed(object sender, object e)
+        {
+            try
+            {
+                BindGrid.Visibility = Visibility.Collapsed;
+            }
+            catch { }
         }
 
         private void SetInputSteamId()
@@ -482,12 +509,25 @@ namespace OpenDota_UWP.Views
                     {
                         ViewModel.SetSteamID(input);
                         ViewModel.InitialDotaMatches();
+                        HideBindingAccountGrid();
+                        SteamIDTextBox.Text = "";
                     }
                     catch { }
                 }
             }
             catch { }
         }
+
+        private void HideBindingAccountGrid()
+        {
+            try
+            {
+                BindingGridPopOut.Begin();
+            }
+            catch { }
+        }
+
+        #endregion
 
         /// <summary>
         /// 显示 "无法显示数据?" 提示框

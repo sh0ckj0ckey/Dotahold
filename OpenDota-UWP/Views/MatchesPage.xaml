@@ -209,6 +209,8 @@
             </Style>
 
             <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
+
+            <ThemeShadow x:Name="FrameShadow"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -217,7 +219,7 @@
             <ColumnDefinition Width="420"/>
             <ColumnDefinition Width="2.3*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,40,12,0">
+        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,40,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -229,7 +231,7 @@
             <StackPanel x:Name="PlayerProfileStackPanel" Grid.Row="0" Orientation="Horizontal" Margin="12,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Grid Height="36" Width="36">
                     <TextBlock Text="?" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Ellipse x:Name="PlayerPhotoEllipse" Height="36" Width="36" Stroke="#404040" StrokeThickness="1">
+                    <Ellipse x:Name="PlayerPhotoEllipse" Height="36" Width="36" Stroke="{ThemeResource PLAYERPROFILE_AVATAR_BD}" StrokeThickness="1">
                         <Ellipse.Fill>
                             <ImageBrush>
                                 <ImageBrush.ImageSource>
@@ -248,7 +250,7 @@
             </StackPanel>
             <!--菜单-->
             <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
-                    Margin="0,0,12,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
+                    Margin="0,0,16,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
                     Foreground="{ThemeResource SIMPLETEXT_FR}">
                 <Button.Content>
                     <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>
@@ -281,12 +283,12 @@
                 </Button.Flyout>
             </Button>
             <!--最近5场比赛-->
-            <FlipView Style="{StaticResource RecentMatchesFlipViewStyle}" Grid.Row="1" CornerRadius="6" Margin="10,24,16,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
+            <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="10,8,16,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
                       HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
                 <FlipView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaRecentMatchModel">
                         <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="6">
-                            <Grid Background="#20FFFFFF" BorderBrush="#33FFFFFF" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
+                            <Grid Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" BorderBrush="{ThemeResource RECENTMATCH_FLIPCARD_BD}" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -295,10 +297,20 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{x:Bind sHeroName,Mode=OneWay}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
                                            FontSize="16" CharacterSpacing="60" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
-                                <TextBlock Grid.Row="1" Text="K/D/A: 12/4/8" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
-                                           FontSize="13" CharacterSpacing="60"/>
-                                <TextBlock Grid.Row="2" Text="Last Hits: 213" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
-                                           FontSize="13" CharacterSpacing="60"/>
+                                <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
+                                           FontSize="13" CharacterSpacing="60">
+                                    <Run Text="K/D/A:"/>
+                                    <Run Text="{x:Bind kills,Mode=OneWay}"/>
+                                    <Run Text="/" FontWeight="Normal"/>
+                                    <Run Text="{x:Bind deaths,Mode=OneWay}"/>
+                                    <Run Text="/" FontWeight="Normal"/>
+                                    <Run Text="{x:Bind assists,Mode=OneWay}"/>
+                                </TextBlock>
+                                <TextBlock Grid.Row="2" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
+                                           FontSize="13" CharacterSpacing="60">
+                                    <Run Text="Last Hits:"/>
+                                    <Run Text="{x:Bind last_hits,Mode=OneWay}"/>
+                                </TextBlock>
                                 <TextBlock Grid.Row="3" Text="1 day ago" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                            FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
                             </Grid>
@@ -1321,8 +1333,12 @@
             </PivotItem>
         </Pivot>-->
 
+        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}">
+            <Frame x:Name="MatchFrame"/>
+        </Grid>
+
         <!--当前在线玩家数-->
-        <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16,0"
+        <Grid Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="16,4"
               Background="{ThemeResource COMMON_ITEM_BK}" Padding="14,6" CornerRadius="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -1332,96 +1348,95 @@
             <TextBlock Grid.Column="1" Text="PLAYERS IN GAME NOW" FontSize="13" Margin="0,0,0,0" Opacity="0.7" VerticalAlignment="Bottom"/>
         </Grid>
 
-        <Grid x:Name="BindGrid" Visibility="Visible" Grid.ColumnSpan="2">
+        <Grid x:Name="BindGrid" Visibility="Collapsed" Grid.ColumnSpan="2">
             <Grid.Background>
-                <ImageBrush ImageSource="/Assets/Pictures/radiant_dire5.jpg"/>
+                <ImageBrush x:Name="BindGridBackImage" ImageSource="/Assets/Pictures/radiant_dire5.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
             <Grid.Resources>
                 <Storyboard x:Name="BindingGridPopIn">
                     <PopInThemeAnimation FromHorizontalOffset="0"
                                          FromVerticalOffset="320"
                                          Storyboard.TargetName="BindingPop"
-                                         Duration="00:00:1" />
+                                         Duration="00:00:0.5" />
+                    <DoubleAnimation Storyboard.TargetName="BindGrid"
+                                     Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="00:00:0.2"/>
                 </Storyboard>
                 <Storyboard x:Name="BindingGridPopOut"
                             Completed="BindingGridPopOut_Completed">
                     <PopOutThemeAnimation Storyboard.TargetName="BindingPop"
-                                          Duration="00:00:0.1" />
+                                          Duration="00:00:0.2" />
+                    <DoubleAnimation Storyboard.TargetName="BindGrid"
+                                     Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="00:00:0.2"/>
                 </Storyboard>
             </Grid.Resources>
             <Grid x:Name="BindingPop" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Height="256" Width="480" CornerRadius="6" Background="{ThemeResource APPLICATION_BK}">
+                  Height="156" Width="396" CornerRadius="6" Background="{ThemeResource APPLICATION_BK}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
                     <RowDefinition Height="64"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="1" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                           CharacterSpacing="40" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Margin="16,0,4,0" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               CharacterSpacing="40" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                <Button Grid.Row="1" Content="&#xE11B;" FontFamily="Segoe UI Symbol" HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Margin="4,0,16,0" Foreground="{ThemeResource SIMPLETEXT_FR}" Style="{StaticResource TextBlockButtonStyle}">
-                    <Button.Flyout>
-                        <Flyout x:Name="WhatIDFlyout" Placement="Bottom">
-                            <Grid>
-                                <StackPanel>
-                                    <TextBlock Text="Both of the following IDs are available"
-                                               FontSize="18" Opacity="0.7" />
-                                    <TextBlock TextWrapping="WrapWholeWords"
+                    <Button Content="&#xE783;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Margin="0" Foreground="{ThemeResource SystemAccentColor}" Style="{StaticResource TextBlockButtonStyle}">
+                        <Button.Flyout>
+                            <Flyout x:Name="WhatIDFlyout" Placement="Bottom">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="Both of the following IDs are available"
+                                               FontSize="18" Opacity="0.7" FontWeight="Medium"/>
+                                        <TextBlock HorizontalAlignment="Left"
                                                Text="The 64-bit ID can be viewed in the address bar after"
-                                               Opacity="0.7" Margin="8,8,8,0" />
-                                    <TextBlock TextWrapping="WrapWholeWords"
+                                               Margin="2,8,8,0" />
+                                        <TextBlock HorizontalAlignment="Left"
                                                Text="clicking personal information on the Steam client:"
-                                               Opacity="0.7" Margin="8,4,8,8" />
-                                    <Image Source="/Assets/Icons/tutorial1.png"
+                                               Margin="2,4,8,8" />
+                                        <Image Source="/Assets/Icons/tutorial1.png"
                                            HorizontalAlignment="Left"
                                            Width="256" Margin="12,0" />
-                                    <TextBlock Text="OR" FontWeight="Black" FontSize="16" Opacity="0.7" Margin="128,12,0,12" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <TextBlock TextWrapping="WrapWholeWords"
+                                        <TextBlock HorizontalAlignment="Left"
                                                Text="The 32-bit ID can be viewed in the Dota2 client:"
-                                               Opacity="0.7"
-                                               Margin="8" />
-                                    <Image Source="/Assets/Icons/tutorial2.png"
+                                               Margin="2,12,8,8" />
+                                        <Image Source="/Assets/Icons/tutorial2.png"
                                            HorizontalAlignment="Left"
                                            Height="96"
-                                           Margin="12,0,12,24" />
-                                </StackPanel>
-                            </Grid>
-                        </Flyout>
-                    </Button.Flyout>
+                                           Margin="12,0,12,8" />
+                                    </StackPanel>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+
+                </StackPanel>
+
+                <Button x:Name="BackAppBarButton" Grid.Row="1"
+                        Width="36" Height="36" CornerRadius="4" Margin="0,0,14,0"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent"
+                        Click="BackAppBarButton_Click"
+                        Style="{StaticResource ButtonRevealStyle}"
+                        Visibility="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource Str2Vis}}">
+                    <Button.Content>
+                        <TextBlock Text="&#xF78A;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" FontSize="14" Margin="0,0,0,-2"/>
+                    </Button.Content>
                 </Button>
 
-                <TextBox x:Name="SteamIDTextBox" Grid.Row="2" Height="34" Width="256" CornerRadius="6" FontWeight="Medium" CharacterSpacing="40"
-                         HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2"
-                         Padding="8,4,4,0" FontSize="18" TextChanged="SteamIDTextBox_TextChanged" KeyUp="SteamIDTextBox_KeyUp" />
-
-                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16" Margin="0,12,0,4">
-
-                    <Button x:Name="OKButton" IsEnabled="False" Height="38" Width="156" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,12,0,0">
+                    <TextBox x:Name="SteamIDTextBox" Height="38" Width="256" Margin="0,0,12,0" CornerRadius="6" FontWeight="Medium" CharacterSpacing="60"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="{ThemeResource COMMON_TEXTBOX_BD}" Template="{StaticResource CornerTextBoxTemplate}"
+                             Padding="12,6,4,0" FontSize="18" TextChanged="SteamIDTextBox_TextChanged" KeyUp="SteamIDTextBox_KeyUp" />
+                    <Button x:Name="OKButton" IsEnabled="False" Height="38" Width="38" CornerRadius="19" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" Foreground="White" Background="{ThemeResource COMMON_BUTTON_BK}">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE10B;" FontFamily="Segoe UI Symbol" VerticalAlignment="Center" FontSize="10" Margin="0,0,4,-2"/>
-                                <TextBlock Text="Confirm" FontWeight="Medium" VerticalAlignment="Center"/>
+                                <TextBlock Text="&#xF0AF;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" FontSize="14" Margin="0,0,0,-2"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    
-                    <Button x:Name="BackAppBarButton"
-                            Width="72" Height="38" CornerRadius="4"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Click="BackAppBarButton_Click"
-                            Style="{StaticResource ButtonRevealStyle}"
-                            Visibility="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource Str2Vis}}">
-                        <Button.Content>
-                            <TextBlock Text="Cancel" FontSize="16" VerticalAlignment="Center" />
-                        </Button.Content>
-                    </Button>
-
                 </StackPanel>
             </Grid>
         </Grid>
