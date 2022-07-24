@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using LiveChartsCore.SkiaSharpView;
+using Newtonsoft.Json;
 using OpenDota_UWP.Helpers;
 using OpenDota_UWP.Models;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,6 +60,20 @@ namespace OpenDota_UWP.ViewModels
         public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
+        // 胜负场数图表数据源
+        private static LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint WinChartColor = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.ForestGreen);
+        private static LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint LoseChartColor = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.DarkRed);
+        private LiveChartsCore.ISeries[] _WinLoseSeries = new LiveChartsCore.ISeries[]
+        {
+            new PieSeries<double> { Values = new List<double> { 0 }, Pushout = 2, Fill = WinChartColor, Name = "Win"},
+            new PieSeries<double> { Values = new List<double> { 0 }, Pushout = 2, Fill = LoseChartColor,Name = "Lose" }
+        };
+        public LiveChartsCore.ISeries[] WinLoseSeries
+        {
+            get { return _WinLoseSeries; }
+            set { Set("WinLoseSeries", ref _WinLoseSeries, value); }
+        }
+
         public DotaMatchesViewModel()
         {
             InitialDotaMatches();
@@ -71,25 +87,73 @@ namespace OpenDota_UWP.ViewModels
 
                 if (!string.IsNullOrEmpty(sSteamId))
                 {
-                    PlayerProfile = await GetPlayerProfileAsync(sSteamId);
-                    PlayerWinLose = await GetPlayerWLAsync(sSteamId);
+                    // 玩家信息
+                    var profile = await GetPlayerProfileAsync(sSteamId);
+                    if (profile != null)
+                    {
+                        if (profile.leaderboard_rank is int rank && rank > 0 && profile.rank_tier >= 80)
+                        {
+                            if (rank == 1)
+                            {
+                                profile.rank_tier = 84;
+                            }
+                            else if (rank <= 10)
+                            {
+                                profile.rank_tier = 83;
+                            }
+                            else if (rank <= 100)
+                            {
+                                profile.rank_tier = 82;
+                            }
+                            else if (rank <= 1000)
+                            {
+                                profile.rank_tier = 81;
+                            }
+                            else
+                            {
+                                profile.rank_tier = 80;
+                            }
+                        }
+                    }
+                    PlayerProfile = profile;
+
+                    // 胜率
+                    var wl = await GetPlayerWLAsync(sSteamId);
+                    if (wl != null && (wl.win + wl.lose) > 0)
+                    {
+                        double rate = wl.win / (wl.win + wl.lose);
+                        wl.winRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+                    }
+                    PlayerWinLose = wl;
+
+                    WinLoseSeries = new LiveChartsCore.ISeries[]
+                        {
+                            new PieSeries<double> { Values = new List<double> { PlayerWinLose.win }, Pushout = 2, Fill = WinChartColor, Name = "Win"},
+                            new PieSeries<double> { Values = new List<double> { PlayerWinLose.lose }, Pushout = 2, Fill = LoseChartColor, Name = "Lose" }
+                        };
+
+                    // 统计数据
                     PlayerTotals = await GetTotalAsync(sSteamId);
 
+                    // 处理最近的比赛
                     var recentMatches = await GetRecentMatchAsync(sSteamId);
-                    vRecentMatchesForFlip.Clear();
-                    vRecentMatches.Clear();
-                    foreach (var item in recentMatches)
+                    if (recentMatches != null)
                     {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                        vRecentMatchesForFlip.Clear();
+                        vRecentMatches.Clear();
+                        foreach (var item in recentMatches)
                         {
-                            item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
-                                DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                            item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                        }
+                            if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                            {
+                                item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
+                                    DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                            }
 
-                        vRecentMatches.Add(item);
-                        if (vRecentMatchesForFlip.Count < 5)
-                            vRecentMatchesForFlip.Add(item);
+                            vRecentMatches.Add(item);
+                            if (vRecentMatchesForFlip.Count < 5)
+                                vRecentMatchesForFlip.Add(item);
+                        }
                     }
                 }
 
@@ -240,7 +304,7 @@ namespace OpenDota_UWP.ViewModels
         /// 请求更新数据
         /// </summary>
         /// <param name="id"></param>
-        private async void PostRefreshAsync(string id)
+        public async void PostRefreshAsync(string id)
         {
             try
             {

@@ -20,5 +20,8 @@ namespace OpenDota_UWP.Models
         /// 失败
         /// </summary>
         public double lose { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string winRate { get; set; } = string.Empty;
     }
 }

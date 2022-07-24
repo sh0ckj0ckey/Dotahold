@@ -131,7 +131,9 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Converters\LongToTimeAgoConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
+    <Compile Include="Converters\RankTierToImageConverter.cs" />
     <Compile Include="Converters\StringArrayToStringConverter.cs" />
     <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
@@ -170,6 +172,9 @@
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AsyncBitmapImage.cs" />
+    <Compile Include="UI\WinLosePieChartControl.xaml.cs">
+      <DependentUpon>WinLosePieChartControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
@@ -596,6 +601,7 @@
     <Content Include="Assets\Icons\Data\icon_tower.png" />
     <Content Include="Assets\Icons\Data\icon_towerdamage.png" />
     <Content Include="Assets\Icons\Data\icon_tp.png" />
+    <Content Include="Assets\Icons\icon_dota_plus.png" />
     <Content Include="Assets\Icons\Hero\hero_agility.png" />
     <Content Include="Assets\Icons\Hero\hero_intelligence.png" />
     <Content Include="Assets\Icons\Hero\hero_melee_dark.png" />
@@ -724,11 +730,11 @@
     <Content Include="Assets\RankMedal\SeasonalRank7-5.png" />
     <Content Include="Assets\RankMedal\SeasonalRank7-6.png" />
     <Content Include="Assets\RankMedal\SeasonalRank7-7.png" />
-    <Content Include="Assets\RankMedal\SeasonalRankTop0.png" />
-    <Content Include="Assets\RankMedal\SeasonalRankTop1.png" />
-    <Content Include="Assets\RankMedal\SeasonalRankTop2.png" />
-    <Content Include="Assets\RankMedal\SeasonalRankTop3.png" />
-    <Content Include="Assets\RankMedal\SeasonalRankTop4.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank8-0.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank8-1.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank8-2.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank8-3.png" />
+    <Content Include="Assets\RankMedal\SeasonalRank8-4.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -798,6 +804,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\SomethingWrongControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\WinLosePieChartControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

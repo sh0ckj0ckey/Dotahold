@@ -164,7 +164,7 @@ namespace OpenDota_UWP.Views
                             }
                         }
                     }
-                    sAttribInfo = attribSb.ToString();
+                    sAttribInfo = attribSb.ToString().Replace("\r\n","");
 
                 }
                 catch { }

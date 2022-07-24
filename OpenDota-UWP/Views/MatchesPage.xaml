@@ -7,9 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:lvc="using:LiveChartsCore"
+    xmlns:lvcuno="using:LiveChartsCore.SkiaSharpView.Uno"
     xmlns:helpers="using:OpenDota_UWP.Helpers" 
     xmlns:models="using:OpenDota_UWP.Models"
     xmlns:converter="using:OpenDota_UWP.Converters"
+    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:ui="using:OpenDota_UWP.UI"
     NavigationCacheMode="Required">
 
     <Page.Transitions>
@@ -209,6 +211,11 @@
             </Style>
 
             <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
+            <converter:StringFormatter x:Key="StrForamt"/>
+            <converter:LongToTimeAgoConverter x:Key="Long2Time"/>
+            <converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+            <converter:RankTierToImageConverter x:Key="Rank2Image"/>
+            <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
         </ResourceDictionary>
@@ -216,10 +223,10 @@
 
     <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"/>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="2.3*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="12,40,12,0">
+        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,40,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -228,7 +235,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <!--头像昵称-->
-            <StackPanel x:Name="PlayerProfileStackPanel" Grid.Row="0" Orientation="Horizontal" Margin="12,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel x:Name="PlayerProfileStackPanel" Grid.Row="0" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Grid Height="36" Width="36">
                     <TextBlock Text="?" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Ellipse x:Name="PlayerPhotoEllipse" Height="36" Width="36" Stroke="{ThemeResource PLAYERPROFILE_AVATAR_BD}" StrokeThickness="1">
@@ -241,7 +248,7 @@
                         </Ellipse.Fill>
                     </Ellipse>
                 </Grid>
-                <TextBlock x:Name="PersonNameTextBlock" MaxWidth="280"
+                <TextBlock x:Name="PersonNameTextBlock" MaxWidth="260"
                            FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" TextTrimming="CharacterEllipsis"
@@ -250,20 +257,21 @@
             </StackPanel>
             <!--菜单-->
             <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
-                    Margin="0,0,16,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
+                    Margin="0,0,22,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
                     Foreground="{ThemeResource SIMPLETEXT_FR}">
                 <Button.Content>
                     <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>
                 </Button.Content>
                 <Button.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Text="Steam Profile" Click="MenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                        <MenuFlyoutItem x:Name="SteamCommunityLinkMenuFlyoutItem" Text="Steam Profile" Click="SteamCommunityLinkMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
                             <MenuFlyoutItem.Icon>
                                 <SymbolIcon Symbol="ContactInfo" Margin="0,4,0,0" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutSeparator />
-                        <MenuFlyoutItem Text="Update Data" Click="MenuFlyoutItem_Click_1" CornerRadius="4" Margin="4,0">
+                        <!--<MenuFlyoutSeparator />-->
+                        <MenuFlyoutItem x:Name="UpdateProfileMenuFlyoutItem" Text="Update Data" 
+                                        Click="UpdateProfileMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
                             <MenuFlyoutItem.Icon>
                                 <SymbolIcon Symbol="Refresh" Margin="0,4,0,0" />
                             </MenuFlyoutItem.Icon>
@@ -273,17 +281,18 @@
                                 <SymbolIcon Symbol="People" Margin="0,4,0,0" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <!--<MenuFlyoutSeparator />-->
-                        <MenuFlyoutItem x:Name="GameIDTextBlock" Text="ID: xxxxxxxxxxxxx" CornerRadius="4" Margin="4,0">
+                        <MenuFlyoutSeparator Opacity="0.3"/>
+                        <MenuFlyoutItem x:Name="GameIDMenuFlyoutItem" Text="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource StrForamt},ConverterParameter=ID: {0}}"
+                                        CornerRadius="4" Margin="4,0" Click="GameIDMenuFlyoutItem_Click">
                             <MenuFlyoutItem.Icon>
-                                <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0" />
+                                <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0"/>
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
             <!--最近5场比赛-->
-            <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="10,8,16,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
+            <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="20,8,22,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
                       HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
                 <FlipView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaRecentMatchModel">
@@ -311,7 +320,7 @@
                                     <Run Text="Last Hits:"/>
                                     <Run Text="{x:Bind last_hits,Mode=OneWay}"/>
                                 </TextBlock>
-                                <TextBlock Grid.Row="3" Text="1 day ago" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
+                                <TextBlock Grid.Row="3" Text="{x:Bind start_time,Mode=OneWay,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                            FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
                             </Grid>
                             <Image Width="220" Source="{x:Bind sHeroCoverImage,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
@@ -319,118 +328,73 @@
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>
+            <!--数据统计-->
+            <ListView Grid.Row="2" IsItemClickEnabled="False" SelectionMode="None"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                      Margin="0,12,0,16">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ToolkitUICtrl:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListViewItem Margin="10,0,-8,0">
+                    <Grid Width="64" Height="64" Background="Transparent" CornerRadius="6">
+                        <Image Source="{x:Bind ViewModel.PlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image}}" Height="64" Width="64" Stretch="UniformToFill"
+                               Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" CharacterSpacing="40" FontWeight="Medium" FontSize="10" Margin="0,0,0,4"
+                                   Visibility="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/Assets/Icons/icon_dota_plus.png" Height="39" Width="39" Opacity="1.0" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,14,0">
+                            <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
+                        </StackPanel>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ui:WinLosePieChartControl/>
+                        <lvcuno:PieChart Height="64" DataContext="{x:Bind ViewModel,Mode=OneWay}" Series="{Binding WinLoseSeries,Mode=OneWay}"></lvcuno:PieChart>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,14,0">
+                            <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.PlayerWinLose.winRate,Mode=OneWay}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                        </StackPanel>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem Margin="0,0,-12,0">
+                    <Grid Width="132" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                        <!--<Image Source="/Assets/Icons/icon_dota_plus.png" Height="39" Width="39" Opacity="2.0" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0">
+                            <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
+                        </StackPanel>
+                    </Grid>
+                </ListViewItem>
+
+            </ListView>
+            <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+            <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+
         </Grid>
 
         <!--<Pivot x:Name="MatchesPivot" Grid.Row="1" Visibility="Collapsed">
-            <Pivot.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" FontSize="20" FontWeight="Bold"/>
-                </DataTemplate>
-            </Pivot.HeaderTemplate>
-            <PivotItem Header="OVERVIEW">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="360" />
-                            <ColumnDefinition Width="0" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="2">
-                            <Rectangle Fill="{ThemeResource APPLICATION_BK}"
-                                       Width="8"
-                                       HorizontalAlignment="Left" />
-                        </Border>
-                        <Rectangle Grid.Column="2"
-                                   Width="28"
-                                   Fill="{ThemeResource APPLICATION_BK}"
-                                   HorizontalAlignment="Left"
-                                   Margin="0,-12" />
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal"
-                                        Margin="0,4,0,0">
-                                <TextBlock FontFamily="Segoe MDL2 Assets"
-                                           Text="&#xEB05;"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           VerticalAlignment="Center"
-                                           Margin="16,2,4,0" />
-                                <TextBlock Grid.Column="3"
-                                           Grid.Row="0"
-                                           Text="Win Rate"
-                                           FontWeight="Medium"
-                                           FontSize="18"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-
-                            -->
-        <!--之前自己写的饼状图-->
-        <!--<Grid Margin="0,8,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="8"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="LeftTextBlock"
-                                           Grid.Column="0" 
-                                           HorizontalAlignment="Right" 
-                                           FontWeight="Light"
-                                           FontFamily="Consolas"
-                                           FontSize="18" 
-                                           Margin="6,0"/>
-                                <Rectangle Grid.Column="1" 
-                                           Fill="{ThemeResource SIMPLETEXT_FR}"
-                                           Width="1" 
-                                           RadiusX="5" 
-                                           RadiusY="5"/>
-                                <TextBlock x:Name="RightTextBlock" 
-                                           Grid.Column="2" 
-                                           HorizontalAlignment="Left"
-                                           FontWeight="Light"
-                                           FontFamily="Consolas"
-                                           FontSize="18" 
-                                           Margin="6,0"/>
-                            </Grid>
-                            <Canvas Width="228" Margin="0,-12,36,0">
-                                <Canvas.RenderTransform>
-                                    <ScaleTransform x:Name="ShowPieChartScaleTransform" CenterX="114" CenterY="114"/>
-                                </Canvas.RenderTransform>
-                                <controls:DropShadowPanel Color="{ThemeResource SIMPLETEXT_FR}" Opacity="1" BlurRadius="10" Canvas.Top="36" Canvas.Left="36">
-                                    <Ellipse Width="192"
-                                             Height="192"
-                                             Fill="Transparent"
-                                             Stroke="LightGray"
-                                             StrokeThickness="1"/>
-                                </controls:DropShadowPanel>
-                                <Ellipse x:Name="LeftPieChart"
-                                         Height="192" Width="192"
-                                         Canvas.Top="36"
-                                         Canvas.Left="36">
-                                </Ellipse>
-                                <Polyline x:Name="RatePolyline" Canvas.Left="132" Canvas.Top="36" StrokeThickness="8" Points="0,0,0,96,0,192" Stroke="{ThemeResource APPLICATION_BK}"/>
-                                <Path x:Name="RightPieChart" Canvas.Left="132" Canvas.Top="36">
-                                    <Path.Data>
-                                        <GeometryGroup>
-                                            <PathGeometry>
-                                                <PathGeometry.Figures>
-                                                    <PathFigureCollection>
-                                                        <PathFigure IsClosed="true" IsFilled="True" StartPoint="0,0">
-                                                            <PathFigure.Segments>
-                                                                <PathSegmentCollection>
-                                                                    <ArcSegment x:Name="RateArcSegment" Size="96,96" IsLargeArc="False" SweepDirection="Clockwise" Point="0,192"/>
-                                                                    <PolyLineSegment x:Name="RatePolyLineSegment" Points="0,0,0,96,0,-96"/>
-                                                                </PathSegmentCollection>
-                                                            </PathFigure.Segments>
-                                                        </PathFigure>
-                                                    </PathFigureCollection>
-                                                </PathGeometry.Figures>
-                                            </PathGeometry>
-                                        </GeometryGroup>
-                                    </Path.Data>
-                                </Path>
-                            </Canvas>-->
-
-        <!--<lvc:PieChart Name="StatsChart"
+        <lvc:PieChart Name="StatsChart"
                                           Margin="0,48"
                                           Series="{Binding SeriesCollection}"
                                           Height="196"
@@ -441,36 +405,6 @@
                             </lvc:PieChart>-->
         <!--
 
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Center">
-                                <TextBlock FontSize="18"
-                                           FontWeight="Bold"
-                                           Text="Total: "
-                                           VerticalAlignment="Center"
-                                           Opacity="0.7" />
-                                <TextBlock x:Name="CountTextBlock"
-                                           FontSize="21"
-                                           FontWeight="Bold"
-                                           Margin="4,0" />
-                            </StackPanel>
-                            <StackPanel Margin="0,12"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center">
-                                <TextBlock FontSize="18"
-                                           FontWeight="Bold"
-                                           Text="Win rate: "
-                                           VerticalAlignment="Center"
-                                           Opacity="0.7" />
-                                <TextBlock x:Name="RateTextBlock"
-                                           FontSize="21"
-                                           FontWeight="Bold"
-                                           Margin="4,0" />
-                                <TextBlock FontSize="18"
-                                           FontWeight="Bold"
-                                           Text="%"
-                                           VerticalAlignment="Center"
-                                           Opacity="0.7" />
-                            </StackPanel>
                         </StackPanel>
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
@@ -506,31 +440,6 @@
                                                Margin="6,-10,0,0" />
                                 </HyperlinkButton>
                             </StackPanel>
-                            <GridView Grid.Row="1"
-                                      Margin="8"
-                                      SelectionMode="None"
-                                      IsItemClickEnabled="True">
-                                <GridViewItem Height="auto"
-                                              Width="128">
-                                    <Grid>
-                                        <Rectangle Fill="Gray"
-                                                   Opacity="0.1" />
-                                        <StackPanel Margin="8">
-                                            <Image x:Name="MatchData_RankMedalImage"
-                                                   Source="/Assets/RankMedal/SeasonalRank0-0.png"
-                                                   Stretch="UniformToFill"
-                                                   Margin="4,12,4,0" />
-                                            <TextBlock x:Name="MatchData_LeaderboardTextBlock"
-                                                       Text="—"
-                                                       Opacity="0.8"
-                                                       FontFamily="Arial"
-                                                       FontSize="18"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="0,0,0,4" />
-                                        </StackPanel>
-                                    </Grid>
-                                </GridViewItem>
-                            </GridView>
                             <GridView Grid.Row="1"
                                       Margin="180,8,0,0"
                                       SelectionMode="None"
@@ -751,74 +660,12 @@
                                         </StackPanel>
                                     </Grid>
                                 </GridViewItem>
-                                <GridViewItem Height="72"
-                                              Width="128"
-                                              PointerEntered="GridViewItem_PointerEntered"
-                                              PointerExited="GridViewItem_PointerExited">
-                                    <Grid Height="72"
-                                          Width="128">
-                                        <Rectangle Fill="Gray"
-                                                   Opacity="0.1" />
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock x:Name="MMRTitleTextBlock"
-                                                       Text="MMR"
-                                                       FontSize="14" FontWeight="Medium"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="6" />
-                                            <TextBlock x:Name="MatchData_MMRTextBlock"
-                                                       Opacity="0.8"
-                                                       Text="—" FontWeight="Medium"
-                                                       HorizontalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </GridViewItem>
-                                <GridViewItem Height="72"
-                                              Width="128">
-                                    <Grid Height="72"
-                                          Width="128">
-                                        <Rectangle Fill="Gray"
-                                                   Opacity="0.1" />
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="APM"
-                                                       FontSize="14" FontWeight="Medium"
-                                                       HorizontalAlignment="Center"
-                                                       Margin="6" />
-                                            <TextBlock x:Name="MatchData_APMTextBlock"
-                                                       Opacity="0.8"
-                                                       Text="—" FontWeight="Medium"
-                                                       HorizontalAlignment="Center" />
-                                        </StackPanel>
-                                    </Grid>
-                                </GridViewItem>
                             </GridView>
                         </Grid>
                     </Grid>
                 </ScrollViewer>
-            </PivotItem>
-            <PivotItem Header="RECENT MATCHES">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="360" />
-                        <ColumnDefinition Width="0" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="2">
-                        <Rectangle Fill="{ThemeResource APPLICATION_BK}"
-                                   Width="8"
-                                   HorizontalAlignment="Left" />
-                    </Border>
-                    <Rectangle Grid.Column="2"
-                               Width="28"
-                               Fill="{ThemeResource APPLICATION_BK}"
-                               HorizontalAlignment="Left"
-                               Margin="0,-12" />
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal"
+
+        <StackPanel Orientation="Horizontal"
                                     Margin="0,2,0,0">
                             <TextBlock FontFamily="Segoe MDL2 Assets"
                                        Text="&#xE9D9;"

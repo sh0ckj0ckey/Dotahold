@@ -73,92 +73,6 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
-        /// 显示玩家资料
-        /// </summary>
-        public async void ShowPlayerProfileAsync(string id)
-        {
-            //try
-            //{
-            //    MatchPlayerProfile = await DotaMatchHelper.GetPlayerProfileAsync(id);
-            //    if (MatchPlayerProfile == null)
-            //    {
-            //        //ShowDialog("抱歉，可能是查询数据太频繁，请稍后尝试");
-            //        return;
-            //    }
-            //    PlayerPhotoBitmapImage.UriSource = new Uri(MatchPlayerProfile.profile.avatarfull);
-            //    PersonNameTextBlock.Text = MatchPlayerProfile.profile.personaname;
-            //    GameIDTextBlock.Text = "ID: " + MatchPlayerProfile.profile.account_id.ToString();
-            //    SteamCommunityLink = MatchPlayerProfile.profile.profileurl;
-
-            //    CurrentNumberTextBlock.Text = await DotaMatchHelper.GetNumberOfCurrentPlayers();
-
-            //    string rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRank0-0.png";
-            //    MatchData_LeaderboardTextBlock.Text = "—";
-            //    //没有分段
-            //    if (MatchPlayerProfile.rank_tier == null)
-            //    { }
-            //    //如果是冠绝一世即“80”
-            //    else if (MatchPlayerProfile.rank_tier == "80")
-            //    {
-            //        //如果有排名
-            //        if ((MatchPlayerProfile.leaderboard_rank != null && MatchPlayerProfile.leaderboard_rank != "null" && Regex.IsMatch(MatchPlayerProfile.leaderboard_rank, "^[\\d]+$")))
-            //        {
-            //            int leaderboard_rank = Convert.ToInt32(MatchPlayerProfile.leaderboard_rank);
-            //            MatchData_LeaderboardTextBlock.Text = MatchPlayerProfile.leaderboard_rank;
-            //            if (leaderboard_rank > 1000)
-            //            {
-            //                rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop0.png";
-            //            }
-            //            else if (leaderboard_rank <= 1000 && leaderboard_rank > 100)
-            //            {
-            //                rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop1.png";
-            //            }
-            //            else if (leaderboard_rank <= 100 && leaderboard_rank > 10)
-            //            {
-            //                rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop2.png";
-            //            }
-            //            else if (leaderboard_rank <= 10 && leaderboard_rank > 1)
-            //            {
-            //                rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop3.png";
-            //            }
-            //            else if (leaderboard_rank == 1)
-            //            {
-            //                rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop4.png";
-            //            }
-            //            else
-            //            {
-            //                rankMedalSource = String.Format("ms-appx:///Assets/RankMedal/SeasonalRankTop0.png");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRankTop0.png";
-            //        }
-            //    }
-            //    else if (MatchPlayerProfile.rank_tier.Length == 2)
-            //    {
-            //        rankMedalSource = String.Format("ms-appx:///Assets/RankMedal/SeasonalRank{0}-{1}.png", MatchPlayerProfile.rank_tier[0], MatchPlayerProfile.rank_tier[1]);
-            //        MatchData_LeaderboardTextBlock.Text = "—";
-            //    }
-            //    else
-            //    {
-            //        rankMedalSource = "ms-appx:///Assets/RankMedal/SeasonalRank0-0.png";
-            //    }
-            //    MatchData_RankMedalImage.Source = new BitmapImage(new Uri(rankMedalSource));
-            //    MatchData_MMRTextBlock.Text = MatchPlayerProfile.mmr_estimate.estimate.ToString();
-            //}
-            //catch
-            //{
-            //    //ShowDialog("无法获取当前绑定账号的信息，请重新绑定");
-            //    //this.Frame.Navigate(typeof(BlankPage));
-            //    return;
-            //}
-
-            //更新磁贴
-            //SetTile(MatchPlayerProfile);
-        }
-
-        /// <summary>
         /// 显示玩家的全期数据
         /// </summary>
         /// <param name="id"></param>
@@ -166,13 +80,6 @@ namespace OpenDota_UWP.Views
         {
             try
             {
-                //string[] total = await DotaMatchHelper.GetTotalAsync(id);
-                //if (total == null)
-                //{
-                //    ShowDialog("Sorry, something went wrong while connecting to server.");
-                //    this.Frame.Navigate(typeof(BlankPage));
-                //    return;
-                //}
 
                 //MatchData_KillTextBlock.Text = total[0];
                 //MatchData_DeadTextBlock.Text = total[1];
@@ -285,98 +192,30 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
-        /// 显示饼状图
-        /// </summary>
-        /// <param name="isWinRateBiggerThanHalf"></param>
-        public async void ShowPieChart(string id)
-        {
-            //wL = await DotaMatchHelper.GetPlayerWLAsync(id);
-
-            DataContext = this;
-
-            //double rate = wL.win / (wL.win + wL.lose);
-            //CountTextBlock.Text = (wL.win + wL.lose).ToString();
-            //RateTextBlock.Text = (100 * rate).ToString("f1");
-
-            //double[] point = GetPieChart(rate);
-            //RateArcSegment.Point = new Point(point[0], point[1]);
-            //RatePolyLineSegment.Points = new PointCollection { new Point(0, 0), new Point(0, 96), new Point(point[0], point[1]) };
-            //RatePolyline.Points = new PointCollection { new Point(0, 0), new Point(0, 96), new Point(point[0], point[1]) };
-            //ShowPieChartScale.Begin();
-
-            //if (rate > 0.5/*如果胜率大于0.5*/)
-            //{
-            //    //那么就是左边显示胜利,填充颜色红色,文字显示胜利
-            //    LeftTextBlock.Text = "胜：" + wL.win;
-            //    RightTextBlock.Text = "负：" + wL.lose;
-            //    LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-            //    RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-            //}
-            //else /*胜率小于0.5*/
-            //{
-            //    //右边显示胜利,填充颜色红色,文字显示胜利
-            //    RightTextBlock.Text = "胜：" + wL.win;
-            //    LeftTextBlock.Text = "负：" + wL.lose;
-            //    RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-            //    LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-            //}
-        }
-
-        ///// <summary>
-        ///// 计算扇形图的“终点”坐标
-        ///// </summary>
-        ///// <param name="rate">胜率</param>
-        ///// <returns></returns>
-        //public double[] GetPieChart(double rate)
-        //{
-        //    //bool IsWinRateBiggerThanHalf = false;
-        //    if (rate > 0.5)
-        //    {
-        //        rate = 1 - rate;
-        //        //胜率大于50%,应该左边表示胜利
-        //        //IsWinRateBiggerThanHalf = true;
-        //    }
-        //    double x, y;
-        //    if (rate < 0)
-        //    {
-        //        return new double[] { 0, 0 };
-        //    }
-        //    else if (rate <= 0.25)
-        //    {
-        //        x = 96 * Math.Sin(2 * Math.PI * rate);
-        //        y = 96 - 96 * Math.Cos(2 * Math.PI * rate);
-        //    }
-        //    else if (rate > 0.25 && rate <= 0.5)
-        //    {
-        //        x = 96 * Math.Cos((2 * rate - 0.5) * Math.PI);
-        //        y = 96 + 96 * Math.Sin((2 * rate - 0.5) * Math.PI);
-        //    }
-        //    else
-        //    {
-        //        //开头已经保证rate小于0.5,这里应该不可能发生了,以防万一放在这里防止意外
-        //        return new double[] { 0, 0 };
-        //    }
-        //    return new double[] { x, y };
-        //}
-
-        /// <summary>
         /// 查看社区主页
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void SteamCommunityLinkMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            //if (SteamCommunityLink != "")
-            //{
-            //    try
-            //    {
-            //        await Windows.System.Launcher.LaunchUriAsync(new Uri(SteamCommunityLink));
-            //    }
-            //    catch
-            //    {
-            //        SteamCommunityLinkMenuFlyoutItem.IsEnabled = false;
-            //    }
-            //}
+            try
+            {
+                string url = ViewModel.PlayerProfile.profile.profileurl;
+                if (!string.IsNullOrEmpty(url.Trim()))
+                {
+                    if (!string.IsNullOrEmpty(url) && !url.StartsWith("http"))
+                    {
+                        url = "https://" + url;
+                    }
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                    return;
+                }
+                else
+                {
+                    SteamCommunityLinkMenuFlyoutItem.IsEnabled = false;
+                }
+            }
+            catch { SteamCommunityLinkMenuFlyoutItem.IsEnabled = false; }
         }
 
         /// <summary>
@@ -384,13 +223,32 @@ namespace OpenDota_UWP.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        private void UpdateProfileMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            //DotaMatchHelper.PostRefreshAsync(ID);
-            //this.NavigationCacheMode = NavigationCacheMode.Disabled;
+            try
+            {
+                UpdateProfileMenuFlyoutItem.Text = "Updating Data";
+                UpdateProfileMenuFlyoutItem.IsEnabled = false;
 
-            //    this.Frame.Navigate(typeof(MatchesPage));
-            //this.NavigationCacheMode = NavigationCacheMode.Enabled;
+                ViewModel.PostRefreshAsync(ViewModel.sSteamId);
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击复制ID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GameIDMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Windows.ApplicationModel.DataTransfer.DataPackage dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                dataPackage.SetText(ViewModel.sSteamId);
+                Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
+            }
+            catch { }
         }
 
         #region 游戏ID绑定
@@ -551,99 +409,6 @@ namespace OpenDota_UWP.Views
         {
             //MatchPicture.Visibility = Visibility.Collapsed;
             //    MatchInfoFrame.Navigate(typeof(MatchInfoPage), recentMatchesObservableCollection[RecentMatchListView.SelectedIndex]);
-        }
-
-        /// <summary>
-        /// 十几页常用英雄
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (UsingIndexGridView.SelectedIndex < 0)
-            //{
-            //    return;
-            //}
-            //if (UsingIndexGridView.SelectedIndex < 1)
-            //{
-            //    LeftHyperlinkButton.IsEnabled = false;
-            //}
-            //if (UsingIndexGridView.SelectedIndex < 11)
-            //{
-            //    RightHyperlinkButton.IsEnabled = true;
-            //}
-            //if (UsingIndexGridView.SelectedIndex > 10)
-            //{
-            //    RightHyperlinkButton.IsEnabled = false;
-            //}
-            //if (UsingIndexGridView.SelectedIndex > 0)
-            //{
-            //    LeftHyperlinkButton.IsEnabled = true;
-            //}
-
-            //if (heroUsingInfos != null)
-            //{
-            //    int start = UsingIndexGridView.SelectedIndex + 1;
-            //    heroUsingInfoObservableCollection.Clear();
-            //    for (int i = start * 10 - 10; i < start * 10; i++)
-            //    {
-            //        try
-            //        {
-            //            HeroUsingInfoViewModel heroUsingInfoOverview = new HeroUsingInfoViewModel(heroUsingInfos[i]);
-            //            heroUsingInfoOverview.Time = ComputeTime(heroUsingInfos[i].last_played);
-            //            heroUsingInfoObservableCollection.Add(heroUsingInfoOverview);
-            //        }
-            //        catch
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
-        }
-
-        /// <summary>
-        /// 计算一串字符串表示时间是多久以前
-        /// </summary>
-        /// <param name="tm"></param>
-        /// <returns></returns>
-        public string ComputeTime(string tm)
-        {
-            if (tm == "0")
-            {
-                return "—";
-            }
-            string time = "";
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            double duration = (Convert.ToInt64(ts.TotalSeconds) - Convert.ToInt64(tm));
-            if (duration / 31536000 >= 1)
-            {
-                time = Convert.ToInt32(duration / 31536000) + " years ago";
-            }
-            else if (duration / 2592000 >= 1)
-            {
-                time = Convert.ToInt32(duration / 2592000) + " months ago";
-            }
-            else if (duration / 604800 >= 1)
-            {
-                time = Convert.ToInt32(duration / 604800) + " weeks ago";
-            }
-            else if (duration / 86400 >= 1)
-            {
-                time = Convert.ToInt32(duration / 86400) + " days ago";
-            }
-            else if (duration / 3600 >= 1)
-            {
-                time = Convert.ToInt32(duration / 3600) + " hours ago";
-            }
-            else if (duration / 60 >= 1)
-            {
-                time = Convert.ToInt32(duration / 60) + " minutes ago";
-            }
-            else
-            {
-                time = "";
-            }
-            return time;
         }
     }
 }
