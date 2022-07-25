@@ -371,7 +371,39 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid DataContext="{x:Bind ViewModel,Mode=OneWay}" Height="42" Width="42" Margin="12,0,0,0">
-
+                            <Canvas Width="48" Height="48">
+                                <Ellipse Width="48"
+                                         Height="48"
+                                         Fill="Transparent"
+                                         Stroke="{ThemeResource APPLICATION_BK}"
+                                         StrokeThickness="2"/>
+                                <Ellipse x:Name="LeftPieChart"
+                                         Height="48" Width="48"
+                                         Canvas.Top="0"
+                                         Canvas.Left="0">
+                                </Ellipse>
+                                <Polyline x:Name="RatePolyline" Canvas.Left="0" Canvas.Top="0" StrokeThickness="2" Points="0,0,0,24,0,48" Stroke="{ThemeResource APPLICATION_BK}"/>
+                                <Path x:Name="RightPieChart" Canvas.Left="0" Canvas.Top="0">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigureCollection>
+                                                        <PathFigure IsClosed="true" IsFilled="True" StartPoint="0,0">
+                                                            <PathFigure.Segments>
+                                                                <PathSegmentCollection>
+                                                                    <ArcSegment x:Name="RateArcSegment" Size="24,24" IsLargeArc="False" SweepDirection="Clockwise" Point="0,48"/>
+                                                                    <PolyLineSegment x:Name="RatePolyLineSegment" Points="0,0,0,24,0,-24"/>
+                                                                </PathSegmentCollection>
+                                                            </PathFigure.Segments>
+                                                        </PathFigure>
+                                                    </PathFigureCollection>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
                         </Grid>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
                             <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
@@ -396,18 +428,7 @@
             
         </Grid>
 
-        <!--<Pivot x:Name="MatchesPivot" Grid.Row="1" Visibility="Collapsed">
-        <lvc:PieChart Name="StatsChart"
-                                          Margin="0,48"
-                                          Series="{Binding SeriesCollection}"
-                                          Height="196"
-                                          Opacity="0.8">
-                                <lvc:PieChart.DataTooltip>
-                                    <lvc:DefaultTooltip BulletSize="16"></lvc:DefaultTooltip>
-                                </lvc:PieChart.DataTooltip>
-                            </lvc:PieChart>-->
         <!--
-
                         </StackPanel>
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
