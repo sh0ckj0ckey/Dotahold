@@ -172,9 +172,6 @@
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AsyncBitmapImage.cs" />
-    <Compile Include="UI\WinLosePieChartControl.xaml.cs">
-      <DependentUpon>WinLosePieChartControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
@@ -807,10 +804,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\WinLosePieChartControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HeroInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -853,11 +846,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LiveChartsCore.SkiaSharpView.Uno">
-      <Version>2.0.0-beta.300</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.13</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>7.1.2</Version>

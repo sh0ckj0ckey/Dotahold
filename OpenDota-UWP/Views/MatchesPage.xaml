@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:lvc="using:LiveChartsCore"
-    xmlns:lvcuno="using:LiveChartsCore.SkiaSharpView.Uno"
     xmlns:helpers="using:OpenDota_UWP.Helpers" 
     xmlns:models="using:OpenDota_UWP.Models"
     xmlns:converter="using:OpenDota_UWP.Converters"
-    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:ui="using:OpenDota_UWP.UI"
+    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:OpenDota_UWP.UI"
     NavigationCacheMode="Required">
 
     <Page.Transitions>
@@ -304,26 +303,26 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{x:Bind sHeroName,Mode=OneWay}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
+                                <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
                                            FontSize="16" CharacterSpacing="60" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
                                 <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
                                            FontSize="13" CharacterSpacing="60">
                                     <Run Text="K/D/A:"/>
-                                    <Run Text="{x:Bind kills,Mode=OneWay}"/>
+                                    <Run Text="{x:Bind kills}"/>
                                     <Run Text="/" FontWeight="Normal"/>
-                                    <Run Text="{x:Bind deaths,Mode=OneWay}"/>
+                                    <Run Text="{x:Bind deaths}"/>
                                     <Run Text="/" FontWeight="Normal"/>
-                                    <Run Text="{x:Bind assists,Mode=OneWay}"/>
+                                    <Run Text="{x:Bind assists}"/>
                                 </TextBlock>
                                 <TextBlock Grid.Row="2" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
                                            FontSize="13" CharacterSpacing="60">
                                     <Run Text="Last Hits:"/>
-                                    <Run Text="{x:Bind last_hits,Mode=OneWay}"/>
+                                    <Run Text="{x:Bind last_hits}"/>
                                 </TextBlock>
-                                <TextBlock Grid.Row="3" Text="{x:Bind start_time,Mode=OneWay,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
+                                <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,4" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                            FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
                             </Grid>
-                            <Image Width="220" Source="{x:Bind sHeroCoverImage,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                         </Grid>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
@@ -339,6 +338,7 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
+                <!--分段-->
                 <ListViewItem Margin="10,0,-8,0">
                     <Grid Width="64" Height="64" Background="Transparent" CornerRadius="6">
                         <Image Source="{x:Bind ViewModel.PlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image}}" Height="64" Width="64" Stretch="UniformToFill"
@@ -348,6 +348,7 @@
                     </Grid>
                 </ListViewItem>
 
+                <!--DotaPlus-->
                 <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                     <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                         <Grid.ColumnDefinitions>
@@ -362,15 +363,17 @@
                     </Grid>
                 </ListViewItem>
 
-                <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                <!--胜率-->
+                <ListViewItem Margin="0,0,-12,0">
                     <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ui:WinLosePieChartControl/>
-                        <lvcuno:PieChart Height="64" DataContext="{x:Bind ViewModel,Mode=OneWay}" Series="{Binding WinLoseSeries,Mode=OneWay}"></lvcuno:PieChart>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,14,0">
+                        <Grid DataContext="{x:Bind ViewModel,Mode=OneWay}" Height="42" Width="42" Margin="12,0,0,0">
+
+                        </Grid>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
                             <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
                             <TextBlock Text="{x:Bind ViewModel.PlayerWinLose.winRate,Mode=OneWay}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                         </StackPanel>
@@ -390,7 +393,7 @@
             </ListView>
             <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
             <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-
+            
         </Grid>
 
         <!--<Pivot x:Name="MatchesPivot" Grid.Row="1" Visibility="Collapsed">

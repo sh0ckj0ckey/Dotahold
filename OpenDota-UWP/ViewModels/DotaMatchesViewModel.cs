@@ -1,8 +1,6 @@
-﻿using LiveChartsCore.SkiaSharpView;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using OpenDota_UWP.Helpers;
 using OpenDota_UWP.Models;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,20 +58,6 @@ namespace OpenDota_UWP.ViewModels
         public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
-        // 胜负场数图表数据源
-        private static LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint WinChartColor = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.ForestGreen);
-        private static LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint LoseChartColor = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.DarkRed);
-        private LiveChartsCore.ISeries[] _WinLoseSeries = new LiveChartsCore.ISeries[]
-        {
-            new PieSeries<double> { Values = new List<double> { 0 }, Pushout = 2, Fill = WinChartColor, Name = "Win"},
-            new PieSeries<double> { Values = new List<double> { 0 }, Pushout = 2, Fill = LoseChartColor,Name = "Lose" }
-        };
-        public LiveChartsCore.ISeries[] WinLoseSeries
-        {
-            get { return _WinLoseSeries; }
-            set { Set("WinLoseSeries", ref _WinLoseSeries, value); }
-        }
-
         public DotaMatchesViewModel()
         {
             InitialDotaMatches();
@@ -125,12 +109,6 @@ namespace OpenDota_UWP.ViewModels
                         wl.winRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
                     }
                     PlayerWinLose = wl;
-
-                    WinLoseSeries = new LiveChartsCore.ISeries[]
-                        {
-                            new PieSeries<double> { Values = new List<double> { PlayerWinLose.win }, Pushout = 2, Fill = WinChartColor, Name = "Win"},
-                            new PieSeries<double> { Values = new List<double> { PlayerWinLose.lose }, Pushout = 2, Fill = LoseChartColor, Name = "Lose" }
-                        };
 
                     // 统计数据
                     PlayerTotals = await GetTotalAsync(sSteamId);
