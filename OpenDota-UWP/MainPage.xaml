@@ -229,10 +229,10 @@
                                     <Image Source="{ThemeResource ABOUT_REF_XAML_IMG}" Height="28" Margin="0,0,2,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.UI.XAML" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
+                                <!--<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
                                     <Image Source="{ThemeResource ABOUT_REF_CHART_IMG}" Height="20" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                     <TextBlock Text=" Live Charts" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
+                                </StackPanel>-->
                                 <!--<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
                                     <Image Source="{ThemeResource ABOUT_REF_BEHAVIOR_IMG}" Height="20" Margin="0,0,4,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.Xaml.Behaviors" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
