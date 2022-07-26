@@ -26,7 +26,7 @@
                     <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#2E3044</Color>
 
-                    <Color x:Key="HEROINFO_LISTITEM_BK">#14F3F4F8</Color>
+                    <Color x:Key="HEROINFO_LISTITEM_BK">#363746</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#404040</Color>
                     

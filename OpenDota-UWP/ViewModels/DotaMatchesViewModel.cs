@@ -55,8 +55,18 @@ namespace OpenDota_UWP.ViewModels
             set { Set("PlayerTotals", ref _PlayerTotals, value); }
         }
 
+        // 在线玩家数量
+        private string _sOnlilnePlayersCount = string.Empty;
+        public string sOnlilnePlayersCount
+        {
+            get { return _sOnlilnePlayersCount; }
+            set { Set("sOnlilnePlayersCount", ref _sOnlilnePlayersCount, value); }
+        }
+
         public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
+
+        public Action<double, double> ActUpdatePieChart = null;
 
         public DotaMatchesViewModel()
         {
@@ -106,9 +116,10 @@ namespace OpenDota_UWP.ViewModels
                     if (wl != null && (wl.win + wl.lose) > 0)
                     {
                         double rate = wl.win / (wl.win + wl.lose);
-                        wl.winRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+                        wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
                     }
                     PlayerWinLose = wl;
+                    ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
 
                     // 统计数据
                     PlayerTotals = await GetTotalAsync(sSteamId);
@@ -135,7 +146,7 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
 
-                var num = await GetNumberOfCurrentPlayersAsync();
+                sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
             }
             catch { }
         }

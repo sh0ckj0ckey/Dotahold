@@ -41,6 +41,11 @@ namespace OpenDota_UWP.Views
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
 
+                ViewModel.ActUpdatePieChart += (win, lose) =>
+                {
+                    ShowPieChart(win, lose);
+                };
+
                 FrameShadow.Receivers.Add(PlayerProfileGrid);
                 MatchGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
 
@@ -75,67 +80,66 @@ namespace OpenDota_UWP.Views
         /// <summary>
         /// 显示饼状图
         /// </summary>
-        /// <param name="isWinRateBiggerThanHalf"></param>
-        public async void ShowPieChart(string id)
+        public void ShowPieChart(double win, double lose)
         {
-            double[] point = GetPieChart(rate);
-            RateArcSegment.Point = new Point(point[0], point[1]);
-            RatePolyLineSegment.Points = new PointCollection { new Point(0, 0), new Point(0, 24), new Point(point[0], point[1]) };
-            RatePolyline.Points = new PointCollection { new Point(0, 0), new Point(0, 24), new Point(point[0], point[1]) };
+            try
+            {
+                double rate = 0.5;
 
-            if (rate > 0.5/*如果胜率大于0.5*/)
-            {
-                //那么就是左边显示胜利,填充颜色红色,文字显示胜利
-                LeftTextBlock.Text = "胜：" + wL.win;
-                RightTextBlock.Text = "负：" + wL.lose;
-                LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-            }
-            else /*胜率小于0.5*/
-            {
-                //右边显示胜利,填充颜色红色,文字显示胜利
-                RightTextBlock.Text = "胜：" + wL.win;
-                LeftTextBlock.Text = "负：" + wL.lose;
-                RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-            }
-        }
+                if (win == 0) rate = 0;
+                else if (lose == 0) rate = 1;
+                else
+                {
+                    rate = win / (win + lose);
+                    rate = (Math.Floor(100 * rate) / 100);
+                }
 
-        /// <summary>
-        /// 计算扇形图的“终点”坐标
-        /// </summary>
-        /// <param name="rate">胜率</param>
-        /// <returns></returns>
-        public double[] GetPieChart(double rate)
-        {
-            //bool IsWinRateBiggerThanHalf = false;
-            if (rate > 0.5)
-            {
-                rate = 1 - rate;
-                //胜率大于50%,应该左边表示胜利
-                //IsWinRateBiggerThanHalf = true;
+                double x = 24, y = 48;
+                bool isWinRateBigger = false;
+                if (rate > 0.5)
+                {
+                    rate = 1 - rate;
+                    //胜率大于50%,应该左边表示胜利
+                    isWinRateBigger = true;
+                }
+                if (rate < 0)
+                {
+                    x = 24; y = 48;
+                }
+                else if (rate <= 0.25)
+                {
+                    x = 24 + 24 * Math.Sin(2 * Math.PI * rate);
+                    y = 24 - 24 * Math.Cos(2 * Math.PI * rate);
+                }
+                else if (rate > 0.25 && rate <= 0.5)
+                {
+                    x = 24 + 24 * Math.Cos((2 * rate - 0.5) * Math.PI);
+                    y = 24 + 24 * Math.Sin((2 * rate - 0.5) * Math.PI);
+                }
+                else
+                {
+                    x = 24; y = 48;
+                }
+                RateArcSegment.Point = new Point(x, y);
+                RatePolyLineSegment.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
+                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
+
+                if (isWinRateBigger)
+                {
+                    //LeftTextBlock.Text = "胜：" + wL.win;
+                    //RightTextBlock.Text = "负：" + wL.lose;
+                    LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
+                    RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
+                }
+                else
+                {
+                    //RightTextBlock.Text = "胜：" + wL.win;
+                    //LeftTextBlock.Text = "负：" + wL.lose;
+                    RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
+                    LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
+                }
             }
-            double x, y;
-            if (rate < 0)
-            {
-                return new double[] { 0, 0 };
-            }
-            else if (rate <= 0.25)
-            {
-                x = 24 * Math.Sin(2 * Math.PI * rate);
-                y = 24 - 24 * Math.Cos(2 * Math.PI * rate);
-            }
-            else if (rate > 0.25 && rate <= 0.5)
-            {
-                x = 24 * Math.Cos((2 * rate - 0.5) * Math.PI);
-                y = 24 + 24 * Math.Sin((2 * rate - 0.5) * Math.PI);
-            }
-            else
-            {
-                //开头已经保证rate小于0.5,这里应该不可能发生了,以防万一放在这里防止意外
-                return new double[] { 0, 0 };
-            }
-            return new double[] { x, y };
+            catch { }
         }
 
         /// <summary>
@@ -458,13 +462,13 @@ namespace OpenDota_UWP.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HyperlinkButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            if (sender is FrameworkElement element)
-            {
-                FlyoutBase.ShowAttachedFlyout(element);
-            }
-        }
+        //private void HyperlinkButton_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    if (sender is FrameworkElement element)
+        //    {
+        //        FlyoutBase.ShowAttachedFlyout(element);
+        //    }
+        //}
 
         /// <summary>
         /// 点击一条比赛记录查看详情
@@ -475,6 +479,34 @@ namespace OpenDota_UWP.Views
         {
             //MatchPicture.Visibility = Visibility.Collapsed;
             //    MatchInfoFrame.Navigate(typeof(MatchInfoPage), recentMatchesObservableCollection[RecentMatchListView.SelectedIndex]);
+        }
+
+        /// <summary>
+        /// 鼠标移入，显示胜负场数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                HoverToShowWinLose?.Begin();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 鼠标移出，显示胜率
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                ExitToShowWinRate?.Begin();
+            }
+            catch { }
         }
     }
 }

@@ -216,7 +216,7 @@
                                 <Button HorizontalAlignment="Center" Click="Button_Click" Height="48" Width="48" CornerRadius="24">
                                     <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Height="32"/>
                                 </Button>
-                                <TextBlock Text="References" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                <!--<TextBlock Text="References" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
                                     <Image Source="{ThemeResource ABOUT_REF_TOOLKIT_IMG}" Height="24" Margin="0,0,4,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.Toolkit.Uwp" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -228,7 +228,7 @@
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
                                     <Image Source="{ThemeResource ABOUT_REF_XAML_IMG}" Height="28" Margin="0,0,2,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.UI.XAML" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
+                                </StackPanel>-->
                                 <!--<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,4">
                                     <Image Source="{ThemeResource ABOUT_REF_CHART_IMG}" Height="20" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                     <TextBlock Text=" Live Charts" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>

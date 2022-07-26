@@ -217,6 +217,24 @@
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
+
+            <Storyboard x:Name="HoverToShowWinLose">
+                <DoubleAnimation Storyboard.TargetName="WinRateStackPanel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0" Duration="0:0:0.2"/>
+                <DoubleAnimation Storyboard.TargetName="WinLoseStackPanel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1" Duration="0:0:0.2"/>
+            </Storyboard>
+
+            <Storyboard x:Name="ExitToShowWinRate">
+                <DoubleAnimation Storyboard.TargetName="WinRateStackPanel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1" Duration="0:0:0.2"/>
+                <DoubleAnimation Storyboard.TargetName="WinLoseStackPanel"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0" Duration="0:0:0.2"/>
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -365,35 +383,29 @@
 
                 <!--胜率-->
                 <ListViewItem Margin="0,0,-12,0">
-                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
+                          PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Grid DataContext="{x:Bind ViewModel,Mode=OneWay}" Height="42" Width="42" Margin="12,0,0,0">
-                            <Canvas Width="48" Height="48">
-                                <Ellipse Width="48"
-                                         Height="48"
-                                         Fill="Transparent"
-                                         Stroke="{ThemeResource APPLICATION_BK}"
-                                         StrokeThickness="2"/>
+                        <Grid Height="48" Width="48" Margin="12,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Canvas Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Ellipse x:Name="LeftPieChart"
                                          Height="48" Width="48"
-                                         Canvas.Top="0"
-                                         Canvas.Left="0">
-                                </Ellipse>
-                                <Polyline x:Name="RatePolyline" Canvas.Left="0" Canvas.Top="0" StrokeThickness="2" Points="0,0,0,24,0,48" Stroke="{ThemeResource APPLICATION_BK}"/>
-                                <Path x:Name="RightPieChart" Canvas.Left="0" Canvas.Top="0">
+                                         Canvas.Top="0" Canvas.Left="0"
+                                         StrokeThickness="0" Fill="ForestGreen"/>
+                                <Path x:Name="RightPieChart" Canvas.Left="0" Canvas.Top="0" StrokeThickness="0" Fill="Firebrick">
                                     <Path.Data>
                                         <GeometryGroup>
                                             <PathGeometry>
                                                 <PathGeometry.Figures>
                                                     <PathFigureCollection>
-                                                        <PathFigure IsClosed="true" IsFilled="True" StartPoint="0,0">
+                                                        <PathFigure IsClosed="true" IsFilled="True" StartPoint="24,0">
                                                             <PathFigure.Segments>
                                                                 <PathSegmentCollection>
-                                                                    <ArcSegment x:Name="RateArcSegment" Size="24,24" IsLargeArc="False" SweepDirection="Clockwise" Point="0,48"/>
-                                                                    <PolyLineSegment x:Name="RatePolyLineSegment" Points="0,0,0,24,0,-24"/>
+                                                                    <ArcSegment x:Name="RateArcSegment" Size="24,24" IsLargeArc="False" SweepDirection="Clockwise" Point="24,48"/>
+                                                                    <PolyLineSegment x:Name="RatePolyLineSegment" Points="24,0"/>
                                                                 </PathSegmentCollection>
                                                             </PathFigure.Segments>
                                                         </PathFigure>
@@ -403,29 +415,56 @@
                                         </GeometryGroup>
                                     </Path.Data>
                                 </Path>
+                                <Polyline x:Name="RatePolyline" Canvas.Left="0" Canvas.Top="0" StrokeThickness="4" Points="24,0,24,24,24,48" Stroke="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                             </Canvas>
                         </Grid>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
+                        <StackPanel x:Name="WinRateStackPanel" Grid.Column="1" Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
                             <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
                             <TextBlock Text="{x:Bind ViewModel.PlayerWinLose.winRate,Mode=OneWay}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                        </StackPanel>
+                        <StackPanel x:Name="WinLoseStackPanel" Grid.Column="1" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
+                            <TextBlock Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
+                                <Run Text="Win" Foreground="ForestGreen" FontSize="12"/>
+                                <Run Text="{x:Bind ViewModel.PlayerWinLose.win,Mode=OneWay}" FontSize="12"/>
+                            </TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
+                                <Run Text="Lose" Foreground="Firebrick" FontSize="12"/>
+                                <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
+                            </TextBlock>
                         </StackPanel>
                     </Grid>
                 </ListViewItem>
 
+                <!--其他数据-->
                 <ListViewItem Margin="0,0,-12,0">
-                    <Grid Width="132" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                        <!--<Image Source="/Assets/Icons/icon_dota_plus.png" Height="39" Width="39" Opacity="2.0" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0">
-                            <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                            <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                        </StackPanel>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem Margin="0,0,-12,0">
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                            <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                        </StackPanel>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem Margin="0,0,10,0">
+                    <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                            <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                            <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
                         </StackPanel>
                     </Grid>
                 </ListViewItem>
 
             </ListView>
-            <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
             <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-            
+            <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+
         </Grid>
 
         <!--
@@ -453,7 +492,7 @@
                                         <Flyout x:Name="NodataFlyout">
                                             <Grid MaxWidth="286">
                                                 <TextBlock TextWrapping="WrapWholeWords"
-                                                           Text="If you can't see the data，probably because of slow connection to Steam server, or because you have too few games."
+                                                           Text="If you can't see the data，probably because of slow connection to the server, or because you have too few games."
                                                            FontSize="16"
                                                            Opacity="0.7" />
                                             </Grid>
@@ -1210,12 +1249,13 @@
 
         <!--当前在线玩家数-->
         <Grid Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="16,4"
-              Background="{ThemeResource COMMON_ITEM_BK}" Padding="14,6" CornerRadius="6">
+              Background="{ThemeResource COMMON_ITEM_BK}" Padding="14,6" CornerRadius="6"
+              Visibility="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay,Converter={StaticResource Str2Vis}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="CurrentNumberTextBlock" Text="0" FontSize="13" FontWeight="Medium" VerticalAlignment="Bottom" Margin="0,0,4,0"/>
+            <TextBlock Text="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay}" FontSize="13" FontWeight="Medium" VerticalAlignment="Bottom" Margin="0,0,4,0"/>
             <TextBlock Grid.Column="1" Text="PLAYERS IN GAME NOW" FontSize="13" Margin="0,0,0,0" Opacity="0.7" VerticalAlignment="Bottom"/>
         </Grid>
 
