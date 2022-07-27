@@ -9,19 +9,22 @@ namespace OpenDota_UWP.Models
     public class DotaMatchHeroPlayedModel
     {
         public string hero_id { get; set; }
-        public int last_played { get; set; }
-        public int games { get; set; }
-        public int win { get; set; }
-        public int with_games { get; set; }
-        public int with_win { get; set; }
-        public int against_games { get; set; }
-        public int against_win { get; set; }
+        public double? last_played { get; set; }
+        public double? games { get; set; }
+        public double? win { get; set; }
+        public double? with_games { get; set; }
+        public double? with_win { get; set; }
+        public double? against_games { get; set; }
+        public double? against_win { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public string sHeroCoverImage { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]
         public string sHeroName { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sWinRate { get; set; } = string.Empty;
     }
 
 }

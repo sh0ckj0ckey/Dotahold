@@ -250,6 +250,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <!--头像昵称-->
             <StackPanel x:Name="PlayerProfileStackPanel" Grid.Row="0" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -424,11 +427,11 @@
                         </StackPanel>
                         <StackPanel x:Name="WinLoseStackPanel" Grid.Column="1" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
                             <TextBlock Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
-                                <Run Text="Win" Foreground="ForestGreen" FontSize="12"/>
+                                <Run Text="Win" Foreground="ForestGreen"/>
                                 <Run Text="{x:Bind ViewModel.PlayerWinLose.win,Mode=OneWay}" FontSize="12"/>
                             </TextBlock>
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
-                                <Run Text="Lose" Foreground="Firebrick" FontSize="12"/>
+                                <Run Text="Lose" Foreground="Firebrick"/>
                                 <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
                             </TextBlock>
                         </StackPanel>
@@ -468,14 +471,14 @@
             <Button Grid.Row="3" Height="38" Margin="20,0" CornerRadius="4" Background="Transparent"
                     BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                    <TextBlock Text="Heroes Played" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Heroes Played" FontWeight="Bold" FontSize="16" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBlock Text="&#xE011;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 </Grid>
             </Button>
             <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                       ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                      Margin="0,12,0,16" Padding="14,0,18,0"
+                      Margin="0,8,0,16" Padding="32,0,18,0"
                       ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -484,24 +487,57 @@
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
-                        <Grid Width="Auto" MinWidth="128" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0"
-                              ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-6,0">
+                        <Grid Width="Auto" MinWidth="98" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,4,24,4"
+                              ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-24,0,10,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="48"/>
+                                <ColumnDefinition Width="32"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{x:Bind sHeroCoverImage}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <TextBlock Text="123"/>
-                                <TextBlock Text="123"/>
-                                <TextBlock Text="123"/>
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind games}" FontWeight="Medium" CharacterSpacing="40"/>
+                                <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium" Opacity="0.7"/>
                             </StackPanel>
+                            <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
             <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+            <!--常用英雄-->
+            <Button Grid.Row="5" Height="38" Margin="20,0" CornerRadius="4" Background="Transparent"
+                    BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <TextBlock Text="Patches" FontWeight="Bold" FontSize="16" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="&#xE011;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+            <ListView Grid.Row="5" IsItemClickEnabled="False" SelectionMode="None"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                      Margin="0,8,0,16" Padding="32,0,18,0"
+                      ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ToolkitUICtrl:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
+                        <Grid Width="Auto" MinWidth="98" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,4,24,4"
+                              Margin="-24,0,10,0">
+                            <Image Grid.Column="0" Source="{x:Bind sHeroCoverImage}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind games}" FontWeight="Medium" CharacterSpacing="40"/>
+                                <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium" Opacity="0.7"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Rectangle Grid.Row="5" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+            <Rectangle Grid.Row="5" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
 
         </Grid>
 

@@ -172,6 +172,13 @@ namespace OpenDota_UWP.ViewModels
                                     DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
                                 item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
 
+                                double rate = 0;
+                                if (item.games > 0)
+                                    rate = (item.win ?? 0) / (item.games ?? 1);
+                                else
+                                    rate = 1;
+                                item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+
                                 vMostPlayedHeroes.Add(item);
                                 if (vMostPlayed10Heroes.Count < 10)
                                     vMostPlayed10Heroes.Add(item);

@@ -122,7 +122,7 @@ namespace OpenDota_UWP.Views
                 }
                 RateArcSegment.Point = new Point(x, y);
                 RatePolyLineSegment.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
-                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
+                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x + 2, y + 2) };
 
                 if (isWinRateBigger)
                 {
