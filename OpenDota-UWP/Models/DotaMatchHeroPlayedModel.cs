@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenDota_UWP.Models
 {
-    public class DotaMatchHeroesPlayedModel
-    {
-        public List<HeroPlayed> vHeroesPlayed { get; set; }
-    }
-
-    public class HeroPlayed
+    public class DotaMatchHeroPlayedModel
     {
         public string hero_id { get; set; }
         public int last_played { get; set; }
@@ -21,6 +16,12 @@ namespace OpenDota_UWP.Models
         public int with_win { get; set; }
         public int against_games { get; set; }
         public int against_win { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sHeroCoverImage { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sHeroName { get; set; } = string.Empty;
     }
 
 }

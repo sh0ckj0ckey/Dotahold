@@ -63,9 +63,20 @@ namespace OpenDota_UWP.ViewModels
             set { Set("sOnlilnePlayersCount", ref _sOnlilnePlayersCount, value); }
         }
 
+        // 最近的5场比赛
         public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
+
+        // 最近的比赛
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
+        // 最常用的10个英雄
+        public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayed10Heroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
+
+        // 所有的最常用英雄
+        public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayedHeroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
+
+
+        // 刷新胜负场次的饼状图
         public Action<double, double> ActUpdatePieChart = null;
 
         public DotaMatchesViewModel()
@@ -119,17 +130,19 @@ namespace OpenDota_UWP.ViewModels
                         wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
                     }
                     PlayerWinLose = wl;
-                    ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
+                    if (PlayerWinLose != null)
+                        ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
 
                     // 统计数据
-                    PlayerTotals = await GetTotalAsync(sSteamId);
+                    var total = await GetTotalAsync(sSteamId);
+                    PlayerTotals = total;
 
                     // 处理最近的比赛
                     var recentMatches = await GetRecentMatchAsync(sSteamId);
+                    vRecentMatchesForFlip.Clear();
+                    vRecentMatches.Clear();
                     if (recentMatches != null)
                     {
-                        vRecentMatchesForFlip.Clear();
-                        vRecentMatches.Clear();
                         foreach (var item in recentMatches)
                         {
                             if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
@@ -137,11 +150,32 @@ namespace OpenDota_UWP.ViewModels
                                 item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
                                     DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
                                 item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                            }
 
-                            vRecentMatches.Add(item);
-                            if (vRecentMatchesForFlip.Count < 5)
-                                vRecentMatchesForFlip.Add(item);
+                                vRecentMatches.Add(item);
+                                if (vRecentMatchesForFlip.Count < 5)
+                                    vRecentMatchesForFlip.Add(item);
+                            }
+                        }
+                    }
+
+                    // 常用英雄
+                    var heroes = await GetHeroesPlayedAsync(sSteamId);
+                    vMostPlayed10Heroes.Clear();
+                    vMostPlayedHeroes.Clear();
+                    if (heroes != null)
+                    {
+                        foreach (var item in heroes)
+                        {
+                            if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                            {
+                                item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
+                                    DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+
+                                vMostPlayedHeroes.Add(item);
+                                if (vMostPlayed10Heroes.Count < 10)
+                                    vMostPlayed10Heroes.Add(item);
+                            }
                         }
                     }
                 }
@@ -248,7 +282,7 @@ namespace OpenDota_UWP.ViewModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private async Task<List<HeroPlayed>> GetHeroesPlayedAsync(string id)
+        private async Task<List<DotaMatchHeroPlayedModel>> GetHeroesPlayedAsync(string id)
         {
             try
             {
@@ -257,9 +291,9 @@ namespace OpenDota_UWP.ViewModels
                 var response = await matchHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
-                var heroes = JsonConvert.DeserializeObject<DotaMatchHeroesPlayedModel>(jsonMessage);
+                var heroes = JsonConvert.DeserializeObject<List<DotaMatchHeroPlayedModel>>(jsonMessage);
 
-                return heroes.vHeroesPlayed;
+                return heroes;
             }
             catch { }
             return null;

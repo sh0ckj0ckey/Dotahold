@@ -244,24 +244,6 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
-        /// 显示常用英雄信息
-        /// </summary>
-        public async void ShowHeroUsingInfo(string id)
-        {
-            //heroUsingInfos = await DotaMatchHelper.GetHeroUsingAsync(id);
-            //if (heroUsingInfos == null)
-            //{
-            //    FailedTextBlock.Visibility = Visibility.Visible;
-            //    UsingIndexGridView.SelectedIndex = -1;
-            //    UsingIndexGridView.IsEnabled = false;
-            //    LeftHyperlinkButton.IsEnabled = false;
-            //    RightHyperlinkButton.IsEnabled = false;
-            //    return;
-            //}
-            //UsingIndexGridView.SelectedIndex = 0;
-        }
-
-        /// <summary>
         /// 查看社区主页
         /// </summary>
         /// <param name="sender"></param>
