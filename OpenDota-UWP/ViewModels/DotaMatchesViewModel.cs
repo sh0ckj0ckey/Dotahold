@@ -150,7 +150,7 @@ namespace OpenDota_UWP.ViewModels
                                 item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
                                     DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
                                 item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                                item.sHeroHorizonImage = "https://cdn.cloudflare.steamstatic.com" + DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
+                                item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
                                 item.bWin = null;
                                 if (item.player_slot != null && item.radiant_win != null)
                                 {
