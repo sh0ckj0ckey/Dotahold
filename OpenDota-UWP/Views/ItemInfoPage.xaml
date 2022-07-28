@@ -60,9 +60,9 @@
                         </Grid.Background>
                     </Grid>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Grid.Column="2" FontFamily="Century" Margin="12,0,2,0"
+                        <TextBlock Grid.Column="2" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Margin="12,0,2,0"
                                    Text="{x:Bind ViewModel.CurrentItem.dname,Mode=OneWay}"
-                                   FontSize="24" CharacterSpacing="20" FontWeight="Bold"/>
+                                   FontSize="24" CharacterSpacing="40" FontWeight="Bold"/>
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                             <Image Grid.Column="2"
                                    Height="17" VerticalAlignment="Center"
