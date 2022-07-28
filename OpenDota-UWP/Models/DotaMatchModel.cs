@@ -59,6 +59,9 @@ namespace OpenDota_UWP.Models
         public string sHeroCoverImage { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]
+        public string sHeroHorizonImage { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
         public string sHeroName { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]

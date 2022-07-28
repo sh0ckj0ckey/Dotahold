@@ -243,20 +243,327 @@
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="2.3*"/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0">
-            <Grid x:Name="PlayerProfileGrid" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,40,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" Grid.RowSpan="2" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
+                <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!--最近5场比赛-->
+                    <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="20,0,22,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
+                              HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
+                        <FlipView.ItemTemplate>
+                            <DataTemplate x:DataType="models:DotaRecentMatchModel">
+                                <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="6">
+                                    <Grid Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" BorderBrush="{ThemeResource RECENTMATCH_FLIPCARD_BD}" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{x:Bind sHeroName}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
+                                                       MaxWidth="296" FontSize="16" CharacterSpacing="50" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
+                                            <Border Grid.Column="1" Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
+                                                <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                            </Border>
+                                            <Border Grid.Column="1" Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                                <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                            </Border>
+                                        </Grid>
+                                        <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis" FontSize="13" CharacterSpacing="60">
+                                            <Run Text="K/D/A:"/>
+                                            <Run Text="{x:Bind kills}"/>
+                                            <Run Text="/" FontWeight="Normal"/>
+                                            <Run Text="{x:Bind deaths}"/>
+                                            <Run Text="/" FontWeight="Normal"/>
+                                            <Run Text="{x:Bind assists}"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="2" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis" FontSize="13" CharacterSpacing="60">
+                                            <Run Text="Last Hits:"/>
+                                            <Run Text="{x:Bind last_hits}"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
+                                                   FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
+                                    </Grid>
+                                    <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                </Grid>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
+                    <!--数据统计-->
+                    <ListView Grid.Row="2" IsItemClickEnabled="False" SelectionMode="None"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                              Margin="0,12,0,16">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ToolkitUICtrl:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <!--分段-->
+                        <ListViewItem Margin="10,0,-8,0">
+                            <Grid Width="64" Height="64" Background="Transparent" CornerRadius="6">
+                                <Image Source="{x:Bind ViewModel.PlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image}}" Height="64" Width="64" Stretch="UniformToFill"
+                                       Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" CharacterSpacing="40" FontWeight="Medium" FontSize="10" Margin="0,0,0,4"
+                                           Visibility="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
+                            </Grid>
+                        </ListViewItem>
+
+                        <!--DotaPlus-->
+                        <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                            <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="/Assets/Icons/icon_dota_plus.png" Height="39" Width="39" Opacity="1.0" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,14,0">
+                                    <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+
+                        <!--胜率-->
+                        <ListViewItem Margin="0,0,-12,0">
+                            <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
+                                  PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Height="48" Width="48" Margin="12,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Canvas Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Ellipse x:Name="LeftPieChart"
+                                                 Height="48" Width="48"
+                                                 Canvas.Top="0" Canvas.Left="0"
+                                                 StrokeThickness="0" Fill="ForestGreen"/>
+                                        <Path x:Name="RightPieChart" Canvas.Left="0" Canvas.Top="0" StrokeThickness="0" Fill="Firebrick">
+                                            <Path.Data>
+                                                <GeometryGroup>
+                                                    <PathGeometry>
+                                                        <PathGeometry.Figures>
+                                                            <PathFigureCollection>
+                                                                <PathFigure IsClosed="true" IsFilled="True" StartPoint="24,0">
+                                                                    <PathFigure.Segments>
+                                                                        <PathSegmentCollection>
+                                                                            <ArcSegment x:Name="RateArcSegment" Size="24,24" IsLargeArc="False" SweepDirection="Clockwise" Point="24,48"/>
+                                                                            <PolyLineSegment x:Name="RatePolyLineSegment" Points="24,0"/>
+                                                                        </PathSegmentCollection>
+                                                                    </PathFigure.Segments>
+                                                                </PathFigure>
+                                                            </PathFigureCollection>
+                                                        </PathGeometry.Figures>
+                                                    </PathGeometry>
+                                                </GeometryGroup>
+                                            </Path.Data>
+                                        </Path>
+                                        <Polyline x:Name="RatePolyline" Canvas.Left="0" Canvas.Top="0" StrokeThickness="4" Points="24,0,24,24,24,48" Stroke="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                                    </Canvas>
+                                </Grid>
+                                <StackPanel x:Name="WinRateStackPanel" Grid.Column="1" Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
+                                    <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.PlayerWinLose.winRate,Mode=OneWay}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                                <StackPanel x:Name="WinLoseStackPanel" Grid.Column="1" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
+                                    <TextBlock Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
+                                        <Run Text="Win" Foreground="ForestGreen"/>
+                                        <Run Text="{x:Bind ViewModel.PlayerWinLose.win,Mode=OneWay}" FontSize="12"/>
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
+                                        <Run Text="Lose" Foreground="Firebrick"/>
+                                        <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+
+                        <!--其他数据-->
+                        <ListViewItem Margin="0,0,-12,0">
+                            <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                                    <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+                        <ListViewItem Margin="0,0,-12,0">
+                            <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                                    <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+                        <ListViewItem Margin="0,0,10,0">
+                            <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
+                                    <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+
+                    </ListView>
+                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                    <!--常用英雄-->
+                    <TextBlock Grid.Row="3" Text="Heroes Played" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               Margin="24,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Grid.Row="3" Height="38" Margin="10,0" CornerRadius="4" Background="Transparent" ToolTipService.ToolTip="View All"
+                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}">
+                        <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                            <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                              Margin="0,8,0,16" Padding="32,0,18,0"
+                              ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ToolkitUICtrl:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
+                                <Grid Width="Auto" MinWidth="98" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,4,24,4"
+                                      ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-24,0,10,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="{x:Bind sHeroCoverImage}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind games}" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
+                                    </StackPanel>
+                                    <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                    <!--最近比赛-->
+                    <TextBlock Grid.Row="5" Text="Recent Matches" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               Margin="24,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Grid.Row="5" Height="38" Margin="10,0" CornerRadius="4" Background="Transparent" ToolTipService.ToolTip="View All"
+                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}">
+                        <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                            <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <ListView Grid.Row="6" Margin="0,12,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                              ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}">
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter />
+                            </ControlTemplate>
+                        </ListView.Template>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:DotaRecentMatchModel">
+                                <Grid Height="72" Width="340">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="72" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="18" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
+                                        <Border.Background>
+                                            <ImageBrush Stretch="UniformToFill">
+                                                <ImageBrush.ImageSource>
+                                                    <BitmapImage UriSource="{x:Bind sHeroHorizonImage}" DecodePixelWidth="64" DecodePixelType="Logical" />
+                                                </ImageBrush.ImageSource>
+                                            </ImageBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1.6*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Medium"
+                                                   MaxWidth="296" FontSize="16" CharacterSpacing="40" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
+                                                <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                            </Border>
+                                            <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                                <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                            </Border>
+                                            <TextBlock Text="{x:Bind skill}" FontSize="12" Margin="0,-1"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Row="2" Text="{x:Bind start_time}" Foreground="Gray" FontSize="12" Margin="8,-6"/>
+                                    </Grid>
+                                    <Grid Grid.Column="2" Margin="12,2" HorizontalAlignment="Right">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1.2*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{x:Bind kills}"
+                                                   FontSize="16" VerticalAlignment="Bottom"/>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                            <TextBlock Text="GPM: " FontSize="12" VerticalAlignment="Center" />
+                                            <TextBlock FontSize="12" Text="{x:Bind gold_per_min}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,-2">
+                                            <TextBlock Text="XPM: " FontSize="12" Foreground="DeepSkyBlue" VerticalAlignment="Top"/>
+                                            <TextBlock FontSize="12" Text="{x:Bind xp_per_min}" VerticalAlignment="Top"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--当前在线玩家数-->
+                    <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,16,0,12"
+                          Background="{ThemeResource COMMON_ITEM_BK}" Padding="16,10" CornerRadius="6"
+                          Visibility="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay,Converter={StaticResource Str2Vis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay}" FontSize="14" FontWeight="Medium" VerticalAlignment="Bottom" Margin="0,0,4,0"/>
+                        <TextBlock Grid.Column="1" Text="players in game now" FontSize="13" Margin="0,-1,0,1" Opacity="0.7" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+            <!--标题栏(头像昵称菜单)-->
+            <Grid Grid.Row="0" Padding="0,40,0,10">
+                <Grid.Background>
+                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
+                                  FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.1"/>
+                </Grid.Background>
                 <!--头像昵称-->
-                <StackPanel x:Name="PlayerProfileStackPanel" Grid.Row="0" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <StackPanel x:Name="PlayerProfileStackPanel" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Grid Height="36" Width="36">
                         <TextBlock Text="?" FontSize="20" Margin="0,-4,0,0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Ellipse x:Name="PlayerPhotoEllipse" Height="36" Width="36" Stroke="{ThemeResource PLAYERPROFILE_AVATAR_BD}" StrokeThickness="1">
@@ -270,16 +577,16 @@
                         </Ellipse>
                     </Grid>
                     <TextBlock x:Name="PersonNameTextBlock" MaxWidth="260"
-                           FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" TextTrimming="CharacterEllipsis"
-                           CharacterSpacing="60"
-                           Margin="12,2,4,0"/>
+                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" TextTrimming="CharacterEllipsis"
+                               CharacterSpacing="60"
+                               Margin="12,2,4,0"/>
                 </StackPanel>
                 <!--菜单-->
-                <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
-                    Margin="0,0,22,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
-                    Foreground="{ThemeResource SIMPLETEXT_FR}">
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
+                        Margin="0,0,22,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
+                        Foreground="{ThemeResource SIMPLETEXT_FR}">
                     <Button.Content>
                         <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>
                     </Button.Content>
@@ -292,7 +599,7 @@
                             </MenuFlyoutItem>
                             <!--<MenuFlyoutSeparator />-->
                             <MenuFlyoutItem x:Name="UpdateProfileMenuFlyoutItem" Text="Update Data" 
-                                        Click="UpdateProfileMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                                            Click="UpdateProfileMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Refresh" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
@@ -304,7 +611,7 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutSeparator Opacity="0.3"/>
                             <MenuFlyoutItem x:Name="GameIDMenuFlyoutItem" Text="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource StrForamt},ConverterParameter=ID: {0}}"
-                                        CornerRadius="4" Margin="4,0" Click="GameIDMenuFlyoutItem_Click">
+                                            CornerRadius="4" Margin="4,0" Click="GameIDMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0"/>
                                 </MenuFlyoutItem.Icon>
@@ -312,298 +619,8 @@
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
-                <!--最近5场比赛-->
-                <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="20,8,22,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
-                          HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
-                    <FlipView.ItemTemplate>
-                        <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                            <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="6">
-                                <Grid Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" BorderBrush="{ThemeResource RECENTMATCH_FLIPCARD_BD}" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{x:Bind sHeroName}" FontWeight="Bold" Margin="18,8,4,0" TextTrimming="CharacterEllipsis"
-                                                   MaxWidth="296" FontSize="16" CharacterSpacing="50" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
-                                        <Border Grid.Column="1" Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
-                                            <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                        </Border>
-                                        <Border Grid.Column="1" Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                            <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                        </Border>
-                                    </Grid>
-                                    <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis"
-                                               FontSize="13" CharacterSpacing="60">
-                                    <Run Text="K/D/A:"/>
-                                    <Run Text="{x:Bind kills}"/>
-                                    <Run Text="/" FontWeight="Normal"/>
-                                    <Run Text="{x:Bind deaths}"/>
-                                    <Run Text="/" FontWeight="Normal"/>
-                                    <Run Text="{x:Bind assists}"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="2" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis" FontSize="13" CharacterSpacing="60">
-                                    <Run Text="Last Hits:"/>
-                                    <Run Text="{x:Bind last_hits}"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
-                                               FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
-                                </Grid>
-                                <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            </Grid>
-                        </DataTemplate>
-                    </FlipView.ItemTemplate>
-                </FlipView>
-                <!--数据统计-->
-                <ListView Grid.Row="2" IsItemClickEnabled="False" SelectionMode="None"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                      Margin="0,12,0,16">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ToolkitUICtrl:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-
-                    <!--分段-->
-                    <ListViewItem Margin="10,0,-8,0">
-                        <Grid Width="64" Height="64" Background="Transparent" CornerRadius="6">
-                            <Image Source="{x:Bind ViewModel.PlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image}}" Height="64" Width="64" Stretch="UniformToFill"
-                               Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" CharacterSpacing="40" FontWeight="Medium" FontSize="10" Margin="0,0,0,4"
-                                   Visibility="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
-                        </Grid>
-                    </ListViewItem>
-
-                    <!--DotaPlus-->
-                    <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-                        <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="/Assets/Icons/icon_dota_plus.png" Height="39" Width="39" Opacity="1.0" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,14,0">
-                                <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
-
-                    <!--胜率-->
-                    <ListViewItem Margin="0,0,-12,0">
-                        <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
-                          PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Height="48" Width="48" Margin="12,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Canvas Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Ellipse x:Name="LeftPieChart"
-                                         Height="48" Width="48"
-                                         Canvas.Top="0" Canvas.Left="0"
-                                         StrokeThickness="0" Fill="ForestGreen"/>
-                                    <Path x:Name="RightPieChart" Canvas.Left="0" Canvas.Top="0" StrokeThickness="0" Fill="Firebrick">
-                                        <Path.Data>
-                                            <GeometryGroup>
-                                                <PathGeometry>
-                                                    <PathGeometry.Figures>
-                                                        <PathFigureCollection>
-                                                            <PathFigure IsClosed="true" IsFilled="True" StartPoint="24,0">
-                                                                <PathFigure.Segments>
-                                                                    <PathSegmentCollection>
-                                                                        <ArcSegment x:Name="RateArcSegment" Size="24,24" IsLargeArc="False" SweepDirection="Clockwise" Point="24,48"/>
-                                                                        <PolyLineSegment x:Name="RatePolyLineSegment" Points="24,0"/>
-                                                                    </PathSegmentCollection>
-                                                                </PathFigure.Segments>
-                                                            </PathFigure>
-                                                        </PathFigureCollection>
-                                                    </PathGeometry.Figures>
-                                                </PathGeometry>
-                                            </GeometryGroup>
-                                        </Path.Data>
-                                    </Path>
-                                    <Polyline x:Name="RatePolyline" Canvas.Left="0" Canvas.Top="0" StrokeThickness="4" Points="24,0,24,24,24,48" Stroke="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                                </Canvas>
-                            </Grid>
-                            <StackPanel x:Name="WinRateStackPanel" Grid.Column="1" Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
-                                <TextBlock Text="Win Rate" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                <TextBlock Text="{x:Bind ViewModel.PlayerWinLose.winRate,Mode=OneWay}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                            </StackPanel>
-                            <StackPanel x:Name="WinLoseStackPanel" Grid.Column="1" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,14,0">
-                                <TextBlock Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
-                                <Run Text="Win" Foreground="ForestGreen"/>
-                                <Run Text="{x:Bind ViewModel.PlayerWinLose.win,Mode=OneWay}" FontSize="12"/>
-                                </TextBlock>
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
-                                <Run Text="Lose" Foreground="Firebrick"/>
-                                <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
-
-                    <!--其他数据-->
-                    <ListViewItem Margin="0,0,-12,0">
-                        <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
-                                <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="0,0,-12,0">
-                        <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
-                                <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="0,0,10,0">
-                        <Grid Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
-                                <TextBlock Text="xxxxxx" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                <TextBlock Text="xxx" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                            </StackPanel>
-                        </Grid>
-                    </ListViewItem>
-
-                </ListView>
-                <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                <!--常用英雄-->
-                <TextBlock Grid.Row="3" Text="Heroes Played" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                       Margin="24,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Grid.Row="3" Height="38" Margin="10,0" CornerRadius="4" Background="Transparent" ToolTipService.ToolTip="View All"
-                    BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}">
-                    <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    </Grid>
-                </Button>
-                <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                      Margin="0,8,0,16" Padding="32,0,18,0"
-                      ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ToolkitUICtrl:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
-                            <Grid Width="Auto" MinWidth="98" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,4,24,4"
-                              ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-24,0,10,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="32"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{x:Bind sHeroCoverImage}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <TextBlock Text="{x:Bind games}" FontWeight="Medium" CharacterSpacing="40"/>
-                                    <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
-                                </StackPanel>
-                                <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                <!--最近比赛-->
-                <TextBlock Grid.Row="5" Text="Recent Matches" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
-                       Margin="24,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <Button Grid.Row="5" Height="38" Margin="10,0" CornerRadius="4" Background="Transparent" ToolTipService.ToolTip="View All"
-                    BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}">
-                    <Grid Width="340" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    </Grid>
-                </Button>
-                <ListView Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Stretch"
-                          ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}">
-                    <ListView.Template>
-                        <ControlTemplate>
-                            <ItemsPresenter />
-                        </ControlTemplate>
-                    </ListView.Template>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                            <Grid Height="72" Width="340">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="72" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="18" />
-                                </Grid.ColumnDefinitions>
-                                <Border VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <Ellipse Grid.Column="0" StrokeThickness="0" Stroke="White" Width="62" Height="62">
-                                        <Ellipse.Fill>
-                                            <ImageBrush Stretch="UniformToFill">
-                                                <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{x:Bind sHeroCoverImage}" DecodePixelWidth="62" DecodePixelType="Logical" />
-                                                </ImageBrush.ImageSource>
-                                            </ImageBrush>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                </Border>
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1.6*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
-                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                        <TextBlock Text="WIN" FontSize="12" Foreground="ForestGreen" Margin="8,-1" Visibility="{x:Bind radiant_win}"/>
-                                        <TextBlock Text="LOSE" FontSize="12" Foreground="Firebrick" Margin="8,-1" Visibility="{x:Bind radiant_win}"/>
-                                        <TextBlock Text="{x:Bind skill}" Foreground="{ThemeResource GrayText}" FontSize="12" Margin="0,-1"/>
-                                    </StackPanel>
-                                    <TextBlock Grid.Row="2" Text="{x:Bind start_time}" Foreground="Gray" FontSize="12" Margin="8,-6"/>
-                                </Grid>
-                                <Grid Grid.Column="2" Margin="12,2" HorizontalAlignment="Right">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1.2*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{x:Bind kills}" Foreground="{ThemeResource GrayText}" 
-                                               FontFamily="Calibri" FontSize="16" VerticalAlignment="Bottom"/>
-                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                        <TextBlock Text="GPM: " FontSize="12" Foreground="{ThemeResource GoldText}" VerticalAlignment="Center" />
-                                        <TextBlock FontSize="12" Text="{x:Bind gold_per_min}" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,-2">
-                                        <TextBlock Text="XPM: " FontSize="12" Foreground="DeepSkyBlue" VerticalAlignment="Top"/>
-                                        <TextBlock FontSize="12" Text="{x:Bind xp_per_min}" VerticalAlignment="Top"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <!--当前在线玩家数-->
-                <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="16,4"
-                      Background="{ThemeResource COMMON_ITEM_BK}" Padding="14,6" CornerRadius="6"
-                      Visibility="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay,Converter={StaticResource Str2Vis}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay}" FontSize="13" FontWeight="Medium" VerticalAlignment="Bottom" Margin="0,0,4,0"/>
-                    <TextBlock Grid.Column="1" Text="PLAYERS IN GAME NOW" FontSize="13" Margin="0,0,0,0" Opacity="0.7" VerticalAlignment="Bottom"/>
-                </Grid>
             </Grid>
-        </ScrollViewer>
+        </Grid>
         <!--
                         </StackPanel>
                         <Grid Grid.Column="2">
