@@ -151,6 +151,15 @@ namespace OpenDota_UWP.ViewModels
                                     DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
                                 item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
 
+                                item.bWin = null;
+                                if (item.player_slot != null && item.radiant_win != null)
+                                {
+                                    if (item.player_slot < 128)         // 天辉
+                                        item.bWin = item.radiant_win;
+                                    else if (item.player_slot >= 128)   // 夜魇
+                                        item.bWin = !item.radiant_win;
+                                }
+
                                 vRecentMatches.Add(item);
                                 if (vRecentMatchesForFlip.Count < 5)
                                     vRecentMatchesForFlip.Add(item);

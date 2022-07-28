@@ -29,8 +29,8 @@
                     <Color x:Key="HEROINFO_LISTITEM_BK">#363746</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#404040</Color>
-                    
-                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#10FFFFFF</Color>
+
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#353545</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
                     
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
