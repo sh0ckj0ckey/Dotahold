@@ -526,7 +526,7 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" FontWeight="Medium" Margin="18,0,4,0" TextTrimming="CharacterEllipsis" FontSize="14" CharacterSpacing="20" HorizontalAlignment="Right">
+                                        <TextBlock Grid.Row="0" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" CharacterSpacing="20" HorizontalAlignment="Right">
                                             <Run Text="{x:Bind kills}"/>
                                             <Run Text="/" FontWeight="Medium"/>
                                             <Run Text="{x:Bind deaths}"/>
@@ -534,12 +534,12 @@
                                             <Run Text="{x:Bind assists}"/>
                                         </TextBlock>
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="GPM" FontWeight="Medium" FontSize="11" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" VerticalAlignment="Center" CharacterSpacing="20"/>
-                                            <TextBlock FontSize="11" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
+                                            <TextBlock Text="GPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" VerticalAlignment="Center" CharacterSpacing="20"/>
+                                            <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="11" Margin="0,0,6,0" Foreground="DeepSkyBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
-                                            <TextBlock FontSize="11" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
+                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="DeepSkyBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
+                                            <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>

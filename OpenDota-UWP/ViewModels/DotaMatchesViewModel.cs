@@ -75,6 +75,41 @@ namespace OpenDota_UWP.ViewModels
         // 所有的最常用英雄
         public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayedHeroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
 
+        // 是否正在加载玩家信息
+        private bool _bLoadingProfile = false;
+        public bool bLoadingProfile
+        {
+            get { return _bLoadingProfile; }
+            set { Set("bLoadingProfile", ref _bLoadingProfile, value); }
+        }  
+        // 是否正在加载胜负场次
+        private bool _bLoadingWL = false;
+        public bool bLoadingWL
+        {
+            get { return _bLoadingWL; }
+            set { Set("bLoadingWL", ref _bLoadingWL, value); }
+        }  
+        // 是否正在加载统计数据
+        private bool _bLoadingTotals = false;
+        public bool bLoadingTotals
+        {
+            get { return _bLoadingTotals; }
+            set { Set("bLoadingTotals", ref _bLoadingTotals, value); }
+        }  
+        // 是否正在加载最近比赛
+        private bool _bLoadingRecent = false;
+        public bool bLoadingRecent
+        {
+            get { return _bLoadingRecent; }
+            set { Set("bLoadingRecent", ref _bLoadingRecent, value); }
+        }  
+        // 是否正在加载常用英雄
+        private bool _bLoadingPlayed = false;
+        public bool bLoadingPlayed
+        {
+            get { return _bLoadingPlayed; }
+            set { Set("bLoadingPlayed", ref _bLoadingPlayed, value); }
+        }
 
         // 刷新胜负场次的饼状图
         public Action<double, double> ActUpdatePieChart = null;
@@ -88,117 +123,150 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to load Matches ---> " + DateTime.Now.Ticks);
+                bLoadingProfile = true;
+                bLoadingWL = true;
+                bLoadingTotals = true;
+                bLoadingRecent = true;
+                bLoadingPlayed = true;
+                PlayerProfile = null;
+                PlayerWinLose = null;
+                PlayerTotals = null;
+                vRecentMatchesForFlip.Clear();
+                vRecentMatches.Clear();
+                vMostPlayed10Heroes.Clear();
+                vMostPlayedHeroes.Clear();
+
                 sSteamId = GetSteamID();
 
+                bool triedLoadHeroes = await DotaHeroesViewModel.Instance.LoadDotaHeroes();
+                bool triedLoadItems = await DotaItemsViewModel.Instance.LoadDotaItems();
+
+                // 先等获取完英雄和物品列表
                 if (!string.IsNullOrEmpty(sSteamId))
                 {
-                    // 玩家信息
-                    var profile = await GetPlayerProfileAsync(sSteamId);
-                    if (profile != null)
+                    if (triedLoadHeroes && triedLoadItems)
                     {
-                        if (profile.leaderboard_rank is int rank && rank > 0 && profile.rank_tier >= 80)
+                        System.Diagnostics.Debug.WriteLine("Loading Matches ---> " + DateTime.Now.Ticks);
+
+                        // 玩家信息
+                        var profile = await GetPlayerProfileAsync(sSteamId);
+                        if (profile != null)
                         {
-                            if (rank == 1)
+                            if (profile.leaderboard_rank is int rank && rank > 0 && profile.rank_tier >= 80)
                             {
-                                profile.rank_tier = 84;
-                            }
-                            else if (rank <= 10)
-                            {
-                                profile.rank_tier = 83;
-                            }
-                            else if (rank <= 100)
-                            {
-                                profile.rank_tier = 82;
-                            }
-                            else if (rank <= 1000)
-                            {
-                                profile.rank_tier = 81;
-                            }
-                            else
-                            {
-                                profile.rank_tier = 80;
-                            }
-                        }
-                    }
-                    PlayerProfile = profile;
-
-                    // 胜率
-                    var wl = await GetPlayerWLAsync(sSteamId);
-                    if (wl != null && (wl.win + wl.lose) > 0)
-                    {
-                        double rate = wl.win / (wl.win + wl.lose);
-                        wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
-                    }
-                    PlayerWinLose = wl;
-                    if (PlayerWinLose != null)
-                        ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
-
-                    // 统计数据
-                    var total = await GetTotalAsync(sSteamId);
-                    PlayerTotals = total;
-
-                    // 处理最近的比赛
-                    var recentMatches = await GetRecentMatchAsync(sSteamId);
-                    vRecentMatchesForFlip.Clear();
-                    vRecentMatches.Clear();
-                    if (recentMatches != null)
-                    {
-                        foreach (var item in recentMatches)
-                        {
-                            if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
-                            {
-                                item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
-                                    DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                                item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                                item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
-                                item.bWin = null;
-                                if (item.player_slot != null && item.radiant_win != null)
+                                if (rank == 1)
                                 {
-                                    if (item.player_slot < 128)// 天辉
-                                        item.bWin = item.radiant_win;
-                                    else if (item.player_slot >= 128)// 夜魇
-                                        item.bWin = !item.radiant_win;
+                                    profile.rank_tier = 84;
                                 }
-
-                                vRecentMatches.Add(item);
-                                if (vRecentMatchesForFlip.Count < 5)
-                                    vRecentMatchesForFlip.Add(item);
-                            }
-                        }
-                    }
-
-                    // 常用英雄
-                    var heroes = await GetHeroesPlayedAsync(sSteamId);
-                    vMostPlayed10Heroes.Clear();
-                    vMostPlayedHeroes.Clear();
-                    if (heroes != null)
-                    {
-                        foreach (var item in heroes)
-                        {
-                            if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
-                            {
-                                item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
-                                    DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                                item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-
-                                double rate = 0;
-                                if (item.games > 0)
-                                    rate = (item.win ?? 0) / (item.games ?? 1);
+                                else if (rank <= 10)
+                                {
+                                    profile.rank_tier = 83;
+                                }
+                                else if (rank <= 100)
+                                {
+                                    profile.rank_tier = 82;
+                                }
+                                else if (rank <= 1000)
+                                {
+                                    profile.rank_tier = 81;
+                                }
                                 else
-                                    rate = 1;
-                                item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
-
-                                vMostPlayedHeroes.Add(item);
-                                if (vMostPlayed10Heroes.Count < 10)
-                                    vMostPlayed10Heroes.Add(item);
+                                {
+                                    profile.rank_tier = 80;
+                                }
                             }
                         }
+                        PlayerProfile = profile;
+                        bLoadingProfile = false;
+
+                        // 胜率
+                        var wl = await GetPlayerWLAsync(sSteamId);
+                        if (wl != null && (wl.win + wl.lose) > 0)
+                        {
+                            double rate = wl.win / (wl.win + wl.lose);
+                            wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
+                        }
+                        PlayerWinLose = wl;
+                        if (PlayerWinLose != null)
+                            ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
+                        bLoadingWL = false;
+
+                        // 统计数据
+                        var total = await GetTotalAsync(sSteamId);
+                        PlayerTotals = total;
+                        bLoadingTotals = false;
+
+                        // 处理最近的比赛
+                        var recentMatches = await GetRecentMatchAsync(sSteamId);
+                        if (recentMatches != null)
+                        {
+                            foreach (var item in recentMatches)
+                            {
+                                if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                                {
+                                    item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
+                                        DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                    item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                                    item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
+                                    item.bWin = null;
+                                    if (item.player_slot != null && item.radiant_win != null)
+                                    {
+                                        if (item.player_slot < 128)// 天辉
+                                            item.bWin = item.radiant_win;
+                                        else if (item.player_slot >= 128)// 夜魇
+                                            item.bWin = !item.radiant_win;
+                                    }
+
+                                    vRecentMatches.Add(item);
+                                    if (vRecentMatchesForFlip.Count < 5)
+                                        vRecentMatchesForFlip.Add(item);
+                                }
+                            }
+                        }
+                        bLoadingRecent = false;
+
+                        // 常用英雄
+                        var heroes = await GetHeroesPlayedAsync(sSteamId);
+                        if (heroes != null)
+                        {
+                            foreach (var item in heroes)
+                            {
+                                if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                                {
+                                    item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
+                                        DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                    item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+
+                                    double rate = 0;
+                                    if (item.games > 0)
+                                        rate = (item.win ?? 0) / (item.games ?? 1);
+                                    else
+                                        rate = 1;
+                                    item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+
+                                    vMostPlayedHeroes.Add(item);
+                                    if (vMostPlayed10Heroes.Count < 10)
+                                        vMostPlayed10Heroes.Add(item);
+                                }
+                            }
+                        }
+                        bLoadingPlayed = false;
+
+                        // 在线玩家数
+                        sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
                     }
                 }
-
-                sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
             }
             catch { }
+            finally
+            {
+                bLoadingProfile = false;
+                bLoadingWL = false;
+                bLoadingTotals = false;
+                bLoadingRecent = false;
+                bLoadingPlayed = false;
+            }
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace OpenDota_UWP.Views
         /// 重写导航至此页面的代码,显示动画
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace OpenDota_UWP.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                ViewModel?.LoadDotaHeroes();
+                _ = await ViewModel?.LoadDotaHeroes();
             }
             catch { }
         }

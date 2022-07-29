@@ -126,12 +126,15 @@ namespace OpenDota_UWP.ViewModels
             //LoadDotaHeroes();
         }
 
-        public async void LoadDotaHeroes()
+        // 固定返回true，用来等待返回值的
+        public async Task<bool> LoadDotaHeroes()
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Loading Heroes ---> " + DateTime.Now.Ticks);
+
                 if (_bLoadedDotaHeroes)
-                    return;
+                    return true;
 
                 _bLoadedDotaHeroes = true;
 
@@ -147,7 +150,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     bLoadingHeroes = false;
                     _bLoadedDotaHeroes = false;
-                    return;
+                    return true;
                 }
 
                 // 处理图片下载等流程，然后逐个添加到列表里面
@@ -171,6 +174,7 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { _bLoadedDotaHeroes = false; }
             finally { bLoadingHeroes = false; }
+            return true;
         }
 
         /// <summary>

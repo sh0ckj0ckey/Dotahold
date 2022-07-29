@@ -44,12 +44,15 @@ namespace OpenDota_UWP.ViewModels
             //LoadDotaItems();
         }
 
-        public async void LoadDotaItems()
+        // 固定返回true，用来等待返回值的
+        public async Task<bool> LoadDotaItems()
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Loading Items ---> " + DateTime.Now.Ticks);
+
                 if (_bLoadedDotaItems)
-                    return;
+                    return true;
 
                 _bLoadedDotaItems = true;
 
@@ -64,7 +67,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     bLoadingItems = false;
                     _bLoadedDotaItems = false;
-                    return;
+                    return true;
                 }
 
                 // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
@@ -123,6 +126,7 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { _bLoadedDotaItems = false; }
             finally { bLoadingItems = false; }
+            return true;
         }
     }
 }

@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Data;
 
 namespace OpenDota_UWP.Converters
 {
-    public class StringFormatter : IValueConverter
+    internal class StringFormatter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
