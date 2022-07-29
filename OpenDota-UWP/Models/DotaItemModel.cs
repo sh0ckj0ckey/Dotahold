@@ -31,7 +31,7 @@ namespace OpenDota_UWP.Models
         /// 物品的 id
         /// int/bool
         /// </summary>
-        public object id { get; set; }
+        public string id { get; set; }
 
         /// <summary>
         /// https://steamcdn-a.akamaihd.net/ + apps/dota2/images/items/{img}.png
@@ -52,7 +52,7 @@ namespace OpenDota_UWP.Models
         /// 价格
         /// int/bool
         /// </summary>
-        public object cost { get; set; }
+        public string cost { get; set; }
 
         /// <summary>
         /// 备注，比如风杖的 notes 是你不能对友军使用
@@ -63,7 +63,7 @@ namespace OpenDota_UWP.Models
         /// 冷却时间
         /// int/bool
         /// </summary>
-        public object cd { get; set; }
+        public string cd { get; set; }
 
         /// <summary>
         /// 背景介绍，就是物品介绍界面最底部那几句介绍的话
@@ -94,18 +94,18 @@ namespace OpenDota_UWP.Models
         /// 消耗品，例如芒果的 charges = 1，吃树的 charges = 3 
         /// int/bool
         /// </summary>
-        public object charges { get; set; }
+        public string charges { get; set; }
 
         /// <summary>
         /// 中立物品等级 
         /// int/bool
         /// </summary>
-        public object tier { get; set; }
+        public string tier { get; set; }
 
         /// <summary>
         /// mana cost 魔法消耗 
         /// int/bool
         /// </summary>
-        public object mc { get; set; }
+        public string mc { get; set; }
     }
 }

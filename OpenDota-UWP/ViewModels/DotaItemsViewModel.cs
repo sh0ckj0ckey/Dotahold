@@ -71,54 +71,57 @@ namespace OpenDota_UWP.ViewModels
                 }
 
                 // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
-                foreach (var item in dictAllItems)
+                foreach (var dictItem in dictAllItems)
                 {
                     try
                     {
-                        item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
+                        var item = dictItem.Value;
+                        item.img = "https://cdn.cloudflare.steamstatic.com" + item.img;
 
-                        if (item.Value.cost != null)
+                        if (!string.IsNullOrEmpty(item.cost))
                         {
-                            var cost = item.Value.cost.ToString().ToLower();
-                            item.Value.cost = (cost == "false" || cost == "true") ? "0" : cost;
+                            string cost = item.cost.ToLower();
+                            item.cost = (cost == "false" || cost == "true" || cost == "null") ? "0" : cost;
                         }
                         else
                         {
-                            item.Value.cost = "0";
+                            item.cost = "0";
                         }
 
-                        if (item.Value.cd != null)
+                        if (!string.IsNullOrEmpty(item.cd))
                         {
-                            var cd = item.Value.cd.ToString().ToLower();
-                            item.Value.cd = (cd == "false" || cd == "true") ? "0" : cd;
+                            string cd = item.cd.ToLower();
+                            item.cd = (cd == "false" || cd == "true" || cd == "null") ? "0" : cd;
                         }
                         else
                         {
-                            item.Value.cd = "0";
+                            item.cd = "0";
                         }
 
-                        if (item.Value.tier != null)
+                        if (!string.IsNullOrEmpty(item.tier))
                         {
-                            var tier = item.Value.tier.ToString().ToLower();
-                            item.Value.tier = (tier == "false" || tier == "true") ? "0" : tier;
+                            string tier = item.tier.ToLower();
+                            item.tier = (tier == "false" || tier == "true" || tier == "null") ? "0" : tier;
                         }
                         else
                         {
-                            item.Value.tier = "0";
+                            item.tier = "0";
                         }
 
-                        if (item.Value.mc != null)
+                        if (!string.IsNullOrEmpty(item.mc))
                         {
-                            var mc = item.Value.mc.ToString().ToLower();
-                            item.Value.mc = (mc == "false" || mc == "true") ? "0" : mc;
+                            string mc = item.mc.ToLower();
+                            item.mc = (mc == "false" || mc == "true" || mc == "null") ? "0" : mc;
                         }
                         else
                         {
-                            item.Value.mc = "0";
+                            item.mc = "0";
                         }
 
-                        vAllItems.Add(item.Value);
-                        vItemsList.Add(item.Value);
+                        vAllItems.Add(item);
+
+                        if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
+                            vItemsList.Add(item);
                     }
                     catch { }
                 }

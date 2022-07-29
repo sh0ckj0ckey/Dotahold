@@ -37,7 +37,7 @@ namespace OpenDota_UWP.Models
         public int? assists { get; set; }
 
         /// <summary>
-        /// 判定N/H/VH局
+        /// 判定N/H/VH局 1-N 2-H 3-VH
         /// </summary>
         public object skill { get; set; }
 

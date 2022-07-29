@@ -77,171 +77,21 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
-        /// <summary>
-        /// 显示饼状图
-        /// </summary>
-        public void ShowPieChart(double win, double lose)
-        {
-            try
-            {
-                double rate = 0.5;
+        //MatchData_KillTextBlock.Text = total[0];
+        //MatchData_DeadTextBlock.Text = total[1];
+        //MatchData_AssistTextBlock.Text = total[2];
+        //MatchData_KDATextBlock.Text = total[3];
+        //MatchData_GPMTextBlock.Text = total[4];
+        //MatchData_XPMTextBlock.Text = total[5];
+        //MatchData_Last_hitTextBlock.Text = total[6];
+        //MatchData_DeniesTextBlock.Text = total[7];
+        //MatchData_LevelTextBlock.Text = total[8];
+        //MatchData_HeroDamageTextBlock.Text = total[9];
+        //MatchData_TowerDamageTextBlock.Text = total[10];
+        //MatchData_HealingTextBlock.Text = total[11];
+        //MatchData_APMTextBlock.Text = total[12];
 
-                if (win == 0) rate = 0;
-                else if (lose == 0) rate = 1;
-                else
-                {
-                    rate = win / (win + lose);
-                    rate = (Math.Floor(100 * rate) / 100);
-                }
-
-                double x = 24, y = 48;
-                bool isWinRateBigger = false;
-                if (rate > 0.5)
-                {
-                    rate = 1 - rate;
-                    //胜率大于50%,应该左边表示胜利
-                    isWinRateBigger = true;
-                }
-                if (rate < 0)
-                {
-                    x = 24; y = 48;
-                }
-                else if (rate <= 0.25)
-                {
-                    x = 24 + 24 * Math.Sin(2 * Math.PI * rate);
-                    y = 24 - 24 * Math.Cos(2 * Math.PI * rate);
-                }
-                else if (rate > 0.25 && rate <= 0.5)
-                {
-                    x = 24 + 24 * Math.Cos((2 * rate - 0.5) * Math.PI);
-                    y = 24 + 24 * Math.Sin((2 * rate - 0.5) * Math.PI);
-                }
-                else
-                {
-                    x = 24; y = 48;
-                }
-                RateArcSegment.Point = new Point(x, y);
-                RatePolyLineSegment.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
-                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x + 2, y + 2) };
-
-                if (isWinRateBigger)
-                {
-                    //LeftTextBlock.Text = "胜：" + wL.win;
-                    //RightTextBlock.Text = "负：" + wL.lose;
-                    LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                    RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-                }
-                else
-                {
-                    //RightTextBlock.Text = "胜：" + wL.win;
-                    //LeftTextBlock.Text = "负：" + wL.lose;
-                    RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                    LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 显示玩家的全期数据
-        /// </summary>
-        /// <param name="id"></param>
-        public async void ShowPlayerTotalDataAsync(string id)
-        {
-            try
-            {
-
-                //MatchData_KillTextBlock.Text = total[0];
-                //MatchData_DeadTextBlock.Text = total[1];
-                //MatchData_AssistTextBlock.Text = total[2];
-                //MatchData_KDATextBlock.Text = total[3];
-                //MatchData_GPMTextBlock.Text = total[4];
-                //MatchData_XPMTextBlock.Text = total[5];
-                //MatchData_Last_hitTextBlock.Text = total[6];
-                //MatchData_DeniesTextBlock.Text = total[7];
-                //MatchData_LevelTextBlock.Text = total[8];
-                //MatchData_HeroDamageTextBlock.Text = total[9];
-                //MatchData_TowerDamageTextBlock.Text = total[10];
-                //MatchData_HealingTextBlock.Text = total[11];
-                //MatchData_APMTextBlock.Text = total[12];
-            }
-            catch
-            {
-                this.Frame.Navigate(typeof(BlankPage));
-                return;
-            }
-        }
-
-        /// <summary>
-        /// 显示最近20场比赛
-        /// </summary>
-        public async void ShowRecentMatches(string id)
-        {
-            try
-            {
-                //List<RecentMatch> result = await DotaMatchHelper.GetRecentMatchAsync(id);
-                //if (result == null)
-                //{
-                //    ShowDialog("The data query may be too frequent, please try again later.");
-                //    return;
-                //}
-                //foreach (RecentMatch item in result)
-                //{
-                //    //处理评级(skill)的字符串
-                //    string skill;
-                //    switch (item.skill)
-                //    {
-                //        case "1":
-                //            skill = "Normal";
-                //            break;
-                //        case "2":
-                //            skill = "High";
-                //            break;
-                //        case "3":
-                //            skill = "Very High";
-                //            break;
-                //        default:
-                //            skill = "";
-                //            break;
-                //    }
-                //    //处理时间
-                //    string time = ComputeTime(item.start_time);
-                //    //处理胜负
-                //    Visibility win = Visibility.Collapsed;
-                //    Visibility lose = Visibility.Collapsed;
-                //    if ((item.radiant_win == "true" && (item.player_slot == "0" || item.player_slot == "1" || item.player_slot == "2" || item.player_slot == "3" || item.player_slot == "4")) ||
-                //        (item.radiant_win == "false" && (item.player_slot == "128" || item.player_slot == "129" || item.player_slot == "130" || item.player_slot == "131" || item.player_slot == "132")))
-                //    {
-                //        win = Visibility.Visible;
-                //        lose = Visibility.Collapsed;
-                //    }
-                //    else
-                //    {
-                //        win = Visibility.Collapsed;
-                //        lose = Visibility.Visible;
-                //    }
-                //    //将这些数据整理起来添加到列表中
-                //    recentMatchesObservableCollection.Add(
-                //        new RecentMatchViewModel()
-                //        {
-                //            SelectedHero = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(item.hero_id)]].Name,
-                //            HeroPhoto = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(item.hero_id)]].LargePic,
-                //            Skill = skill,
-                //            Time = time,
-                //            KDA = item.kills + "/" + item.deaths + "/" + item.assists,
-                //            PlayerWin = win,
-                //            PlayerLose = lose,
-                //            GPM = item.gold_per_min,
-                //            XPM = item.xp_per_min,
-                //            Match_ID = item.match_id
-                //        });
-                //}
-            }
-            catch
-            {
-                return;
-            }
-        }
+        #region 菜单
 
         /// <summary>
         /// 查看社区主页
@@ -303,8 +153,6 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
-        #region 游戏ID绑定
-
         /// <summary>
         /// 更改绑定
         /// </summary>
@@ -318,6 +166,10 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        #endregion
+
+        #region 游戏ID绑定
 
         /// <summary>
         /// 输入内容
@@ -439,28 +291,67 @@ namespace OpenDota_UWP.Views
 
         #endregion
 
-        /// <summary>
-        /// 显示 "无法显示数据?" 提示框
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void HyperlinkButton_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    if (sender is FrameworkElement element)
-        //    {
-        //        FlyoutBase.ShowAttachedFlyout(element);
-        //    }
-        //}
+        #region 胜率饼状图
 
         /// <summary>
-        /// 点击一条比赛记录查看详情
+        /// 显示饼状图
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RecentMatchListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void ShowPieChart(double win, double lose)
         {
-            //MatchPicture.Visibility = Visibility.Collapsed;
-            //    MatchInfoFrame.Navigate(typeof(MatchInfoPage), recentMatchesObservableCollection[RecentMatchListView.SelectedIndex]);
+            try
+            {
+                double rate = 0.5;
+
+                if (win == 0) rate = 0;
+                else if (lose == 0) rate = 1;
+                else
+                {
+                    rate = win / (win + lose);
+                    rate = (Math.Floor(100 * rate) / 100);
+                }
+
+                double x = 24, y = 48;
+                bool isWinRateBigger = false;
+                if (rate > 0.5)
+                {
+                    rate = 1 - rate;
+                    //胜率大于50%,应该左边表示胜利
+                    isWinRateBigger = true;
+                }
+                if (rate < 0)
+                {
+                    x = 24; y = 48;
+                }
+                else if (rate <= 0.25)
+                {
+                    x = 24 + 24 * Math.Sin(2 * Math.PI * rate);
+                    y = 24 - 24 * Math.Cos(2 * Math.PI * rate);
+                }
+                else if (rate > 0.25 && rate <= 0.5)
+                {
+                    x = 24 + 24 * Math.Cos((2 * rate - 0.5) * Math.PI);
+                    y = 24 + 24 * Math.Sin((2 * rate - 0.5) * Math.PI);
+                }
+                else
+                {
+                    x = 24; y = 48;
+                }
+                RateArcSegment.Point = new Point(x, y);
+                RatePolyLineSegment.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
+                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x + 2, y + 2) };
+
+                if (isWinRateBigger)
+                {
+                    LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
+                    RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
+                }
+                else
+                {
+                    RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
+                    LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
+                }
+            }
+            catch { }
         }
 
         /// <summary>
@@ -490,5 +381,7 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        #endregion
     }
 }
