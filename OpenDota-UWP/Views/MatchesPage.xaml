@@ -303,8 +303,10 @@
                                         </TextBlock>
                                         <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                                    FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
+
+                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                     </Grid>
-                                    <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                    <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                                 </Grid>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
@@ -476,7 +478,7 @@
                             <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
-                    <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                    <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
                         <ListView.Template>
                             <ControlTemplate>
@@ -547,7 +549,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <!--当前在线玩家数-->
-                    <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,16,0,12"
+                    <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,16,0,24"
                           Background="{ThemeResource COMMON_ITEM_BK}" Padding="16,6" CornerRadius="6"
                           Visibility="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay,Converter={StaticResource Str2Vis}}">
                         <Grid.ColumnDefinitions>
