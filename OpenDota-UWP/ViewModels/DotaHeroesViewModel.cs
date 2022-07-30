@@ -157,6 +157,7 @@ namespace OpenDota_UWP.ViewModels
                 foreach (var item in dictAllHeroes)
                 {
                     item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
+                    item.Value.icon = "https://cdn.cloudflare.steamstatic.com" + item.Value.icon;
                     string attr = item.Value.primary_attr.ToLower();
                     if (attr.Contains("str"))
                     {

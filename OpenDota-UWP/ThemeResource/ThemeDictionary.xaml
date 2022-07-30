@@ -46,6 +46,13 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
 
+                    <LinearGradientBrush x:Key="HEROPLAYED_LISTTOPMASK_BK" StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#272839" Offset="0"/>
+                            <GradientStop Color="#00272839" Offset="0.7"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
                     <LinearGradientBrush x:Key="HEROINFO_TALENTS_SPLIT_BK" StartPoint="1,0" EndPoint="0,0">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#00404040" Offset="0"/>
@@ -122,6 +129,13 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                     <LinearGradientBrush x:Key="HEROINFO_LISTRIGHTMASK_BK" StartPoint="1,0" EndPoint="0,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#F3F4F8" Offset="0"/>
+                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
+                    <LinearGradientBrush x:Key="HEROPLAYED_LISTTOPMASK_BK" StartPoint="0,0" EndPoint="0,1">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#F3F4F8" Offset="0"/>
                             <GradientStop Color="#00F3F4F8" Offset="0.7"/>

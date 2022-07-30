@@ -317,7 +317,7 @@
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <TextBlock FontWeight="Medium" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
                                                     <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
@@ -332,7 +332,7 @@
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <TextBlock FontWeight="Medium" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
                                                     <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>

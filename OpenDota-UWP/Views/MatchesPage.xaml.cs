@@ -383,5 +383,19 @@ namespace OpenDota_UWP.Views
         }
 
         #endregion
+
+        /// <summary>
+        /// 点击查看常用英雄
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickMostPlayedHeroes(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MatchFrame.Navigate(typeof(MatchHeroesPlayedPage));
+            }
+            catch { }
+        }
     }
 }
