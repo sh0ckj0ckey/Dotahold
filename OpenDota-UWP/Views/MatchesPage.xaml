@@ -289,7 +289,8 @@
                     <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
                     <!--最近比赛-->
                     <Button Grid.Row="5" Height="38" Margin="0,0" Background="Transparent" ToolTipService.ToolTip="View All"
-                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}">
+                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                            Click="OnClickRecentMatches">
                         <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                             <TextBlock Text="Recent Matches" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                        Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>

@@ -397,5 +397,19 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        ///  点击查看所有比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickRecentMatches(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MatchFrame.Navigate(typeof(MatchesListPage));
+            }
+            catch { }
+        }
     }
 }

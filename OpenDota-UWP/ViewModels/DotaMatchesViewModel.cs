@@ -102,13 +102,20 @@ namespace OpenDota_UWP.ViewModels
         {
             get { return _bLoadingRecent; }
             set { Set("bLoadingRecent", ref _bLoadingRecent, value); }
-        }  
+        }
         // 是否正在加载常用英雄
         private bool _bLoadingPlayed = false;
         public bool bLoadingPlayed
         {
             get { return _bLoadingPlayed; }
             set { Set("bLoadingPlayed", ref _bLoadingPlayed, value); }
+        }
+        // 是否正在加载所有比赛
+        private bool _bLoadingAllMatches = false;
+        public bool bLoadingAllMatches
+        {
+            get { return _bLoadingAllMatches; }
+            set { Set("bLoadingAllMatches", ref _bLoadingAllMatches, value); }
         }
 
         // 刷新胜负场次的饼状图
@@ -349,7 +356,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                string url = String.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
+                string url = string.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
 
                 var response = await matchHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
@@ -408,6 +415,27 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
+        /// 获取所有比赛
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private async Task<List<DotaRecentMatchModel>> GetAllMatchAsync(string id)
+        {
+            try
+            {
+                string url = string.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
+
+                var response = await matchHttpClient.GetAsync(new Uri(url));
+                var jsonMessage = await response.Content.ReadAsStringAsync();
+
+                var matches = JsonConvert.DeserializeObject<List<DotaRecentMatchModel>>(jsonMessage);
+                return matches;
+            }
+            catch { }
+            return null;
+        }
+
+        /// <summary>
         /// 请求更新数据
         /// </summary>
         /// <param name="id"></param>
@@ -415,7 +443,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                string url = String.Format("https://api.opendota.com/api/players/{0}/refresh", id);
+                string url = string.Format("https://api.opendota.com/api/players/{0}/refresh", id);
                 await playerInfoHttpClient.PostAsync(new Uri(url), null);
             }
             catch { }

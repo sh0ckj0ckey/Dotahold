@@ -198,6 +198,9 @@
     <Compile Include="Views\HeroesPage.xaml.cs">
       <DependentUpon>HeroesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MatchesListPage.xaml.cs">
+      <DependentUpon>MatchesListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MatchesPage.xaml.cs">
       <DependentUpon>MatchesPage.xaml</DependentUpon>
     </Compile>
@@ -484,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HeroesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchesListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
