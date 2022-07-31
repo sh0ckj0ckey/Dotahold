@@ -423,7 +423,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                string url = string.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
+                string url = string.Format("https://api.opendota.com/api/players/{0}/matches", id);
 
                 var response = await matchHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
