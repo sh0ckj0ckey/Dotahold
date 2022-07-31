@@ -31,7 +31,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Opacity="0.7"
-                  Visibility="{x:Bind ViewModel.v.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                  Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="72"/>
                     <ColumnDefinition Width="*"/>
@@ -46,9 +46,9 @@
                 <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                 <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
             </Grid>
-            <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.v,Mode=OneWay}"
+            <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}"
                       Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                      Visibility="{x:Bind ViewModel.v.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                      Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -119,7 +119,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
-            <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.v.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="56" Width="96" CornerRadius="6" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},Mode=OneWay}">

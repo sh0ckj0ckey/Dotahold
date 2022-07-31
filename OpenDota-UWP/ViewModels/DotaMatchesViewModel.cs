@@ -69,6 +69,10 @@ namespace OpenDota_UWP.ViewModels
         // 最近的比赛
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
+        // 所有的比赛
+        private List<DotaRecentMatchModel> vAllMatchesList = new List<DotaRecentMatchModel>();
+        public ObservableCollection<DotaRecentMatchModel> vAllMatches = new ObservableCollection<DotaRecentMatchModel>();
+
         // 最常用的10个英雄
         public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayed10Heroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
 
@@ -412,6 +416,17 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
             return string.Empty;
+        }
+
+        public async void LoadAllMatches()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(sSteamId)) return;
+
+                var matches = await GetAllMatchAsync(sSteamId);
+            }
+            catch { }
         }
 
         /// <summary>
