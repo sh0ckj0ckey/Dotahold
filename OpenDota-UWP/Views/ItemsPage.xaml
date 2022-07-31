@@ -23,8 +23,8 @@
             <BrushTransition />
         </Grid.BackgroundTransition>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MaxWidth="360" />
-            <ColumnDefinition Width="2.3*" />
+            <ColumnDefinition Width="*" MaxWidth="400" />
+            <ColumnDefinition Width="2.2*" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="ItemsListGrid">
             <Grid.RowDefinitions>
