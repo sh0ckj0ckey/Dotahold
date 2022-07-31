@@ -358,7 +358,7 @@
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="DeepSkyBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
+                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="DodgerBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
                                         </StackPanel>
                                     </Grid>
@@ -367,8 +367,8 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <!--当前在线玩家数-->
-                    <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,16,0,24"
-                          Background="{ThemeResource COMMON_ITEM_BK}" Padding="16,6" CornerRadius="6"
+                    <Grid Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20,14,24"
+                          Background="Transparent" Padding="16,6" CornerRadius="6"
                           Visibility="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay,Converter={StaticResource Str2Vis}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>

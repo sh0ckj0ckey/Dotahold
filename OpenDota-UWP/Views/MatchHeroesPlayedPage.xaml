@@ -6,82 +6,103 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:OpenDota_UWP.Models"
-    xmlns:converter="using:OpenDota_UWP.Converters"
+    xmlns:converter="using:OpenDota_UWP.Converters" 
+    xmlns:ui="using:OpenDota_UWP.UI"
     mc:Ignorable="d" NavigationCacheMode="Required"
     Background="Transparent">
     <Page.Resources>
         <converter:LongToTimeAgoConverter x:Key="Long2Time"/>
+        <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
+        <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
+        <converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
     </Page.Resources>
-    
+
     <Grid Padding="4,30,4,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,10,10,10" TextTrimming="CharacterEllipsis"
                    Text="Heroes Played" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Opacity="0.7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="72"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Hero" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40"
-                       HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontWeight="Medium"/>
-            <TextBlock Grid.Column="1" Text="Win Rate" HorizontalAlignment="Center" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-            <TextBlock Grid.Column="2" Text="With" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-            <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-            <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingPlayed,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Opacity="0.7"
+                  Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Hero" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40"
+                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontWeight="Medium"/>
+                <TextBlock Grid.Column="1" Text="Win Rate" HorizontalAlignment="Center" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="2" Text="With" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+            <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vMostPlayedHeroes,Mode=OneWay}"
+                      Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                      Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
+                        <Grid Height="56" Margin="0,8,-12,0" HorizontalAlignment="Stretch" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="72"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="36">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{x:Bind sHeroCoverImage}" DecodePixelWidth="36" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Run Text="{x:Bind win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="/" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="{x:Bind games}" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="=" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="{x:Bind sWinRate}" Foreground="ForestGreen" FontFamily="Consolas" FontWeight="Medium" FontSize="14"/>
+                            </TextBlock>
+                            <TextBlock Grid.Column="2" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Run Text="{x:Bind with_win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="/" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="{x:Bind with_games}" FontFamily="Consolas" FontSize="14"/>
+                            </TextBlock>
+                            <TextBlock Grid.Column="3" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Run Text="{x:Bind against_win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="/" FontFamily="Consolas" FontSize="14"/>
+                                <Run Text="{x:Bind against_games}" FontFamily="Consolas" FontSize="14"/>
+                            </TextBlock>
+                            <TextBlock Grid.Column="4" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}" TextTrimming="CharacterEllipsis"
+                                       FontSize="14" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
+            <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
-        <ListView Grid.Row="2" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vMostPlayedHeroes,Mode=OneWay}"
-                  Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
-                    <Grid Height="56" Margin="0,8,-12,0" HorizontalAlignment="Stretch" Background="Transparent">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="72"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Width="36">
-                            <Image.Source>
-                                <BitmapImage UriSource="{x:Bind sHeroCoverImage}" DecodePixelWidth="36" DecodePixelType="Logical"/>
-                            </Image.Source>
-                        </Image>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Run Text="{x:Bind win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="/" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="{x:Bind games}" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="=" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="{x:Bind sWinRate}" Foreground="ForestGreen" FontFamily="Consolas" FontWeight="Medium" FontSize="14"/>
-                        </TextBlock>
-                        <TextBlock Grid.Column="2" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Run Text="{x:Bind with_win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="/" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="{x:Bind with_games}" FontFamily="Consolas" FontSize="14"/>
-                        </TextBlock>
-                        <TextBlock Grid.Column="3" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Run Text="{x:Bind against_win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="/" FontFamily="Consolas" FontSize="14"/>
-                            <Run Text="{x:Bind against_games}" FontFamily="Consolas" FontSize="14"/>
-                        </TextBlock>
-                        <TextBlock Grid.Column="4" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}" TextTrimming="CharacterEllipsis"
-                                   FontSize="14" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+              Height="56" Width="96" CornerRadius="6" Visibility="{x:Bind ViewModel.bLoadingPlayed,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+            <Grid.Background>
+                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
+            </Grid.Background>
+            <ProgressRing x:Name="ItemProgressRing"
+                          Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                          IsActive="{x:Bind ViewModel.bLoadingPlayed,Mode=OneWay}"/>
+        </Grid>
     </Grid>
 </Page>
