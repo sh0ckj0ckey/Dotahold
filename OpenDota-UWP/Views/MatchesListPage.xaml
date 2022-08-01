@@ -27,37 +27,16 @@
                    Text="Recent Matches" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
         <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Opacity="0.7"
-                  Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="72"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Hero" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40"
-                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontWeight="Medium"/>
-                <TextBlock Grid.Column="1" Text="Win Rate" HorizontalAlignment="Center" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                <TextBlock Grid.Column="2" Text="With" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-            </Grid>
-            <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}"
-                      Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+            <ListView Grid.Row="1" SelectionMode="None" IsItemClickEnabled="True"
+                      ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+                      Padding="0,0,0,20" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                       Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                        <Grid Height="56" Width="340">
+                        <Grid Height="56" Width="Auto">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -118,7 +97,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
+            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
             <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"

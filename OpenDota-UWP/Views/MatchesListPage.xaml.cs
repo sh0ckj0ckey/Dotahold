@@ -36,5 +36,20 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        /// 重写导航至此页面的代码,显示动画
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            try
+            {
+                base.OnNavigatedTo(e);
+
+                ViewModel.LoadAllMatches();
+            }
+            catch { }
+        }
     }
 }

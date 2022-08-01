@@ -438,7 +438,7 @@
                                Margin="12,2,4,0"/>
                 </StackPanel>
                 <!--菜单-->
-                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Height="26" Padding="0,-4,0,0" CornerRadius="4"
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Width="34" Height="38" Padding="0,-4,0,0" CornerRadius="6"
                         Margin="0,0,22,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
                         Foreground="{ThemeResource SIMPLETEXT_FR}">
                     <Button.Content>
@@ -451,13 +451,12 @@
                                     <SymbolIcon Symbol="ContactInfo" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <!--<MenuFlyoutSeparator />-->
-                            <MenuFlyoutItem x:Name="UpdateProfileMenuFlyoutItem" Text="Update Data" 
+                            <!--<MenuFlyoutItem x:Name="UpdateProfileMenuFlyoutItem" Text="Update Data" 
                                             Click="UpdateProfileMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
                                 <MenuFlyoutItem.Icon>
-                                    <SymbolIcon Symbol="Refresh" Margin="0,4,0,0" />
+                                    <SymbolIcon Symbol="Sync" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                            </MenuFlyoutItem>-->
                             <MenuFlyoutItem Text="Change Account" Click="MenuFlyoutItem_Click_2" CornerRadius="4" Margin="4,0">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="People" Margin="0,4,0,0" />
@@ -468,6 +467,11 @@
                                             CornerRadius="4" Margin="4,0" Click="GameIDMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Refresh" Click="MenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                                <MenuFlyoutItem.Icon>
+                                    <SymbolIcon Symbol="Refresh" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                         </MenuFlyout>

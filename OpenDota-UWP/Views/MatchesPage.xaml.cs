@@ -127,14 +127,14 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void UpdateProfileMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                UpdateProfileMenuFlyoutItem.Text = "Updating Data";
-                UpdateProfileMenuFlyoutItem.IsEnabled = false;
+            //try
+            //{
+            //    UpdateProfileMenuFlyoutItem.Text = "Updating Data";
+            //    UpdateProfileMenuFlyoutItem.IsEnabled = false;
 
-                ViewModel.PostRefreshAsync(ViewModel.sSteamId);
-            }
-            catch { }
+            //    ViewModel.PostRefreshAsync(ViewModel.sSteamId);
+            //}
+            //catch { }
         }
 
         /// <summary>
@@ -163,6 +163,21 @@ namespace OpenDota_UWP.Views
             try
             {
                 BindAccount();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 刷新页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.InitialDotaMatches();
+                MatchFrame.Navigate(typeof(BlankPage));
             }
             catch { }
         }
@@ -272,7 +287,7 @@ namespace OpenDota_UWP.Views
                         ViewModel.SetSteamID(input);
                         ViewModel.InitialDotaMatches();
                         HideBindingAccountGrid();
-                        SteamIDTextBox.Text = "";
+                        MatchFrame.Navigate(typeof(BlankPage));
                     }
                     catch { }
                 }
@@ -284,6 +299,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
+                SteamIDTextBox.Text = "";
                 BindingGridPopOut.Begin();
             }
             catch { }

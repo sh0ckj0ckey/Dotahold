@@ -92,7 +92,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
+            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
             <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
