@@ -78,7 +78,14 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <!--最近5场比赛-->
-                    <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="20,0,22,16" Height="120" ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
+                    <Grid Grid.Row="1" CornerRadius="6" Margin="20,20,22,16" Height="100" Opacity="0.7"
+                          Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" HorizontalAlignment="Stretch"
+                          Visibility="{x:Bind ViewModel.vRecentMatchesForFlip.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
+                        <Rectangle Height="32" Width="14" RadiusX="4" RadiusY="4" Margin="6,0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#20AAAAAA"/>
+                        <Rectangle Height="32" Width="14" RadiusX="4" RadiusY="4" Margin="6,0" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="#20AAAAAA"/>
+                    </Grid>
+                    <FlipView Grid.Row="1" Style="{StaticResource RecentMatchesFlipViewStyle}" CornerRadius="6" Margin="20,0,22,16" Height="120" 
+                              ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
                               HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:DotaRecentMatchModel">
@@ -257,6 +264,13 @@
                             <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="20,8,0,20" Opacity="0.7"
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Visibility="{x:Bind ViewModel.vMostPlayed10Heroes.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
+                        <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}" Margin="12,0"/>
+                        <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                    </StackPanel>
                     <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                               ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
@@ -297,6 +311,20 @@
                             <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
+                    <StackPanel Grid.Row="6" Orientation="Vertical" Opacity="0.7"
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Visibility="{x:Bind ViewModel.vRecentMatches.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                    </StackPanel>
                     <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
                         <ListView.Template>
@@ -386,7 +414,7 @@
             <Grid Grid.Row="0" Padding="0,40,0,10">
                 <Grid.Background>
                     <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
-                                  FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.1"/>
+                                  FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.2" TintOpacity="0.1"/>
                 </Grid.Background>
                 <!--头像昵称-->
                 <StackPanel x:Name="PlayerProfileStackPanel" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">

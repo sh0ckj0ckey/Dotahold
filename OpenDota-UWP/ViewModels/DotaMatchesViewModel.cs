@@ -100,13 +100,6 @@ namespace OpenDota_UWP.ViewModels
             get { return _bLoadingTotals; }
             set { Set("bLoadingTotals", ref _bLoadingTotals, value); }
         }  
-        // 是否正在加载最近比赛
-        private bool _bLoadingRecent = false;
-        public bool bLoadingRecent
-        {
-            get { return _bLoadingRecent; }
-            set { Set("bLoadingRecent", ref _bLoadingRecent, value); }
-        }
         // 是否正在加载常用英雄
         private bool _bLoadingPlayed = false;
         public bool bLoadingPlayed
@@ -138,7 +131,6 @@ namespace OpenDota_UWP.ViewModels
                 bLoadingProfile = true;
                 bLoadingWL = true;
                 bLoadingTotals = true;
-                bLoadingRecent = true;
                 bLoadingPlayed = true;
                 PlayerProfile = null;
                 PlayerWinLose = null;
@@ -235,7 +227,6 @@ namespace OpenDota_UWP.ViewModels
                                 }
                             }
                         }
-                        bLoadingRecent = false;
 
                         // 常用英雄
                         var heroes = await GetHeroesPlayedAsync(sSteamId);
@@ -275,7 +266,6 @@ namespace OpenDota_UWP.ViewModels
                 bLoadingProfile = false;
                 bLoadingWL = false;
                 bLoadingTotals = false;
-                bLoadingRecent = false;
                 bLoadingPlayed = false;
             }
         }
