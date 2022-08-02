@@ -76,7 +76,7 @@
                                        Opacity="0.7"/>
                             <StackPanel Margin="12,0" Orientation="Horizontal" Background="{ThemeResource ITEMINFO_TIER_BK}" HorizontalAlignment="Left" Height="18" CornerRadius="4" Padding="8,2" 
                                         Visibility="{x:Bind ViewModel.CurrentItem.tier,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                                <TextBlock Text="T" FontSize="12" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Neutral T" FontWeight="Medium" FontSize="12" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind ViewModel.CurrentItem.tier,Mode=OneWay}" FontWeight="Medium" FontSize="12" VerticalAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>

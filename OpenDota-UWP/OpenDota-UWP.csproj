@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Converters\IntToGameModeConverter.cs" />
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
