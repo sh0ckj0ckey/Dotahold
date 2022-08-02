@@ -67,6 +67,9 @@ namespace OpenDota_UWP.Models
         [Newtonsoft.Json.JsonIgnore]
         public bool? bWin { get; set; } = null;
 
+        [Newtonsoft.Json.JsonIgnore]
+        public string sKda { get; set; } = string.Empty;
+
 
     }
 

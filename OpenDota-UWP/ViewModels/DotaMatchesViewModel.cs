@@ -452,6 +452,15 @@ namespace OpenDota_UWP.ViewModels
                         vAllMatchesList.Add(item);
                         if (vAllMatches.Count < 40)
                         {
+                            double kda = 0;
+                            if (item.kills != null && item.assists != null && item.deaths != null)
+                            {
+                                if (item.deaths <= 0)
+                                    kda = (double)item.kills + (double)item.assists;
+                                else
+                                    kda = ((double)item.kills + (double)item.assists) / (double)item.deaths;
+                            }
+                            item.sKda = kda.ToString("f2");
                             vAllMatches.Add(item);
                         }
                     }

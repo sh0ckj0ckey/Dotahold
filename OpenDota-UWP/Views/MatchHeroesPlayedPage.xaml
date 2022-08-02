@@ -39,7 +39,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Hero" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40"
-                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" FontWeight="Medium"/>
+                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="34,0,0,0" FontWeight="Medium"/>
                 <TextBlock Grid.Column="1" Text="Win Rate" HorizontalAlignment="Center" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                 <TextBlock Grid.Column="2" Text="With" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                 <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
@@ -56,7 +56,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
-                        <Grid Height="56" Margin="0,8,-12,0" HorizontalAlignment="Stretch" Background="#10666666" CornerRadius="6">
+                        <Grid Height="56" Margin="4,8,4,0" HorizontalAlignment="Stretch" Background="#10666666" CornerRadius="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="72"/>
                                 <ColumnDefinition Width="*"/>

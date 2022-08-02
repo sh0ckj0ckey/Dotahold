@@ -16,6 +16,8 @@
         <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
         <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
         <converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+        <converter:IntToGameModeConverter x:Key="Int2GameMode"/>
+        <converter:IntToLobbyTypeConverter x:Key="Int2LobbyType"/>
     </Page.Resources>
 
     <Grid Padding="4,30,4,0">
@@ -41,8 +43,9 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
+                            <Grid Grid.Column="1" Grid.ColumnSpan="4" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
                             <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
                                 <Grid.Background>
                                     <ImageBrush Stretch="UniformToFill">
@@ -58,46 +61,47 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Medium" MaxWidth="156" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,-6,0,2">
-                                    <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
-                                        <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                    </Border>
-                                    <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                    Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                        <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                    </Border>
-                                    <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" Margin="6,0,0,-10" FontSize="12" Opacity="0.7"
-                                                       HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,0,0,0" Opacity="0.7">
+                                    <TextBlock Text="{x:Bind game_mode,Converter={StaticResource Int2GameMode}}" FontWeight="Normal" FontSize="12"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="·" FontWeight="Bold" Margin="4,0,4,0" FontSize="12"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{x:Bind lobby_type,Converter={StaticResource Int2LobbyType}}" FontWeight="Normal" FontSize="12"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" FontSize="12" Margin="8,0,0,0" Opacity="0.7"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Column="2" Margin="12,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" CharacterSpacing="20" HorizontalAlignment="Right">
+                                <TextBlock Grid.Row="0" FontSize="16" FontWeight="Medium" Text="{x:Bind sKda}" Visibility="{x:Bind sKda,Converter={StaticResource Null2Vis}}" TextTrimming="CharacterEllipsis" 
+                                           HorizontalAlignment="Right" VerticalAlignment="Center" CharacterSpacing="20"/>
+                                <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" Opacity="0.7" CharacterSpacing="20" HorizontalAlignment="Right">
                                             <Run Text="{x:Bind kills}"/>
                                             <Run Text="/" FontWeight="Medium"/>
                                             <Run Text="{x:Bind deaths}"/>
                                             <Run Text="/" FontWeight="Medium"/>
                                             <Run Text="{x:Bind assists}"/>
                                 </TextBlock>
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <TextBlock Text="GPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" VerticalAlignment="Center" CharacterSpacing="20"/>
-                                    <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
-                                </StackPanel>
-                                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="DodgerBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
-                                    <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
-                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="3" Margin="12,0,12,2">
+                                <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AA228B22" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
+                                    <TextBlock Text="W" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                </Border>
+                                <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AAB22222" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                        Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                    <TextBlock Text="L" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                </Border>
                             </Grid>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>
+            <!--<Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>-->
             <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"

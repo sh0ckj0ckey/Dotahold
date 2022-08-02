@@ -118,8 +118,9 @@ namespace OpenDota_UWP.Converters
                         case "24":
                         case "game_mode_mutation":
                             return "Mutation";
+
                         default:
-                            break;
+                            return gameMode;
                     }
                 }
             }
