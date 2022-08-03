@@ -110,9 +110,9 @@
                     <Color x:Key="TEXTBOX_FOCUS_BK">#50E6E6E6</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FR">#66000000</Color>
                     <Color x:Key="TEXTBOX_PLACEHOLDER_FOCUS_FR">#40000000</Color>
-                    <Color x:Key="COMBOBOX_NORMAL_BK">#B3E6E6E6</Color>
-                    <Color x:Key="COMBOBOX_HOVER_BK">#E6E6E6E6</Color>
-                    <Color x:Key="COMBOBOX_PRESS_BK">#99FFFFFF</Color>
+                    <Color x:Key="COMBOBOX_NORMAL_BK">#50AAAAAA</Color>
+                    <Color x:Key="COMBOBOX_HOVER_BK">#E6E6E6</Color>
+                    <Color x:Key="COMBOBOX_PRESS_BK">#46AAAAAA</Color>
                     <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
