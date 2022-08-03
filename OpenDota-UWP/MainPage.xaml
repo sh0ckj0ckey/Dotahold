@@ -133,9 +133,9 @@
                                     <TextBlock Text="Matches"/>
                                 </ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
+                            <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,24,0,6"/>
                             <StackPanel Orientation="Horizontal">
-                                <Button CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">
+                                <Button CornerRadius="6" Height="32" Background="{ThemeResource COMBOBOX_NORMAL_BK}" BorderThickness="0" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                             <TextBlock Text="&#xEA99;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>

@@ -114,6 +114,13 @@ namespace OpenDota_UWP.ViewModels
             get { return _bLoadingAllMatches; }
             set { Set("bLoadingAllMatches", ref _bLoadingAllMatches, value); }
         }
+        // 是否已经加载完所有的比赛
+        private bool _bLoadedAllMatches = false;
+        public bool bLoadedAllMatches
+        {
+            get { return _bLoadedAllMatches; }
+            set { Set("bLoadedAllMatches", ref _bLoadedAllMatches, value); }
+        }
 
         // 刷新胜负场次的饼状图
         public Action<double, double> ActUpdatePieChart = null;
@@ -422,7 +429,9 @@ namespace OpenDota_UWP.ViewModels
             {
                 if (string.IsNullOrEmpty(sSteamId)) return;
                 if (_bGottenAllMatchesList) return;
+
                 bLoadingAllMatches = true;
+                bLoadedAllMatches = true;
                 vAllMatchesList.Clear();
                 vAllMatches.Clear();
 
@@ -465,9 +474,76 @@ namespace OpenDota_UWP.ViewModels
                         }
                     }
                 }
+
+                if (vAllMatchesList.Count <= vAllMatches.Count)
+                {
+                    bLoadedAllMatches = true;
+                }
+                else
+                {
+                    bLoadedAllMatches = false;
+                }
             }
             catch { }
             finally { bLoadingAllMatches = false; }
+        }
+
+        /// <summary>
+        /// 从所有比赛中再取出20条显示
+        /// </summary>
+        public void IncreaseFromAllMatches()
+        {
+            try
+            {
+                // 未绑定账号或者还没有拉到列表时就不处理
+                if (string.IsNullOrEmpty(sSteamId)) return;
+                if (!_bGottenAllMatchesList) return;
+
+                int index = vAllMatches.Count;
+                for (int i = index; i < index + 30 && i < vAllMatchesList.Count; i++)
+                {
+                    if (i >= vAllMatchesList.Count) break;
+
+                    var item = vAllMatchesList[i];
+
+                    if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                    {
+                        item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
+                            DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                        item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                        item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
+                        item.bWin = null;
+                        if (item.player_slot != null && item.radiant_win != null)
+                        {
+                            if (item.player_slot < 128)// 天辉
+                                item.bWin = item.radiant_win;
+                            else if (item.player_slot >= 128)// 夜魇
+                                item.bWin = !item.radiant_win;
+                        }
+
+                        double kda = 0;
+                        if (item.kills != null && item.assists != null && item.deaths != null)
+                        {
+                            if (item.deaths <= 0)
+                                kda = (double)item.kills + (double)item.assists;
+                            else
+                                kda = ((double)item.kills + (double)item.assists) / (double)item.deaths;
+                        }
+                        item.sKda = kda.ToString("f2");
+                        vAllMatches.Add(item);
+                    }
+                }
+
+                if (vAllMatchesList.Count <= vAllMatches.Count)
+                {
+                    bLoadedAllMatches = true;
+                }
+                else
+                {
+                    bLoadedAllMatches = false;
+                }
+            }
+            catch { }
         }
 
         /// <summary>

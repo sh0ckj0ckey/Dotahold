@@ -51,5 +51,19 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        /// 加载更多比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickLoadMoreMatches(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.IncreaseFromAllMatches();
+            }
+            catch { }
+        }
     }
 }
