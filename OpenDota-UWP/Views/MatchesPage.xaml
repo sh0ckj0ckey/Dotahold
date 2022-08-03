@@ -325,16 +325,16 @@
                     <StackPanel Grid.Row="6" Orientation="Vertical" Opacity="0.7"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
                                 Visibility="{x:Bind ViewModel.vRecentMatches.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="1.0" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.9" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.8" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.7" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.5" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.4" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.3" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.2" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="344" RadiusX="6" RadiusY="6" Opacity="0.1" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="1.0" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.9" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.8" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.7" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.5" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.4" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.3" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.2" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                        <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.1" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                     </StackPanel>
                     <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
