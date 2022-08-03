@@ -279,6 +279,7 @@
                                 Visibility="{x:Bind ViewModel.vMostPlayed10Heroes.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
                         <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                         <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}" Margin="12,0"/>
+                        <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}" Margin="0,0,12,0"/>
                         <Rectangle Height="48" Width="106" RadiusX="6" RadiusY="6" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                     </StackPanel>
                     <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
