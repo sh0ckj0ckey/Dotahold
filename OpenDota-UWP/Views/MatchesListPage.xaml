@@ -25,85 +25,98 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--标题-->
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,10,10,10" TextTrimming="CharacterEllipsis"
                    Text="Recent Matches" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ListView Grid.Row="1" SelectionMode="None" IsItemClickEnabled="True"
-                      ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
-                      Padding="0,0,0,20" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                      Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                        <Grid Height="56" Width="Auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="1" Grid.ColumnSpan="4" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
-                            <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
-                                <Grid.Background>
-                                    <ImageBrush Stretch="UniformToFill">
-                                        <ImageBrush.ImageSource>
-                                            <BitmapImage UriSource="{x:Bind sHeroHorizonImage}" DecodePixelWidth="64" DecodePixelType="Logical"/>
-                                        </ImageBrush.ImageSource>
-                                    </ImageBrush>
-                                </Grid.Background>
+        <!--列表-->
+        <ScrollViewer Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch">
+            <StackPanel>
+                <ListView SelectionMode="None" IsItemClickEnabled="True"
+                          ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                          Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListView.Template>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:DotaRecentMatchModel">
+                            <Grid Height="56" Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1" Grid.ColumnSpan="4" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
+                                <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
+                                    <Grid.Background>
+                                        <ImageBrush Stretch="UniformToFill">
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="{x:Bind sHeroHorizonImage}" DecodePixelWidth="64" DecodePixelType="Logical"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Grid.Background>
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Medium" MaxWidth="156" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,0,0,0" Opacity="0.7">
+                                        <TextBlock Text="{x:Bind game_mode,Converter={StaticResource Int2GameMode}}" FontWeight="Normal" FontSize="12"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="·" FontWeight="Bold" Margin="4,0,4,0" FontSize="12"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{x:Bind lobby_type,Converter={StaticResource Int2LobbyType}}" FontWeight="Normal" FontSize="12"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" FontSize="12" Margin="8,0,0,0" Opacity="0.7"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="2" Margin="12,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" FontSize="16" FontWeight="Medium" Text="{x:Bind sKda}" Visibility="{x:Bind sKda,Converter={StaticResource Null2Vis}}" TextTrimming="CharacterEllipsis" 
+                                               HorizontalAlignment="Right" VerticalAlignment="Center" CharacterSpacing="20"/>
+                                    <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" Opacity="0.7" CharacterSpacing="20" HorizontalAlignment="Right">
+                                                <Run Text="{x:Bind kills}"/>
+                                                <Run Text="/" FontWeight="Medium"/>
+                                                <Run Text="{x:Bind deaths}"/>
+                                                <Run Text="/" FontWeight="Medium"/>
+                                                <Run Text="{x:Bind assists}"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Grid Grid.Column="3" Margin="12,0,12,2">
+                                    <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AA228B22" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
+                                        <TextBlock Text="W" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                    </Border>
+                                    <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AAB22222" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                        <TextBlock Text="L" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                    </Border>
+                                </Grid>
                             </Grid>
-                            <Grid Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Medium" MaxWidth="156" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,0,0,0" Opacity="0.7">
-                                    <TextBlock Text="{x:Bind game_mode,Converter={StaticResource Int2GameMode}}" FontWeight="Normal" FontSize="12"
-                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="·" FontWeight="Bold" Margin="4,0,4,0" FontSize="12"
-                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="{x:Bind lobby_type,Converter={StaticResource Int2LobbyType}}" FontWeight="Normal" FontSize="12"
-                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" FontSize="12" Margin="8,0,0,0" Opacity="0.7"
-                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                                </StackPanel>
-                            </Grid>
-                            <Grid Grid.Column="2" Margin="12,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" FontSize="16" FontWeight="Medium" Text="{x:Bind sKda}" Visibility="{x:Bind sKda,Converter={StaticResource Null2Vis}}" TextTrimming="CharacterEllipsis" 
-                                           HorizontalAlignment="Right" VerticalAlignment="Center" CharacterSpacing="20"/>
-                                <TextBlock Grid.Row="1" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" Opacity="0.7" CharacterSpacing="20" HorizontalAlignment="Right">
-                                            <Run Text="{x:Bind kills}"/>
-                                            <Run Text="/" FontWeight="Medium"/>
-                                            <Run Text="{x:Bind deaths}"/>
-                                            <Run Text="/" FontWeight="Medium"/>
-                                            <Run Text="{x:Bind assists}"/>
-                                </TextBlock>
-                            </Grid>
-                            <Grid Grid.Column="3" Margin="12,0,12,2">
-                                <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AA228B22" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                        Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
-                                    <TextBlock Text="W" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                </Border>
-                                <Border Height="26" Width="26" CornerRadius="5" Margin="2,10,0,0" Background="#AAB22222" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                        Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                    <TextBlock Text="L" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
-                                </Border>
-                            </Grid>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <!--<Rectangle Grid.Row="1" IsHitTestVisible="False" HorizontalAlignment="Stretch" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Fill="{ThemeResource HEROPLAYED_LISTTOPMASK_BK}"/>-->
-            <ui:SomethingWrongControl Grid.RowSpan="2" Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Margin="0,16,0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                        <TextBlock Text="Load More" FontSize="16"
+                                   Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="&#xE013;" FontFamily="Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <!--加载出错-->
+        <ui:SomethingWrongControl Grid.Row="1" Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <!--加载中-->
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="56" Width="96" CornerRadius="6" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},Mode=OneWay}">
             <Grid.Background>
