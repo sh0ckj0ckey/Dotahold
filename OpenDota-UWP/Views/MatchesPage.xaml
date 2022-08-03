@@ -79,7 +79,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <!--最近5场比赛-->
-                    <Grid Grid.Row="1" CornerRadius="6" Margin="20,20,22,16" Height="100" Opacity="0.7"
+                    <Grid Grid.Row="1" CornerRadius="6" Margin="20,20,22,16" Height="100"
                           Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" HorizontalAlignment="Stretch"
                           Visibility="{x:Bind ViewModel.vRecentMatchesForFlip.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
                         <Rectangle Height="32" Width="14" RadiusX="4" RadiusY="4" Margin="6,0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#20AAAAAA"/>
