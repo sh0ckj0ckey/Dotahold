@@ -89,7 +89,6 @@ namespace OpenDota_UWP.Views
         //MatchData_HeroDamageTextBlock.Text = total[9];
         //MatchData_TowerDamageTextBlock.Text = total[10];
         //MatchData_HealingTextBlock.Text = total[11];
-        //MatchData_APMTextBlock.Text = total[12];
 
         #region 菜单
 

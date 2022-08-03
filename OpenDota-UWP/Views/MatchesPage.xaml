@@ -32,6 +32,7 @@
             <converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
             <converter:RankTierToImageConverter x:Key="Rank2Image"/>
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
+            <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
 
@@ -128,7 +129,7 @@
                                         <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                                    FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
 
-                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                     </Grid>
                                     <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                                 </Grid>
@@ -153,6 +154,9 @@
                                        Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" CharacterSpacing="40" FontWeight="Medium" FontSize="10" Margin="0,0,0,4"
                                            Visibility="{x:Bind ViewModel.PlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
+
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                      Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
                         </ListViewItem>
 
@@ -168,6 +172,9 @@
                                     <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
                                     <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
                                 </StackPanel>
+
+                                <Grid Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                      Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
                         </ListViewItem>
 
@@ -222,6 +229,9 @@
                                         <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
                                     </TextBlock>
                                 </StackPanel>
+
+                                <Grid Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                      Visibility="{x:Bind ViewModel.PlayerWinLose,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
                         </ListViewItem>
 
