@@ -198,23 +198,36 @@ namespace OpenDota_UWP.ViewModels
                         var totals = await GetTotalAsync(sSteamId);
                         if (totals != null && totals.Count > 0)
                         {
-                            //KDA
-                            //total[3] = ((Convert.ToDouble(killsMatch.Groups[1].Value) + Convert.ToDouble(assistsMatch.Groups[1].Value)) / (Convert.ToDouble(deadMatch.Groups[1].Value))).ToString("f2");
+                            Dictionary<string, string> addingKeys = new Dictionary<string, string>()
+                            {
+                                {"kills", "Kills"}, {"deaths", "Deaths"}, {"assists", "Assists"}, {"gold_per_min", "GPM"}, {"xp_per_min", "XPM"},
+                                {"last_hits", "Last Hits"}, {"denies", "Denies"}, {"level", "Level"}, {"hero_damage", "Hero Damage"}, {"tower_damage", "Tower Damage"},
+                                {"hero_healing", "Hero Healing"}
+                            };
 
-                            //MatchData_KillTextBlock.Text = total[0];
-                            //MatchData_DeadTextBlock.Text = total[1];
-                            //MatchData_AssistTextBlock.Text = total[2];
-                            //MatchData_KDATextBlock.Text = total[3];
-                            //MatchData_GPMTextBlock.Text = total[4];
-                            //MatchData_XPMTextBlock.Text = total[5];
-                            //MatchData_Last_hitTextBlock.Text = total[6];
-                            //MatchData_DeniesTextBlock.Text = total[7];
-                            //MatchData_LevelTextBlock.Text = total[8];
-                            //MatchData_HeroDamageTextBlock.Text = total[9];
-                            //MatchData_TowerDamageTextBlock.Text = total[10];
-                            //MatchData_HealingTextBlock.Text = total[11];
+                            double kills = -1, deaths = -1, assists = -1;
 
-                            vPlayerTotals.Add(totals[0]);
+                            foreach (var item in totals)
+                            {
+                                if (addingKeys.ContainsKey(item.field))
+                                {
+                                    item.field = addingKeys[item.field];
+                                    item.n = Math.Floor((item.sum / item.n) * 10) / 10;
+                                    vPlayerTotals.Add(item);
+
+                                    if (item.field == "Kills") kills = item.n;
+                                    if (item.field == "Deaths") deaths = item.n;
+                                    if (item.field == "Assists") assists = item.n;
+                                }
+                            }
+                            if (kills >= 0 && deaths >= 0 && assists >= 0)
+                            {
+                                double kda = 0;
+                                if (deaths <= 0) deaths = 1;
+                                kda = Math.Floor(((kills + assists) / deaths) * 100) / 100;
+
+                                vPlayerTotals.Insert(0, new DotaMatchPlayerTotalModel() { field = "KDA", n = kda });
+                            }
                         }
 
                         // 处理最近的比赛

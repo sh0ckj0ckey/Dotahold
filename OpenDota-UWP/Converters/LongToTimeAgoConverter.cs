@@ -15,6 +15,7 @@ namespace OpenDota_UWP.Converters
         {
             try
             {
+                if (value == null) return string.Empty;
                 string time = value.ToString();
                 if (string.IsNullOrEmpty(time) || time == "0") return string.Empty;
 

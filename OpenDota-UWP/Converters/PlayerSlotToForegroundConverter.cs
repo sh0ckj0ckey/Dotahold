@@ -28,6 +28,8 @@ namespace OpenDota_UWP.Converters
         {
             try
             {
+                if (value == null) return SlotXColor;
+
                 string slot = value.ToString();
                 switch (slot)
                 {

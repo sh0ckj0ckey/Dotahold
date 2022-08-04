@@ -239,10 +239,10 @@
                                 </ListView.Template>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:DotaMatchPlayerTotalModel">
-                                        <Grid Margin="-12,0,0,0" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,0">
-                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0">
-                                                <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
-                                                <TextBlock Text="{x:Bind n}" HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                        <Grid Margin="-12,0,0,0" MinWidth="80" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="16,0" ToolTipService.ToolTip="On Average">
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
+                                                <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                                <TextBlock Text="{x:Bind n}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium" CharacterSpacing="20"/>
                                             </StackPanel>
                                         </Grid>
                                     </DataTemplate>

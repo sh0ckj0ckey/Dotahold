@@ -14,8 +14,8 @@ namespace OpenDota_UWP.Models
     public class DotaMatchPlayerTotalModel
     {
         public string field { get; set; }
-        public int n { get; set; }
-        public float sum { get; set; }
+        public double n { get; set; }
+        public double sum { get; set; }
     }
 
 }

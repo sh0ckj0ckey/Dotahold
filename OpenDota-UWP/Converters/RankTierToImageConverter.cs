@@ -29,16 +29,19 @@ namespace OpenDota_UWP.Converters
         {
             try
             {
-                string rank = value.ToString();
-                if (!string.IsNullOrEmpty(rank) && rank.Length >= 2)
+                if (value != null)
                 {
-                    string tier = rank[0].ToString();
-                    string stars = rank[1].ToString();
-                    string contain = tier + stars;
-                    if (RankTiers.Contains(contain))
+                    string rank = value.ToString();
+                    if (!string.IsNullOrEmpty(rank) && rank.Length >= 2)
                     {
-                        string image = string.Format("ms-appx:///Assets/RankMedal/SeasonalRank{0}-{1}.png", tier, stars);
-                        return new BitmapImage(new System.Uri(image));
+                        string tier = rank[0].ToString();
+                        string stars = rank[1].ToString();
+                        string contain = tier + stars;
+                        if (RankTiers.Contains(contain))
+                        {
+                            string image = string.Format("ms-appx:///Assets/RankMedal/SeasonalRank{0}-{1}.png", tier, stars);
+                            return new BitmapImage(new System.Uri(image));
+                        }
                     }
                 }
             }

@@ -14,6 +14,7 @@ namespace OpenDota_UWP.Converters
         {
             try
             {
+                if (value == null) return "NaN";
                 string val = value.ToString();
                 if (val.Contains("."))
                 {

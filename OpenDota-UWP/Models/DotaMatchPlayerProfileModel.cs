@@ -21,7 +21,7 @@ namespace OpenDota_UWP.Models
         /// <summary>
         /// 分段，十位数表示徽章，个位数表示星级
         /// </summary>
-        public int rank_tier { get; set; }
+        public int? rank_tier { get; set; }
         public Profile profile { get; set; }
     }
 
