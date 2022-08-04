@@ -77,19 +77,6 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
-        //MatchData_KillTextBlock.Text = total[0];
-        //MatchData_DeadTextBlock.Text = total[1];
-        //MatchData_AssistTextBlock.Text = total[2];
-        //MatchData_KDATextBlock.Text = total[3];
-        //MatchData_GPMTextBlock.Text = total[4];
-        //MatchData_XPMTextBlock.Text = total[5];
-        //MatchData_Last_hitTextBlock.Text = total[6];
-        //MatchData_DeniesTextBlock.Text = total[7];
-        //MatchData_LevelTextBlock.Text = total[8];
-        //MatchData_HeroDamageTextBlock.Text = total[9];
-        //MatchData_TowerDamageTextBlock.Text = total[10];
-        //MatchData_HealingTextBlock.Text = total[11];
-
         #region 菜单
 
         /// <summary>

@@ -47,14 +47,6 @@ namespace OpenDota_UWP.ViewModels
             set { Set("PlayerWinLose", ref _PlayerWinLose, value); }
         }
 
-        // 用户统计数据
-        private List<DotaMatchPlayerTotalModel> _PlayerTotals = null;
-        public List<DotaMatchPlayerTotalModel> PlayerTotals
-        {
-            get { return _PlayerTotals; }
-            set { Set("PlayerTotals", ref _PlayerTotals, value); }
-        }
-
         // 在线玩家数量
         private string _sOnlilnePlayersCount = string.Empty;
         public string sOnlilnePlayersCount
@@ -79,6 +71,9 @@ namespace OpenDota_UWP.ViewModels
         // 所有的最常用英雄
         public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayedHeroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
 
+        // 玩家的统计数据
+        public ObservableCollection<DotaMatchPlayerTotalModel> vPlayerTotals = new ObservableCollection<DotaMatchPlayerTotalModel>();
+
         // 是否正在加载玩家信息
         private bool _bLoadingProfile = false;
         public bool bLoadingProfile
@@ -92,13 +87,6 @@ namespace OpenDota_UWP.ViewModels
         {
             get { return _bLoadingWL; }
             set { Set("bLoadingWL", ref _bLoadingWL, value); }
-        }
-        // 是否正在加载统计数据
-        private bool _bLoadingTotals = false;
-        public bool bLoadingTotals
-        {
-            get { return _bLoadingTotals; }
-            set { Set("bLoadingTotals", ref _bLoadingTotals, value); }
         }
         // 是否正在加载常用英雄
         private bool _bLoadingPlayed = false;
@@ -140,15 +128,14 @@ namespace OpenDota_UWP.ViewModels
                 System.Diagnostics.Debug.WriteLine("Going to load Matches ---> " + DateTime.Now.Ticks);
                 bLoadingProfile = true;
                 bLoadingWL = true;
-                bLoadingTotals = true;
                 bLoadingPlayed = true;
                 PlayerProfile = null;
                 PlayerWinLose = null;
-                PlayerTotals = null;
                 vRecentMatchesForFlip.Clear();
                 vRecentMatches.Clear();
                 vMostPlayed10Heroes.Clear();
                 vMostPlayedHeroes.Clear();
+                vPlayerTotals.Clear();
 
                 _bGottenAllMatchesList = false;
 
@@ -208,9 +195,27 @@ namespace OpenDota_UWP.ViewModels
                         bLoadingWL = false;
 
                         // 统计数据
-                        var total = await GetTotalAsync(sSteamId);
-                        PlayerTotals = total;
-                        bLoadingTotals = false;
+                        var totals = await GetTotalAsync(sSteamId);
+                        if (totals != null && totals.Count > 0)
+                        {
+                            //KDA
+                            //total[3] = ((Convert.ToDouble(killsMatch.Groups[1].Value) + Convert.ToDouble(assistsMatch.Groups[1].Value)) / (Convert.ToDouble(deadMatch.Groups[1].Value))).ToString("f2");
+
+                            //MatchData_KillTextBlock.Text = total[0];
+                            //MatchData_DeadTextBlock.Text = total[1];
+                            //MatchData_AssistTextBlock.Text = total[2];
+                            //MatchData_KDATextBlock.Text = total[3];
+                            //MatchData_GPMTextBlock.Text = total[4];
+                            //MatchData_XPMTextBlock.Text = total[5];
+                            //MatchData_Last_hitTextBlock.Text = total[6];
+                            //MatchData_DeniesTextBlock.Text = total[7];
+                            //MatchData_LevelTextBlock.Text = total[8];
+                            //MatchData_HeroDamageTextBlock.Text = total[9];
+                            //MatchData_TowerDamageTextBlock.Text = total[10];
+                            //MatchData_HealingTextBlock.Text = total[11];
+
+                            vPlayerTotals.Add(totals[0]);
+                        }
 
                         // 处理最近的比赛
                         var recentMatches = await GetRecentMatchAsync(sSteamId);
@@ -277,7 +282,6 @@ namespace OpenDota_UWP.ViewModels
             {
                 bLoadingProfile = false;
                 bLoadingWL = false;
-                bLoadingTotals = false;
                 bLoadingPlayed = false;
             }
         }
@@ -339,14 +343,6 @@ namespace OpenDota_UWP.ViewModels
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
                 var totals = JsonConvert.DeserializeObject<List<DotaMatchPlayerTotalModel>>(jsonMessage);
-
-                if (totals != null && totals.Count > 0)
-                {
-
-                }
-                //KDA
-                //total[3] = ((Convert.ToDouble(killsMatch.Groups[1].Value) + Convert.ToDouble(assistsMatch.Groups[1].Value)) / (Convert.ToDouble(deadMatch.Groups[1].Value))).ToString("f2");
-
                 return totals;
             }
             catch { }

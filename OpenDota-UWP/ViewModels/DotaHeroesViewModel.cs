@@ -313,40 +313,40 @@ namespace OpenDota_UWP.ViewModels
                 info.sTalentNameLoc25R = info?.talents[7]?.name_loc;
             }
             catch { }
+
+            // Ri = function(e, t)
+            // {
+            //     var talent = info.talents[t],
+            //       talentNameLoc = e.talents[t].name_loc;
+            //     return (
+            //       talent.special_values.forEach(function(e) {
+            //         if (e.values_float.length > 0)
+            //         {
+            //             var t = e.values_float[0];
+            //             (t = Math.floor(100 * t) / 100),
+            //           (talentNameLoc = talentNameLoc.replace("{s:" + e.name + "}", "" + t));
+            //         }
+            //     }),
+            //     info.abilities.forEach(function(e) {
+            //         info.special_values.forEach(function(e) {
+            //             var t;
+            //             null == (t = e.bonuses) ||
+            //               void 0 == t ||
+            //               t.forEach(function(t) {
+            //                 if (t.name == talent.name)
+            //                 {
+            //                     var r = t.value;
+            //                     (r = Math.floor(100 * r) / 100),
+            //                 (talentNameLoc = talentNameLoc.replace("{s:bonus_" + e.name + "}", "" + r));
+            //                 }
+            //             });
+            //         });
+            //     }),
+            //     n
+            //   );
+            // }
         }
-        /*
-        Ri = function(e, t)
-        {
-            var talent = info.talents[t],
-              talentNameLoc = e.talents[t].name_loc;
-            return (
-              talent.special_values.forEach(function(e) {
-                if (e.values_float.length > 0)
-                {
-                    var t = e.values_float[0];
-                    (t = Math.floor(100 * t) / 100),
-                  (talentNameLoc = talentNameLoc.replace("{s:" + e.name + "}", "" + t));
-                }
-            }),
-            info.abilities.forEach(function(e) {
-                info.special_values.forEach(function(e) {
-                    var t;
-                    null == (t = e.bonuses) ||
-                      void 0 == t ||
-                      t.forEach(function(t) {
-                        if (t.name == talent.name)
-                        {
-                            var r = t.value;
-                            (r = Math.floor(100 * r) / 100),
-                        (talentNameLoc = talentNameLoc.replace("{s:bonus_" + e.name + "}", "" + r));
-                        }
-                    });
-                });
-            }),
-            n
-          );
-        },
-        */
+
 
         /*
          Ui = Object(d.a)(function (e) {
@@ -868,6 +868,10 @@ namespace OpenDota_UWP.ViewModels
         }),
          */
 
+        /// <summary>
+        /// 加载英雄榜列表
+        /// </summary>
+        /// <param name="heroId"></param>
         public async void FetchHeroRanking(int heroId)
         {
             try
@@ -946,28 +950,6 @@ namespace OpenDota_UWP.ViewModels
             catch { }
             finally { bLoadingHeroRanking = false; }
             return null;
-        }
-
-
-
-        private string ConvertDouble2String(double val)
-        {
-            try
-            {
-                string str = val.ToString("f1");
-                if (str.EndsWith(".0"))
-                {
-                    return str.Replace(".0", "");
-                }
-                else
-                {
-                    return str;
-                }
-            }
-            catch
-            {
-                return val.ToString();
-            }
         }
     }
 }
