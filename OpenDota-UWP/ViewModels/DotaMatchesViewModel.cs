@@ -74,20 +74,6 @@ namespace OpenDota_UWP.ViewModels
         // 玩家的统计数据
         public ObservableCollection<DotaMatchPlayerTotalModel> vPlayerTotals = new ObservableCollection<DotaMatchPlayerTotalModel>();
 
-        // 是否正在加载玩家信息
-        private bool _bLoadingProfile = false;
-        public bool bLoadingProfile
-        {
-            get { return _bLoadingProfile; }
-            set { Set("bLoadingProfile", ref _bLoadingProfile, value); }
-        }
-        // 是否正在加载胜负场次
-        private bool _bLoadingWL = false;
-        public bool bLoadingWL
-        {
-            get { return _bLoadingWL; }
-            set { Set("bLoadingWL", ref _bLoadingWL, value); }
-        }
         // 是否正在加载常用英雄
         private bool _bLoadingPlayed = false;
         public bool bLoadingPlayed
@@ -126,8 +112,6 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 System.Diagnostics.Debug.WriteLine("Going to load Matches ---> " + DateTime.Now.Ticks);
-                bLoadingProfile = true;
-                bLoadingWL = true;
                 bLoadingPlayed = true;
                 PlayerProfile = null;
                 PlayerWinLose = null;
@@ -152,149 +136,169 @@ namespace OpenDota_UWP.ViewModels
                         System.Diagnostics.Debug.WriteLine("Loading Matches ---> " + DateTime.Now.Ticks);
 
                         // 玩家信息
-                        var profile = await GetPlayerProfileAsync(sSteamId);
-                        if (profile != null)
+                        try
                         {
-                            if (profile.leaderboard_rank is int rank && rank > 0 && profile.rank_tier >= 80)
+                            var profile = await GetPlayerProfileAsync(sSteamId);
+                            if (profile != null)
                             {
-                                if (rank == 1)
+                                if (profile.leaderboard_rank is int rank && rank > 0 && profile.rank_tier >= 80)
                                 {
-                                    profile.rank_tier = 84;
-                                }
-                                else if (rank <= 10)
-                                {
-                                    profile.rank_tier = 83;
-                                }
-                                else if (rank <= 100)
-                                {
-                                    profile.rank_tier = 82;
-                                }
-                                else if (rank <= 1000)
-                                {
-                                    profile.rank_tier = 81;
-                                }
-                                else
-                                {
-                                    profile.rank_tier = 80;
+                                    if (rank == 1)
+                                    {
+                                        profile.rank_tier = 84;
+                                    }
+                                    else if (rank <= 10)
+                                    {
+                                        profile.rank_tier = 83;
+                                    }
+                                    else if (rank <= 100)
+                                    {
+                                        profile.rank_tier = 82;
+                                    }
+                                    else if (rank <= 1000)
+                                    {
+                                        profile.rank_tier = 81;
+                                    }
+                                    else
+                                    {
+                                        profile.rank_tier = 80;
+                                    }
                                 }
                             }
+                            PlayerProfile = profile;
                         }
-                        PlayerProfile = profile;
-                        bLoadingProfile = false;
+                        catch { }
 
                         // 胜率
-                        var wl = await GetPlayerWLAsync(sSteamId);
-                        if (wl != null && (wl.win + wl.lose) > 0)
+                        try
                         {
-                            double rate = wl.win / (wl.win + wl.lose);
-                            wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
+                            var wl = await GetPlayerWLAsync(sSteamId);
+                            if (wl != null && (wl.win + wl.lose) > 0)
+                            {
+                                double rate = wl.win / (wl.win + wl.lose);
+                                wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
+                            }
+                            PlayerWinLose = wl;
+                            if (PlayerWinLose != null)
+                                ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
                         }
-                        PlayerWinLose = wl;
-                        if (PlayerWinLose != null)
-                            ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
-                        bLoadingWL = false;
+                        catch { }
 
                         // 统计数据
-                        var totals = await GetTotalAsync(sSteamId);
-                        if (totals != null && totals.Count > 0)
+                        try
                         {
-                            Dictionary<string, string> addingKeys = new Dictionary<string, string>()
+                            var totals = await GetTotalAsync(sSteamId);
+                            if (totals != null && totals.Count > 0)
                             {
-                                {"kills", "Kills"}, {"deaths", "Deaths"}, {"assists", "Assists"}, {"gold_per_min", "GPM"}, {"xp_per_min", "XPM"},
-                                {"last_hits", "Last Hits"}, {"denies", "Denies"}, {"level", "Level"}, {"hero_damage", "Hero Damage"}, {"tower_damage", "Tower Damage"},
-                                {"hero_healing", "Hero Healing"}
-                            };
-
-                            double kills = -1, deaths = -1, assists = -1;
-
-                            foreach (var item in totals)
-                            {
-                                if (addingKeys.ContainsKey(item.field))
+                                Dictionary<string, string> addingKeys = new Dictionary<string, string>()
                                 {
-                                    item.field = addingKeys[item.field];
-                                    item.n = Math.Floor((item.sum / item.n) * 10) / 10;
-                                    vPlayerTotals.Add(item);
+                                    {"kills", "Kills"}, {"deaths", "Deaths"}, {"assists", "Assists"}, {"gold_per_min", "GPM"}, {"xp_per_min", "XPM"},
+                                    {"last_hits", "Last Hits"}, {"denies", "Denies"}, {"level", "Level"}, {"hero_damage", "Hero Damage"}, {"tower_damage", "Tower Damage"},
+                                    {"hero_healing", "Hero Healing"}
+                                };
 
-                                    if (item.field == "Kills") kills = item.n;
-                                    if (item.field == "Deaths") deaths = item.n;
-                                    if (item.field == "Assists") assists = item.n;
+                                double kills = -1, deaths = -1, assists = -1;
+
+                                foreach (var item in totals)
+                                {
+                                    if (addingKeys.ContainsKey(item.field))
+                                    {
+                                        item.field = addingKeys[item.field];
+                                        item.n = Math.Floor((item.sum / item.n) * 10) / 10;
+                                        vPlayerTotals.Add(item);
+
+                                        if (item.field == "Kills") kills = item.n;
+                                        if (item.field == "Deaths") deaths = item.n;
+                                        if (item.field == "Assists") assists = item.n;
+                                    }
+                                }
+                                if (kills >= 0 && deaths >= 0 && assists >= 0)
+                                {
+                                    double kda = 0;
+                                    if (deaths <= 0) deaths = 1;
+                                    kda = Math.Floor(((kills + assists) / deaths) * 100) / 100;
+
+                                    vPlayerTotals.Insert(0, new DotaMatchPlayerTotalModel() { field = "KDA", n = kda });
                                 }
                             }
-                            if (kills >= 0 && deaths >= 0 && assists >= 0)
-                            {
-                                double kda = 0;
-                                if (deaths <= 0) deaths = 1;
-                                kda = Math.Floor(((kills + assists) / deaths) * 100) / 100;
-
-                                vPlayerTotals.Insert(0, new DotaMatchPlayerTotalModel() { field = "KDA", n = kda });
-                            }
                         }
+                        catch { }
 
                         // 处理最近的比赛
-                        var recentMatches = await GetRecentMatchAsync(sSteamId);
-                        if (recentMatches != null)
+                        try
                         {
-                            foreach (var item in recentMatches)
+                            var recentMatches = await GetRecentMatchAsync(sSteamId);
+                            if (recentMatches != null)
                             {
-                                if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                                foreach (var item in recentMatches)
                                 {
-                                    item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
-                                        DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                                    item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                                    item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
-                                    item.bWin = null;
-                                    if (item.player_slot != null && item.radiant_win != null)
+                                    if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
                                     {
-                                        if (item.player_slot < 128)// 天辉
-                                            item.bWin = item.radiant_win;
-                                        else if (item.player_slot >= 128)// 夜魇
-                                            item.bWin = !item.radiant_win;
-                                    }
+                                        item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
+                                            DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                        item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                                        item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
+                                        item.bWin = null;
+                                        if (item.player_slot != null && item.radiant_win != null)
+                                        {
+                                            if (item.player_slot < 128)// 天辉
+                                                item.bWin = item.radiant_win;
+                                            else if (item.player_slot >= 128)// 夜魇
+                                                item.bWin = !item.radiant_win;
+                                        }
 
-                                    vRecentMatches.Add(item);
-                                    if (vRecentMatchesForFlip.Count < 5)
-                                        vRecentMatchesForFlip.Add(item);
+                                        vRecentMatches.Add(item);
+                                        if (vRecentMatchesForFlip.Count < 5)
+                                            vRecentMatchesForFlip.Add(item);
+                                    }
                                 }
                             }
                         }
+                        catch { }
 
                         // 常用英雄
-                        var heroes = await GetHeroesPlayedAsync(sSteamId);
-                        if (heroes != null)
+                        try
                         {
-                            foreach (var item in heroes)
+                            var heroes = await GetHeroesPlayedAsync(sSteamId);
+                            if (heroes != null)
                             {
-                                if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                                foreach (var item in heroes)
                                 {
-                                    item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
-                                        DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                                    item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
+                                    if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                                    {
+                                        item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
+                                            DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
+                                        item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
 
-                                    double rate = 0;
-                                    if (item.games > 0)
-                                        rate = (item.win ?? 0) / (item.games ?? 1);
-                                    else
-                                        rate = 1;
-                                    item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+                                        double rate = 0;
+                                        if (item.games > 0)
+                                            rate = (item.win ?? 0) / (item.games ?? 1);
+                                        else
+                                            rate = 1;
+                                        item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
 
-                                    vMostPlayedHeroes.Add(item);
-                                    if (vMostPlayed10Heroes.Count < 10)
-                                        vMostPlayed10Heroes.Add(item);
+                                        vMostPlayedHeroes.Add(item);
+                                        if (vMostPlayed10Heroes.Count < 10)
+                                            vMostPlayed10Heroes.Add(item);
+                                    }
                                 }
                             }
                         }
+                        catch { }
                         bLoadingPlayed = false;
 
                         // 在线玩家数
-                        sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
+                        try
+                        {
+                            sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
+                        }
+                        catch { }
                     }
                 }
             }
             catch { }
             finally
             {
-                bLoadingProfile = false;
-                bLoadingWL = false;
                 bLoadingPlayed = false;
             }
         }

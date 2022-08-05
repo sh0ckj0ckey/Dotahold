@@ -122,7 +122,7 @@
             </StackPanel>
         </ScrollViewer>
         <!--加载中-->
-        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="56" Width="96" CornerRadius="6" 
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="56" Width="96" Margin="0,-80,0,0" CornerRadius="6" 
               Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},Mode=OneWay}">
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent"/>

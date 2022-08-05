@@ -430,7 +430,7 @@
                         </Ellipse>
                     </Grid>
                     <TextBlock x:Name="PersonNameTextBlock" MaxWidth="260"
-                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold"
                                HorizontalAlignment="Center" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" TextTrimming="CharacterEllipsis"
                                CharacterSpacing="60"
