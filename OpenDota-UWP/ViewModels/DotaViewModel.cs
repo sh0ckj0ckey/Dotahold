@@ -43,6 +43,14 @@ namespace OpenDota_UWP.ViewModels
             }
         }
 
+        // 物品-搜索模式, true:模糊匹配, false:全字匹配
+        private bool _bSearchFuzzy = true;
+        public bool bSearchFuzzy
+        {
+            get { return _bSearchFuzzy; }
+            set { Set("bSearchFuzzy", ref _bSearchFuzzy, value); }
+        }
+
         public DotaViewModel()
         {
             try
@@ -97,6 +105,28 @@ namespace OpenDota_UWP.ViewModels
                     else
                     {
                         iStartupTabIndex = 0;
+                    }
+                }
+                catch { }
+
+                // 读取设置的物品搜索模式
+                try
+                {
+                    if (App.AppSettingContainer?.Values["ItemsSearchFuzzy"] == null)
+                    {
+                        this.bSearchFuzzy = true;
+                    }
+                    else if (App.AppSettingContainer?.Values["ItemsSearchFuzzy"]?.ToString() == "True")
+                    {
+                        this.bSearchFuzzy = true;
+                    }
+                    else if (App.AppSettingContainer?.Values["ItemsSearchFuzzy"]?.ToString() == "False")
+                    {
+                        this.bSearchFuzzy = false;
+                    }
+                    else
+                    {
+                        this.bSearchFuzzy = true;
                     }
                 }
                 catch { }

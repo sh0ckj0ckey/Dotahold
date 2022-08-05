@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OpenDota_UWP.ViewModels
@@ -18,6 +19,7 @@ namespace OpenDota_UWP.ViewModels
         public List<Models.DotaItemModel> vAllItems { get; set; } = new List<Models.DotaItemModel>();
 
         // 列表展示的物品
+        public List<Models.DotaItemModel> vAllShowItemsList { get; set; } = new List<Models.DotaItemModel>();
         public ObservableCollection<Models.DotaItemModel> vItemsList { get; set; } = new ObservableCollection<Models.DotaItemModel>();
 
         // 是否正在加载物品列表
@@ -60,7 +62,9 @@ namespace OpenDota_UWP.ViewModels
 
                 dictAllItems?.Clear();
                 vAllItems?.Clear();
+                vAllShowItemsList?.Clear();
                 vItemsList?.Clear();
+
                 dictAllItems = await ConstantsHelper.Instance.GetItemsConstant();
 
                 if (dictAllItems == null || dictAllItems.Count <= 0)
@@ -121,7 +125,10 @@ namespace OpenDota_UWP.ViewModels
                         vAllItems.Add(item);
 
                         if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
+                        {
+                            vAllShowItemsList.Add(item);
                             vItemsList.Add(item);
+                        }
                     }
                     catch { }
                 }
@@ -130,6 +137,58 @@ namespace OpenDota_UWP.ViewModels
             catch { _bLoadedDotaItems = false; }
             finally { bLoadingItems = false; }
             return true;
+        }
+
+        // 搜索
+        public void SearchItems(string search)
+        {
+            try
+            {
+                vItemsList.Clear();
+
+                if (string.IsNullOrEmpty(search))
+                {
+                    foreach (var item in vAllShowItemsList)
+                    {
+                        vItemsList.Add(item);
+                    }
+                }
+                else
+                {
+                    bool searchFuzzy = DotaViewModel.Instance.bSearchFuzzy;
+
+                    if (searchFuzzy)
+                    {
+                        // 模糊匹配搜索
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append(".*");
+                        foreach (var item in search)
+                        {
+                            sb.Append(item);
+                            sb.Append(".*");
+                        }
+                        foreach (var item in vAllItems)
+                        {
+                            if (item != null && !string.IsNullOrEmpty(item.dname) && Regex.IsMatch(item.dname.ToLower(), sb.ToString().ToLower()))
+                            {
+                                vItemsList.Add(item);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // 全字匹配搜索
+                        foreach (var item in vAllItems)
+                        {
+                            if (item != null && !string.IsNullOrEmpty(item.dname) && item.dname.ToLower().Contains(search.ToLower()))
+                            {
+                                vItemsList.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
         }
     }
 }

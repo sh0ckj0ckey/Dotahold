@@ -68,6 +68,24 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
+        /// 输入文字搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (sender is TextBox textBox)
+                {
+                    string searching = textBox.Text.Replace(" ", "");
+                    ViewModel.SearchItems(searching);
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 点击列表显示信息
         /// </summary>
         /// <param name="sender"></param>
@@ -108,6 +126,26 @@ namespace OpenDota_UWP.Views
                 }
             }
             return text;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainViewModel.bSearchFuzzy = true;
+                App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
+            }
+            catch { }
+        }
+
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainViewModel.bSearchFuzzy = false;
+                App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
+            }
+            catch { }
         }
     }
 }
