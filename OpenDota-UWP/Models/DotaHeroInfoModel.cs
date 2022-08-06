@@ -135,33 +135,88 @@ namespace OpenDota_UWP.Models
         public string name_loc { get; set; }
         public string desc_loc { get; set; }
         public string lore_loc { get; set; }
+
         public string[] notes_loc { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        private string _notesStr_loc = string.Empty;
-        public string notesStr_loc
+        private string _notesStr = string.Empty;
+        public string notesStr
         {
-            get { return _notesStr_loc; }
-            set { Set("notesStr_loc", ref _notesStr_loc, value); }
+            get { return _notesStr; }
+            set { Set("notesStr", ref _notesStr, value); }
         }
 
         public string shard_loc { get; set; }
         public string scepter_loc { get; set; }
         public double type { get; set; }
+
+        // 技能类型，例如点目标、AOE、切换等
         public string behavior { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _behaviorStr = string.Empty;
+        public string behaviorStr
+        {
+            get { return _behaviorStr; }
+            set { Set("behaviorStr", ref _behaviorStr, value); }
+        }
+
+        // 影响单位(作用单位，例如敌方单位、己方英雄等)
         public double target_team { get; set; }
-        public double target_type { get; set; }
+        public int target_type { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _targetStr = string.Empty;
+        public string targetStr
+        {
+            get { return _targetStr; }
+            set { Set("targetStr", ref _targetStr, value); }
+        }
+
         public double flags { get; set; }
+
+        // 伤害类型
         public double damage { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _damageStr = string.Empty;
+        public string damageStr
+        {
+            get { return _damageStr; }
+            set { Set("damageStr", ref _damageStr, value); }
+        }
+
+        // 是否无视魔免
         public double immunity { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _immunityStr = string.Empty;
+        public string immunityStr
+        {
+            get { return _immunityStr; }
+            set { Set("immunityStr", ref _immunityStr, value); }
+        }
+
+        // 是否可驱散
         public double dispellable { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _dispellableStr = string.Empty;
+        public string dispellableStr
+        {
+            get { return _dispellableStr; }
+            set { Set("dispellableStr", ref _dispellableStr, value); }
+        }
+
         public double max_level { get; set; }
         public double[] cast_ranges { get; set; }
         public double[] cast_points { get; set; }
         public double[] channel_times { get; set; }
         public double[] cooldowns { get; set; }
         public double[] durations { get; set; }
+
         public double[] damages { get; set; }
+
         public double[] mana_costs { get; set; }
         public double[] gold_costs { get; set; }
         public Special_Values[] special_values { get; set; }

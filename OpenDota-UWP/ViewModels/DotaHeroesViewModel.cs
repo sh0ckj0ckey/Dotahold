@@ -360,47 +360,204 @@ namespace OpenDota_UWP.ViewModels
 
                 foreach (var ability in info.abilities)
                 {
+                    // 技能图片和描述
                     ability.sAbilityImageUrl = "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/" + ability.name + ".png";
                     ability.desc_loc = OrganizeLocString(ability.desc_loc);
                     ability.lore_loc = OrganizeLocString(ability.lore_loc);
-                    if (ability.notes_loc != null && ability.notes_loc.Length > 0)
+
+                    // 备注
+                    try
                     {
-                        StringBuilder notesLocSb = new StringBuilder();
-                        for (int i = 0; i < ability.notes_loc.Length; i++)
+                        if (ability.notes_loc != null && ability.notes_loc.Length > 0)
                         {
-                            notesLocSb.Append(ability.notes_loc[i]);
-                            if (i < ability.notes_loc.Length - 1)
+                            StringBuilder notesLocSb = new StringBuilder();
+                            for (int i = 0; i < ability.notes_loc.Length; i++)
                             {
-                                notesLocSb.Append("\n");
+                                notesLocSb.Append(ability.notes_loc[i]);
+                                if (i < ability.notes_loc.Length - 1)
+                                {
+                                    notesLocSb.Append("\n");
+                                }
+                            }
+                            ability.notesStr = notesLocSb.ToString();
+                        }
+                    }
+                    catch { }
+
+                    // 技能是否有神杖效果
+                    try
+                    {
+                        if (ability.ability_has_scepter)
+                        {
+                            if (string.IsNullOrEmpty(ability.scepter_loc))
+                            {
+                                //ability.scepter_loc = "Upgraded by Scepter";
+                                ability.ability_has_scepter = false;
+                            }
+                            else
+                            {
+                                ability.scepter_loc = OrganizeLocString(ability.scepter_loc);
                             }
                         }
-                        ability.notesStr_loc = notesLocSb.ToString();
                     }
-                    
-                    if (ability.ability_has_scepter)
+                    catch { }
+
+                    // 技能是否有魔晶效果
+                    try
                     {
-                        if (string.IsNullOrEmpty(ability.scepter_loc))
+                        if (ability.ability_has_shard)
                         {
-                            //ability.scepter_loc = "Upgraded by Scepter";
-                            ability.ability_has_scepter = false;
-                        }
-                        else
-                        {
-                            ability.scepter_loc = OrganizeLocString(ability.scepter_loc);
+                            if (string.IsNullOrEmpty(ability.shard_loc))
+                            {
+                                //ability.shard_loc = "Upgraded by Shard";
+                                ability.ability_has_shard = false;
+                            }
+                            else
+                            {
+                                ability.shard_loc = OrganizeLocString(ability.shard_loc);
+                            }
                         }
                     }
-                    if (ability.ability_has_shard)
+                    catch { }
+
+                    // 技能伤害类型
+                    try
                     {
-                        if (string.IsNullOrEmpty(ability.shard_loc))
+                        switch (ability.damage)
                         {
-                            //ability.shard_loc = "Upgraded by Shard";
-                            ability.ability_has_shard = false;
-                        }
-                        else
-                        {
-                            ability.shard_loc = OrganizeLocString(ability.shard_loc);
+                            case 1:
+                                ability.damageStr = "Physical";
+                                break;
+                            case 2:
+                                ability.damageStr = "Magical";
+                                break;
+                            case 4:
+                                ability.damageStr = "Pure";
+                                break;
+                            case 8:
+                                ability.damageStr = "HP Removal";
+                                break;
                         }
                     }
+                    catch { }
+
+                    // 技能是否可以驱散
+                    try
+                    {
+                        switch (ability.dispellable)
+                        {
+                            case 1:
+                                ability.dispellableStr = "Strong";
+                                break;
+                            case 2:
+                                ability.dispellableStr = "Yes";
+                                break;
+                            case 3:
+                                ability.dispellableStr = "No";
+                                break;
+                        }
+                    }
+                    catch { }
+
+                    // 技能是否无视魔免
+                    try
+                    {
+                        switch (ability.immunity)
+                        {
+                            case 1:
+                            case 3:
+                                ability.dispellableStr = "Yes";
+                                break;
+                            case 2:
+                            case 4:
+                                ability.dispellableStr = "No";
+                                break;
+                            case 5:
+                                ability.dispellableStr = "Allies Yes Enemies No";
+                                break;
+                        }
+                    }
+                    catch { }
+
+                    // 技能作用目标
+                    try
+                    {
+                        switch (ability.target_team)
+                        {
+                            case 1:
+                                ability.targetStr = 7 == (7 & ability.target_type)
+                                                    ? "Allied Units And Buildings"
+                                                    : 3 == (3 & ability.target_type)
+                                                    ? "Allied Units"
+                                                    : 5 == (5 & ability.target_type)
+                                                    ? "Allied Heroes And Buildings"
+                                                    : 1 == (1 & ability.target_type)
+                                                    ? "Allied Heroes"
+                                                    : 2 == (2 & ability.target_type)
+                                                    ? "Allied Creeps" : "Allies";
+                                break;
+                            case 2:
+                                ability.targetStr = 7 == (7 & ability.target_type)
+                                                    ? "Enemy Units And Buildings"
+                                                    : 3 == (3 & ability.target_type)
+                                                    ? "Enemy Units"
+                                                    : 5 == (5 & ability.target_type)
+                                                    ? "Enemy Heroes And Buildings"
+                                                    : 1 == (1 & ability.target_type)
+                                                    ? "Enemy Heroes"
+                                                    : 2 == (2 & ability.target_type)
+                                                    ? "Enemy Creeps" : "Enemies";
+                                break;
+                            case 3:
+                                ability.targetStr = 1 == (1 & ability.target_type)
+                                                    ? "Heroes" : "Units";
+                                break;
+                        }
+                    }
+                    catch { }
+
+                    // 技能类型
+                    try
+                    {
+                        long behavior;
+                        bool parse = long.TryParse(ability.behavior, out behavior);
+                        if (parse)
+                        {
+                            ability.behaviorStr = 0 != (65536 & behavior)
+                                                ? "Aura"
+                                                : 0 != (4 & behavior)
+                                                ? "No Target"
+                                                : 0 != (8 & behavior)
+                                                ? "Unit Ttarget"
+                                                : 0 != (16 & behavior)
+                                                ? "Point Target"
+                                                : 0 != (32 & behavior)
+                                                ? "Point Aoe"
+                                                : 0 != (128 & behavior)
+                                                ? "Channeled"
+                                                : 0 != (512 & behavior)
+                                                ? "Toggle"
+                                                : 0 != (4096 & behavior)
+                                                ? "Autocast"
+                                                : 0 != (2 & behavior)
+                                                ? "Passive" : string.Empty;
+                        }
+                    }
+                    catch { }
+
+                    // 技能其他的数值
+                    try
+                    {
+                        StringBuilder specialValuesSb = new StringBuilder();
+                        foreach (var item in ability.special_values)
+                        {
+                            if (!string.IsNullOrEmpty(item.heading_loc))
+                            {
+                                specialValuesSb.Append(item.heading_loc);
+                            }
+                        }
+                    }
+                    catch { }
                 }
             }
             catch { }

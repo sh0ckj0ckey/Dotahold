@@ -503,7 +503,7 @@
                                             <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
 
                                             <!--备注-->
-                                            <TextBlock Grid.Row="2" Text="{x:Bind notesStr_loc,Mode=OneWay}" Visibility="{x:Bind notesStr_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Row="2" Text="{x:Bind notesStr,Mode=OneWay}" Visibility="{x:Bind notesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
 
                                             <!--神杖升级-->
                                             <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
