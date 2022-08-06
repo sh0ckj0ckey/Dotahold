@@ -25,6 +25,7 @@
                     <Color x:Key="HEROTAB_BTN_BK">#20808080</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#2E3044</Color>
+                    <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#434452</Color>
 
                     <Color x:Key="HEROINFO_LISTITEM_BK">#363746</Color>
 
@@ -32,7 +33,7 @@
 
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#353545</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
-                    
+
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#272839" Offset="0"/>
@@ -116,7 +117,8 @@
                     <Color x:Key="HEROTAB_BTN_BK">#66E6E6E6</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
-
+                    <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#F5F5F5</Color>
+                    
                     <Color x:Key="HEROINFO_LISTITEM_BK">#FFFFFF</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08666666</Color>

@@ -361,8 +361,8 @@ namespace OpenDota_UWP.ViewModels
                 foreach (var ability in info.abilities)
                 {
                     ability.sAbilityImageUrl = "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/" + ability.name + ".png";
-                    ability.desc_loc = TrimHtmlString(ability.desc_loc);
-                    ability.lore_loc = TrimHtmlString(ability.lore_loc);
+                    ability.desc_loc = OrganizeLocString(ability.desc_loc);
+                    ability.lore_loc = OrganizeLocString(ability.lore_loc);
                     if (ability.notes_loc != null && ability.notes_loc.Length > 0)
                     {
                         StringBuilder notesLocSb = new StringBuilder();
@@ -375,6 +375,31 @@ namespace OpenDota_UWP.ViewModels
                             }
                         }
                         ability.notesStr_loc = notesLocSb.ToString();
+                    }
+                    
+                    if (ability.ability_has_scepter)
+                    {
+                        if (string.IsNullOrEmpty(ability.scepter_loc))
+                        {
+                            //ability.scepter_loc = "Upgraded by Scepter";
+                            ability.ability_has_scepter = false;
+                        }
+                        else
+                        {
+                            ability.scepter_loc = OrganizeLocString(ability.scepter_loc);
+                        }
+                    }
+                    if (ability.ability_has_shard)
+                    {
+                        if (string.IsNullOrEmpty(ability.shard_loc))
+                        {
+                            //ability.shard_loc = "Upgraded by Shard";
+                            ability.ability_has_shard = false;
+                        }
+                        else
+                        {
+                            ability.shard_loc = OrganizeLocString(ability.shard_loc);
+                        }
                     }
                 }
             }
@@ -987,11 +1012,11 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
-        /// 去掉一些HTML标签等特殊内容
+        /// 去掉HTML标签等额外的文字，将占位符替换为相应的special_values
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private string TrimHtmlString(string str)
+        private string OrganizeLocString(string str)
         {
             try
             {

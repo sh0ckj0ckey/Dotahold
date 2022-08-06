@@ -480,9 +480,9 @@
                                                     <BitmapImage UriSource="{x:Bind sAbilityImageUrl,Mode=OneWay}" DecodePixelHeight="64" DecodePixelType="Logical"/>
                                                 </Image.Source>
                                             </Image>
-                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png"
+                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter"
                                                    Visibility="{x:Bind ability_is_granted_by_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
-                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png"
+                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard"
                                                    Visibility="{x:Bind ability_is_granted_by_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
                                         </Grid>
                                         <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
@@ -493,13 +493,42 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
+
+                                            <!--技能名字-->
                                             <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
 
+                                            <!--技能描述-->
                                             <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+
+                                            <!--备注-->
                                             <TextBlock Grid.Row="2" Text="{x:Bind notesStr_loc,Mode=OneWay}" Visibility="{x:Bind notesStr_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
 
-                                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="14,0,4,0">
+                                            <!--神杖升级-->
+                                            <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
+                                                  Visibility="{x:Bind ability_has_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_scepter.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Scepter"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind scepter_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                            <!--魔晶升级-->
+                                            <Grid Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
+                                                  Visibility="{x:Bind ability_has_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_shard.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Shard"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind shard_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                            <!--冷却时间和耗蓝-->
+                                            <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="14,0,4,0">
                                                 <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
                                                         Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}">
                                                     <Border.Background>
@@ -515,7 +544,9 @@
                                                 </Border>
                                                 <TextBlock Text="{x:Bind mana_costs,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
                                             </StackPanel>
-                                            <Grid Grid.Row="4" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
+
+                                            <!--背景描述-->
+                                            <Grid Grid.Row="6" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
                                                 <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
                                             </Grid>
                                         </Grid>
