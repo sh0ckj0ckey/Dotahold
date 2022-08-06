@@ -9,13 +9,13 @@ using Windows.UI.Xaml.Media;
 
 namespace OpenDota_UWP.Converters
 {
-    internal class StringArrayToStringConverter : IValueConverter
+    internal class DoubleArrayToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
-                if (value != null && value is string[] arr)
+                if (value != null && value is double[] arr)
                 {
                     StringBuilder stringBuilder = new StringBuilder();
                     string split = " ";

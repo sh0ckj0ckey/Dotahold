@@ -128,7 +128,7 @@ namespace OpenDota_UWP.Models
 
     }
 
-    public class Ability
+    public class Ability : ViewModelBase
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -136,6 +136,15 @@ namespace OpenDota_UWP.Models
         public string desc_loc { get; set; }
         public string lore_loc { get; set; }
         public string[] notes_loc { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _notesStr_loc = string.Empty;
+        public string notesStr_loc
+        {
+            get { return _notesStr_loc; }
+            set { Set("notesStr_loc", ref _notesStr_loc, value); }
+        }
+
         public string shard_loc { get; set; }
         public string scepter_loc { get; set; }
         public double type { get; set; }
@@ -167,6 +176,18 @@ namespace OpenDota_UWP.Models
         public double item_stock_max { get; set; }
         public double item_stock_time { get; set; }
         public double item_quality { get; set; }
+
+        /// <summary>
+        /// 技能图片
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        private string _sAbilityImageUrl = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string sAbilityImageUrl
+        {
+            get { return _sAbilityImageUrl; }
+            set { Set("sAbilityImageUrl", ref _sAbilityImageUrl, value); }
+        }
+
     }
 
     public class Talent

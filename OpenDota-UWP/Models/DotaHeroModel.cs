@@ -14,8 +14,8 @@ namespace OpenDota_UWP.Models
         public string primary_attr { get; set; }
         public string attack_type { get; set; }
         public string[] roles { get; set; }
-        public string img { get; set; }
-        public string icon { get; set; }
+        public string img { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string icon { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
         public double base_health { get; set; }
         public double base_health_regen { get; set; }
         public double base_mana { get; set; }

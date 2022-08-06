@@ -10,7 +10,8 @@
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:Converter="using:OpenDota_UWP.Converters" 
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:ui="using:OpenDota_UWP.UI"
+    xmlns:ui="using:OpenDota_UWP.UI" 
+    xmlns:models="using:OpenDota_UWP.Models" Loaded="Page_Loaded"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -19,13 +20,16 @@
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Converter:StringArrayToStringConverter x:Key="strArr2Str"/>
+            <Converter:StringArrayToStringConverter x:Key="StrArr2Str"/>
             <Converter:EqualToBoolConverter x:Key="Eql2Bool"/>
             <Converter:EqualToVisibilityConverter x:Key="Eql2Vis"/>
             <Converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
             <Converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <Converter:DoubleToStringConverter x:Key="Double2Str"/>
             <Converter:StringLengthToFontSizeConverter x:Key="Str2FontSize"/>
+            <Converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
+            <Converter:StringToVisibilityConverter x:Key="Str2Vis"/>
+            <Converter:DoubleArrayToStringConverter x:Key="DoubleArr2Str"/>
 
             <Storyboard x:Name="ShowBackgroundImage">
                 <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder"
@@ -177,7 +181,7 @@
                     <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
                            Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
                     <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
-                               Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource strArr2Str},ConverterParameter=·}"
+                               Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource StrArr2Str},ConverterParameter=·}"
                                FontSize="16" Foreground="White" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
                 </Grid>
                 <Grid x:Name="HeroTalentsGrid" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -261,9 +265,9 @@
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="HeroInfoGridTranslation" Y="60"/>
                 </Grid.RenderTransform>
-                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                <ScrollViewer x:Name="HeroInfoScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Hidden"
                               Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <StackPanel x:Name="HeroInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                         <!--属性信息-->
                         <Grid Height="Auto" HorizontalAlignment="Stretch" Margin="0,16,0,0">
                             <Grid.ColumnDefinitions>
@@ -274,7 +278,7 @@
                                 <!--<Grid Width="60" Height="60" BorderBrush="Transparent" BorderThickness="0" CornerRadius="6" Background="Transparent">
                                     <Image Source="{ThemeResource HERO_TALENT_IMG}" Width="73"/>
                                 </Grid>-->
-                                <Grid Margin="0,0,12,0" Width="96" Height="60" BorderBrush="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="2" CornerRadius="6" Background="Transparent">
+                                <Grid Margin="0,0,12,0" Width="96" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="18"/>
@@ -306,7 +310,7 @@
                                         </TextBlock>
                                     </Grid>
                                 </Grid>
-                                <Grid Width="156" Height="60" BorderBrush="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="2" CornerRadius="6" Background="Transparent">
+                                <Grid Width="156" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Grid Width="146" Height="20" Margin="0,0,0,6" CornerRadius="4">
                                             <Grid.Background>
@@ -317,8 +321,8 @@
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <TextBlock FontWeight="Medium" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
                                                     <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                             </TextBlock>
@@ -332,8 +336,8 @@
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <TextBlock FontWeight="Medium" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                     <Run Text="+"/>
                                                     <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                             </TextBlock>
@@ -456,6 +460,60 @@
                             <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
                         </Grid>
                         <!--英雄技能-->
+                        <ListView Margin="0,4,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="False"
+                                  ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Ability">
+                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" CornerRadius="6" Background="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Height="64" Width="64" Margin="16,16,0,0" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center">
+                                                <Image.Source>
+                                                    <BitmapImage UriSource="{x:Bind sAbilityImageUrl,Mode=OneWay}" DecodePixelHeight="64" DecodePixelType="Logical"/>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+                                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
+
+                                            <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="14" Margin="15,4,12,0" Opacity="0.7" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Row="2" Text="{x:Bind notesStr_loc,Mode=OneWay}" Visibility="{x:Bind notesStr_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+
+                                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="14,0,4,0">
+                                                <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="2" UseLayoutRounding="True">
+                                                    <Image Source="/Assets/Icons/Data/icon_mana.png" Stretch="Uniform" Width="14" Height="14" Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind mana_costs,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                                <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="2" UseLayoutRounding="True">
+                                                    <Image Source="/Assets/Icons/Data/icon_cooldown.png" Stretch="Uniform" Width="14" Height="14" Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind cooldowns,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                            </StackPanel>
+
+                                            <Grid Grid.Row="4" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
+                                                <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackPanel>
                 </ScrollViewer>
                 <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
@@ -463,757 +521,6 @@
             <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                 <ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
             </Grid>
-            <!--
-            <Grid Grid.Row="2"
-                  Margin="12,12,0,0">
-                <Pivot>
-                    <PivotItem Header="STATS">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="BasicInformWrapPanel"
-                                                Orientation="Horizontal"
-                                                HorizontalAlignment="Center">
-                                <Grid HorizontalAlignment="Stretch">
-                                    <ListView IsItemClickEnabled="True"
-                                              SelectionMode="None"
-                                              HorizontalAlignment="Stretch"
-                                              Margin="0,12">
-                                        <ListView.Header>
-                                            <StackPanel Orientation="Horizontal"
-                                                        Margin="6,0,12,8">
-                                                <TextBlock Text="&#xE179;"
-                                                           FontWeight="Bold"
-                                                           FontFamily="Segoe MDL2 Assets"
-                                                           VerticalAlignment="Center"
-                                                           Margin="6,0,4,0" />
-                                                <TextBlock Text="Trends"
-                                                           FontWeight="Bold"
-                                                           Opacity="0.8"
-                                                           VerticalAlignment="Center"
-                                                           Margin="4,0" />
-                                            </StackPanel>
-                                        </ListView.Header>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="12,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank1-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_1Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="YellowGreen" />
-                                                <Rectangle x:Name="Pick_1Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_1TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_1TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_1TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank2-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_2Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="SaddleBrown" />
-                                                <Rectangle x:Name="Pick_2Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_2TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_2TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_2TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank3-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_3Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Teal" />
-                                                <Rectangle x:Name="Pick_3Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_3TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_3TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_3TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank4-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_4Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Green" />
-                                                <Rectangle x:Name="Pick_4Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_4TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_4TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_4TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank5-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_5Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Firebrick" />
-                                                <Rectangle x:Name="Pick_5Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_5TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_5TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_5TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank6-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_6Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Purple" />
-                                                <Rectangle x:Name="Pick_6Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_6TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_6TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_6TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRank7-0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_7Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Gold" />
-                                                <Rectangle x:Name="Pick_7Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_7TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_7TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_7TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                        <ListViewItem Height="68"
-                                                      Width="420"
-                                                      Margin="0,2">
-                                            <Grid Height="68"
-                                                  Width="420"
-                                                  Margin="-12,0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="86" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Fill="Gray"
-                                                           Opacity="0.2"
-                                                           Height="72"
-                                                           Width="86" />
-                                                <Rectangle Width="68">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush>
-                                                            <ImageBrush.ImageSource>
-                                                                <BitmapImage UriSource="/Assets/RankMedal/SeasonalRankTop0.png"
-                                                                             DecodePixelHeight="64"
-                                                                             DecodePixelType="Logical" />
-                                                            </ImageBrush.ImageSource>
-                                                        </ImageBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <Rectangle Grid.Column="1"
-                                                           Fill="Gray"
-                                                           Opacity="0.1"
-                                                           Height="72" />
-                                                <Rectangle x:Name="Win_8Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.5"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,8"
-                                                           Fill="Red" />
-                                                <Rectangle x:Name="Pick_8Rectangle"
-                                                           Grid.Column="1"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Top"
-                                                           Opacity="0.3"
-                                                           Height="12"
-                                                           Width="0"
-                                                           Margin="0,20"
-                                                           Fill="{ThemeResource GrayText}" />
-                                                <StackPanel Grid.Column="1"
-                                                            Orientation="Horizontal"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Bottom"
-                                                            Margin="4,32,0,8">
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="Win Rate: " />
-                                                    <TextBlock x:Name="Win_8TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="DarkCyan"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="/"
-                                                               Margin="4,0" />
-                                                    <TextBlock x:Name="Pick_8TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="{ThemeResource GrayText}"
-                                                               Text="0" />
-                                                    <TextBlock Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Text="=" />
-                                                    <TextBlock x:Name="Rate_8TextBlock"
-                                                               Grid.Column="1"
-                                                               VerticalAlignment="Center"
-                                                               Opacity="0.7"
-                                                               Foreground="Tomato"
-                                                               FontSize="16"
-                                                               FontWeight="Bold"
-                                                               Text="0%"
-                                                               Margin="4,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </ListViewItem>
-                                    </ListView>
-                                </Grid>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </PivotItem>
-                    <PivotItem Header="RANKINGS">
-                        
-                    </PivotItem>
-                </Pivot>
-            </Grid>-->
         </Grid>
     </Grid>
 </Page>

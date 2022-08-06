@@ -177,8 +177,9 @@ namespace OpenDota_UWP.ViewModels
                             {
                                 double rate = wl.win / (wl.win + wl.lose);
                                 wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
+
+                                PlayerWinLose = wl;
                             }
-                            PlayerWinLose = wl;
                             if (PlayerWinLose != null)
                                 ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
                         }

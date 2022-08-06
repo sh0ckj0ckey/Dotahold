@@ -36,7 +36,7 @@ namespace OpenDota_UWP.Models
         /// <summary>
         /// https://steamcdn-a.akamaihd.net/ + apps/dota2/images/items/{img}.png
         /// </summary>
-        public string img { get; set; }
+        public string img { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
 
         /// <summary>
         /// 显示的名字

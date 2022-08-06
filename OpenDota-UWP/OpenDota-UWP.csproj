@@ -137,6 +137,7 @@
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
     <Compile Include="Converters\RankTierToImageConverter.cs" />
+    <Compile Include="Converters\DoubleArrayToStringConverter.cs" />
     <Compile Include="Converters\StringArrayToStringConverter.cs" />
     <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\EqualToHeroTabBackgroundConverter.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="Helpers\ImageLoader.cs" />
     <Compile Include="Helpers\SteamApiKey_GitIgnored.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
-    <Compile Include="Models\DotaHeroes.cs" />
     <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="Models\DotaHeroRankingModel.cs" />

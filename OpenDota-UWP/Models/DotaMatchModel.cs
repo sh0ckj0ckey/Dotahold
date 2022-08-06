@@ -56,10 +56,10 @@ namespace OpenDota_UWP.Models
         public int? party_size { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroCoverImage { get; set; } = string.Empty;
+        public string sHeroCoverImage { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroHorizonImage { get; set; } = string.Empty;
+        public string sHeroHorizonImage { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
 
         [Newtonsoft.Json.JsonIgnore]
         public string sHeroName { get; set; } = string.Empty;

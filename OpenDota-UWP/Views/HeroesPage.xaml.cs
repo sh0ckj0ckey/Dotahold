@@ -34,8 +34,6 @@ namespace OpenDota_UWP.Views
         private DotaHeroesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
-        public static DotaHeroes SelectedHero;
-
         public HeroesPage()
         {
             try

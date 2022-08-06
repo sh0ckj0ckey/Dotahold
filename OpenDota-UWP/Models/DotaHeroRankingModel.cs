@@ -18,7 +18,7 @@ namespace OpenDota_UWP.Models
         public string score { get; set; }
         public string personaname { get; set; }
         public string name { get; set; }
-        public string avatar { get; set; }
+        public string avatar { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
         public string last_login { get; set; }
         public string rank_tier { get; set; }
 

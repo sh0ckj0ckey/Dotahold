@@ -100,54 +100,19 @@ namespace OpenDota_UWP.Views
             }
         }
 
-        //    double[] pick = new double[] { ConvertString2Double(heroAttr._1_pick), ConvertString2Double(heroAttr._2_pick), ConvertString2Double(heroAttr._3_pick), ConvertString2Double(heroAttr._4_pick), ConvertString2Double(heroAttr._5_pick), ConvertString2Double(heroAttr._6_pick), ConvertString2Double(heroAttr._7_pick), ConvertString2Double(heroAttr._8_pick) };
-        //    double[] win = new double[] { ConvertString2Double(heroAttr._1_win), ConvertString2Double(heroAttr._2_win), ConvertString2Double(heroAttr._3_win), ConvertString2Double(heroAttr._4_win), ConvertString2Double(heroAttr._5_win), ConvertString2Double(heroAttr._6_win), ConvertString2Double(heroAttr._7_win), ConvertString2Double(heroAttr._8_win) };
-        //    double max = pick.Max();
-        //    double ratio = 328.0 / max;
-        //    Pick_1Rectangle.Width = ConvertString2Double(heroAttr._1_pick) * ratio;
-        //    Pick_2Rectangle.Width = ConvertString2Double(heroAttr._2_pick) * ratio;
-        //    Pick_3Rectangle.Width = ConvertString2Double(heroAttr._3_pick) * ratio;
-        //    Pick_4Rectangle.Width = ConvertString2Double(heroAttr._4_pick) * ratio;
-        //    Pick_5Rectangle.Width = ConvertString2Double(heroAttr._5_pick) * ratio;
-        //    Pick_6Rectangle.Width = ConvertString2Double(heroAttr._6_pick) * ratio;
-        //    Pick_7Rectangle.Width = ConvertString2Double(heroAttr._7_pick) * ratio;
-        //    Pick_8Rectangle.Width = ConvertString2Double(heroAttr._8_pick) * ratio;
-
-        //    Win_1Rectangle.Width = ConvertString2Double(heroAttr._1_win) * ratio;
-        //    Win_2Rectangle.Width = ConvertString2Double(heroAttr._2_win) * ratio;
-        //    Win_3Rectangle.Width = ConvertString2Double(heroAttr._3_win) * ratio;
-        //    Win_4Rectangle.Width = ConvertString2Double(heroAttr._4_win) * ratio;
-        //    Win_5Rectangle.Width = ConvertString2Double(heroAttr._5_win) * ratio;
-        //    Win_6Rectangle.Width = ConvertString2Double(heroAttr._6_win) * ratio;
-        //    Win_7Rectangle.Width = ConvertString2Double(heroAttr._7_win) * ratio;
-        //    Win_8Rectangle.Width = ConvertString2Double(heroAttr._8_win) * ratio;
-
-        //    Win_1TextBlock.Text = heroAttr._1_win;
-        //    Pick_1TextBlock.Text = heroAttr._1_pick;
-        //    Rate_1TextBlock.Text = (100 * ConvertString2Double(heroAttr._1_win) / ConvertString2Double(heroAttr._1_pick)).ToString("f1") + "%";
-        //    Win_2TextBlock.Text = heroAttr._2_win;
-        //    Pick_2TextBlock.Text = heroAttr._2_pick;
-        //    Rate_2TextBlock.Text = (100 * ConvertString2Double(heroAttr._2_win) / ConvertString2Double(heroAttr._2_pick)).ToString("f1") + "%";
-        //    Win_3TextBlock.Text = heroAttr._3_win;
-        //    Pick_3TextBlock.Text = heroAttr._3_pick;
-        //    Rate_3TextBlock.Text = (100 * ConvertString2Double(heroAttr._3_win) / ConvertString2Double(heroAttr._3_pick)).ToString("f1") + "%";
-        //    Win_4TextBlock.Text = heroAttr._4_win;
-        //    Pick_4TextBlock.Text = heroAttr._4_pick;
-        //    Rate_4TextBlock.Text = (100 * ConvertString2Double(heroAttr._4_win) / ConvertString2Double(heroAttr._4_pick)).ToString("f1") + "%";
-        //    Win_5TextBlock.Text = heroAttr._5_win;
-        //    Pick_5TextBlock.Text = heroAttr._5_pick;
-        //    Rate_5TextBlock.Text = (100 * ConvertString2Double(heroAttr._5_win) / ConvertString2Double(heroAttr._5_pick)).ToString("f1") + "%";
-        //    Win_6TextBlock.Text = heroAttr._6_win;
-        //    Pick_6TextBlock.Text = heroAttr._6_pick;
-        //    Rate_6TextBlock.Text = (100 * ConvertString2Double(heroAttr._6_win) / ConvertString2Double(heroAttr._6_pick)).ToString("f1") + "%";
-        //    Win_7TextBlock.Text = heroAttr._7_win;
-        //    Pick_7TextBlock.Text = heroAttr._7_pick;
-        //    Rate_7TextBlock.Text = (100 * ConvertString2Double(heroAttr._7_win) / ConvertString2Double(heroAttr._7_pick)).ToString("f1") + "%";
-        //    Win_8TextBlock.Text = heroAttr._8_win;
-        //    Pick_8TextBlock.Text = heroAttr._8_pick;
-        //    Rate_8TextBlock.Text = (100 * ConvertString2Double(heroAttr._8_win) / ConvertString2Double(heroAttr._8_pick)).ToString("f1") + "%";
-
-
+        /// <summary>
+        /// 加载完成后将滚动条滚到最顶部
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HeroInfoScrollViewer?.ChangeView(0, 0, 1, true);
+            }
+            catch { }
+        }
 
         /// <summary>
         /// 返回按钮

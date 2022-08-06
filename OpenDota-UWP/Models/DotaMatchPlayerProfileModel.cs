@@ -40,7 +40,7 @@ namespace OpenDota_UWP.Models
         public string steamid { get; set; }
         public string avatar { get; set; }
         public string avatarmedium { get; set; }
-        public string avatarfull { get; set; }
+        public string avatarfull { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
         public string profileurl { get; set; }
         public object last_login { get; set; }
         public object loccountrycode { get; set; }

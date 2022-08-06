@@ -163,12 +163,13 @@
                                     <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
                                 </StackPanel>
 
-                                <Grid Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="276" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
                                       Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
 
                             <!--胜率-->
                             <Grid Margin="0,0,12,0" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
+                                  Visibility="{x:Bind ViewModel.PlayerWinLose,Mode=OneWay,Converter={StaticResource Null2Vis}}"
                                   PointerEntered="Grid_PointerEntered" PointerExited="Grid_PointerExited">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -217,9 +218,6 @@
                                         <Run Text="{x:Bind ViewModel.PlayerWinLose.lose,Mode=OneWay}" FontSize="12"/>
                                     </TextBlock>
                                 </StackPanel>
-
-                                <Grid Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
-                                      Visibility="{x:Bind ViewModel.PlayerWinLose,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
 
                             <!--其他数据-->

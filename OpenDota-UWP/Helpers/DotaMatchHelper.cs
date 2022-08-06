@@ -102,104 +102,105 @@ namespace OpenDota_UWP.Helpers
         /// <returns></returns>
         public static HeroPlayerInfoViewModel GetHeroPlayerInfo(int index)
         {
-            #region 匹配
-            MatchCollection ability_upgrades_arrMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"ability_upgrades_arr\\\":\\[([\\s\\S]*?)\\],");
-            MatchCollection backpackItemsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"assists\\\":([\\d]*?),\\\"backpack_0\\\":([\\s\\S]*?),\\\"backpack_1\\\":([\\s\\S]*?),\\\"backpack_2\\\":([\\s\\S]*?),");
-            MatchCollection hero_idMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_id\\\":([\\s\\S]*?),");
-            MatchCollection hero_damageMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_damage\\\":([\\s\\S]*?),");
-            MatchCollection hero_healingMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_healing\\\":([\\s\\S]*?),");
-            MatchCollection itemsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_id\\\":[\\d]*?,\\\"item_0\\\":([\\s\\S]*?),\\\"item_1\\\":([\\s\\S]*?),\\\"item_2\\\":([\\s\\S]*?),\\\"item_3\\\":([\\s\\S]*?),\\\"item_4\\\":([\\s\\S]*?),\\\"item_5\\\":([\\s\\S]*?),");
-            MatchCollection permanent_buffsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"permanent_buffs\\\":([\\s\\S]*?),\\\"pings");
-            MatchCollection total_goldMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"total_gold\\\":([\\s\\S]*?),");
-            MatchCollection total_xpMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"total_xp\\\":([\\s\\S]*?),");
-            MatchCollection party_sizeMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"party_size\\\":([\\s\\S]*?),");
-            MatchCollection rank_tierMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"rank_tier\\\":([\\s\\S]*?),");
-            MatchCollection benchmarksMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"benchmarks\\\":{([\\s\\S]*?)}}");
-            #endregion
+            //#region 匹配
+            //MatchCollection ability_upgrades_arrMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"ability_upgrades_arr\\\":\\[([\\s\\S]*?)\\],");
+            //MatchCollection backpackItemsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"assists\\\":([\\d]*?),\\\"backpack_0\\\":([\\s\\S]*?),\\\"backpack_1\\\":([\\s\\S]*?),\\\"backpack_2\\\":([\\s\\S]*?),");
+            //MatchCollection hero_idMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_id\\\":([\\s\\S]*?),");
+            //MatchCollection hero_damageMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_damage\\\":([\\s\\S]*?),");
+            //MatchCollection hero_healingMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_healing\\\":([\\s\\S]*?),");
+            //MatchCollection itemsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"hero_id\\\":[\\d]*?,\\\"item_0\\\":([\\s\\S]*?),\\\"item_1\\\":([\\s\\S]*?),\\\"item_2\\\":([\\s\\S]*?),\\\"item_3\\\":([\\s\\S]*?),\\\"item_4\\\":([\\s\\S]*?),\\\"item_5\\\":([\\s\\S]*?),");
+            //MatchCollection permanent_buffsMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"permanent_buffs\\\":([\\s\\S]*?),\\\"pings");
+            //MatchCollection total_goldMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"total_gold\\\":([\\s\\S]*?),");
+            //MatchCollection total_xpMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"total_xp\\\":([\\s\\S]*?),");
+            //MatchCollection party_sizeMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"party_size\\\":([\\s\\S]*?),");
+            //MatchCollection rank_tierMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"rank_tier\\\":([\\s\\S]*?),");
+            //MatchCollection benchmarksMatch = Regex.Matches(HeroPlayerInfo.buffer, "\\\"benchmarks\\\":{([\\s\\S]*?)}}");
+            //#endregion
 
-            #region 赋值
-            HeroPlayerInfo heroPlayerInfo = new HeroPlayerInfo();
-            try
-            {
-                heroPlayerInfo.Ability_upgrades_arr = ability_upgrades_arrMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Ability_upgrades_arr = ""; }
-            try
-            {
-                heroPlayerInfo.Benchmarks = benchmarksMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Benchmarks = ""; }
-            try
-            {
-                heroPlayerInfo.Hero_id = hero_idMatch[index + hero_idMatch.Count - 10].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Hero_id = ""; }
-            try
-            {
-                heroPlayerInfo.Hero_damage = hero_damageMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Hero_damage = ""; }
-            try
-            {
-                heroPlayerInfo.Hero_healing = hero_healingMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Hero_healing = ""; }
-            try
-            {
-                heroPlayerInfo.Rank_tier = rank_tierMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Rank_tier = ""; }
-            try
-            {
-                heroPlayerInfo.Total_gold = total_goldMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Total_gold = ""; }
-            try
-            {
-                heroPlayerInfo.Total_xp = total_xpMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Total_xp = ""; }
-            try
-            {
-                heroPlayerInfo.Party_size = party_sizeMatch[index].Groups[1].Value;
-                switch (heroPlayerInfo.Party_size)
-                {
-                    case "1":
-                        heroPlayerInfo.Party_size = "单排";
-                        break;
-                    case "2":
-                        heroPlayerInfo.Party_size = "二黑";
-                        break;
-                    case "3":
-                        heroPlayerInfo.Party_size = "三黑";
-                        break;
-                    case "4":
-                        heroPlayerInfo.Party_size = "四黑";
-                        break;
-                    case "5":
-                        heroPlayerInfo.Party_size = "五黑";
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch { heroPlayerInfo.Party_size = ""; }
-            try
-            {
-                heroPlayerInfo.Permanent_buffs = permanent_buffsMatch[index].Groups[1].Value;
-            }
-            catch { heroPlayerInfo.Permanent_buffs = ""; }
-            heroPlayerInfo.Item_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[1].Value]);
-            heroPlayerInfo.Item_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[2].Value]);
-            heroPlayerInfo.Item_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[3].Value]);
-            heroPlayerInfo.Item_3 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[4].Value]);
-            heroPlayerInfo.Item_4 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[5].Value]);
-            heroPlayerInfo.Item_5 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[6].Value]);
-            heroPlayerInfo.Backpack_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[1].Value]);
-            heroPlayerInfo.Backpack_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[2].Value]);
-            heroPlayerInfo.Backpack_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[3].Value]);
-            #endregion
-            return new HeroPlayerInfoViewModel(heroPlayerInfo);
+            //#region 赋值
+            //HeroPlayerInfo heroPlayerInfo = new HeroPlayerInfo();
+            //try
+            //{
+            //    heroPlayerInfo.Ability_upgrades_arr = ability_upgrades_arrMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Ability_upgrades_arr = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Benchmarks = benchmarksMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Benchmarks = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Hero_id = hero_idMatch[index + hero_idMatch.Count - 10].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Hero_id = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Hero_damage = hero_damageMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Hero_damage = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Hero_healing = hero_healingMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Hero_healing = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Rank_tier = rank_tierMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Rank_tier = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Total_gold = total_goldMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Total_gold = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Total_xp = total_xpMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Total_xp = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Party_size = party_sizeMatch[index].Groups[1].Value;
+            //    switch (heroPlayerInfo.Party_size)
+            //    {
+            //        case "1":
+            //            heroPlayerInfo.Party_size = "单排";
+            //            break;
+            //        case "2":
+            //            heroPlayerInfo.Party_size = "二黑";
+            //            break;
+            //        case "3":
+            //            heroPlayerInfo.Party_size = "三黑";
+            //            break;
+            //        case "4":
+            //            heroPlayerInfo.Party_size = "四黑";
+            //            break;
+            //        case "5":
+            //            heroPlayerInfo.Party_size = "五黑";
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            //catch { heroPlayerInfo.Party_size = ""; }
+            //try
+            //{
+            //    heroPlayerInfo.Permanent_buffs = permanent_buffsMatch[index].Groups[1].Value;
+            //}
+            //catch { heroPlayerInfo.Permanent_buffs = ""; }
+            //heroPlayerInfo.Item_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[1].Value]);
+            //heroPlayerInfo.Item_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[2].Value]);
+            //heroPlayerInfo.Item_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[3].Value]);
+            //heroPlayerInfo.Item_3 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[4].Value]);
+            //heroPlayerInfo.Item_4 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[5].Value]);
+            //heroPlayerInfo.Item_5 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[itemsMatch[index].Groups[6].Value]);
+            //heroPlayerInfo.Backpack_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[1].Value]);
+            //heroPlayerInfo.Backpack_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[2].Value]);
+            //heroPlayerInfo.Backpack_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[backpackItemsMatch[index].Groups[3].Value]);
+            //#endregion
+            //return new HeroPlayerInfoViewModel(heroPlayerInfo);
+            return null;
         }
 
         /// <summary>
@@ -244,123 +245,123 @@ namespace OpenDota_UWP.Helpers
             HttpClient http = new HttpClient();
             List<PlayersInfo> playersInfoList = new List<PlayersInfo>();
             string jsonMessage;
-            try
-            {
-                if (HeroPlayerInfo.CurrentMatchID != matchid || HeroPlayerInfo.buffer.StartsWith("{\"error\""))
-                {
-                    var response = await http.GetAsync(new Uri(url));
-                    jsonMessage = await response.Content.ReadAsStringAsync();
-                    HeroPlayerInfo.CurrentMatchID = matchid;
-                    if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    jsonMessage = HeroPlayerInfo.buffer;
-                }
+            //try
+            //{
+            //    if (HeroPlayerInfo.CurrentMatchID != matchid || HeroPlayerInfo.buffer.StartsWith("{\"error\""))
+            //    {
+            //        var response = await http.GetAsync(new Uri(url));
+            //        jsonMessage = await response.Content.ReadAsStringAsync();
+            //        HeroPlayerInfo.CurrentMatchID = matchid;
+            //        if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
+            //        {
+            //            return null;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        jsonMessage = HeroPlayerInfo.buffer;
+            //    }
 
-                MatchCollection account_idMatch = Regex.Matches(jsonMessage, "\\\"account_id\\\":([\\s\\S]*?),");
-                MatchCollection assistsMatch = Regex.Matches(jsonMessage, "\\\"assists\\\":([\\s\\S]*?),");
-                MatchCollection deathsMatch = Regex.Matches(jsonMessage, "\\\"damage_targets\\\"[\\s\\S]*?,\\\"deaths\\\":([\\s\\S]*?),\\\"denies");
-                MatchCollection deniesMatch = Regex.Matches(jsonMessage, "\\\"denies\\\":([\\s\\S]*?),");
-                MatchCollection killsMatch = Regex.Matches(jsonMessage, "\\\"kills\\\":([\\s\\S]*?),\\\"kills_log");
-                MatchCollection last_hitsMatch = Regex.Matches(jsonMessage, "\\\"last_hits\\\":([\\s\\S]*?),");
-                MatchCollection levelMatch = Regex.Matches(jsonMessage, "\\\"level\\\":([\\s\\S]*?),");
-                MatchCollection hero_damageMatch = Regex.Matches(jsonMessage, "\\\"hero_damage\\\":([\\s\\S]*?),");
-                MatchCollection hero_idItemsMatch = Regex.Matches(jsonMessage, "\\\"hero_id\\\":([\\d]*?),\\\"item_0\\\":([\\s\\S]*?),\\\"item_1\\\":([\\s\\S]*?),\\\"item_2\\\":([\\s\\S]*?),\\\"item_3\\\":([\\s\\S]*?),\\\"item_4\\\":([\\s\\S]*?),\\\"item_5\\\":([\\s\\S]*?),");
+            //    MatchCollection account_idMatch = Regex.Matches(jsonMessage, "\\\"account_id\\\":([\\s\\S]*?),");
+            //    MatchCollection assistsMatch = Regex.Matches(jsonMessage, "\\\"assists\\\":([\\s\\S]*?),");
+            //    MatchCollection deathsMatch = Regex.Matches(jsonMessage, "\\\"damage_targets\\\"[\\s\\S]*?,\\\"deaths\\\":([\\s\\S]*?),\\\"denies");
+            //    MatchCollection deniesMatch = Regex.Matches(jsonMessage, "\\\"denies\\\":([\\s\\S]*?),");
+            //    MatchCollection killsMatch = Regex.Matches(jsonMessage, "\\\"kills\\\":([\\s\\S]*?),\\\"kills_log");
+            //    MatchCollection last_hitsMatch = Regex.Matches(jsonMessage, "\\\"last_hits\\\":([\\s\\S]*?),");
+            //    MatchCollection levelMatch = Regex.Matches(jsonMessage, "\\\"level\\\":([\\s\\S]*?),");
+            //    MatchCollection hero_damageMatch = Regex.Matches(jsonMessage, "\\\"hero_damage\\\":([\\s\\S]*?),");
+            //    MatchCollection hero_idItemsMatch = Regex.Matches(jsonMessage, "\\\"hero_id\\\":([\\d]*?),\\\"item_0\\\":([\\s\\S]*?),\\\"item_1\\\":([\\s\\S]*?),\\\"item_2\\\":([\\s\\S]*?),\\\"item_3\\\":([\\s\\S]*?),\\\"item_4\\\":([\\s\\S]*?),\\\"item_5\\\":([\\s\\S]*?),");
 
-                //String.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", id);
-                for (int i = 0; i < 10; i++)
-                {
-                    string color = "#FFFFFF";
-                    switch (i)
-                    {
-                        case 0:
-                            color = "#3375FF";
-                            break;
-                        case 1:
-                            color = "#66FFBF";
-                            break;
-                        case 2:
-                            color = "#BF00BF";
-                            break;
-                        case 3:
-                            color = "#F3F00B";
-                            break;
-                        case 4:
-                            color = "#FF6B00";
-                            break;
-                        case 5:
-                            color = "#FE86C2";
-                            break;
-                        case 6:
-                            color = "#A1B447";
-                            break;
-                        case 7:
-                            color = "#65D9F7";
-                            break;
-                        case 8:
-                            color = "#008321";
-                            break;
-                        case 9:
-                            color = "#A46900";
-                            break;
-                        default:
-                            color = "#FFFFFF";
-                            break;
-                    }
-                    try
-                    {
-                        playersInfoList.Add(new PlayersInfo
-                        {
-                            Account_id = account_idMatch[i].Groups[1].Value,
-                            Assists = assistsMatch[i].Groups[1].Value,
-                            Deaths = deathsMatch[i].Groups[1].Value,
-                            Denies = deniesMatch[i].Groups[1].Value,
-                            Kills = killsMatch[i].Groups[1].Value,
-                            Last_hits = last_hitsMatch[i].Groups[1].Value,
-                            Level = levelMatch[i].Groups[1].Value,
-                            Hero_damage = hero_damageMatch[i].Groups[1].Value,
-                            Hero_id = hero_idItemsMatch[i].Groups[1].Value,
-                            Item_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[2].Value]),
-                            Item_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[3].Value]),
-                            Item_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[4].Value]),
-                            Item_3 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[5].Value]),
-                            Item_4 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[6].Value]),
-                            Item_5 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[7].Value]),
-                            Color = color
-                        });
-                    }
-                    catch
-                    {
-                        playersInfoList.Add(new PlayersInfo
-                        {
-                            Account_id = "Unknown",
-                            Assists = "0",
-                            Deaths = "0",
-                            Denies = "0",
-                            Kills = "0",
-                            Last_hits = "0",
-                            Level = "0",
-                            Hero_damage = "0",
-                            Hero_id = "1",
-                            Item_0 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Item_1 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Item_2 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Item_3 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Item_4 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Item_5 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
-                            Color = color
-                        });
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
+            //    //String.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", id);
+            //    for (int i = 0; i < 10; i++)
+            //    {
+            //        string color = "#FFFFFF";
+            //        switch (i)
+            //        {
+            //            case 0:
+            //                color = "#3375FF";
+            //                break;
+            //            case 1:
+            //                color = "#66FFBF";
+            //                break;
+            //            case 2:
+            //                color = "#BF00BF";
+            //                break;
+            //            case 3:
+            //                color = "#F3F00B";
+            //                break;
+            //            case 4:
+            //                color = "#FF6B00";
+            //                break;
+            //            case 5:
+            //                color = "#FE86C2";
+            //                break;
+            //            case 6:
+            //                color = "#A1B447";
+            //                break;
+            //            case 7:
+            //                color = "#65D9F7";
+            //                break;
+            //            case 8:
+            //                color = "#008321";
+            //                break;
+            //            case 9:
+            //                color = "#A46900";
+            //                break;
+            //            default:
+            //                color = "#FFFFFF";
+            //                break;
+            //        }
+            //        try
+            //        {
+            //            playersInfoList.Add(new PlayersInfo
+            //            {
+            //                Account_id = account_idMatch[i].Groups[1].Value,
+            //                Assists = assistsMatch[i].Groups[1].Value,
+            //                Deaths = deathsMatch[i].Groups[1].Value,
+            //                Denies = deniesMatch[i].Groups[1].Value,
+            //                Kills = killsMatch[i].Groups[1].Value,
+            //                Last_hits = last_hitsMatch[i].Groups[1].Value,
+            //                Level = levelMatch[i].Groups[1].Value,
+            //                Hero_damage = hero_damageMatch[i].Groups[1].Value,
+            //                Hero_id = hero_idItemsMatch[i].Groups[1].Value,
+            //                Item_0 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[2].Value]),
+            //                Item_1 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[3].Value]),
+            //                Item_2 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[4].Value]),
+            //                Item_3 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[5].Value]),
+            //                Item_4 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[6].Value]),
+            //                Item_5 = string.Format("http://www.dota2.com.cn/items/images/{0}_lg.png", ConstantsHelper.ItemsDictionary[hero_idItemsMatch[i].Groups[7].Value]),
+            //                Color = color
+            //            });
+            //        }
+            //        catch
+            //        {
+            //            playersInfoList.Add(new PlayersInfo
+            //            {
+            //                Account_id = "Unknown",
+            //                Assists = "0",
+            //                Deaths = "0",
+            //                Denies = "0",
+            //                Kills = "0",
+            //                Last_hits = "0",
+            //                Level = "0",
+            //                Hero_damage = "0",
+            //                Hero_id = "1",
+            //                Item_0 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Item_1 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Item_2 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Item_3 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Item_4 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Item_5 = string.Format("http://www.dota2.com.cn/items/images/null_lg.png"),
+            //                Color = color
+            //            });
+            //        }
+            //    }
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
             return playersInfoList;
         }
 
@@ -416,26 +417,26 @@ namespace OpenDota_UWP.Helpers
 
         public PlayersInfoViewModel(PlayersInfo playersInfo)
         {
-            this.Item_0 = playersInfo.Item_0 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_0;
-            this.Item_1 = playersInfo.Item_1 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_1;
-            this.Item_2 = playersInfo.Item_2 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_2;
-            this.Item_3 = playersInfo.Item_3 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_3;
-            this.Item_4 = playersInfo.Item_4 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_4;
-            this.Item_5 = playersInfo.Item_5 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_5;
-            this.Level = playersInfo.Level;
-            this.Hero_damage = playersInfo.Hero_damage;
-            this.HeroPhoto = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(playersInfo.Hero_id)]].Pic;
-            this.K_D_A = playersInfo.Kills + "/" + playersInfo.Deaths + "/" + playersInfo.Assists;
-            double deaths = playersInfo.Deaths == "0" ? 1 : Convert.ToDouble(playersInfo.Deaths);
-            this.KDA = "KDA：" + ((Convert.ToDouble(playersInfo.Kills) + Convert.ToDouble(playersInfo.Assists)) / deaths).ToString("0.00");
-            this.LD = "正/反：" + playersInfo.Last_hits + "/" + playersInfo.Denies;
-            this.Account_id = playersInfo.Account_id;
-            this.PlayerName = "匿名玩家";
-            this.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
-            this.Kills = Convert.ToDouble(playersInfo.Kills);
-            this.Deaths = Convert.ToDouble(playersInfo.Deaths);
-            this.Assists = Convert.ToDouble(playersInfo.Assists);
-            this.Color = playersInfo.Color;
+            //this.Item_0 = playersInfo.Item_0 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_0;
+            //this.Item_1 = playersInfo.Item_1 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_1;
+            //this.Item_2 = playersInfo.Item_2 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_2;
+            //this.Item_3 = playersInfo.Item_3 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_3;
+            //this.Item_4 = playersInfo.Item_4 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_4;
+            //this.Item_5 = playersInfo.Item_5 == "http://www.dota2.com.cn/items/images/_lg.png" ? "ms-appx:///Assets/Pictures/null.png" : playersInfo.Item_5;
+            //this.Level = playersInfo.Level;
+            //this.Hero_damage = playersInfo.Hero_damage;
+            //this.HeroPhoto = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(playersInfo.Hero_id)]].Pic;
+            //this.K_D_A = playersInfo.Kills + "/" + playersInfo.Deaths + "/" + playersInfo.Assists;
+            //double deaths = playersInfo.Deaths == "0" ? 1 : Convert.ToDouble(playersInfo.Deaths);
+            //this.KDA = "KDA：" + ((Convert.ToDouble(playersInfo.Kills) + Convert.ToDouble(playersInfo.Assists)) / deaths).ToString("0.00");
+            //this.LD = "正/反：" + playersInfo.Last_hits + "/" + playersInfo.Denies;
+            //this.Account_id = playersInfo.Account_id;
+            //this.PlayerName = "匿名玩家";
+            //this.PlayerPhoto = "ms-appx:///Assets/Pictures/null.png";
+            //this.Kills = Convert.ToDouble(playersInfo.Kills);
+            //this.Deaths = Convert.ToDouble(playersInfo.Deaths);
+            //this.Assists = Convert.ToDouble(playersInfo.Assists);
+            //this.Color = playersInfo.Color;
         }
     }
 
@@ -467,15 +468,15 @@ namespace OpenDota_UWP.Helpers
         public HeroUsingInfoViewModel() { }
         public HeroUsingInfoViewModel(HeroUsingInfo heroUsingInfo)
         {
-            this.Photo = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroUsingInfo.hero_id)]].IconPic;
-            this.Name = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroUsingInfo.hero_id)]].Name;
-            this.Games = heroUsingInfo.games;
-            this.Win = heroUsingInfo.win;
-            this.Win_rate = Math.Round(100 * heroUsingInfo.win / heroUsingInfo.games, 1);
-            this.With = heroUsingInfo.with_games;
-            this.With_win = heroUsingInfo.with_win;
-            this.Against = heroUsingInfo.against_games;
-            this.Against_win = heroUsingInfo.against_win;
+            //this.Photo = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroUsingInfo.hero_id)]].IconPic;
+            //this.Name = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroUsingInfo.hero_id)]].Name;
+            //this.Games = heroUsingInfo.games;
+            //this.Win = heroUsingInfo.win;
+            //this.Win_rate = Math.Round(100 * heroUsingInfo.win / heroUsingInfo.games, 1);
+            //this.With = heroUsingInfo.with_games;
+            //this.With_win = heroUsingInfo.with_win;
+            //this.Against = heroUsingInfo.against_games;
+            //this.Against_win = heroUsingInfo.against_win;
         }
     }
 
@@ -657,39 +658,39 @@ namespace OpenDota_UWP.Helpers
 
         public HeroPlayerInfoViewModel(HeroPlayerInfo heroPlayerInfo)
         {
-            List<Benchmark> got = GetBenchmarks(heroPlayerInfo.Benchmarks);
-            this.Benchmarks_gpm = got[0];
-            this.Benchmarks_hero_damage_per_minute = got[4];
-            this.Benchmarks_hero_healing_per_minute = got[5];
-            this.Benchmarks_kill_per_minute = got[2];
-            this.Benchmarks_last_hit_per_minute = got[3];
-            this.Benchmarks_tower_damage = got[6];
-            this.Benchmarks_xpm = got[1];
+            //List<Benchmark> got = GetBenchmarks(heroPlayerInfo.Benchmarks);
+            //this.Benchmarks_gpm = got[0];
+            //this.Benchmarks_hero_damage_per_minute = got[4];
+            //this.Benchmarks_hero_healing_per_minute = got[5];
+            //this.Benchmarks_kill_per_minute = got[2];
+            //this.Benchmarks_last_hit_per_minute = got[3];
+            //this.Benchmarks_tower_damage = got[6];
+            //this.Benchmarks_xpm = got[1];
 
-            this.Ability_upgrades_arr = GetAbility_upgrades_arr(heroPlayerInfo.Ability_upgrades_arr);
-            this.Permanent_buffs = GetBuffs(heroPlayerInfo.Permanent_buffs);
-            this.Backpack_0 = heroPlayerInfo.Backpack_0;
-            this.Backpack_1 = heroPlayerInfo.Backpack_1;
-            this.Backpack_2 = heroPlayerInfo.Backpack_2;
-            this.Item_0 = heroPlayerInfo.Item_0;
-            this.Item_1 = heroPlayerInfo.Item_1;
-            this.Item_2 = heroPlayerInfo.Item_2;
-            this.Item_3 = heroPlayerInfo.Item_3;
-            this.Item_4 = heroPlayerInfo.Item_4;
-            this.Item_5 = heroPlayerInfo.Item_5;
-            this.GPM = this.Benchmarks_gpm.Raw;
-            this.Hero_damage = heroPlayerInfo.Hero_damage;
-            this.Hero_healing = heroPlayerInfo.Hero_healing;
-            this.Party_size = heroPlayerInfo.Party_size;
-            this.Total_gold = heroPlayerInfo.Total_gold;
-            this.Total_xp = heroPlayerInfo.Total_xp;
-            this.Tower_damage = this.Benchmarks_tower_damage.Raw;
-            this.XPM = this.Benchmarks_xpm.Raw;
-            this.Rank_tier = heroPlayerInfo.Rank_tier;
+            //this.Ability_upgrades_arr = GetAbility_upgrades_arr(heroPlayerInfo.Ability_upgrades_arr);
+            //this.Permanent_buffs = GetBuffs(heroPlayerInfo.Permanent_buffs);
+            //this.Backpack_0 = heroPlayerInfo.Backpack_0;
+            //this.Backpack_1 = heroPlayerInfo.Backpack_1;
+            //this.Backpack_2 = heroPlayerInfo.Backpack_2;
+            //this.Item_0 = heroPlayerInfo.Item_0;
+            //this.Item_1 = heroPlayerInfo.Item_1;
+            //this.Item_2 = heroPlayerInfo.Item_2;
+            //this.Item_3 = heroPlayerInfo.Item_3;
+            //this.Item_4 = heroPlayerInfo.Item_4;
+            //this.Item_5 = heroPlayerInfo.Item_5;
+            //this.GPM = this.Benchmarks_gpm.Raw;
+            //this.Hero_damage = heroPlayerInfo.Hero_damage;
+            //this.Hero_healing = heroPlayerInfo.Hero_healing;
+            //this.Party_size = heroPlayerInfo.Party_size;
+            //this.Total_gold = heroPlayerInfo.Total_gold;
+            //this.Total_xp = heroPlayerInfo.Total_xp;
+            //this.Tower_damage = this.Benchmarks_tower_damage.Raw;
+            //this.XPM = this.Benchmarks_xpm.Raw;
+            //this.Rank_tier = heroPlayerInfo.Rank_tier;
 
-            this.Hero_id = heroPlayerInfo.Hero_id;
-            this.Hero_name = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroPlayerInfo.Hero_id)]].Name;
-            this.Hero_photo = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroPlayerInfo.Hero_id)]].Pic;
+            //this.Hero_id = heroPlayerInfo.Hero_id;
+            //this.Hero_name = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroPlayerInfo.Hero_id)]].Name;
+            //this.Hero_photo = ConstantsHelper.dotaHerosDictionary[ConstantsHelper.HeroID[Convert.ToInt32(heroPlayerInfo.Hero_id)]].Pic;
         }
 
         private List<Benchmark> GetBenchmarks(string regular)

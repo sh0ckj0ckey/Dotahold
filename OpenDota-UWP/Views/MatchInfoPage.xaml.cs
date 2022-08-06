@@ -103,87 +103,87 @@ namespace OpenDota_UWP.Views
 
         private async void ShowMatchInfo(string match_id)
         {
-            List<string> list = await DotaMatchHelper.GetMatchInfoAsync(match_id);
-            if (list[0] == "time_limit")
-            {
-                ShowDialog("好像获取不到数据了(超时)，请稍等一会儿再查看");
-                this.Frame.Navigate(typeof(BlankPage));
-                return;
-            }
-            else if (list[0] == "server_error")
-            {
-                ShowDialog("抱歉，OpenDota 服务器连接错误，请过一段时间再试");
-                this.Frame.Navigate(typeof(BlankPage));
-                return;
-            }
-            else if (list[0] == "data_error")
-            {
-                ShowDialog("非常抱歉，解析比赛数据时出现故障，烦请发送比赛编号 " + match_id + " 给 yaoyiming123@live.com，感谢！");
-                this.Frame.Navigate(typeof(BlankPage));
-                return;
-            }
+            //List<string> list = await DotaMatchHelper.GetMatchInfoAsync(match_id);
+            //if (list[0] == "time_limit")
+            //{
+            //    ShowDialog("好像获取不到数据了(超时)，请稍等一会儿再查看");
+            //    this.Frame.Navigate(typeof(BlankPage));
+            //    return;
+            //}
+            //else if (list[0] == "server_error")
+            //{
+            //    ShowDialog("抱歉，OpenDota 服务器连接错误，请过一段时间再试");
+            //    this.Frame.Navigate(typeof(BlankPage));
+            //    return;
+            //}
+            //else if (list[0] == "data_error")
+            //{
+            //    ShowDialog("非常抱歉，解析比赛数据时出现故障，烦请发送比赛编号 " + match_id + " 给 yaoyiming123@live.com，感谢！");
+            //    this.Frame.Navigate(typeof(BlankPage));
+            //    return;
+            //}
 
-            try
-            {
-                MatchData_FBTextBlock.Text = (Convert.ToInt32(list[0]) / 60) + ":" + (Convert.ToInt32(list[0]) % 60).ToString().PadLeft(2, '0');
-            }
-            catch { }
-            try
-            {
-                MatchData_GameTimeTextBlock.Text = (Convert.ToInt32(list[1]) / 60) + ":" + (Convert.ToInt32(list[1]) % 60).ToString().PadLeft(2, '0');
-            }
-            catch { }
-            try
-            {
-                MatchData_GameModeTextBlock.Text = ConstantsHelper.GameModeID[Convert.ToInt32(list[2])];
-                if (MatchData_GameModeTextBlock.Text == "暗月来袭" || MatchData_GameModeTextBlock.Text == "小贪魔节" || MatchData_GameModeTextBlock.Text == "-")
-                {
-                    MaskGrid.Visibility = Visibility.Visible;
-                    MatchInfoScrollViewer.IsEnabled = false;
-                    return;
-                }
-            }
-            catch { }
-            try
-            {
-                DownloadHyperlinkButton.NavigateUri = new Uri(list[3]);
-            }
-            catch
-            {
-                DownloadHyperlinkButton.IsEnabled = false;
-            }
-            RadiantScoreTextBlock.Text = "Score: " + list[4];
-            DireScoreTextBlock.Text = "Score: " + list[5];
-            switch (list[6])
-            {
-                case "9":
-                    MatchData_GameModeTextBlock.Foreground = new SolidColorBrush(Colors.Brown);//"勇士联赛"
-                    break;
-                case "5":
-                case "6":
-                case "7":
-                    MatchData_GameModeTextBlock.Foreground = new SolidColorBrush(Colors.DarkGoldenrod);//"天梯"
-                    break;
-                default:
-                    break;
-            }
-            try
-            {
-                DireWinTextBlock.Text = list[7] == "true" ? "LOSE" : "WIN";
-                RadiantWinTextBlock.Text = list[7] == "true" ? "WIN" : "LOSE";
-            }
-            catch { }
-            string[] radiant_gold_adv = list[8].Split(',');
-            string[] radiant_xp_adv = list[9].Split(',');
-            try
-            {
-                DrawChart(radiant_gold_adv, radiant_xp_adv);
-            }
-            catch
-            {
-                ChartGrid.Visibility = Visibility.Collapsed;
-                NoChartNoteStackPanel.Visibility = Visibility.Visible;
-            }
+            //try
+            //{
+            //    MatchData_FBTextBlock.Text = (Convert.ToInt32(list[0]) / 60) + ":" + (Convert.ToInt32(list[0]) % 60).ToString().PadLeft(2, '0');
+            //}
+            //catch { }
+            //try
+            //{
+            //    MatchData_GameTimeTextBlock.Text = (Convert.ToInt32(list[1]) / 60) + ":" + (Convert.ToInt32(list[1]) % 60).ToString().PadLeft(2, '0');
+            //}
+            //catch { }
+            //try
+            //{
+            //    MatchData_GameModeTextBlock.Text = ConstantsHelper.GameModeID[Convert.ToInt32(list[2])];
+            //    if (MatchData_GameModeTextBlock.Text == "暗月来袭" || MatchData_GameModeTextBlock.Text == "小贪魔节" || MatchData_GameModeTextBlock.Text == "-")
+            //    {
+            //        MaskGrid.Visibility = Visibility.Visible;
+            //        MatchInfoScrollViewer.IsEnabled = false;
+            //        return;
+            //    }
+            //}
+            //catch { }
+            //try
+            //{
+            //    DownloadHyperlinkButton.NavigateUri = new Uri(list[3]);
+            //}
+            //catch
+            //{
+            //    DownloadHyperlinkButton.IsEnabled = false;
+            //}
+            //RadiantScoreTextBlock.Text = "Score: " + list[4];
+            //DireScoreTextBlock.Text = "Score: " + list[5];
+            //switch (list[6])
+            //{
+            //    case "9":
+            //        MatchData_GameModeTextBlock.Foreground = new SolidColorBrush(Colors.Brown);//"勇士联赛"
+            //        break;
+            //    case "5":
+            //    case "6":
+            //    case "7":
+            //        MatchData_GameModeTextBlock.Foreground = new SolidColorBrush(Colors.DarkGoldenrod);//"天梯"
+            //        break;
+            //    default:
+            //        break;
+            //}
+            //try
+            //{
+            //    DireWinTextBlock.Text = list[7] == "true" ? "LOSE" : "WIN";
+            //    RadiantWinTextBlock.Text = list[7] == "true" ? "WIN" : "LOSE";
+            //}
+            //catch { }
+            //string[] radiant_gold_adv = list[8].Split(',');
+            //string[] radiant_xp_adv = list[9].Split(',');
+            //try
+            //{
+            //    DrawChart(radiant_gold_adv, radiant_xp_adv);
+            //}
+            //catch
+            //{
+            //    ChartGrid.Visibility = Visibility.Collapsed;
+            //    NoChartNoteStackPanel.Visibility = Visibility.Visible;
+            //}
         }
 
         private async void ShowPlayers(string match_id)
