@@ -256,6 +256,8 @@
     <Content Include="Assets\Icons\Data\icon_tower.png" />
     <Content Include="Assets\Icons\Data\icon_towerdamage.png" />
     <Content Include="Assets\Icons\Data\icon_tp.png" />
+    <Content Include="Assets\Icons\Hero\hero_ability_aghs_scepter.png" />
+    <Content Include="Assets\Icons\Hero\hero_ability_aghs_shard.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_light.png" />
     <Content Include="Assets\Icons\icon_dota_plus.png" />

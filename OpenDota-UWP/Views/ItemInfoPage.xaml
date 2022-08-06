@@ -101,21 +101,27 @@
                            Margin="0,4"
                            Visibility="{x:Bind sAttribInfo,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
                 <StackPanel Orientation="Horizontal" Margin="6">
-                    <Image Source="/Assets/Icons/Data/icon_mana.png" Stretch="Uniform" Width="14" Height="14"
-                           Visibility="{x:Bind ViewModel.CurrentItem.mc,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                    <Border Height="14" Width="14" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
+                            Visibility="{x:Bind ViewModel.CurrentItem.mc,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_mana.png"/>
+                        </Border.Background>
+                    </Border>
                     <TextBlock Text="{x:Bind ViewModel.CurrentItem.mc,Mode=OneWay}"
                                Margin="4,0,12,0" Visibility="{x:Bind ViewModel.CurrentItem.mc,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
-                    <Image Source="/Assets/Icons/Data/icon_cooldown.png" Stretch="Uniform" Width="14" Height="14"
-                           Visibility="{x:Bind ViewModel.CurrentItem.cd,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
+                    <Border Height="14" Width="14" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
+                            Visibility="{x:Bind ViewModel.CurrentItem.cd,Converter={StaticResource Int2Vis},Mode=OneWay}">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_cooldown.png"/>
+                        </Border.Background>
+                    </Border>
                     <TextBlock Text="{x:Bind ViewModel.CurrentItem.cd,Mode=OneWay}"
                                Margin="4,0" Visibility="{x:Bind ViewModel.CurrentItem.cd,Converter={StaticResource Int2Vis},Mode=OneWay}"/>
                 </StackPanel>
                 <Grid x:Name="BackgroundGrid" Background="#20808080" CornerRadius="6"
                       Visibility="{x:Bind ViewModel.CurrentItem.lore,Converter={StaticResource Str2Vis},Mode=OneWay}">
                     <TextBlock Text="{x:Bind ViewModel.CurrentItem.lore,Mode=OneWay}"
-                               Opacity="0.6"
-                               Margin="12,10" CharacterSpacing="20"
-                               TextWrapping="WrapWholeWords"/>
+                               Opacity="0.6" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
                 </Grid>
                 <TextBlock Text="Recipe" FontWeight="Medium" CharacterSpacing="20" FontSize="15" Margin="4,18,0,4"
                            Visibility="{x:Bind bHasComponents,Mode=OneWay}"/>
