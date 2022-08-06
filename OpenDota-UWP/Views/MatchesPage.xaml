@@ -509,15 +509,16 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
                     <RowDefinition Height="64"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Grid.RowSpan="2" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Margin="16,0,4,0" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                CharacterSpacing="40" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                    <Button Content="&#xE783;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"
+                    <Button Content="&#xE9CE;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"
                             Margin="0" Foreground="{ThemeResource SystemAccentColor}" Style="{StaticResource TextBlockButtonStyle}">
                         <Button.Flyout>
                             <Flyout x:Name="WhatIDFlyout" Placement="Bottom">
@@ -560,10 +561,10 @@
                     </Button.Content>
                 </Button>
 
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,12,0,0">
-                    <TextBox x:Name="SteamIDTextBox" Height="38" Width="256" Margin="0,0,12,0" CornerRadius="6" FontWeight="Medium" CharacterSpacing="60"
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-4,0,0">
+                    <TextBox x:Name="SteamIDTextBox" Height="38" Width="256" Margin="0,0,12,0" FontWeight="Medium" CharacterSpacing="60" UseLayoutRounding="True"
                              HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,2" BorderBrush="{ThemeResource COMMON_TEXTBOX_BD}" Template="{StaticResource CornerTextBoxTemplate}"
-                             Padding="12,6,4,0" FontSize="18" TextChanged="SteamIDTextBox_TextChanged" KeyUp="SteamIDTextBox_KeyUp" />
+                             Padding="12,6,4,0" FontSize="18" PlaceholderText="enter id here..." PlaceholderForeground="#60AAAAAA" TextChanged="SteamIDTextBox_TextChanged" KeyUp="SteamIDTextBox_KeyUp" />
                     <Button x:Name="OKButton" IsEnabled="False" Height="38" Width="38" CornerRadius="19" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" Foreground="White" Background="{ThemeResource COMMON_BUTTON_BK}">
                         <Button.Content>

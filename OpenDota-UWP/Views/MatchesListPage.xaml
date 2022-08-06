@@ -107,7 +107,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Margin="0,24,0,20" Height="38" Padding="18,0" BorderThickness="0" CornerRadius="20"
+                <Button Margin="0,24,0,28" Height="38" Padding="18,0" BorderThickness="0" CornerRadius="20"
                         Style="{ThemeResource ButtonRevealStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                         Visibility="{x:Bind ViewModel.bLoadedAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}"
                         Click="OnClickLoadMoreMatches">
