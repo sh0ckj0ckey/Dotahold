@@ -112,38 +112,100 @@
                     </Pivot.HeaderTemplate>
                     <PivotItem Header="GENERAL">
                         <StackPanel>
-                            <TextBlock Text="Customize" FontWeight="Bold" FontSize="18" Margin="12,12,0,6"/>
-                            <TextBlock Text="Appearance" FontWeight="Medium" FontSize="15" Margin="12,4,0,4"/>
-                            <RadioButton Content="Dark" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked"
-                                         IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Dark,Mode=OneWay}"/>
-                            <RadioButton Content="Light" Margin="12,2" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"
-                                         IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Light,Mode=OneWay}"/>
-                            <TextBlock Text="Startup Page" FontWeight="Medium" FontSize="15" Margin="12,8,0,6"/>
-                            <ComboBox x:Name="StartupPageComboBox" Style="{StaticResource CustomComboBoxStyle}" Margin="12,4,0,0" MinWidth="128" 
-                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}"
-                                      SelectedIndex="{x:Bind ViewModel.iStartupTabIndex,Mode=OneWay}"
-                                      SelectionChanged="ComboBox_SelectionChanged">
-                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
-                                    <TextBlock Text="Heroes"/>
-                                </ComboBoxItem>
-                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
-                                    <TextBlock Text="Items"/>
-                                </ComboBoxItem>
-                                <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
-                                    <TextBlock Text="Matches"/>
-                                </ComboBoxItem>
-                            </ComboBox>
-                            <TextBlock Text="Data" FontWeight="Bold" FontSize="18" Margin="12,24,0,6"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Button CornerRadius="6" Height="32" Background="{ThemeResource COMBOBOX_NORMAL_BK}" BorderThickness="0" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,0">
-                                    <Button.Content>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xEA99;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                            <TextBlock Text="Clear Cache"/>
-                                        </StackPanel>
-                                    </Button.Content>
-                                </Button>
-                            </StackPanel>
+                            <!--个性化-->
+                            <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,12,0,0" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock Text="&#xE790;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Customize" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,2" Padding="0,8" CornerRadius="0" Background="{ThemeResource SETTING_CONTENT_BK}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Appearance" FontWeight="Medium" FontSize="14" Margin="12,0,0,4"/>
+                                <RadioButton Grid.Row="1" Content="Dark" Margin="14,2,2,0" GroupName="ThemeGroup" Checked="RadioButton_Checked"
+                                             IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Dark,Mode=OneWay}"/>
+                                <RadioButton Grid.Row="2" Content="Light" Margin="14,0,2,0" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"
+                                             IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Light,Mode=OneWay}"/>
+                            </Grid>
+                            <Grid Margin="0,0" Padding="0,8" CornerRadius="0,0,6,6" Background="{ThemeResource SETTING_CONTENT_BK}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Startup Page" FontWeight="Medium" FontSize="14" Margin="12,0,0,6"/>
+                                <ComboBox x:Name="StartupPageComboBox" Grid.Row="1" Style="{StaticResource CustomComboBoxStyle}" Margin="12,4,0,0" MinWidth="128" 
+                                          Background="{ThemeResource COMBOBOX_NORMAL_BK}"
+                                          SelectedIndex="{x:Bind ViewModel.iStartupTabIndex,Mode=OneWay}"
+                                          SelectionChanged="ComboBox_SelectionChanged">
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="Heroes"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="Items"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="Matches"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
+                            <!--数据-->
+                            <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock Text="&#xEB05;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Data" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,2" Padding="0,8" CornerRadius="0,0,6,6" Background="{ThemeResource SETTING_CONTENT_BK}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Cache" FontWeight="Medium" FontSize="14" Margin="12,0,0,4"/>
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <Button CornerRadius="4" Height="32" Width="128" Background="{ThemeResource COMBOBOX_NORMAL_BK}" BorderThickness="0" Style="{StaticResource ButtonRevealStyle}" Margin="12,4,0,4">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="&#xEA99;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                <TextBlock Text="Clear Cache"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                    <!--<TextBlock Text="Cleared!"/>-->
+                                </StackPanel>
+                            </Grid>
+
+                            <!--实验性-->
+                            <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <TextBlock Text="&#xEA80;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Experimental" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,2" Padding="0,8" CornerRadius="0,0,6,6" Background="{ThemeResource SETTING_CONTENT_BK}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Language" FontWeight="Medium" FontSize="14" Margin="12,0,0,6"/>
+                                <ComboBox x:Name="LanguageComboBox" Grid.Row="1" Style="{StaticResource CustomComboBoxStyle}" Margin="12,4,0,0" MinWidth="128" 
+                                          Background="{ThemeResource COMBOBOX_NORMAL_BK}"
+                                          SelectedIndex="{x:Bind ViewModel.iLanguageIndex,Mode=OneWay}"
+                                          SelectionChanged="LanguageComboBox_SelectionChanged">
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="English"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="Chinese (partially supported)"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem CornerRadius="6" BorderThickness="0" Margin="4,0">
+                                        <TextBlock Text="Russian (partially supported)"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
                         </StackPanel>
                     </PivotItem>
                     <PivotItem Header="FEEDBACK">
@@ -189,17 +251,17 @@
                     <PivotItem Header="ABOUT">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="0,0,0,16">
-                                <TextBlock Text="Version" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,24,0,8"/>
+                                <TextBlock Text="Version" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,24,0,8" CharacterSpacing="20"/>
                                 <Image Grid.Row="1" Height="80" Source="/Assets/Logos/Logo.png"/>
-                                <TextBlock Text="OpenDota+"
-                                           FontWeight="Medium" FontSize="15" CharacterSpacing="32"
+                                <TextBlock Text="OpenDota+" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
+                                           FontWeight="Medium" FontSize="14" CharacterSpacing="60"
                                            HorizontalAlignment="Center"
-                                           Margin="4,4,4,0"/>
+                                           Margin="6,4,4,0"/>
                                 <TextBlock Text="v4.0.0"
                                            HorizontalAlignment="Center" FontWeight="Medium"
                                            Opacity="0.5" FontFamily="Consolas"/>
                                 <HyperlinkButton HorizontalAlignment="Center" Content="Rate &amp; Review on Microsoft Store" Click="HyperlinkButton_Click"/>
-                                <TextBlock Text="Data Sources" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                <TextBlock Text="Data Sources" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8" CharacterSpacing="20"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image Width="32" Source="/Assets/Icons/About/icon_dota2.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="http://www.dota2.com/" Content="www.dota2.com" HorizontalAlignment="Center"/>
@@ -212,7 +274,7 @@
                                     <Image Width="32" Source="/Assets/Icons/About/icon_dotapedia.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" HorizontalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Text="GitHub" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8"/>
+                                <TextBlock Text="GitHub" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,16,0,8" CharacterSpacing="20"/>
                                 <Button HorizontalAlignment="Center" Click="Button_Click" Height="48" Width="48" CornerRadius="24">
                                     <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Height="32"/>
                                 </Button>
@@ -237,7 +299,7 @@
                                     <Image Source="{ThemeResource ABOUT_REF_BEHAVIOR_IMG}" Height="20" Margin="0,0,4,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Microsoft.Xaml.Behaviors" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>-->
-                                <TextBlock Text="Developer" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8"/>
+                                <TextBlock Text="Developer" FontWeight="Bold" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,26,0,8" CharacterSpacing="20"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image Height="25" Margin="0,0,6,0" Source="/Assets/Icons/About/photo.png"/>
                                     <TextBlock Text="sh0ckj0ckey" CharacterSpacing="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -247,7 +309,7 @@
                     </PivotItem>
                 </Pivot>
                 <AppBarButton HorizontalAlignment="Right" VerticalAlignment="Top"
-                              Height="40" Width="40" Icon="Cancel" CornerRadius="6" Margin="4"
+                              Height="40" Width="40" Icon="Cancel" CornerRadius="6" Margin="4,4,12,4"
                               Click="AppBarButton_Click_4"/>
             </Grid>
         </Grid>

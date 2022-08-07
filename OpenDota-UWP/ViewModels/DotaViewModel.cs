@@ -43,6 +43,21 @@ namespace OpenDota_UWP.ViewModels
             }
         }
 
+        // 设置的语言: 0-english 1-schinese 2-russian
+        private int _iLanguageIndex = 0;
+        public int iLanguageIndex
+        {
+            get { return _iLanguageIndex; }
+            set
+            {
+                if (value > 2 || value < 0)
+                {
+                    return;
+                }
+                Set("iLanguageIndex", ref _iLanguageIndex, value);
+            }
+        }
+
         // 物品-搜索模式, true:模糊匹配, false:全字匹配
         private bool _bSearchFuzzy = true;
         public bool bSearchFuzzy
@@ -105,6 +120,29 @@ namespace OpenDota_UWP.ViewModels
                     else
                     {
                         iStartupTabIndex = 0;
+                    }
+                }
+                catch { }
+
+                // 读取设置的语言
+                try
+                {
+                    if (App.AppSettingContainer?.Values["Language"] == null ||
+                        App.AppSettingContainer?.Values["Language"].ToString() == "0")
+                    {
+                        iLanguageIndex = 0;
+                    }
+                    else if (App.AppSettingContainer?.Values["Language"].ToString() == "1")
+                    {
+                        iLanguageIndex = 1;
+                    }
+                    else if (App.AppSettingContainer?.Values["Language"].ToString() == "2")
+                    {
+                        iLanguageIndex = 2;
+                    }
+                    else
+                    {
+                        iLanguageIndex = 0;
                     }
                 }
                 catch { }

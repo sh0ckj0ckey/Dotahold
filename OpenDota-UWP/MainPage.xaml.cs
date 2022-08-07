@@ -334,6 +334,21 @@ namespace OpenDota_UWP
                 if (ViewModel.iStartupTabIndex != index)
                 {
                     App.AppSettingContainer.Values["StartupPage"] = index;
+                    ViewModel.iStartupTabIndex = index;
+                }
+            }
+            catch { }
+        }
+
+        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                int index = LanguageComboBox.SelectedIndex;
+                if (ViewModel.iLanguageIndex != index)
+                {
+                    App.AppSettingContainer.Values["Language"] = index;
+                    ViewModel.iLanguageIndex = index;
                 }
             }
             catch { }

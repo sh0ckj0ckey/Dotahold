@@ -187,7 +187,18 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 this.CurrentHero = selectedHero;
-                var info = await ReqHeroInfo(this.CurrentHero.id);
+
+                string language = "english";
+                if (DotaViewModel.Instance.iLanguageIndex == 1)
+                {
+                    language = "schinese";
+                }
+                else if (DotaViewModel.Instance.iLanguageIndex == 2)
+                {
+                    language = "russian";
+                }
+
+                var info = await ReqHeroInfo(this.CurrentHero.id, language);
 
                 CurrentHeroInfo = info?.result?.data?.heroes?.Length > 0 ? info?.result?.data?.heroes[0] : null;
 
@@ -432,11 +443,11 @@ namespace OpenDota_UWP.ViewModels
                                 ability.damageForeground = Models.Ability.AbilityDamageTypePhysicalColor;
                                 break;
                             case 2:
-                                ability.damageStr = "Magical"; 
+                                ability.damageStr = "Magical";
                                 ability.damageForeground = Models.Ability.AbilityDamageTypeMagicalColor;
                                 break;
                             case 4:
-                                ability.damageStr = "Pure"; 
+                                ability.damageStr = "Pure";
                                 ability.damageForeground = Models.Ability.AbilityDamageTypePureColor;
                                 break;
                             case 8:
