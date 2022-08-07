@@ -163,7 +163,7 @@
                                     <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
                                 </StackPanel>
 
-                                <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="276" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="320" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
                                       Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
 
@@ -353,7 +353,7 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="{x:Bind sHeroName}" FontWeight="Medium" MaxWidth="156" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,-6,0,2">
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,-7,0,2">
                                             <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                     Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
                                                 <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
