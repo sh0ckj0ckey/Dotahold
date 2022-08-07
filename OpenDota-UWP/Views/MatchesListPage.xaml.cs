@@ -65,5 +65,23 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        /// 点击查看比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickMatch(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                {
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
+                    this.Frame.Navigate(typeof(MatchesListPage));
+                }
+            }
+            catch { }
+        }
     }
 }

@@ -401,7 +401,7 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
-        ///  点击查看所有比赛
+        /// 点击查看所有比赛
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -410,6 +410,32 @@ namespace OpenDota_UWP.Views
             try
             {
                 MatchFrame.Navigate(typeof(MatchesListPage));
+            }
+            catch { }
+        }
+
+        private void OnClickFlipRecentMatch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                {
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
+                    MatchFrame.Navigate(typeof(MatchesListPage));
+                }
+            }
+            catch { }
+        }
+
+        private void OnClickListRecentMatch(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                {
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
+                    MatchFrame.Navigate(typeof(MatchesListPage));
+                }
             }
             catch { }
         }

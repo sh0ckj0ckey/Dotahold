@@ -26,73 +26,7 @@ namespace OpenDota_UWP.Helpers
         /// <param name="matchid"></param>
         public static async Task<List<string>> GetMatchInfoAsync(string matchid)
         {
-            //示例比赛编号3792271763
-            string url = String.Format("https://api.opendota.com/api/matches/{0}", matchid);
-            //HttpClientHandler handler = new HttpClientHandler();
-            //handler.UseProxy = false;   //不加这个会非常慢
-            HttpClient http = new HttpClient();
-            List<string> matchInfoList = new List<string>();
-            string jsonMessage;
-            try
-            {
-                if (HeroPlayerInfo.CurrentMatchID != matchid || HeroPlayerInfo.buffer.StartsWith("{\"error\""))
-                {
-                    var response = await http.GetAsync(new Uri(url));
-                    jsonMessage = await response.Content.ReadAsStringAsync();
-
-                    HeroPlayerInfo.buffer = jsonMessage;
-                    HeroPlayerInfo.CurrentMatchID = matchid;
-                    if (jsonMessage == "{\"error\":\"rate limit exceeded\"}")
-                    {
-                        matchInfoList.Clear();
-                        matchInfoList.Add("time_limit");
-                        return matchInfoList;
-                    }
-                    else if (jsonMessage == "{\"error\":\"Internal Server Error\"}")
-                    {
-                        matchInfoList.Clear();
-                        matchInfoList.Add("server_error");
-                        return matchInfoList;
-                    }
-                }
-                else
-                {
-                    jsonMessage = HeroPlayerInfo.buffer;
-                }
-                Match first_blood_timeMatch = Regex.Match(jsonMessage, "\\\"first_blood_time\\\":([\\d\\D]*?),");
-                //Match start_timeMatch = Regex.Match(jsonMessage, "\\\"start_time\\\":([\\d\\D]*?),");
-                Match durationMatch = Regex.Match(jsonMessage, "\\\"duration\\\":([\\d\\D]*?),");
-                //Match levelMatch = Regex.Match(jsonMessage, "\\\"skill\\\":([\\d\\D]*?),");
-                Match game_modeMatch = Regex.Match(jsonMessage, "\\\"game_mode\\\":([\\d\\D]*?),");
-                Match replay_urlMatch = Regex.Match(jsonMessage, "\\\"replay_url\\\":\\\"([\\d\\D]*?)\\\"}");
-                Match radiant_scoreMatch = Regex.Match(jsonMessage, "\\\"radiant_score\\\":([\\d\\D]*?),");
-                Match dire_scoreMatch = Regex.Match(jsonMessage, "\\\"dire_score\\\":([\\d\\D]*?),");
-                Match lobby_typeMatch = Regex.Match(jsonMessage, "\\\"lobby_type\\\":([\\d\\D]*?),");
-                Match radiant_winMatch = Regex.Match(jsonMessage, "\\\"radiant_win\\\":([\\d\\D]*?),");
-                Match radiant_gold_advMatch = Regex.Match(jsonMessage, "\\\"radiant_gold_adv\\\":\\[([\\d\\D]*?)\\],");
-                Match radiant_xp_advMatch = Regex.Match(jsonMessage, "\\\"radiant_xp_adv\\\":\\[([\\d\\D]*?)\\],");
-
-
-                matchInfoList.AddRange(new List<string> {
-                    first_blood_timeMatch.Groups[1].Value,
-                    durationMatch.Groups[1].Value,
-                    game_modeMatch.Groups[1].Value,
-                    replay_urlMatch.Groups[1].Value,
-                    radiant_scoreMatch.Groups[1].Value,
-                    dire_scoreMatch.Groups[1].Value,
-                    lobby_typeMatch.Groups[1].Value,
-                    radiant_winMatch.Groups[1].Value,
-                    radiant_gold_advMatch.Groups[1].Value,
-                    radiant_xp_advMatch.Groups[1].Value
-                });
-            }
-            catch
-            {
-                matchInfoList.Clear();
-                matchInfoList.Add("data_error");
-                return matchInfoList;
-            }
-            return matchInfoList;
+            
         }
 
         /// <summary>

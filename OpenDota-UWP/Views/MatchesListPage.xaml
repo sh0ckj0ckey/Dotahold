@@ -35,7 +35,7 @@
         <!--列表-->
         <ScrollViewer Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch">
             <StackPanel Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                <ListView SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}"
+                <ListView SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}" ItemClick="OnClickMatch"
                           ItemContainerStyle="{StaticResource CornerListViewItemStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <ListView.Template>
                         <ControlTemplate>

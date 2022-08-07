@@ -129,7 +129,7 @@
                                         <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                                    FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
 
-                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickFlipRecentMatch"/>
                                     </Grid>
                                     <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                                 </Grid>
@@ -323,7 +323,7 @@
                         <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.1" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                     </StackPanel>
                     <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True"
-                              ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
+                              ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}" ItemClick="OnClickListRecentMatch">
                         <ListView.Template>
                             <ControlTemplate>
                                 <ItemsPresenter />
