@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace OpenDota_UWP.Models
 {
@@ -130,6 +132,12 @@ namespace OpenDota_UWP.Models
 
     public class Ability : ViewModelBase
     {
+        public static SolidColorBrush AbilityDamageTypeDefaultColor = new SolidColorBrush(Colors.Gray);
+        public static SolidColorBrush AbilityDamageTypePhysicalColor = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+        public static SolidColorBrush AbilityDamageTypeMagicalColor = new SolidColorBrush(Color.FromArgb(255, 163, 220, 238));
+        public static SolidColorBrush AbilityDamageTypePureColor = new SolidColorBrush(Color.FromArgb(255, 255, 165, 0));
+        public static SolidColorBrush AbilityDamageTypeHPRemovalColor = new SolidColorBrush(Color.FromArgb(255, 165, 15, 121));
+
         public int id { get; set; }
         public string name { get; set; }
         public string name_loc { get; set; }
@@ -186,6 +194,14 @@ namespace OpenDota_UWP.Models
             set { Set("damageStr", ref _damageStr, value); }
         }
 
+        [Newtonsoft.Json.JsonIgnore]
+        private SolidColorBrush _damageForeground = AbilityDamageTypeDefaultColor;
+        public SolidColorBrush damageForeground
+        {
+            get { return _damageForeground; }
+            set { Set("damageForeground", ref _damageForeground, value); }
+        }
+
         // 是否无视魔免
         public double immunity { get; set; }
 
@@ -209,8 +225,29 @@ namespace OpenDota_UWP.Models
         }
 
         public double max_level { get; set; }
+
+        // 范围
         public double[] cast_ranges { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _castRangesStr = string.Empty;
+        public string castRangesStr
+        {
+            get { return _castRangesStr; }
+            set { Set("castRangesStr", ref _castRangesStr, value); }
+        }
+
+        // 间隔
         public double[] cast_points { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private string _castPointsStr = string.Empty;
+        public string castPointsStr
+        {
+            get { return _castPointsStr; }
+            set { Set("castPointsStr", ref _castPointsStr, value); }
+        }
+
         public double[] channel_times { get; set; }
         public double[] cooldowns { get; set; }
         public double[] durations { get; set; }
@@ -219,7 +256,7 @@ namespace OpenDota_UWP.Models
 
         public double[] mana_costs { get; set; }
         public double[] gold_costs { get; set; }
-        public Special_Values[] special_values { get; set; }
+        public List<Special_Values> special_values { get; set; }
         public bool is_item { get; set; }
         public bool ability_has_scepter { get; set; }
         public bool ability_has_shard { get; set; }
@@ -243,6 +280,16 @@ namespace OpenDota_UWP.Models
             set { Set("sAbilityImageUrl", ref _sAbilityImageUrl, value); }
         }
 
+        /// <summary>
+        /// 技能数值
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        private string _specialValuesStr = string.Empty;
+        public string specialValuesStr
+        {
+            get { return _specialValuesStr; }
+            set { Set("specialValuesStr", ref _specialValuesStr, value); }
+        }
     }
 
     public class Talent

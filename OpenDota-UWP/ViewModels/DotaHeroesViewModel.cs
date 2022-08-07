@@ -315,6 +315,7 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
 
+            #region JavaScriptCode from dota2.com 2022/8/7 main.js?v=7ovgxfp53jKo&l=english&_cdn=cloudflare
             // Ri = function(e, t)
             // {
             //     var talent = info.talents[t],
@@ -346,6 +347,7 @@ namespace OpenDota_UWP.ViewModels
             //     n
             //   );
             // }
+            #endregion
         }
 
         /// <summary>
@@ -362,8 +364,8 @@ namespace OpenDota_UWP.ViewModels
                 {
                     // 技能图片和描述
                     ability.sAbilityImageUrl = "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/" + ability.name + ".png";
-                    ability.desc_loc = OrganizeLocString(ability.desc_loc);
-                    ability.lore_loc = OrganizeLocString(ability.lore_loc);
+                    ability.desc_loc = OrganizeLocString(ability.desc_loc, ability.special_values);
+                    ability.lore_loc = OrganizeLocString(ability.lore_loc, ability.special_values);
 
                     // 备注
                     try
@@ -396,7 +398,7 @@ namespace OpenDota_UWP.ViewModels
                             }
                             else
                             {
-                                ability.scepter_loc = OrganizeLocString(ability.scepter_loc);
+                                ability.scepter_loc = OrganizeLocString(ability.scepter_loc, ability.special_values);
                             }
                         }
                     }
@@ -414,7 +416,7 @@ namespace OpenDota_UWP.ViewModels
                             }
                             else
                             {
-                                ability.shard_loc = OrganizeLocString(ability.shard_loc);
+                                ability.shard_loc = OrganizeLocString(ability.shard_loc, ability.special_values);
                             }
                         }
                     }
@@ -427,15 +429,19 @@ namespace OpenDota_UWP.ViewModels
                         {
                             case 1:
                                 ability.damageStr = "Physical";
+                                ability.damageForeground = Models.Ability.AbilityDamageTypePhysicalColor;
                                 break;
                             case 2:
-                                ability.damageStr = "Magical";
+                                ability.damageStr = "Magical"; 
+                                ability.damageForeground = Models.Ability.AbilityDamageTypeMagicalColor;
                                 break;
                             case 4:
-                                ability.damageStr = "Pure";
+                                ability.damageStr = "Pure"; 
+                                ability.damageForeground = Models.Ability.AbilityDamageTypePureColor;
                                 break;
                             case 8:
                                 ability.damageStr = "HP Removal";
+                                ability.damageForeground = Models.Ability.AbilityDamageTypeHPRemovalColor;
                                 break;
                         }
                     }
@@ -466,14 +472,14 @@ namespace OpenDota_UWP.ViewModels
                         {
                             case 1:
                             case 3:
-                                ability.dispellableStr = "Yes";
+                                ability.immunityStr = "Yes";
                                 break;
                             case 2:
                             case 4:
-                                ability.dispellableStr = "No";
+                                ability.immunityStr = "No";
                                 break;
                             case 5:
-                                ability.dispellableStr = "Allies Yes Enemies No";
+                                ability.immunityStr = "Allies Yes Enemies No";
                                 break;
                         }
                     }
@@ -545,23 +551,118 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
 
+                    //// 技能范围
+                    //try
+                    //{
+                    //    if (ability.cast_ranges != null && ability.cast_ranges.Length > 0)
+                    //    {
+                    //        StringBuilder castRangesSb = new StringBuilder();
+                    //        bool haveCastRanges = false;
+                    //        for (int i = 0; i < ability.cast_ranges.Length; i++)
+                    //        {
+                    //            double append = Math.Floor(ability.cast_ranges[i] * 10000) / 10000;
+                    //            castRangesSb.Append(append);
+
+                    //            if (i < ability.cast_ranges.Length - 1)
+                    //            {
+                    //                castRangesSb.Append("/");
+                    //            }
+
+                    //            if (append > 0)
+                    //            {
+                    //                haveCastRanges = true;
+                    //            }
+                    //        }
+                    //        if (haveCastRanges)
+                    //        {
+                    //            ability.castRangesStr = castRangesSb.ToString();
+                    //        }
+                    //    }
+                    //}
+                    //catch { }
+
+                    //// 技能间隔
+                    //try
+                    //{
+                    //    if (ability.cast_points != null && ability.cast_points.Length > 0)
+                    //    {
+                    //        StringBuilder castPointsSb = new StringBuilder();
+                    //        bool haveCastPoints = false;
+                    //        for (int i = 0; i < ability.cast_points.Length; i++)
+                    //        {
+                    //            double append = Math.Floor(ability.cast_points[i] * 10000) / 10000;
+                    //            castPointsSb.Append(append);
+
+                    //            if (i < ability.cast_points.Length - 1)
+                    //            {
+                    //                castPointsSb.Append("/");
+                    //            }
+
+                    //            if (append > 0)
+                    //            {
+                    //                haveCastPoints = true;
+                    //            }
+                    //        }
+                    //        if (haveCastPoints)
+                    //        {
+                    //            ability.castPointsStr = castPointsSb.ToString();
+                    //        }
+                    //    }
+                    //}
+                    //catch { }
+
                     // 技能其他的数值
                     try
                     {
+                        //Dictionary<string, string> SpecialValuesNames = new Dictionary<string, string>()
+                        //{
+                        //    {"#hero_ability", "Ability"}, {"#HeroAbility", "Ability"},
+                        //    {"#hero_affects", "Affects"}, {"#HeroAffects", "Affects"},
+                        //    {"#ability_damage", "Damage"}, {"#AbilityDamage", "Damage"},
+                        //    {"#hero_spell_immunity", "Immunity"}, {"#heroSpellImmunity", "Immunity"},
+                        //    {"#hero_dispellable", "Dispellable"}, {"#HeroDispellable", "Dispellable"},
+                        //    {"#hero_damage", "Damage"}, {"#HeroDamage", "Damage"}
+                        //};
                         StringBuilder specialValuesSb = new StringBuilder();
-                        foreach (var item in ability.special_values)
+                        for (int j = 0; j < ability.special_values.Count; j++)
                         {
-                            if (!string.IsNullOrEmpty(item.heading_loc))
+                            var specialValue = ability.special_values[j];
+
+                            if ((specialValue.name == "#AbilityDamage" || specialValue.name == "#HeroDamage") && string.IsNullOrEmpty(specialValue.heading_loc))
                             {
-                                specialValuesSb.Append(item.heading_loc);
+                                specialValue.heading_loc = "DAMAGE:";
+                            }
+
+                            if (!string.IsNullOrEmpty(specialValue.heading_loc) && specialValue.values_float != null && specialValue.values_float.Length > 0)
+                            {
+                                StringBuilder specialValueSb = new StringBuilder();
+                                specialValueSb.Append(specialValue.heading_loc.Replace("\n", "").Trim());
+                                specialValueSb.Append(" ");
+                                for (int i = 0; i < specialValue.values_float.Length; i++)
+                                {
+                                    if (i > 0)
+                                    {
+                                        specialValueSb.Append("/");
+                                    }
+                                    specialValueSb.Append(specialValue.values_float[i].ToString("f1").Replace("\n", ""));
+                                    if (specialValue.is_percentage)
+                                    {
+                                        specialValueSb.Append("%");
+                                    }
+                                }
+                                specialValuesSb.Append(specialValueSb);
+                                specialValuesSb.Append("\n");
                             }
                         }
+                        ability.specialValuesStr = specialValuesSb.ToString().TrimEnd('\n');
+                        ability.specialValuesStr = OrganizeLocString(ability.specialValuesStr, null);
                     }
                     catch { }
                 }
             }
             catch { }
 
+            #region JavaScriptCode from dota2.com 2022/8/7 main.js?v=7ovgxfp53jKo&l=english&_cdn=cloudflare
             /*
                  Ui = Object(d.a)(function (e) {
                   var t = e.heroData,
@@ -1081,7 +1182,7 @@ namespace OpenDota_UWP.ViewModels
                   );
                 }),
                  */
-
+            #endregion
         }
 
         /// <summary>
@@ -1169,11 +1270,11 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
-        /// 去掉HTML标签等额外的文字，将占位符替换为相应的special_values
+        /// 去掉HTML标签等额外的文字，并将占位符替换为相应的special_values
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        private string OrganizeLocString(string str)
+        private string OrganizeLocString(string str, List<Models.Special_Values> specialValues)
         {
             try
             {
@@ -1182,6 +1283,16 @@ namespace OpenDota_UWP.ViewModels
                 strText = strText.Replace("\t", "");
                 strText = strText.Replace("\r", "\n");
                 strText = strText.TrimStart('\n').TrimEnd('\n');
+                if (specialValues != null)
+                {
+                    foreach (var specialValue in specialValues)
+                    {
+                        string value = specialValue.values_float?.Length > 0 ? specialValue.values_float[0].ToString("f1") : "0";
+                        string specialValuePlaceholder = "%" + specialValue.name.ToLower() + "%";
+                        strText = strText.Replace(specialValuePlaceholder, value);
+                        strText = strText.Replace("%%", "%");
+                    }
+                }
                 return strText;
             }
             catch { }

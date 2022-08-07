@@ -469,12 +469,17 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Ability">
-                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" CornerRadius="6" Background="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Stretch">
+                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Height="64" Width="64" Margin="16,16,0,0" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                                        <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center">
                                                 <Image.Source>
                                                     <BitmapImage UriSource="{x:Bind sAbilityImageUrl,Mode=OneWay}" DecodePixelHeight="64" DecodePixelType="Logical"/>
@@ -485,7 +490,17 @@
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard"
                                                    Visibility="{x:Bind ability_is_granted_by_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
                                         </Grid>
-                                        <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
+                                        <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0,16" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <!--技能名字-->
+                                            <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
+                                            <!--技能描述-->
+                                            <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+                                        </Grid>
+                                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
@@ -495,12 +510,39 @@
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
+                                            <ToolkitUICtrl:WrapPanel Grid.Row="0">
+                                                <TextBlock Visibility="{x:Bind behaviorStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="ABILITY:"/>
+                                                    <Run Text="{x:Bind behaviorStr,Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind damageStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="DAMAGE TYPE:"/>
+                                                    <Run Text="{x:Bind damageStr,Mode=OneWay}" Foreground="{x:Bind damageForeground,Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind dispellableStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="DISPELLABLE:"/>
+                                                    <Run Text="{x:Bind dispellableStr,Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind immunityStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="PIERCES SPELL IMMUNITY:"/>
+                                                    <Run Text="{x:Bind immunityStr,Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="AFFECTS:"/>
+                                                    <Run Text="{x:Bind targetStr,Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <!--<TextBlock Visibility="{x:Bind castRangesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="CAST RANGE:"/>
+                                                    <Run Text="{x:Bind castRangesStr,Mode=OneWay}"/>
+                                                </TextBlock>-->
+                                                <!--<TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="CAST POINT:"/>
+                                                    <Run Text="{x:Bind castPointsStr,Mode=OneWay}"/>
+                                                </TextBlock>-->
+                                            </ToolkitUICtrl:WrapPanel>
 
-                                            <!--技能名字-->
-                                            <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
-
-                                            <!--技能描述-->
-                                            <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+                                            <!--技能特殊数值-->
+                                            <TextBlock Grid.Row="1" Text="{x:Bind specialValuesStr,Mode=OneWay}" Visibility="{x:Bind specialValuesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.6" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
 
                                             <!--备注-->
                                             <TextBlock Grid.Row="2" Text="{x:Bind notesStr,Mode=OneWay}" Visibility="{x:Bind notesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
@@ -528,7 +570,7 @@
                                             </Grid>
 
                                             <!--冷却时间和耗蓝-->
-                                            <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="14,0,4,0">
+                                            <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="14,6,4,0">
                                                 <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
                                                         Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}">
                                                     <Border.Background>
@@ -549,6 +591,7 @@
                                             <Grid Grid.Row="6" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
                                                 <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
                                             </Grid>
+                                            
                                         </Grid>
                                     </Grid>
                                 </DataTemplate>
