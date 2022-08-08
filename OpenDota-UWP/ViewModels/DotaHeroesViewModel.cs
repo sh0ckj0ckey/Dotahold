@@ -566,6 +566,54 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
 
+                    // 技能其他的数值
+                    try
+                    {
+                        //Dictionary<string, string> SpecialValuesNames = new Dictionary<string, string>()
+                        //{
+                        //    {"#hero_ability", "Ability"}, {"#HeroAbility", "Ability"},
+                        //    {"#hero_affects", "Affects"}, {"#HeroAffects", "Affects"},
+                        //    {"#ability_damage", "Damage"}, {"#AbilityDamage", "Damage"},
+                        //    {"#hero_spell_immunity", "Immunity"}, {"#heroSpellImmunity", "Immunity"},
+                        //    {"#hero_dispellable", "Dispellable"}, {"#HeroDispellable", "Dispellable"},
+                        //    {"#hero_damage", "Damage"}, {"#HeroDamage", "Damage"}
+                        //};
+                        StringBuilder specialValuesSb = new StringBuilder();
+                        for (int j = 0; j < ability.special_values.Count; j++)
+                        {
+                            var specialValue = ability.special_values[j];
+
+                            if ((specialValue.name == "#AbilityDamage" || specialValue.name == "#HeroDamage") && string.IsNullOrEmpty(specialValue.heading_loc))
+                            {
+                                specialValue.heading_loc = "DAMAGE:";
+                            }
+
+                            if (!string.IsNullOrEmpty(specialValue.heading_loc) && specialValue.values_float != null && specialValue.values_float.Length > 0)
+                            {
+                                StringBuilder specialValueSb = new StringBuilder();
+                                specialValueSb.Append(specialValue.heading_loc.Replace("\n", "").Trim());
+                                specialValueSb.Append(" ");
+                                for (int i = 0; i < specialValue.values_float.Length; i++)
+                                {
+                                    if (i > 0)
+                                    {
+                                        specialValueSb.Append("/");
+                                    }
+                                    specialValueSb.Append(specialValue.values_float[i].ToString("f1").Replace("\n", ""));
+                                    if (specialValue.is_percentage)
+                                    {
+                                        specialValueSb.Append("%");
+                                    }
+                                }
+                                specialValuesSb.Append(specialValueSb);
+                                specialValuesSb.Append("\n");
+                            }
+                        }
+                        ability.specialValuesStr = specialValuesSb.ToString().TrimEnd('\n');
+                        ability.specialValuesStr = OrganizeLocString(ability.specialValuesStr, null);
+                    }
+                    catch { }
+
                     //// 技能范围
                     //try
                     //{
@@ -625,55 +673,10 @@ namespace OpenDota_UWP.ViewModels
                     //    }
                     //}
                     //catch { }
+                }
 
-                    // 技能其他的数值
-                    try
-                    {
-                        //Dictionary<string, string> SpecialValuesNames = new Dictionary<string, string>()
-                        //{
-                        //    {"#hero_ability", "Ability"}, {"#HeroAbility", "Ability"},
-                        //    {"#hero_affects", "Affects"}, {"#HeroAffects", "Affects"},
-                        //    {"#ability_damage", "Damage"}, {"#AbilityDamage", "Damage"},
-                        //    {"#hero_spell_immunity", "Immunity"}, {"#heroSpellImmunity", "Immunity"},
-                        //    {"#hero_dispellable", "Dispellable"}, {"#HeroDispellable", "Dispellable"},
-                        //    {"#hero_damage", "Damage"}, {"#HeroDamage", "Damage"}
-                        //};
-                        StringBuilder specialValuesSb = new StringBuilder();
-                        for (int j = 0; j < ability.special_values.Count; j++)
-                        {
-                            var specialValue = ability.special_values[j];
-
-                            if ((specialValue.name == "#AbilityDamage" || specialValue.name == "#HeroDamage") && string.IsNullOrEmpty(specialValue.heading_loc))
-                            {
-                                specialValue.heading_loc = "DAMAGE:";
-                            }
-
-                            if (!string.IsNullOrEmpty(specialValue.heading_loc) && specialValue.values_float != null && specialValue.values_float.Length > 0)
-                            {
-                                StringBuilder specialValueSb = new StringBuilder();
-                                specialValueSb.Append(specialValue.heading_loc.Replace("\n", "").Trim());
-                                specialValueSb.Append(" ");
-                                for (int i = 0; i < specialValue.values_float.Length; i++)
-                                {
-                                    if (i > 0)
-                                    {
-                                        specialValueSb.Append("/");
-                                    }
-                                    specialValueSb.Append(specialValue.values_float[i].ToString("f1").Replace("\n", ""));
-                                    if (specialValue.is_percentage)
-                                    {
-                                        specialValueSb.Append("%");
-                                    }
-                                }
-                                specialValuesSb.Append(specialValueSb);
-                                specialValuesSb.Append("\n");
-                            }
-                        }
-                        ability.specialValuesStr = specialValuesSb.ToString().TrimEnd('\n');
-                        ability.specialValuesStr = OrganizeLocString(ability.specialValuesStr, null);
-                    }
-                    catch { }
-
+                foreach (var ability in info.abilities)
+                {
                     await ability.LoadImageAsync(64);
                 }
             }

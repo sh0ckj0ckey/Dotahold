@@ -471,7 +471,7 @@
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                                        <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" Background="{ThemeResource APPLICATION_BK}" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter"
                                                    Visibility="{x:Bind ability_is_granted_by_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
