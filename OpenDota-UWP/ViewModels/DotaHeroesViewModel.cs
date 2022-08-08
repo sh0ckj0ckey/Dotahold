@@ -1236,7 +1236,7 @@ namespace OpenDota_UWP.ViewModels
                             int dotIndex = item.score.IndexOf('.');
                             string score = dotIndex <= 0 ? item.score : item.score.Substring(0, dotIndex);
                             item.score = score;
-                            await item.LoadImageAsync(72);
+                            //await item.LoadImageAsync(72);
                             vRankingPlayers.Add(item);
                         }
                         catch { }

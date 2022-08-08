@@ -83,7 +83,11 @@
                                      Height="36"
                                      Width="36">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
+                                    <ImageBrush>
+                                        <ImageBrush.ImageSource>
+                                            <BitmapImage UriSource="{x:Bind avatar}" DecodePixelHeight="72" DecodePixelType="Logical"/>
+                                        </ImageBrush.ImageSource>
+                                    </ImageBrush>
                                 </Ellipse.Fill>
                             </Ellipse>
                             <TextBlock Grid.Column="2"
