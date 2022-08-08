@@ -6,10 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:OpenDota_UWP.Models"
-    xmlns:Animation="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ToolkitBehaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
     xmlns:ToolkitUI="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
@@ -44,27 +40,19 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GridViewItem">
-                            <Grid x:Name="RootGrid" Background="Transparent" CornerRadius="0">
-                                <Interactivity:Interaction.Behaviors>
-                                    <Core:EventTriggerBehavior EventName="PointerEntered">
-                                        <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=GridScaleUp}"/>
-                                    </Core:EventTriggerBehavior>
-                                    <Core:EventTriggerBehavior EventName="PointerExited">
-                                        <ToolkitBehaviors:StartAnimationAction Animation="{Binding ElementName=GridScaleDown}"/>
-                                    </Core:EventTriggerBehavior>
-                                </Interactivity:Interaction.Behaviors>
+                            <Grid x:Name="RootGrid" Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
-                                        <VisualStateGroup.Transitions>
+                                        <!--<VisualStateGroup.Transitions>
                                             <VisualTransition From="PointerOver" To="Normal" GeneratedDuration="0:0:0">
                                                 <Storyboard>
                                                     <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.Opacity)">
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.5">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.6">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseIn"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
                                                         </EasingDoubleKeyFrame>
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="0.2">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.2" Value="0.2">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseOut"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
@@ -76,7 +64,31 @@
                                                                 <CubicEase EasingMode="EaseIn"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
                                                         </EasingDoubleKeyFrame>
-                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="10">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.2" Value="10">
+                                                            <EasingDoubleKeyFrame.EasingFunction>
+                                                                <CubicEase EasingMode="EaseOut"/>
+                                                            </EasingDoubleKeyFrame.EasingFunction>
+                                                        </EasingDoubleKeyFrame>
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
+                                                            <EasingDoubleKeyFrame.EasingFunction>
+                                                                <CubicEase EasingMode="EaseIn"/>
+                                                            </EasingDoubleKeyFrame.EasingFunction>
+                                                        </EasingDoubleKeyFrame>
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.2" Value="1.0">
+                                                            <EasingDoubleKeyFrame.EasingFunction>
+                                                                <CubicEase EasingMode="EaseOut"/>
+                                                            </EasingDoubleKeyFrame.EasingFunction>
+                                                        </EasingDoubleKeyFrame>
+                                                    </DoubleAnimationUsingKeyFrames>
+                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
+                                                            <EasingDoubleKeyFrame.EasingFunction>
+                                                                <CubicEase EasingMode="EaseIn"/>
+                                                            </EasingDoubleKeyFrame.EasingFunction>
+                                                        </EasingDoubleKeyFrame>
+                                                        <EasingDoubleKeyFrame KeyTime="00:00:0.2" Value="1.0">
                                                             <EasingDoubleKeyFrame.EasingFunction>
                                                                 <CubicEase EasingMode="EaseOut"/>
                                                             </EasingDoubleKeyFrame.EasingFunction>
@@ -84,36 +96,86 @@
                                                     </DoubleAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualTransition>
-                                        </VisualStateGroup.Transitions>
+                                        </VisualStateGroup.Transitions>-->
 
-                                        <VisualState x:Name="Normal"/>
-                                        <VisualState x:Name="Selected" />
-
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
-                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}" />
-                                            </VisualState.Setters>
+                                        <VisualState x:Name="Normal">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.Opacity)">
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.2">
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseIn"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="0.5">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseOut"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.BlurRadius)">
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected"/>
+                                        <VisualState x:Name="PointerOver">
+                                            <!--<VisualState.Setters>
+                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
+                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}" />
+                                            </VisualState.Setters>-->
+                                            <Storyboard>
+                                                <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.Opacity)">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.4">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="0.8">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DropShadowHolder" Storyboard.TargetProperty="(AttachedCardShadow.BlurRadius)">
                                                     <EasingDoubleKeyFrame KeyTime="00:00:00" Value="10">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseIn"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
                                                     </EasingDoubleKeyFrame>
-                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.6" Value="20">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="20">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>-->
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.0">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.0">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseIn"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
                                                         <EasingDoubleKeyFrame.EasingFunction>
                                                             <CubicEase EasingMode="EaseOut"/>
                                                         </EasingDoubleKeyFrame.EasingFunction>
@@ -122,35 +184,38 @@
                                             </Storyboard>
                                         </VisualState>
 
-                                        <VisualState x:Name="PointerOverSelected">
+                                        <!--<VisualState x:Name="PointerOverSelected">
                                             <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver" />
-                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}" />
+                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="PointerOver"/>
+                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOver}"/>
                                             </VisualState.Setters>
                                         </VisualState>
 
                                         <VisualState x:Name="PointerOverPressed">
                                             <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
-                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOverPressed }" />
+                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
+                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPointerOverPressed}"/>
                                             </VisualState.Setters>
-                                        </VisualState>
+                                        </VisualState>-->
 
-                                        <VisualState x:Name="Pressed">
+                                        <!--<VisualState x:Name="Pressed">
                                             <VisualState.Setters>
-                                                <Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed" />
-                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPressed }" />
+                                                --><!--<Setter Target="RootGrid.(RevealBrush.State)" Value="Pressed"/>
+                                                <Setter Target="ContentPresenter.Background" Value="{ThemeResource GridViewItemRevealBackgroundPressed}"/>--><!--
+                                                <Setter Target="DropShadowHolder.Opacity" Value="0.5"/>
+                                                <Setter Target="DropShadowHolder.BlurRadius" Value="20"/>
+                                                <Setter Target="ContentScale.ScaleX" Value="1.0"/>
+                                                <Setter Target="ContentScale.ScaleY" Value="1.0"/>
                                             </VisualState.Setters>
-                                        </VisualState>
+                                        </VisualState>-->
 
-
-                                        <VisualState x:Name="PressedSelected">
+                                        <!--<VisualState x:Name="PressedSelected">
                                             <VisualState.Setters>
-                                                <Setter Target="ContentPresenter.(RevealBrush.State)" Value="Pressed" />
+                                                <Setter Target="ContentPresenter.(RevealBrush.State)" Value="Pressed"/>
                                             </VisualState.Setters>
-                                        </VisualState>
+                                        </VisualState>-->
                                     </VisualStateGroup>
-                                    <VisualStateGroup x:Name="DisabledStates">
+                                    <!--<VisualStateGroup x:Name="DisabledStates">
                                         <VisualState x:Name="Enabled" />
 
                                         <VisualState x:Name="Disabled">
@@ -158,32 +223,14 @@
                                                 <Setter Target="Root.RevealBorderThickness" Value="0" />
                                             </VisualState.Setters>
                                         </VisualState>
-                                    </VisualStateGroup>
+                                    </VisualStateGroup>-->
                                 </VisualStateManager.VisualStateGroups>
 
-                                <Grid Margin="4,4" Background="Transparent"
-                                      BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                      ToolkitUI:VisualExtensions.NormalizedCenterPoint="0.5">
-                                    <Animation:Explicit.Animations>
-                                        <Animation:AnimationSet x:Name="GridScaleUp">
-                                            <Animation:ScaleAnimation To="1.1"
-                                                                      Duration="0:0:0.3"
-                                                                      EasingType="Default"
-                                                                      EasingMode="EaseOut"/>
-                                        </Animation:AnimationSet>
-                                        <Animation:AnimationSet x:Name="GridScaleDown">
-                                            <Animation:ScaleAnimation To="1"
-                                                                      Duration="0:0:0.3"
-                                                                      EasingType="Default"
-                                                                      EasingMode="EaseOut"/>
-                                        </Animation:AnimationSet>
-                                    </Animation:Explicit.Animations>
-                                    <ToolkitUI:Effects.Shadow>
-                                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
-                                                                         Color="Black"
-                                                                         Offset="0,0,8"
-                                                                         Opacity="0.2"/>
-                                    </ToolkitUI:Effects.Shadow>
+                                <Grid Margin="4,4" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
+                                    </Grid.RenderTransform>
+                                    
                                     <Grid x:Name="ContentHolder">
                                         <ContentPresenter x:Name="ContentPresenter" CornerRadius="0"
                                                           Background="Transparent"
@@ -203,15 +250,13 @@
             </Style>
             
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="model:DotaHeroModel">
-                <Grid Width="128" Height="72" Margin="0" Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
-                    <Border x:Name="HeroPhotoImg" Width="128" Height="72" CornerRadius="0">
+                <Grid Width="128" Height="72" Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
+                    <ToolkitUI:Effects.Shadow>
+                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10" Color="Black" Offset="0,0,8" Opacity="0.5"/>
+                    </ToolkitUI:Effects.Shadow>
+                    <Border x:Name="HeroPhotoImg" Width="128" Height="72">
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
-                            <!--<ImageBrush Stretch="UniformToFill">
-                                <ImageBrush.ImageSource>
-                                    <BitmapImage UriSource="{x:Bind img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
-                                </ImageBrush.ImageSource>
-                            </ImageBrush>-->
                         </Border.Background>
                     </Border>
                 </Grid>
@@ -284,58 +329,37 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                    Text="Heroes" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Width="164" Height="38" BorderThickness="0,0,0,2" 
+            <Button Width="164" Height="34" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=0,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="16,0,6,0"
-                    CornerRadius="12"
+                    CornerRadius="14"
                     Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_STR_IMG}"
-                       Height="23"
-                       VerticalAlignment="Center"/>
-                    <TextBlock x:Name="StrTextBlock"
-                           Text="STRENGTH"
-                           VerticalAlignment="Center"
-                           Margin="6,0,0,0"
-                           CharacterSpacing="40"
-                           FontWeight="Medium"/>
+                    <Image Source="{ThemeResource HERO_TAB_STR_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                    <TextBlock x:Name="StrTextBlock" Text="STRENGTH" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="38" BorderThickness="0,0,0,2" 
+            <Button Width="164" Height="34" BorderThickness="0,0,0,2" 
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=1,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0"
-                    CornerRadius="12"
+                    CornerRadius="14"
                     Click="Button_Click_1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_AGI_IMG}"
-                       Height="23"
-                       VerticalAlignment="Center"/>
-                    <TextBlock x:Name="AgiTextBlock"
-                               Text="AGILITY"
-                               VerticalAlignment="Center"
-                               Margin="6,0,0,0"
-                               CharacterSpacing="40"
-                               FontWeight="Medium"/>
+                    <Image Source="{ThemeResource HERO_TAB_AGI_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                    <TextBlock x:Name="AgiTextBlock" Text="AGILITY" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
                 </StackPanel>
             </Button>
-            <Button Width="164" Height="38" BorderThickness="0,0,0,2"
+            <Button Width="164" Height="34" BorderThickness="0,0,0,2"
                     BorderBrush="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2BD},ConverterParameter=2,Mode=OneWay}"
                     Background="{ThemeResource HEROTAB_BTN_BK}" Style="{StaticResource ButtonRevealStyle}"
                     Margin="6,0,16,0"
-                    CornerRadius="12"
+                    CornerRadius="14"
                     Click="Button_Click_2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_INT_IMG}"
-                       Height="23"
-                       VerticalAlignment="Center"/>
-                    <TextBlock x:Name="IntTextBlock"
-                           Text="INTELLIGENCE"
-                           VerticalAlignment="Center"
-                           Margin="6,0,0,0"
-                           CharacterSpacing="40"
-                           FontWeight="Medium"/>
+                    <Image Source="{ThemeResource HERO_TAB_INT_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                    <TextBlock x:Name="IntTextBlock" Text="INTELLIGENCE" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
                 </StackPanel>
             </Button>
         </StackPanel>
