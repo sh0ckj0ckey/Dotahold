@@ -19,20 +19,33 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                var bm = new BitmapImage();
+                BitmapImage bm = null;
                 using (var memStream = await DownloadImage(Uri))
                 {
                     if (memStream == null)
                     {
-                        return new BitmapImage(new System.Uri(defaultImg));
+                        if (!string.IsNullOrEmpty(defaultImg))
+                        {
+                            return new BitmapImage(new System.Uri(defaultImg));
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
+                    bm = new BitmapImage();
                     await bm.SetSourceAsync(memStream.AsRandomAccessStream());
                 }
                 return bm;
             }
             catch
             {
-                return new BitmapImage(new System.Uri(defaultImg));
+                try
+                {
+                    return new BitmapImage(new System.Uri(defaultImg));
+                }
+                catch { }
+                return null;
             }
         }
 
