@@ -331,6 +331,58 @@ namespace OpenDota_UWP.ViewModels
         }
 
         /// <summary>
+        /// 绑定保存用户的SteamID
+        /// </summary>
+        /// <param name="input"></param>
+        public void SetSteamID(string steamId)
+        {
+            try
+            {
+                // 我的Steam64位ID:76561198194624815
+                if (steamId.Length > 14)
+                {
+                    // 说明输入的是64位的,要先转换成32位
+                    decimal id64 = Convert.ToDecimal(steamId);
+                    steamId = (id64 - 76561197960265728).ToString();
+                }
+                App.AppSettingContainer.Values["SteamID"] = steamId;
+                sSteamId = steamId;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 读取保存的用户的SteamID
+        /// </summary>
+        /// <returns></returns>
+        public string GetSteamID()
+        {
+            try
+            {
+                if (App.AppSettingContainer?.Values["SteamID"] != null)
+                {
+                    return App.AppSettingContainer?.Values["SteamID"].ToString();
+                }
+            }
+            catch { }
+            return string.Empty;
+        }
+
+        public async Task<T> GetResponseAsync<T>(string url, Windows.Web.Http.HttpClient httpClient)
+        {
+            try
+            {
+                var response = await httpClient.GetAsync(new Uri(url));
+                var jsonMessage = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<T>(jsonMessage);
+                return result;
+            }
+            catch { }
+            return default(T);
+        }
+
+
+        /// <summary>
         /// 获得用户的个人信息
         /// </summary>
         /// <param name="id"></param>
@@ -666,44 +718,6 @@ namespace OpenDota_UWP.ViewModels
                 await playerInfoHttpClient.PostAsync(new Uri(url), null);
             }
             catch { }
-        }
-
-        /// <summary>
-        /// 绑定保存用户的SteamID
-        /// </summary>
-        /// <param name="input"></param>
-        public void SetSteamID(string steamId)
-        {
-            try
-            {
-                // 我的Steam64位ID:76561198194624815
-                if (steamId.Length > 14)
-                {
-                    // 说明输入的是64位的,要先转换成32位
-                    decimal id64 = Convert.ToDecimal(steamId);
-                    steamId = (id64 - 76561197960265728).ToString();
-                }
-                App.AppSettingContainer.Values["SteamID"] = steamId;
-                sSteamId = steamId;
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 读取保存的用户的SteamID
-        /// </summary>
-        /// <returns></returns>
-        public string GetSteamID()
-        {
-            try
-            {
-                if (App.AppSettingContainer?.Values["SteamID"] != null)
-                {
-                    return App.AppSettingContainer?.Values["SteamID"].ToString();
-                }
-            }
-            catch { }
-            return string.Empty;
         }
 
     }
