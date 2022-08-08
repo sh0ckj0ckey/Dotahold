@@ -300,7 +300,11 @@ namespace OpenDota_UWP.ViewModels
                         // 在线玩家数
                         try
                         {
-                            sOnlilnePlayersCount = await GetNumberOfCurrentPlayersAsync();
+                            var online = await GetNumberOfCurrentPlayersAsync();
+                            if (online?.response?.result == 1)
+                            {
+                                sOnlilnePlayersCount = online.response.player_count.ToString();
+                            }
                         }
                         catch { }
                     }
@@ -423,7 +427,7 @@ namespace OpenDota_UWP.ViewModels
         /// 获取当前在线人数
         /// </summary>
         /// <returns></returns>
-        private async Task<string> GetNumberOfCurrentPlayersAsync()
+        private async Task<DotaOnlinePlayersModel> GetNumberOfCurrentPlayersAsync()
         {
             try
             {
@@ -433,14 +437,10 @@ namespace OpenDota_UWP.ViewModels
                 var jsonMessage = await response.Content.ReadAsStringAsync();
 
                 var online = JsonConvert.DeserializeObject<DotaOnlinePlayersModel>(jsonMessage);
-
-                if (online?.response?.result == 1)
-                {
-                    return online.response.player_count.ToString();
-                }
+                return online;
             }
             catch { }
-            return string.Empty;
+            return null;
         }
 
         /// <summary>
