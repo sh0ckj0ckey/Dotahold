@@ -546,8 +546,6 @@ namespace OpenDota_UWP.ViewModels
                                 item.bWin = !item.radiant_win;
                         }
 
-                        await item.LoadHorizonImageAsync(64);
-
                         vAllMatchesList.Add(item);
                         if (vAllMatches.Count < 40)
                         {
@@ -572,6 +570,11 @@ namespace OpenDota_UWP.ViewModels
                 else
                 {
                     bLoadedAllMatches = false;
+                }
+
+                foreach (var item in vAllMatches)
+                {
+                    await item.LoadHorizonImageAsync(64);
                 }
             }
             catch { }

@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:helpers="using:OpenDota_UWP.Helpers" NavigationCacheMode="Required">
 
     <Page.Resources>
@@ -285,7 +284,7 @@
                                            Width="36"
                                            RadiusX="4"
                                            RadiusY="4"
-                                           Stroke="{ThemeResource GoldText}"
+                                           Stroke="{ThemeResource GOLDTEXT_FR}"
                                            StrokeThickness="1.5"
                                            Opacity="0.5"
                                            HorizontalAlignment="Center"
