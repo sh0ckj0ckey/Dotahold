@@ -16,11 +16,13 @@ namespace OpenDota_UWP.ViewModels
 
         // 所有物品
         public Dictionary<string, Models.DotaItemModel> dictAllItems { get; set; } = new Dictionary<string, Models.DotaItemModel>();
-        public List<Models.DotaItemModel> vAllItems { get; set; } = new List<Models.DotaItemModel>();
+        private List<Models.DotaItemModel> _vAllItems { get; set; } = new List<Models.DotaItemModel>();
 
         // 列表展示的物品
-        public List<Models.DotaItemModel> vAllShowItemsList { get; set; } = new List<Models.DotaItemModel>();
-        public ObservableCollection<Models.DotaItemModel> vItemsList { get; set; } = new ObservableCollection<Models.DotaItemModel>();
+        public ObservableCollection<Models.DotaItemModel> vAllShowItemsList { get; set; } = new ObservableCollection<Models.DotaItemModel>();
+
+        // 搜索时展示的物品
+        public ObservableCollection<Models.DotaItemModel> vSearchItemsList { get; set; } = new ObservableCollection<Models.DotaItemModel>();
 
         // 是否正在加载物品列表
         private bool _bLoadingItems = false;
@@ -41,6 +43,14 @@ namespace OpenDota_UWP.ViewModels
         // 是否已经成功加载过装备列表
         private bool _bLoadedDotaItems = false;
 
+        // 是否正在搜索，搜索时显示vSearchItemsList，否则显示vAllShowItemsList
+        private bool _bSearchingItems = false;
+        public bool bSearchingItems
+        {
+            get { return _bSearchingItems; }
+            set { Set("bSearchingItems", ref _bSearchingItems, value); }
+        }
+
         public DotaItemsViewModel()
         {
             //LoadDotaItems();
@@ -60,14 +70,14 @@ namespace OpenDota_UWP.ViewModels
 
                 bLoadingItems = true;
 
+                bSearchingItems = false;
+
                 dictAllItems?.Clear();
-                vAllItems?.Clear();
+                _vAllItems?.Clear();
                 vAllShowItemsList?.Clear();
-                vItemsList?.Clear();
+                vSearchItemsList?.Clear();
 
                 dictAllItems = await ConstantsHelper.Instance.GetItemsConstant();
-
-                bLoadingItems = false;
 
                 if (dictAllItems == null || dictAllItems.Count <= 0)
                 {
@@ -75,13 +85,13 @@ namespace OpenDota_UWP.ViewModels
                     return true;
                 }
 
-                // 处理图片下载等流程，然后逐个添加到 vAllItems 里面
                 foreach (var dictItem in dictAllItems)
                 {
                     try
                     {
                         var item = dictItem.Value;
 
+                        item.img = "https://cdn.cloudflare.steamstatic.com" + item.img;
                         if (!string.IsNullOrEmpty(item.cost))
                         {
                             string cost = item.cost.ToLower();
@@ -121,21 +131,26 @@ namespace OpenDota_UWP.ViewModels
                         {
                             item.mc = "0";
                         }
-
-                        item.img = "https://cdn.cloudflare.steamstatic.com" + item.img;
-                        await item.LoadImageAsync(85);
-
-                        vAllItems.Add(item);
-
-                        if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
-                        {
-                            vAllShowItemsList.Add(item);
-                            vItemsList.Add(item);
-                        }
+                        _vAllItems.Add(item);
                     }
                     catch { }
                 }
 
+                bLoadingItems = false;
+
+                foreach (var item in _vAllItems)
+                {
+                    try
+                    {
+                        await item.LoadImageAsync(85);
+
+                        if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
+                        {
+                            vAllShowItemsList.Add(item);
+                        }
+                    }
+                    catch { }
+                }
             }
             catch { _bLoadedDotaItems = false; }
             finally { bLoadingItems = false; }
@@ -147,19 +162,13 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                vItemsList.Clear();
+                vSearchItemsList?.Clear();
+                search = search.Trim();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    bSearchingItems = true;
 
-                if (string.IsNullOrEmpty(search))
-                {
-                    foreach (var item in vAllShowItemsList)
-                    {
-                        vItemsList.Add(item);
-                    }
-                }
-                else
-                {
                     bool searchFuzzy = DotaViewModel.Instance.bSearchFuzzy;
-
                     if (searchFuzzy)
                     {
                         // 模糊匹配搜索
@@ -170,25 +179,29 @@ namespace OpenDota_UWP.ViewModels
                             sb.Append(item);
                             sb.Append(".*");
                         }
-                        foreach (var item in vAllItems)
+                        foreach (var item in _vAllItems)
                         {
                             if (item != null && !string.IsNullOrEmpty(item.dname) && Regex.IsMatch(item.dname.ToLower(), sb.ToString().ToLower()))
                             {
-                                vItemsList.Add(item);
+                                vSearchItemsList.Add(item);
                             }
                         }
                     }
                     else
                     {
                         // 全字匹配搜索
-                        foreach (var item in vAllItems)
+                        foreach (var item in _vAllItems)
                         {
                             if (item != null && !string.IsNullOrEmpty(item.dname) && item.dname.ToLower().Contains(search.ToLower()))
                             {
-                                vItemsList.Add(item);
+                                vSearchItemsList.Add(item);
                             }
                         }
                     }
+                }
+                else
+                {
+                    bSearchingItems = false;
                 }
             }
             catch { }

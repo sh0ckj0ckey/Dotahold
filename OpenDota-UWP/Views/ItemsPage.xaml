@@ -11,9 +11,10 @@
     NavigationCacheMode="Required">
     <Page.Resources>
         <ThemeShadow x:Name="FrameShadow"/>
-        
+
         <cvt:EqualToBoolConverter x:Key="Eq2BConverter"/>
-        
+        <cvt:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+
         <Style x:Key="SearchSettingRadioButtonStyle" TargetType="RadioButton">
             <Setter Property="Background" Value="{ThemeResource RadioButtonBackground}"/>
             <Setter Property="Foreground" Value="{ThemeResource RadioButtonForeground}"/>
@@ -207,8 +208,10 @@
             <TextBox Grid.Row="1" Height="34" Margin="16,8,42,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"
                      TextChanged="TextBox_TextChanged"/>
-            <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.vItemsList,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+            <!--全部物品的列表-->
+            <ListView Grid.Row="2" Background="Transparent" ItemsSource="{x:Bind ViewModel.vAllShowItemsList,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
                       HorizontalAlignment="Stretch" SelectionMode="None" Padding="0,0,0,8" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
+                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaItemModel">
@@ -232,7 +235,33 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
+            <!--搜索时显示的列表-->
+            <ListView Grid.Row="2" Background="Transparent" ItemsSource="{x:Bind ViewModel.vSearchItemsList,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+                      HorizontalAlignment="Stretch" SelectionMode="None" Padding="0,0,0,8" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
+                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DotaItemModel">
+                        <Grid Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid Height="42" Width="56" CornerRadius="6">
+                                <Grid.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
+                                </Grid.Background>
+                            </Grid>
+                            <TextBlock Grid.Column="1" FontWeight="Medium"
+                                       Text="{x:Bind dname}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                       FontSize="15" ToolTipService.ToolTip="{x:Bind dname}"
+                                       Margin="14,0" CharacterSpacing="40"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Margin="12,0,0,0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid HorizontalAlignment="Center"
               VerticalAlignment="Center"
