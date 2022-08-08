@@ -257,14 +257,19 @@ namespace OpenDota_UWP.ViewModels
                                             else if (item.player_slot >= 128)// 夜魇
                                                 item.bWin = !item.radiant_win;
                                         }
-
-                                        await item.LoadCoverImageAsync(220);
-                                        await item.LoadHorizonImageAsync(36);
-
                                         vRecentMatches.Add(item);
                                         if (vRecentMatchesForFlip.Count < 5)
                                             vRecentMatchesForFlip.Add(item);
                                     }
+                                }
+
+                                foreach (var item in vRecentMatches)
+                                {
+                                    await item.LoadHorizonImageAsync(64);
+                                }
+                                foreach (var item in vRecentMatchesForFlip)
+                                {
+                                    await item.LoadCoverImageAsync(220);
                                 }
                             }
                         }
@@ -291,12 +296,14 @@ namespace OpenDota_UWP.ViewModels
                                             rate = 1;
                                         item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
 
-                                        await item.LoadImageAsync(36);
-
                                         vMostPlayedHeroes.Add(item);
                                         if (vMostPlayed10Heroes.Count < 10)
                                             vMostPlayed10Heroes.Add(item);
                                     }
+                                }
+                                foreach (var item in vMostPlayedHeroes)
+                                {
+                                    await item.LoadImageAsync(36);
                                 }
                             }
                         }
@@ -487,7 +494,6 @@ namespace OpenDota_UWP.ViewModels
                                 item.bWin = !item.radiant_win;
                         }
 
-                        await item.LoadCoverImageAsync(220);
                         await item.LoadHorizonImageAsync(64);
 
                         vAllMatchesList.Add(item);
@@ -563,8 +569,7 @@ namespace OpenDota_UWP.ViewModels
                         }
                         item.sKda = kda.ToString("f2");
 
-                        await item.LoadCoverImageAsync(220);
-                        await item.LoadHorizonImageAsync(36);
+                        await item.LoadHorizonImageAsync(64);
 
                         vAllMatches.Add(item);
                     }

@@ -247,10 +247,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid Height="42" Width="56" CornerRadius="6">
-                                <Grid.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
-                                </Grid.Background>
+                            <Grid Height="42" Width="56" CornerRadius="6" Background="{ThemeResource ITEMINFO_TIER_BK}">
+                                <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                             </Grid>
                             <TextBlock Grid.Column="1" FontWeight="Medium"
                                        Text="{x:Bind dname}" HorizontalAlignment="Left" VerticalAlignment="Center"
