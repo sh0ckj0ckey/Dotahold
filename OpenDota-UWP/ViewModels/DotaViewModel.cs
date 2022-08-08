@@ -66,6 +66,23 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bSearchFuzzy", ref _bSearchFuzzy, value); }
         }
 
+        // 图片缓存大小
+        private string _sImageCacheSize = string.Empty;
+        public string sImageCacheSize
+        {
+            get { return _sImageCacheSize; }
+            set { Set("sImageCacheSize", ref _sImageCacheSize, value); }
+        }
+
+        // 是否正在清理图片缓存
+        private bool _bCleaningImageCache = false;
+        public bool bCleaningImageCache
+        {
+            get { return _bCleaningImageCache; }
+            set { Set("bCleaningImageCache", ref _bCleaningImageCache, value); }
+        }
+
+
         public DotaViewModel()
         {
             try
@@ -170,6 +187,52 @@ namespace OpenDota_UWP.ViewModels
                 catch { }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 获取图片缓存的大小
+        /// </summary>
+        public async void GetImageCacheSize()
+        {
+            try
+            {
+                long size = await Helpers.CacheManager.GetCacheSizeAsync();
+                if (size > 0)
+                {
+                    sImageCacheSize = ByteConvert2GBMBKB(size);
+                }
+                else
+                {
+                    sImageCacheSize = string.Empty;
+                }
+            }
+            catch { sImageCacheSize = string.Empty; }
+        }
+
+        /// <summary>
+        /// 清理图片缓存
+        /// </summary>
+        public async void ClearImageCache()
+        {
+            try
+            {
+                bCleaningImageCache = true;
+                await Helpers.CacheManager.ClearCacheAsync();
+            }
+            catch { }
+            finally { bCleaningImageCache = false; }
+        }
+
+        private string ByteConvert2GBMBKB(long size)
+        {
+            if (size / 1073741824 >= 1)//如果当前Byte的值大于等于1GB
+                return (Math.Round(size / (float)1073741824, 2)).ToString() + "GB";// 将其转换成 GB
+            else if (size / 1048576 >= 1)//如果当前Byte的值大于等于1MB
+                return (Math.Round(size / (float)1048576, 2)).ToString() + "MB";// 将其转换成 MB
+            else if (size / 1024 >= 1)//如果当前Byte的值大于等于1KB
+                return (Math.Round(size / (float)1024, 2)).ToString() + "KB";// 将其转换成 KB
+            else
+                return size.ToString() + "B"; // 显示 Byte 值
         }
     }
 }

@@ -391,7 +391,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                string url = string.Format("https://api.opendota.com/api/players/{0}", id); //http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}
+                string url = string.Format("https://api.opendota.com/api/players/{0}", id); // http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}
 
                 var response = await playerInfoHttpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
