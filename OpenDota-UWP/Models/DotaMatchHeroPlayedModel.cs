@@ -1,12 +1,14 @@
-﻿using System;
+﻿using OpenDota_UWP.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
-    public class DotaMatchHeroPlayedModel
+    public class DotaMatchHeroPlayedModel : ViewModels.ViewModelBase
     {
         public string hero_id { get; set; }
         public double? last_played { get; set; }
@@ -25,6 +27,27 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         public string sWinRate { get; set; } = string.Empty;
+
+        // 封面图片(英雄小头像)
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ImageSource = null;
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (ImageSource != null) return;
+
+                ImageSource = await ImageLoader.LoadImageAsync(sHeroCoverImage);
+                ImageSource.DecodePixelType = DecodePixelType.Logical;
+                ImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
     }
 
 }

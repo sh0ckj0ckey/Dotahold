@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="6,0,0,0">
-            <Image Source="{x:Bind ViewModel.CurrentHero.icon,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center"/>
+            <Image Source="{x:Bind ViewModel.CurrentHero.IconSource,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center"/>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                        FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40" Margin="8,0,4,0"/>
         </StackPanel>

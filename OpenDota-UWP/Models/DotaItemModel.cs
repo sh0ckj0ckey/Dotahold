@@ -1,26 +1,14 @@
-﻿using System;
+﻿using OpenDota_UWP.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
-    public class Attrib
-    {
-        public string key { get; set; }
-        public string header { get; set; }
-        public string footer { get; set; }
-        public bool generated { get; set; }
-
-        /// <summary>
-        /// 例如大根，根据不同等级增加不同的属性，这个时候 value 为数组 string[]，否则为 string
-        /// </summary>
-        public object value { get; set; }
-    }
-
-
-    public class DotaItemModel
+    public class DotaItemModel : ViewModels.ViewModelBase
     {
         /// <summary>
         /// 使用的介绍，可能有多条，例如第一条是主动效果，第二条是被动
@@ -107,5 +95,39 @@ namespace OpenDota_UWP.Models
         /// int/bool
         /// </summary>
         public string mc { get; set; }
+
+        // 装备图片
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ImageSource = null;
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (ImageSource != null) return;
+
+                ImageSource = await ImageLoader.LoadImageAsync(img);
+                ImageSource.DecodePixelType = DecodePixelType.Logical;
+                ImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
+    }
+
+    public class Attrib
+    {
+        public string key { get; set; }
+        public string header { get; set; }
+        public string footer { get; set; }
+        public bool generated { get; set; }
+
+        /// <summary>
+        /// 例如大根，根据不同等级增加不同的属性，这个时候 value 为数组 string[]，否则为 string
+        /// </summary>
+        public object value { get; set; }
     }
 }

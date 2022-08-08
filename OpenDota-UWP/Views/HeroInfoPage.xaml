@@ -91,11 +91,7 @@
             <Grid Grid.Row="0" Grid.RowSpan="3">
                 <Border x:Name="BackgroundImageBorder">
                     <Border.Background>
-                        <ImageBrush Stretch="UniformToFill">
-                            <ImageBrush.ImageSource>
-                                <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
-                            </ImageBrush.ImageSource>
-                        </ImageBrush>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
                     </Border.Background>
                 </Border>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -157,11 +153,7 @@
                                                          Offset="0,0,8"
                                                          Opacity="0.2"/>
                     </ToolkitUI:Effects.Shadow>
-                    <Image Width="128" Height="72" Stretch="Uniform">
-                        <Image.Source>
-                            <BitmapImage UriSource="{x:Bind ViewModel.CurrentHero.img,Mode=OneWay}" DecodePixelWidth="256" DecodePixelType="Logical"/>
-                        </Image.Source>
-                    </Image>
+                    <Image Width="128" Height="72" Stretch="Uniform" Source="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
                 </Border>
                 <Grid x:Name="HeroNameGrid" Grid.Column="1" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -480,11 +472,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                                         <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind sAbilityImageUrl,Mode=OneWay}" DecodePixelHeight="64" DecodePixelType="Logical"/>
-                                                </Image.Source>
-                                            </Image>
+                                            <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter"
                                                    Visibility="{x:Bind ability_is_granted_by_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard"

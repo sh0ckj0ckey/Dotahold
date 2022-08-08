@@ -131,7 +131,7 @@
 
                                         <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickFlipRecentMatch"/>
                                     </Grid>
-                                    <Image Width="220" Source="{x:Bind sHeroCoverImage}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
+                                    <Image Width="220" Source="{x:Bind CoverImageSource,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                                 </Grid>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
@@ -286,7 +286,7 @@
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Source="{x:Bind sHeroCoverImage}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Image Grid.Column="0" Source="{x:Bind ImageSource,Mode=OneWay}" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     <StackPanel Grid.Column="1" Margin="8,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                         <TextBlock Text="{x:Bind games}" FontWeight="Medium" CharacterSpacing="40"/>
                                         <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
@@ -340,11 +340,7 @@
                                     <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
                                     <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
                                         <Grid.Background>
-                                            <ImageBrush Stretch="UniformToFill">
-                                                <ImageBrush.ImageSource>
-                                                    <BitmapImage UriSource="{x:Bind sHeroHorizonImage}" DecodePixelWidth="64" DecodePixelType="Logical"/>
-                                                </ImageBrush.ImageSource>
-                                            </ImageBrush>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HorizonImageSource,Mode=OneWay}"/>
                                         </Grid.Background>
                                     </Grid>
                                     <Grid Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
@@ -419,11 +415,7 @@
                         <TextBlock Text="?" FontSize="20" Margin="0,-4,0,0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Ellipse x:Name="PlayerPhotoEllipse" Height="36" Width="36" Stroke="{ThemeResource PLAYERPROFILE_AVATAR_BD}" StrokeThickness="1">
                             <Ellipse.Fill>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage x:Name="PlayerPhotoBitmapImage" UriSource="{x:Bind ViewModel.PlayerProfile.profile.avatarfull,Mode=OneWay}" DecodePixelHeight="72" DecodePixelType="Logical"/>
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.PlayerProfile.profile.AvatarSource,Mode=OneWay}"/>
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>

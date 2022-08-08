@@ -24,10 +24,10 @@ namespace OpenDota_UWP.Helpers
         /// </summary>
         /// 技能图片：https://www.dota2.com.cn/images/heroes/abilities/{英雄名加技能名，如chaos_knight_chaos_bolt}_hp1.png
         /// <param name="matchid"></param>
-        public static async Task<List<string>> GetMatchInfoAsync(string matchid)
-        {
+        //public static async Task<List<string>> GetMatchInfoAsync(string matchid)
+        //{
             
-        }
+        //}
 
         /// <summary>
         /// 获取本场比赛指定玩家的具体数据

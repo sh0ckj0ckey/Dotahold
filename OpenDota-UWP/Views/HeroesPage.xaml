@@ -206,11 +206,12 @@
                 <Grid Width="128" Height="72" Margin="0" Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
                     <Border x:Name="HeroPhotoImg" Width="128" Height="72" CornerRadius="0">
                         <Border.Background>
-                            <ImageBrush Stretch="UniformToFill">
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
+                            <!--<ImageBrush Stretch="UniformToFill">
                                 <ImageBrush.ImageSource>
                                     <BitmapImage UriSource="{x:Bind img}" DecodePixelWidth="256" DecodePixelType="Logical"/>
                                 </ImageBrush.ImageSource>
-                            </ImageBrush>
+                            </ImageBrush>-->
                         </Border.Background>
                     </Border>
                 </Grid>

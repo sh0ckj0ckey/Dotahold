@@ -34,18 +34,27 @@ namespace OpenDota_UWP.Helpers
         //清除缓存
         public static async Task ClearCacheAsync()
         {
-            var cacheFolder = await getCacheFolderAsync();
-            await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            try
+            {
+                var cacheFolder = await getCacheFolderAsync();
+                await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+            catch { }
         }
 
         //得到目录大小
         private static async Task<long> getFolderSizeAsync(StorageFolder target)
         {
-            var getFileSizeTasks = from file
-                                   in await target.CreateFileQuery().GetFilesAsync()
-                                   select file.GetBasicPropertiesAsync().AsTask();
-            var fileSizes = await Task.WhenAll(getFileSizeTasks);
-            return fileSizes.Sum(i => (long)i.Size);
+            try
+            {
+                var getFileSizeTasks = from file
+                                       in await target.CreateFileQuery().GetFilesAsync()
+                                       select file.GetBasicPropertiesAsync().AsTask();
+                var fileSizes = await Task.WhenAll(getFileSizeTasks);
+                return fileSizes.Sum(i => (long)i.Size);
+            }
+            catch { }
+            return -1;
         }
 
         //得到缓存目录大小
@@ -55,41 +64,56 @@ namespace OpenDota_UWP.Helpers
         //得到缓存文件
         public static async Task<StorageFile> GetCachedFileAsync(string Filename)
         {
-            var cacheFolder = await getCacheFolderAsync();
-            if (await cacheFolder.TryGetItemAsync(Filename) == null) return null;
-            return await cacheFolder.GetFileAsync(Filename);
+            try
+            {
+                var cacheFolder = await getCacheFolderAsync();
+                if (await cacheFolder.TryGetItemAsync(Filename) == null) return null;
+                return await cacheFolder.GetFileAsync(Filename);
+            }
+            catch { }
+            return null;
         }
 
         //删除缓存文件
         public static async Task<bool> DeleteCachedFileAsync(string Filename)
         {
-            var file = await GetCachedFileAsync(Filename);
-            if (file == null) return false;
-            await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
-            return true;
+            try
+            {
+                var file = await GetCachedFileAsync(Filename);
+                if (file == null) return false;
+                await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                return true;
+            }
+            catch { }
+            return false;
         }
 
-        //创建缓存文件
-        //文件将以随机的Guid命名，完成写入时再命名为期望的文件名
-        //此举有助于防止写入一半时程序非法终止而产生损坏的缓存文件
+        // 创建缓存文件
+        // 文件将以随机的Guid命名，完成写入时再命名为期望的文件名
+        // 此举有助于防止写入一半时程序非法终止而产生损坏的缓存文件
         public static async Task<TempStorageFile?> CreateCacheFileAsync(string Filename)
         {
-            Guid guid;
-            var test = Guid.TryParse(Filename, out guid);
-            //避免使用GUID作为文件名
-            if (test) return null;
-            do guid = Guid.NewGuid();
-            while (await GetCachedFileAsync(guid.ToString()) != null);
-            var cacheFolder = await getCacheFolderAsync();
-            var newFile = await cacheFolder.CreateFileAsync(guid.ToString());
-            TempStorageFile result = new TempStorageFile();
-            result.ExpectedName = Filename;
-            result.File = newFile;
-            return result;
+            try
+            {
+                Guid guid;
+                var test = Guid.TryParse(Filename, out guid);
+                // 避免使用GUID作为文件名
+                if (test) return null;
+                do guid = Guid.NewGuid();
+                while (await GetCachedFileAsync(guid.ToString()) != null);
+                var cacheFolder = await getCacheFolderAsync();
+                var newFile = await cacheFolder.CreateFileAsync(guid.ToString());
+                TempStorageFile result = new TempStorageFile();
+                result.ExpectedName = Filename;
+                result.File = newFile;
+                return result;
+            }
+            catch { }
+            return null;
         }
 
-        //完成写入缓存文件
-        //ForceUpdate: 是否覆盖已有的文件
+        // 完成写入缓存文件
+        // ForceUpdate: 是否覆盖已有的文件
         public static async Task<bool> FinishCachedFileAsync(TempStorageFile File, bool ForceUpdate = false)
         {
             try
@@ -108,14 +132,18 @@ namespace OpenDota_UWP.Helpers
             }
         }
 
-        //清理名称为GUID的临时文件
+        // 清理名称为GUID的临时文件
         public static async Task ClearTempFilesAsync()
         {
-            var deleteTempFilesTasks = from file
-                                       in await (await getCacheFolderAsync()).CreateFileQuery().GetFilesAsync()
-                                       where Guid.TryParse(file.Name, out _)
-                                       select file.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask();
-            await Task.WhenAll(deleteTempFilesTasks);
+            try
+            {
+                var deleteTempFilesTasks = from file
+                                           in await (await getCacheFolderAsync()).CreateFileQuery().GetFilesAsync()
+                                           where Guid.TryParse(file.Name, out _)
+                                           select file.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask();
+                await Task.WhenAll(deleteTempFilesTasks);
+            }
+            catch { }
         }
     }
 

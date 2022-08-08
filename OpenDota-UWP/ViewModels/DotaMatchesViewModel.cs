@@ -175,6 +175,7 @@ namespace OpenDota_UWP.ViewModels
                                 }
                             }
                             PlayerProfile = profile;
+                            await PlayerProfile?.profile?.LoadIconAsync(72);
                         }
                         catch { }
 
@@ -257,6 +258,9 @@ namespace OpenDota_UWP.ViewModels
                                                 item.bWin = !item.radiant_win;
                                         }
 
+                                        await item.LoadCoverImageAsync(220);
+                                        await item.LoadHorizonImageAsync(36);
+
                                         vRecentMatches.Add(item);
                                         if (vRecentMatchesForFlip.Count < 5)
                                             vRecentMatchesForFlip.Add(item);
@@ -286,6 +290,8 @@ namespace OpenDota_UWP.ViewModels
                                         else
                                             rate = 1;
                                         item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
+
+                                        await item.LoadImageAsync(36);
 
                                         vMostPlayedHeroes.Add(item);
                                         if (vMostPlayed10Heroes.Count < 10)
@@ -481,6 +487,9 @@ namespace OpenDota_UWP.ViewModels
                                 item.bWin = !item.radiant_win;
                         }
 
+                        await item.LoadCoverImageAsync(220);
+                        await item.LoadHorizonImageAsync(64);
+
                         vAllMatchesList.Add(item);
                         if (vAllMatches.Count < 40)
                         {
@@ -514,7 +523,7 @@ namespace OpenDota_UWP.ViewModels
         /// <summary>
         /// 从所有比赛中再取出20条显示
         /// </summary>
-        public void IncreaseFromAllMatches()
+        public async void IncreaseFromAllMatches()
         {
             try
             {
@@ -553,6 +562,10 @@ namespace OpenDota_UWP.ViewModels
                                 kda = ((double)item.kills + (double)item.assists) / (double)item.deaths;
                         }
                         item.sKda = kda.ToString("f2");
+
+                        await item.LoadCoverImageAsync(220);
+                        await item.LoadHorizonImageAsync(36);
+
                         vAllMatches.Add(item);
                     }
                 }

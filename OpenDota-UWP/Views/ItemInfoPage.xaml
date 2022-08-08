@@ -50,13 +50,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                     <Grid Height="62" Width="85" CornerRadius="6">
                         <Grid.Background>
-                            <ImageBrush Stretch="UniformToFill">
-                                <ImageBrush.ImageSource>
-                                    <BitmapImage UriSource="{x:Bind ViewModel.CurrentItem.img,Mode=OneWay}"
-                                                 DecodePixelWidth="85"
-                                                 DecodePixelType="Logical"/>
-                                </ImageBrush.ImageSource>
-                            </ImageBrush>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.CurrentItem.ImageSource,Mode=OneWay}"/>
                         </Grid.Background>
                     </Grid>
                     <StackPanel Orientation="Vertical">
@@ -132,13 +126,7 @@
                         <DataTemplate x:DataType="models:DotaItemModel">
                             <Grid Height="34" Width="45" Margin="4,0" CornerRadius="4" ToolTipService.ToolTip="{x:Bind dname}">
                                 <Grid.Background>
-                                    <ImageBrush Stretch="UniformToFill">
-                                        <ImageBrush.ImageSource>
-                                            <BitmapImage UriSource="{x:Bind img}"
-                                                         DecodePixelHeight="34"
-                                                         DecodePixelType="Logical"/>
-                                        </ImageBrush.ImageSource>
-                                    </ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
                                 </Grid.Background>
                             </Grid>
                         </DataTemplate>

@@ -219,11 +219,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid Height="42" Width="56" CornerRadius="6">
                                 <Grid.Background>
-                                    <ImageBrush Stretch="UniformToFill">
-                                        <ImageBrush.ImageSource>
-                                            <BitmapImage UriSource="{x:Bind img}" DecodePixelHeight="42" DecodePixelType="Logical"/>
-                                        </ImageBrush.ImageSource>
-                                    </ImageBrush>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
                                 </Grid.Background>
                             </Grid>
                             <TextBlock Grid.Column="1" FontWeight="Medium"

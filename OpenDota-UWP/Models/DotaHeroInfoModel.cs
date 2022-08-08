@@ -1,4 +1,5 @@
-﻿using OpenDota_UWP.ViewModels;
+﻿using OpenDota_UWP.Helpers;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
@@ -269,26 +271,36 @@ namespace OpenDota_UWP.Models
         public double item_stock_time { get; set; }
         public double item_quality { get; set; }
 
-        /// <summary>
-        /// 技能图片
-        /// </summary>
+        // 技能图片
         [Newtonsoft.Json.JsonIgnore]
-        private string _sAbilityImageUrl = "ms-appx:///Assets/Icons/item_placeholder.png";
-        public string sAbilityImageUrl
-        {
-            get { return _sAbilityImageUrl; }
-            set { Set("sAbilityImageUrl", ref _sAbilityImageUrl, value); }
-        }
+        public string sAbilityImageUrl = "ms-appx:///Assets/Icons/item_placeholder.png";
 
-        /// <summary>
-        /// 技能数值
-        /// </summary>
+        // 技能数值
         [Newtonsoft.Json.JsonIgnore]
         private string _specialValuesStr = string.Empty;
         public string specialValuesStr
         {
             get { return _specialValuesStr; }
             set { Set("specialValuesStr", ref _specialValuesStr, value); }
+        }
+
+        // 技能图片
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ImageSource = null;
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                ImageSource = await ImageLoader.LoadImageAsync(sAbilityImageUrl);
+                ImageSource.DecodePixelType = DecodePixelType.Logical;
+                ImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
         }
     }
 

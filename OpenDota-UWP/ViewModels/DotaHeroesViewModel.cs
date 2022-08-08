@@ -146,9 +146,10 @@ namespace OpenDota_UWP.ViewModels
                 vIntHeroesList?.Clear();
                 dictAllHeroes = await ConstantsHelper.Instance.GetHeroesConstant();
 
+                bLoadingHeroes = false;
+
                 if (dictAllHeroes == null || dictAllHeroes.Count <= 0)
                 {
-                    bLoadingHeroes = false;
                     _bLoadedDotaHeroes = false;
                     return true;
                 }
@@ -158,6 +159,9 @@ namespace OpenDota_UWP.ViewModels
                 {
                     item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
                     item.Value.icon = "https://cdn.cloudflare.steamstatic.com" + item.Value.icon;
+                    await item.Value.LoadImageAsync(256);
+                    await item.Value.LoadIconAsync(36);
+
                     string attr = item.Value.primary_attr.ToLower();
                     if (attr.Contains("str"))
                     {
@@ -365,7 +369,7 @@ namespace OpenDota_UWP.ViewModels
         /// 整理英雄信息中的技能信息
         /// </summary>
         /// <param name="info"></param>
-        private void OrganizeHeroAbilities(Models.Hero info)
+        private async void OrganizeHeroAbilities(Models.Hero info)
         {
             try
             {
@@ -669,6 +673,8 @@ namespace OpenDota_UWP.ViewModels
                         ability.specialValuesStr = OrganizeLocString(ability.specialValuesStr, null);
                     }
                     catch { }
+
+                    await ability.LoadImageAsync(64);
                 }
             }
             catch { }
@@ -1227,6 +1233,7 @@ namespace OpenDota_UWP.ViewModels
                             int dotIndex = item.score.IndexOf('.');
                             string score = dotIndex <= 0 ? item.score : item.score.Substring(0, dotIndex);
                             item.score = score;
+                            await item.LoadImageAsync(72);
                             vRankingPlayers.Add(item);
                         }
                         catch { }

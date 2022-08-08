@@ -128,6 +128,8 @@ namespace OpenDota_UWP.Views
                         {
                             if (DotaItemsViewModel.Instance.dictAllItems.ContainsKey(item))
                             {
+                                // 在获取到字典的时候已经load了
+                                // await DotaItemsViewModel.Instance.dictAllItems[item].LoadImageAsync(85);
                                 vComponentsList.Add(DotaItemsViewModel.Instance.dictAllItems[item]);
                             }
                         }

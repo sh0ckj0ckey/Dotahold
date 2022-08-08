@@ -1,8 +1,10 @@
-﻿using System;
+﻿using OpenDota_UWP.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
@@ -11,7 +13,7 @@ namespace OpenDota_UWP.Models
     //    public List<DotaRecentMatchModel> vRecentMatches { get; set; }
     //}
 
-    public class DotaRecentMatchModel
+    public class DotaRecentMatchModel : ViewModels.ViewModelBase
     {
         public long? match_id { get; set; }
         public int? player_slot { get; set; }
@@ -70,6 +72,47 @@ namespace OpenDota_UWP.Models
         [Newtonsoft.Json.JsonIgnore]
         public string sKda { get; set; } = string.Empty;
 
+        // 比赛英雄封面(大图)
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _CoverImageSource = null;
+        public BitmapImage CoverImageSource
+        {
+            get { return _CoverImageSource; }
+            set { Set("CoverImageSource", ref _CoverImageSource, value); }
+        }
+        public async Task LoadCoverImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (CoverImageSource != null) return;
+
+                CoverImageSource = await ImageLoader.LoadImageAsync(sHeroCoverImage);
+                CoverImageSource.DecodePixelType = DecodePixelType.Logical;
+                CoverImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
+
+        // 比赛英雄图片
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _HorizonImageSource = null;
+        public BitmapImage HorizonImageSource
+        {
+            get { return _HorizonImageSource; }
+            set { Set("HorizonImageSource", ref _HorizonImageSource, value); }
+        }
+        public async Task LoadHorizonImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (CoverImageSource != null) return;
+
+                HorizonImageSource = await ImageLoader.LoadImageAsync(sHeroHorizonImage);
+                HorizonImageSource.DecodePixelType = DecodePixelType.Logical;
+                HorizonImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
 
     }
 

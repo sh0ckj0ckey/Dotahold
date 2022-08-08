@@ -160,7 +160,7 @@
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="Models\DotaHeroRankingModel.cs" />
     <Compile Include="Models\DotaMatchHeroPlayedModel.cs" />
-    <Compile Include="Models\DotaMatchModel.cs" />
+    <Compile Include="Models\DotaRecentMatchModel.cs" />
     <Compile Include="Models\DotaMatchPlayerProfileModel.cs" />
     <Compile Include="Models\DotaMatchPlayerTotalsModel.cs" />
     <Compile Include="Models\DotaMatchWinLoseModel.cs" />

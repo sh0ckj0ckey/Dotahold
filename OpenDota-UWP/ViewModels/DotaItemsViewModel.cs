@@ -67,9 +67,10 @@ namespace OpenDota_UWP.ViewModels
 
                 dictAllItems = await ConstantsHelper.Instance.GetItemsConstant();
 
+                bLoadingItems = false;
+
                 if (dictAllItems == null || dictAllItems.Count <= 0)
                 {
-                    bLoadingItems = false;
                     _bLoadedDotaItems = false;
                     return true;
                 }
@@ -80,7 +81,6 @@ namespace OpenDota_UWP.ViewModels
                     try
                     {
                         var item = dictItem.Value;
-                        item.img = "https://cdn.cloudflare.steamstatic.com" + item.img;
 
                         if (!string.IsNullOrEmpty(item.cost))
                         {
@@ -121,6 +121,9 @@ namespace OpenDota_UWP.ViewModels
                         {
                             item.mc = "0";
                         }
+
+                        item.img = "https://cdn.cloudflare.steamstatic.com" + item.img;
+                        await item.LoadImageAsync(85);
 
                         vAllItems.Add(item);
 

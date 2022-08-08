@@ -1,12 +1,14 @@
-﻿using System;
+﻿using OpenDota_UWP.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
-    public class DotaHeroModel
+    public class DotaHeroModel : ViewModels.ViewModelBase
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -37,6 +39,44 @@ namespace OpenDota_UWP.Models
         public double turn_rate { get; set; }
         public bool? cm_enabled { get; set; }
         public double legs { get; set; }
+
+        // 英雄图片
+        [Newtonsoft.Json.JsonIgnore]
+        public BitmapImage _ImageSource = null;
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                ImageSource = await ImageLoader.LoadImageAsync(img);
+                ImageSource.DecodePixelType = DecodePixelType.Logical;
+                ImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
+
+        // 英雄小头像
+        [Newtonsoft.Json.JsonIgnore]
+        public BitmapImage _IconSource = null;
+        public BitmapImage IconSource
+        {
+            get { return _IconSource; }
+            set { Set("IconSource", ref _IconSource, value); }
+        }
+        public async Task LoadIconAsync(int decodeWidth)
+        {
+            try
+            {
+                IconSource = await ImageLoader.LoadImageAsync(icon);
+                IconSource.DecodePixelType = DecodePixelType.Logical;
+                IconSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
     }
 
 }

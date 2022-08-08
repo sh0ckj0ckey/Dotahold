@@ -54,11 +54,7 @@
                                 <Grid Grid.Column="1" Grid.ColumnSpan="4" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
                                 <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
                                     <Grid.Background>
-                                        <ImageBrush Stretch="UniformToFill">
-                                            <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="{x:Bind sHeroHorizonImage}" DecodePixelWidth="64" DecodePixelType="Logical"/>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HorizonImageSource,Mode=OneWay}"/>
                                     </Grid.Background>
                                 </Grid>
                                 <Grid Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">

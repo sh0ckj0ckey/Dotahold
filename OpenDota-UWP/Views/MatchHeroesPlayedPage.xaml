@@ -64,11 +64,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Width="36">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind sHeroCoverImage}" DecodePixelWidth="36" DecodePixelType="Logical"/>
-                                </Image.Source>
-                            </Image>
+                            <Image Grid.Column="0" Width="36" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Run Text="{x:Bind win}" Foreground="ForestGreen" FontFamily="Consolas" FontSize="14"/>
                                 <Run Text="/" FontFamily="Consolas" FontSize="14"/>

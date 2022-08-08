@@ -15,7 +15,7 @@ namespace OpenDota_UWP.Helpers
     {
         private static HttpClient http = new HttpClient();
 
-        public static async Task<BitmapImage> LoadImageAsync(string Uri)
+        public static async Task<BitmapImage> LoadImageAsync(string Uri, string defaultImg = "ms-appx:///Assets/Icons/item_placeholder.png")
         {
             try
             {
@@ -24,7 +24,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     if (memStream == null)
                     {
-                        return new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/loadwrong.png"));
+                        return new BitmapImage(new System.Uri(defaultImg));
                     }
                     await bm.SetSourceAsync(memStream.AsRandomAccessStream());
                 }
@@ -32,7 +32,7 @@ namespace OpenDota_UWP.Helpers
             }
             catch
             {
-                return new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/loadwrong.png"));
+                return new BitmapImage(new System.Uri(defaultImg));
             }
         }
 
@@ -58,6 +58,7 @@ namespace OpenDota_UWP.Helpers
                         await resStream.CopyToAsync(memStream);
                         memStream.Position = 0;
                         var newCachedFile = await CacheManager.CreateCacheFileAsync(tmpFileName);
+                        if (newCachedFile == null) return null;
                         using (var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync())
                         {
                             await memStream.CopyToAsync(fileStream);
