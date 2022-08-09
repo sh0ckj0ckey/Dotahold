@@ -69,7 +69,7 @@
             <ScrollViewer Grid.Row="0" Grid.RowSpan="2" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
                 <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="82"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -404,7 +404,7 @@
                 </Grid>
             </ScrollViewer>
             <!--标题栏(头像昵称菜单)-->
-            <Grid Grid.Row="0" Padding="0,40,0,10">
+            <Grid Grid.Row="0" Padding="0,36,0,6">
                 <Grid.Background>
                     <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
                                   FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.2" TintOpacity="0.1"/>
@@ -467,9 +467,21 @@
                     </Button.Flyout>
                 </Button>
             </Grid>
+
+            <!--加载中-->
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                  Height="Auto" CornerRadius="8,8,0,0"
+                  Visibility="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="Backdrop" TintColor="{ThemeResource HEROINFO_LISTITEM_BK}" 
+                                  FallbackColor="{ThemeResource HEROINFO_LISTITEM_BK}" TintLuminosityOpacity="1" TintOpacity="0.1"/>
+                </Grid.Background>
+                <ProgressBar Foreground="{ThemeResource SIMPLETEXT_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                <TextBlock Text="fetching heroes and items list..." FontWeight="Medium" CharacterSpacing="40" FontSize="12" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,12,0,18"/>
+            </Grid>
         </Grid>
 
-        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}">
+        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}" BorderThickness="0,0,0,0" BorderBrush="#20AAAAAA">
             <Frame x:Name="MatchFrame"/>
         </Grid>
 

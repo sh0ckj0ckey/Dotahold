@@ -105,6 +105,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bLoadingOneMatchInfo", ref _bLoadingOneMatchInfo, value); }
         }
 
+        // 是否正在加载英雄和物品
+        private bool _bLoadingHeroesAndItems = false;
+        public bool bLoadingHeroesAndItems
+        {
+            get { return _bLoadingHeroesAndItems; }
+            set { Set("bLoadingHeroesAndItems", ref _bLoadingHeroesAndItems, value); }
+        }
+
         // 刷新胜负场次的饼状图
         public Action<double, double> ActUpdatePieChart = null;
 
@@ -121,11 +129,12 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 System.Diagnostics.Debug.WriteLine("Going to load Matches ---> " + DateTime.Now.Ticks);
-                
+
                 _bGottenAllMatchesList = false;
 
                 sSteamId = GetSteamID();
 
+                bLoadingHeroesAndItems = true;
                 bool triedLoadHeroes = await DotaHeroesViewModel.Instance.LoadDotaHeroes();
                 bool triedLoadItems = await DotaItemsViewModel.Instance.LoadDotaItems();
 
@@ -135,6 +144,8 @@ namespace OpenDota_UWP.ViewModels
                     if (triedLoadHeroes && triedLoadItems)
                     {
                         System.Diagnostics.Debug.WriteLine("Loading Matches ---> " + DateTime.Now.Ticks);
+
+                        bLoadingHeroesAndItems = false;
 
                         // 玩家信息
                         GetPlayerProfileAsync(sSteamId);
@@ -157,6 +168,7 @@ namespace OpenDota_UWP.ViewModels
                 }
             }
             catch { }
+            finally { bLoadingHeroesAndItems = false; }
         }
 
         /// <summary>
