@@ -28,6 +28,9 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
+        // 用来抑制页面跳转时其他的动画的，这样可以避免其他动画和 Connected Animation 出现奇怪的冲突
+        private SuppressNavigationTransitionInfo snti = new SuppressNavigationTransitionInfo();
+
         private DotaItemsViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
@@ -97,7 +100,7 @@ namespace OpenDota_UWP.Views
                 if (e.ClickedItem is Models.DotaItemModel item)
                 {
                     ViewModel.CurrentItem = item;
-                    ItemFrame.Navigate(typeof(ItemInfoPage));
+                    ItemFrame.Navigate(typeof(ItemInfoPage), null, snti);
                 }
             }
             catch { }

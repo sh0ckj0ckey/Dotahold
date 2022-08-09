@@ -29,6 +29,9 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class ItemInfoPage : Page, INotifyPropertyChanged
     {
+        // 用来抑制页面跳转时其他的动画的，这样可以避免其他动画和 Connected Animation 出现奇怪的冲突
+        private SuppressNavigationTransitionInfo snti = new SuppressNavigationTransitionInfo();
+
         private DotaItemsViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
@@ -106,11 +109,6 @@ namespace OpenDota_UWP.Views
 
                 try
                 {
-                    if (e.Parameter is NavigationTransitionInfo transition)
-                    {
-                        navigationTransition.DefaultNavigationTransitionInfo = transition;
-                    }
-
                     PopInItemInfoStoryboard?.Begin();
                 }
                 catch { }
@@ -183,7 +181,7 @@ namespace OpenDota_UWP.Views
                     if (e.ClickedItem is Models.DotaItemModel item)
                     {
                         ViewModel.CurrentItem = item;
-                        this.Frame.Navigate(typeof(ItemInfoPage));
+                        this.Frame.Navigate(typeof(ItemInfoPage), null, snti);
                     }
                 }
             }
