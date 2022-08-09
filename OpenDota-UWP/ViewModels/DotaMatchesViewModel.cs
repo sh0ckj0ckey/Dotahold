@@ -227,6 +227,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetPlayerProfile ---> " + DateTime.Now.ToLongDateString());
+
                 PlayerProfile = null;
 
                 string url = string.Format("https://api.opendota.com/api/players/{0}", id); // http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={0}&steamids={1}
@@ -279,6 +281,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetPlayerWL ---> " + DateTime.Now.ToLongDateString());
+
                 PlayerWinLose = null;
 
                 string url = string.Format("https://api.opendota.com/api/players/{0}/wl", id);
@@ -315,6 +319,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetTotal ---> " + DateTime.Now.ToLongDateString());
+
                 vPlayerTotals.Clear();
 
                 string url = string.Format("https://api.opendota.com/api/players/{0}/totals", id);
@@ -372,6 +378,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetRecentMatch ---> " + DateTime.Now.ToLongDateString());
+
                 vRecentMatchesForFlip.Clear();
                 vRecentMatches.Clear();
 
@@ -430,6 +438,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetHeroesPlayed ---> " + DateTime.Now.ToLongDateString());
+
                 bLoadingPlayed = true;
                 vMostPlayed10Heroes.Clear();
                 vMostPlayedHeroes.Clear();
@@ -483,6 +493,8 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine("Going to GetNumberOfCurrentPlayers ---> " + DateTime.Now.ToLongDateString());
+
                 string url = "http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=570&format=json";
                 DotaOnlinePlayersModel online = null;
 
