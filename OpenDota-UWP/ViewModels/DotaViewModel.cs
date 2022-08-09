@@ -58,6 +58,14 @@ namespace OpenDota_UWP.ViewModels
             }
         }
 
+        // 是否在一些页面间显示分割线
+        private bool _bShowSplitLine = false;
+        public bool bShowSplitLine
+        {
+            get { return _bShowSplitLine; }
+            set { Set("bShowSplitLine", ref _bShowSplitLine, value); }
+        }
+
         // 物品-搜索模式, true:模糊匹配, false:全字匹配
         private bool _bSearchFuzzy = true;
         public bool bSearchFuzzy
@@ -160,6 +168,28 @@ namespace OpenDota_UWP.ViewModels
                     else
                     {
                         iLanguageIndex = 0;
+                    }
+                }
+                catch { }
+
+                // 读取是否显示分割线
+                try
+                {
+                    if (App.AppSettingContainer?.Values["ShowSplitLine"] == null)
+                    {
+                        this.bShowSplitLine = false;
+                    }
+                    else if (App.AppSettingContainer?.Values["ShowSplitLine"]?.ToString() == "True")
+                    {
+                        this.bShowSplitLine = true;
+                    }
+                    else if (App.AppSettingContainer?.Values["ShowSplitLine"]?.ToString() == "False")
+                    {
+                        this.bShowSplitLine = false;
+                    }
+                    else
+                    {
+                        this.bShowSplitLine = false;
                     }
                 }
                 catch { }

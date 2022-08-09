@@ -470,7 +470,7 @@
 
             <!--加载中-->
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
-                  Height="Auto" CornerRadius="8,8,0,0"
+                  Height="Auto" CornerRadius="12,12,0,0"
                   Visibility="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                 <Grid.Background>
                     <AcrylicBrush BackgroundSource="Backdrop" TintColor="{ThemeResource HEROINFO_LISTITEM_BK}" 
