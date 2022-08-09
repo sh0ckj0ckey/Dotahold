@@ -227,7 +227,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetPlayerProfile ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetPlayerProfile ---> " + DateTime.Now.Ticks);
 
                 PlayerProfile = null;
 
@@ -281,7 +281,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetPlayerWL ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetPlayerWL ---> " + DateTime.Now.Ticks);
 
                 PlayerWinLose = null;
 
@@ -319,7 +319,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetTotal ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetTotal ---> " + DateTime.Now.Ticks);
 
                 vPlayerTotals.Clear();
 
@@ -378,7 +378,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetRecentMatch ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetRecentMatch ---> " + DateTime.Now.Ticks);
 
                 vRecentMatchesForFlip.Clear();
                 vRecentMatches.Clear();
@@ -438,7 +438,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetHeroesPlayed ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetHeroesPlayed ---> " + DateTime.Now.Ticks);
 
                 bLoadingPlayed = true;
                 vMostPlayed10Heroes.Clear();
@@ -493,7 +493,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("Going to GetNumberOfCurrentPlayers ---> " + DateTime.Now.ToLongDateString());
+                System.Diagnostics.Debug.WriteLine("Going to GetNumberOfCurrentPlayers ---> " + DateTime.Now.Ticks);
 
                 string url = "http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=570&format=json";
                 DotaOnlinePlayersModel online = null;
