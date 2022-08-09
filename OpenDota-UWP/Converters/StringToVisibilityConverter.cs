@@ -14,7 +14,7 @@ namespace OpenDota_UWP.Converters
         {
             try
             {
-                if (value != null && value.ToString().Length > 0)
+                if (value != null && value.ToString()?.Length > 0)
                 {
                     return Visibility.Visible;
                 }

@@ -32,14 +32,21 @@ namespace OpenDota_UWP.Helpers
         }
 
         //清除缓存
-        public static async Task ClearCacheAsync()
+        public static async Task<bool> ClearCacheAsync()
         {
             try
             {
                 var cacheFolder = await getCacheFolderAsync();
-                await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
+                foreach (var file in files)
+                {
+                    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                }
+                //await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                return true;
             }
             catch { }
+            return false;
         }
 
         //得到目录大小

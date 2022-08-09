@@ -163,6 +163,8 @@ namespace OpenDota_UWP
                 SettingPopGrid.Visibility = Visibility.Visible;
                 SettingGridPopIn.Begin();
                 SettingPivot.SelectedIndex = 0;
+
+                ViewModel.GetImageCacheSize();
             }
             catch { }
         }
@@ -326,6 +328,11 @@ namespace OpenDota_UWP
             catch { }
         }
 
+        /// <summary>
+        /// 选择启动页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -340,6 +347,11 @@ namespace OpenDota_UWP
             catch { }
         }
 
+        /// <summary>
+        /// 选择语言
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -350,6 +362,20 @@ namespace OpenDota_UWP
                     App.AppSettingContainer.Values["Language"] = index;
                     ViewModel.iLanguageIndex = index;
                 }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 清理缓存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickClearImageCache(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.ClearImageCache();
             }
             catch { }
         }

@@ -54,11 +54,8 @@
                                    HorizontalAlignment="Left"
                                    Margin="12,0,8,0"
                                    Source="/Assets/Icons/Data/icon_gold.png"/>
-                            <TextBlock Grid.Column="2"
-                                       Height="28" VerticalAlignment="Center"
-                                       FontSize="18"
-                                       Text="{x:Bind ViewModel.CurrentItem.cost,Mode=OneWay}"
-                                       Opacity="0.7"/>
+                            <TextBlock Grid.Column="2" Height="28" VerticalAlignment="Center" CharacterSpacing="20"
+                                       FontSize="18" FontWeight="Medium" Opacity="0.7" Text="{x:Bind ViewModel.CurrentItem.cost,Mode=OneWay}"/>
                             <StackPanel Margin="12,0" Orientation="Horizontal" Background="{ThemeResource ITEMINFO_TIER_BK}" HorizontalAlignment="Left" Height="18" CornerRadius="4" Padding="8,2" 
                                         Visibility="{x:Bind ViewModel.CurrentItem.tier,Converter={StaticResource Int2Vis},Mode=OneWay}">
                                 <TextBlock Text="Neutral T" FontWeight="Medium" FontSize="12" Margin="0,0,0,0" VerticalAlignment="Center"/>
@@ -70,7 +67,7 @@
                 <TextBlock Text="{x:Bind sHintInfo,Mode=OneWay}"
                            TextWrapping="WrapWholeWords"
                            Opacity="0.8"
-                           CharacterSpacing="20"
+                           CharacterSpacing="40"
                            Margin="0,4"
                            Visibility="{x:Bind sHintInfo,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
                 <TextBlock Text="{x:Bind ViewModel.CurrentItem.notes,Mode=OneWay}"
@@ -78,11 +75,11 @@
                            TextWrapping="WrapWholeWords"
                            Foreground="ForestGreen"
                            Margin="0,4"
-                           CharacterSpacing="20"
+                           CharacterSpacing="40"
                            Visibility="{x:Bind ViewModel.CurrentItem.notes,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
                 <TextBlock Text="{x:Bind sAttribInfo,Mode=OneWay}"
                            TextWrapping="WrapWholeWords"
-                           CharacterSpacing="20"
+                           CharacterSpacing="40"
                            Margin="0,4"
                            Visibility="{x:Bind sAttribInfo,Converter={StaticResource Str2Vis},Mode=OneWay}"/>
                 <StackPanel Orientation="Horizontal" Margin="6">

@@ -203,7 +203,7 @@ namespace OpenDota_UWP.ViewModels
                 }
                 else
                 {
-                    sImageCacheSize = string.Empty;
+                    sImageCacheSize = "0B";
                 }
             }
             catch { sImageCacheSize = string.Empty; }
@@ -217,7 +217,9 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 bCleaningImageCache = true;
-                await Helpers.CacheManager.ClearCacheAsync();
+                bool result = await Helpers.CacheManager.ClearCacheAsync();
+
+                if (result) GetImageCacheSize();
             }
             catch { }
             finally { bCleaningImageCache = false; }
@@ -225,14 +227,19 @@ namespace OpenDota_UWP.ViewModels
 
         private string ByteConvert2GBMBKB(long size)
         {
-            if (size / 1073741824 >= 1)//如果当前Byte的值大于等于1GB
-                return (Math.Round(size / (float)1073741824, 2)).ToString() + "GB";// 将其转换成 GB
-            else if (size / 1048576 >= 1)//如果当前Byte的值大于等于1MB
-                return (Math.Round(size / (float)1048576, 2)).ToString() + "MB";// 将其转换成 MB
-            else if (size / 1024 >= 1)//如果当前Byte的值大于等于1KB
-                return (Math.Round(size / (float)1024, 2)).ToString() + "KB";// 将其转换成 KB
-            else
-                return size.ToString() + "B"; // 显示 Byte 值
+            try
+            {
+                if (size / 1073741824 >= 1)//如果当前Byte的值大于等于1GB
+                    return (Math.Round(size / (float)1073741824, 2)).ToString() + "GB";// 将其转换成 GB
+                else if (size / 1048576 >= 1)//如果当前Byte的值大于等于1MB
+                    return (Math.Round(size / (float)1048576, 2)).ToString() + "MB";// 将其转换成 MB
+                else if (size / 1024 >= 1)//如果当前Byte的值大于等于1KB
+                    return (Math.Round(size / (float)1024, 2)).ToString() + "KB";// 将其转换成 KB
+                else
+                    return size.ToString() + "B"; // 显示 Byte 值
+            }
+            catch { }
+            return size.ToString() + "B";
         }
     }
 }
