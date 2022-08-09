@@ -26,7 +26,7 @@ namespace OpenDota_UWP.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class HeroesPage : Page
+    public sealed partial class DotaHeroesPage : Page
     {
         // 用来抑制页面跳转时其他的动画的，这样可以避免其他动画和 Connected Animation 出现奇怪的冲突
         private SuppressNavigationTransitionInfo snti = new SuppressNavigationTransitionInfo();
@@ -34,7 +34,7 @@ namespace OpenDota_UWP.Views
         private DotaHeroesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
-        public HeroesPage()
+        public DotaHeroesPage()
         {
             try
             {

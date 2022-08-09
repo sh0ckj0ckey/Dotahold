@@ -186,8 +186,8 @@
     <Compile Include="Views\ItemInfoPage.xaml.cs">
       <DependentUpon>ItemInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ItemsPage.xaml.cs">
-      <DependentUpon>ItemsPage.xaml</DependentUpon>
+    <Compile Include="Views\DotaItemsPage.xaml.cs">
+      <DependentUpon>DotaItemsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -197,14 +197,14 @@
     <Compile Include="Views\BlankPage.xaml.cs">
       <DependentUpon>BlankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HeroesPage.xaml.cs">
-      <DependentUpon>HeroesPage.xaml</DependentUpon>
+    <Compile Include="Views\DotaHeroesPage.xaml.cs">
+      <DependentUpon>DotaHeroesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MatchesListPage.xaml.cs">
       <DependentUpon>MatchesListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MatchesPage.xaml.cs">
-      <DependentUpon>MatchesPage.xaml</DependentUpon>
+    <Compile Include="Views\DotaMatchesPage.xaml.cs">
+      <DependentUpon>DotaMatchesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MatchHeroesPlayedPage.xaml.cs">
       <DependentUpon>MatchHeroesPlayedPage.xaml</DependentUpon>
@@ -476,7 +476,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ItemsPage.xaml">
+    <Page Include="Views\DotaItemsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -492,7 +492,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HeroesPage.xaml">
+    <Page Include="Views\DotaHeroesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -500,7 +500,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MatchesPage.xaml">
+    <Page Include="Views\DotaMatchesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

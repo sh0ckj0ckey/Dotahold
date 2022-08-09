@@ -48,17 +48,17 @@ namespace OpenDota_UWP
 
                 if (ViewModel.iStartupTabIndex == 1)
                 {
-                    MainFrame.Navigate(typeof(ItemsPage));
+                    MainFrame.Navigate(typeof(DotaItemsPage));
                     ViewModel.iSideMenuTabIndex = 1;
                 }
                 else if (ViewModel.iStartupTabIndex == 2)
                 {
-                    MainFrame.Navigate(typeof(MatchesPage));
+                    MainFrame.Navigate(typeof(DotaMatchesPage));
                     ViewModel.iSideMenuTabIndex = 2;
                 }
                 else
                 {
-                    MainFrame.Navigate(typeof(HeroesPage));
+                    MainFrame.Navigate(typeof(DotaHeroesPage));
                     ViewModel.iSideMenuTabIndex = 0;
                 }
             }
@@ -108,7 +108,7 @@ namespace OpenDota_UWP
             {
                 if (ViewModel.iSideMenuTabIndex != 0)
                 {
-                    MainFrame.Navigate(typeof(HeroesPage));
+                    MainFrame.Navigate(typeof(DotaHeroesPage));
                     ViewModel.iSideMenuTabIndex = 0;
                 }
             }
@@ -126,7 +126,7 @@ namespace OpenDota_UWP
             {
                 if (ViewModel.iSideMenuTabIndex != 1)
                 {
-                    MainFrame.Navigate(typeof(ItemsPage));
+                    MainFrame.Navigate(typeof(DotaItemsPage));
                     ViewModel.iSideMenuTabIndex = 1;
                 }
             }
@@ -144,7 +144,7 @@ namespace OpenDota_UWP
             {
                 if (ViewModel.iSideMenuTabIndex != 2)
                 {
-                    MainFrame.Navigate(typeof(MatchesPage));
+                    MainFrame.Navigate(typeof(DotaMatchesPage));
                     ViewModel.iSideMenuTabIndex = 2;
                 }
             }

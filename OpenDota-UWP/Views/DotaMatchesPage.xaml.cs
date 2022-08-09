@@ -28,12 +28,12 @@ namespace OpenDota_UWP.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MatchesPage : Page
+    public sealed partial class DotaMatchesPage : Page
     {
         private DotaMatchesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
-        public MatchesPage()
+        public DotaMatchesPage()
         {
             try
             {
