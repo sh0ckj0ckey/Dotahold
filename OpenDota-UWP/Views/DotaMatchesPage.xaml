@@ -33,6 +33,7 @@
             <converter:RankTierToImageConverter x:Key="Rank2Image"/>
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
+            <converter:SettingToBorderThicknessConverter x:Key="Setting2Thickness"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
 
@@ -481,7 +482,8 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}" BorderThickness="0,0,0,0" BorderBrush="#20AAAAAA">
+        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}"
+              BorderThickness="{x:Bind MainViewModel.bShowSplitLine,Mode=OneWay,Converter={StaticResource Setting2Thickness}}" BorderBrush="{ThemeResource SPLITLINE_BK}">
             <Frame x:Name="MatchFrame"/>
         </Grid>
 

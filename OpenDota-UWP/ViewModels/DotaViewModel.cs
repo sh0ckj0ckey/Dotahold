@@ -226,7 +226,14 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                long size = await Helpers.CacheManager.GetCacheSizeAsync();
+                async Task<long> funcGetCacheSize()
+                {
+                    long sizeTmp = await Helpers.CacheManager.GetCacheSizeAsync();
+                    return sizeTmp;
+                }
+
+                long size = await Task.Run(funcGetCacheSize);
+                
                 if (size > 0)
                 {
                     sImageCacheSize = ByteConvert2GBMBKB(size);

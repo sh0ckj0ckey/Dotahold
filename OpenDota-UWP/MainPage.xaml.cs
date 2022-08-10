@@ -379,5 +379,24 @@ namespace OpenDota_UWP
             }
             catch { }
         }
+
+        /// <summary>
+        /// 开关显示分界线
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bool on = ShowSplitLineToggle.IsOn;
+                if (ViewModel.bShowSplitLine != on)
+                {
+                    App.AppSettingContainer.Values["ShowSplitLine"] = on ? "True" : "False";
+                    ViewModel.bShowSplitLine = on;
+                }
+            }
+            catch { }
+        }
     }
 }

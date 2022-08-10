@@ -66,7 +66,16 @@ namespace OpenDota_UWP.Helpers
 
         //得到缓存目录大小
         public static async Task<long> GetCacheSizeAsync()
-            => await getFolderSizeAsync(await getCacheFolderAsync());
+        {
+            try
+            {
+                var tar = await getCacheFolderAsync();
+                var size = await getFolderSizeAsync(tar);
+                return size;
+            }
+            catch { }
+            return 0;
+        }
 
         //得到缓存文件
         public static async Task<StorageFile> GetCachedFileAsync(string Filename)

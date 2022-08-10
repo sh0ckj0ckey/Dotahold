@@ -18,6 +18,7 @@
                     
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
                     <Color x:Key="SIMPLETEXT_FR">White</Color>
+                    <Color x:Key="SPLITLINE_BK">#20AAAAAA</Color>
                     <Color x:Key="TEXTBOX_FR">#FFFFFF</Color>
                     <Color x:Key="TEXTBOX_NORMAL_BK">#16FFFFFF</Color>
                     <Color x:Key="TEXTBOX_HOVER_BK">#20FFFFFF</Color>
@@ -115,6 +116,7 @@
                     
                     <Color x:Key="GOLDTEXT_FR">Goldenrod</Color>
                     <Color x:Key="SIMPLETEXT_FR">Black</Color>
+                    <Color x:Key="SPLITLINE_BK">#20000000</Color>
                     <Color x:Key="TEXTBOX_FR">#000000</Color>
                     <Color x:Key="TEXTBOX_NORMAL_BK">#8CE6E6E6</Color>
                     <Color x:Key="TEXTBOX_HOVER_BK">#50E6E6E6</Color>
