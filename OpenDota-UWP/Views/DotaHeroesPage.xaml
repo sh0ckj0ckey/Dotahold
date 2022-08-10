@@ -369,11 +369,6 @@
                   ItemTemplate="{StaticResource HeroItemTemplate}" 
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
                   Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded">
-            <GridView.ItemContainerTransitions>
-                <TransitionCollection>
-                    <AddDeleteThemeTransition />
-                </TransitionCollection>
-            </GridView.ItemContainerTransitions>
             <GridView.RenderTransform>
                 <TranslateTransform x:Name="StrHeroesGridViewTranslation"/>
             </GridView.RenderTransform>
@@ -385,11 +380,6 @@
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
                   ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1">
-            <GridView.ItemContainerTransitions>
-                <TransitionCollection>
-                    <AddDeleteThemeTransition />
-                </TransitionCollection>
-            </GridView.ItemContainerTransitions>
             <GridView.RenderTransform>
                 <TranslateTransform x:Name="AgiHeroesGridViewTranslation"/>
             </GridView.RenderTransform>
@@ -401,11 +391,6 @@
                   ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
                   ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
                   ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2">
-            <GridView.ItemContainerTransitions>
-                <TransitionCollection>
-                    <AddDeleteThemeTransition />
-                </TransitionCollection>
-            </GridView.ItemContainerTransitions>
             <GridView.RenderTransform>
                 <TranslateTransform x:Name="IntHeroesGridViewTranslation"/>
             </GridView.RenderTransform>
