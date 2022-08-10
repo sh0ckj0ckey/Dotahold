@@ -32,9 +32,6 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
-        <Grid.BackgroundTransition>
-            <BrushTransition />
-        </Grid.BackgroundTransition>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
             <StackPanel x:Name="ItemInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="60,40">
                 <StackPanel.RenderTransform>

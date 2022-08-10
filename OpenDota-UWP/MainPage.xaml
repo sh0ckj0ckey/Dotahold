@@ -19,9 +19,6 @@
         <ThemeShadow x:Name="FrameShadow"/>
     </Page.Resources>
     <Grid Background="{ThemeResource APPLICATION_BK}">
-        <Grid.BackgroundTransition>
-            <BrushTransition />
-        </Grid.BackgroundTransition>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64"/>
             <ColumnDefinition/>
@@ -103,9 +100,6 @@
                   HorizontalAlignment="Center" VerticalAlignment="Center"
                   Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource SettingShadow}"
                   Width="480" Height="560" CornerRadius="6">
-                <Grid.BackgroundTransition>
-                    <BrushTransition/>
-                </Grid.BackgroundTransition>
                 <Pivot x:Name="SettingPivot">
                     <Pivot.HeaderTemplate>
                         <DataTemplate>
