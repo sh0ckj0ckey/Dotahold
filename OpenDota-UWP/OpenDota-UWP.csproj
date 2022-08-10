@@ -261,6 +261,7 @@
     <Content Include="Assets\Icons\Hero\hero_ability_aghs_shard.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_scepter.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_shard.png" />
+    <Content Include="Assets\Icons\icon_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_light.png" />
     <Content Include="Assets\Icons\icon_dota_plus.png" />
@@ -285,6 +286,7 @@
     <Content Include="Assets\Icons\Hero\icon_talents_light.png" />
     <Content Include="Assets\Icons\Hero\icon_turn_rate.png" />
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
+    <Content Include="Assets\Icons\icon_light.png" />
     <Content Include="Assets\Icons\icon_nochart.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />

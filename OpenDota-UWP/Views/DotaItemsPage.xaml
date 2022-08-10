@@ -169,7 +169,7 @@
     <Grid Background="{ThemeResource APPLICATION_BK}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MaxWidth="400" />
-            <ColumnDefinition Width="2.1*" />
+            <ColumnDefinition Width="2.2*" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="ItemsListGrid">
             <Grid.RowDefinitions>

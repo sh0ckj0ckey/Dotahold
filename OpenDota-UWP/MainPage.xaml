@@ -95,11 +95,16 @@
                     <PopOutThemeAnimation Storyboard.TargetName="SettingPop" Duration="00:00:0.1"/>
                 </Storyboard>
             </Grid.Resources>
-            <Rectangle x:Name="SettingPopBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#66000000" Tapped="Rectangle_Tapped"/>
-            <Grid x:Name="SettingPop" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
-                  HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4.2*" MinHeight="320"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Rectangle x:Name="SettingPopBackground" Grid.RowSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#66000000" Tapped="Rectangle_Tapped"/>
+            <Grid x:Name="SettingPop" Grid.Row="1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
+                  HorizontalAlignment="Center" VerticalAlignment="Stretch"
                   Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource SettingShadow}"
-                  Width="480" Height="560" CornerRadius="6">
+                  Width="480" MaxHeight="540" CornerRadius="6" Margin="0,32">
                 <Pivot x:Name="SettingPivot">
                     <Pivot.HeaderTemplate>
                         <DataTemplate>
@@ -127,6 +132,10 @@
                                                  IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Dark,Mode=OneWay}"/>
                                     <RadioButton Grid.Row="2" Content="Light" Margin="14,0,2,0" GroupName="ThemeGroup" Checked="RadioButton_Checked_1"
                                                  IsChecked="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2BConverter},ConverterParameter=Light,Mode=OneWay}"/>
+                                    <Image Grid.Row="1" Grid.RowSpan="2" Source="/Assets/Icons/icon_light.png" Height="64" Width="64" Stretch="Uniform" Opacity="0.05"
+                                           Visibility="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2VisConverter},ConverterParameter=Light,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                                    <Image Grid.Row="1" Grid.RowSpan="2" Source="/Assets/Icons/icon_dark.png" Height="64" Width="64" Stretch="Uniform" Opacity="0.05" 
+                                           Visibility="{x:Bind ViewModel.eAppTheme,Converter={StaticResource Eq2VisConverter},ConverterParameter=Dark,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0"/>
                                 </Grid>
                                 <Grid Margin="0,0" Padding="0,8" CornerRadius="0,0,6,6" Background="{ThemeResource SETTING_CONTENT_BK}">
                                     <Grid.ColumnDefinitions>
@@ -151,6 +160,7 @@
                                         </ComboBoxItem>
                                     </ComboBox>
                                 </Grid>
+                                
                                 <!--数据-->
                                 <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -235,7 +245,7 @@
                         </ScrollViewer>
                     </PivotItem>
                     <PivotItem Header="FEEDBACK">
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="84"/>
                                 <RowDefinition Height="Auto"/>
@@ -250,7 +260,7 @@
                                 <TextBlock Text="or want to make some suggestions" CharacterSpacing="30" Opacity="0.7" HorizontalAlignment="Left"/>
                                 <TextBlock Text="please let me know 💕" CharacterSpacing="30" Opacity="0.7" HorizontalAlignment="Left"/>
                             </StackPanel>
-                            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,96">
+                            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,0">
                                 <Button Height="42" Width="120" CornerRadius="18" Style="{StaticResource ButtonRevealStyle}">
                                     <Button.Flyout>
                                         <Flyout>
@@ -277,7 +287,7 @@
                     <PivotItem Header="ABOUT">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel Margin="0,0,0,16">
-                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12">
+                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA">
                                     <TextBlock Text="Version" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="30"/>
                                 </Grid>
                                 <Image Grid.Row="1" Height="80" Source="/Assets/Logos/Logo.png"/>
@@ -289,7 +299,7 @@
                                            HorizontalAlignment="Center" FontWeight="Medium"
                                            Opacity="0.5" FontFamily="Consolas"/>
                                 <HyperlinkButton HorizontalAlignment="Center" Content="Rate &amp; Review on Microsoft Store" Click="HyperlinkButton_Click"/>
-                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12">
+                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA">
                                     <TextBlock Text="Data Sources" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="30"/>
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -304,14 +314,14 @@
                                     <Image Width="32" Source="/Assets/Icons/About/icon_dotapedia.png" Margin="8,0"/>
                                     <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" HorizontalAlignment="Center"/>
                                 </StackPanel>
-                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12">
+                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA">
                                     <TextBlock Text="GitHub" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="30"/>
                                 </Grid>
                                 <Button HorizontalAlignment="Center" Click="Button_Click" Height="48" Width="48" CornerRadius="24" BorderThickness="0"
                                         Style="{ThemeResource ButtonRevealStyle}" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn">
                                     <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Height="32" Width="32"/>
                                 </Button>
-                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12">
+                                <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA">
                                     <TextBlock Text="Developer" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="30"/>
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,12">
