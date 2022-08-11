@@ -134,7 +134,7 @@
                     
                     <Color x:Key="HEROINFO_LISTITEM_BK">#FFFFFF</Color>
 
-                    <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08666666</Color>
+                    <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08AAAAAA</Color>
                     
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#FFFFFF</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#08666666</Color>

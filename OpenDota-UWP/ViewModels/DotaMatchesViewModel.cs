@@ -282,7 +282,12 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
                 PlayerProfile = profile;
-                await PlayerProfile?.profile?.LoadIconAsync(72);
+
+                if (PlayerProfile?.profile != null)
+                {
+                    await PlayerProfile?.profile?.LoadIconAsync(72);
+                }
+                
                 if (PlayerProfile?.profile != null)
                 {
                     var prof = PlayerProfile?.profile;
@@ -739,13 +744,20 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
+                DotaIdBindHistoryModel removing = null;
                 foreach (var item in vDotaIdHistory)
                 {
                     if (item.SteamId == id)
                     {
-                        vDotaIdHistory.Remove(item);
+                        removing = item;
+                        break;
                     }
                 }
+                if (removing != null && vDotaIdHistory.Contains(removing))
+                {
+                    vDotaIdHistory.Remove(removing);
+                }
+
                 while (vDotaIdHistory.Count > 2)
                 {
                     vDotaIdHistory.RemoveAt(vDotaIdHistory.Count - 1);

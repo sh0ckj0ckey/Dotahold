@@ -71,7 +71,7 @@
                 </Grid>
             </Button>
             <Button Grid.Row="4"
-                    Margin="0,0,0,16"
+                    Margin="0,-16,0,16"
                     Style="{StaticResource TextBlockButtonStyle}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
