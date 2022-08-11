@@ -24,6 +24,9 @@ namespace OpenDota_UWP.ViewModels
             set { Set("sSteamId", ref _sSteamId, value); }
         }
 
+        // 绑定过的账号列表
+        public ObservableCollection<DotaIdBindHistoryModel> vDotaIdHistory = new ObservableCollection<DotaIdBindHistoryModel>();
+
         // 缓存玩家名字和头像
         private Dictionary<string, string> dictPlayersNameCache = new Dictionary<string, string>();
         private Dictionary<string, string> dictPlayersPhotoCache = new Dictionary<string, string>();
@@ -280,6 +283,12 @@ namespace OpenDota_UWP.ViewModels
                 }
                 PlayerProfile = profile;
                 await PlayerProfile?.profile?.LoadIconAsync(72);
+                if (PlayerProfile?.profile != null)
+                {
+                    var prof = PlayerProfile?.profile;
+                    string steamId = this.sSteamId;
+                    AddDotaIdHistory(prof.personaname, prof.avatarfull, steamId);
+                }
             }
             catch { }
         }
@@ -725,5 +734,30 @@ namespace OpenDota_UWP.ViewModels
             catch { }
         }
 
+        // 添加一条账号记录
+        private async void AddDotaIdHistory(string name, string img, string id)
+        {
+            try
+            {
+                foreach (var item in vDotaIdHistory)
+                {
+                    if (item.SteamId == id)
+                    {
+                        vDotaIdHistory.Remove(item);
+                    }
+                }
+                while (vDotaIdHistory.Count > 2)
+                {
+                    vDotaIdHistory.RemoveAt(vDotaIdHistory.Count - 1);
+                }
+                DotaIdBindHistoryModel his = new DotaIdBindHistoryModel();
+                his.PlayerName = name;
+                his.SteamId = id;
+                his.AvatarImage = img;
+                vDotaIdHistory.Insert(0, his);
+                await his.LoadImageAsync(56);
+            }
+            catch { }
+        }
     }
 }
