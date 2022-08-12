@@ -219,7 +219,7 @@ namespace OpenDota_UWP.ViewModels
         /// <param name="url"></param>
         /// <param name="httpClient"></param>
         /// <returns></returns>
-        public async Task<T> GetResponseAsync<T>(string url, Windows.Web.Http.HttpClient httpClient)
+        private async Task<T> GetResponseAsync<T>(string url, Windows.Web.Http.HttpClient httpClient)
         {
             try
             {

@@ -10,6 +10,9 @@ using Windows.Storage.Streams;
 
 namespace OpenDota_UWP.Helpers
 {
+    /// <summary>
+    /// 这是一只信使，帮你运送你需要的本地文件
+    /// </summary>
     public class StorageFilesCourier
     {
         //存储数据的文件夹名称
@@ -22,7 +25,7 @@ namespace OpenDota_UWP.Helpers
         /// 获取存储数据的文件夹的对象
         /// </summary>
         /// <returns></returns>
-        public static async Task<IStorageFolder> GetDataFolder()
+        private static async Task<IStorageFolder> GetDataFolder()
         {
             if (DataFolder == null)
             {
@@ -49,10 +52,7 @@ namespace OpenDota_UWP.Helpers
                     text = streamReader.ReadToEnd();
                 }
             }
-            catch (Exception e)
-            {
-                //text = "文件读取错误：" + e.Message;
-            }
+            catch { }
             return text;
         }
 
@@ -62,16 +62,16 @@ namespace OpenDota_UWP.Helpers
         /// <param name="fileName"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static async Task<string> WriteFileAsync(string fileName, string content)
+        public static async Task<bool> WriteFileAsync(string fileName, string content)
         {
             try
             {
                 IStorageFolder applicationFolder = await GetDataFolder();
-                IStorageFile storageFile = await applicationFolder.CreateFileAsync("SavingTempFile.pswd", CreationCollisionOption.ReplaceExisting);
+                IStorageFile storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
 
-                Int32 retryAttempts = 3;
-                const Int32 ERROR_ACCESS_DENIED = unchecked((Int32)0x80070005);
-                const Int32 ERROR_SHARING_VIOLATION = unchecked((Int32)0x80070020);
+                int retryAttempts = 3;
+                const int ERROR_ACCESS_DENIED = unchecked((int)0x80070005);
+                const int ERROR_SHARING_VIOLATION = unchecked((int)0x80070020);
 
                 while (retryAttempts > 0)
                 {
@@ -80,17 +80,17 @@ namespace OpenDota_UWP.Helpers
                         retryAttempts--;
                         await FileIO.WriteTextAsync(storageFile, content);
                         await storageFile.RenameAsync(fileName, NameCollisionOption.ReplaceExisting);
-                        return string.Empty;
+                        return true;
                     }
                     catch (Exception ex) when ((ex.HResult == ERROR_ACCESS_DENIED) || (ex.HResult == ERROR_SHARING_VIOLATION))
                     {
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
-                    catch (Exception e) { return "写入失败：" + e.Message; }
+                    catch { }
                 }
-                return "写入失败：文件访问被拒绝或者文件被占用";
             }
-            catch (Exception e) { return "写入失败：" + e.Message; }
+            catch { }
+            return false;
         }
     }
 }
