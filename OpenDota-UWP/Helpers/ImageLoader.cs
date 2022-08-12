@@ -14,6 +14,7 @@ namespace OpenDota_UWP.Helpers
     public static class ImageLoader
     {
         private static HttpClient http = new HttpClient();
+        private static Dictionary<string,BitmapImage> 
 
         public static async Task<BitmapImage> LoadImageAsync(string Uri, string defaultImg = "ms-appx:///Assets/Icons/item_placeholder.png")
         {

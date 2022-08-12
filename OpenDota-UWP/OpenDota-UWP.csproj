@@ -155,6 +155,7 @@
     <Compile Include="Helpers\DotaMatchHelper.cs" />
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Helpers\ImageLoader.cs" />
+    <Compile Include="Helpers\StorageFilesCourier.cs" />
     <Compile Include="Models\DotaHeroInfoModel.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="Models\DotaHeroRankingModel.cs" />
