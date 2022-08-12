@@ -47,7 +47,7 @@ namespace OpenDota_UWP.Views
             {
                 base.OnNavigatedTo(e);
 
-                ViewModel.LoadAllMatches();
+                ViewModel.GetAllMatchesAsync();
             }
             catch { }
         }
@@ -77,7 +77,7 @@ namespace OpenDota_UWP.Views
             {
                 if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
-                    ViewModel.LoadMatchInfo(match.match_id ?? 0, match);
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
                     this.Frame.Navigate(typeof(MatchesListPage));
                 }
             }

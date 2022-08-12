@@ -541,7 +541,7 @@ namespace OpenDota_UWP.ViewModels
         /// <summary>
         /// 加载所有比赛的列表
         /// </summary>
-        public async void LoadAllMatches()
+        public async void GetAllMatchesAsync()
         {
             try
             {
@@ -682,47 +682,25 @@ namespace OpenDota_UWP.ViewModels
         /// <summary>
         /// 加载指定比赛
         /// </summary>
-        public async void LoadMatchInfo(long matchId, Models.DotaRecentMatchModel currentMatch)
+        public async void GetMatchInfoAsync(long matchId, Models.DotaRecentMatchModel currentMatch)
         {
             try
             {
                 if (matchId == 0) return;
 
                 bLoadingOneMatchInfo = true;
+
+                string url = string.Format("https://api.opendota.com/api/matches/{0}", matchId);    //e.g.3792271763
+                object matchInfo = null;
+
+                try
+                {
+                    matchInfo = await GetResponseAsync<object>(url, matchInfoHttpClient);
+                }
+                catch { }
             }
             catch { }
             finally { bLoadingOneMatchInfo = false; }
-        }
-
-        /// <summary>
-        /// 获取某场比赛详情
-        /// </summary>
-        /// <param name="matchId"></param>
-        private async void GetMatchInfoAsync(long matchid)
-        {
-            try
-            {
-                string url = string.Format("https://api.opendota.com/api/matches/{0}", matchid);    //e.g.3792271763
-
-                var response = await matchInfoHttpClient.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                var matches = JsonConvert.DeserializeObject<object>(jsonMessage);
-
-
-                //Match first_blood_timeMatch = Regex.Match(jsonMessage, "\\\"first_blood_time\\\":([\\d\\D]*?),");
-                ////Match start_timeMatch = Regex.Match(jsonMessage, "\\\"start_time\\\":([\\d\\D]*?),");
-                //Match durationMatch = Regex.Match(jsonMessage, "\\\"duration\\\":([\\d\\D]*?),");
-                ////Match levelMatch = Regex.Match(jsonMessage, "\\\"skill\\\":([\\d\\D]*?),");
-                //Match game_modeMatch = Regex.Match(jsonMessage, "\\\"game_mode\\\":([\\d\\D]*?),");
-                //Match radiant_scoreMatch = Regex.Match(jsonMessage, "\\\"radiant_score\\\":([\\d\\D]*?),");
-                //Match dire_scoreMatch = Regex.Match(jsonMessage, "\\\"dire_score\\\":([\\d\\D]*?),");
-                //Match lobby_typeMatch = Regex.Match(jsonMessage, "\\\"lobby_type\\\":([\\d\\D]*?),");
-                //Match radiant_winMatch = Regex.Match(jsonMessage, "\\\"radiant_win\\\":([\\d\\D]*?),");
-                //Match radiant_gold_advMatch = Regex.Match(jsonMessage, "\\\"radiant_gold_adv\\\":\\[([\\d\\D]*?)\\],");
-                //Match radiant_xp_advMatch = Regex.Match(jsonMessage, "\\\"radiant_xp_adv\\\":\\[([\\d\\D]*?)\\],");
-            }
-            catch { }
         }
 
         /// <summary>
@@ -739,7 +717,12 @@ namespace OpenDota_UWP.ViewModels
             catch { }
         }
 
-        // 添加一条账号记录
+        /// <summary>
+        /// 添加一条账号绑定记录
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="img"></param>
+        /// <param name="id"></param>
         private async void AddDotaIdHistory(string name, string img, string id)
         {
             try

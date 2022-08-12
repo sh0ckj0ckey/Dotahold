@@ -1,5 +1,4 @@
 ﻿using OpenDota_UWP.Helpers;
-using OpenDota_UWP.Models;
 using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -421,7 +420,7 @@ namespace OpenDota_UWP.Views
             {
                 if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
-                    ViewModel.LoadMatchInfo(match.match_id ?? 0, match);
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
                     MatchFrame.Navigate(typeof(MatchesListPage));
                 }
             }
@@ -434,26 +433,8 @@ namespace OpenDota_UWP.Views
             {
                 if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
-                    ViewModel.LoadMatchInfo(match.match_id ?? 0, match);
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
                     MatchFrame.Navigate(typeof(MatchesListPage));
-                }
-            }
-            catch { }
-        }
-
-        private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button btn && btn.DataContext is DotaIdBindHistoryModel steamId)
-                {
-                    if (steamId.SteamId != ViewModel.sSteamId)
-                    {
-                        ViewModel.SetSteamID(steamId.SteamId);
-                        ViewModel.InitialDotaMatches();
-                        MatchFrame.Navigate(typeof(BlankPage));
-                    }
-                    HideBindingAccountGrid();
                 }
             }
             catch { }
