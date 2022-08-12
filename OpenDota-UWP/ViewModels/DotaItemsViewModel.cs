@@ -77,7 +77,7 @@ namespace OpenDota_UWP.ViewModels
                 vAllShowItemsList?.Clear();
                 vSearchItemsList?.Clear();
 
-                dictAllItems = await ConstantsHelper.Instance.GetItemsConstant();
+                dictAllItems = await ConstantsCourier.Instance.GetItemsConstant();
 
                 if (dictAllItems == null || dictAllItems.Count <= 0)
                 {

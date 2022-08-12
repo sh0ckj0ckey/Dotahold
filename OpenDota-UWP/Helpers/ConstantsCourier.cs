@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace OpenDota_UWP.Helpers
 {
-    public class ConstantsHelper
+    /// <summary>
+    /// 这是一只信使，帮你运送你需要的"常量数据"
+    /// </summary>
+    public class ConstantsCourier
     {
-        private static Lazy<ConstantsHelper> _lazyVM = new Lazy<ConstantsHelper>(() => new ConstantsHelper());
-        public static ConstantsHelper Instance => _lazyVM.Value;
+        private static Lazy<ConstantsCourier> _lazyVM = new Lazy<ConstantsCourier>(() => new ConstantsCourier());
+        public static ConstantsCourier Instance => _lazyVM.Value;
 
         private Windows.Web.Http.HttpClient constantsHttpClient = new Windows.Web.Http.HttpClient();
 

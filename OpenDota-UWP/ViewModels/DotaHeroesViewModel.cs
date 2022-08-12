@@ -144,7 +144,7 @@ namespace OpenDota_UWP.ViewModels
                 vStrHeroesList?.Clear();
                 vAgiHeroesList?.Clear();
                 vIntHeroesList?.Clear();
-                dictAllHeroes = await ConstantsHelper.Instance.GetHeroesConstant();
+                dictAllHeroes = await ConstantsCourier.Instance.GetHeroesConstant();
 
                 bLoadingHeroes = false;
 
