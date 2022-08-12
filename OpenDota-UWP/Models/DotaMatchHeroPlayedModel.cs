@@ -41,7 +41,6 @@ namespace OpenDota_UWP.Models
             try
             {
                 if (ImageSource != null) return;
-
                 ImageSource = await ImageLoader.LoadImageAsync(sHeroCoverImage);
                 ImageSource.DecodePixelType = DecodePixelType.Logical;
                 ImageSource.DecodePixelWidth = decodeWidth;
@@ -49,5 +48,4 @@ namespace OpenDota_UWP.Models
             catch { }
         }
     }
-
 }

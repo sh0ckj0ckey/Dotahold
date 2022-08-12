@@ -14,12 +14,18 @@ namespace OpenDota_UWP.Helpers
     public static class ImageLoader
     {
         private static HttpClient http = new HttpClient();
-        private static Dictionary<string,BitmapImage> 
+
+        private static Dictionary<string, BitmapImage> dictImageCache = new Dictionary<string, BitmapImage>();
 
         public static async Task<BitmapImage> LoadImageAsync(string Uri, string defaultImg = "ms-appx:///Assets/Icons/item_placeholder.png")
         {
             try
             {
+                if (dictImageCache.ContainsKey(Uri))
+                {
+                    return dictImageCache[Uri];
+                }
+
                 BitmapImage bm = null;
                 using (var memStream = await DownloadImage(Uri))
                 {
@@ -37,6 +43,9 @@ namespace OpenDota_UWP.Helpers
                     bm = new BitmapImage();
                     await bm.SetSourceAsync(memStream.AsRandomAccessStream());
                 }
+
+                dictImageCache[Uri] = bm;
+
                 return bm;
             }
             catch

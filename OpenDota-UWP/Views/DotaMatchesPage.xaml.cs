@@ -439,5 +439,23 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is Models.DotaIdBindHistoryModel steamId)
+                {
+                    if (steamId.SteamId != ViewModel.sSteamId)
+                    {
+                        ViewModel.SetSteamID(steamId.SteamId);
+                        ViewModel.InitialDotaMatches();
+                        MatchFrame.Navigate(typeof(BlankPage));
+                    }
+                    HideBindingAccountGrid();
+                }
+            }
+            catch { }
+        }
     }
 }
