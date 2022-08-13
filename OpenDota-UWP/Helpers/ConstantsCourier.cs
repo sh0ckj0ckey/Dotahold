@@ -69,14 +69,14 @@ namespace OpenDota_UWP.Helpers
         /// 获取永久buff列表
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string, object>> GetPermanentBuffsConstant()
+        public async Task<Dictionary<string, string>> GetPermanentBuffsConstant()
         {
             try
             {
                 if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
-                    var buffs = await DownloadConstant<Dictionary<string, object>>("permanent_buffs");
+                    var buffs = await DownloadConstant<Dictionary<string, string>>("permanent_buffs");
                     return buffs;
                 }
                 else
@@ -93,14 +93,14 @@ namespace OpenDota_UWP.Helpers
         /// 获取技能ID列表
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<string, object>> GetAbilityIDsConstant()
+        public async Task<Dictionary<string, string>> GetAbilityIDsConstant()
         {
             try
             {
                 if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
-                    var abilities = await DownloadConstant<Dictionary<string, object>>("ability_ids");
+                    var abilities = await DownloadConstant<Dictionary<string, string>>("ability_ids");
                     return abilities;
                 }
                 else
