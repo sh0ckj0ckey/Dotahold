@@ -450,5 +450,17 @@ namespace OpenDota_UWP
             }
             catch { }
         }
+
+        private void OnClickDisableApiRequest(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is ToggleButton btn)
+                {
+                    ViewModel.bDisableApiRequest = btn.IsChecked == true;
+                }
+            }
+            catch { }
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (true)
+                if (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest)
                 {
                     // if Time > 24h, then download new file
                     var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
@@ -49,7 +49,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (true)
+                if (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest)
                 {
                     // if Time > 24h, then download new file
                     var items = await DownloadConstant<Dictionary<string, Models.DotaItemModel>>("items");

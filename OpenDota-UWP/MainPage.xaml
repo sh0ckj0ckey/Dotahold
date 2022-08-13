@@ -260,10 +260,11 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0" CornerRadius="6" Height="32" Width="32" Margin="12,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                Background="{ThemeResource COMBOBOX_NORMAL_BK}" Style="{StaticResource ButtonRevealStyle}" ToolTipService.ToolTip="Open Data Folder"
+                                                Background="{ThemeResource COMBOBOX_NORMAL_BK}" ToolTipService.ToolTip="Open Data Folder"
                                                 Click="OnClickOpenDataDir">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -272,7 +273,7 @@
                                             </Button.Content>
                                         </Button>
                                         <Button Grid.Column="1" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                Background="{ThemeResource COMBOBOX_NORMAL_BK}" Style="{StaticResource ButtonRevealStyle}" ToolTipService.ToolTip="Open Image Cache Folder"
+                                                Background="{ThemeResource COMBOBOX_NORMAL_BK}" ToolTipService.ToolTip="Open Image Cache Folder"
                                                 Click="OnClickOpenImageCacheDir">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -280,6 +281,15 @@
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
+                                        <ToggleButton Grid.Column="2" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}" ToolTipService.ToolTip="Always use local JSON"
+                                                      Click="OnClickDisableApiRequest">
+                                            <ToggleButton.Content>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xF384;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                </StackPanel>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
                                     </Grid>
                                 </StackPanel>
                             </ScrollViewer>

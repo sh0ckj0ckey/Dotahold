@@ -127,6 +127,9 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bShowDevTools", ref _bShowDevTools, value); }
         }
 
+        // 是否禁用网络请求，始终使用ConstantsJsons文件夹内的JSON
+        public bool bDisableApiRequest = false;
+
         public DotaViewModel()
         {
             try
