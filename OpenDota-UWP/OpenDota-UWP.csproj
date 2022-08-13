@@ -150,7 +150,7 @@
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
-    <Compile Include="Helpers\CacheManager.cs" />
+    <Compile Include="Helpers\ImageCacheManager.cs" />
     <Compile Include="Helpers\ConstantsCourier.cs" />
     <Compile Include="Helpers\DotaMatchHelper.cs" />
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
@@ -261,7 +261,6 @@
     <Content Include="Assets\Icons\Hero\hero_ability_aghs_shard.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_scepter.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_shard.png" />
-    <Content Include="Assets\Icons\icon_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_light.png" />
     <Content Include="Assets\Icons\icon_dota_plus.png" />
@@ -286,7 +285,6 @@
     <Content Include="Assets\Icons\Hero\icon_talents_light.png" />
     <Content Include="Assets\Icons\Hero\icon_turn_rate.png" />
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
-    <Content Include="Assets\Icons\icon_light.png" />
     <Content Include="Assets\Icons\icon_nochart.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
@@ -541,6 +539,10 @@
     <Content Include="Fonts\Radiance.ttf" />
     <Content Include="Fonts\Radiance-SemiBold.ttf" />
     <Content Include="Fonts\Reaver-Bold.ttf" />
+    <None Include="ConstantsJsons\ability_ids.json" />
+    <None Include="ConstantsJsons\heroes.json" />
+    <None Include="ConstantsJsons\items.json" />
+    <None Include="ConstantsJsons\permanent_buffs.json" />
     <None Include="OpenDota-UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />

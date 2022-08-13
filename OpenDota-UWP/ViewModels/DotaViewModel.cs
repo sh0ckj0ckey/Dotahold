@@ -25,7 +25,36 @@ namespace OpenDota_UWP.ViewModels
         public ElementTheme eAppTheme
         {
             get { return _eAppTheme; }
-            set { Set("eAppTheme", ref _eAppTheme, value); }
+            set
+            {
+                Set("eAppTheme", ref _eAppTheme, value);
+                switch (value)
+                {
+                    case ElementTheme.Light:
+                        iAppearanceIndex = 1;
+                        break;
+                    case ElementTheme.Dark:
+                        iAppearanceIndex = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        // 设置的应用程序的主题
+        private int _iAppearanceIndex = 0;
+        public int iAppearanceIndex
+        {
+            get { return _iAppearanceIndex; }
+            set
+            {
+                if (value > 2 || value < 0)
+                {
+                    return;
+                }
+                Set("iAppearanceIndex", ref _iAppearanceIndex, value);
+            }
         }
 
         // 设置的启动页面: 0-Heroes 1-Items 2-Matches
@@ -90,6 +119,13 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bCleaningImageCache", ref _bCleaningImageCache, value); }
         }
 
+        // 是否显示开发者工具
+        private bool _bShowDevTools = false;
+        public bool bShowDevTools
+        {
+            get { return _bShowDevTools; }
+            set { Set("bShowDevTools", ref _bShowDevTools, value); }
+        }
 
         public DotaViewModel()
         {
@@ -228,12 +264,12 @@ namespace OpenDota_UWP.ViewModels
             {
                 async Task<long> funcGetCacheSize()
                 {
-                    long sizeTmp = await Helpers.CacheManager.GetCacheSizeAsync();
+                    long sizeTmp = await Helpers.ImageCacheManager.GetCacheSizeAsync();
                     return sizeTmp;
                 }
 
                 long size = await Task.Run(funcGetCacheSize);
-                
+
                 if (size > 0)
                 {
                     sImageCacheSize = ByteConvert2GBMBKB(size);
@@ -254,7 +290,7 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 bCleaningImageCache = true;
-                bool result = await Helpers.CacheManager.ClearCacheAsync();
+                bool result = await Helpers.ImageCacheManager.ClearCacheAsync();
 
                 if (result) GetImageCacheSize();
             }

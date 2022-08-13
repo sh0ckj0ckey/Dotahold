@@ -18,13 +18,13 @@ namespace OpenDota_UWP.Helpers
     }
 
     //用来管理缓存
-    public static class CacheManager
+    public static class ImageCacheManager
     {
         //临时目录
         private static StorageFolder tmpFolder = ApplicationData.Current.TemporaryFolder;
 
         //获取临时目录，确保目录存在
-        private static async Task<StorageFolder> getCacheFolderAsync()
+        public static async Task<StorageFolder> GetCacheFolderAsync()
         {
             var cacheFolder = await tmpFolder.TryGetItemAsync("Cache");
             if (cacheFolder == null) return await tmpFolder.CreateFolderAsync("Cache");
@@ -36,7 +36,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                var cacheFolder = await getCacheFolderAsync();
+                var cacheFolder = await GetCacheFolderAsync();
                 var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
                 foreach (var file in files)
                 {
@@ -69,7 +69,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                var tar = await getCacheFolderAsync();
+                var tar = await GetCacheFolderAsync();
                 var size = await getFolderSizeAsync(tar);
                 return size;
             }
@@ -82,7 +82,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                var cacheFolder = await getCacheFolderAsync();
+                var cacheFolder = await GetCacheFolderAsync();
                 if (await cacheFolder.TryGetItemAsync(Filename) == null) return null;
                 return await cacheFolder.GetFileAsync(Filename);
             }
@@ -117,7 +117,7 @@ namespace OpenDota_UWP.Helpers
                 if (test) return null;
                 do guid = Guid.NewGuid();
                 while (await GetCachedFileAsync(guid.ToString()) != null);
-                var cacheFolder = await getCacheFolderAsync();
+                var cacheFolder = await GetCacheFolderAsync();
                 var newFile = await cacheFolder.CreateFileAsync(guid.ToString());
                 TempStorageFile result = new TempStorageFile();
                 result.ExpectedName = Filename;
@@ -139,7 +139,7 @@ namespace OpenDota_UWP.Helpers
                     if (ForceUpdate) await DeleteCachedFileAsync(File.ExpectedName);
                     else return false;
                 }
-                await File.File.MoveAsync(await getCacheFolderAsync(), File.ExpectedName);
+                await File.File.MoveAsync(await GetCacheFolderAsync(), File.ExpectedName);
                 return true;
             }
             catch
@@ -154,7 +154,7 @@ namespace OpenDota_UWP.Helpers
             try
             {
                 var deleteTempFilesTasks = from file
-                                           in await (await getCacheFolderAsync()).CreateFileQuery().GetFilesAsync()
+                                           in await (await GetCacheFolderAsync()).CreateFileQuery().GetFilesAsync()
                                            where Guid.TryParse(file.Name, out _)
                                            select file.DeleteAsync(StorageDeleteOption.PermanentDelete).AsTask();
                 await Task.WhenAll(deleteTempFilesTasks);

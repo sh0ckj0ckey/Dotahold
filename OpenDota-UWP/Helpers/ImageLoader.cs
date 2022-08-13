@@ -66,7 +66,7 @@ namespace OpenDota_UWP.Helpers
             try
             {
                 string tmpFileName = System.Text.RegularExpressions.Regex.Replace(Uri, @"[^a-zA-Z0-9\u4e00-\u9fa5\s]", "");
-                var cachedFile = await CacheManager.GetCachedFileAsync(tmpFileName);
+                var cachedFile = await ImageCacheManager.GetCachedFileAsync(tmpFileName);
                 if (cachedFile == null)
                 {
                     //没有对应的缓存文件
@@ -75,13 +75,13 @@ namespace OpenDota_UWP.Helpers
                         var memStream = new MemoryStream();
                         await resStream.CopyToAsync(memStream);
                         memStream.Position = 0;
-                        var newCachedFile = await CacheManager.CreateCacheFileAsync(tmpFileName);
+                        var newCachedFile = await ImageCacheManager.CreateCacheFileAsync(tmpFileName);
                         if (newCachedFile == null) return null;
                         using (var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync())
                         {
                             await memStream.CopyToAsync(fileStream);
                         }
-                        await CacheManager.FinishCachedFileAsync(newCachedFile.Value, true);
+                        await ImageCacheManager.FinishCachedFileAsync(newCachedFile.Value, true);
                         memStream.Position = 0;
                         return memStream;
                     }

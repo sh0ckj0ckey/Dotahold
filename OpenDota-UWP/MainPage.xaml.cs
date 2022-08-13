@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -235,6 +236,28 @@ namespace OpenDota_UWP
         }
 
         /// <summary>
+        /// 切换黑白模式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AppearanceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                int index = AppearanceComboBox.SelectedIndex;
+                if (index == 1)
+                {
+                    Switch2LightMode();
+                }
+                else if (index == 0)
+                {
+                    Switch2DarkMode();
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 切换到白天主题
         /// </summary>
         public void Switch2LightMode()
@@ -395,6 +418,35 @@ namespace OpenDota_UWP
                     App.AppSettingContainer.Values["ShowSplitLine"] = on ? "True" : "False";
                     ViewModel.bShowSplitLine = on;
                 }
+            }
+            catch { }
+        }
+
+        private async void OnClickOpenDataDir(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var folder = await StorageFilesCourier.GetDataFolder();
+                await Launcher.LaunchFolderAsync(folder);
+            }
+            catch { }
+        }
+
+        private async void OnClickOpenImageCacheDir(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var folder = await ImageCacheManager.GetCacheFolderAsync();
+                await Launcher.LaunchFolderAsync(folder);
+            }
+            catch { }
+        }
+
+        private void Image_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.bShowDevTools = true;
             }
             catch { }
         }
