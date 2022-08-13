@@ -1220,11 +1220,11 @@ namespace OpenDota_UWP.ViewModels
 
                 if (ranking == null || ranking.rankings == null || ranking.hero_id != this.CurrentHero.id.ToString())
                 {
-                    bFailedHeroInfo = true;
+                    bFailedHeroRanking = true;
                 }
                 else
                 {
-                    bFailedHeroInfo = false;
+                    bFailedHeroRanking = false;
 
                     int rank = 1;
                     foreach (var item in ranking.rankings)
@@ -1243,7 +1243,7 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
             }
-            catch { bFailedHeroInfo = true; }
+            catch { bFailedHeroRanking = true; }
         }
 
         /// <summary>
