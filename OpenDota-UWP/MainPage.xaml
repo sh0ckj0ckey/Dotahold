@@ -261,6 +261,8 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0" CornerRadius="6" Height="32" Width="32" Margin="12,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -281,12 +283,22 @@
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
-                                        <ToggleButton Grid.Column="2" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        <Grid Grid.Column="2" Height="28" Width="1" Margin="0,0,12,0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
+                                        <ToggleButton Grid.Column="3" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
                                                       Background="{ThemeResource COMBOBOX_NORMAL_BK}" IsChecked="{x:Bind ViewModel.bDisableApiRequest,Mode=OneWay}" ToolTipService.ToolTip="Always use local JSON"
                                                       Click="OnClickDisableApiRequest">
                                             <ToggleButton.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                                     <TextBlock Text="&#xF384;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                </StackPanel>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                        <ToggleButton Grid.Column="4" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}" IsChecked="{x:Bind ViewModel.bForceApiRequest,Mode=OneWay}" ToolTipService.ToolTip="Always use request API"
+                                                      Click="OnClickForceApiRequest">
+                                            <ToggleButton.Content>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xF16A;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
                                                 </StackPanel>
                                             </ToggleButton.Content>
                                         </ToggleButton>

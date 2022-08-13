@@ -135,6 +135,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bDisableApiRequest", ref _bDisableApiRequest, value); }
         }
 
+        // 是否强制网络请求，每次启动都重新拉取Constants
+        private bool _bForceApiRequest = false;
+        public bool bForceApiRequest
+        {
+            get { return _bForceApiRequest; }
+            set { Set("bForceApiRequest", ref _bForceApiRequest, value); }
+        }
+
         public DotaViewModel()
         {
             try
@@ -282,6 +290,27 @@ namespace OpenDota_UWP.ViewModels
                 }
                 catch { }
 
+                // [开发者设置]读取是否禁用网络请求
+                try
+                {
+                    if (App.AppSettingContainer?.Values["ForceAPI"] == null)
+                    {
+                        this.bForceApiRequest = false;
+                    }
+                    else if (App.AppSettingContainer?.Values["ForceAPI"]?.ToString() == "True")
+                    {
+                        this.bForceApiRequest = true;
+                    }
+                    else if (App.AppSettingContainer?.Values["ForceAPI"]?.ToString() == "False")
+                    {
+                        this.bForceApiRequest = false;
+                    }
+                    else
+                    {
+                        this.bForceApiRequest = false;
+                    }
+                }
+                catch { }
             }
             catch { }
         }

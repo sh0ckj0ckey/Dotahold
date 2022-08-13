@@ -25,7 +25,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest)
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
@@ -49,11 +49,59 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest)
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var items = await DownloadConstant<Dictionary<string, Models.DotaItemModel>>("items");
                     return items;
+                }
+                else
+                {
+                    // return local file
+                    return null;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取永久buff列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Dictionary<string, object>> GetPermanentBuffsConstant()
+        {
+            try
+            {
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
+                {
+                    // if Time > 24h, then download new file
+                    var buffs = await DownloadConstant<Dictionary<string, object>>("permanent_buffs");
+                    return buffs;
+                }
+                else
+                {
+                    // return local file
+                    return null;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        /// <summary>
+        /// 获取技能ID列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Dictionary<string, object>> GetAbilityIDsConstant()
+        {
+            try
+            {
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
+                {
+                    // if Time > 24h, then download new file
+                    var abilities = await DownloadConstant<Dictionary<string, object>>("ability_ids");
+                    return abilities;
                 }
                 else
                 {
