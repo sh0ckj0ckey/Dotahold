@@ -12,12 +12,11 @@
             <RowDefinition Height="52"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="6,0,0,0">
-            <Image Source="{x:Bind ViewModel.CurrentHero.IconSource,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-16,0,-16,0" Background="#20808080">
+            <Image Source="{x:Bind ViewModel.CurrentHero.IconSource,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center" Margin="22,0,0,0"/>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                        FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40" Margin="8,0,4,0"/>
         </StackPanel>
-        <Grid Grid.Row="0" Height="1" Background="#50666666" Margin="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
         <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.bio_loc,Mode=OneWay}" Margin="8,8,8,8"
                        FontSize="15" FontWeight="Medium" Opacity="0.8" IsTextSelectionEnabled="True"
