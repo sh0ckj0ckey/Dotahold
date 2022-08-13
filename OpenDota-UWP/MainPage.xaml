@@ -282,7 +282,7 @@
                                             </Button.Content>
                                         </Button>
                                         <ToggleButton Grid.Column="2" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}" ToolTipService.ToolTip="Always use local JSON"
+                                                      Background="{ThemeResource COMBOBOX_NORMAL_BK}" IsChecked="{x:Bind ViewModel.bDisableApiRequest,Mode=OneWay}" ToolTipService.ToolTip="Always use local JSON"
                                                       Click="OnClickDisableApiRequest">
                                             <ToggleButton.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

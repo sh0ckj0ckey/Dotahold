@@ -457,7 +457,12 @@ namespace OpenDota_UWP
             {
                 if (sender is ToggleButton btn)
                 {
-                    ViewModel.bDisableApiRequest = btn.IsChecked == true;
+                    bool disable = btn.IsChecked == true;
+                    if (ViewModel.bDisableApiRequest != disable)
+                    {
+                        App.AppSettingContainer.Values["DisableAPI"] = disable ? "True" : "False";
+                        ViewModel.bDisableApiRequest = disable;
+                    }
                 }
             }
             catch { }

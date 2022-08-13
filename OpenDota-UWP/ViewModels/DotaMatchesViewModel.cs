@@ -287,7 +287,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     await PlayerProfile?.profile?.LoadIconAsync(72);
                 }
-                
+
                 if (PlayerProfile?.profile != null)
                 {
                     var prof = PlayerProfile?.profile;
@@ -422,7 +422,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     foreach (var item in recentMatches)
                     {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(item.hero_id.ToString()) == true)
                         {
                             item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
                                 DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
@@ -483,7 +483,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     foreach (var item in heroes)
                     {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
+                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(item.hero_id.ToString()) == true)
                         {
                             item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
                                 DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));

@@ -128,7 +128,12 @@ namespace OpenDota_UWP.ViewModels
         }
 
         // 是否禁用网络请求，始终使用ConstantsJsons文件夹内的JSON
-        public bool bDisableApiRequest = false;
+        private bool _bDisableApiRequest = false;
+        public bool bDisableApiRequest
+        {
+            get { return _bDisableApiRequest; }
+            set { Set("bDisableApiRequest", ref _bDisableApiRequest, value); }
+        }
 
         public DotaViewModel()
         {
@@ -254,6 +259,29 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
                 catch { }
+
+                // [开发者设置]读取是否禁用网络请求
+                try
+                {
+                    if (App.AppSettingContainer?.Values["DisableAPI"] == null)
+                    {
+                        this.bDisableApiRequest = false;
+                    }
+                    else if (App.AppSettingContainer?.Values["DisableAPI"]?.ToString() == "True")
+                    {
+                        this.bDisableApiRequest = true;
+                    }
+                    else if (App.AppSettingContainer?.Values["DisableAPI"]?.ToString() == "False")
+                    {
+                        this.bDisableApiRequest = false;
+                    }
+                    else
+                    {
+                        this.bDisableApiRequest = false;
+                    }
+                }
+                catch { }
+
             }
             catch { }
         }
