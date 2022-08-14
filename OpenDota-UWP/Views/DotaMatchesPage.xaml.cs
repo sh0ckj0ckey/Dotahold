@@ -421,7 +421,7 @@ namespace OpenDota_UWP.Views
                 if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
                     ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
-                    MatchFrame.Navigate(typeof(MatchesListPage));
+                    MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
             catch { }
@@ -434,7 +434,7 @@ namespace OpenDota_UWP.Views
                 if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
                     ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
-                    MatchFrame.Navigate(typeof(MatchesListPage));
+                    MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
             catch { }

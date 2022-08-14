@@ -161,6 +161,7 @@
     <Compile Include="Models\DotaHeroRankingModel.cs" />
     <Compile Include="Models\DotaIdBindHistoryModel.cs" />
     <Compile Include="Models\DotaMatchHeroPlayedModel.cs" />
+    <Compile Include="Models\DotaMatchInfoModel.cs" />
     <Compile Include="Models\DotaRecentMatchModel.cs" />
     <Compile Include="Models\DotaMatchPlayerProfileModel.cs" />
     <Compile Include="Models\DotaMatchPlayerTotalsModel.cs" />
@@ -288,6 +289,8 @@
     <Content Include="Assets\Icons\icon_nochart.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
+    <Content Include="Assets\Icons\Match\icon_dire_square.png" />
+    <Content Include="Assets\Icons\Match\icon_radiant_square.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />
