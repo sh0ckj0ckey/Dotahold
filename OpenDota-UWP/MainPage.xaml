@@ -355,7 +355,7 @@
                                 <Grid Background="{ThemeResource SETTING_TITLE_BK}" Padding="12,4" CornerRadius="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,24,0,12" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA">
                                     <TextBlock Text="Version" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="30"/>
                                 </Grid>
-                                <Image Grid.Row="1" Height="80" Source="/Assets/Logos/Logo.png" DoubleTapped="Image_DoubleTapped"/>
+                                <Image Grid.Row="1" Height="80" Source="/Assets/Logos/logo_opendotaplus.png" DoubleTapped="Image_DoubleTapped"/>
                                 <TextBlock Text="OpenDota+" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                            FontWeight="Medium" FontSize="14" CharacterSpacing="60"
                                            HorizontalAlignment="Center"

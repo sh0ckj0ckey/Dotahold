@@ -77,7 +77,7 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
 
-                    <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/WhiteLogo.png" />
+                    <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/logo_white.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABITEMS_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABMATCHES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_dark_un.png" />
@@ -182,7 +182,7 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                     
-                    <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/BlackLogo.png" />
+                    <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/logo_black.png" />
                     <BitmapImage x:Key="SIDEMENU_TABHEROES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABITEMS_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark_un.png" />
                     <BitmapImage x:Key="SIDEMENU_TABMATCHES_UNSELECT_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_dark_un.png" />

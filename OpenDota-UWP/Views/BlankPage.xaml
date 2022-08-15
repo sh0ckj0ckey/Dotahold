@@ -10,6 +10,5 @@
         <Image Source="{ThemeResource BLANKPLACEHOLDER_IMG}" Height="100" Opacity="0.1"/>
         <TextBlock Text="www.opendota.com" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" CharacterSpacing="36"
                    Opacity="0.1" FontWeight="Medium" FontSize="16"/>
-        <TextBox Height="32" Width="156" Margin="0,164,0,0" CornerRadius="8" PlaceholderText="可以绑定TabIndex，为2的时候显示搜索框，搜索比赛编号"/>
     </Grid>
 </Page>

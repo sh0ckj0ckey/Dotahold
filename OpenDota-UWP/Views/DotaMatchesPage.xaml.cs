@@ -1,4 +1,5 @@
 ﻿using OpenDota_UWP.Helpers;
+using OpenDota_UWP.Models;
 using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -414,32 +416,47 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
+        /// <summary>
+        /// 查看最近的一场比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickFlipRecentMatch(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
-                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
                     MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
             catch { }
         }
 
+        /// <summary>
+        /// 查看最近的一场比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickListRecentMatch(object sender, ItemClickEventArgs e)
         {
             try
             {
                 if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
-                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0, match);
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
                     MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
             catch { }
         }
 
+        /// <summary>
+        /// 点击绑定历史账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
         {
             try
@@ -454,6 +471,64 @@ namespace OpenDota_UWP.Views
                     }
                     HideBindingAccountGrid();
                 }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 显示搜索框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickSearch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.bSearchingByMatchId = true;
+                ShowTitleSearchTextBox?.Begin();
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 确定搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickGoSearch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string input = TitleSearchTextBox.Text;
+                if (input.Length > 0 && Regex.IsMatch(input, @"^\d+$"))
+                {
+                    long id;
+                    bool parse = long.TryParse(input, out id);
+                    if (parse)
+                    {
+                        ViewModel.GetMatchInfoAsync(id);
+                        MatchFrame.Navigate(typeof(MatchInfoPage));
+                        ViewModel.bSearchingByMatchId = false;
+                        TitleSearchTextBox.Text = "";
+                        ShowTitlePersonaname?.Begin();
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 取消搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickCancelSearch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.bSearchingByMatchId = false;
+                TitleSearchTextBox.Text = "";
+                ShowTitlePersonaname?.Begin();
             }
             catch { }
         }

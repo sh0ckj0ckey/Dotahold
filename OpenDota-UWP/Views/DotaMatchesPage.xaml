@@ -54,6 +54,20 @@
                                  Storyboard.TargetProperty="Opacity"
                                  To="0" Duration="0:0:0.2"/>
             </Storyboard>
+
+            <Storyboard x:Name="ShowTitlePersonaname">
+                <DoubleAnimation Storyboard.TargetName="TitlePersonanameGrid"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.2"/>
+            </Storyboard>
+            <Storyboard x:Name="ShowTitleSearchTextBox">
+                <DoubleAnimation Storyboard.TargetName="TitleSearchTextBox"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1" Duration="0:0:0.2"/>
+                <DoubleAnimation Storyboard.TargetName="TitleSearchTextBox"
+                                 Storyboard.TargetProperty="Width" EnableDependentAnimation ="True"
+                                 From="20" To="218" Duration="0:0:0.2"/>
+            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -410,37 +424,74 @@
                     <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
                                   FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.2" TintOpacity="0.1"/>
                 </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
                 <!--头像昵称-->
-                <StackPanel x:Name="PlayerProfileStackPanel" Orientation="Horizontal" Margin="22,0,64,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <Grid Height="36" Width="36">
-                        <Border Height="36" Width="36" CornerRadius="18" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}">
-                            <Border.Background>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <BitmapImage UriSource="/Assets/Icons/avatar_placeholder.jpeg" DecodePixelHeight="72" DecodePixelType="Logical"/>
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
-                            </Border.Background>
-                        </Border>
-                        <Ellipse Height="36" Width="36" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                            <Ellipse.Fill>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.PlayerProfile.profile.AvatarSource,Mode=OneWay}"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                    </Grid>
-                    <TextBlock MaxWidth="260" TextTrimming="CharacterEllipsis" CharacterSpacing="60" Margin="12,2,4,0"
-                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <Grid Grid.Column="0" Margin="22,0,12,0" Height="36" Width="36" VerticalAlignment="Center">
+                    <Border Height="36" Width="36" CornerRadius="18" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}">
+                        <Border.Background>
+                            <ImageBrush>
+                                <ImageBrush.ImageSource>
+                                    <BitmapImage UriSource="/Assets/Icons/avatar_placeholder.jpeg" DecodePixelHeight="72" DecodePixelType="Logical"/>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+                    </Border>
+                    <Ellipse Height="36" Width="36" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <Ellipse.Fill>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.PlayerProfile.profile.AvatarSource,Mode=OneWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+                <!--玩家名字-->
+                <Grid x:Name="TitlePersonanameGrid" Grid.Column="1" MinHeight="36" HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                    <TextBlock TextTrimming="CharacterEllipsis" CharacterSpacing="60" Margin="0,2,4,0"
+                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis}}"/>
-                    <TextBlock MaxWidth="260" TextTrimming="CharacterEllipsis" CharacterSpacing="60" Margin="12,2,4,0"
-                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <TextBlock TextTrimming="CharacterEllipsis" CharacterSpacing="60" Margin="0,2,4,0"
+                               FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"
                                Text="{x:Bind ViewModel.sSteamId,Mode=OneWay}" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
-                </StackPanel>
-                <!--菜单-->
-                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Width="34" Height="38" Padding="0,-4,0,0" CornerRadius="6"
-                        Margin="0,0,22,0" Background="Transparent" BorderThickness="0" ToolTipService.ToolTip="Menu"
-                        Foreground="{ThemeResource SIMPLETEXT_FR}">
+                </Grid>
+                <!--搜索框-->
+                <TextBox x:Name="TitleSearchTextBox" Grid.Column="1" Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                         Height="36" Width="218" Margin="0,0,8,0" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                         PlaceholderText="Search by match id" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"/>
+                
+                <!--搜索-->
+                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
+                        Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                        Click="OnClickSearch">
                     <Button.Content>
-                        <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>
+                        <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF78B;" FontSize="14"/>-->
+                        <FontIcon Glyph="&#xF78B;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
+                    </Button.Content>
+                </Button>
+                <!--确认搜索-->
+                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
+                        Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                        Click="OnClickGoSearch">
+                    <Button.Content>
+                        <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF78B;" FontSize="14"/>-->
+                        <FontIcon Glyph="&#xE72A;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
+                    </Button.Content>
+                </Button>
+                <!--菜单-->
+                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
+                        Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Menu"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                    <Button.Content>
+                        <!--<TextBlock FontFamily="Segoe UI Symbol" Text="&#xE0C2;" FontSize="14"/>-->
+                        <FontIcon Glyph="&#xE700;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -474,6 +525,17 @@
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </Button.Flyout>
+                </Button>
+                <!--取消搜索-->
+                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
+                        Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Cancel Search"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                        Click="OnClickCancelSearch">
+                    <Button.Content>
+                        <!--<TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF78B;" FontSize="14"/>-->
+                        <FontIcon Glyph="&#xE711;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"/>
+                    </Button.Content>
                 </Button>
             </Grid>
 
