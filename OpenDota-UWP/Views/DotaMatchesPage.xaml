@@ -34,6 +34,7 @@
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
             <converter:SettingToBorderThicknessConverter x:Key="Setting2Thickness"/>
+            <converter:BoolReverseConverter x:Key="BoolReverse"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
 
@@ -268,7 +269,7 @@
                     <!--常用英雄-->
                     <Button Grid.Row="3" Height="38" Margin="0,0" Background="Transparent" ToolTipService.ToolTip="View All"
                             BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
-                            Click="OnClickMostPlayedHeroes">
+                            Click="OnClickMostPlayedHeroes" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
                         <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                             <TextBlock Text="Heroes Played" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                        Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -316,7 +317,7 @@
                     <!--最近比赛-->
                     <Button Grid.Row="5" Height="38" Margin="0,0" Background="Transparent" ToolTipService.ToolTip="View All"
                             BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
-                            Click="OnClickRecentMatches">
+                            Click="OnClickRecentMatches" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
                         <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                             <TextBlock Text="Recent Matches" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                        Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -460,7 +461,8 @@
                 <!--搜索框-->
                 <TextBox x:Name="TitleSearchTextBox" Grid.Column="1" Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                          Height="36" Width="218" Margin="0,0,8,0" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                         PlaceholderText="Search by match id" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"/>
+                         PlaceholderText="Search by match id" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"
+                         IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}"/>
                 
                 <!--搜索-->
                 <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
