@@ -179,7 +179,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                        Text="Items" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-            <Button Grid.Row="1" Height="34" Width="34" Margin="0,0,4,0" FontFamily="Segoe MDL2 Assets" Content="&#xE945;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"
+            <Button Grid.Row="1" Height="36" Width="36" Margin="0,0,4,0" FontFamily="Segoe MDL2 Assets" Content="&#xE945;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"
                     Style="{ThemeResource TextBlockButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="Search Setting">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
@@ -203,7 +203,7 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-            <TextBox Grid.Row="1" Height="34" Margin="16,8,42,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+            <TextBox Grid.Row="1" Height="36" Margin="16,8,42,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"
                      TextChanged="TextBox_TextChanged"/>
             <!--全部物品的列表-->
