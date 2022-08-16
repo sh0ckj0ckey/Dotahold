@@ -65,9 +65,21 @@
                 <DoubleAnimation Storyboard.TargetName="TitleSearchTextBox"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.2"/>
-                <DoubleAnimation Storyboard.TargetName="TitleSearchTextBox"
+                <!--<DoubleAnimation Storyboard.TargetName="TitleSearchTextBox"
                                  Storyboard.TargetProperty="Width" EnableDependentAnimation ="True"
-                                 From="20" To="218" Duration="0:0:0.2"/>
+                                 From="20" To="218" Duration="0:0:0.2"/>-->
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleSearchTextBox" Storyboard.TargetProperty="Width" EnableDependentAnimation="True">
+                    <EasingDoubleKeyFrame KeyTime="00:00:00" Value="20">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <CubicEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="218">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <CubicEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
             </Storyboard>
         </ResourceDictionary>
     </Page.Resources>

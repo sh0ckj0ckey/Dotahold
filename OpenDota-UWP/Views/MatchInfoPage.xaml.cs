@@ -50,10 +50,10 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is NavigationTransitionInfo transition)
-            {
-                navigationTransition.DefaultNavigationTransitionInfo = transition;
-            }
+            //if (e.Parameter is NavigationTransitionInfo transition)
+            //{
+            //    navigationTransition.DefaultNavigationTransitionInfo = transition;
+            //}
             //match_id = (e.Parameter as RecentMatchViewModel).Match_ID;
             //MatchIDTextBlock.Text = (e.Parameter as RecentMatchViewModel).Match_ID;
             //MatchData_BeginTimeTextBlock.Text = (e.Parameter as RecentMatchViewModel).Time;
@@ -73,32 +73,6 @@ namespace OpenDota_UWP.Views
             ShowMatchInfo(match_id);
             ShowPlayers(match_id);
             base.OnNavigatedTo(e);
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            if (radiantPlayers != null)
-            {
-                radiantPlayers.Clear();
-                radiantPlayers = null;
-            }
-            if (direPlayers != null)
-            {
-                direPlayers.Clear();
-                direPlayers = null;
-            }
-            if (radiantPlayersList != null)
-            {
-                radiantPlayersList.Clear();
-                radiantPlayersList = null;
-            }
-            if (direPlayersList != null)
-            {
-                direPlayersList.Clear();
-                direPlayersList = null;
-            }
-
-            base.OnNavigatedFrom(e);
         }
 
         private async void ShowMatchInfo(string match_id)
@@ -191,7 +165,6 @@ namespace OpenDota_UWP.Views
             List<PlayersInfo> players = await DotaMatchHelper.GetPlayersInfoAsync(match_id);
             if (players == null)
             {
-                ShowDialog("玩家列表数据格式错误无法解析，烦请将比赛编号 " + match_id + " 发送给开发者 yaoyiming123@live.com，谢谢！");
                 return;
             }
 
@@ -463,63 +436,6 @@ namespace OpenDota_UWP.Views
             //Labels = timeList.ToArray();
             //YFormatter = value => value.ToString();
             //DataChart.DataContext = this;
-        }
-
-        /// <summary>
-        /// 显示团战Json数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (TeamFightTextBox.Text != "")
-            {
-                return;
-            }
-            TeamFightWaitStackPanel.Visibility = Visibility.Visible;
-            TeamFightProgressRing.IsActive = true;
-            TeamFightTextBox.Visibility = Visibility.Visible;
-            TeamFightTextBox.Text = await DotaMatchHelper.GetTeamfightInfoAsync(match_id);
-            TeamFightProgressRing.IsActive = false;
-            TeamFightWaitStackPanel.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 点击复制比赛编号
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            DataPackage dp = new DataPackage();
-            dp.SetText(MatchIDTextBlock.Text);
-            Clipboard.SetContent(dp);
-            CopySuccessGrid.Visibility = Visibility.Visible;
-            ShowCopySuccess.Begin();
-        }
-
-        /// <summary>
-        /// 弹出对话框
-        /// </summary>
-        public async void ShowDialog(string content)
-        {
-            var dialog = new ContentDialog()
-            {
-                Title = ":(",
-                Content = content,
-                PrimaryButtonText = "Okay",
-                FullSizeDesired = false,
-            };
-
-            dialog.PrimaryButtonClick += (_s, _e) =>
-            {
-                this.Frame.Navigate(typeof(BlankPage));
-            };
-            try
-            {
-                await dialog.ShowAsync();
-            }
-            catch { }
         }
 
         /// <summary>

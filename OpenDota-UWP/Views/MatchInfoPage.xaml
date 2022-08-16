@@ -5,40 +5,47 @@
     xmlns:local="using:OpenDota_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    xmlns:helpers="using:OpenDota_UWP.Helpers"
-    NavigationCacheMode="Required">
+    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent">
 
-    <Page.Transitions>
-        <TransitionCollection>
-            <NavigationThemeTransition x:Name="navigationTransition">
-                <EntranceNavigationTransitionInfo />
-            </NavigationThemeTransition>
-        </TransitionCollection>
-    </Page.Transitions>
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Storyboard x:Name="ShowCopySuccess">
-                <DoubleAnimation From="0"
-                                 To="1"
-                                 Duration="00:00:0.2"
-                                 Storyboard.TargetName="ShowSuccessScaleTransform"
-                                 Storyboard.TargetProperty="ScaleY">
-                    <DoubleAnimation.EasingFunction>
-                        <BackEase Amplitude="0.2"
-                                  EasingMode="EaseInOut" />
-                    </DoubleAnimation.EasingFunction>
-                </DoubleAnimation>
-            </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
-        <ScrollViewer x:Name="MatchInfoScrollViewer"
-                      VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Vertical">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer x:Name="MatchInfoScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <Grid>
+                    <ListView Grid.Column="1" IsItemClickEnabled="False" SelectionMode="None"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                                      Margin="0,16">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ToolkitUICtrl:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListViewItem Margin="0,0,-12,0">
+                            <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+                    </ListView>
+                    <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                    <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                </Grid>
                 <StackPanel Orientation="Horizontal"
                             Margin="0,2,0,0">
                     <Grid Margin="0,0,0,12">
@@ -215,10 +222,6 @@
                                VerticalAlignment="Center"
                                Margin="72,0" />
                 </Grid>
-                <ProgressRing x:Name="RadiantProgressRing"
-                              Height="36"
-                              Width="36"
-                              IsActive="True" />
                 <ListView x:Name="RadiantListView"
                           ItemsSource="{x:Bind radiantPlayers}"
                           MinWidth="586"
@@ -240,7 +243,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="helpers:PlayersInfoViewModel">
+                        <DataTemplate>
                             <Grid Height="72"
                                   HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
@@ -495,10 +498,6 @@
                                VerticalAlignment="Center"
                                Margin="72,0" />
                 </Grid>
-                <ProgressRing x:Name="DireProgressRing"
-                              Height="36"
-                              Width="36"
-                              IsActive="True" />
                 <ListView x:Name="DireListView"
                           ItemsSource="{x:Bind direPlayers}"
                           MinWidth="586"
@@ -518,7 +517,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="helpers:PlayersInfoViewModel">
+                        <DataTemplate>
                             <Grid Height="72"
                                   HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
@@ -901,13 +900,11 @@
                                       Opacity="0.7" />
                             <!--零线-->
                             <Polyline x:Name="ZeroPolyline"
-                                      Stroke="{ThemeResource GrayText}"
                                       StrokeDashArray="4"
                                       StrokeThickness="2"
                                       Opacity="0.8" />
                             <!--两条数据走势线-->
                             <Polyline x:Name="GoldPolyline"
-                                      Stroke="{ThemeResource GoldText}"
                                       StrokeThickness="2" />
                             <Polyline x:Name="XpPolyline"
                                       Stroke="DeepSkyBlue"
@@ -937,64 +934,7 @@
                                    VerticalAlignment="Center" />
                     </StackPanel>
                 </Grid>
-
-                <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontFamily="Segoe MDL2 Assets"
-                                   Text="&#xE15E;"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   VerticalAlignment="Center"
-                                   Margin="16,2,6,0" />
-                        <TextBlock Text="Others"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   Margin="0,6" />
-                    </StackPanel>
-                </Grid>
-                <StackPanel Orientation="Horizontal">
-                    <Button Style="{StaticResource TextBlockButtonStyle}"
-                            FontWeight="Black"
-                            Foreground="OrangeRed"
-                            Content="Teamfight Log (JSON)"
-                            Margin="24,12"
-                            FontSize="15"
-                            Click="Button_Click" />
-                    <HyperlinkButton x:Name="DownloadHyperlinkButton"
-                                     Content="Dowmload replay(.dem)" />
-                </StackPanel>
-                <StackPanel x:Name="TeamFightWaitStackPanel"
-                            Orientation="Horizontal"
-                            Margin="0,8"
-                            HorizontalAlignment="Center"
-                            Visibility="Collapsed">
-                    <ProgressRing x:Name="TeamFightProgressRing"
-                                  Height="24"
-                                  Width="24"
-                                  IsActive="False"
-                                  VerticalAlignment="Center" />
-                    <TextBlock Text="Loading JSON..."
-                               VerticalAlignment="Center" />
-                </StackPanel>
-                <TextBox x:Name="TeamFightTextBox"
-                         Margin="16,4,16,0"
-                         Height="auto"
-                         IsReadOnly="True"
-                         Foreground="{ThemeResource GrayText}"
-                         FontFamily="Consolas"
-                         FontSize="16"
-                         BorderThickness="0"
-                         TextWrapping="Wrap"
-                         Visibility="Collapsed" />
             </StackPanel>
         </ScrollViewer>
-        <Grid x:Name="MaskGrid"
-              Visibility="Collapsed"
-              Background="{ThemeResource APPLICATION_BK}"
-              Margin="0,146,0,0">
-            <Image Source="{ThemeResource BLANKPLACEHOLDER_IMG}"
-                   Height="96"
-                   Opacity="0.7" />
-        </Grid>
     </Grid>
 </Page>
