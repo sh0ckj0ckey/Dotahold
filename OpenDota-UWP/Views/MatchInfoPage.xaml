@@ -43,14 +43,42 @@
                     <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
                 </Grid>
 
-
+                <!--First Blood-->
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Match ID:" FontWeight="Medium" VerticalAlignment="Center" Margin="4,0,6,0" />
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id}" FontWeight="Medium"/>
+                    <FontIcon Glyph="&#xEB42;" FontSize="12"/>
+                    <TextBlock Text="First Blood" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time}" FontWeight="Medium" CharacterSpacing="60"/>
+                </StackPanel>
+
+                <!--Duration-->
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE916;" FontSize="12"/>
+                    <TextBlock Text="Duration" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.duration}" FontWeight="Medium" CharacterSpacing="60"/>
+                </StackPanel>
+
+                <!--Match ID-->
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xECCB;" FontSize="12"/>
+                    <TextBlock Text="Match ID" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+
+                <!--Skill-->
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xF272;" FontSize="12"/>
+                    <TextBlock Text="Skill" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.skill}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
+                </StackPanel>
+
+                <!--Start Time-->
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE823;" FontSize="12"/>
+                    <TextBlock Text="Start Time" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.start_time}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
                 </StackPanel>
 
                 <ListView x:Name="RadiantListView"
-                          ItemsSource="{x:Bind radiantPlayers}"
                           MinWidth="586"
                           MaxWidth="960"
                           Margin="16,8"
