@@ -1,4 +1,5 @@
 ﻿using OpenDota_UWP.Helpers;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,19 +30,18 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class MatchInfoPage : Page
     {
-        private ObservableCollection<PlayersInfoViewModel> radiantPlayers = new ObservableCollection<PlayersInfoViewModel>();
-        private ObservableCollection<PlayersInfoViewModel> direPlayers = new ObservableCollection<PlayersInfoViewModel>();
-        private List<PlayersInfoViewModel> radiantPlayersList = new List<PlayersInfoViewModel>();
-        private List<PlayersInfoViewModel> direPlayersList = new List<PlayersInfoViewModel>();
-
-        public string[] Labels { get; set; }
-        public Func<double, string> YFormatter { get; set; }
-
-        private string match_id = "";
+        private DotaMatchesViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
 
         public MatchInfoPage()
         {
-            this.InitializeComponent();
+            try
+            {
+                this.InitializeComponent();
+                ViewModel = DotaMatchesViewModel.Instance;
+                MainViewModel = DotaViewModel.Instance;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace OpenDota_UWP.Views
             //{
             //    MatchData_LevelTextBlock.Foreground = new SolidColorBrush(Colors.DarkOrange);
             //}
-            ShowMatchInfo(match_id);
-            ShowPlayers(match_id);
+            //ShowMatchInfo(match_id);
+            //ShowPlayers(match_id);
             base.OnNavigatedTo(e);
         }
 
@@ -162,39 +162,39 @@ namespace OpenDota_UWP.Views
 
         private async void ShowPlayers(string match_id)
         {
-            List<PlayersInfo> players = await DotaMatchHelper.GetPlayersInfoAsync(match_id);
-            if (players == null)
-            {
-                return;
-            }
+            //List<PlayersInfo> players = await DotaMatchHelper.GetPlayersInfoAsync(match_id);
+            //if (players == null)
+            //{
+            //    return;
+            //}
 
-            double radiant_herodamage = 0;
-            double radiant_score = 0;
-            double dire_herodamage = 0;
-            double dire_score = 0;
-            for (int i = 0; i < 5; i++)
-            {
-                radiantPlayersList.Add(new PlayersInfoViewModel(players[i]) { PlayerName = "Anonymous", PlayerPhoto = "ms-appx:///Assets/Pictures/null.png" });
-                radiant_herodamage += Convert.ToDouble(players[i].Hero_damage);
-                radiant_score += Convert.ToDouble(players[i].Kills);
-            }
-            foreach (PlayersInfoViewModel item in radiantPlayersList)
-            {
-                item.Fight_rate = "参战率: " + (100 * (item.Kills + item.Assists) / radiant_score).ToString("0.0") + "%";
-                item.Damage_rate = "Damage: " + (100 * Convert.ToDouble(item.Hero_damage) / radiant_herodamage).ToString("0.0") + "%";
-            }
-            for (int i = 5; i < 10; i++)
-            {
-                direPlayersList.Add(new PlayersInfoViewModel(players[i]) { PlayerName = "Anonymous", PlayerPhoto = "ms-appx:///Assets/Pictures/null.png" });
-                dire_herodamage += Convert.ToDouble(players[i].Hero_damage);
-                dire_score += Convert.ToDouble(players[i].Kills);
-            }
-            foreach (PlayersInfoViewModel item in direPlayersList)
-            {
-                item.Fight_rate = "参战率: " + (100 * (item.Kills + item.Assists) / dire_score).ToString("0.0") + "%";
-                item.Damage_rate = "Damage: " + (100 * Convert.ToDouble(item.Hero_damage) / dire_herodamage).ToString("0.0") + "%";
-            }
-            ShowPlayersPhoto(radiantPlayersList, direPlayersList);
+            //double radiant_herodamage = 0;
+            //double radiant_score = 0;
+            //double dire_herodamage = 0;
+            //double dire_score = 0;
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    radiantPlayersList.Add(new PlayersInfoViewModel(players[i]) { PlayerName = "Anonymous", PlayerPhoto = "ms-appx:///Assets/Pictures/null.png" });
+            //    radiant_herodamage += Convert.ToDouble(players[i].Hero_damage);
+            //    radiant_score += Convert.ToDouble(players[i].Kills);
+            //}
+            //foreach (PlayersInfoViewModel item in radiantPlayersList)
+            //{
+            //    item.Fight_rate = "参战率: " + (100 * (item.Kills + item.Assists) / radiant_score).ToString("0.0") + "%";
+            //    item.Damage_rate = "Damage: " + (100 * Convert.ToDouble(item.Hero_damage) / radiant_herodamage).ToString("0.0") + "%";
+            //}
+            //for (int i = 5; i < 10; i++)
+            //{
+            //    direPlayersList.Add(new PlayersInfoViewModel(players[i]) { PlayerName = "Anonymous", PlayerPhoto = "ms-appx:///Assets/Pictures/null.png" });
+            //    dire_herodamage += Convert.ToDouble(players[i].Hero_damage);
+            //    dire_score += Convert.ToDouble(players[i].Kills);
+            //}
+            //foreach (PlayersInfoViewModel item in direPlayersList)
+            //{
+            //    item.Fight_rate = "参战率: " + (100 * (item.Kills + item.Assists) / dire_score).ToString("0.0") + "%";
+            //    item.Damage_rate = "Damage: " + (100 * Convert.ToDouble(item.Hero_damage) / dire_herodamage).ToString("0.0") + "%";
+            //}
+            //ShowPlayersPhoto(radiantPlayersList, direPlayersList);
         }
 
         private async void ShowPlayersPhoto(List<PlayersInfoViewModel> radiant, List<PlayersInfoViewModel> dire)
@@ -445,22 +445,22 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void RadiantListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (RadiantListView.SelectedIndex >= 0)
-            {
-                //this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            //if (RadiantListView.SelectedIndex >= 0)
+            //{
+            //    //this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-                HeroPlayerInfoViewModel heroPlayerInfoViewModel = DotaMatchHelper.GetHeroPlayerInfo(RadiantListView.SelectedIndex);
-                PlayersInfoViewModel temp = radiantPlayers[RadiantListView.SelectedIndex];
-                heroPlayerInfoViewModel.Account_id = "ID: " + temp.Account_id;
-                heroPlayerInfoViewModel.Personaname = temp.PlayerName;
-                heroPlayerInfoViewModel.KDA = Regex.Match(temp.KDA, "KDA: ([\\d\\D]*)").Groups[1].Value;
-                heroPlayerInfoViewModel.Level = "Lvl" + temp.Level;
-                heroPlayerInfoViewModel.Last_hits = Regex.Match(temp.LD, "LH/DN: ([\\d\\D]*?)/").Groups[1].Value;
-                heroPlayerInfoViewModel.Denies = Regex.Match(temp.LD, "LH/DN: [\\d\\D]*?/([\\d\\D]*)").Groups[1].Value;
-                heroPlayerInfoViewModel.KDAString = "KDA: " + temp.K_D_A.ToString();
+            //    HeroPlayerInfoViewModel heroPlayerInfoViewModel = DotaMatchHelper.GetHeroPlayerInfo(RadiantListView.SelectedIndex);
+            //    PlayersInfoViewModel temp = radiantPlayers[RadiantListView.SelectedIndex];
+            //    heroPlayerInfoViewModel.Account_id = "ID: " + temp.Account_id;
+            //    heroPlayerInfoViewModel.Personaname = temp.PlayerName;
+            //    heroPlayerInfoViewModel.KDA = Regex.Match(temp.KDA, "KDA: ([\\d\\D]*)").Groups[1].Value;
+            //    heroPlayerInfoViewModel.Level = "Lvl" + temp.Level;
+            //    heroPlayerInfoViewModel.Last_hits = Regex.Match(temp.LD, "LH/DN: ([\\d\\D]*?)/").Groups[1].Value;
+            //    heroPlayerInfoViewModel.Denies = Regex.Match(temp.LD, "LH/DN: [\\d\\D]*?/([\\d\\D]*)").Groups[1].Value;
+            //    heroPlayerInfoViewModel.KDAString = "KDA: " + temp.K_D_A.ToString();
 
-                this.Frame.Navigate(typeof(MatchPlayerPage), heroPlayerInfoViewModel);
-            }
+            //    this.Frame.Navigate(typeof(MatchPlayerPage), heroPlayerInfoViewModel);
+            //}
         }
 
         /// <summary>
@@ -470,22 +470,22 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void DireListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DireListView.SelectedIndex >= 0)
-            {
-                //this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            //if (DireListView.SelectedIndex >= 0)
+            //{
+            //    //this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
-                HeroPlayerInfoViewModel heroPlayerInfoViewModel = DotaMatchHelper.GetHeroPlayerInfo(DireListView.SelectedIndex + 5);
-                PlayersInfoViewModel temp = direPlayers[DireListView.SelectedIndex];
-                heroPlayerInfoViewModel.Account_id = "ID: " + temp.Account_id;
-                heroPlayerInfoViewModel.Personaname = temp.PlayerName;
-                heroPlayerInfoViewModel.KDA = Regex.Match(temp.KDA, "KDA: ([\\d\\D]*)").Groups[1].Value;
-                heroPlayerInfoViewModel.Level = "Lvl" + temp.Level;
-                heroPlayerInfoViewModel.Last_hits = Regex.Match(temp.LD, "LH/DN: ([\\d\\D]*?)/").Groups[1].Value;
-                heroPlayerInfoViewModel.Denies = Regex.Match(temp.LD, "LH/DN: [\\d\\D]*?/([\\d\\D]*)").Groups[1].Value;
-                heroPlayerInfoViewModel.KDAString = "KDA: " + temp.K_D_A.ToString();
+            //    HeroPlayerInfoViewModel heroPlayerInfoViewModel = DotaMatchHelper.GetHeroPlayerInfo(DireListView.SelectedIndex + 5);
+            //    PlayersInfoViewModel temp = direPlayers[DireListView.SelectedIndex];
+            //    heroPlayerInfoViewModel.Account_id = "ID: " + temp.Account_id;
+            //    heroPlayerInfoViewModel.Personaname = temp.PlayerName;
+            //    heroPlayerInfoViewModel.KDA = Regex.Match(temp.KDA, "KDA: ([\\d\\D]*)").Groups[1].Value;
+            //    heroPlayerInfoViewModel.Level = "Lvl" + temp.Level;
+            //    heroPlayerInfoViewModel.Last_hits = Regex.Match(temp.LD, "LH/DN: ([\\d\\D]*?)/").Groups[1].Value;
+            //    heroPlayerInfoViewModel.Denies = Regex.Match(temp.LD, "LH/DN: [\\d\\D]*?/([\\d\\D]*)").Groups[1].Value;
+            //    heroPlayerInfoViewModel.KDAString = "KDA: " + temp.K_D_A.ToString();
 
-                this.Frame.Navigate(typeof(MatchPlayerPage), heroPlayerInfoViewModel);
-            }
+            //    this.Frame.Navigate(typeof(MatchPlayerPage), heroPlayerInfoViewModel);
+            //}
         }
     }
 }

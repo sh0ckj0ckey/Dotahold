@@ -22,81 +22,33 @@
         </Grid.RowDefinitions>
         <ScrollViewer x:Name="MatchInfoScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                <Grid>
+                <!--英雄BanPick顺序-->
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="16,0,8,0" Text="BanPick" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <ListView Grid.Column="1" IsItemClickEnabled="False" SelectionMode="None"
-                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                                      Margin="0,16">
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                              Margin="0,16">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <ToolkitUICtrl:WrapPanel/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
-
-                        <ListViewItem Margin="0,0,-12,0">
-                            <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                    <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                </StackPanel>
-                            </Grid>
-                        </ListViewItem>
                     </ListView>
                     <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
                     <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
                 </Grid>
-                <StackPanel Orientation="Horizontal"
-                            Margin="0,2,0,0">
-                    <Grid Margin="0,0,0,12">
-                        <!--<Polygon Points="0,0,256,0,216,48,0,48" Fill="SaddleBrown" Margin="8,0"/>-->
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontFamily="Segoe MDL2 Assets"
-                                       Text="&#xECCB;"
-                                       FontWeight="Bold"
-                                       FontSize="16"
-                                       VerticalAlignment="Center"
-                                       Margin="16,0,0,0" />
-                            <TextBlock Text="Match ID:"
-                                       FontSize="18"
-                                       FontWeight="Medium"
-                                       VerticalAlignment="Center"
-                                       Margin="4,0,6,0" />
-                            <HyperlinkButton Click="HyperlinkButton_Click" Margin="0,2,0,-2"
-                                             ToolTipService.ToolTip="Click to copy match ID to clipboard">
-                                <TextBlock x:Name="MatchIDTextBlock"
-                                           Text="—"
-                                           FontFamily="Consolas"
-                                           FontSize="18"
-                                           VerticalAlignment="Center" />
-                            </HyperlinkButton>
-                            <Grid x:Name="CopySuccessGrid"
-                                  Height="32"
-                                  Width="auto"
-                                  Margin="32,0"
-                                  Visibility="Collapsed">
-                                <Grid.RenderTransform>
-                                    <ScaleTransform x:Name="ShowSuccessScaleTransform"
-                                                    CenterY="16" />
-                                </Grid.RenderTransform>
-                                <Rectangle RadiusX="6"
-                                           RadiusY="6"
-                                           Fill="Gray"
-                                           Opacity="0.1"
-                                           Margin="-16,0" />
-                                <TextBlock FontFamily="Segoe MDL2 Assets"
-                                           FontSize="14"
-                                           Text="&#xE16F;"
-                                           Opacity="0.9"
-                                           VerticalAlignment="Center" />
-                                <TextBlock FontSize="12"
-                                           Text="Copied to clipboard"
-                                           Margin="20,0,4,0"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
+
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Match ID:" FontWeight="Medium" VerticalAlignment="Center" Margin="4,0,6,0" />
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id}" FontWeight="Medium"/>
                 </StackPanel>
+                
                 <GridView Margin="12"
                           SelectionMode="None"
                           HorizontalAlignment="Center"

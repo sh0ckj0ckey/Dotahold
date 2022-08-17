@@ -132,6 +132,13 @@ namespace OpenDota_UWP.ViewModels
 
         // 当前正在查看的比赛编号
         private long _CurrentMatchId = 0;
+        // 当前正在查看的比赛信息
+        private DotaMatchInfoModel _CurrentMatchInfo = null;
+        public DotaMatchInfoModel CurrentMatchInfo
+        {
+            get { return _CurrentMatchInfo; }
+            set { Set("CurrentMatchInfo", ref _CurrentMatchInfo, value); }
+        }
 
         public DotaMatchesViewModel()
         {
@@ -338,10 +345,6 @@ namespace OpenDota_UWP.ViewModels
 
                     PlayerWinLose = wl;
                     ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
-                }
-                else
-                {
-                    PlayerWinLose = null;
                 }
             }
             catch { }
@@ -700,451 +703,458 @@ namespace OpenDota_UWP.ViewModels
                 if (matchId == 0 || _CurrentMatchId == matchId) return;
 
                 _CurrentMatchId = matchId;
-
+                CurrentMatchInfo = null;
                 bLoadingOneMatchInfo = true;
 
                 string url = string.Format("https://api.opendota.com/api/matches/{0}", matchId);    //e.g.3792271763
-                object matchInfo = null;
+                DotaMatchInfoModel matchInfo = null;
 
                 try
                 {
                     matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
-                    /*{
-                        "match_id": 6706352286,
-                        "dire_score": 64,
-                        "duration": 3086,
-                        "first_blood_time": 133,
-                        "game_mode": 2,
-                        "lobby_type": 1,
-                        "picks_bans": [
-                          {
-                            "is_pick": false,
-                            "hero_id": 135,
-                            "team": 0,
-                            "order": 0,
-                            "ord": 0,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 136,
-                            "team": 1,
-                            "order": 1,
-                            "ord": 1,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 19,
-                            "team": 0,
-                            "order": 2,
-                            "ord": 2,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 112,
-                            "team": 1,
-                            "order": 3,
-                            "ord": 3,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 47,
-                            "team": 0,
-                            "order": 4,
-                            "ord": 4,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 66,
-                            "team": 1,
-                            "order": 5,
-                            "ord": 5,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 17,
-                            "team": 1,
-                            "order": 6,
-                            "ord": 6,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 13,
-                            "team": 0,
-                            "order": 7,
-                            "ord": 7,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 101,
-                            "team": 0,
-                            "order": 8,
-                            "ord": 8,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 120,
-                            "team": 1,
-                            "order": 9,
-                            "ord": 9,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 60,
-                            "team": 0,
-                            "order": 10,
-                            "ord": 10,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 128,
-                            "team": 1,
-                            "order": 11,
-                            "ord": 11,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 38,
-                            "team": 0,
-                            "order": 12,
-                            "ord": 12,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 7,
-                            "team": 1,
-                            "order": 13,
-                            "ord": 13,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 107,
-                            "team": 1,
-                            "order": 14,
-                            "ord": 14,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 99,
-                            "team": 0,
-                            "order": 15,
-                            "ord": 15,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 100,
-                            "team": 0,
-                            "order": 16,
-                            "ord": 16,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 36,
-                            "team": 1,
-                            "order": 17,
-                            "ord": 17,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 8,
-                            "team": 0,
-                            "order": 18,
-                            "ord": 18,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 68,
-                            "team": 1,
-                            "order": 19,
-                            "ord": 19,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 4,
-                            "team": 0,
-                            "order": 20,
-                            "ord": 20,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": false,
-                            "hero_id": 110,
-                            "team": 1,
-                            "order": 21,
-                            "ord": 21,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 37,
-                            "team": 0,
-                            "order": 22,
-                            "ord": 22,
-                            "match_id": 6706352286
-                          },
-                          {
-                            "is_pick": true,
-                            "hero_id": 40,
-                            "team": 1,
-                            "order": 23,
-                            "ord": 23,
-                            "match_id": 6706352286
-                          }
-                        ],
-                        "positive_votes": 0,
-                        "radiant_gold_adv": [
-                          0, 272, 531, 501, 938, 1175, 1349, 911, 903, 813, 775, 13, -578, -546, -259,
-                          -858, 287, -1420, -1318, -1481, -2462, -2348, -3276, -4206, -6326, -6770,
-                          -8079, -10621, -11971, -11571, -8942, -10961, -13839, -11568, -11246,
-                          -11905, -10694, -10301, -9978, -10149, -8501, -4732, -6329, -7420, -7367,
-                          -8091, -8434, -7932, -5751, -6018, -5216, -7203
-                        ],
-                        "radiant_score": 38,
-                        "radiant_win": false,
-                        "radiant_xp_adv": [
-                          0, -230, -2, 55, 777, 1090, 1213, -415, -630, -309, 268, -855, -2937, -2301,
-                          -1586, -2957, -3110, -6127, -5322, -5613, -7378, -8488, -10612, -14790,
-                          -19268, -19217, -23337, -26221, -28363, -24937, -19712, -29314, -32114,
-                          -26728, -25981, -27769, -24582, -27693, -25128, -23577, -20845, -16352,
-                          -22636, -23604, -23715, -24624, -25081, -24687, -20071, -19524, -20739,
-                          -23880
-                        ],
-                        "skill": null,
-                        "start_time": 1660453236,
-                        "players": [
-                          {
-                            "match_id": 6706352286,
-                            "player_slot": 0,
-                            "ability_upgrades_arr": [
-                              5162, 5163, 5163, 5162, 5163, 5165, 5163, 5162, 5162, 768, 5164, 5165,
-                              5164, 5164, 6412, 5164, 5165, 6505
-                            ],
-                            "account_id": 198161112,
-                            "additional_units": [
-                              {
-                                "unitname": "spirit_bear",
-                                "item_0": 168,
-                                "item_1": 50,
-                                "item_2": 172,
-                                "item_3": 116,
-                                "item_4": 143,
-                                "item_5": 112,
-                                "backpack_0": 0,
-                                "backpack_1": 0,
-                                "backpack_2": 0,
-                                "item_neutral": 0
-                              }
-                            ],
-                            "assists": 23,
-                            "backpack_0": 0,
-                            "backpack_1": 188,
-                            "backpack_2": 0,
-                            "backpack_3": null,
-                            "camps_stacked": 3,
-                            "creeps_stacked": 14,
-                            "deaths": 11,
-                            "denies": 5,
-                            "gold": 3322,
-                            "gold_per_min": 373,
-                            "gold_spent": 15625,
-                            "gold_t": [
-                              0, 219, 319, 454, 808, 983, 1129, 1359, 1740, 1919, 2158, 2329, 2512,
-                              2854, 3069, 3220, 4172, 4528, 4837, 5294, 5646, 6307, 6591, 6920, 7159,
-                              7449, 7561, 7741, 8038, 8966, 9511, 9878, 10143, 10775, 11164, 11709,
-                              12066, 13015, 13215, 13579, 14030, 15157, 15367, 15640, 15760, 15989,
-                              16266, 16780, 17115, 17374, 18161, 19126
-                            ],
-                            "hero_damage": 30193,
-                            "hero_healing": 18628,
-                            "hero_id": 37,
-                            "item_0": 908,
-                            "item_1": 190,
-                            "item_2": 254,
-                            "item_3": 269,
-                            "item_4": 218,
-                            "item_5": 29,
-                            "item_neutral": 676,
-                            "kills": 3,
-                            "last_hits": 142,
-                            "level": 24,
-                            "net_worth": 16447,
-                            "obs_placed": 10,
-                            "party_id": 0,
-                            "party_size": 10,
-                            "permanent_buffs": [
-                              { "permanent_buff": 6, "stack_count": 2 },
-                              { "permanent_buff": 12, "stack_count": 0 }
-                            ],
-                            "pings": 34,
-                            "purchase_log": [
-                              { "time": -89, "key": "tango" },
-                              { "time": -89, "key": "magic_stick" },
-                              { "time": -89, "key": "branches" },
-                              { "time": -89, "key": "branches" },
-                              { "time": -89, "key": "enchanted_mango", "charges": 2 },
-                              { "time": -89, "key": "branches" },
-                              { "time": 4, "key": "ward_sentry" },
-                              { "time": 4, "key": "ward_sentry" },
-                              { "time": 225, "key": "boots" },
-                              { "time": 226, "key": "clarity" },
-                              { "time": 226, "key": "clarity" },
-                              { "time": 385, "key": "sobi_mask" },
-                              { "time": 385, "key": "ring_of_basilius" },
-                              { "time": 387, "key": "ward_sentry" },
-                              { "time": 483, "key": "ring_of_protection" },
-                              { "time": 483, "key": "buckler" },
-                              { "time": 609, "key": "tpscroll" },
-                              { "time": 611, "key": "magic_wand" },
-                              { "time": 613, "key": "ward_observer" },
-                              { "time": 613, "key": "ward_sentry" },
-                              { "time": 614, "key": "smoke_of_deceit" },
-                              { "time": 720, "key": "blades_of_attack" },
-                              { "time": 813, "key": "tpscroll" },
-                              { "time": 857, "key": "ward_observer" },
-                              { "time": 857, "key": "ward_observer" },
-                              { "time": 857, "key": "ward_sentry" },
-                              { "time": 857, "key": "ward_sentry" },
-                              { "time": 954, "key": "lifesteal" },
-                              { "time": 976, "key": "vladmir" },
-                              { "time": 992, "key": "tpscroll" },
-                              { "time": 1035, "key": "ward_sentry" },
-                              { "time": 1035, "key": "ward_sentry" },
-                              { "time": 1100, "key": "tpscroll" },
-                              { "time": 1102, "key": "smoke_of_deceit" },
-                              { "time": 1102, "key": "ward_sentry" },
-                              { "time": 1205, "key": "tpscroll" },
-                              { "time": 1213, "key": "tome_of_knowledge" },
-                              { "time": 1237, "key": "wraith_pact" },
-                              { "time": 1237, "key": "point_booster" },
-                              { "time": 1317, "key": "ward_sentry" },
-                              { "time": 1317, "key": "ward_observer" },
-                              { "time": 1317, "key": "dust" },
-                              { "time": 1318, "key": "smoke_of_deceit" },
-                              { "time": 1318, "key": "ward_sentry" },
-                              { "time": 1420, "key": "ward_observer" },
-                              { "time": 1420, "key": "ward_sentry" },
-                              { "time": 1666, "key": "aghanims_shard" },
-                              { "time": 1672, "key": "ward_observer" },
-                              { "time": 1672, "key": "ward_sentry" },
-                              { "time": 1672, "key": "ward_sentry" },
-                              { "time": 1752, "key": "ward_sentry" },
-                              { "time": 1752, "key": "dust" },
-                              { "time": 1753, "key": "smoke_of_deceit" },
-                              { "time": 1753, "key": "ward_sentry" },
-                              { "time": 1857, "key": "tome_of_knowledge" },
-                              { "time": 1891, "key": "sobi_mask" },
-                              { "time": 1891, "key": "ring_of_basilius" },
-                              { "time": 1892, "key": "crown" },
-                              { "time": 1901, "key": "veil_of_discord" },
-                              { "time": 1985, "key": "ward_observer" },
-                              { "time": 1986, "key": "ward_sentry" },
-                              { "time": 2225, "key": "shadow_amulet" },
-                              { "time": 2225, "key": "cloak" },
-                              { "time": 2225, "key": "glimmer_cape" },
-                              { "time": 2234, "key": "ward_sentry" },
-                              { "time": 2340, "key": "ward_sentry" },
-                              { "time": 2340, "key": "ward_observer" },
-                              { "time": 2341, "key": "ward_sentry" },
-                              { "time": 2502, "key": "ward_observer" },
-                              { "time": 2503, "key": "ward_sentry" },
-                              { "time": 2503, "key": "ward_sentry" },
-                              { "time": 2541, "key": "ring_of_regen" },
-                              { "time": 2541, "key": "headdress" },
-                              { "time": 2541, "key": "fluffy_hat" },
-                              { "time": 2549, "key": "energy_booster" },
-                              { "time": 2553, "key": "holy_locket" },
-                              { "time": 2715, "key": "ward_observer" },
-                              { "time": 2715, "key": "ward_sentry" },
-                              { "time": 2926, "key": "ward_observer" },
-                              { "time": 2926, "key": "ward_observer" },
-                              { "time": 2926, "key": "ward_sentry" },
-                              { "time": 2926, "key": "ward_sentry" },
-                              { "time": 2927, "key": "ward_sentry" },
-                              { "time": 2927, "key": "ward_sentry" },
-                              { "time": 2927, "key": "ward_sentry" }
-                            ],
-                            "randomed": false,
-                            "roshans_killed": 0,
-                            "runes_log": [
-                              { "time": 0, "key": 5 },
-                              { "time": 361, "key": 5 },
-                              { "time": 1468, "key": 5 },
-                              { "time": 2708, "key": 5 }
-                            ],
-                            "tower_damage": 932,
-                            "towers_killed": 1,
-                            "xp_per_min": 543,
-                            "xp_t": [
-                              0, 118, 356, 444, 642, 866, 991, 1121, 1410, 1751, 2291, 2555, 2932,
-                              3177, 3692, 4052, 4492, 6046, 6876, 7595, 7959, 8878, 9125, 9410, 9526,
-                              10159, 10209, 10594, 10813, 12551, 13163, 13379, 14755, 14831, 15130,
-                              16991, 18015, 18087, 18839, 19448, 20880, 22020, 22102, 22423, 22890,
-                              23326, 23708, 24192, 25297, 25453, 25551, 27835
-                            ],
-                            "personaname": "euphoria",
-                            "name": "detachment",
-                            "radiant_win": false,
-                            "isRadiant": true,
-                            "total_gold": 19184,
-                            "total_xp": 27928,
-                            "neutral_kills": 26,
-                            "tower_kills": 1,
-                            "courier_kills": 0,
-                            "observer_kills": 3,
-                            "sentry_kills": 3,
-                            "roshan_kills": 0,
-                            "buyback_count": 0,
-                            "rank_tier": 80,
-                            "benchmarks": {
-                              "gold_per_min": { "raw": 373, "pct": 0.8095238095238095 },
-                              "xp_per_min": { "raw": 543, "pct": 0.8571428571428571 },
-                              "kills_per_min": {
-                                "raw": 0.05832793259883344,
-                                "pct": 0.19047619047619047
-                              },
-                              "last_hits_per_min": {
-                                "raw": 2.7608554763447826,
-                                "pct": 0.8571428571428571
-                              },
-                              "hero_damage_per_min": {
-                                "raw": 587.0317563188594,
-                                "pct": 0.9047619047619048
-                              },
-                              "hero_healing_per_min": {
-                                "raw": 362.17757615035646,
-                                "pct": 0.8095238095238095
-                              },
-                              "tower_damage": { "raw": 932, "pct": 0.5714285714285714 },
-                              "stuns_per_min": {
-                                "raw": 0.33382604018146467,
-                                "pct": 0.47619047619047616
-                              },
-                              "lhten": { "raw": 12, "pct": 0.8571428571428571 }
-                            }
-                          }
-                        ]
-                    }*/
+                    #region
+                    //{
+                    //    "match_id": 6706352286,
+                    //    "dire_score": 64,
+                    //    "duration": 3086,
+                    //    "first_blood_time": 133,
+                    //    "game_mode": 2,
+                    //    "lobby_type": 1,
+                    //    "picks_bans": [
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 135,
+                    //        "team": 0,
+                    //        "order": 0,
+                    //        "ord": 0,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 136,
+                    //        "team": 1,
+                    //        "order": 1,
+                    //        "ord": 1,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 19,
+                    //        "team": 0,
+                    //        "order": 2,
+                    //        "ord": 2,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 112,
+                    //        "team": 1,
+                    //        "order": 3,
+                    //        "ord": 3,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 47,
+                    //        "team": 0,
+                    //        "order": 4,
+                    //        "ord": 4,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 66,
+                    //        "team": 1,
+                    //        "order": 5,
+                    //        "ord": 5,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 17,
+                    //        "team": 1,
+                    //        "order": 6,
+                    //        "ord": 6,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 13,
+                    //        "team": 0,
+                    //        "order": 7,
+                    //        "ord": 7,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 101,
+                    //        "team": 0,
+                    //        "order": 8,
+                    //        "ord": 8,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 120,
+                    //        "team": 1,
+                    //        "order": 9,
+                    //        "ord": 9,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 60,
+                    //        "team": 0,
+                    //        "order": 10,
+                    //        "ord": 10,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 128,
+                    //        "team": 1,
+                    //        "order": 11,
+                    //        "ord": 11,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 38,
+                    //        "team": 0,
+                    //        "order": 12,
+                    //        "ord": 12,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 7,
+                    //        "team": 1,
+                    //        "order": 13,
+                    //        "ord": 13,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 107,
+                    //        "team": 1,
+                    //        "order": 14,
+                    //        "ord": 14,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 99,
+                    //        "team": 0,
+                    //        "order": 15,
+                    //        "ord": 15,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 100,
+                    //        "team": 0,
+                    //        "order": 16,
+                    //        "ord": 16,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 36,
+                    //        "team": 1,
+                    //        "order": 17,
+                    //        "ord": 17,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 8,
+                    //        "team": 0,
+                    //        "order": 18,
+                    //        "ord": 18,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 68,
+                    //        "team": 1,
+                    //        "order": 19,
+                    //        "ord": 19,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 4,
+                    //        "team": 0,
+                    //        "order": 20,
+                    //        "ord": 20,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": false,
+                    //        "hero_id": 110,
+                    //        "team": 1,
+                    //        "order": 21,
+                    //        "ord": 21,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 37,
+                    //        "team": 0,
+                    //        "order": 22,
+                    //        "ord": 22,
+                    //        "match_id": 6706352286
+                    //      },
+                    //      {
+                    //        "is_pick": true,
+                    //        "hero_id": 40,
+                    //        "team": 1,
+                    //        "order": 23,
+                    //        "ord": 23,
+                    //        "match_id": 6706352286
+                    //      }
+                    //    ],
+                    //    "positive_votes": 0,
+                    //    "radiant_gold_adv": [
+                    //      0, 272, 531, 501, 938, 1175, 1349, 911, 903, 813, 775, 13, -578, -546, -259,
+                    //      -858, 287, -1420, -1318, -1481, -2462, -2348, -3276, -4206, -6326, -6770,
+                    //      -8079, -10621, -11971, -11571, -8942, -10961, -13839, -11568, -11246,
+                    //      -11905, -10694, -10301, -9978, -10149, -8501, -4732, -6329, -7420, -7367,
+                    //      -8091, -8434, -7932, -5751, -6018, -5216, -7203
+                    //    ],
+                    //    "radiant_score": 38,
+                    //    "radiant_win": false,
+                    //    "radiant_xp_adv": [
+                    //      0, -230, -2, 55, 777, 1090, 1213, -415, -630, -309, 268, -855, -2937, -2301,
+                    //      -1586, -2957, -3110, -6127, -5322, -5613, -7378, -8488, -10612, -14790,
+                    //      -19268, -19217, -23337, -26221, -28363, -24937, -19712, -29314, -32114,
+                    //      -26728, -25981, -27769, -24582, -27693, -25128, -23577, -20845, -16352,
+                    //      -22636, -23604, -23715, -24624, -25081, -24687, -20071, -19524, -20739,
+                    //      -23880
+                    //    ],
+                    //    "skill": null,
+                    //    "start_time": 1660453236,
+                    //    "players": [
+                    //      {
+                    //        "match_id": 6706352286,
+                    //        "player_slot": 0,
+                    //        "ability_upgrades_arr": [
+                    //          5162, 5163, 5163, 5162, 5163, 5165, 5163, 5162, 5162, 768, 5164, 5165,
+                    //          5164, 5164, 6412, 5164, 5165, 6505
+                    //        ],
+                    //        "account_id": 198161112,
+                    //        "additional_units": [
+                    //          {
+                    //            "unitname": "spirit_bear",
+                    //            "item_0": 168,
+                    //            "item_1": 50,
+                    //            "item_2": 172,
+                    //            "item_3": 116,
+                    //            "item_4": 143,
+                    //            "item_5": 112,
+                    //            "backpack_0": 0,
+                    //            "backpack_1": 0,
+                    //            "backpack_2": 0,
+                    //            "item_neutral": 0
+                    //          }
+                    //        ],
+                    //        "assists": 23,
+                    //        "backpack_0": 0,
+                    //        "backpack_1": 188,
+                    //        "backpack_2": 0,
+                    //        "backpack_3": null,
+                    //        "camps_stacked": 3,
+                    //        "creeps_stacked": 14,
+                    //        "deaths": 11,
+                    //        "denies": 5,
+                    //        "gold": 3322,
+                    //        "gold_per_min": 373,
+                    //        "gold_spent": 15625,
+                    //        "gold_t": [
+                    //          0, 219, 319, 454, 808, 983, 1129, 1359, 1740, 1919, 2158, 2329, 2512,
+                    //          2854, 3069, 3220, 4172, 4528, 4837, 5294, 5646, 6307, 6591, 6920, 7159,
+                    //          7449, 7561, 7741, 8038, 8966, 9511, 9878, 10143, 10775, 11164, 11709,
+                    //          12066, 13015, 13215, 13579, 14030, 15157, 15367, 15640, 15760, 15989,
+                    //          16266, 16780, 17115, 17374, 18161, 19126
+                    //        ],
+                    //        "hero_damage": 30193,
+                    //        "hero_healing": 18628,
+                    //        "hero_id": 37,
+                    //        "item_0": 908,
+                    //        "item_1": 190,
+                    //        "item_2": 254,
+                    //        "item_3": 269,
+                    //        "item_4": 218,
+                    //        "item_5": 29,
+                    //        "item_neutral": 676,
+                    //        "kills": 3,
+                    //        "last_hits": 142,
+                    //        "level": 24,
+                    //        "net_worth": 16447,
+                    //        "obs_placed": 10,
+                    //        "party_id": 0,
+                    //        "party_size": 10,
+                    //        "permanent_buffs": [
+                    //          { "permanent_buff": 6, "stack_count": 2 },
+                    //          { "permanent_buff": 12, "stack_count": 0 }
+                    //        ],
+                    //        "pings": 34,
+                    //        "purchase_log": [
+                    //          { "time": -89, "key": "tango" },
+                    //          { "time": -89, "key": "magic_stick" },
+                    //          { "time": -89, "key": "branches" },
+                    //          { "time": -89, "key": "branches" },
+                    //          { "time": -89, "key": "enchanted_mango", "charges": 2 },
+                    //          { "time": -89, "key": "branches" },
+                    //          { "time": 4, "key": "ward_sentry" },
+                    //          { "time": 4, "key": "ward_sentry" },
+                    //          { "time": 225, "key": "boots" },
+                    //          { "time": 226, "key": "clarity" },
+                    //          { "time": 226, "key": "clarity" },
+                    //          { "time": 385, "key": "sobi_mask" },
+                    //          { "time": 385, "key": "ring_of_basilius" },
+                    //          { "time": 387, "key": "ward_sentry" },
+                    //          { "time": 483, "key": "ring_of_protection" },
+                    //          { "time": 483, "key": "buckler" },
+                    //          { "time": 609, "key": "tpscroll" },
+                    //          { "time": 611, "key": "magic_wand" },
+                    //          { "time": 613, "key": "ward_observer" },
+                    //          { "time": 613, "key": "ward_sentry" },
+                    //          { "time": 614, "key": "smoke_of_deceit" },
+                    //          { "time": 720, "key": "blades_of_attack" },
+                    //          { "time": 813, "key": "tpscroll" },
+                    //          { "time": 857, "key": "ward_observer" },
+                    //          { "time": 857, "key": "ward_observer" },
+                    //          { "time": 857, "key": "ward_sentry" },
+                    //          { "time": 857, "key": "ward_sentry" },
+                    //          { "time": 954, "key": "lifesteal" },
+                    //          { "time": 976, "key": "vladmir" },
+                    //          { "time": 992, "key": "tpscroll" },
+                    //          { "time": 1035, "key": "ward_sentry" },
+                    //          { "time": 1035, "key": "ward_sentry" },
+                    //          { "time": 1100, "key": "tpscroll" },
+                    //          { "time": 1102, "key": "smoke_of_deceit" },
+                    //          { "time": 1102, "key": "ward_sentry" },
+                    //          { "time": 1205, "key": "tpscroll" },
+                    //          { "time": 1213, "key": "tome_of_knowledge" },
+                    //          { "time": 1237, "key": "wraith_pact" },
+                    //          { "time": 1237, "key": "point_booster" },
+                    //          { "time": 1317, "key": "ward_sentry" },
+                    //          { "time": 1317, "key": "ward_observer" },
+                    //          { "time": 1317, "key": "dust" },
+                    //          { "time": 1318, "key": "smoke_of_deceit" },
+                    //          { "time": 1318, "key": "ward_sentry" },
+                    //          { "time": 1420, "key": "ward_observer" },
+                    //          { "time": 1420, "key": "ward_sentry" },
+                    //          { "time": 1666, "key": "aghanims_shard" },
+                    //          { "time": 1672, "key": "ward_observer" },
+                    //          { "time": 1672, "key": "ward_sentry" },
+                    //          { "time": 1672, "key": "ward_sentry" },
+                    //          { "time": 1752, "key": "ward_sentry" },
+                    //          { "time": 1752, "key": "dust" },
+                    //          { "time": 1753, "key": "smoke_of_deceit" },
+                    //          { "time": 1753, "key": "ward_sentry" },
+                    //          { "time": 1857, "key": "tome_of_knowledge" },
+                    //          { "time": 1891, "key": "sobi_mask" },
+                    //          { "time": 1891, "key": "ring_of_basilius" },
+                    //          { "time": 1892, "key": "crown" },
+                    //          { "time": 1901, "key": "veil_of_discord" },
+                    //          { "time": 1985, "key": "ward_observer" },
+                    //          { "time": 1986, "key": "ward_sentry" },
+                    //          { "time": 2225, "key": "shadow_amulet" },
+                    //          { "time": 2225, "key": "cloak" },
+                    //          { "time": 2225, "key": "glimmer_cape" },
+                    //          { "time": 2234, "key": "ward_sentry" },
+                    //          { "time": 2340, "key": "ward_sentry" },
+                    //          { "time": 2340, "key": "ward_observer" },
+                    //          { "time": 2341, "key": "ward_sentry" },
+                    //          { "time": 2502, "key": "ward_observer" },
+                    //          { "time": 2503, "key": "ward_sentry" },
+                    //          { "time": 2503, "key": "ward_sentry" },
+                    //          { "time": 2541, "key": "ring_of_regen" },
+                    //          { "time": 2541, "key": "headdress" },
+                    //          { "time": 2541, "key": "fluffy_hat" },
+                    //          { "time": 2549, "key": "energy_booster" },
+                    //          { "time": 2553, "key": "holy_locket" },
+                    //          { "time": 2715, "key": "ward_observer" },
+                    //          { "time": 2715, "key": "ward_sentry" },
+                    //          { "time": 2926, "key": "ward_observer" },
+                    //          { "time": 2926, "key": "ward_observer" },
+                    //          { "time": 2926, "key": "ward_sentry" },
+                    //          { "time": 2926, "key": "ward_sentry" },
+                    //          { "time": 2927, "key": "ward_sentry" },
+                    //          { "time": 2927, "key": "ward_sentry" },
+                    //          { "time": 2927, "key": "ward_sentry" }
+                    //        ],
+                    //        "randomed": false,
+                    //        "roshans_killed": 0,
+                    //        "runes_log": [
+                    //          { "time": 0, "key": 5 },
+                    //          { "time": 361, "key": 5 },
+                    //          { "time": 1468, "key": 5 },
+                    //          { "time": 2708, "key": 5 }
+                    //        ],
+                    //        "tower_damage": 932,
+                    //        "towers_killed": 1,
+                    //        "xp_per_min": 543,
+                    //        "xp_t": [
+                    //          0, 118, 356, 444, 642, 866, 991, 1121, 1410, 1751, 2291, 2555, 2932,
+                    //          3177, 3692, 4052, 4492, 6046, 6876, 7595, 7959, 8878, 9125, 9410, 9526,
+                    //          10159, 10209, 10594, 10813, 12551, 13163, 13379, 14755, 14831, 15130,
+                    //          16991, 18015, 18087, 18839, 19448, 20880, 22020, 22102, 22423, 22890,
+                    //          23326, 23708, 24192, 25297, 25453, 25551, 27835
+                    //        ],
+                    //        "personaname": "euphoria",
+                    //        "name": "detachment",
+                    //        "radiant_win": false,
+                    //        "isRadiant": true,
+                    //        "total_gold": 19184,
+                    //        "total_xp": 27928,
+                    //        "neutral_kills": 26,
+                    //        "tower_kills": 1,
+                    //        "courier_kills": 0,
+                    //        "observer_kills": 3,
+                    //        "sentry_kills": 3,
+                    //        "roshan_kills": 0,
+                    //        "buyback_count": 0,
+                    //        "rank_tier": 80,
+                    //        "benchmarks": {
+                    //          "gold_per_min": { "raw": 373, "pct": 0.8095238095238095 },
+                    //          "xp_per_min": { "raw": 543, "pct": 0.8571428571428571 },
+                    //          "kills_per_min": {
+                    //            "raw": 0.05832793259883344,
+                    //            "pct": 0.19047619047619047
+                    //          },
+                    //          "last_hits_per_min": {
+                    //            "raw": 2.7608554763447826,
+                    //            "pct": 0.8571428571428571
+                    //          },
+                    //          "hero_damage_per_min": {
+                    //            "raw": 587.0317563188594,
+                    //            "pct": 0.9047619047619048
+                    //          },
+                    //          "hero_healing_per_min": {
+                    //            "raw": 362.17757615035646,
+                    //            "pct": 0.8095238095238095
+                    //          },
+                    //          "tower_damage": { "raw": 932, "pct": 0.5714285714285714 },
+                    //          "stuns_per_min": {
+                    //            "raw": 0.33382604018146467,
+                    //            "pct": 0.47619047619047616
+                    //          },
+                    //          "lhten": { "raw": 12, "pct": 0.8571428571428571 }
+                    //        }
+                    //      }
+                    //    ]
+                    //}
+                    #endregion
                 }
                 catch { }
+
+                if (matchInfo != null)
+                {
+                    CurrentMatchInfo = matchInfo;
+                }
             }
             catch { }
             finally { bLoadingOneMatchInfo = false; }
