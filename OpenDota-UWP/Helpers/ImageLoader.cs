@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -31,14 +32,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     if (memStream == null)
                     {
-                        if (!string.IsNullOrEmpty(defaultImg))
-                        {
-                            return new BitmapImage(new System.Uri(defaultImg));
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return string.IsNullOrEmpty(defaultImg) ? null : new BitmapImage(new System.Uri(defaultImg));
                     }
                     bm = new BitmapImage();
                     await bm.SetSourceAsync(memStream.AsRandomAccessStream());
@@ -70,20 +64,23 @@ namespace OpenDota_UWP.Helpers
                 if (cachedFile == null)
                 {
                     //没有对应的缓存文件
-                    using (var resStream = await (await GetImage(Uri)).Content.ReadAsStreamAsync())
+                    using (var resStream = await (await GetImage(Uri))?.Content?.ReadAsStreamAsync())
                     {
-                        var memStream = new MemoryStream();
-                        await resStream.CopyToAsync(memStream);
-                        memStream.Position = 0;
-                        var newCachedFile = await ImageCacheManager.CreateCacheFileAsync(tmpFileName);
-                        if (newCachedFile == null) return null;
-                        using (var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync())
+                        if (resStream != null)
                         {
-                            await memStream.CopyToAsync(fileStream);
+                            var memStream = new MemoryStream();
+                            await resStream.CopyToAsync(memStream);
+                            memStream.Position = 0;
+                            var newCachedFile = await ImageCacheManager.CreateCacheFileAsync(tmpFileName);
+                            if (newCachedFile == null) return null;
+                            using (var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync())
+                            {
+                                await memStream.CopyToAsync(fileStream);
+                            }
+                            await ImageCacheManager.FinishCachedFileAsync(newCachedFile.Value, true);
+                            memStream.Position = 0;
+                            return memStream;
                         }
-                        await ImageCacheManager.FinishCachedFileAsync(newCachedFile.Value, true);
-                        memStream.Position = 0;
-                        return memStream;
                     }
                 }
                 else
@@ -98,7 +95,8 @@ namespace OpenDota_UWP.Helpers
                     }
                 }
             }
-            catch { return null; }
+            catch { }
+            return null;
         }
 
         private static async Task<HttpResponseMessage> GetImage(string url)
@@ -106,7 +104,7 @@ namespace OpenDota_UWP.Helpers
             try
             {
                 var response = await http.GetAsync(new Uri(url));
-                response.EnsureSuccessStatusCode();
+                //response.EnsureSuccessStatusCode();
                 return response;
             }
             catch { return null; }
