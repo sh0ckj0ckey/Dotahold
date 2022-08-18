@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media" 
     xmlns:cvt="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent">
 
@@ -126,6 +127,11 @@
                                                 <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
                                                 <TextBlock Text="{x:Bind n}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium" CharacterSpacing="20"/>
                                             </StackPanel>
+                                            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Height="400">
+                                                <Border.Background>
+                                                    <ToolkitMedia:BackdropSaturationBrush Saturation="0"/>
+                                                </Border.Background>
+                                            </Border>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
