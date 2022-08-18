@@ -137,6 +137,7 @@
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
+    <Compile Include="Converters\PlayerTotalsFieldToIconConverter.cs" />
     <Compile Include="Converters\RankTierToImageConverter.cs" />
     <Compile Include="Converters\DoubleArrayToStringConverter.cs" />
     <Compile Include="Converters\SettingToBorderThicknessConverter.cs" />
