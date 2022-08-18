@@ -5,7 +5,8 @@
     xmlns:local="using:OpenDota_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:cvt="using:OpenDota_UWP.Converters"
     mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent">
 
     <Page.Resources>
@@ -13,6 +14,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <cvt:BoolToVisibilityConverter x:Key="Bool2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -22,61 +25,116 @@
         </Grid.RowDefinitions>
         <ScrollViewer x:Name="MatchInfoScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                <!--英雄BanPick顺序-->
                 <Grid HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="16,0,8,0" Text="BanPick" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <ListView Grid.Column="1" IsItemClickEnabled="False" SelectionMode="None"
-                              ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                              Margin="0,16">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ToolkitUICtrl:WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                    </ListView>
-                    <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                    <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <!--天辉获胜-->
+                    <Grid Height="68" HorizontalAlignment="Left" CornerRadius="6" Background="#8C66BB6A" BorderBrush="#AA66BB6A" BorderThickness="3" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="68"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_66bb6a.png" DecodePixelHeight="50" DecodePixelType="Logical"/>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Grid.Column="1" Text="Radiant Victory" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="4,0,16,0"/>
+                    </Grid>
+                    <!--夜魇获胜-->
+                    <Grid Height="68" HorizontalAlignment="Left" CornerRadius="6" Background="#8CFF4C4C" BorderBrush="#AAFF4C4C" BorderThickness="3" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="68"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Height="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_ff4c4c.png" DecodePixelHeight="50" DecodePixelType="Logical"/>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Grid.Column="1" Text="Dire Victory" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="24" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="4,0,16,0"/>
+                    </Grid>
+
                 </Grid>
+                <Grid>
+                    <!--数据统计-->
+                    <ScrollViewer Margin="0,4,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal" Padding="8,0">
+                            <!--第一滴血时间-->
+                            <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                                  MinWidth="86" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <FontIcon Glyph="&#xEB42;" Margin="0,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="First Blood" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--比赛时长-->
+                            <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                                  MinWidth="86" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <FontIcon Glyph="&#xE916;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Duration" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.duration}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--评级(N H VH)-->
+                            <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                                  MinWidth="86" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <FontIcon Glyph="&#xF272;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Skill" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.skill}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--比赛开始时间-->
+                            <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                                  MinWidth="86" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <FontIcon Glyph="&#xE823;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Start Time" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.start_time}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
+                            <!--Match ID-->
+                            <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                                  MinWidth="86" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <FontIcon Glyph="&#xECCB;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Match ID" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                </StackPanel>
+                            </Grid>
 
-                <!--First Blood-->
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon Glyph="&#xEB42;" FontSize="12"/>
-                    <TextBlock Text="First Blood" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time}" FontWeight="Medium" CharacterSpacing="60"/>
-                </StackPanel>
-
-                <!--Duration-->
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon Glyph="&#xE916;" FontSize="12"/>
-                    <TextBlock Text="Duration" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.duration}" FontWeight="Medium" CharacterSpacing="60"/>
-                </StackPanel>
-
-                <!--Match ID-->
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon Glyph="&#xECCB;" FontSize="12"/>
-                    <TextBlock Text="Match ID" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
-                </StackPanel>
-
-                <!--Skill-->
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon Glyph="&#xF272;" FontSize="12"/>
-                    <TextBlock Text="Skill" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.skill}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
-                </StackPanel>
-
-                <!--Start Time-->
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon Glyph="&#xE823;" FontSize="12"/>
-                    <TextBlock Text="Start Time" FontSize="14" Opacity="0.7" CharacterSpacing="40" VerticalAlignment="Center" Margin="4,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.start_time}" FontWeight="Medium" CharacterSpacing="60" IsTextSelectionEnabled="True"/>
-                </StackPanel>
+                            <!--英雄BanPick顺序-->
+                            <ListView IsItemClickEnabled="False" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vPlayerTotals,Mode=OneWay}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                                      Margin="0,0,10,0">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ToolkitUICtrl:WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ItemsPresenter />
+                                    </ControlTemplate>
+                                </ListView.Template>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="-12,0,0,0" MinWidth="80" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="16,0" ToolTipService.ToolTip="On Average">
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
+                                                <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
+                                                <TextBlock Text="{x:Bind n}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium" CharacterSpacing="20"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <Rectangle IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <Rectangle IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                </Grid>
 
                 <ListView x:Name="RadiantListView"
                           MinWidth="586"
