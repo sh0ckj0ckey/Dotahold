@@ -75,7 +75,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
-                if (e.ClickedItem is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                if (e.ClickedItem is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
                     ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
                     this.Frame.Navigate(typeof(MatchInfoPage));

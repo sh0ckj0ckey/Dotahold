@@ -700,7 +700,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (matchId == 0 || _CurrentMatchId == matchId) return;
+                if (matchId == 0 || (_CurrentMatchId == matchId && CurrentMatchInfo != null)) return;
 
                 _CurrentMatchId = matchId;
                 CurrentMatchInfo = null;

@@ -23,7 +23,7 @@ namespace OpenDota_UWP.Converters
                             return "\uE8F0";
 
                         case "deaths":
-                            return "";
+                            return "\uF78A";
 
                         case "assists":
                             return "\uE8E1";
@@ -35,10 +35,10 @@ namespace OpenDota_UWP.Converters
                             return "\uE9D9";
 
                         case "last hits":
-                            return "\uEA3A";
+                            return "\uF138";
 
                         case "denies":
-                            return "\uF126";
+                            return "\uEDB1";
 
                         case "level":
                             return "\uEA41";
@@ -51,6 +51,9 @@ namespace OpenDota_UWP.Converters
 
                         case "hero healing":
                             return "\uF10E";
+
+                        case "kda":
+                            return "\uE81E";
 
                         default:
                             return string.Empty;

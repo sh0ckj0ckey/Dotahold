@@ -443,7 +443,7 @@ namespace OpenDota_UWP.Views
         {
             try
             {
-                if (sender is ListViewItem lvi && lvi.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                if (e.ClickedItem is Models.DotaRecentMatchModel match && match.match_id != null)
                 {
                     ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
                     MatchFrame.Navigate(typeof(MatchInfoPage));

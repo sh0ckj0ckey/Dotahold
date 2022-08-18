@@ -264,8 +264,7 @@
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
-            <ProgressRing x:Name="ItemProgressRing"
-                          Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
+            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
         </Grid>
         <Grid x:Name="ItemGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}"

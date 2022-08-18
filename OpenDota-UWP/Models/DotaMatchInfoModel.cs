@@ -8,26 +8,26 @@ namespace OpenDota_UWP.Models
 {
     public class DotaMatchInfoModel
     {
-        public long match_id { get; set; }
-        public int dire_score { get; set; }
-        public int duration { get; set; }
-        public int first_blood_time { get; set; }
+        public long? match_id { get; set; }
+        public int? dire_score { get; set; }
+        public long? duration { get; set; }
+        public long? first_blood_time { get; set; }
         public int? game_mode { get; set; }
         public int? lobby_type { get; set; }
         public List<Picks_Bans> picks_bans { get; set; }
         public List<int> radiant_gold_adv { get; set; }
-        public int radiant_score { get; set; }
-        public bool radiant_win { get; set; }
+        public int? radiant_score { get; set; }
+        public bool? radiant_win { get; set; }
         public List<int> radiant_xp_adv { get; set; }
         public int? skill { get; set; }
-        public int start_time { get; set; }
+        public long? start_time { get; set; }
         public List<Player> players { get; set; }
     }
 
     public class Picks_Bans
     {
-        public bool is_pick { get; set; }
-        public int hero_id { get; set; }
+        public bool? is_pick { get; set; }
+        public int? hero_id { get; set; }
         //public int team { get; set; }
         //public int order { get; set; }
         //public int ord { get; set; }
@@ -36,10 +36,10 @@ namespace OpenDota_UWP.Models
 
     public class Player
     {
-        public long match_id { get; set; }
+        public long? match_id { get; set; }
         public int? player_slot { get; set; }
         public List<int> ability_upgrades_arr { get; set; }
-        public int account_id { get; set; }
+        public long? account_id { get; set; }
         public Additional_Units[] additional_units { get; set; }
         public int? assists { get; set; }
         public int? backpack_0 { get; set; }
@@ -69,12 +69,11 @@ namespace OpenDota_UWP.Models
         public int? level { get; set; }
         public int? net_worth { get; set; }
         public int? obs_placed { get; set; }
-        public int? party_id { get; set; }
+        public long? party_id { get; set; }
         public int? party_size { get; set; }
         public List<Permanent_Buffs> permanent_buffs { get; set; }
         public int? pings { get; set; }
         public List<Purchase_Log> purchase_log { get; set; }
-        public bool randomed { get; set; }
         public int? roshans_killed { get; set; }
         public List<Runes_Log> runes_log { get; set; }
         public int? tower_damage { get; set; }
@@ -84,7 +83,6 @@ namespace OpenDota_UWP.Models
         public string personaname { get; set; }
         public string name { get; set; }
         public bool radiant_win { get; set; }
-        public bool isRadiant { get; set; }
         public int? total_gold { get; set; }
         public int? total_xp { get; set; }
         public int? neutral_kills { get; set; }
@@ -182,21 +180,21 @@ namespace OpenDota_UWP.Models
 
     public class Permanent_Buffs
     {
-        public int permanent_buff { get; set; }
-        public int stack_count { get; set; }
+        public int? permanent_buff { get; set; }
+        public int? stack_count { get; set; }
     }
 
     public class Purchase_Log
     {
-        public int time { get; set; }
+        public int? time { get; set; }
         public string key { get; set; }
-        public int charges { get; set; }
+        public int? charges { get; set; }
     }
 
     public class Runes_Log
     {
-        public int time { get; set; }
-        public int key { get; set; }
+        public int? time { get; set; }
+        public int? key { get; set; }
     }
 
 }

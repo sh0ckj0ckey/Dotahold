@@ -35,6 +35,7 @@
             <converter:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
             <converter:SettingToBorderThicknessConverter x:Key="Setting2Thickness"/>
             <converter:BoolReverseConverter x:Key="BoolReverse"/>
+            <converter:PlayerTotalsFieldToIconConverter x:Key="Field2Icon"/>
 
             <ThemeShadow x:Name="FrameShadow"/>
 
@@ -265,8 +266,9 @@
                                 </ListView.Template>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:DotaMatchPlayerTotalModel">
-                                        <Grid Margin="-12,0,0,0" MinWidth="80" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="16,0" ToolTipService.ToolTip="On Average">
-                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
+                                        <Grid Margin="-12,0,0,0" MinWidth="84" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="On Average">
+                                            <TextBlock Text="{x:Bind field,Converter={StaticResource Field2Icon}}" FontFamily="Segoe MDL2 Assets" Margin="4,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                            <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
                                                 <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
                                                 <TextBlock Text="{x:Bind n}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium" CharacterSpacing="20"/>
                                             </StackPanel>

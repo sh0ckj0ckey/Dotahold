@@ -134,6 +134,8 @@
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToGameModeConverter.cs" />
     <Compile Include="Converters\IntToLobbyTypeConverter.cs" />
+    <Compile Include="Converters\LongToMinutesConverter.cs" />
+    <Compile Include="Converters\IntToSkillConverter.cs" />
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
