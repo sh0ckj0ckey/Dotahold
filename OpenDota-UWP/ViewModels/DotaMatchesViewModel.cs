@@ -981,26 +981,36 @@ namespace OpenDota_UWP.ViewModels
                         }
                     }
 
-                    RadiantAdvantageSeries = new LiveChartsCore.ISeries[] {
-                        new LineSeries<double>
+                    // 天辉优势图
+                    if (matchInfo?.radiant_gold_adv != null && matchInfo?.radiant_xp_adv != null)
+                    {
+                        RadiantAdvantageSeries = new LiveChartsCore.ISeries[] 
                         {
-                            Values = matchInfo.radiant_gold_adv,
-                            GeometryStroke = new SolidColorPaint(SKColors.Gold, 2),
-                            GeometrySize = 2,
-                            Fill = null,
-                            Stroke = new SolidColorPaint(SKColors.Gold, 2),
-                            Name = "Radiant Gold Adv"
-                        },
-                        new LineSeries<double>
-                        {
-                            Values = matchInfo.radiant_xp_adv,
-                            GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
-                            GeometrySize = 2,
-                            Fill = null,
-                            Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
-                            Name = "Radiant XP Adv"
-                        }
-                    };
+                            new LineSeries<double>
+                            {
+                                Values = matchInfo.radiant_gold_adv,
+                                GeometryStroke = new SolidColorPaint(SKColors.Gold, 2),
+                                GeometrySize = 2,
+                                Fill = null,
+                                Stroke = new SolidColorPaint(SKColors.Gold, 2),
+                                Name = "Radiant Gold Adv"
+                            },
+                            new LineSeries<double>
+                            {
+                                Values = matchInfo.radiant_xp_adv,
+                                GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                                GeometrySize = 2,
+                                Fill = null,
+                                Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                                Name = "Radiant XP Adv"
+                            }
+                        };
+                    }
+                    else
+                    {
+                        RadiantAdvantageSeries = null;
+                    }
+
 
                     CurrentMatchInfo = matchInfo;
                 }
