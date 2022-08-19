@@ -139,6 +139,9 @@ namespace OpenDota_UWP.ViewModels
             set { Set("CurrentMatchInfo", ref _CurrentMatchInfo, value); }
         }
 
+        // 请求过的比赛缓存起来
+        private Dictionary<long, DotaMatchInfoModel> _MatchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
+
         // 天辉优势走势图(金钱和经验)
         private LiveChartsCore.ISeries[] _RadiantAdvantageSeries = null;
         public LiveChartsCore.ISeries[] RadiantAdvantageSeries
@@ -718,7 +721,15 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
+                    if (_MatchesInfoCache.ContainsKey(matchId))
+                    {
+                        matchInfo = _MatchesInfoCache[matchId];
+                    }
+                    else
+                    {
+                        matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
+                        if (matchInfo != null) _MatchesInfoCache[matchId] = matchInfo;
+                    }
                     #region
                     //{
                     //    "radiant_gold_adv": [
@@ -971,17 +982,23 @@ namespace OpenDota_UWP.ViewModels
                     }
 
                     RadiantAdvantageSeries = new LiveChartsCore.ISeries[] {
-                        new LineSeries<double, LiveChartsCore.SkiaSharpView.Drawing.Geometries.CircleGeometry>
+                        new LineSeries<double>
                         {
                             Values = matchInfo.radiant_gold_adv,
-                            GeometrySize = 6,
-                            Fill = new SolidColorPaint(SKColor.FromHsl(0,0,12,64))
+                            GeometryStroke = new SolidColorPaint(SKColors.Gold, 2),
+                            GeometrySize = 2,
+                            Fill = null,
+                            Stroke = new SolidColorPaint(SKColors.Gold, 2),
+                            Name = "Radiant Gold Adv"
                         },
-                        new LineSeries<double, LiveChartsCore.SkiaSharpView.Drawing.Geometries.CircleGeometry>
+                        new LineSeries<double>
                         {
                             Values = matchInfo.radiant_xp_adv,
-                            GeometrySize = 6,
-                            Fill = new SolidColorPaint(SKColor.FromHsl(0,0,12,64))
+                            GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                            GeometrySize = 2,
+                            Fill = null,
+                            Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                            Name = "Radiant XP Adv"
                         }
                     };
 

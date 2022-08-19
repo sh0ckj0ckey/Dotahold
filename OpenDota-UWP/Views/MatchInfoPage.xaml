@@ -463,7 +463,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid>
-                        <lvc:CartesianChart x:Name="DataChart" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" Margin="48,8" Height="512"/>
+                        <lvc:CartesianChart x:Name="DataChart" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" Margin="16,8" Height="320"/>
                     </Grid>
 
                     <!--比赛开始时间-->
