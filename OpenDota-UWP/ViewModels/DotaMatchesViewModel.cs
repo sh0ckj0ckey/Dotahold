@@ -1153,6 +1153,20 @@ namespace OpenDota_UWP.ViewModels
 
                 if (matchInfo != null)
                 {
+                    if (matchInfo.picks_bans == null)
+                    {
+                        matchInfo.picks_bans = new List<Picks_Bans>();
+                    }
+                    foreach (var bp in matchInfo.picks_bans)
+                    {
+                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(bp.hero_id.ToString()) == true)
+                        {
+                            bp.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].img;
+                            bp.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].localized_name;
+                            await bp.LoadImageAsync(86);
+                        }
+                    }
+
                     CurrentMatchInfo = matchInfo;
                 }
             }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using OpenDota_UWP.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
 {
@@ -24,14 +26,42 @@ namespace OpenDota_UWP.Models
         public List<Player> players { get; set; }
     }
 
-    public class Picks_Bans
+    public class Picks_Bans : ViewModels.ViewModelBase
     {
         public bool? is_pick { get; set; }
         public int? hero_id { get; set; }
-        //public int team { get; set; }
+        public int? team { get; set; }  //0-radiant 1-dire
+
         //public int order { get; set; }
         //public int ord { get; set; }
         //public long match_id { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sHeroImage { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sHeroName { get; set; }
+
+        // 比赛英雄图片
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ImageSource = null;
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (ImageSource != null) return;
+
+                ImageSource = await ImageLoader.LoadImageAsync(sHeroImage);
+                ImageSource.DecodePixelType = DecodePixelType.Logical;
+                ImageSource.DecodePixelWidth = decodeWidth;
+            }
+            catch { }
+        }
     }
 
     public class Player

@@ -108,7 +108,7 @@ namespace OpenDota_UWP.Models
         {
             try
             {
-                if (CoverImageSource != null) return;
+                if (HorizonImageSource != null) return;
 
                 HorizonImageSource = await ImageLoader.LoadImageAsync(sHeroHorizonImage);
                 HorizonImageSource.DecodePixelType = DecodePixelType.Logical;

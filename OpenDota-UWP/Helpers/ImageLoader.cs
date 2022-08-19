@@ -103,6 +103,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
+                if (string.IsNullOrEmpty(url)) return null;
                 var response = await http.GetAsync(new Uri(url));
                 //response.EnsureSuccessStatusCode();
                 return response;

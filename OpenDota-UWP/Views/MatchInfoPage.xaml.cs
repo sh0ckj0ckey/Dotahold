@@ -73,6 +73,12 @@ namespace OpenDota_UWP.Views
             //ShowMatchInfo(match_id);
             //ShowPlayers(match_id);
             base.OnNavigatedTo(e);
+
+            try
+            {
+                BanPickScrollViewer?.ChangeView(0, 0, 1, true);
+            }
+            catch { }
         }
 
         private async void ShowMatchInfo(string match_id)
