@@ -11,14 +11,13 @@ namespace OpenDota_UWP.Converters
 {
     internal class LongToMinutesConverter : IValueConverter
     {
-        private static string _DefaultString = "00:00";
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
-                if (value == null) return _DefaultString;
+                if (value == null) return "00:00";
                 string time = value.ToString();
-                if (string.IsNullOrEmpty(time) || time == "0") return _DefaultString;
+                if (string.IsNullOrEmpty(time) || time == "0") return "00:00";
 
                 long totalSeconds = System.Convert.ToInt64(time);
                 long minutes = totalSeconds / 60;
@@ -41,7 +40,7 @@ namespace OpenDota_UWP.Converters
                 return stringBuilder.ToString();
             }
             catch { }
-            return _DefaultString;
+            return "00:00";
         }
 
 

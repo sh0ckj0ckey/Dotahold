@@ -27,6 +27,7 @@
             <cvt:IntToSkillConverter x:Key="Int2Skill"/>
             <cvt:LongToMinutesConverter x:Key="Long2Min"/>
             <cvt:EqualToVisibilityConverter x:Key="Eql2Vis"/>
+            <cvt:LongToTimeConverter x:Key="Long2Date"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -165,9 +166,8 @@
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
                                                             <GradientStopCollection>
-                                                                <GradientStop Offset="0.0" Color="#AA000000"/>
-                                                                <GradientStop Offset="0.4" Color="#AA000000"/>
-                                                                <GradientStop Offset="1.0" Color="#00000000"/>
+                                                                <GradientStop Offset="0.0" Color="#80000000"/>
+                                                                <GradientStop Offset="0.9" Color="#00000000"/>
                                                             </GradientStopCollection>
                                                         </LinearGradientBrush>
                                                     </Grid.Background>
@@ -482,8 +482,8 @@
 
                     <!--比赛开始时间-->
                     <StackPanel Padding="12,4,12,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="6" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
-                        <FontIcon Glyph="&#xE823;" FontSize="14" VerticalAlignment="Center" Margin="0,0,6,-2"/>
-                        <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay}" VerticalAlignment="Center" FontSize="15" FontWeight="Medium"/>
+                        <FontIcon Glyph="&#xE823;" FontSize="14" Opacity="0.7" VerticalAlignment="Center" Margin="0,0,6,-2"/>
+                        <TextBlock Opacity="0.7" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" FontSize="15" FontWeight="Medium"/>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

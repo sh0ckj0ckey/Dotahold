@@ -137,6 +137,7 @@
     <Compile Include="Converters\LongToMinutesConverter.cs" />
     <Compile Include="Converters\IntToSkillConverter.cs" />
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
+    <Compile Include="Converters\LongToTimeConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
     <Compile Include="Converters\PlayerTotalsFieldToIconConverter.cs" />
