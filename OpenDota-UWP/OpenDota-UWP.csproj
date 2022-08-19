@@ -529,6 +529,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveChartsCore">
+      <Version>2.0.0-beta.350</Version>
+    </PackageReference>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Uno">
+      <Version>2.0.0-beta.350</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>

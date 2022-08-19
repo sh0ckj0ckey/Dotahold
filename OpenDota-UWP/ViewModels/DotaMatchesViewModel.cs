@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using Newtonsoft.Json;
 using OpenDota_UWP.Helpers;
 using OpenDota_UWP.Models;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,10 +29,6 @@ namespace OpenDota_UWP.ViewModels
 
         // 绑定过的账号列表
         public ObservableCollection<DotaIdBindHistoryModel> vDotaIdHistory = new ObservableCollection<DotaIdBindHistoryModel>();
-
-        // 缓存玩家名字和头像
-        private Dictionary<string, string> dictPlayersNameCache = new Dictionary<string, string>();
-        private Dictionary<string, string> dictPlayersPhotoCache = new Dictionary<string, string>();
 
         private Windows.Web.Http.HttpClient playerInfoHttpClient = new Windows.Web.Http.HttpClient();
         private Windows.Web.Http.HttpClient matchHttpClient = new Windows.Web.Http.HttpClient();
@@ -138,6 +137,14 @@ namespace OpenDota_UWP.ViewModels
         {
             get { return _CurrentMatchInfo; }
             set { Set("CurrentMatchInfo", ref _CurrentMatchInfo, value); }
+        }
+
+        // 天辉优势走势图(金钱和经验)
+        private LiveChartsCore.ISeries[] _RadiantAdvantageSeries = null;
+        public LiveChartsCore.ISeries[] RadiantAdvantageSeries
+        {
+            get { return _RadiantAdvantageSeries; }
+            set { Set("RadiantAdvantageSeries", ref _RadiantAdvantageSeries, value); }
         }
 
         public DotaMatchesViewModel()
@@ -714,207 +721,6 @@ namespace OpenDota_UWP.ViewModels
                     matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
                     #region
                     //{
-                    //    "match_id": 6706352286,
-                    //    "dire_score": 64,
-                    //    "duration": 3086,
-                    //    "first_blood_time": 133,
-                    //    "game_mode": 2,
-                    //    "lobby_type": 1,
-                    //    "picks_bans": [
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 135,
-                    //        "team": 0,
-                    //        "order": 0,
-                    //        "ord": 0,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 136,
-                    //        "team": 1,
-                    //        "order": 1,
-                    //        "ord": 1,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 19,
-                    //        "team": 0,
-                    //        "order": 2,
-                    //        "ord": 2,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 112,
-                    //        "team": 1,
-                    //        "order": 3,
-                    //        "ord": 3,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 47,
-                    //        "team": 0,
-                    //        "order": 4,
-                    //        "ord": 4,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 66,
-                    //        "team": 1,
-                    //        "order": 5,
-                    //        "ord": 5,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 17,
-                    //        "team": 1,
-                    //        "order": 6,
-                    //        "ord": 6,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 13,
-                    //        "team": 0,
-                    //        "order": 7,
-                    //        "ord": 7,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 101,
-                    //        "team": 0,
-                    //        "order": 8,
-                    //        "ord": 8,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 120,
-                    //        "team": 1,
-                    //        "order": 9,
-                    //        "ord": 9,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 60,
-                    //        "team": 0,
-                    //        "order": 10,
-                    //        "ord": 10,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 128,
-                    //        "team": 1,
-                    //        "order": 11,
-                    //        "ord": 11,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 38,
-                    //        "team": 0,
-                    //        "order": 12,
-                    //        "ord": 12,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 7,
-                    //        "team": 1,
-                    //        "order": 13,
-                    //        "ord": 13,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 107,
-                    //        "team": 1,
-                    //        "order": 14,
-                    //        "ord": 14,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 99,
-                    //        "team": 0,
-                    //        "order": 15,
-                    //        "ord": 15,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 100,
-                    //        "team": 0,
-                    //        "order": 16,
-                    //        "ord": 16,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 36,
-                    //        "team": 1,
-                    //        "order": 17,
-                    //        "ord": 17,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 8,
-                    //        "team": 0,
-                    //        "order": 18,
-                    //        "ord": 18,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 68,
-                    //        "team": 1,
-                    //        "order": 19,
-                    //        "ord": 19,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 4,
-                    //        "team": 0,
-                    //        "order": 20,
-                    //        "ord": 20,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": false,
-                    //        "hero_id": 110,
-                    //        "team": 1,
-                    //        "order": 21,
-                    //        "ord": 21,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 37,
-                    //        "team": 0,
-                    //        "order": 22,
-                    //        "ord": 22,
-                    //        "match_id": 6706352286
-                    //      },
-                    //      {
-                    //        "is_pick": true,
-                    //        "hero_id": 40,
-                    //        "team": 1,
-                    //        "order": 23,
-                    //        "ord": 23,
-                    //        "match_id": 6706352286
-                    //      }
-                    //    ],
-                    //    "positive_votes": 0,
                     //    "radiant_gold_adv": [
                     //      0, 272, 531, 501, 938, 1175, 1349, 911, 903, 813, 775, 13, -578, -546, -259,
                     //      -858, 287, -1420, -1318, -1481, -2462, -2348, -3276, -4206, -6326, -6770,
@@ -922,8 +728,6 @@ namespace OpenDota_UWP.ViewModels
                     //      -11905, -10694, -10301, -9978, -10149, -8501, -4732, -6329, -7420, -7367,
                     //      -8091, -8434, -7932, -5751, -6018, -5216, -7203
                     //    ],
-                    //    "radiant_score": 38,
-                    //    "radiant_win": false,
                     //    "radiant_xp_adv": [
                     //      0, -230, -2, 55, 777, 1090, 1213, -415, -630, -309, 268, -855, -2937, -2301,
                     //      -1586, -2957, -3110, -6127, -5322, -5613, -7378, -8488, -10612, -14790,
@@ -932,8 +736,6 @@ namespace OpenDota_UWP.ViewModels
                     //      -22636, -23604, -23715, -24624, -25081, -24687, -20071, -19524, -20739,
                     //      -23880
                     //    ],
-                    //    "skill": null,
-                    //    "start_time": 1660453236,
                     //    "players": [
                     //      {
                     //        "match_id": 6706352286,
@@ -1153,6 +955,7 @@ namespace OpenDota_UWP.ViewModels
 
                 if (matchInfo != null)
                 {
+                    // BanPick列表
                     if (matchInfo.picks_bans == null)
                     {
                         matchInfo.picks_bans = new List<Picks_Bans>();
@@ -1166,6 +969,21 @@ namespace OpenDota_UWP.ViewModels
                             await bp.LoadImageAsync(86);
                         }
                     }
+
+                    RadiantAdvantageSeries = new LiveChartsCore.ISeries[] {
+                        new LineSeries<double, LiveChartsCore.SkiaSharpView.Drawing.Geometries.CircleGeometry>
+                        {
+                            Values = matchInfo.radiant_gold_adv,
+                            GeometrySize = 6,
+                            Fill = new SolidColorPaint(SKColor.FromHsl(0,0,12,64))
+                        },
+                        new LineSeries<double, LiveChartsCore.SkiaSharpView.Drawing.Geometries.CircleGeometry>
+                        {
+                            Values = matchInfo.radiant_xp_adv,
+                            GeometrySize = 6,
+                            Fill = new SolidColorPaint(SKColor.FromHsl(0,0,12,64))
+                        }
+                    };
 
                     CurrentMatchInfo = matchInfo;
                 }

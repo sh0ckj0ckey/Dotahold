@@ -17,10 +17,10 @@ namespace OpenDota_UWP.Models
         public int? game_mode { get; set; }
         public int? lobby_type { get; set; }
         public List<Picks_Bans> picks_bans { get; set; }
-        public List<int> radiant_gold_adv { get; set; }
+        public List<double> radiant_gold_adv { get; set; }
         public int? radiant_score { get; set; }
         public bool? radiant_win { get; set; }
-        public List<int> radiant_xp_adv { get; set; }
+        public List<double> radiant_xp_adv { get; set; }
         public int? skill { get; set; }
         public long? start_time { get; set; }
         public List<Player> players { get; set; }

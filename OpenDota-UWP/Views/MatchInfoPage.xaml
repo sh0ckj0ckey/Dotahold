@@ -9,7 +9,7 @@
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media" 
     xmlns:cvt="using:OpenDota_UWP.Converters"
     xmlns:ui="using:OpenDota_UWP.UI" 
-    xmlns:models="using:OpenDota_UWP.Models"
+    xmlns:models="using:OpenDota_UWP.Models" xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Uno"
     mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent">
 
     <Page.Resources>
@@ -81,8 +81,9 @@
                             </StackPanel>
                         </StackPanel>
                     </Grid>
+
+                    <!--数据统计和BP-->
                     <Grid>
-                        <!--数据统计-->
                         <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,4,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Orientation="Horizontal" Padding="16,0">
                                 <!--Game Mode-->
@@ -127,7 +128,8 @@
                                         <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.skill,Mode=OneWay,Converter={StaticResource Int2Skill}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
                                     </StackPanel>
                                 </Grid>
-                                
+
+                                <!--分割线-->
                                 <Grid Height="36" Width="1" Background="{ThemeResource HEROINFO_LISTITEM_BK}" Margin="0,0,12,0"
                                       Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
 
@@ -446,13 +448,6 @@
                                         </Grid>
                                     </StackPanel>
                                     -->
-                    <!--<Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="Gray" Opacity="0.3"/>-->
-                    <!--
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>-->
-
                     <Grid Margin="0,48,0,8">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontFamily="Segoe MDL2 Assets"
@@ -467,18 +462,9 @@
                                        Margin="0,6" />
                         </StackPanel>
                     </Grid>
-                    <!--<Grid x:Name="ChartGrid" Visibility="Collapsed">
-                        <lvc:CartesianChart x:Name="DataChart" Series="{Binding SeriesCollection}" Margin="48,8" Height="512">
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis LabelFormatter="{Binding YFormatter}"/>
-                            </lvc:CartesianChart.AxisY>
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Labels="{Binding Labels}"/>
-                            </lvc:CartesianChart.AxisX>
-                        </lvc:CartesianChart>
-                        <TextBlock Text="↑天辉" Foreground="MediumSeaGreen" FontSize="21" VerticalAlignment="Top" FontFamily="STKaiti" FontWeight="Bold" Margin="4,28,0,0"/>
-                        <TextBlock Text="↓夜魇" Foreground="OrangeRed" FontSize="21" VerticalAlignment="Bottom" FontFamily="STKaiti" FontWeight="Bold" Margin="4,0,0,52"/>
-                    </Grid>-->
+                    <Grid>
+                        <lvc:CartesianChart x:Name="DataChart" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" Margin="48,8" Height="512"/>
+                    </Grid>
 
                     <!--比赛开始时间-->
                     <StackPanel Padding="12,4,12,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="6" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
@@ -489,6 +475,8 @@
             </ScrollViewer>
             <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
         </Grid>
+
+        <!--加载中-->
         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="56" Width="96" CornerRadius="6"
               Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}">
             <Grid.Background>
@@ -497,6 +485,5 @@
             <ProgressRing Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}"/>
         </Grid>
-
     </Grid>
 </Page>
