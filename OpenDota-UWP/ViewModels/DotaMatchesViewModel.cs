@@ -1099,6 +1099,48 @@ namespace OpenDota_UWP.ViewModels
                             {
                                 player.isRadiant = player.player_slot < 128 ? true : false;
                             }
+
+                            /*
+                             {
+  "player_slot": 0,
+  "account_id": 198161112,
+  "additional_units": [
+    {
+      "unitname": "spirit_bear",
+      "item_0": 168,
+      "item_1": 50,
+      "item_2": 172,
+      "item_3": 116,
+      "item_4": 143,
+      "item_5": 112,
+      "backpack_0": 0,
+      "backpack_1": 0,
+      "backpack_2": 0,
+      "item_neutral": 0
+    }
+  ],
+  "assists": 23,
+  "backpack_0": 0,
+  "backpack_1": 188,
+  "backpack_2": 0,
+  "backpack_3": null,
+  "deaths": 11,
+  "denies": 5,
+  "gold_per_min": 373,
+
+  "last_hits": 142,
+  "net_worth": 16447,
+  "party_id": 0,
+  "party_size": 10,
+  "permanent_buffs": [
+    { "permanent_buff": 6, "stack_count": 2 },
+    { "permanent_buff": 12, "stack_count": 0 }
+  ],
+  "randomed": false,
+  "xp_per_min": 543,
+  "isRadiant": true,
+  "rank_tier": 80
+}*/
                         }
 
                         foreach (var player in matchInfo.players)
