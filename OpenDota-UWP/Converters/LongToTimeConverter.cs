@@ -21,7 +21,7 @@ namespace OpenDota_UWP.Converters
                     if (long.TryParse(value.ToString(), out timeStamp))
                     {
                         DateTimeOffset dateTimeOffset = timeStamp.ToString().Length == 13 ? DateTimeOffset.FromUnixTimeMilliseconds(timeStamp) : DateTimeOffset.FromUnixTimeSeconds(timeStamp);
-                        return dateTimeOffset.LocalDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                        return dateTimeOffset.LocalDateTime.ToString("yyyy-MM-dd HH:mm");
                     }
                 }
             }

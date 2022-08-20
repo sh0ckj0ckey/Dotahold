@@ -142,13 +142,109 @@ namespace OpenDota_UWP.ViewModels
         // 请求过的比赛缓存起来
         private Dictionary<long, DotaMatchInfoModel> _MatchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
 
+        #region 折线图
+
         // 天辉优势走势图(金钱和经验)
-        private LiveChartsCore.ISeries[] _RadiantAdvantageSeries = null;
+        private LiveChartsCore.ISeries[] _RadiantAdvantageSeries = new LiveChartsCore.ISeries[]
+        {
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                GeometryStroke = new SolidColorPaint(SKColors.Gold, 2),
+                GeometrySize = 2,
+                Fill = null,
+                Stroke = new SolidColorPaint(SKColors.Gold, 2),
+                Name = "Radiant Gold Adv"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                GeometrySize = 2,
+                Fill = null,
+                Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                Name = "Radiant XP Adv"
+            }
+        };
         public LiveChartsCore.ISeries[] RadiantAdvantageSeries
         {
             get { return _RadiantAdvantageSeries; }
             set { Set("RadiantAdvantageSeries", ref _RadiantAdvantageSeries, value); }
         }
+
+        public Axis[] XAxes { get; set; } =
+        {
+            new Axis
+            {
+                TextSize = 14,
+                LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                SeparatorsPaint = new SolidColorPaint
+                {
+                    Color = SKColors.LightGray,
+                    StrokeThickness = 2
+                }
+            }
+        };
+
+        public Axis[] YAxes { get; set; } =
+        {
+            new Axis
+            {
+                TextSize = 14,
+                LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                SeparatorsPaint = new SolidColorPaint
+                {
+                    Color = SKColors.LightGray,
+                    StrokeThickness = 2,
+                    PathEffect = new LiveChartsCore.SkiaSharpView.Painting.Effects.DashEffect(new float[] { 3, 3 })
+                }
+            }
+        };
+
+        public RectangularSection[] Sections { get; set; } =
+        {
+            new RectangularSection
+            {
+                Yi = 0,
+                Yj = 500000,
+                Fill = new SolidColorPaint
+                {
+                    Color = new SKColor(68, 112, 78, 255)
+                }
+            },
+            new RectangularSection
+            {
+                Yi = 0,
+                Yj = -500000,
+                Fill = new SolidColorPaint
+                {
+                    Color = new SKColor(145, 56, 63, 255)
+                }
+            }
+        };
+
+        public DrawMarginFrame Frame { get; set; } = new DrawMarginFrame()
+        {
+            Fill = new SolidColorPaint
+            {
+                Color = new SKColor(0, 0, 0, 30)
+            },
+            Stroke = new SolidColorPaint
+            {
+                Color = new SKColor(80, 80, 80),
+                StrokeThickness = 2
+            }
+        };
+
+        // 是否有天辉优势走势图数据
+        private bool _bHaveRadiantAdv = false;
+        public bool bHaveRadiantAdv
+        {
+            get { return _bHaveRadiantAdv; }
+            set { Set("bHaveRadiantAdv", ref _bHaveRadiantAdv, value); }
+        }
+
+        #endregion
 
         public DotaMatchesViewModel()
         {
@@ -728,7 +824,15 @@ namespace OpenDota_UWP.ViewModels
                     else
                     {
                         matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
-                        if (matchInfo != null) _MatchesInfoCache[matchId] = matchInfo;
+                        if (matchInfo != null)
+                        {
+                            _MatchesInfoCache[matchId] = matchInfo;
+                            if (_MatchesInfoCache.Count > 100)
+                            {
+                                var removing = _MatchesInfoCache.ElementAt(0);
+                                _MatchesInfoCache.Remove(removing.Key);
+                            }
+                        }
                     }
                     #region
                     //{
@@ -964,53 +1068,66 @@ namespace OpenDota_UWP.ViewModels
                 }
                 catch { }
 
-                if (matchInfo != null)
+                if (matchInfo != null && matchInfo.match_id == _CurrentMatchId)
                 {
                     // BanPick列表
                     if (matchInfo.picks_bans == null)
                     {
                         matchInfo.picks_bans = new List<Picks_Bans>();
                     }
-                    foreach (var bp in matchInfo.picks_bans)
+                    try
                     {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(bp.hero_id.ToString()) == true)
+                        foreach (var bp in matchInfo.picks_bans)
                         {
-                            bp.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].img;
-                            bp.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].localized_name;
-                            await bp.LoadImageAsync(86);
+                            if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(bp.hero_id.ToString()) == true)
+                            {
+                                bp.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].img;
+                                bp.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[bp.hero_id.ToString()].localized_name;
+                                await bp.LoadImageAsync(86);
+                            }
                         }
                     }
+                    catch { }
 
-                    // 天辉优势图
-                    if (matchInfo?.radiant_gold_adv != null && matchInfo?.radiant_xp_adv != null)
+                    try
                     {
-                        RadiantAdvantageSeries = new LiveChartsCore.ISeries[] 
+                        // 天辉优势图
+                        if (matchInfo?.radiant_gold_adv != null && matchInfo?.radiant_xp_adv != null)
                         {
-                            new LineSeries<double>
+                            if (RadiantAdvantageSeries[0].Values is ObservableCollection<double> v1 && v1 != null)
                             {
-                                Values = matchInfo.radiant_gold_adv,
-                                GeometryStroke = new SolidColorPaint(SKColors.Gold, 2),
-                                GeometrySize = 2,
-                                Fill = null,
-                                Stroke = new SolidColorPaint(SKColors.Gold, 2),
-                                Name = "Radiant Gold Adv"
-                            },
-                            new LineSeries<double>
-                            {
-                                Values = matchInfo.radiant_xp_adv,
-                                GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
-                                GeometrySize = 2,
-                                Fill = null,
-                                Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
-                                Name = "Radiant XP Adv"
+                                v1.Clear();
+                                foreach (var item in matchInfo.radiant_gold_adv)
+                                {
+                                    v1.Add(item);
+                                }
                             }
-                        };
-                    }
-                    else
-                    {
-                        RadiantAdvantageSeries = null;
-                    }
+                            else
+                            {
+                                RadiantAdvantageSeries[0].Values = new ObservableCollection<double>(matchInfo.radiant_gold_adv);
+                            }
 
+                            if (RadiantAdvantageSeries[1].Values is ObservableCollection<double> v2 && v2 != null)
+                            {
+                                v2.Clear();
+                                foreach (var item in matchInfo.radiant_xp_adv)
+                                {
+                                    v2.Add(item);
+                                }
+                            }
+                            else
+                            {
+                                RadiantAdvantageSeries[1].Values = new ObservableCollection<double>(matchInfo.radiant_xp_adv);
+                            }
+
+                            bHaveRadiantAdv = true;
+                        }
+                        else
+                        {
+                            bHaveRadiantAdv = false;
+                        }
+                    }
+                    catch { bHaveRadiantAdv = false; }
 
                     CurrentMatchInfo = matchInfo;
                 }

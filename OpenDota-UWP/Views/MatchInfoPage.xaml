@@ -448,26 +448,32 @@
                                         </Grid>
                                     </StackPanel>
                                     -->
-                    
+
                     <!--天辉优势图-->
-                    <Grid>
+                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Grid Margin="0,48,0,8">
+                        <Grid>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE9D2;" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" Margin="16,2,6,0" />
-                                <TextBlock Text="Radiant Advantage" FontWeight="Bold" FontSize="18" Margin="0,6"/>
+                                <FontIcon Glyph="&#xE9D2;" Margin="24,0,8,0" FontSize="20"/>
+                                <TextBlock Text="Radiant Advantage" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                             </StackPanel>
                         </Grid>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" Margin="16,8" Height="320"/>
+                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" 
+                                            Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
+                                            XAxes="{Binding XAxes}"
+                                            YAxes="{Binding YAxes}"
+                                            Sections="{Binding Sections}"
+                                            DrawMarginFrame="{Binding Frame}"
+                                            Margin="16,16,24,8" Height="320"/>
                     </Grid>
 
                     <!--比赛开始时间-->
-                    <StackPanel Padding="12,4,12,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="6" BorderThickness="0,0,0,1" BorderBrush="#66AAAAAA" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
-                        <FontIcon Glyph="&#xE823;" FontSize="14" Opacity="0.7" VerticalAlignment="Center" Margin="0,0,6,-2"/>
-                        <TextBlock Opacity="0.7" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" FontSize="15" FontWeight="Medium"/>
+                    <StackPanel Padding="12,18,12,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="6">
+                        <FontIcon Glyph="&#xE823;" FontSize="14" Opacity="0.5" VerticalAlignment="Center" Margin="0,0,6,-2"/>
+                        <TextBlock Opacity="0.5" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" CharacterSpacing="40" FontSize="15" FontWeight="Medium"/>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
