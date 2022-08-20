@@ -124,11 +124,11 @@ namespace OpenDota_UWP.Views
                     {
                         foreach (var item in DotaItemsViewModel.Instance.CurrentItem.components)
                         {
-                            if (DotaItemsViewModel.Instance.dictAllItems.ContainsKey(item))
+                            if (DotaItemsViewModel.Instance.dictNameToAllItems.ContainsKey(item))
                             {
                                 // 在获取到字典的时候已经load了
                                 // await DotaItemsViewModel.Instance.dictAllItems[item].LoadImageAsync(85);
-                                vComponentsList.Add(DotaItemsViewModel.Instance.dictAllItems[item]);
+                                vComponentsList.Add(DotaItemsViewModel.Instance.dictNameToAllItems[item]);
                             }
                         }
                     }

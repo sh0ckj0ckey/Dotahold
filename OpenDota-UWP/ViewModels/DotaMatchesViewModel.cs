@@ -835,22 +835,6 @@ namespace OpenDota_UWP.ViewModels
                         }
                     }
                     #region
-                    //{
-                    //    "radiant_gold_adv": [
-                    //      0, 272, 531, 501, 938, 1175, 1349, 911, 903, 813, 775, 13, -578, -546, -259,
-                    //      -858, 287, -1420, -1318, -1481, -2462, -2348, -3276, -4206, -6326, -6770,
-                    //      -8079, -10621, -11971, -11571, -8942, -10961, -13839, -11568, -11246,
-                    //      -11905, -10694, -10301, -9978, -10149, -8501, -4732, -6329, -7420, -7367,
-                    //      -8091, -8434, -7932, -5751, -6018, -5216, -7203
-                    //    ],
-                    //    "radiant_xp_adv": [
-                    //      0, -230, -2, 55, 777, 1090, 1213, -415, -630, -309, 268, -855, -2937, -2301,
-                    //      -1586, -2957, -3110, -6127, -5322, -5613, -7378, -8488, -10612, -14790,
-                    //      -19268, -19217, -23337, -26221, -28363, -24937, -19712, -29314, -32114,
-                    //      -26728, -25981, -27769, -24582, -27693, -25128, -23577, -20845, -16352,
-                    //      -22636, -23604, -23715, -24624, -25081, -24687, -20071, -19524, -20739,
-                    //      -23880
-                    //    ],
                     //    "players": [
                     //      {
                     //        "match_id": 6706352286,
@@ -1071,12 +1055,12 @@ namespace OpenDota_UWP.ViewModels
                 if (matchInfo != null && matchInfo.match_id == _CurrentMatchId)
                 {
                     // BanPick列表
-                    if (matchInfo.picks_bans == null)
-                    {
-                        matchInfo.picks_bans = new List<Picks_Bans>();
-                    }
                     try
                     {
+                        if (matchInfo.picks_bans == null)
+                        {
+                            matchInfo.picks_bans = new List<Picks_Bans>();
+                        }
                         foreach (var bp in matchInfo.picks_bans)
                         {
                             if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(bp.hero_id.ToString()) == true)
@@ -1089,9 +1073,45 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
 
+                    // 玩家列表
                     try
                     {
-                        // 天辉优势图
+                        foreach (var player in matchInfo.players)
+                        {
+                            if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(player.hero_id.ToString()) == true)
+                            {
+                                player.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].localized_name;
+                                player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
+                            }
+
+                            player.sItem0 = GetItemImgById(player.item_0.ToString());
+                            player.sItem1 = GetItemImgById(player.item_1.ToString());
+                            player.sItem2 = GetItemImgById(player.item_2.ToString());
+                            player.sItem3 = GetItemImgById(player.item_3.ToString());
+                            player.sItem4 = GetItemImgById(player.item_4.ToString());
+                            player.sItem5 = GetItemImgById(player.item_5.ToString());
+                            player.sItemB0 = GetItemImgById(player.backpack_0.ToString());
+                            player.sItemB1 = GetItemImgById(player.backpack_1.ToString());
+                            player.sItemB2 = GetItemImgById(player.backpack_2.ToString());
+                            player.sItemN = GetItemImgById(player.item_neutral.ToString());
+
+                            if (player.isRadiant == null)
+                            {
+                                player.isRadiant = player.player_slot < 128 ? true : false;
+                            }
+                        }
+
+                        foreach (var player in matchInfo.players)
+                        {
+                            await player.LoadImageAsync(86);
+                            await player.LoadItemsImageAsync(44, 35, 134);
+                        }
+                    }
+                    catch { }
+
+                    // 天辉优势图
+                    try
+                    {
                         if (matchInfo?.radiant_gold_adv != null && matchInfo?.radiant_xp_adv != null)
                         {
                             if (RadiantAdvantageSeries[0].Values is ObservableCollection<double> v1 && v1 != null)
@@ -1128,6 +1148,8 @@ namespace OpenDota_UWP.ViewModels
                         }
                     }
                     catch { bHaveRadiantAdv = false; }
+
+
 
                     CurrentMatchInfo = matchInfo;
                 }
@@ -1186,6 +1208,24 @@ namespace OpenDota_UWP.ViewModels
                 await his.LoadImageAsync(56);
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 从物品字典中查找物品，返回其图片地址
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private string GetItemImgById(string id)
+        {
+            try
+            {
+                if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                {
+                    return DotaItemsViewModel.Instance.dictIdToAllItems[id].img;
+                }
+            }
+            catch { }
+            return string.Empty;
         }
     }
 }

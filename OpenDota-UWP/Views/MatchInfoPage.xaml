@@ -28,6 +28,7 @@
             <cvt:LongToMinutesConverter x:Key="Long2Min"/>
             <cvt:EqualToVisibilityConverter x:Key="Eql2Vis"/>
             <cvt:LongToTimeConverter x:Key="Long2Date"/>
+            <cvt:PlayerSlotToForegroundConverter x:Key="Slot2Color"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -205,249 +206,123 @@
                         <Rectangle IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
                     </Grid>
 
-                    <!--<ListView x:Name="RadiantListView"
-                              MinWidth="586"
-                              MaxWidth="960"
-                              Margin="16,8"
-                              SelectionChanged="RadiantListView_SelectionChanged"
+                    <!--玩家列表-->
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <FontIcon Glyph="&#xE99A;" Margin="24,0,8,0" FontSize="20"/>
+                        <TextBlock Text="Players" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                    </StackPanel>
+                    <ListView x:Name="RadiantListView" Margin="0,8"
                               ScrollViewer.VerticalScrollMode="Disabled"
-                              HorizontalContentAlignment="Stretch"
-                              HorizontalAlignment="Stretch">
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                              ScrollViewer.HorizontalScrollMode="Disabled"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                              ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+                              SelectionMode="None" IsItemClickEnabled="False"
+                              ItemsSource="{x:Bind ViewModel.CurrentMatchInfo.players,Mode=OneWay}">
                         <ListView.Template>
                             <ControlTemplate>
-                                <ItemsPresenter />
+                                <ItemsPresenter/>
                             </ControlTemplate>
                         </ListView.Template>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Height="72"
-                                      HorizontalAlignment="Stretch">
+                            <DataTemplate x:DataType="models:Player">
+                                <Grid Height="76" MinHeight="64" Margin="0,2" CornerRadius="6" HorizontalAlignment="Stretch" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="204" />
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition Height="0" />
-                                    </Grid.RowDefinitions>
-                                    <Rectangle Grid.ColumnSpan="3"
-                                               Grid.RowSpan="2"
-                                               Margin="-12,2,-12,2"
-                                               Fill="Gray"
-                                               Opacity="0.1" />
-                                    <Image Grid.Column="0"
-                                           Height="52"
-                                           Margin="-4,4">
-                                        <Image.Source>
-                                            <BitmapImage UriSource="{x:Bind HeroPhoto}"
-                                                         DecodePixelHeight="52"
-                                                         DecodePixelType="Logical" />
-                                        </Image.Source>
-                                    </Image>
-                                    <Grid Height="28"
-                                          Width="28"
-                                          HorizontalAlignment="Right"
-                                          VerticalAlignment="Bottom"
-                                          Margin="-8,2">
-                                        <Polygon Fill="Black"
-                                                 Opacity="0.9"
-                                                 Points="-8,21,24,-8,24,21" />
-                                        <TextBlock Text="{x:Bind Level}"
-                                                   FontFamily="Arial"
-                                                   Foreground="White"
-                                                   FontSize="13"
-                                                   Opacity="0.7"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center" />
+                                    <Grid Grid.ColumnSpan="4" CornerRadius="6">
+                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Source="/Assets/Icons/Match/icon_radiant_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
+                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Source="/Assets/Icons/Match/icon_dire_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
+                                        <Grid Background="{ThemeResource MATCHPLAYER_LISTMASK_BK}" Width="108" Height="108" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
                                     </Grid>
-                                    <Grid Grid.Column="1"
-                                          Margin="16,0">
+                                    <Grid Grid.Column="0" Width="86" Height="48" CornerRadius="4" Margin="16,0,0,0">
+                                        <Image Grid.Column="0" Width="86" Height="48" Source="{x:Bind ImageSource,Mode=OneWay}"/>
+                                        <Grid Grid.Column="0" Height="36" Width="36" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Polygon Points="0,0,36,0,0,36">
+                                                <Polygon.Fill>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                        <GradientStopCollection>
+                                                            <GradientStop Offset="0" Color="#000000"/>
+                                                            <GradientStop Offset="0.4" Color="#80000000"/>
+                                                            <GradientStop Offset="0.5" Color="#00000000"/>
+                                                        </GradientStopCollection>
+                                                    </LinearGradientBrush>
+                                                </Polygon.Fill>
+                                            </Polygon>
+                                            <TextBlock Text="{x:Bind level}" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="#fada9e" FontWeight="Bold" Margin="2,0,0,0" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="2" />
-                                            <RowDefinition Height="1.5*" />
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition Height="8" />
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="1"
-                                                   Foreground="{x:Bind Color}"
-                                                   FontWeight="Bold"
-                                                   Text="{x:Bind PlayerName,Mode=TwoWay}"
-                                                   FontSize="18"
-                                                   Opacity="0.8"
-                                                   VerticalAlignment="Bottom" />
-                                        <TextBlock Grid.Row="2"
-                                                   Opacity="0.7"
-                                                   Text="{x:Bind Fight_rate}"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center" />
-                                        <TextBlock Grid.Row="3"
-                                                   Opacity="0.7"
-                                                   Text="{x:Bind Damage_rate}"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Row="0" Foreground="{x:Bind player_slot,Mode=OneWay,Converter={StaticResource Slot2Color}}" HorizontalAlignment="Left"
+                                                   Text="{x:Bind personaname,Mode=OneWay}" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+                                                   ToolTipService.ToolTip="{x:Bind name,Mode=OneWay}" CharacterSpacing="40" Margin="0,0,20,4"
+                                                   FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="16"/>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                                            <FontIcon Glyph="&#xF133;" Margin="0,0,6,0" FontSize="16" Opacity="0.7" HorizontalAlignment="Left" Visibility="{x:Bind randomed,Mode=OneWay,Converter={StaticResource Bool2Vis}}" ToolTipService.ToolTip="Randomed"/>
+                                            <TextBlock FontWeight="Medium" Margin="2,1,0,0" TextTrimming="CharacterEllipsis" FontSize="14" CharacterSpacing="20" HorizontalAlignment="Left">
+                                                <Run Text="{x:Bind kills}"/>
+                                                <Run Text="/" FontWeight="Medium"/>
+                                                <Run Text="{x:Bind deaths}"/>
+                                                <Run Text="/" FontWeight="Medium"/>
+                                                <Run Text="{x:Bind assists}"/>
+                                            </TextBlock>
+                                        </StackPanel>
                                     </Grid>
-                                    <StackPanel Grid.Column="2"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Right"
-                                                Orientation="Horizontal">
-                                        <Grid Width="78">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0"
-                                                       FontSize="11"
-                                                       Opacity="0.5"
-                                                       Text="{x:Bind LD}"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Bottom" />
-                                            <TextBlock Grid.Row="1"
-                                                       FontSize="15"
-                                                       FontWeight="Bold"
-                                                       Opacity="0.8"
-                                                       Text="{x:Bind K_D_A}"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Bottom" />
-                                            <TextBlock Grid.Row="2"
-                                                       FontSize="13"
-                                                       Opacity="0.7"
-                                                       Text="{x:Bind KDA}"
-                                                       HorizontalAlignment="Left" />
-                                        </Grid>
-                                        <Grid Width="108"
-                                              Margin="8,2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Rectangle Grid.Column="0"
-                                                       Grid.Row="0"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Rectangle Grid.Column="1"
-                                                       Grid.Row="0"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Rectangle Grid.Column="2"
-                                                       Grid.Row="0"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Rectangle Grid.Column="0"
-                                                       Grid.Row="1"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Rectangle Grid.Column="1"
-                                                       Grid.Row="1"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Rectangle Grid.Column="2"
-                                                       Grid.Row="1"
-                                                       Margin="1"
-                                                       Fill="Gray"
-                                                       Opacity="0.3" />
-                                            <Image Grid.Column="0"
-                                                   Grid.Row="0"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_0}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Grid.Column="1"
-                                                   Grid.Row="0"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_1}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Grid.Column="2"
-                                                   Grid.Row="0"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_2}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Grid.Column="0"
-                                                   Grid.Row="1"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_3}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Grid.Column="1"
-                                                   Grid.Row="1"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_4}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                            <Image Grid.Column="2"
-                                                   Grid.Row="1"
-                                                   Stretch="Uniform"
-                                                   Margin="1">
-                                                <Image.Source>
-                                                    <BitmapImage UriSource="{x:Bind Item_5}"
-                                                                 DecodePixelWidth="52"
-                                                                 DecodePixelType="Logical" />
-                                                </Image.Source>
-                                            </Image>
-                                        </Grid>
-                                        <Grid Margin="6,0">
-                                            <TextBlock Text="?"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FontSize="36" />
-                                            <Ellipse x:Name="PlayerPhotoEllipse"
-                                                     Height="58"
-                                                     Width="58"
-                                                     Stroke="{ThemeResource SIMPLETEXT_FR}"
-                                                     StrokeThickness="1.5">
-                                                <Ellipse.Fill>
-                                                    <ImageBrush>
-                                                        <ImageBrush.ImageSource>
-                                                            <BitmapImage UriSource="{x:Bind PlayerPhoto,Mode=TwoWay}"
-                                                                         DecodePixelHeight="58"
-                                                                         DecodePixelType="Logical" />
-                                                        </ImageBrush.ImageSource>
-                                                    </ImageBrush>
-                                                </Ellipse.Fill>
-                                            </Ellipse>
-                                        </Grid>
-                                    </StackPanel>
-                                    -->
+                                    <Grid Grid.Column="2" VerticalAlignment="Center">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item0ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item1ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item2ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item3ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item4ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind Item5ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Opacity="0.8">
+                                            <Border Margin="4,0,4,0" Width="26" Height="26" CornerRadius="18" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Width="35" Height="26" Source="{x:Bind ItemNImageSource,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
+                                            </Border>
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind ItemB0ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind ItemB1ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}">
+                                                <Image Source="{x:Bind ItemB2ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="3" VerticalAlignment="Center">
+                                        <TextBlock Text="显示神杖和魔晶，标题栏32像素加一个遮罩"/>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
                     <!--天辉优势图-->
                     <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
@@ -455,12 +330,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon Glyph="&#xE9D2;" Margin="24,0,8,0" FontSize="20"/>
-                                <TextBlock Text="Radiant Advantage" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                            </StackPanel>
-                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE9D2;" Margin="24,0,8,0" FontSize="20"/>
+                            <TextBlock Text="Radiant Advantage" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                        </StackPanel>
                         <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" 
                                             Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
                                             XAxes="{Binding XAxes}"
@@ -468,6 +341,44 @@
                                             Sections="{Binding Sections}"
                                             DrawMarginFrame="{Binding Frame}"
                                             Margin="16,16,24,8" Height="320"/>
+                    </Grid>
+
+                    <!--玩家经济数据走势图-->
+                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xF0E3;" Margin="24,0,8,0" FontSize="20"/>
+                            <TextBlock Text="Gold" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                        </StackPanel>
+                        <!--<lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" 
+                                            Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
+                                            XAxes="{Binding XAxes}"
+                                            YAxes="{Binding YAxes}"
+                                            Sections="{Binding Sections}"
+                                            DrawMarginFrame="{Binding Frame}"
+                                            Margin="16,16,24,8" Height="320"/>-->
+                    </Grid>
+
+                    <!--玩家经验数据走势图-->
+                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xF0E3;" Margin="24,0,8,0" FontSize="20"/>
+                            <TextBlock Text="Experience" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                        </StackPanel>
+                        <!--<lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" 
+                                            Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
+                                            XAxes="{Binding XAxes}"
+                                            YAxes="{Binding YAxes}"
+                                            Sections="{Binding Sections}"
+                                            DrawMarginFrame="{Binding Frame}"
+                                            Margin="16,16,24,8" Height="320"/>-->
                     </Grid>
 
                     <!--比赛开始时间-->

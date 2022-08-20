@@ -41,6 +41,17 @@
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#353545</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
 
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#80363746</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#2e303f</Color>
+                    
+                    <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#2e303f" Offset="0"/>
+                            <GradientStop Color="#2e303f" Offset="0.1"/>
+                            <GradientStop Color="#002e303f" Offset="1.0"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                    
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#272839" Offset="0"/>
@@ -138,14 +149,25 @@
                     <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
                     <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#FFFFFF</Color>
                     <Color x:Key="HEROINFO_ABILITY_TITLE_BK">#FAFAFC</Color>
-                    
+
                     <Color x:Key="HEROINFO_LISTITEM_BK">#FFFFFF</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08AAAAAA</Color>
                     
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#FFFFFF</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#08666666</Color>
-                    
+
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#80FFFFFF</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#f9fafc</Color>
+
+                    <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="#F3F4F8" Offset="0"/>
+                            <GradientStop Color="#F3F4F8" Offset="0.0"/>
+                            <GradientStop Color="#00F3F4F8" Offset="1.0"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+
                     <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Color="#F3F4F8" Offset="0"/>

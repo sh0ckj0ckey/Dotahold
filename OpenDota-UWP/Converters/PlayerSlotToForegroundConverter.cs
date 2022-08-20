@@ -10,19 +10,19 @@ namespace OpenDota_UWP.Converters
 {
     internal class PlayerSlotToForegroundConverter : IValueConverter
     {
-        private SolidColorBrush Slot0Color = new SolidColorBrush(new Color() { R = 51, G = 117, B = 255 });
-        private SolidColorBrush Slot1Color = new SolidColorBrush(new Color() { R = 102, G = 255, B = 191 });
-        private SolidColorBrush Slot2Color = new SolidColorBrush(new Color() { R = 191, G = 0, B = 191 });
-        private SolidColorBrush Slot3Color = new SolidColorBrush(new Color() { R = 243, G = 240, B = 11 });
-        private SolidColorBrush Slot4Color = new SolidColorBrush(new Color() { R = 255, G = 107, B = 0 });
+        private SolidColorBrush Slot0Color = new SolidColorBrush(new Color() { R = 51, G = 117, B = 255, A = 255 });
+        private SolidColorBrush Slot1Color = new SolidColorBrush(new Color() { R = 102, G = 255, B = 191, A = 255 });
+        private SolidColorBrush Slot2Color = new SolidColorBrush(new Color() { R = 191, G = 0, B = 191, A = 255 });
+        private SolidColorBrush Slot3Color = new SolidColorBrush(new Color() { R = 243, G = 240, B = 11, A = 255 });
+        private SolidColorBrush Slot4Color = new SolidColorBrush(new Color() { R = 255, G = 107, B = 0, A = 255 });
 
-        private SolidColorBrush Slot128Color = new SolidColorBrush(new Color() { R = 254, G = 134, B = 194 });
-        private SolidColorBrush Slot129Color = new SolidColorBrush(new Color() { R = 161, G = 180, B = 71 });
-        private SolidColorBrush Slot130Color = new SolidColorBrush(new Color() { R = 101, G = 217, B = 247 });
-        private SolidColorBrush Slot131Color = new SolidColorBrush(new Color() { R = 0, G = 131, B = 33 });
-        private SolidColorBrush Slot132Color = new SolidColorBrush(new Color() { R = 164, G = 105, B = 0 });
+        private SolidColorBrush Slot128Color = new SolidColorBrush(new Color() { R = 254, G = 134, B = 194, A = 255 });
+        private SolidColorBrush Slot129Color = new SolidColorBrush(new Color() { R = 161, G = 180, B = 71, A = 255 });
+        private SolidColorBrush Slot130Color = new SolidColorBrush(new Color() { R = 101, G = 217, B = 247, A = 255 });
+        private SolidColorBrush Slot131Color = new SolidColorBrush(new Color() { R = 0, G = 131, B = 33, A = 255 });
+        private SolidColorBrush Slot132Color = new SolidColorBrush(new Color() { R = 164, G = 105, B = 0, A = 255 });
 
-        private SolidColorBrush SlotXColor = new SolidColorBrush(new Color() { R = 99, G = 99, B = 99 });
+        private SolidColorBrush SlotXColor = new SolidColorBrush(new Color() { R = 99, G = 99, B = 99, A = 255 });
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {

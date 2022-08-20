@@ -15,7 +15,9 @@ namespace OpenDota_UWP.ViewModels
         public static DotaItemsViewModel Instance => _lazyVM.Value;
 
         // 所有物品
-        public Dictionary<string, Models.DotaItemModel> dictAllItems { get; set; } = new Dictionary<string, Models.DotaItemModel>();
+        public Dictionary<string, Models.DotaItemModel> dictNameToAllItems { get; set; } = new Dictionary<string, Models.DotaItemModel>();
+        public Dictionary<string, Models.DotaItemModel> dictIdToAllItems { get; set; } = new Dictionary<string, Models.DotaItemModel>();
+
         private List<Models.DotaItemModel> _vAllItems { get; set; } = new List<Models.DotaItemModel>();
 
         // 列表展示的物品
@@ -72,20 +74,20 @@ namespace OpenDota_UWP.ViewModels
 
                 bSearchingItems = false;
 
-                dictAllItems?.Clear();
+                dictNameToAllItems?.Clear();
                 _vAllItems?.Clear();
                 vAllShowItemsList?.Clear();
                 vSearchItemsList?.Clear();
 
-                dictAllItems = await ConstantsCourier.Instance.GetItemsConstant();
+                dictNameToAllItems = await ConstantsCourier.Instance.GetItemsConstant();
 
-                if (dictAllItems == null || dictAllItems.Count <= 0)
+                if (dictNameToAllItems == null || dictNameToAllItems.Count <= 0)
                 {
                     _bLoadedDotaItems = false;
                     return true;
                 }
 
-                foreach (var dictItem in dictAllItems)
+                foreach (var dictItem in dictNameToAllItems)
                 {
                     try
                     {
@@ -132,6 +134,11 @@ namespace OpenDota_UWP.ViewModels
                             item.mc = "0";
                         }
                         _vAllItems.Add(item);
+
+                        if (!string.IsNullOrEmpty(item.id) && item.id != "0")
+                        {
+                            dictIdToAllItems.Add(item.id, item);
+                        }
                     }
                     catch { }
                 }
