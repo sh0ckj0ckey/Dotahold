@@ -132,6 +132,14 @@ namespace OpenDota_UWP.Models
         // 是否是当前登录玩家
         [Newtonsoft.Json.JsonIgnore]
         public bool bIsCurrentPlayer { get; set; } = false;
+        
+        // 是否激活神杖
+        [Newtonsoft.Json.JsonIgnore]
+        public bool bHaveAghanimScepter { get; set; } = false;
+        
+        // 是否激活魔晶
+        [Newtonsoft.Json.JsonIgnore]
+        public bool bHaveAghanimShard { get; set; } = false;
 
 
         [Newtonsoft.Json.JsonIgnore]

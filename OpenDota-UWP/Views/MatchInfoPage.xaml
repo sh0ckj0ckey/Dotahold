@@ -214,22 +214,30 @@
                             <FontIcon Glyph="&#xE99A;" Margin="24,0,8,0" FontSize="20"/>
                             <TextBlock Text="Players" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="18" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,28,0">
+                        <StackPanel Opacity="0.8" Orientation="Horizontal" Spacing="18" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,28,0">
                             <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_team,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                                <Image Height="24" Width="24">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
-                                    </Image.Source>
-                                </Image>
-                                <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.radiant_team.name,Mode=OneWay}" CharacterSpacing="40" Margin="8,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                                <Border Height="24" Width="24" CornerRadius="12" ToolTipService.ToolTip="Radiant">
+                                    <Border.Background>
+                                        <ImageBrush>
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                                <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.radiant_team.name,Mode=OneWay}" FontSize="14" CharacterSpacing="20" Margin="8,0,0,0" FontWeight="Medium" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.CurrentMatchInfo.dire_team,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                                <Image Height="24" Width="24">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
-                                    </Image.Source>
-                                </Image>
-                                <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.dire_team.name,Mode=OneWay}" CharacterSpacing="40" Margin="8,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                                <Border Height="24" Width="24" CornerRadius="12" ToolTipService.ToolTip="Dire">
+                                    <Border.Background>
+                                        <ImageBrush>
+                                            <ImageBrush.ImageSource>
+                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                                <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.dire_team.name,Mode=OneWay}" FontSize="14" CharacterSpacing="20" Margin="8,0,0,0" FontWeight="Medium" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -374,22 +382,22 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Image Grid.Row="0" Height="29" Stretch="Uniform">
+                                        <Image Grid.Row="0" Height="29" Stretch="Uniform" Visibility="{x:Bind bHaveAghanimScepter,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                             <Image.Source>
                                                 <BitmapImage UriSource="/Assets/Icons/Match/icon_scepter_0.png" DecodePixelHeight="29" DecodePixelType="Logical"/>
                                             </Image.Source>
                                         </Image>
-                                        <Image Grid.Row="0" Height="29" Stretch="Uniform">
+                                        <Image Grid.Row="0" Height="29" Stretch="Uniform" Visibility="{x:Bind bHaveAghanimScepter,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                             <Image.Source>
                                                 <BitmapImage UriSource="/Assets/Icons/Match/icon_scepter_1.png" DecodePixelHeight="29" DecodePixelType="Logical"/>
                                             </Image.Source>
                                         </Image>
-                                        <Image Grid.Row="1" Height="17" Stretch="Uniform">
+                                        <Image Grid.Row="1" Height="17" Stretch="Uniform" Visibility="{x:Bind bHaveAghanimShard,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                             <Image.Source>
                                                 <BitmapImage UriSource="/Assets/Icons/Match/icon_shard_0.png" DecodePixelHeight="17" DecodePixelType="Logical"/>
                                             </Image.Source>
                                         </Image>
-                                        <Image Grid.Row="1" Height="17" Stretch="Uniform">
+                                        <Image Grid.Row="1" Height="17" Stretch="Uniform" Visibility="{x:Bind bHaveAghanimShard,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                             <Image.Source>
                                                 <BitmapImage UriSource="/Assets/Icons/Match/icon_shard_1.png" DecodePixelHeight="17" DecodePixelType="Logical"/>
                                             </Image.Source>

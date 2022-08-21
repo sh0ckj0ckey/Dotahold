@@ -1115,7 +1115,19 @@ namespace OpenDota_UWP.ViewModels
                                 player.bIsCurrentPlayer = true;
                             }
 
-
+                            player.bHaveAghanimScepter = false;
+                            player.bHaveAghanimShard = false;
+                            foreach (var buff in player.permanent_buffs)
+                            {
+                                if (buff.permanent_buff == 2)
+                                {
+                                    player.bHaveAghanimScepter = true;
+                                }
+                                if (buff.permanent_buff == 12)
+                                {
+                                    player.bHaveAghanimShard = true;
+                                }
+                            }
                         }
 
                         foreach (var player in matchInfo.players)
