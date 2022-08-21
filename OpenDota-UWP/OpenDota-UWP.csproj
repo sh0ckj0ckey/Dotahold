@@ -298,7 +298,6 @@
     <Content Include="Assets\Icons\Hero\icon_talents_light.png" />
     <Content Include="Assets\Icons\Hero\icon_turn_rate.png" />
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
-    <Content Include="Assets\Icons\icon_nochart.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
     <Content Include="Assets\Icons\Match\icon_dire_ff4c4c.png" />

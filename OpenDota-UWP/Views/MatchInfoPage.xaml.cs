@@ -58,5 +58,23 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        private void OnClickShowGoldSeries(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.SwitchPlayersGoldOrXPSeries(true, ViewModel.CurrentMatchInfo);
+            }
+            catch { }
+        }
+
+        private void OnClickShowXPSeries(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.SwitchPlayersGoldOrXPSeries(false, ViewModel.CurrentMatchInfo);
+            }
+            catch { }
+        }
     }
 }

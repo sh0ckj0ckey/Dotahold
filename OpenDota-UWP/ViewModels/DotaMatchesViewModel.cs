@@ -162,7 +162,7 @@ namespace OpenDota_UWP.ViewModels
                 GeometryStroke = new SolidColorPaint(SKColors.MediumOrchid, 2),
                 GeometrySize = 2,
                 Fill = null,
-                Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                Stroke = new SolidColorPaint(SKColors.MediumOrchid, 2),
                 Name = "Radiant XP Adv"
             }
         };
@@ -170,6 +170,96 @@ namespace OpenDota_UWP.ViewModels
         {
             get { return _RadiantAdvantageSeries; }
             set { Set("RadiantAdvantageSeries", ref _RadiantAdvantageSeries, value); }
+        }
+
+        // 玩家经济/经验走势
+        private LiveChartsCore.ISeries[] _PlayersGoldOrXPSeries = new LiveChartsCore.ISeries[]
+        {
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(51,117,255,255), 2),
+                Name = "Player1"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(102,255,191,255), 2),
+                Name = "Player2"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(191,0,191,255), 2),
+                Name = "Player3"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(243,240,11,255), 2),
+                Name = "Player4"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(255,107,0,255), 2),
+                Name = "Player5"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(254,134,194,255), 2),
+                Name = "Player6"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(161,180,71,255), 2),
+                Name = "Player7"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(101,217,247,255), 2),
+                Name = "Player8"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(0,131,33,255), 2),
+                Name = "Player9"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(164,105,0,255), 2),
+                Name = "Player10"
+            },
+        };
+        public LiveChartsCore.ISeries[] PlayersGoldOrXPSeries
+        {
+            get { return _PlayersGoldOrXPSeries; }
+            set { Set("PlayersGoldOrXPSeries", ref _PlayersGoldOrXPSeries, value); }
         }
 
         public Axis[] XAxes { get; set; } =
@@ -242,6 +332,22 @@ namespace OpenDota_UWP.ViewModels
         {
             get { return _bHaveRadiantAdv; }
             set { Set("bHaveRadiantAdv", ref _bHaveRadiantAdv, value); }
+        }
+
+        // 是否有玩家走势
+        private bool _bHavePlayersSeries = false;
+        public bool bHavePlayersSeries
+        {
+            get { return _bHavePlayersSeries; }
+            set { Set("bHavePlayersSeries", ref _bHavePlayersSeries, value); }
+        }
+
+        // 当前查看的玩家走势类型（true-经济/false-经验）
+        private bool _bSelectedPlayersSeriesType = true;
+        public bool bSelectedPlayersSeriesType
+        {
+            get { return _bSelectedPlayersSeriesType; }
+            set { Set("bSelectedPlayersSeriesType", ref _bSelectedPlayersSeriesType, value); }
         }
 
         #endregion
@@ -812,6 +918,10 @@ namespace OpenDota_UWP.ViewModels
                 CurrentMatchInfo = null;
                 bLoadingOneMatchInfo = true;
 
+                bHaveRadiantAdv = false;
+                bHavePlayersSeries = false;
+                bSelectedPlayersSeriesType = true;
+
                 string url = string.Format("https://api.opendota.com/api/matches/{0}", matchId);    //e.g.3792271763
                 DotaMatchInfoModel matchInfo = null;
 
@@ -1076,58 +1186,77 @@ namespace OpenDota_UWP.ViewModels
                     // 玩家列表
                     try
                     {
-                        foreach (var player in matchInfo.players)
+
+                        for (int i = 0; i < matchInfo.players.Count; i++)
                         {
-                            if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(player.hero_id.ToString()) == true)
+                            try
                             {
-                                player.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].localized_name;
-                                player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
-                            }
+                                var player = matchInfo.players[i];
 
-                            player.sItem0 = GetItemImgById(player.item_0.ToString());
-                            player.sItem1 = GetItemImgById(player.item_1.ToString());
-                            player.sItem2 = GetItemImgById(player.item_2.ToString());
-                            player.sItem3 = GetItemImgById(player.item_3.ToString());
-                            player.sItem4 = GetItemImgById(player.item_4.ToString());
-                            player.sItem5 = GetItemImgById(player.item_5.ToString());
-                            player.sItemB0 = GetItemImgById(player.backpack_0.ToString());
-                            player.sItemB1 = GetItemImgById(player.backpack_1.ToString());
-                            player.sItemB2 = GetItemImgById(player.backpack_2.ToString());
-                            player.sItemN = GetItemImgById(player.item_neutral.ToString());
-                            player.sNameItem0 = GetItemNameById(player.item_0.ToString());
-                            player.sNameItem1 = GetItemNameById(player.item_1.ToString());
-                            player.sNameItem2 = GetItemNameById(player.item_2.ToString());
-                            player.sNameItem3 = GetItemNameById(player.item_3.ToString());
-                            player.sNameItem4 = GetItemNameById(player.item_4.ToString());
-                            player.sNameItem5 = GetItemNameById(player.item_5.ToString());
-                            player.sNameItemB0 = GetItemNameById(player.backpack_0.ToString());
-                            player.sNameItemB1 = GetItemNameById(player.backpack_1.ToString());
-                            player.sNameItemB2 = GetItemNameById(player.backpack_2.ToString());
-                            player.sNameItemN = GetItemNameById(player.item_neutral.ToString());
-
-                            if (player.isRadiant == null)
-                            {
-                                player.isRadiant = player.player_slot < 128 ? true : false;
-                            }
-
-                            if (player.account_id.ToString() == sSteamId)
-                            {
-                                player.bIsCurrentPlayer = true;
-                            }
-
-                            player.bHaveAghanimScepter = false;
-                            player.bHaveAghanimShard = false;
-                            foreach (var buff in player.permanent_buffs)
-                            {
-                                if (buff.permanent_buff == 2)
+                                // 玩家使用的英雄
+                                if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(player.hero_id.ToString()) == true)
                                 {
-                                    player.bHaveAghanimScepter = true;
+                                    player.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].localized_name;
+                                    player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
                                 }
-                                if (buff.permanent_buff == 12)
+
+                                // 玩家的物品
+                                player.sItem0 = GetItemImgById(player.item_0.ToString());
+                                player.sItem1 = GetItemImgById(player.item_1.ToString());
+                                player.sItem2 = GetItemImgById(player.item_2.ToString());
+                                player.sItem3 = GetItemImgById(player.item_3.ToString());
+                                player.sItem4 = GetItemImgById(player.item_4.ToString());
+                                player.sItem5 = GetItemImgById(player.item_5.ToString());
+                                player.sItemB0 = GetItemImgById(player.backpack_0.ToString());
+                                player.sItemB1 = GetItemImgById(player.backpack_1.ToString());
+                                player.sItemB2 = GetItemImgById(player.backpack_2.ToString());
+                                player.sItemN = GetItemImgById(player.item_neutral.ToString());
+                                player.sNameItem0 = GetItemNameById(player.item_0.ToString());
+                                player.sNameItem1 = GetItemNameById(player.item_1.ToString());
+                                player.sNameItem2 = GetItemNameById(player.item_2.ToString());
+                                player.sNameItem3 = GetItemNameById(player.item_3.ToString());
+                                player.sNameItem4 = GetItemNameById(player.item_4.ToString());
+                                player.sNameItem5 = GetItemNameById(player.item_5.ToString());
+                                player.sNameItemB0 = GetItemNameById(player.backpack_0.ToString());
+                                player.sNameItemB1 = GetItemNameById(player.backpack_1.ToString());
+                                player.sNameItemB2 = GetItemNameById(player.backpack_2.ToString());
+                                player.sNameItemN = GetItemNameById(player.item_neutral.ToString());
+
+                                // 判断是天辉还是夜魇
+                                if (player.isRadiant == null)
                                 {
-                                    player.bHaveAghanimShard = true;
+                                    player.isRadiant = player.player_slot < 128 ? true : false;
                                 }
+
+                                // 判断是否是当前绑定账号的玩家
+                                if (player.account_id.ToString() == sSteamId)
+                                {
+                                    player.bIsCurrentPlayer = true;
+                                }
+
+                                // 神杖和魔晶
+                                player.bHaveAghanimScepter = false;
+                                player.bHaveAghanimShard = false;
+                                foreach (var buff in player.permanent_buffs)
+                                {
+                                    if (buff.permanent_buff == 2)
+                                    {
+                                        player.bHaveAghanimScepter = true;
+                                    }
+                                    if (buff.permanent_buff == 12)
+                                    {
+                                        player.bHaveAghanimShard = true;
+                                    }
+                                }
+
+                                // 玩家的经济经验走势
+                                try
+                                {
+                                    bHavePlayersSeries = SwitchPlayersGoldOrXPSeries(true, matchInfo);
+                                }
+                                catch { }
                             }
+                            catch { }
                         }
 
                         foreach (var player in matchInfo.players)
@@ -1171,12 +1300,8 @@ namespace OpenDota_UWP.ViewModels
 
                             bHaveRadiantAdv = true;
                         }
-                        else
-                        {
-                            bHaveRadiantAdv = false;
-                        }
                     }
-                    catch { bHaveRadiantAdv = false; }
+                    catch { }
 
                     // 双方职业战队
                     try
@@ -1291,6 +1416,57 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// 加载玩家的经济或者经验走势
+        /// </summary>
+        /// <param name="isGold"></param>
+        /// <returns></returns>
+        public bool SwitchPlayersGoldOrXPSeries(bool isGold, DotaMatchInfoModel matchInfo)
+        {
+            try
+            {
+                bSelectedPlayersSeriesType = isGold;
+
+                bool havePlayersSeries = false;
+                for (int i = 0; i < matchInfo.players.Count && i < PlayersGoldOrXPSeries.Length; i++)
+                {
+                    var player = matchInfo.players[i];
+                    if (player == null) continue;
+
+                    List<double> list = isGold ? player.gold_t : player.xp_t;
+
+                    if (PlayersGoldOrXPSeries[i].Values is ObservableCollection<double> v && v != null)
+                    {
+                        v.Clear();
+                        if (list != null && list.Count > 0)
+                        {
+                            foreach (var item in list)
+                            {
+                                v.Add(item);
+                            }
+                            havePlayersSeries = true;
+                        }
+                    }
+                    else
+                    {
+                        if (list != null && list.Count > 0)
+                        {
+                            PlayersGoldOrXPSeries[i].Values = new ObservableCollection<double>(list);
+                            havePlayersSeries = true;
+                        }
+                        else
+                        {
+                            PlayersGoldOrXPSeries[i].Values = new ObservableCollection<double>();
+                        }
+                    }
+                    PlayersGoldOrXPSeries[i].Name = player.sHeroName;
+                }
+                return havePlayersSeries;
+            }
+            catch { }
+            return false;
         }
     }
 }

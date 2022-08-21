@@ -85,7 +85,7 @@ namespace OpenDota_UWP.Models
         public int? gold { get; set; }
         public int? gold_per_min { get; set; }
         public int? gold_spent { get; set; }
-        public List<int> gold_t { get; set; }
+        public List<double> gold_t { get; set; }
         public int? hero_damage { get; set; }
         public int? hero_healing { get; set; }
         public int? hero_id { get; set; }
@@ -111,7 +111,7 @@ namespace OpenDota_UWP.Models
         public int? tower_damage { get; set; }
         public int? towers_killed { get; set; }
         public int? xp_per_min { get; set; }
-        public List<int> xp_t { get; set; }
+        public List<double> xp_t { get; set; }
         public string personaname { get; set; }
         public string name { get; set; }
         public bool radiant_win { get; set; }
