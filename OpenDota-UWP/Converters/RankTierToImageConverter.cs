@@ -13,7 +13,7 @@ namespace OpenDota_UWP.Converters
 {
     internal class RankTierToImageConverter : IValueConverter
     {
-        private List<string> RankTiers = new List<string> {
+        private static List<string> RankTiers = new List<string> {
             "10", "11", "12", "13", "14", "15", "16", "17",
             "20", "21", "22", "23", "24", "25", "26", "27",
             "30", "31", "32", "33", "34", "35", "36", "37",
@@ -23,7 +23,7 @@ namespace OpenDota_UWP.Converters
             "70", "71", "72", "73", "74", "75", "76", "77",
             "80", "81", "82", "83", "84", "00"};
 
-        private BitmapImage DefaultRankTier = new BitmapImage(new System.Uri("ms-appx:///Assets/RankMedal/SeasonalRank0-0.png"));
+        private static BitmapImage DefaultRankTier = new BitmapImage(new System.Uri("ms-appx:///Assets/RankMedal/SeasonalRank0-0.png"));
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -40,7 +40,19 @@ namespace OpenDota_UWP.Converters
                         if (RankTiers.Contains(contain))
                         {
                             string image = string.Format("ms-appx:///Assets/RankMedal/SeasonalRank{0}-{1}.png", tier, stars);
-                            return new BitmapImage(new System.Uri(image));
+                            var img = new BitmapImage(new System.Uri(image));
+
+                            if (parameter != null && !string.IsNullOrEmpty(parameter.ToString()))
+                            {
+                                int width = 0;
+                                if (int.TryParse(parameter.ToString(), out width))
+                                {
+                                    img.DecodePixelType = DecodePixelType.Logical;
+                                    img.DecodePixelWidth = width;
+                                }
+                            }
+
+                            return img;
                         }
                     }
                 }

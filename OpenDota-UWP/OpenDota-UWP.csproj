@@ -138,6 +138,7 @@
     <Compile Include="Converters\IntToSkillConverter.cs" />
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
     <Compile Include="Converters\LongToTimeConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\PlayerSlotToForegroundConverter.cs" />
     <Compile Include="Converters\PlayerTotalsFieldToIconConverter.cs" />
@@ -267,6 +268,12 @@
     <Content Include="Assets\Icons\Hero\hero_ability_aghs_shard.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_scepter.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_shard.png" />
+    <Content Include="Assets\Icons\Hero\img_agi_background_dark.png" />
+    <Content Include="Assets\Icons\Hero\img_agi_background_light.png" />
+    <Content Include="Assets\Icons\Hero\img_int_background_dark.png" />
+    <Content Include="Assets\Icons\Hero\img_int_background_light.png" />
+    <Content Include="Assets\Icons\Hero\img_str_background_dark.png" />
+    <Content Include="Assets\Icons\Hero\img_str_background_light.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_light.png" />
     <Content Include="Assets\Icons\icon_dota_plus.png" />
@@ -298,6 +305,10 @@
     <Content Include="Assets\Icons\Match\icon_dire_square.png" />
     <Content Include="Assets\Icons\Match\icon_radiant_66bb6a.png" />
     <Content Include="Assets\Icons\Match\icon_radiant_square.png" />
+    <Content Include="Assets\Icons\Match\icon_scepter_0.png" />
+    <Content Include="Assets\Icons\Match\icon_scepter_1.png" />
+    <Content Include="Assets\Icons\Match\icon_shard_0.png" />
+    <Content Include="Assets\Icons\Match\icon_shard_1.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />

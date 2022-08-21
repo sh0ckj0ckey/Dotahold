@@ -275,6 +275,9 @@
                 <DoubleAnimation Storyboard.TargetName="StrHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="StrAttrBkImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0.05" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInLeftAgiHeroesStoryboard">
@@ -286,6 +289,9 @@
                 <DoubleAnimation Storyboard.TargetName="AgiHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="AgiAttrBkImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0.05" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInRightAgiHeroesStoryboard">
@@ -297,6 +303,9 @@
                 <DoubleAnimation Storyboard.TargetName="AgiHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="AgiAttrBkImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0.05" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="SlideInIntHeroesStoryboard">
@@ -308,6 +317,9 @@
                 <DoubleAnimation Storyboard.TargetName="IntHeroesGridView"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="IntAttrBkImage"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0.05" Duration="0:0:0.5"/>
             </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
@@ -362,6 +374,11 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+        <Grid Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image x:Name="StrAttrBkImage" Source="{ThemeResource HERO_ATTR_STR_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-4,-24"/>
+            <Image x:Name="AgiAttrBkImage" Source="{ThemeResource HERO_ATTR_AGI_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-24"/>
+            <Image x:Name="IntAttrBkImage" Source="{ThemeResource HERO_ATTR_INT_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-12,-28"/>
+        </Grid>
         <GridView x:Name="StrHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}"
                   SelectionMode="None"
                   IsItemClickEnabled="True"

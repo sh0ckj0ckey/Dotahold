@@ -159,7 +159,7 @@ namespace OpenDota_UWP.ViewModels
             new LineSeries<double>
             {
                 Values = new ObservableCollection<double>(),
-                GeometryStroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
+                GeometryStroke = new SolidColorPaint(SKColors.MediumOrchid, 2),
                 GeometrySize = 2,
                 Fill = null,
                 Stroke = new SolidColorPaint(SKColors.DodgerBlue, 2),
@@ -1094,53 +1094,28 @@ namespace OpenDota_UWP.ViewModels
                             player.sItemB1 = GetItemImgById(player.backpack_1.ToString());
                             player.sItemB2 = GetItemImgById(player.backpack_2.ToString());
                             player.sItemN = GetItemImgById(player.item_neutral.ToString());
+                            player.sNameItem0 = GetItemNameById(player.item_0.ToString());
+                            player.sNameItem1 = GetItemNameById(player.item_1.ToString());
+                            player.sNameItem2 = GetItemNameById(player.item_2.ToString());
+                            player.sNameItem3 = GetItemNameById(player.item_3.ToString());
+                            player.sNameItem4 = GetItemNameById(player.item_4.ToString());
+                            player.sNameItem5 = GetItemNameById(player.item_5.ToString());
+                            player.sNameItemB0 = GetItemNameById(player.backpack_0.ToString());
+                            player.sNameItemB1 = GetItemNameById(player.backpack_1.ToString());
+                            player.sNameItemB2 = GetItemNameById(player.backpack_2.ToString());
+                            player.sNameItemN = GetItemNameById(player.item_neutral.ToString());
 
                             if (player.isRadiant == null)
                             {
                                 player.isRadiant = player.player_slot < 128 ? true : false;
                             }
 
-                            /*
-                             {
-  "player_slot": 0,
-  "account_id": 198161112,
-  "additional_units": [
-    {
-      "unitname": "spirit_bear",
-      "item_0": 168,
-      "item_1": 50,
-      "item_2": 172,
-      "item_3": 116,
-      "item_4": 143,
-      "item_5": 112,
-      "backpack_0": 0,
-      "backpack_1": 0,
-      "backpack_2": 0,
-      "item_neutral": 0
-    }
-  ],
-  "assists": 23,
-  "backpack_0": 0,
-  "backpack_1": 188,
-  "backpack_2": 0,
-  "backpack_3": null,
-  "deaths": 11,
-  "denies": 5,
-  "gold_per_min": 373,
+                            if (player.account_id.ToString() == sSteamId)
+                            {
+                                player.bIsCurrentPlayer = true;
+                            }
 
-  "last_hits": 142,
-  "net_worth": 16447,
-  "party_id": 0,
-  "party_size": 10,
-  "permanent_buffs": [
-    { "permanent_buff": 6, "stack_count": 2 },
-    { "permanent_buff": 12, "stack_count": 0 }
-  ],
-  "randomed": false,
-  "xp_per_min": 543,
-  "isRadiant": true,
-  "rank_tier": 80
-}*/
+
                         }
 
                         foreach (var player in matchInfo.players)
@@ -1191,7 +1166,25 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { bHaveRadiantAdv = false; }
 
-
+                    // 双方职业战队
+                    try
+                    {
+                        if (matchInfo.radiant_team != null)
+                        {
+                            if (string.IsNullOrEmpty(matchInfo.radiant_team.name))
+                            {
+                                matchInfo.radiant_team.name = matchInfo.radiant_team.team_id;
+                            }
+                        }
+                        if (matchInfo.dire_team != null)
+                        {
+                            if (string.IsNullOrEmpty(matchInfo.dire_team.name))
+                            {
+                                matchInfo.dire_team.name = matchInfo.dire_team.team_id;
+                            }
+                        }
+                    }
+                    catch { }
 
                     CurrentMatchInfo = matchInfo;
                 }
@@ -1264,6 +1257,24 @@ namespace OpenDota_UWP.ViewModels
                 if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
                 {
                     return DotaItemsViewModel.Instance.dictIdToAllItems[id].img;
+                }
+            }
+            catch { }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 从物品字典中查找物品，返回其名字
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private string GetItemNameById(string id)
+        {
+            try
+            {
+                if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                {
+                    return DotaItemsViewModel.Instance.dictIdToAllItems[id].dname;
                 }
             }
             catch { }

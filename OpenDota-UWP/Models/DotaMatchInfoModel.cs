@@ -23,6 +23,8 @@ namespace OpenDota_UWP.Models
         public List<double> radiant_xp_adv { get; set; }
         public int? skill { get; set; }
         public long? start_time { get; set; }
+        public Team radiant_team { get; set; } = null;
+        public Team dire_team { get; set; } = null;
         public List<Player> players { get; set; }
     }
 
@@ -127,6 +129,11 @@ namespace OpenDota_UWP.Models
         public bool? randomed { get; set; }
         public Benchmarks benchmarks { get; set; }
 
+        // 是否是当前登录玩家
+        [Newtonsoft.Json.JsonIgnore]
+        public bool bIsCurrentPlayer { get; set; } = false;
+
+
         [Newtonsoft.Json.JsonIgnore]
         public string sHeroImage { get; set; }
 
@@ -153,6 +160,27 @@ namespace OpenDota_UWP.Models
             }
             catch { }
         }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem3 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem4 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem5 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemN { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]
         public string sItem0 { get; set; } = string.Empty;
@@ -312,6 +340,12 @@ namespace OpenDota_UWP.Models
             }
             catch { }
         }
+    }
+
+    public class Team
+    {
+        public string team_id { get; set; }
+        public string name { get; set; }
     }
 
     public class Benchmarks

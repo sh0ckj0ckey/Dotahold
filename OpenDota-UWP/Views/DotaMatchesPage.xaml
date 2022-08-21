@@ -410,7 +410,7 @@
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="DodgerBlue" VerticalAlignment="Top" CharacterSpacing="20"/>
+                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="MediumOrchid" VerticalAlignment="Top" CharacterSpacing="20"/>
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
                                         </StackPanel>
                                     </Grid>
