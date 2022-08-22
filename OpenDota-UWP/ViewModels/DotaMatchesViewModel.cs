@@ -1198,73 +1198,138 @@ namespace OpenDota_UWP.ViewModels
                                 var player = matchInfo.players[i];
 
                                 // 玩家使用的英雄
-                                if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(player.hero_id.ToString()) == true)
+                                try
                                 {
-                                    player.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].localized_name;
-                                    player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
+                                    if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(player.hero_id.ToString()) == true)
+                                    {
+                                        player.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].localized_name;
+                                        player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
+                                    }
                                 }
+                                catch { }
 
                                 // 玩家的物品
-                                player.sItem0 = GetItemImgById(player.item_0.ToString());
-                                player.sItem1 = GetItemImgById(player.item_1.ToString());
-                                player.sItem2 = GetItemImgById(player.item_2.ToString());
-                                player.sItem3 = GetItemImgById(player.item_3.ToString());
-                                player.sItem4 = GetItemImgById(player.item_4.ToString());
-                                player.sItem5 = GetItemImgById(player.item_5.ToString());
-                                player.sItemB0 = GetItemImgById(player.backpack_0.ToString());
-                                player.sItemB1 = GetItemImgById(player.backpack_1.ToString());
-                                player.sItemB2 = GetItemImgById(player.backpack_2.ToString());
-                                player.sItemN = GetItemImgById(player.item_neutral.ToString());
-                                player.sNameItem0 = GetItemNameById(player.item_0.ToString());
-                                player.sNameItem1 = GetItemNameById(player.item_1.ToString());
-                                player.sNameItem2 = GetItemNameById(player.item_2.ToString());
-                                player.sNameItem3 = GetItemNameById(player.item_3.ToString());
-                                player.sNameItem4 = GetItemNameById(player.item_4.ToString());
-                                player.sNameItem5 = GetItemNameById(player.item_5.ToString());
-                                player.sNameItemB0 = GetItemNameById(player.backpack_0.ToString());
-                                player.sNameItemB1 = GetItemNameById(player.backpack_1.ToString());
-                                player.sNameItemB2 = GetItemNameById(player.backpack_2.ToString());
-                                player.sNameItemN = GetItemNameById(player.item_neutral.ToString());
+                                try
+                                {
+                                    player.sItem0 = GetItemImgById(player.item_0?.ToString());
+                                    player.sItem1 = GetItemImgById(player.item_1?.ToString());
+                                    player.sItem2 = GetItemImgById(player.item_2?.ToString());
+                                    player.sItem3 = GetItemImgById(player.item_3?.ToString());
+                                    player.sItem4 = GetItemImgById(player.item_4?.ToString());
+                                    player.sItem5 = GetItemImgById(player.item_5?.ToString());
+                                    player.sItemB0 = GetItemImgById(player.backpack_0?.ToString());
+                                    player.sItemB1 = GetItemImgById(player.backpack_1?.ToString());
+                                    player.sItemB2 = GetItemImgById(player.backpack_2?.ToString());
+                                    player.sItemN = GetItemImgById(player.item_neutral?.ToString());
+                                    player.sNameItem0 = GetItemNameById(player.item_0?.ToString());
+                                    player.sNameItem1 = GetItemNameById(player.item_1?.ToString());
+                                    player.sNameItem2 = GetItemNameById(player.item_2?.ToString());
+                                    player.sNameItem3 = GetItemNameById(player.item_3?.ToString());
+                                    player.sNameItem4 = GetItemNameById(player.item_4?.ToString());
+                                    player.sNameItem5 = GetItemNameById(player.item_5?.ToString());
+                                    player.sNameItemB0 = GetItemNameById(player.backpack_0?.ToString());
+                                    player.sNameItemB1 = GetItemNameById(player.backpack_1?.ToString());
+                                    player.sNameItemB2 = GetItemNameById(player.backpack_2?.ToString());
+                                    player.sNameItemN = GetItemNameById(player.item_neutral?.ToString());
+                                }
+                                catch { }
 
                                 // 判断是天辉还是夜魇
-                                if (player.isRadiant == null)
+                                try
                                 {
-                                    player.isRadiant = player.player_slot < 128 ? true : false;
+                                    if (player.isRadiant == null)
+                                    {
+                                        player.isRadiant = player.player_slot < 128 ? true : false;
+                                    }
                                 }
+                                catch { }
 
                                 // 判断是否是当前绑定账号的玩家
-                                if (player.account_id.ToString() == sSteamId)
+                                try
                                 {
-                                    player.bIsCurrentPlayer = true;
+                                    if (player.account_id.ToString() == sSteamId)
+                                    {
+                                        player.bIsCurrentPlayer = true;
+                                    }
                                 }
+                                catch { }
 
                                 // 神杖和魔晶
-                                player.bHaveAghanimScepter = false;
-                                player.bHaveAghanimShard = false;
-                                foreach (var buff in player.permanent_buffs)
+                                try
                                 {
-                                    if (buff.permanent_buff == 2)
+                                    player.bHaveAghanimScepter = false;
+                                    player.bHaveAghanimShard = false;
+                                    foreach (var buff in player.permanent_buffs)
                                     {
-                                        player.bHaveAghanimScepter = true;
-                                    }
-                                    if (buff.permanent_buff == 12)
-                                    {
-                                        player.bHaveAghanimShard = true;
+                                        if (buff.permanent_buff == 2)
+                                        {
+                                            player.bHaveAghanimScepter = true;
+                                        }
+                                        if (buff.permanent_buff == 12)
+                                        {
+                                            player.bHaveAghanimShard = true;
+                                        }
                                     }
                                 }
+                                catch { }
 
                                 // 玩家的开黑编号
-                                player.iPartyId = 0;
-                                if (player.party_id != null && player.party_size != null && player.party_size > 1 && player.party_size < 10)
+                                try
                                 {
-                                    long id = (long)player.party_id;
-                                    if (!playersPartyDict.ContainsKey(id))
+                                    player.iPartyId = 0;
+                                    if (player.party_id != null && player.party_size != null && player.party_size > 1 && player.party_size < 10)
                                     {
-                                        partyId++;
-                                        playersPartyDict.Add(id, partyId);
+                                        long id = (long)player.party_id;
+                                        if (!playersPartyDict.ContainsKey(id))
+                                        {
+                                            partyId++;
+                                            playersPartyDict.Add(id, partyId);
+                                        }
+                                        player.iPartyId = playersPartyDict[id];
                                     }
-                                    player.iPartyId = playersPartyDict[id];
                                 }
+                                catch { }
+
+                                // 额外单位，目前只处理德鲁伊(hero_id=80)的熊灵
+                                try
+                                {
+                                    player.SpiritBear = null;
+                                    if (player.hero_id == 80 && player.additional_units != null)
+                                    {
+                                        foreach (var item in player.additional_units)
+                                        {
+                                            if (item.unitname.Contains("spirit"))
+                                            {
+                                                player.SpiritBear = item;
+                                                break;
+                                            }
+                                        }
+                                        if (player.SpiritBear != null)
+                                        {
+                                            player.SpiritBear.sItem0 = GetItemImgById(player.SpiritBear.item_0?.ToString());
+                                            player.SpiritBear.sItem1 = GetItemImgById(player.SpiritBear.item_1?.ToString());
+                                            player.SpiritBear.sItem2 = GetItemImgById(player.SpiritBear.item_2?.ToString());
+                                            player.SpiritBear.sItem3 = GetItemImgById(player.SpiritBear.item_3?.ToString());
+                                            player.SpiritBear.sItem4 = GetItemImgById(player.SpiritBear.item_4?.ToString());
+                                            player.SpiritBear.sItem5 = GetItemImgById(player.SpiritBear.item_5?.ToString());
+                                            player.SpiritBear.sItemB0 = GetItemImgById(player.SpiritBear.backpack_0?.ToString());
+                                            player.SpiritBear.sItemB1 = GetItemImgById(player.SpiritBear.backpack_1?.ToString());
+                                            player.SpiritBear.sItemB2 = GetItemImgById(player.SpiritBear.backpack_2?.ToString());
+                                            player.SpiritBear.sItemN = GetItemImgById(player.SpiritBear.item_neutral?.ToString());
+                                            player.SpiritBear.sNameItem0 = GetItemNameById(player.SpiritBear.item_0?.ToString());
+                                            player.SpiritBear.sNameItem1 = GetItemNameById(player.SpiritBear.item_1?.ToString());
+                                            player.SpiritBear.sNameItem2 = GetItemNameById(player.SpiritBear.item_2?.ToString());
+                                            player.SpiritBear.sNameItem3 = GetItemNameById(player.SpiritBear.item_3?.ToString());
+                                            player.SpiritBear.sNameItem4 = GetItemNameById(player.SpiritBear.item_4?.ToString());
+                                            player.SpiritBear.sNameItem5 = GetItemNameById(player.SpiritBear.item_5?.ToString());
+                                            player.SpiritBear.sNameItemB0 = GetItemNameById(player.SpiritBear.backpack_0?.ToString());
+                                            player.SpiritBear.sNameItemB1 = GetItemNameById(player.SpiritBear.backpack_1?.ToString());
+                                            player.SpiritBear.sNameItemB2 = GetItemNameById(player.SpiritBear.backpack_2?.ToString());
+                                            player.SpiritBear.sNameItemN = GetItemNameById(player.SpiritBear.item_neutral?.ToString());
+                                        }
+                                    }
+                                }
+                                catch { }
 
                                 // 玩家的经济经验走势
                                 try
@@ -1278,8 +1343,16 @@ namespace OpenDota_UWP.ViewModels
 
                         foreach (var player in matchInfo.players)
                         {
-                            await player.LoadImageAsync(86);
-                            await player.LoadItemsImageAsync(44, 35, 134);
+                            try
+                            {
+                                await player.LoadImageAsync(86);
+                                await player.LoadItemsImageAsync(44, 35, 134);
+                                if (player.SpiritBear != null)
+                                {
+                                    await player.SpiritBear?.LoadItemsImageAsync(44, 35, 134);
+                                }
+                            }
+                            catch { }
                         }
                     }
                     catch { }
@@ -1408,9 +1481,12 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                if (!string.IsNullOrEmpty(id))
                 {
-                    return DotaItemsViewModel.Instance.dictIdToAllItems[id].img;
+                    if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                    {
+                        return DotaItemsViewModel.Instance.dictIdToAllItems[id].img;
+                    }
                 }
             }
             catch { }
@@ -1426,9 +1502,12 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                if (!string.IsNullOrEmpty(id))
                 {
-                    return DotaItemsViewModel.Instance.dictIdToAllItems[id].dname;
+                    if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
+                    {
+                        return DotaItemsViewModel.Instance.dictIdToAllItems[id].dname;
+                    }
                 }
             }
             catch { }

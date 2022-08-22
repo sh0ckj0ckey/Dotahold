@@ -129,6 +129,10 @@ namespace OpenDota_UWP.Models
         public bool? randomed { get; set; }
         public Benchmarks benchmarks { get; set; }
 
+        // 目前只处理熊灵这一个额外单位
+        [Newtonsoft.Json.JsonIgnore]
+        public Additional_Units SpiritBear { get; set; } = null;
+
         // 开黑队伍编号
         [Newtonsoft.Json.JsonIgnore]
         public int iPartyId { get; set; } = 0;
@@ -136,11 +140,11 @@ namespace OpenDota_UWP.Models
         // 是否是当前登录玩家
         [Newtonsoft.Json.JsonIgnore]
         public bool bIsCurrentPlayer { get; set; } = false;
-        
+
         // 是否激活神杖
         [Newtonsoft.Json.JsonIgnore]
         public bool bHaveAghanimScepter { get; set; } = false;
-        
+
         // 是否激活魔晶
         [Newtonsoft.Json.JsonIgnore]
         public bool bHaveAghanimShard { get; set; } = false;
@@ -427,7 +431,7 @@ namespace OpenDota_UWP.Models
         public float pct { get; set; }
     }
 
-    public class Additional_Units
+    public class Additional_Units : ViewModels.ViewModelBase
     {
         public string unitname { get; set; }
         public int? item_0 { get; set; }
@@ -440,6 +444,186 @@ namespace OpenDota_UWP.Models
         public int? backpack_1 { get; set; }
         public int? backpack_2 { get; set; }
         public int? item_neutral { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem3 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem4 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItem5 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemB2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sNameItemN { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem3 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem4 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItem5 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItemB0 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItemB1 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItemB2 { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        public string sItemN { get; set; } = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item0ImageSource = null;
+        public BitmapImage Item0ImageSource
+        {
+            get { return _Item0ImageSource; }
+            set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item1ImageSource = null;
+        public BitmapImage Item1ImageSource
+        {
+            get { return _Item1ImageSource; }
+            set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item2ImageSource = null;
+        public BitmapImage Item2ImageSource
+        {
+            get { return _Item2ImageSource; }
+            set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item3ImageSource = null;
+        public BitmapImage Item3ImageSource
+        {
+            get { return _Item3ImageSource; }
+            set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item4ImageSource = null;
+        public BitmapImage Item4ImageSource
+        {
+            get { return _Item4ImageSource; }
+            set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _Item5ImageSource = null;
+        public BitmapImage Item5ImageSource
+        {
+            get { return _Item5ImageSource; }
+            set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ItemB0ImageSource = null;
+        public BitmapImage ItemB0ImageSource
+        {
+            get { return _ItemB0ImageSource; }
+            set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ItemB1ImageSource = null;
+        public BitmapImage ItemB1ImageSource
+        {
+            get { return _ItemB1ImageSource; }
+            set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ItemB2ImageSource = null;
+        public BitmapImage ItemB2ImageSource
+        {
+            get { return _ItemB2ImageSource; }
+            set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
+        }
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ItemNImageSource = null;
+        public BitmapImage ItemNImageSource
+        {
+            get { return _ItemNImageSource; }
+            set { Set("ItemNImageSource", ref _ItemNImageSource, value); }
+        }
+
+        public async Task LoadItemsImageAsync(int itemDecodeWidth, int backpackDecodeWidth, int neutralDecodeWidth)
+        {
+            try
+            {
+                if (Item0ImageSource == null && !string.IsNullOrEmpty(sItem0))
+                {
+                    Item0ImageSource = await ImageLoader.LoadImageAsync(sItem0);
+                    Item0ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item0ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (Item1ImageSource == null && !string.IsNullOrEmpty(sItem1))
+                {
+                    Item1ImageSource = await ImageLoader.LoadImageAsync(sItem1);
+                    Item1ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item1ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (Item2ImageSource == null && !string.IsNullOrEmpty(sItem2))
+                {
+                    Item2ImageSource = await ImageLoader.LoadImageAsync(sItem2);
+                    Item2ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item2ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (Item3ImageSource == null && !string.IsNullOrEmpty(sItem3))
+                {
+                    Item3ImageSource = await ImageLoader.LoadImageAsync(sItem3);
+                    Item3ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item3ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (Item4ImageSource == null && !string.IsNullOrEmpty(sItem4))
+                {
+                    Item4ImageSource = await ImageLoader.LoadImageAsync(sItem4);
+                    Item4ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item4ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (Item5ImageSource == null && !string.IsNullOrEmpty(sItem5))
+                {
+                    Item5ImageSource = await ImageLoader.LoadImageAsync(sItem5);
+                    Item5ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    Item5ImageSource.DecodePixelWidth = itemDecodeWidth;
+                }
+                if (ItemB0ImageSource == null && !string.IsNullOrEmpty(sItemB0))
+                {
+                    ItemB0ImageSource = await ImageLoader.LoadImageAsync(sItemB0);
+                    ItemB0ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ItemB0ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                }
+                if (ItemB1ImageSource == null && !string.IsNullOrEmpty(sItemB1))
+                {
+                    ItemB1ImageSource = await ImageLoader.LoadImageAsync(sItemB1);
+                    ItemB1ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ItemB1ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                }
+                if (ItemB2ImageSource == null && !string.IsNullOrEmpty(sItemB2))
+                {
+                    ItemB2ImageSource = await ImageLoader.LoadImageAsync(sItemB2);
+                    ItemB2ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ItemB2ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                }
+                if (ItemNImageSource == null && !string.IsNullOrEmpty(sItemN))
+                {
+                    ItemNImageSource = await ImageLoader.LoadImageAsync(sItemN);
+                    ItemNImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ItemNImageSource.DecodePixelWidth = neutralDecodeWidth;
+                }
+            }
+            catch { }
+        }
     }
 
     public class Permanent_Buffs

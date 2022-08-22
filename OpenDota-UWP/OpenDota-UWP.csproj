@@ -274,6 +274,8 @@
     <Content Include="Assets\Icons\Hero\img_int_background_light.png" />
     <Content Include="Assets\Icons\Hero\img_str_background_dark.png" />
     <Content Include="Assets\Icons\Hero\img_str_background_light.png" />
+    <Content Include="Assets\Icons\Hero\lone_druid_bear.png" />
+    <Content Include="Assets\Icons\Hero\lone_druid_spirit_bear_ability.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />
     <Content Include="Assets\Icons\icon_dota2logo_light.png" />
     <Content Include="Assets\Icons\icon_dota_plus.png" />
