@@ -183,6 +183,13 @@
                     Style="{ThemeResource TextBlockButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="Search Setting">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="CornerRadius" Value="6" />
+                                <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <TextBlock Text="Search Mode" FontWeight="Medium" CharacterSpacing="40" Margin="0,0,0,6"/>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Slower" Style="{StaticResource SearchSettingRadioButtonStyle}"

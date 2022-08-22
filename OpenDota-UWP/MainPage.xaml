@@ -329,6 +329,13 @@
                                 <Button Height="42" Width="120" CornerRadius="18" Style="{StaticResource ButtonRevealStyle}">
                                     <Button.Flyout>
                                         <Flyout>
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style TargetType="FlyoutPresenter">
+                                                    <Setter Property="CornerRadius" Value="6" />
+                                                    <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                                    <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
                                             <HyperlinkButton Content="yaoyiming123@live.com" ToolTipService.ToolTip="Click to send me an email " NavigateUri="mailto:yaoyiming123@live.com"/>
                                         </Flyout>
                                     </Button.Flyout>

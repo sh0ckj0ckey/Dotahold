@@ -511,6 +511,13 @@
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
+                            <MenuFlyout.MenuFlyoutPresenterStyle>
+                                <Style TargetType="MenuFlyoutPresenter">
+                                    <Setter Property="CornerRadius" Value="6" />
+                                    <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                    <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
+                                </Style>
+                            </MenuFlyout.MenuFlyoutPresenterStyle>
                             <MenuFlyoutItem x:Name="SteamCommunityLinkMenuFlyoutItem" Text="Steam Profile" Click="SteamCommunityLinkMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="ContactInfo" Margin="0,4,0,0" />
@@ -612,9 +619,16 @@
                         <TextBlock Margin="16,0,4,0" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                    CharacterSpacing="40" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <Button Content="&#xE9CE;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"
-                            Margin="0" Foreground="{ThemeResource SystemAccentColor}" Style="{StaticResource TextBlockButtonStyle}">
+                                Margin="0" Foreground="{ThemeResource SystemAccentColor}" Style="{StaticResource TextBlockButtonStyle}">
                             <Button.Flyout>
                                 <Flyout x:Name="WhatIDFlyout" Placement="Bottom">
+                                    <Flyout.FlyoutPresenterStyle>
+                                        <Style TargetType="FlyoutPresenter">
+                                            <Setter Property="CornerRadius" Value="6" />
+                                            <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                            <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
+                                        </Style>
+                                    </Flyout.FlyoutPresenterStyle>
                                     <Grid>
                                         <StackPanel>
                                             <TextBlock Text="Both of the following IDs are available"
