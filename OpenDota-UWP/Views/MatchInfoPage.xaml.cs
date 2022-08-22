@@ -59,6 +59,11 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
+        /// <summary>
+        /// 切换到玩家经济走势图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickShowGoldSeries(object sender, RoutedEventArgs e)
         {
             try
@@ -68,11 +73,34 @@ namespace OpenDota_UWP.Views
             catch { }
         }
 
+        /// <summary>
+        /// 切换到玩家经验走势图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickShowXPSeries(object sender, RoutedEventArgs e)
         {
             try
             {
                 ViewModel.SwitchPlayersGoldOrXPSeries(false, ViewModel.CurrentMatchInfo);
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 打开opendota网页查看更多比赛信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnClickVisitWebsite(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ViewModel.CurrentMatchId > 0)
+                {
+                    string url = "https://www.opendota.com/matches/" + ViewModel.CurrentMatchId;
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                }
             }
             catch { }
         }

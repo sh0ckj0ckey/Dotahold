@@ -70,6 +70,7 @@
                             <TextBlock Grid.Column="1" Text="Dire Victory" Foreground="#280f11" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="0,0,16,0"/>
                         </Grid>
 
+                        <!--比赛ID和比分-->
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <!--比赛ID-->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -209,7 +210,7 @@
                         <Rectangle IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
                     </Grid>
 
-                    <!--玩家列表-->
+                    <!--玩家列表标题-->
                     <Grid Margin="0,12,0,0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <FontIcon Glyph="&#xE99A;" Margin="24,0,8,0" FontSize="20"/>
@@ -242,7 +243,9 @@
                             </StackPanel>
                         </StackPanel>
                     </Grid>
-                    <ListView x:Name="RadiantListView" Margin="0,8"
+
+                    <!--玩家列表-->
+                    <ListView Margin="0,8"
                               ScrollViewer.VerticalScrollMode="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               ScrollViewer.HorizontalScrollMode="Disabled"
@@ -258,18 +261,22 @@
                         </ListView.Template>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:Player">
-                                <Grid Height="76" MinHeight="64" Margin="0,2" CornerRadius="6" HorizontalAlignment="Stretch" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
+                                <Grid Height="78" MinHeight="64" Margin="0,2" CornerRadius="6" HorizontalAlignment="Stretch" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
+
+                                    <!--阵营底图-->
                                     <Grid Grid.ColumnSpan="4" CornerRadius="8">
                                         <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Source="/Assets/Icons/Match/icon_radiant_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
                                         <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Source="/Assets/Icons/Match/icon_dire_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
                                         <Grid Background="{ThemeResource MATCHPLAYER_LISTMASK_BK}" Width="108" Height="108" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
                                     </Grid>
+
+                                    <!--英雄头像-->
                                     <Grid Grid.Column="0" Width="86" Height="48" CornerRadius="4" Margin="16,0,0,0" BorderThickness="1.5" BorderBrush="{x:Bind player_slot,Mode=OneWay,Converter={StaticResource Slot2Color}}">
                                         <Image Grid.Column="0" Width="86" Height="48" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                                         <Grid Grid.Column="0" Height="36" Width="36" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -287,17 +294,20 @@
                                             <TextBlock Text="{x:Bind level}" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="#fada9e" FontWeight="Bold" Margin="2,0,0,0" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                         </Grid>
                                     </Grid>
+
+                                    <!--玩家名字和游戏表现数据-->
                                     <Grid Grid.Column="1" Margin="12,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
+                                        <!--玩家名字-->
+                                        <Grid Grid.Row="0" Margin="0,0,280,2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image Grid.Column="0" Source="{x:Bind rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image},ConverterParameter=24}" Height="24" Width="24" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Grid.Column="0" Source="{x:Bind rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image},ConverterParameter=26}" Height="26" Width="26" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <TextBlock Grid.Column="1" HorizontalAlignment="Left" Visibility="{x:Bind personaname,Mode=OneWay,Converter={StaticResource IsNull2Vis}}"
                                                        Text="{x:Bind personaname,Mode=OneWay}" FontWeight="Bold" TextTrimming="CharacterEllipsis"
                                                        ToolTipService.ToolTip="{x:Bind name,Mode=OneWay}" CharacterSpacing="40" Margin="4,0,20,0"
@@ -307,30 +317,31 @@
                                                        ToolTipService.ToolTip="{x:Bind name,Mode=OneWay}" CharacterSpacing="40" Margin="4,0,20,0"
                                                        FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="16" Opacity="0.5" VerticalAlignment="Center"/>
                                         </Grid>
-                                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <!--玩家表现-->
+                                        <StackPanel Grid.Row="1" Margin="0,2,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <FontIcon Glyph="&#xF133;" Margin="4,0,6,0" FontSize="16" Opacity="0.7" HorizontalAlignment="Left" Visibility="{x:Bind randomed,Mode=OneWay,Converter={StaticResource Bool2Vis}}" ToolTipService.ToolTip="Randomed"/>
                                             <TextBlock FontWeight="Medium" Margin="2,0,10,0" TextTrimming="CharacterEllipsis" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTipService.ToolTip="K/D/A">
-                                                <Run Text="{x:Bind kills}" Foreground="#63916c" CharacterSpacing="40"/>
+                                                <Run Text="{x:Bind kills}" Foreground="#63916c" CharacterSpacing="20"/>
                                                 <Run Text="/" FontWeight="Light"/>
-                                                <Run Text="{x:Bind deaths}" Foreground="#c55357" CharacterSpacing="40"/>
+                                                <Run Text="{x:Bind deaths}" Foreground="#c55357" CharacterSpacing="20"/>
                                                 <Run Text="/" FontWeight="Light"/>
-                                                <Run Text="{x:Bind assists}" Foreground="#647e8e" CharacterSpacing="40"/>
+                                                <Run Text="{x:Bind assists}" Foreground="#647e8e" CharacterSpacing="20"/>
                                             </TextBlock>
-                                            <Border CornerRadius="4" Margin="0,0,4,0" Padding="4,0,4,0" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="Gold Per Min">
+                                            <Border x:Name="PlayerGPMBorder" CornerRadius="4" Margin="0,0,4,-1" Padding="4,0,4,0" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Gold Per Min">
                                                 <TextBlock FontSize="11" Opacity="0.7" Margin="0,-1,0,1" FontWeight="Medium" VerticalAlignment="Center">
                                                     <Run Text="GPM" Foreground="{ThemeResource GOLDTEXT_FR}"/>
                                                     <Run Text="{x:Bind gold_per_min}"/>
                                                 </TextBlock>
                                             </Border>
-                                            <Border CornerRadius="4" Margin="0,0,4,0" Padding="4,0,4,0" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="XP Per Min">
+                                            <Border x:Name="PlayerXPMBorder" CornerRadius="4" Margin="0,0,4,-1" Padding="4,0,4,0" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="XP Per Min">
                                                 <TextBlock FontSize="11" Opacity="0.7" Margin="0,-1,0,1" FontWeight="Medium" VerticalAlignment="Center">
                                                     <Run Text="XPM" Foreground="MediumOrchid"/>
                                                     <Run Text="{x:Bind xp_per_min}"/>
                                                 </TextBlock>
                                             </Border>
-                                            <Border CornerRadius="4" Margin="0,0,0,0" Padding="4,0,4,0" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="Last Hits/Denies">
+                                            <Border CornerRadius="4" Margin="0,0,0,-1" Padding="4,0,4,0" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Last Hits/Denies">
                                                 <TextBlock FontSize="11" Opacity="0.7" Margin="0,-1,0,1" FontWeight="Medium" VerticalAlignment="Center">
-                                                    <Run Text="●" CharacterSpacing="40"/>
+                                                    <Run Text="○" CharacterSpacing="40"/>
                                                     <Run Text="{x:Bind last_hits}" CharacterSpacing="40"/>
                                                     <Run Text="/" FontWeight="Light"/>
                                                     <Run Text="{x:Bind denies}" CharacterSpacing="40"/>
@@ -338,46 +349,50 @@
                                             </Border>
                                         </StackPanel>
                                     </Grid>
-                                    <Grid Grid.Column="2" VerticalAlignment="Center">
+
+                                    <!--物品和背包-->
+                                    <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem0,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem0,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item0ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem1,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem1,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item1ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem2,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem2,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item2ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem3,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem3,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item3ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem4,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem4,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item4ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem5,Mode=OneWay}">
+                                            <Border Height="32" Width="44" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItem5,Mode=OneWay}">
                                                 <Image Source="{x:Bind Item5ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
                                             </Border>
                                         </StackPanel>
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <Border Margin="4,0,4,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemN,Mode=OneWay}">
+                                            <Border Margin="4,0,4,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemN,Mode=OneWay}">
                                                 <Image Width="35" Height="26" Source="{x:Bind ItemNImageSource,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
                                             </Border>
-                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB0,Mode=OneWay}">
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB0,Mode=OneWay}">
                                                 <Image Source="{x:Bind ItemB0ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
                                             </Border>
-                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB1,Mode=OneWay}">
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB1,Mode=OneWay}">
                                                 <Image Source="{x:Bind ItemB1ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
                                             </Border>
-                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource HEROINFO_LISTITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB2,Mode=OneWay}">
+                                            <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemB2,Mode=OneWay}">
                                                 <Image Source="{x:Bind ItemB2ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
                                             </Border>
                                         </StackPanel>
                                     </Grid>
+
+                                    <!--神杖和魔晶-->
                                     <Grid Grid.Column="3" VerticalAlignment="Center" Margin="16,0,24,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
@@ -404,9 +419,21 @@
                                             </Image.Source>
                                         </Image>
                                     </Grid>
+                                    
+                                    <!--当前玩家边框-->
                                     <Grid Grid.ColumnSpan="4" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"
-                                          BorderThickness="4" BorderBrush="{ThemeResource HEROINFO_LISTITEM_BK}" Background="Transparent"
+                                          BorderThickness="3" BorderBrush="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Background="Transparent"
                                           Visibility="{x:Bind bIsCurrentPlayer,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+
+                                    <!--开黑标识-->
+                                    <Grid Visibility="{x:Bind iPartyId,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                                        <Border Grid.Column="0" Height="18" Padding="2,0" CornerRadius="0,4,4,0" Background="#66bb6a" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" ToolTipService.ToolTip="Party">
+                                            <TextBlock FontFamily="Consolas" FontWeight="Bold" FontSize="12" Text="{x:Bind iPartyId,Mode=OneWay}" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="0" Height="18" Padding="2,0" CornerRadius="0,4,4,0" Background="#ff4c4c" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" ToolTipService.ToolTip="Party">
+                                            <TextBlock FontFamily="Consolas" FontWeight="Bold" FontSize="12" Text="{x:Bind iPartyId,Mode=OneWay}" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -469,12 +496,22 @@
                     </Grid>
 
                     <!--比赛开始时间-->
-                    <StackPanel Padding="12,18,12,24" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="6">
-                        <FontIcon Glyph="&#xE823;" FontSize="14" Opacity="0.5" VerticalAlignment="Center" Margin="0,0,6,-2"/>
-                        <TextBlock Opacity="0.5" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" CharacterSpacing="40" FontSize="15" FontWeight="Medium"/>
-                    </StackPanel>
+                    <Grid Padding="12,18,12,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource SIMPLETEXT_FR}"/>
+                        <Rectangle Grid.Column="3" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource SIMPLETEXT_FR}"/>
+                        <FontIcon Grid.Column="1" Glyph="&#xE823;" FontSize="14" Opacity="0.5" VerticalAlignment="Center" Margin="0,0,6,-2"/>
+                        <TextBlock Grid.Column="2" Opacity="0.5" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" CharacterSpacing="40" FontSize="15" FontWeight="Medium"/>
+                    </Grid>
 
-                    <Button Margin="24,0,24,16" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}">
+                    <!--前往网页端查看-->
+                    <Button Margin="24,0,24,16" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
+                            Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickVisitWebsite">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <TextBlock FontWeight="Medium" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Run Text="Visit"/>

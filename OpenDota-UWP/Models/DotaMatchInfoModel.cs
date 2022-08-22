@@ -129,6 +129,10 @@ namespace OpenDota_UWP.Models
         public bool? randomed { get; set; }
         public Benchmarks benchmarks { get; set; }
 
+        // 开黑队伍编号
+        [Newtonsoft.Json.JsonIgnore]
+        public int iPartyId { get; set; } = 0;
+
         // 是否是当前登录玩家
         [Newtonsoft.Json.JsonIgnore]
         public bool bIsCurrentPlayer { get; set; } = false;

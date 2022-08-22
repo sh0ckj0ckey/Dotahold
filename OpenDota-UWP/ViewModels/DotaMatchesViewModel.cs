@@ -130,7 +130,8 @@ namespace OpenDota_UWP.ViewModels
         private bool _bGottenAllMatchesList = false;
 
         // 当前正在查看的比赛编号
-        private long _CurrentMatchId = 0;
+        public long CurrentMatchId { get; set; } = 0;
+
         // 当前正在查看的比赛信息
         private DotaMatchInfoModel _CurrentMatchInfo = null;
         public DotaMatchInfoModel CurrentMatchInfo
@@ -912,9 +913,9 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                if (matchId == 0 || (_CurrentMatchId == matchId && CurrentMatchInfo != null)) return;
+                if (matchId == 0 || (CurrentMatchId == matchId && CurrentMatchInfo != null)) return;
 
-                _CurrentMatchId = matchId;
+                CurrentMatchId = matchId;
                 CurrentMatchInfo = null;
                 bLoadingOneMatchInfo = true;
 
@@ -1162,7 +1163,7 @@ namespace OpenDota_UWP.ViewModels
                 }
                 catch { }
 
-                if (matchInfo != null && matchInfo.match_id == _CurrentMatchId)
+                if (matchInfo != null && matchInfo.match_id == CurrentMatchId)
                 {
                     // BanPick列表
                     try
@@ -1186,6 +1187,9 @@ namespace OpenDota_UWP.ViewModels
                     // 玩家列表
                     try
                     {
+                        // 用于整理玩家开黑编号
+                        Dictionary<long, int> playersPartyDict = new Dictionary<long, int>();
+                        int partyId = 0;
 
                         for (int i = 0; i < matchInfo.players.Count; i++)
                         {
@@ -1247,6 +1251,19 @@ namespace OpenDota_UWP.ViewModels
                                     {
                                         player.bHaveAghanimShard = true;
                                     }
+                                }
+
+                                // 玩家的开黑编号
+                                player.iPartyId = 0;
+                                if (player.party_id != null && player.party_size != null && player.party_size > 1 && player.party_size < 10)
+                                {
+                                    long id = (long)player.party_id;
+                                    if (!playersPartyDict.ContainsKey(id))
+                                    {
+                                        partyId++;
+                                        playersPartyDict.Add(id, partyId);
+                                    }
+                                    player.iPartyId = playersPartyDict[id];
                                 }
 
                                 // 玩家的经济经验走势
