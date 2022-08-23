@@ -1281,15 +1281,18 @@ namespace OpenDota_UWP.ViewModels
                                 {
                                     player.bHaveAghanimScepter = false;
                                     player.bHaveAghanimShard = false;
-                                    foreach (var buff in player.permanent_buffs)
+                                    if (player?.permanent_buffs != null)
                                     {
-                                        if (buff.permanent_buff == 2)
+                                        foreach (var buff in player.permanent_buffs)
                                         {
-                                            player.bHaveAghanimScepter = true;
-                                        }
-                                        if (buff.permanent_buff == 12)
-                                        {
-                                            player.bHaveAghanimShard = true;
+                                            if (buff.permanent_buff == 2)
+                                            {
+                                                player.bHaveAghanimScepter = true;
+                                            }
+                                            if (buff.permanent_buff == 12)
+                                            {
+                                                player.bHaveAghanimShard = true;
+                                            }
                                         }
                                     }
                                 }
@@ -1320,13 +1323,13 @@ namespace OpenDota_UWP.ViewModels
                                     {
                                         foreach (var item in player.additional_units)
                                         {
-                                            if (item.unitname.Contains("spirit"))
+                                            if (item.unitname.Contains("spirit_bear"))
                                             {
                                                 player.SpiritBear = item;
                                                 break;
                                             }
                                         }
-                                        
+
                                         if (player.SpiritBear != null)
                                         {
                                             player.SpiritBear.sItem0 = GetItemImgById(player.SpiritBear.item_0?.ToString());
