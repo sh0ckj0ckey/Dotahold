@@ -271,9 +271,8 @@
 
                                     <!--阵营底图-->
                                     <Grid Grid.ColumnSpan="4" CornerRadius="8">
-                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Source="/Assets/Icons/Match/icon_radiant_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
-                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Source="/Assets/Icons/Match/icon_dire_square.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
-                                        <Grid Background="{ThemeResource MATCHPLAYER_LISTMASK_BK}" Width="108" Height="108" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Source="/Assets/Icons/Match/icon_radiant_square_bk.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
+                                        <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Source="/Assets/Icons/Match/icon_dire_square_bk.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
                                     </Grid>
 
                                     <!--英雄头像-->

@@ -304,8 +304,10 @@
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
     <Content Include="Assets\Icons\Match\icon_dire_ff4c4c.png" />
     <Content Include="Assets\Icons\Match\icon_dire_square.png" />
+    <Content Include="Assets\Icons\Match\icon_dire_square_bk.png" />
     <Content Include="Assets\Icons\Match\icon_radiant_66bb6a.png" />
     <Content Include="Assets\Icons\Match\icon_radiant_square.png" />
+    <Content Include="Assets\Icons\Match\icon_radiant_square_bk.png" />
     <Content Include="Assets\Icons\Match\icon_scepter_0.png" />
     <Content Include="Assets\Icons\Match\icon_scepter_1.png" />
     <Content Include="Assets\Icons\Match\icon_shard_0.png" />
