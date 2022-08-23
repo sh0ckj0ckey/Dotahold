@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     xmlns:cvt="using:OpenDota_UWP.Converters"
     xmlns:ui="using:OpenDota_UWP.UI" 
-    xmlns:models="using:OpenDota_UWP.Models" 
-    NavigationCacheMode="Required">
+    xmlns:mdl="using:OpenDota_UWP.Models" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    NavigationCacheMode="Required" Background="Transparent">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -34,361 +34,52 @@
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer Padding="0,32,0,0">
-            <StackPanel Margin="32,0">
-                <Grid HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <!--返回按钮-->
-                    <Button Grid.Column="0" Margin="16,0,0,0" Width="42" Height="42" CornerRadius="6" HorizontalAlignment="Left"
-                            Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" ToolTipService.ToolTip="Go Back">
-                        <Button.Content>
-                            <TextBlock Text="&#xE652;" FontFamily="Segoe MDL2 Assets" FontSize="16" VerticalAlignment="Center"/>
-                        </Button.Content>
-                    </Button>
-                </Grid>
-                <Grid Height="auto">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Image x:Name="MatchData_RankMedalImage"
-                           Grid.RowSpan="3"
-                           Height="144"
-                           Opacity="0.3"
-                           HorizontalAlignment="Right"
-                           Source="/Assets/RankMedal/SeasonalRank0-0.png" />
-                    <StackPanel Grid.Row="0"
-                                Margin="0,8"
-                                Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind HeroPlayerInfo.Personaname}"
-                                   FontWeight="Bold"
-                                   FontSize="21"
-                                   VerticalAlignment="Bottom" />
-                        <TextBlock x:Name="IDTextBlock"
-                                   Text="{x:Bind HeroPlayerInfo.Account_id}"
-                                   Opacity="0.6"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Bottom"
-                                   Margin="12,0" />
-                    </StackPanel>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Border Grid.Column="0"
-                                                  Grid.RowSpan="3"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center">
-                            <Image Height="84"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Source="{x:Bind HeroPlayerInfo.Hero_photo}" />
-                        </Border>
-                        <StackPanel Grid.Column="1"
-                                    Grid.Row="0"
-                                    Orientation="Horizontal">
-                            <TextBlock Text="{x:Bind HeroPlayerInfo.Hero_name}"
-                                       FontSize="24"
-                                       Margin="12,0"
-                                       VerticalAlignment="Center"
-                                       FontFamily="STKaiti"
-                                       FontWeight="Black" />
-                            <Grid Height="32"
-                                  Width="auto"
-                                  Margin="0,0,0,4">
-                                <Rectangle Height="20"
-                                           Width="36"
-                                           RadiusX="4"
-                                           RadiusY="4"
-                                           Stroke="{ThemeResource GOLDTEXT_FR}"
-                                           StrokeThickness="1.5"
-                                           Opacity="0.5"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind HeroPlayerInfo.Level}"
-                                           FontSize="12"
-                                           Margin="1,0,0,2"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid Height="32"
-                                  Width="auto"
-                                  Margin="4,0,0,4">
-                                <Rectangle Height="20"
-                                           Width="36"
-                                           RadiusX="4"
-                                           RadiusY="4"
-                                           Stroke="Green"
-                                           StrokeThickness="1.5"
-                                           Opacity="0.8"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Text="{x:Bind HeroPlayerInfo.Party_size}"
-                                           FontSize="12"
-                                           Margin="1,0,0,2"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1"
-                                   Grid.Row="1"
-                                   Text="{x:Bind HeroPlayerInfo.KDAString}"
-                                   Margin="16,0"
-                                   VerticalAlignment="Center"
-                                   Opacity="0.7"
-                                   FontFamily="Arial" />
-                        <StackPanel Grid.Column="1"
-                                    Grid.Row="2"
-                                    Orientation="Horizontal"
-                                    Margin="12,0">
-                            <Grid x:Name="Buff1Grid"
+        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="0,108,0,0">
+            <StackPanel Margin="16,0">
+                <!--<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="12,0">
+                        <Grid x:Name="Buff1Grid"
                                   Visibility="Collapsed"
                                   Height="36"
                                   Width="36"
                                   Padding="-4">
-                                <Ellipse Height="32"
+                            <Ellipse Height="32"
                                          Width="32"
                                          Margin="4,0"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
                                          Stroke="Green"
                                          StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
+                                <Ellipse.Fill>
+                                    <ImageBrush Stretch="UniformToFill"
                                                     ImageSource="/Assets/Icons/PermanentBuffs/moon_shard.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff1TextBlock"
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock x:Name="Buff1TextBlock"
                                            Text=" "
                                            Margin="0,0,0,2"
                                            Foreground="White"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff2Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/ultimate_scepter.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff2TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff3Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/silencer_glaives_of_wisdom.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff3TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff4Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/pudge_flesh_heap.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff4TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff5Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/legion_commander_duel.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff5TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff6Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/tome_of_knowledge.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff6TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff7Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/lion_finger_of_death.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff7TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff8Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/slark_essence_shift.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff8TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                            <Grid x:Name="Buff9Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                                <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/abyssal_underlord_atrophy_aura.png" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="Buff9TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                            </Grid>
-                        </StackPanel>
-                    </Grid>
+                        </Grid>
+                    </StackPanel>-->
+                <Grid HorizontalAlignment="Stretch" Margin="0,16,0,0">
+                    <TextBlock Text="Overview" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="16" FontWeight="Bold" Margin="2,0,0,2" CharacterSpacing="40"/>
+                    <TextBlock FontWeight="Bold" Margin="2,0,16,0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="K/D/A">
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.kills}" Foreground="#63916c" CharacterSpacing="20"/>
+                        <Run Text="/" FontWeight="Light"/>
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.deaths}" Foreground="#c55357" CharacterSpacing="20"/>
+                        <Run Text="/" FontWeight="Light"/>
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.assists}" Foreground="#647e8e" CharacterSpacing="20"/>
+                    </TextBlock>
                 </Grid>
-                <TextBlock Text="基础表现"
-                           FontSize="18"
-                           FontWeight="Black"
-                           Opacity="0.8"
-                           Margin="4,16,0,4" />
-                <ListView SelectionMode="None"
-                          IsItemClickEnabled="True"
-                          ItemContainerStyle="{StaticResource ItemContainerStyle}"
-                          ScrollViewer.VerticalScrollMode="Disabled"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <!--<ListView.ItemsPanel>
+                <ListView SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <controls:WrapPanel />
+                            <controls:WrapPanel/>
                         </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>-->
+                    </ListView.ItemsPanel>
                     <ListViewItem Height="auto">
-                        <Grid Height="24"
-                              Padding="2">
+                        <Grid Height="24" Padding="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition />
@@ -396,7 +87,7 @@
                             <Rectangle Grid.Column="0"
                                        RadiusX="4"
                                        RadiusY="4"
-                                       Fill="Gold"
+                                       Fill="{ThemeResource GOLDTEXT_FR}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Height="18"
@@ -409,7 +100,7 @@
                                        FontSize="12"
                                        Foreground="#272839" />
                             <TextBlock Grid.Column="1"
-                                       Text="{x:Bind HeroPlayerInfo.GPM}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay}"
                                        Opacity="0.8"
                                        VerticalAlignment="Center"
                                        Margin="6,0,0,2"
@@ -427,7 +118,7 @@
                             <Rectangle Grid.Column="0"
                                        RadiusX="4"
                                        RadiusY="4"
-                                       Fill="DeepSkyBlue"
+                                       Fill="MediumOrchid"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Height="18"
@@ -440,7 +131,7 @@
                                        FontSize="12"
                                        Foreground="#272839" />
                             <TextBlock Grid.Column="1"
-                                       Text="{x:Bind HeroPlayerInfo.XPM}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay}"
                                        Opacity="0.8"
                                        VerticalAlignment="Center"
                                        Margin="6,0,0,2"
@@ -449,7 +140,7 @@
                         </Grid>
                     </ListViewItem>
                     <ListViewItem Height="auto">
-                        <Grid Height="24"
+                        <!--<Grid Height="24"
                               Padding="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -471,7 +162,38 @@
                                        FontSize="12"
                                        Foreground="#272839" />
                             <TextBlock Grid.Column="1"
-                                       Text="{x:Bind HeroPlayerInfo.KDA}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay}"
+                                       Opacity="0.8"
+                                       VerticalAlignment="Center"
+                                       Margin="6,0,0,2"
+                                       FontSize="16"
+                                       FontWeight="Bold" />
+                        </Grid>-->
+                    </ListViewItem>
+                    <ListViewItem Height="auto">
+                        <Grid Height="24"
+                              Padding="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0"
+                                       RadiusX="4"
+                                       RadiusY="4"
+                                       Fill="{ThemeResource GOLDTEXT_FR}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="18"
+                                       Width="42" />
+                            <TextBlock Grid.Column="0"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="NET WORTH"
+                                       FontSize="11"
+                                       Foreground="#272839" />
+                            <TextBlock Grid.Column="1"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay}"
                                        Opacity="0.8"
                                        VerticalAlignment="Center"
                                        Margin="6,0,0,2"
@@ -489,7 +211,7 @@
                             <Rectangle Grid.Column="0"
                                        RadiusX="4"
                                        RadiusY="4"
-                                       Fill="Goldenrod"
+                                       Fill="{ThemeResource GOLDTEXT_FR}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Height="18"
@@ -498,11 +220,11 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Text="总经济"
+                                       Text="TOTAL GOLD"
                                        FontSize="11"
                                        Foreground="#272839" />
                             <TextBlock Grid.Column="1"
-                                       Text="{x:Bind HeroPlayerInfo.Total_gold}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay}"
                                        Opacity="0.8"
                                        VerticalAlignment="Center"
                                        Margin="6,0,0,2"
@@ -520,7 +242,7 @@
                             <Rectangle Grid.Column="0"
                                        RadiusX="4"
                                        RadiusY="4"
-                                       Fill="DodgerBlue"
+                                       Fill="MediumOrchid"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Height="18"
@@ -529,11 +251,11 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
-                                       Text="总经验"
+                                       Text="TOTAL XP"
                                        FontSize="11"
                                        Foreground="#272839" />
                             <TextBlock Grid.Column="1"
-                                       Text="{x:Bind HeroPlayerInfo.Total_xp}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.total_xp,Mode=OneWay}"
                                        Opacity="0.8"
                                        VerticalAlignment="Center"
                                        Margin="6,0,0,2"
@@ -555,7 +277,7 @@
                             <TextBlock FontWeight="Bold"
                                        Opacity="0.8"
                                        FontSize="14"
-                                       Text="{x:Bind HeroPlayerInfo.Last_hits}" />
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay}" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="auto">
@@ -572,7 +294,7 @@
                             <TextBlock FontWeight="Bold"
                                        Opacity="0.8"
                                        FontSize="14"
-                                       Text="{x:Bind HeroPlayerInfo.Denies}" />
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay}" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="auto">
@@ -589,7 +311,7 @@
                             <TextBlock FontWeight="Bold"
                                        Opacity="0.8"
                                        FontSize="14"
-                                       Text="{x:Bind HeroPlayerInfo.Hero_damage}" />
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay}" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="auto">
@@ -606,7 +328,7 @@
                             <TextBlock FontWeight="Bold"
                                        Opacity="0.8"
                                        FontSize="14"
-                                       Text="{x:Bind HeroPlayerInfo.Hero_healing}" />
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay}" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="auto">
@@ -623,188 +345,130 @@
                             <TextBlock FontWeight="Bold"
                                        Opacity="0.8"
                                        FontSize="14"
-                                       Text="{x:Bind HeroPlayerInfo.Tower_damage}" />
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay}" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
-                <TextBlock Text="物品背包"
-                           FontSize="18"
-                           FontWeight="Black"
-                           Opacity="0.8"
-                           Margin="4,16,0,4" />
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center">
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_0}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
+
+                <TextBlock Text="Items" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="16" FontWeight="Bold" Margin="2,16,0,2" CharacterSpacing="40"/>
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <controls:WrapPanel Orientation="Horizontal">
+                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem0,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item0ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="32" Width="44" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem1,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item1ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="32" Width="44" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem2,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item2ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="32" Width="44" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem3,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item3ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="32" Width="44" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem4,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item4ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="32" Width="44" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItem5,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.Item5ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                        </Border>
+                        <Border Height="26" Width="35" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" VerticalAlignment="Bottom" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItemB0,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.ItemB0ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                        </Border>
+                        <Border Height="26" Width="35" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" VerticalAlignment="Bottom" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItemB1,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.ItemB1ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                        </Border>
+                        <Border Height="26" Width="35" Margin="6,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" VerticalAlignment="Bottom" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItemB2,Mode=OneWay}">
+                            <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.ItemB2ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                        </Border>
+                        <Border Margin="6,0,4,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" VerticalAlignment="Bottom" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.sNameItemN,Mode=OneWay}">
+                            <Image Width="35" Height="26" Source="{x:Bind ViewModel.CurrentMatchPlayer.ItemNImageSource,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+                        </Border>
+                    </controls:WrapPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <!--熊灵-->
+                        <Grid Height="26" Width="46" CornerRadius="4" Margin="0,0,8,0" ToolTipService.ToolTip="Spirit Bear" Visibility="{x:Bind ViewModel.CurrentMatchPlayer.hero_id,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=80}">
+                            <Grid.Background>
+                                <ImageBrush>
+                                    <ImageBrush.ImageSource>
+                                        <BitmapImage UriSource="/Assets/Icons/Hero/lone_druid_bear.png" DecodePixelHeight="26" DecodePixelType="Logical"/>
+                                    </ImageBrush.ImageSource>
+                                </ImageBrush>
+                            </Grid.Background>
+                            <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="Transparent" Style="{StaticResource NoClickEffectButtonStyle}">
+                                <Button.Flyout>
+                                    <Flyout Placement="Right">
+                                        <Flyout.FlyoutPresenterStyle>
+                                            <Style TargetType="FlyoutPresenter">
+                                                <Setter Property="CornerRadius" Value="6" />
+                                                <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                                <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
+                                            </Style>
+                                        </Flyout.FlyoutPresenterStyle>
+                                        <Grid HorizontalAlignment="Center">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.Row="0" Height="48" Width="48" CornerRadius="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <Border.Background>
+                                                    <ImageBrush>
+                                                        <ImageBrush.ImageSource>
+                                                            <BitmapImage UriSource="/Assets/Icons/Hero/lone_druid_spirit_bear_ability.png" DecodePixelHeight="48" DecodePixelType="Logical"/>
+                                                        </ImageBrush.ImageSource>
+                                                    </ImageBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Grid.Row="0" Text="Spirit Bear" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="14" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" CharacterSpacing="20"/>
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem0,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item0ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                                <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem1,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item1ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                                <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem2,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item2ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,4">
+                                                <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem3,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item3ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                                <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem4,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item4ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                                <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItem5,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.Item5ImageSource,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                </Border>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <Border Margin="0,0,2,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItemN,Mode=OneWay}">
+                                                    <Image Width="35" Height="26" Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.ItemNImageSource,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+                                                </Border>
+                                                <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItemB0,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.ItemB0ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                                                </Border>
+                                                <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItemB1,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.ItemB1ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                                                </Border>
+                                                <Border Height="26" Width="35" Margin="4,0,0,0" CornerRadius="4" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.sNameItemB2,Mode=OneWay}">
+                                                    <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.SpiritBear.ItemB2ImageSource,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.8"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
                         </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_1}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_2}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_3}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_4}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="56"
-                                  Height="42">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="41"
-                                       Width="55" />
-                            <Image Stretch="Uniform"
-                                   Margin="1">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Item_5}"
-                                                 DecodePixelWidth="48"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center">
-                    <GridViewItem Width="48"
-                                  Height="32">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="34"
-                                       Width="47" />
-                            <Image Stretch="Uniform"
-                                   Margin="1"
-                                   Opacity="0.7">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Backpack_0}"
-                                                 DecodePixelWidth="42"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="48"
-                                  Height="32">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="34"
-                                       Width="47" />
-                            <Image Stretch="Uniform"
-                                   Margin="1"
-                                   Opacity="0.7">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Backpack_1}"
-                                                 DecodePixelWidth="42"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                    <GridViewItem Width="48"
-                                  Height="32">
-                        <Grid>
-                            <Rectangle Margin="1"
-                                       Fill="Gray"
-                                       Opacity="0.3"
-                                       Height="34"
-                                       Width="47" />
-                            <Image Stretch="Uniform"
-                                   Margin="1"
-                                   Opacity="0.7">
-                                <Image.Source>
-                                    <BitmapImage UriSource="{x:Bind HeroPlayerInfo.Backpack_2}"
-                                                 DecodePixelWidth="4428"
-                                                 DecodePixelType="Logical" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
-                    </GridViewItem>
-                </StackPanel>
+                    </StackPanel>
+                </Grid>
+
                 <TextBlock Text="技能加点"
                            FontSize="18"
                            FontWeight="Black"
@@ -836,20 +500,19 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
-                <TextBlock Text="数据排名"
+                <!--<TextBlock Text="数据排名"
                            FontSize="18"
                            FontWeight="Black"
                            Opacity="0.8"
                            Margin="4,16,0,4" />
                 <ListView HorizontalContentAlignment="Stretch"
                           SelectionMode="None"
-                          IsItemClickEnabled="True"
-                          ItemContainerStyle="{StaticResource ItemContainerStyle}">
-                    <!--<ListView.ItemsPanel>
+                          IsItemClickEnabled="True">
+                    <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <controls:WrapPanel />
+                            <controls:WrapPanel/>
                         </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>-->
+                    </ListView.ItemsPanel>
                     <ListViewItem Height="56">
                         <Grid Height="52">
                             <Grid.RowDefinitions>
@@ -865,14 +528,14 @@
                                            VerticalAlignment="Center" />
                                 <TextBlock Grid.Row="0"
                                            Foreground="Gold"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_gpm.Raw}"
+                                           Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.gold_per_min.raw,Mode=OneWay}"
                                            FontFamily="Arial"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center" />
                             </StackPanel>
                             <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_gpm.Pct}"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.gold_per_min.pct,Mode=OneWay}"
                                        FontFamily="Arial"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
@@ -893,15 +556,13 @@
                                            VerticalAlignment="Center" />
                                 <TextBlock Grid.Row="0"
                                            Foreground="DodgerBlue"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_xpm.Raw}"
-                                           FontFamily="Arial"
+                                           Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.xp_per_min.raw,Mode=OneWay}"
                                            FontWeight="Bold"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center" />
                             </StackPanel>
                             <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_xpm.Pct}"
-                                       FontFamily="Arial"
+                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.xp_per_min.pct,Mode=OneWay}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                         </Grid>
@@ -1046,9 +707,65 @@
                                        VerticalAlignment="Center" />
                         </Grid>
                     </ListViewItem>
-                </ListView>
+                </ListView>-->
             </StackPanel>
         </ScrollViewer>
+
+        <!--标题栏-->
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Padding="16,36,16,0">
+            <Grid.Background>
+                <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
+                              FallbackColor="{ThemeResource APPLICATION_BK}" TintLuminosityOpacity="0.2" TintOpacity="0.1"/>
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!--返回按钮-->
+            <Button Grid.Column="0" Margin="0,0,0,0" Width="38" Height="38" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" ToolTipService.ToolTip="Go Back"
+                    Content="&#xE652;" FontFamily="Segoe MDL2 Assets" FontSize="14" Padding="0,1,0,-1"/>
+            <Grid Grid.Column="1" Width="96" Height="54" CornerRadius="6" Margin="16,0,8,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image Width="96" Height="54" Source="{x:Bind ViewModel.CurrentMatchPlayer.ImageSource,Mode=OneWay}"/>
+                <Grid Height="36" Width="36" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Polygon Points="0,0,36,0,0,36">
+                        <Polygon.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStopCollection>
+                                    <GradientStop Offset="0" Color="#000000"/>
+                                    <GradientStop Offset="0.4" Color="#80000000"/>
+                                    <GradientStop Offset="0.5" Color="#00000000"/>
+                                </GradientStopCollection>
+                            </LinearGradientBrush>
+                        </Polygon.Fill>
+                    </Polygon>
+                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.level,Mode=OneWay}" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="#fada9e" FontWeight="Bold" Margin="2,0,0,0" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" Visibility="{x:Bind ViewModel.CurrentMatchPlayer.personaname,Mode=OneWay,Converter={StaticResource IsNull2Vis}}"
+                               Text="{x:Bind ViewModel.CurrentMatchPlayer.personaname,Mode=OneWay}" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+                               ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.name,Mode=OneWay}" CharacterSpacing="40" Margin="4,0,20,0"
+                               FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="17" VerticalAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Left" Visibility="{x:Bind ViewModel.CurrentMatchPlayer.personaname,Mode=OneWay,Converter={StaticResource IsNull2Vis},ConverterParameter=-}"
+                               Text="Anonymous" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+                               ToolTipService.ToolTip="{x:Bind ViewModel.CurrentMatchPlayer.name,Mode=OneWay}" CharacterSpacing="40" Margin="4,0,20,0"
+                               FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="17" Opacity="0.7" VerticalAlignment="Center"/>
+                </Grid>
+                <TextBlock HorizontalAlignment="Left" Visibility="{x:Bind ViewModel.CurrentMatchPlayer.account_id,Mode=OneWay,Converter={StaticResource IsNull2Vis}}"
+                           FontWeight="Bold" TextTrimming="CharacterEllipsis" CharacterSpacing="40" Margin="4,4,4,0"
+                           FontSize="14" Opacity="0.5" VerticalAlignment="Center" FontFamily="Consolas" IsTextSelectionEnabled="True">
+                    <Run Text="ID"/>
+                    <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.account_id,Mode=OneWay}"/>
+                </TextBlock>
+            </StackPanel>
+            <Grid Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                <Image Source="{x:Bind ViewModel.CurrentMatchPlayer.rank_tier,Mode=OneWay,Converter={StaticResource Rank2Image},ConverterParameter=54}" Height="54" Width="54"/>
+            </Grid>
+        </Grid>
     </Grid>
 
 </Page>

@@ -90,7 +90,13 @@
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="2.3*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        
+        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}"
+              BorderThickness="{x:Bind MainViewModel.bShowSplitLine,Mode=OneWay,Converter={StaticResource Setting2Thickness}}" BorderBrush="{ThemeResource SPLITLINE_BK}">
+            <Frame x:Name="MatchFrame"/>
+        </Grid>
+
+        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" Background="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -573,11 +579,6 @@
                 <ProgressBar Foreground="{ThemeResource SIMPLETEXT_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                 <TextBlock Text="fetching heroes and items list..." FontWeight="Medium" CharacterSpacing="40" FontSize="12" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,12,0,18"/>
             </Grid>
-        </Grid>
-
-        <Grid x:Name="MatchGrid" Grid.Column="1" Shadow="{StaticResource FrameShadow}"
-              BorderThickness="{x:Bind MainViewModel.bShowSplitLine,Mode=OneWay,Converter={StaticResource Setting2Thickness}}" BorderBrush="{ThemeResource SPLITLINE_BK}">
-            <Frame x:Name="MatchFrame"/>
         </Grid>
 
         <Grid x:Name="BindGrid" Visibility="Collapsed" Grid.ColumnSpan="2">

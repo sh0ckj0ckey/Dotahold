@@ -1,4 +1,5 @@
 ﻿using OpenDota_UWP.Helpers;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,9 +25,33 @@ namespace OpenDota_UWP.Views
     /// </summary>
     public sealed partial class MatchPlayerPage : Page
     {
+        private DotaMatchesViewModel ViewModel = null;
+        private DotaViewModel MainViewModel = null;
+
         public MatchPlayerPage()
         {
-            this.InitializeComponent();
+            try
+            {
+                this.InitializeComponent();
+                ViewModel = DotaMatchesViewModel.Instance;
+                MainViewModel = DotaViewModel.Instance;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 重写导航至此页面的代码
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            try
+            {
+                base.OnNavigatedTo(e);
+
+                PlayerInfoScrollViewer?.ChangeView(0, 0, 1, true);
+            }
+            catch { }
         }
 
         /// <summary>
