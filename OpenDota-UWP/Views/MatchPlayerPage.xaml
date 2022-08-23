@@ -197,30 +197,6 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Button BorderThickness="0"
-                    Style="{StaticResource ButtonStyle1}"
-                    Height="36"
-                    Margin="8"
-                    HorizontalAlignment="Stretch"
-                    Click="Button_Click"
-                    PointerEntered="Button_PointerEntered"
-                    PointerExited="Button_PointerExited">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontFamily="Segoe UI Symbol"
-                                   Text="&#xE0D5;"
-                                   FontSize="12"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Center" />
-                        <TextBlock x:Name="BackButtonTextBlock"
-                                   Text="  Back to the Game Overview"
-                                   FontWeight="Bold"
-                                   VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-        </Grid>
         <ScrollViewer Grid.Row="1">
             <StackPanel Margin="32,0">
                 <Grid Height="auto">

@@ -63,7 +63,7 @@
                       HorizontalAlignment="Stretch" SelectionMode="None" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="Models:RankingPlayer">
-                        <Grid Height="48" Margin="0,4,0,0" MinWidth="482" MaxWidth="482">
+                        <Grid Height="48" Margin="0,4,0,0" MinWidth="482" MaxWidth="482" Padding="8,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="56" />
                                 <ColumnDefinition Width="38" />

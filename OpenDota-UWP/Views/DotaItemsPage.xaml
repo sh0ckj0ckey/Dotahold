@@ -220,7 +220,7 @@
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaItemModel">
-                        <Grid Height="60">
+                        <Grid Height="60" Padding="12,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
@@ -245,7 +245,7 @@
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:DotaItemModel">
-                        <Grid Height="60">
+                        <Grid Height="60" Padding="12,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />

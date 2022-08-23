@@ -41,7 +41,7 @@
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#353545</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
 
-                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#2e303f</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#08FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_LISTITEM_BD">#484a57</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#14FFFFFF</Color>
@@ -163,7 +163,7 @@
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#FFFFFF</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#08666666</Color>
 
-                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#edeef2</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BK">#06000000</Color>
                     <Color x:Key="MATCHPLAYER_LISTITEM_BD">#14000000</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#16000000</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#20AAAAAA</Color>

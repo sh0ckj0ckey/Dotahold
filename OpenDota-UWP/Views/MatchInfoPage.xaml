@@ -252,7 +252,7 @@
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                               HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
                               ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
-                              SelectionMode="None" IsItemClickEnabled="False"
+                              SelectionMode="None" IsItemClickEnabled="True"
                               ItemsSource="{x:Bind ViewModel.CurrentMatchInfo.players,Mode=OneWay}">
                         <ListView.Template>
                             <ControlTemplate>
@@ -514,6 +514,9 @@
                                             <TextBlock FontFamily="Consolas" FontWeight="Bold" FontSize="12" Text="{x:Bind iPartyId,Mode=OneWay}" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
+
+                                    <!--<Button Grid.ColumnSpan="4" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource NoClickEffectButtonStyle}"/>-->
+
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

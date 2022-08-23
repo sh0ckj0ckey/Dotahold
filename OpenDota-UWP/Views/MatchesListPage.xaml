@@ -44,7 +44,7 @@
                     </ListView.Template>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                            <Grid Height="56" Width="Auto">
+                            <Grid Height="56" Width="Auto" Padding="12,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>

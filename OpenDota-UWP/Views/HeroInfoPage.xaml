@@ -461,7 +461,7 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Ability">
-                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition/>

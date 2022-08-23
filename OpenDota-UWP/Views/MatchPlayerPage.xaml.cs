@@ -169,36 +169,5 @@ namespace OpenDota_UWP.Views
         {
             this.Frame.GoBack();
         }
-        private void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            BackButtonTextBlock.Text = "   Back to the Game Overview";
-        }
-        private void Button_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-
-            BackButtonTextBlock.Text = "  Back to the Game Overview";
-        }
-
-        public async void ShowDialog()
-        {
-            var dialog = new ContentDialog()
-            {
-                Title = ":( 数据解析失败",
-                Content = "不知为什么，数据解析失败了，烦请发送比赛编号到yaoyiming123@live.com，谢谢！",
-                PrimaryButtonText = "Okay",
-                FullSizeDesired = false
-            };
-
-            dialog.PrimaryButtonClick += (_s, _e) =>
-            {
-                this.Frame.GoBack();
-            };
-            try
-            {
-                await dialog.ShowAsync();
-            }
-            catch { }
-        }
-
     }
 }
