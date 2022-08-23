@@ -104,5 +104,15 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        /// 点击玩家查看其详细数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickPlayer(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }

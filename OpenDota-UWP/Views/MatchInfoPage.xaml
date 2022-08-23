@@ -252,7 +252,7 @@
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                               HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
                               ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
-                              SelectionMode="None" IsItemClickEnabled="True"
+                              SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnClickPlayer"
                               ItemsSource="{x:Bind ViewModel.CurrentMatchInfo.players,Mode=OneWay}">
                         <ListView.Template>
                             <ControlTemplate>
