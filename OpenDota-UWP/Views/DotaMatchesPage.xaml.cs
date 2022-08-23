@@ -71,7 +71,7 @@ namespace OpenDota_UWP.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                if (string.IsNullOrEmpty(ViewModel.sSteamId))
+                if (string.IsNullOrEmpty(DotaMatchesViewModel.Instance.sSteamId))
                 {
                     BindAccount();
                 }

@@ -47,7 +47,7 @@ namespace OpenDota_UWP.Views
             {
                 base.OnNavigatedTo(e);
 
-                ViewModel.GetAllMatchesAsync();
+                DotaMatchesViewModel.Instance.GetAllMatchesAsync();
             }
             catch { }
         }

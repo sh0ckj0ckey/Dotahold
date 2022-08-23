@@ -59,7 +59,7 @@ namespace OpenDota_UWP.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                _ = await ViewModel?.LoadDotaHeroes();
+                _ = await DotaHeroesViewModel.Instance?.LoadDotaHeroes();
             }
             catch { }
         }

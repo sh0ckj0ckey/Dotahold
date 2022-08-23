@@ -65,7 +65,7 @@ namespace OpenDota_UWP.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                _ = await ViewModel?.LoadDotaItems();
+                _ = await DotaItemsViewModel.Instance?.LoadDotaItems();
             }
             catch { }
         }
