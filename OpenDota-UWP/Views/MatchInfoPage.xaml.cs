@@ -33,6 +33,8 @@ namespace OpenDota_UWP.Views
         private DotaMatchesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
+        private SlideNavigationTransitionInfo SlideNaviTransition = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
+
         public MatchInfoPage()
         {
             try
@@ -112,7 +114,15 @@ namespace OpenDota_UWP.Views
         /// <param name="e"></param>
         private void OnClickPlayer(object sender, ItemClickEventArgs e)
         {
-
+            try
+            {
+                if (e.ClickedItem is Models.Player player)
+                {
+                    ViewModel.CurrentMatchPlayer = player;
+                    this.Frame.Navigate(typeof(MatchPlayerPage), null, SlideNaviTransition);
+                }
+            }
+            catch { }
         }
     }
 }

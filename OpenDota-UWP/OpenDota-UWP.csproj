@@ -158,7 +158,6 @@
     <Compile Include="Converters\UnequalToVisibilityConverter.cs" />
     <Compile Include="Helpers\ImageCacheManager.cs" />
     <Compile Include="Helpers\ConstantsCourier.cs" />
-    <Compile Include="Helpers\DotaMatchHelper.cs" />
     <Compile Include="Helpers\ExceptionHandlingSynchronizationContext.cs" />
     <Compile Include="Helpers\ImageLoader.cs" />
     <Compile Include="Helpers\StorageFilesCourier.cs" />

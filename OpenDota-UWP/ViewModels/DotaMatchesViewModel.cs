@@ -140,6 +140,14 @@ namespace OpenDota_UWP.ViewModels
             set { Set("CurrentMatchInfo", ref _CurrentMatchInfo, value); }
         }
 
+        // 当前正在查看的玩家数据
+        private Player _CurrentMatchPlayer = null;
+        public Player CurrentMatchPlayer
+        {
+            get { return _CurrentMatchPlayer; }
+            set { Set("CurrentMatchPlayer", ref _CurrentMatchPlayer, value); }
+        }
+
         // 请求过的比赛缓存起来
         private Dictionary<long, DotaMatchInfoModel> _MatchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
 
