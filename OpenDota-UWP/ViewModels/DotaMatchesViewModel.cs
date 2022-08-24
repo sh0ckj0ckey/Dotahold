@@ -1,4 +1,5 @@
-﻿using LiveChartsCore.SkiaSharpView;
+﻿using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Newtonsoft.Json;
 using OpenDota_UWP.Helpers;
@@ -1597,6 +1598,29 @@ namespace OpenDota_UWP.ViewModels
             }
             catch { }
             return false;
+        }
+
+        /// <summary>
+        /// 分析当前选择玩家的数据
+        /// </summary>
+        /// <returns></returns>
+        public void AnalyzePlayerInfo()
+        {
+            try
+            {
+                if (CurrentMatchPlayer != null)
+                {
+                    try
+                    {
+                        double ka = CurrentMatchPlayer.kills ?? 0 + CurrentMatchPlayer.assists ?? 0;
+                        double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
+                        double kda = ka / d;
+                        CurrentMatchPlayer.KDA = Math.Floor(100 * kda) / 100;
+                    }
+                    catch { }
+                }
+            }
+            catch { }
         }
     }
 }

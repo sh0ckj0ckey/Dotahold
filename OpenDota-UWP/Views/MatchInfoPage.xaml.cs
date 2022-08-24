@@ -119,6 +119,7 @@ namespace OpenDota_UWP.Views
                 if (e.ClickedItem is Models.Player player)
                 {
                     ViewModel.CurrentMatchPlayer = player;
+                    ViewModel.AnalyzePlayerInfo();
                     this.Frame.Navigate(typeof(MatchPlayerPage), null, SlideNaviTransition);
                 }
             }

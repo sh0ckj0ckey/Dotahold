@@ -129,6 +129,10 @@ namespace OpenDota_UWP.Models
         public bool? randomed { get; set; }
         public Benchmarks benchmarks { get; set; }
 
+        // KDA
+        [Newtonsoft.Json.JsonIgnore]
+        public double KDA { get; set; } = 0.0;
+
         // 目前只处理熊灵这一个额外单位
         [Newtonsoft.Json.JsonIgnore]
         public Additional_Units SpiritBear { get; set; } = null;

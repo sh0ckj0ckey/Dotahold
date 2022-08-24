@@ -35,7 +35,7 @@
 
     <Grid>
         <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,0,0">
-            <StackPanel Margin="16,0">
+            <StackPanel Margin="8,0">
                 <!--<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="12,0">
                         <Grid x:Name="Buff1Grid"
                                   Visibility="Collapsed"
@@ -62,302 +62,132 @@
                                            VerticalAlignment="Center" />
                         </Grid>
                     </StackPanel>-->
-                <Grid HorizontalAlignment="Stretch" Margin="0,16,0,0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,12">
-                        <FontIcon Glyph="&#xEB3C;" Margin="24,0,8,0" FontSize="20"/>
+
+                <!--数据统计-->
+                <Grid HorizontalAlignment="Stretch" Margin="0,16,0,8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,0,0,0">
+                        <FontIcon Glyph="&#xEB3C;" Margin="0,0,8,0" FontSize="20"/>
                         <TextBlock Text="Overview" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                     </StackPanel>
                     <TextBlock FontWeight="Bold" Margin="2,0,16,0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="K/D/A">
-                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.kills}" Foreground="#63916c" CharacterSpacing="20"/>
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.kills,Mode=OneWay}" Foreground="#63916c" CharacterSpacing="20"/>
                         <Run Text="/" FontWeight="Light"/>
-                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.deaths}" Foreground="#c55357" CharacterSpacing="20"/>
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.deaths,Mode=OneWay}" Foreground="#c55357" CharacterSpacing="20"/>
                         <Run Text="/" FontWeight="Light"/>
-                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.assists}" Foreground="#647e8e" CharacterSpacing="20"/>
+                        <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.assists,Mode=OneWay}" Foreground="#647e8e" CharacterSpacing="20"/>
                     </TextBlock>
                 </Grid>
-                <ListView SelectionMode="None" IsItemClickEnabled="False" ScrollViewer.VerticalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListViewItem>
-                        <Grid Height="24" Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="{ThemeResource GOLDTEXT_FR}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="36" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="GPM"
-                                       FontSize="12"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <Grid Height="24"
-                              Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="MediumOrchid"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="36" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="XPM"
-                                       FontSize="12"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <!--<Grid Height="24"
-                              Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="Red"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="36" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="KDA"
-                                       FontSize="12"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>-->
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <Grid Height="24"
-                              Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="{ThemeResource GOLDTEXT_FR}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="42" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="NET WORTH"
-                                       FontSize="11"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <Grid Height="24"
-                              Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="{ThemeResource GOLDTEXT_FR}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="42" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="TOTAL GOLD"
-                                       FontSize="11"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <Grid Height="24"
-                              Padding="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0"
-                                       RadiusX="4"
-                                       RadiusY="4"
-                                       Fill="MediumOrchid"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Height="18"
-                                       Width="42" />
-                            <TextBlock Grid.Column="0"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="TOTAL XP"
-                                       FontSize="11"
-                                       Foreground="#272839" />
-                            <TextBlock Grid.Column="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.total_xp,Mode=OneWay}"
-                                       Opacity="0.8"
-                                       VerticalAlignment="Center"
-                                       Margin="6,0,0,2"
-                                       FontSize="16"
-                                       FontWeight="Bold" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Padding="2">
-                            <Image Source="/Assets/Icons/Data/icon_creep.png"
-                                   Height="16"
-                                   Width="16" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Margin="12,0,0,0"
-                                       Text="击杀小兵: " />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay}" />
+                <controls:WrapPanel>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="KDA"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="KDA " Foreground="ForestGreen"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Gold Per Min"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="GPM " Foreground="{ThemeResource GOLDTEXT_FR}"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="XP Per Min"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="XPM " Foreground="MediumOrchid"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="NET WORTH"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="NET Worth " Foreground="{ThemeResource GOLDTEXT_FR}"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOTAL GOLD"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="Total Gold " Foreground="{ThemeResource GOLDTEXT_FR}"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOTAL XP"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            <Run Text="Total XP " Foreground="MediumOrchid"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.total_xp,Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="LAST HITS"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Height="16" Width="16" VerticalAlignment="Center" Margin="0,-6">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Icons/Data/icon_creep.png" DecodePixelHeight="16" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="Last Hits" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Padding="2">
-                            <Image Source="/Assets/Icons/Data/icon_denied.png"
-                                   Height="16"
-                                   Width="16" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Margin="12,0,0,0"
-                                       Text="反补: " />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay}" />
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="DENIES"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Height="16" Width="16" VerticalAlignment="Center" Margin="0,-6">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Icons/Data/icon_denied.png" DecodePixelHeight="16" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="Denies" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Padding="2">
-                            <Image Source="/Assets/Icons/Data/icon_attack.png"
-                                   Height="16"
-                                   Width="16" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Margin="12,0,0,0"
-                                       Text="英雄伤害: " />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay}" />
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="HERO DAMAGE"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Height="22" Width="22" VerticalAlignment="Center" Margin="0,-6,0,-6">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Icons/Data/icon_attack.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="Hero Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Padding="2">
-                            <Image Source="/Assets/Icons/Data/icon_defend.png"
-                                   Height="16"
-                                   Width="16" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Margin="12,0,0,0"
-                                       Text="英雄治疗: " />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay}" />
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="HERO HEALING"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Height="22" Width="22" VerticalAlignment="Center" Margin="0,-10,0,-6">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Icons/Data/icon_defend.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="Hero Healing" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="auto">
-                        <StackPanel Orientation="Horizontal"
-                                    Padding="2">
-                            <Image Source="/Assets/Icons/Data/icon_towerdamage.png"
-                                   Height="16"
-                                   Width="16" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Margin="12,0,0,0"
-                                       Text="TOWER DAMAGE" />
-                            <TextBlock FontWeight="Bold"
-                                       Opacity="0.8"
-                                       FontSize="14"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay}" />
+                    </Border>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOWER DAMAGE"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image Height="22" Width="22" VerticalAlignment="Center" Margin="0,-10,0,-6">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Icons/Data/icon_towerdamage.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="Tower Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </ListViewItem>
-                </ListView>
+                    </Border>
+                </controls:WrapPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,8">
-                    <FontIcon Glyph="&#xEC0A;" Margin="24,0,8,0" FontSize="20"/>
+                <!--物品-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,6,0,8">
+                    <FontIcon Glyph="&#xEC0A;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Items" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="16,0,0,0">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="2,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -428,8 +258,9 @@
                     </controls:WrapPanel>
                 </Grid>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,12">
-                    <FontIcon Glyph="&#xE945;" Margin="24,0,8,0" FontSize="20"/>
+                <!--技能加点-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                    <FontIcon Glyph="&#xE945;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Abilities" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
                 <!--<GridView SelectionMode="None"
@@ -458,8 +289,8 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,16,0,12">
-                    <FontIcon Glyph="&#xF159;" Margin="24,0,8,0" FontSize="20"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                    <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
                 <!--<TextBlock Text="数据排名"
