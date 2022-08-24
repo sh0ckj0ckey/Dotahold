@@ -106,10 +106,7 @@
                     HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
                 <Button.Content>
-                    <TextBlock Text="&#xE652;" Foreground="White"
-                               FontFamily="Segoe MDL2 Assets"
-                               FontSize="16"
-                               VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE652;" Foreground="White" FontSize="16"/>
                 </Button.Content>
             </Button>
             <!--背景故事按钮-->
@@ -118,10 +115,7 @@
                     Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_1">
                 <Button.Content>
-                    <TextBlock Text="&#xE736;" Foreground="White"
-                               FontFamily="Segoe MDL2 Assets"
-                               FontSize="16"
-                               VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE736;" Foreground="White" FontSize="16"/>
                 </Button.Content>
             </Button>
             <!--英雄榜按钮-->
@@ -130,10 +124,7 @@
                     Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
                 <Button.Content>
-                    <TextBlock Text="&#xE179;" Foreground="White"
-                               FontFamily="Segoe MDL2 Assets"
-                               FontSize="16"
-                               VerticalAlignment="Center" />
+                    <FontIcon Glyph="&#xE179;" Foreground="White" FontSize="16"/>
                 </Button.Content>
             </Button>
             <!--英雄头像和背景介绍-->

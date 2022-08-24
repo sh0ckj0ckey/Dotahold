@@ -77,11 +77,10 @@
                     VerticalAlignment="Bottom"
                     BorderThickness="0"
                     ToolTipService.ToolTip="Setting"
-                    Foreground="White"
-                    Click="AppBarButton_Click_3"
-                    FontFamily="Segoe UI Symbol"
-                    Content="&#xE115;"
-                    FontSize="20"/>
+                    Foreground="#FFFFFF"
+                    Click="AppBarButton_Click_3">
+                <FontIcon Glyph="&#xE713;" FontSize="20"/>
+            </Button>
         </Grid>
         <Frame x:Name="MainFrame" Grid.Column="1" Background="{ThemeResource APPLICATION_BK}" Shadow="{StaticResource FrameShadow}"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -118,7 +117,7 @@
                                     <!--个性化-->
                                     <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,12,0,0" HorizontalAlignment="Stretch">
                                         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE790;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                            <FontIcon Glyph="&#xE790;" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Customize" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
@@ -169,7 +168,7 @@
                                     <!--数据-->
                                     <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xEB05;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                            <FontIcon Glyph="&#xEB05;" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Data" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
@@ -193,7 +192,7 @@
                                                 Click="OnClickClearImageCache">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xEA99;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                    <FontIcon Glyph="&#xEA99;" FontSize="15" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Clear Cache"/>
                                                 </StackPanel>
                                             </Button.Content>
@@ -206,7 +205,7 @@
                                     <!--实验性-->
                                     <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xEA80;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                            <FontIcon Glyph="&#xEA80;" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Experimental" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
@@ -251,7 +250,7 @@
                                     <Grid Background="{ThemeResource SETTING_TITLE_BK}" CornerRadius="6,6,0,0" Height="36" Margin="0,8,0,0" HorizontalAlignment="Stretch"
                                           Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xEC7A;" FontFamily="Segoe MDL2 Assets" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                            <FontIcon Glyph="&#xEC7A;" FontSize="16" Margin="12,0,0,0" VerticalAlignment="Center"/>
                                             <TextBlock Text="Development" FontWeight="Medium" FontSize="16" Margin="6,0,0,0" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </Grid>
@@ -270,7 +269,7 @@
                                                 Click="OnClickOpenDataDir">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xED43;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                    <FontIcon Glyph="&#xED43;" FontSize="16" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -279,7 +278,7 @@
                                                 Click="OnClickOpenImageCacheDir">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xEB9F;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                    <FontIcon Glyph="&#xEB9F;" FontSize="16" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -289,7 +288,7 @@
                                                       Click="OnClickDisableApiRequest">
                                             <ToggleButton.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xF384;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                    <FontIcon Glyph="&#xF384;" FontSize="16" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </ToggleButton.Content>
                                         </ToggleButton>
@@ -298,7 +297,7 @@
                                                       Click="OnClickForceApiRequest">
                                             <ToggleButton.Content>
                                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xF16A;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                                                    <FontIcon Glyph="&#xF16A;" FontSize="16" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </ToggleButton.Content>
                                         </ToggleButton>

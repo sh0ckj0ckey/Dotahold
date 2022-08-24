@@ -179,7 +179,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                        Text="Items" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-            <Button Grid.Row="1" Height="36" Width="36" Margin="0,0,4,0" FontFamily="Segoe MDL2 Assets" Content="&#xE945;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"
+            <Button Grid.Row="1" Height="36" Width="36" Margin="0,0,4,0" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"
                     Style="{ThemeResource TextBlockButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="Search Setting">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
@@ -196,19 +196,20 @@
                                          Checked="RadioButton_Checked" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=True,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Fuzzy Search" FontSize="13" VerticalAlignment="Center"/>
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA79;" Opacity="0.7" VerticalAlignment="Center" FontSize="18" Margin="4,0,2,-6"/>
+                                    <FontIcon Glyph="&#xEA79;" Foreground="White" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-6"/>
                                 </StackPanel>
                             </RadioButton>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Faster" Style="{StaticResource SearchSettingRadioButtonStyle}"
                                          Checked="RadioButton_Checked_1" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=False,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Full Word Match" FontSize="13" VerticalAlignment="Center"/>
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEA5E;" Opacity="0.7" VerticalAlignment="Center" FontSize="16" Margin="4,0,2,-2"/>
+                                    <FontIcon Glyph="&#xEA5E;" Foreground="White" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-2"/>
                                 </StackPanel>
                             </RadioButton>
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
+                <FontIcon Glyph="&#xE9E9;" />
             </Button>
             <TextBox Grid.Row="1" Height="36" Margin="16,8,42,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" Template="{StaticResource CornerTextBoxTemplate}" AcceptsReturn="False"

@@ -93,7 +93,7 @@
                             <StackPanel Orientation="Horizontal" Padding="16,0">
                                 <!--Game Mode-->
                                 <Grid Margin="0,0,12,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                    <FontIcon Glyph="&#xF159;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <FontIcon Glyph="&#xE7FC;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <TextBlock Text="Game Mode" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
                                         <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.game_mode,Mode=OneWay,Converter={StaticResource Int2GameMode}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
