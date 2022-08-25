@@ -32,6 +32,7 @@
             <cvt:RankTierToImageConverter x:Key="Rank2Image"/>
             <cvt:DoubleToPingColorConverter x:Key="Double2Color"/>
             <cvt:DoubleToPingIconConverter x:Key="Double2Icon"/>
+            <cvt:StringToRuneConverter x:Key="Str2Rune"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -193,7 +194,7 @@
                         </StackPanel>
                     </Border>
                 </controls:WrapPanel>
-                
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
                     <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Buff" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
@@ -306,14 +307,38 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
+                <!--物品购买记录-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
                     <FontIcon Glyph="&#xE9D5;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
+                <!--神符激活记录-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
                     <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
+                <ListView IsItemClickEnabled="False" SelectionMode="None"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                          Margin="0,0,0,0" Padding="8,0,8,0"
+                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="mdl:Runes_Log">
+                            <Border CornerRadius="4" Margin="-16,0,0,0" Padding="10,4,10,4" Background="{ThemeResource MATCHPLAYER_DATA_BK}"
+                                    Visibility="{x:Bind key,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Height="32" Width="32" VerticalAlignment="Center" Source="{x:Bind key,Mode=OneWay,Converter={StaticResource Str2Rune}}"/>
+                                    <TextBlock Text="{x:Bind time,Mode=OneWay,Converter={StaticResource Long2Min}}" FontSize="14" Margin="4,0,8,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <!--<TextBlock Text="数据排名"
                            FontSize="18"
                            FontWeight="Black"
@@ -543,7 +568,7 @@
             <!--返回按钮-->
             <Button Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="38" Height="38" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" ToolTipService.ToolTip="Go Back">
-                <FontIcon Glyph="&#xE652;" Foreground="White" FontSize="16"/>
+                <FontIcon Glyph="&#xE652;" FontSize="16"/>
             </Button>
             <Grid Grid.Column="0" Grid.Row="1" Width="96" Height="54" CornerRadius="6" Margin="0,12,8,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image Width="96" Height="54" Source="{x:Bind ViewModel.CurrentMatchPlayer.ImageSource,Mode=OneWay}"/>

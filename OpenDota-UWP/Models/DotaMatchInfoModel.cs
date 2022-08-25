@@ -650,7 +650,7 @@ namespace OpenDota_UWP.Models
 
     public class Runes_Log
     {
-        public int? time { get; set; }
+        public long? time { get; set; }
         public int? key { get; set; }
     }
 

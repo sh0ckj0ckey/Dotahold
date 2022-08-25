@@ -154,6 +154,7 @@
     <Compile Include="Converters\EqualToVisibilityConverter.cs" />
     <Compile Include="Converters\StringFormatter.cs" />
     <Compile Include="Converters\StringLengthToFontSizeConverter.cs" />
+    <Compile Include="Converters\StringToRuneConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
@@ -313,6 +314,14 @@
     <Content Include="Assets\Icons\Match\icon_scepter_1.png" />
     <Content Include="Assets\Icons\Match\icon_shard_0.png" />
     <Content Include="Assets\Icons\Match\icon_shard_1.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_0.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_1.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_2.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_3.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_4.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_5.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_6.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_7.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />
