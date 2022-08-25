@@ -131,7 +131,12 @@ namespace OpenDota_UWP.Models
 
         // KDA
         [Newtonsoft.Json.JsonIgnore]
-        public double KDA { get; set; } = 0.0;
+        private string _sKDA = string.Empty;
+        public string sKDA
+        {
+            get { return _sKDA; }
+            set { Set("sKDA", ref _sKDA, value); }
+        }
 
         // 目前只处理熊灵这一个额外单位
         [Newtonsoft.Json.JsonIgnore]

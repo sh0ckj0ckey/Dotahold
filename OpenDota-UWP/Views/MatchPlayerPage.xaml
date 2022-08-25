@@ -79,43 +79,43 @@
                 </Grid>
                 <controls:WrapPanel>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="KDA"
-                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.sKDA,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="KDA " Foreground="ForestGreen"/>
-                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.KDA,Mode=OneWay}"/>
+                            <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.sKDA,Mode=OneWay}"/>
                         </TextBlock>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Gold Per Min"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="GPM " Foreground="{ThemeResource GOLDTEXT_FR}"/>
                             <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.gold_per_min,Mode=OneWay}"/>
                         </TextBlock>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="XP Per Min"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="XPM " Foreground="MediumOrchid"/>
                             <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.xp_per_min,Mode=OneWay}"/>
                         </TextBlock>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="NET WORTH"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="NET Worth " Foreground="{ThemeResource GOLDTEXT_FR}"/>
                             <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.net_worth,Mode=OneWay}"/>
                         </TextBlock>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOTAL GOLD"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="Total Gold " Foreground="{ThemeResource GOLDTEXT_FR}"/>
                             <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay}"/>
                         </TextBlock>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOTAL XP"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.total_gold,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center">
+                        <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                             <Run Text="Total XP " Foreground="MediumOrchid"/>
                             <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.total_xp,Mode=OneWay}"/>
                         </TextBlock>
@@ -128,8 +128,8 @@
                                     <BitmapImage UriSource="/Assets/Icons/Data/icon_creep.png" DecodePixelHeight="16" DecodePixelType="Logical"/>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="Last Hits" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="Last Hits" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.last_hits,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="DENIES"
@@ -140,8 +140,8 @@
                                     <BitmapImage UriSource="/Assets/Icons/Data/icon_denied.png" DecodePixelHeight="16" DecodePixelType="Logical"/>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="Denies" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="Denies" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.denies,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="HERO DAMAGE"
@@ -152,8 +152,8 @@
                                     <BitmapImage UriSource="/Assets/Icons/Data/icon_attack.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="Hero Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="Hero Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="HERO HEALING"
@@ -164,8 +164,8 @@
                                     <BitmapImage UriSource="/Assets/Icons/Data/icon_defend.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="Hero Healing" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="Hero Healing" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.hero_healing,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
                         </StackPanel>
                     </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="TOWER DAMAGE"
@@ -176,11 +176,16 @@
                                     <BitmapImage UriSource="/Assets/Icons/Data/icon_towerdamage.png" DecodePixelHeight="22" DecodePixelType="Logical"/>
                                 </Image.Source>
                             </Image>
-                            <TextBlock Text="Tower Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center"/>
+                            <TextBlock Text="Tower Damage" FontSize="12" Opacity="0.7" Margin="4,0,2,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
+                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchPlayer.tower_damage,Mode=OneWay}" FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40"/>
                         </StackPanel>
                     </Border>
                 </controls:WrapPanel>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                    <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
+                    <TextBlock Text="Buff" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                </StackPanel>
 
                 <!--物品-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,6,0,8">
@@ -289,6 +294,10 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                    <FontIcon Glyph="&#xE9D5;" Margin="0,0,8,0" FontSize="20"/>
+                    <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
                     <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>

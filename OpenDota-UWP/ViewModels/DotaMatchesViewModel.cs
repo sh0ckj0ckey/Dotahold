@@ -1612,10 +1612,10 @@ namespace OpenDota_UWP.ViewModels
                 {
                     try
                     {
-                        double ka = CurrentMatchPlayer.kills ?? 0 + CurrentMatchPlayer.assists ?? 0;
+                        double ka = (CurrentMatchPlayer.kills ?? 0) + (CurrentMatchPlayer.assists ?? 0);
                         double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
                         double kda = ka / d;
-                        CurrentMatchPlayer.KDA = Math.Floor(100 * kda) / 100;
+                        CurrentMatchPlayer.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
                     }
                     catch { }
                 }
