@@ -9,7 +9,7 @@
     xmlns:cvt="using:OpenDota_UWP.Converters"
     xmlns:ui="using:OpenDota_UWP.UI" 
     xmlns:mdl="using:OpenDota_UWP.Models" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    NavigationCacheMode="Required" Background="Transparent">
+    NavigationCacheMode="Required" Background="{ThemeResource APPLICATION_BK}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -30,6 +30,8 @@
             <cvt:PlayerSlotToForegroundConverter x:Key="Slot2Color"/>
             <cvt:NullToVisibilityConverter x:Key="IsNull2Vis"/>
             <cvt:RankTierToImageConverter x:Key="Rank2Image"/>
+            <cvt:DoubleToPingColorConverter x:Key="Double2Color"/>
+            <cvt:DoubleToPingIconConverter x:Key="Double2Icon"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -78,6 +80,16 @@
                     </TextBlock>
                 </Grid>
                 <controls:WrapPanel>
+                    <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Ping"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay,Converter={StaticResource Null2Vis}}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <FontIcon Margin="4,0,2,0" VerticalAlignment="Center" Glyph="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay,Converter={StaticResource Double2Icon}}" Foreground="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay,Converter={StaticResource Double2Color}}"/>
+                            <TextBlock FontSize="12" Margin="4,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
+                                <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay}"/>
+                                <Run Text="ms"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="KDA"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.sKDA,Mode=OneWay,Converter={StaticResource Null2Vis}}">
                         <TextBlock FontSize="12" Opacity="0.7" Margin="0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
