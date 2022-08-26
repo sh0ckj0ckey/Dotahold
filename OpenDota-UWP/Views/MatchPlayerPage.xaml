@@ -270,7 +270,7 @@
                             </Image>
                             <TextBlock FontSize="12" Margin="6,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                                 <Run Text="Observer Ward"/>
-                                <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.obs_placed,Mode=OneWay}" Foreground="ForestGreen"/>
+                                <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.obs_placed,Mode=OneWay}" Foreground="ForestGreen" FontWeight="Bold"/>
                                 <Run Text="/"/>
                                 <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.observer_kills,Mode=OneWay}" Foreground="Tomato"/>
                             </TextBlock>
@@ -285,7 +285,7 @@
                             </Image>
                             <TextBlock FontSize="12" Margin="6,0,0,0" FontWeight="Medium" VerticalAlignment="Center" CharacterSpacing="40">
                                 <Run Text="Sentry Ward"/>
-                                <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.sen_placed,Mode=OneWay}" Foreground="ForestGreen"/>
+                                <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.sen_placed,Mode=OneWay}" Foreground="ForestGreen" FontWeight="Bold"/>
                                 <Run Text="/"/>
                                 <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.sentry_kills,Mode=OneWay}" Foreground="Tomato"/>
                             </TextBlock>

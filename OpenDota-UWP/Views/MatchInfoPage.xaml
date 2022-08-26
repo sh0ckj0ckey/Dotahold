@@ -555,11 +555,11 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Width="64" Height="28" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="2,2,0,2" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
+                            <Button Grid.Column="0" Width="64" Height="28" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
                                     Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                 <TextBlock Text="GOLD" FontWeight="Medium" Foreground="{ThemeResource GOLDTEXT_FR}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Button>
-                            <Button Grid.Column="1" Width="64" Height="28" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,2,2,2" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
+                            <Button Grid.Column="1" Width="64" Height="28" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
                                     Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                 <TextBlock Text="XP" FontWeight="Medium" Foreground="MediumOrchid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Button>
