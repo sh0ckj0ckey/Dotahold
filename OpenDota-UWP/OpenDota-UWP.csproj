@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Converters\BoolReverseConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DoubleToBenchmarkColorConverter.cs" />
     <Compile Include="Converters\DoubleToPingColorConverter.cs" />
     <Compile Include="Converters\DoubleToPingIconConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />

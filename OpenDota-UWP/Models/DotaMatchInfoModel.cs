@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
@@ -127,7 +128,15 @@ namespace OpenDota_UWP.Models
         public int? rank_tier { get; set; }
         public bool? isRadiant { get; set; } = null;
         public bool? randomed { get; set; }
-        public Benchmarks benchmarks { get; set; }
+        public Dictionary<string, Benchmark> benchmarks { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        private List<Benchmark> _vBenchmarks = null;
+        public List<Benchmark> vBenchmarks
+        {
+            get { return _vBenchmarks; }
+            set { Set("vBenchmarks", ref _vBenchmarks, value); }
+        }
 
         // KDA
         [Newtonsoft.Json.JsonIgnore]
@@ -373,71 +382,16 @@ namespace OpenDota_UWP.Models
         public string name { get; set; }
     }
 
-    public class Benchmarks
+    public class Benchmark
     {
-        public Gold_Per_Min gold_per_min { get; set; }
-        public Xp_Per_Min xp_per_min { get; set; }
-        public Kills_Per_Min kills_per_min { get; set; }
-        public Last_Hits_Per_Min last_hits_per_min { get; set; }
-        public Hero_Damage_Per_Min hero_damage_per_min { get; set; }
-        public Hero_Healing_Per_Min hero_healing_per_min { get; set; }
-        public Tower_Damage tower_damage { get; set; }
-        public Stuns_Per_Min stuns_per_min { get; set; }
-        public Lhten lhten { get; set; }
-    }
+        public double raw { get; set; }
+        public double pct { get; set; }
 
-    public class Gold_Per_Min
-    {
-        public int raw { get; set; }
-        public float pct { get; set; }
-    }
+        [Newtonsoft.Json.JsonIgnore]
+        public string Name { get; set; } = string.Empty;
 
-    public class Xp_Per_Min
-    {
-        public int raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Kills_Per_Min
-    {
-        public float raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Last_Hits_Per_Min
-    {
-        public float raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Hero_Damage_Per_Min
-    {
-        public float raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Hero_Healing_Per_Min
-    {
-        public float raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Tower_Damage
-    {
-        public int raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Stuns_Per_Min
-    {
-        public float raw { get; set; }
-        public float pct { get; set; }
-    }
-
-    public class Lhten
-    {
-        public int raw { get; set; }
-        public float pct { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
+        public double BarWidth { get; set; } = 0;
     }
 
     public class Additional_Units : ViewModels.ViewModelBase

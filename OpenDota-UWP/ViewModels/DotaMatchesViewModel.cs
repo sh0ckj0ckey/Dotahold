@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI;
 
 namespace OpenDota_UWP.ViewModels
 {
@@ -1610,12 +1611,44 @@ namespace OpenDota_UWP.ViewModels
             {
                 if (CurrentMatchPlayer != null)
                 {
+                    // kda
                     try
                     {
                         double ka = (CurrentMatchPlayer.kills ?? 0) + (CurrentMatchPlayer.assists ?? 0);
                         double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
                         double kda = ka / d;
                         CurrentMatchPlayer.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
+                    }
+                    catch { }
+
+                    // benchmarks
+                    try
+                    {
+                        var benchmarks = CurrentMatchPlayer.benchmarks;
+                        if (benchmarks != null && benchmarks.Count > 0)
+                        {
+                            CurrentMatchPlayer.vBenchmarks = new List<Benchmark>();
+                            foreach (var benchmark in benchmarks)
+                            {
+                                if (benchmark.Value == null)
+                                    continue;
+
+                                string name = benchmark.Key;
+                                StringBuilder nameSb = new StringBuilder();
+                                name = name.Replace('_', ' ');
+                                name = name.ToUpper();
+                                benchmark.Value.Name = name;
+
+                                benchmark.Value.raw = Math.Floor(benchmark.Value.raw * 100) / 100;
+                                benchmark.Value.pct = Math.Floor(benchmark.Value.pct * 100);
+
+                                benchmark.Value.BarWidth = 1.2/*进度条长度120*/* benchmark.Value.pct;
+                                if (benchmark.Value.BarWidth < 0) benchmark.Value.BarWidth = 0;
+                                if (benchmark.Value.BarWidth > 120) benchmark.Value.BarWidth = 120;
+
+                                CurrentMatchPlayer.vBenchmarks.Add(benchmark.Value);
+                            }
+                        }
                     }
                     catch { }
                 }

@@ -8,13 +8,13 @@ using Windows.UI.Xaml.Media;
 
 namespace OpenDota_UWP.Converters
 {
-    internal class DoubleToPingColorConverter : IValueConverter
+    internal class DoubleToBenchmarkColorConverter : IValueConverter
     {
-        private SolidColorBrush Ping0Color = new SolidColorBrush(new Color() { R = 0, G = 99, B = 177, A = 255 });
-        private SolidColorBrush Ping1Color = new SolidColorBrush(new Color() { R = 0, G = 128, B = 0, A = 255 });
-        private SolidColorBrush Ping2Color = new SolidColorBrush(new Color() { R = 60, G = 179, B = 113, A = 255 });
-        private SolidColorBrush Ping3Color = new SolidColorBrush(new Color() { R = 255, G = 127, B = 80, A = 255 });
-        private SolidColorBrush Ping4Color = new SolidColorBrush(new Color() { R = 220, G = 20, B = 60, A = 255 });
+        private SolidColorBrush Ping0Color = new SolidColorBrush(Colors.ForestGreen);
+        private SolidColorBrush Ping1Color = new SolidColorBrush(Colors.DodgerBlue);
+        private SolidColorBrush Ping2Color = new SolidColorBrush(Colors.Peru);
+        private SolidColorBrush Ping3Color = new SolidColorBrush(Colors.Tomato);
+        private SolidColorBrush Ping4Color = new SolidColorBrush(Colors.Crimson);
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -22,22 +22,22 @@ namespace OpenDota_UWP.Converters
             {
                 if (value != null)
                 {
-                    double ping = -1;
-                    if (double.TryParse(value.ToString(), out ping))
+                    double pct = 0; // 去掉%的值，例如80%则pct=80
+                    if (double.TryParse(value.ToString(), out pct))
                     {
-                        if (ping < 0)
+                        if (pct >= 80)
                         {
                             return Ping0Color;
                         }
-                        else if (ping >= 0 && ping <= 30)
+                        else if (pct >= 60 && pct < 80)
                         {
                             return Ping1Color;
                         }
-                        else if (ping > 30 && ping <= 50)
+                        else if (pct >= 40 && pct < 60)
                         {
                             return Ping2Color;
                         }
-                        else if (ping > 50 && ping <= 100)
+                        else if (pct >= 20 && pct < 40)
                         {
                             return Ping3Color;
                         }

@@ -33,6 +33,7 @@
             <cvt:DoubleToPingColorConverter x:Key="Double2Color"/>
             <cvt:DoubleToPingIconConverter x:Key="Double2Icon"/>
             <cvt:StringToRuneConverter x:Key="Str2Rune"/>
+            <cvt:DoubleToBenchmarkColorConverter x:Key="Benchmark2Color"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -67,8 +68,8 @@
                     </StackPanel>-->
 
                 <!--数据统计-->
-                <Grid HorizontalAlignment="Stretch" Margin="0,16,0,8">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,0,0,0">
+                <Grid HorizontalAlignment="Stretch" Margin="16,16,0,8">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <FontIcon Glyph="&#xEB3C;" Margin="0,0,8,0" FontSize="20"/>
                         <TextBlock Text="Overview" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                     </StackPanel>
@@ -80,7 +81,7 @@
                         <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.assists,Mode=OneWay}" Foreground="#647e8e" CharacterSpacing="20"/>
                     </TextBlock>
                 </Grid>
-                <controls:WrapPanel>
+                <controls:WrapPanel Margin="8,0,0,0">
                     <Border CornerRadius="4" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Ping"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay,Converter={StaticResource Null2Vis}}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -195,17 +196,19 @@
                     </Border>
                 </controls:WrapPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                <!--永久BUFF-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Buff" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
 
                 <!--物品-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,6,0,8">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,6,0,8">
                     <FontIcon Glyph="&#xEC0A;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Items" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="2,0,0,0">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="8,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -277,7 +280,7 @@
                 </Grid>
 
                 <!--技能加点-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12">
                     <FontIcon Glyph="&#xE945;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Abilities" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
@@ -307,21 +310,25 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
+                
                 <!--物品购买记录-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
-                    <FontIcon Glyph="&#xE9D5;" Margin="0,0,8,0" FontSize="20"/>
+                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                    <FontIcon Glyph="&#xE7BF;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                </StackPanel>
+                </StackPanel>-->
+                
                 <!--神符激活记录-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
                 <ListView IsItemClickEnabled="False" SelectionMode="None"
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                          Margin="0,0,0,0" Padding="8,0,8,0"
-                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}">
+                          Margin="6,0,0,0" Padding="8,0,8,0"
+                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}"
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel/>
@@ -339,214 +346,51 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <!--<TextBlock Text="数据排名"
-                           FontSize="18"
-                           FontWeight="Black"
-                           Opacity="0.8"
-                           Margin="4,16,0,4" />
+                
+                <!--Benchmarks-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <FontIcon Glyph="&#xE94C;" Margin="0,0,8,0" FontSize="20"/>
+                    <TextBlock Text="Benchmarks" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                </StackPanel>
                 <ListView HorizontalContentAlignment="Stretch"
-                          SelectionMode="None"
-                          IsItemClickEnabled="True">
+                          SelectionMode="None" IsItemClickEnabled="False" Padding="24,0,24,0"
+                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks,Mode=OneWay}"
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="GPM:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="Gold"
-                                           Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.gold_per_min.raw,Mode=OneWay}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.gold_per_min.pct,Mode=OneWay}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="XPM:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="DodgerBlue"
-                                           Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.xp_per_min.raw,Mode=OneWay}"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind ViewModel.CurrentMatchPlayer.benchmarks.xp_per_min.pct,Mode=OneWay}"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="每分钟杀敌数:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="OrangeRed"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_kill_per_minute.Raw}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_kill_per_minute.Pct}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="每分钟正补:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="Violet"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_last_hit_per_minute.Raw}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_last_hit_per_minute.Pct}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="每分钟英雄伤害:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="Red"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_hero_damage_per_minute.Raw}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_hero_damage_per_minute.Pct}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="每分钟英雄治疗:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="ForestGreen"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_hero_healing_per_minute.Raw}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_hero_healing_per_minute.Pct}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Height="56">
-                        <Grid Height="52">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Grid.Row="0"
-                                           Text="建筑伤害:  "
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="0"
-                                           Foreground="RosyBrown"
-                                           Text="{x:Bind HeroPlayerInfo.Benchmarks_tower_damage.Raw}"
-                                           FontFamily="Arial"
-                                           FontWeight="Bold"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                            <TextBlock Grid.Row="1"
-                                       Text="{x:Bind HeroPlayerInfo.Benchmarks_tower_damage.Pct}"
-                                       FontFamily="Arial"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
-                        </Grid>
-                    </ListViewItem>
-                </ListView>-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="mdl:Benchmark">
+                            <Grid CornerRadius="4" Margin="-24,0,6,8" MinWidth="120" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock FontSize="12" Opacity="0.7" Margin="4,0,4,0" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Run Text="{x:Bind Name}"/>
+                                    <Run Text=":"/>
+                                    <Run Text="{x:Bind raw}" Foreground="{x:Bind pct,Converter={StaticResource Benchmark2Color}}"/>
+                                </TextBlock>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Margin="4,4,2,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="12" Width="120" CornerRadius="6" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
+                                        <Border HorizontalAlignment="Left" Height="12" Width="{x:Bind BarWidth}" CornerRadius="6" Background="{x:Bind pct,Converter={StaticResource Benchmark2Color}}"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="1" FontSize="12" Opacity="0.5" Margin="4,0,2,-1" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Run Text="{x:Bind pct}"/>
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
         </ScrollViewer>
 
