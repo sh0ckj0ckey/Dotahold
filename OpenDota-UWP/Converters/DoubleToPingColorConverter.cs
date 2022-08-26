@@ -29,15 +29,15 @@ namespace OpenDota_UWP.Converters
                         {
                             return Ping0Color;
                         }
-                        else if (ping >= 0 && ping <= 30)
+                        else if (ping >= 0 && ping <= 35)
                         {
                             return Ping1Color;
                         }
-                        else if (ping > 30 && ping <= 50)
+                        else if (ping > 35 && ping <= 70)
                         {
                             return Ping2Color;
                         }
-                        else if (ping > 50 && ping <= 100)
+                        else if (ping > 70 && ping <= 110)
                         {
                             return Ping3Color;
                         }

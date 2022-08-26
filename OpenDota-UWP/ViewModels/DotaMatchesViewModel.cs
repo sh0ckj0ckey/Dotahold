@@ -1625,9 +1625,9 @@ namespace OpenDota_UWP.ViewModels
                     try
                     {
                         var benchmarks = CurrentMatchPlayer.benchmarks;
-                        if (benchmarks != null && benchmarks.Count > 0)
+                        if (benchmarks != null && benchmarks.Count > 0 && CurrentMatchPlayer.vBenchmarks == null)
                         {
-                            CurrentMatchPlayer.vBenchmarks = new List<Benchmark>();
+                            CurrentMatchPlayer.vBenchmarks = new ObservableCollection<Benchmark>();
                             foreach (var benchmark in benchmarks)
                             {
                                 if (benchmark.Value == null)

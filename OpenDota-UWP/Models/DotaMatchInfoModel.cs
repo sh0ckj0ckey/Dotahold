@@ -1,6 +1,7 @@
 ﻿using OpenDota_UWP.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,7 +84,7 @@ namespace OpenDota_UWP.Models
         public int? creeps_stacked { get; set; }
         public int? deaths { get; set; }
         public int? denies { get; set; }
-        public int? gold { get; set; }
+        //public int? gold { get; set; }
         public int? gold_per_min { get; set; }
         public int? gold_spent { get; set; }
         public List<double> gold_t { get; set; }
@@ -101,16 +102,17 @@ namespace OpenDota_UWP.Models
         public int? last_hits { get; set; }
         public int? level { get; set; }
         public int? net_worth { get; set; }
-        public int? obs_placed { get; set; }
+        public int? obs_placed { get; set; } = 0;
+        public int? sen_placed { get; set; } = 0;
         public long? party_id { get; set; }
         public int? party_size { get; set; }
         public List<Permanent_Buffs> permanent_buffs { get; set; }
         public int? pings { get; set; }
         public List<Purchase_Log> purchase_log { get; set; }
-        public int? roshans_killed { get; set; }
+        //public int? roshans_killed { get; set; }
         public List<Runes_Log> runes_log { get; set; }
         public int? tower_damage { get; set; }
-        public int? towers_killed { get; set; }
+        //public int? towers_killed { get; set; }
         public int? xp_per_min { get; set; }
         public List<double> xp_t { get; set; }
         public string personaname { get; set; }
@@ -121,18 +123,19 @@ namespace OpenDota_UWP.Models
         public int? neutral_kills { get; set; }
         public int? tower_kills { get; set; }
         public int? courier_kills { get; set; }
-        public int? observer_kills { get; set; }
-        public int? sentry_kills { get; set; }
+        public int? observer_kills { get; set; } = 0;
+        public int? sentry_kills { get; set; } = 0;
         public int? roshan_kills { get; set; }
         public int? buyback_count { get; set; }
         public int? rank_tier { get; set; }
         public bool? isRadiant { get; set; } = null;
         public bool? randomed { get; set; }
+        public int? purchase_tpscroll { get; set; } = null;
         public Dictionary<string, Benchmark> benchmarks { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        private List<Benchmark> _vBenchmarks = null;
-        public List<Benchmark> vBenchmarks
+        private ObservableCollection<Benchmark> _vBenchmarks = null;
+        public ObservableCollection<Benchmark> vBenchmarks
         {
             get { return _vBenchmarks; }
             set { Set("vBenchmarks", ref _vBenchmarks, value); }

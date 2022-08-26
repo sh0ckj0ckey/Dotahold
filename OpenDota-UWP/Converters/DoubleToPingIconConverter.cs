@@ -23,11 +23,11 @@ namespace OpenDota_UWP.Converters
                         {
                             return "\uE904";
                         }
-                        else if (ping >= 0 && ping <= 30)
+                        else if (ping >= 0 && ping <= 35)
                         {
                             return "\uE908";
                         }
-                        else if (ping > 30 && ping <= 70)
+                        else if (ping > 35 && ping <= 70)
                         {
                             return "\uE907";
                         }
