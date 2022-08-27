@@ -139,7 +139,7 @@ namespace OpenDota_UWP.Helpers
                     if (ForceUpdate) await DeleteCachedFileAsync(File.ExpectedName);
                     else return false;
                 }
-                await File.File.MoveAsync(await GetCacheFolderAsync(), File.ExpectedName);
+                await File.File.MoveAsync(await GetCacheFolderAsync(), File.ExpectedName, NameCollisionOption.ReplaceExisting);
                 return true;
             }
             catch

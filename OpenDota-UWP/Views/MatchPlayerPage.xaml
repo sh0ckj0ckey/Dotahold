@@ -51,8 +51,8 @@
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,8,20">
-            <StackPanel Margin="8,0">
+        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,8,0">
+            <StackPanel Margin="8,0,8,16">
                 <!--数据统计-->
                 <Grid HorizontalAlignment="Stretch" Margin="16,16,0,8">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
