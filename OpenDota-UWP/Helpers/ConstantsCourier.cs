@@ -17,6 +17,18 @@ namespace OpenDota_UWP.Helpers
 
         private Windows.Web.Http.HttpClient constantsHttpClient = new Windows.Web.Http.HttpClient();
 
+
+        /// <summary>
+        /// 永久buff字典
+        /// </summary>
+        private Dictionary<string, string> _DictPermanentBuffs = null;
+
+        /// <summary>
+        /// 技能ID与名称字典
+        /// </summary>
+        private Dictionary<string, string> _DictAbilitiesId = null;
+
+
         /// <summary>
         /// 获取英雄列表
         /// </summary>
@@ -73,11 +85,16 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
+                if (_DictPermanentBuffs != null) return _DictPermanentBuffs;
+
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true/*time is ok*/ && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var buffs = await DownloadConstant<Dictionary<string, string>>("permanent_buffs");
-                    return buffs;
+
+                    if (buffs != null) _DictPermanentBuffs = buffs;
+
+                    return _DictPermanentBuffs;
                 }
                 else
                 {
@@ -97,11 +114,16 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
+                if (_DictAbilitiesId != null) return _DictAbilitiesId;
+
+                if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true/*time is ok*/ && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var abilities = await DownloadConstant<Dictionary<string, string>>("ability_ids");
-                    return abilities;
+
+                    if (abilities != null) _DictAbilitiesId = abilities;
+
+                    return _DictAbilitiesId;
                 }
                 else
                 {

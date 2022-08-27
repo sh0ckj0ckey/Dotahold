@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Contacts.DataProvider;
 using Windows.Storage;
 using Windows.UI;
 
@@ -1622,7 +1623,7 @@ namespace OpenDota_UWP.ViewModels
         /// 分析当前选择玩家的数据
         /// </summary>
         /// <returns></returns>
-        public void AnalyzePlayerInfo()
+        public async void AnalyzePlayerInfo()
         {
             try
             {
@@ -1638,10 +1639,29 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
 
-                    // buff
+                    // buff 
                     try
                     {
+                        Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
+                        foreach (var buff in CurrentMatchPlayer.permanent_buffs)
+                        {
+                            if (buff == null) continue;
 
+                            if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
+                            {
+                                buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
+                            }
+                            else
+                            {
+                                // 字典里没有这个buff，则显示默认图
+                                buff.permanent_buff = -99;
+                                buff.sBuff = "buff_placeholder";
+                            }
+                        }
+                        foreach (var buff in CurrentMatchPlayer.permanent_buffs)
+                        {
+                            buff?.LoadItemsImageAsync(36);
+                        }
                     }
                     catch { }
 

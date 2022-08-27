@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -592,10 +593,66 @@ namespace OpenDota_UWP.Models
         }
     }
 
-    public class Permanent_Buffs
+    public class Permanent_Buffs : ViewModels.ViewModelBase
     {
+        private static Dictionary<string, BitmapImage> dictBuffs = new Dictionary<string, BitmapImage>();
+
         public int? permanent_buff { get; set; }
         public int? stack_count { get; set; }
+
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sBuff { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _BuffImageSource = null;
+        public BitmapImage BuffImageSource
+        {
+            get { return _BuffImageSource; }
+            set { Set("BuffImageSource", ref _BuffImageSource, value); }
+        }
+
+        public async Task LoadItemsImageAsync(int imageDecodeHeight)
+        {
+            try
+            {
+                if (BuffImageSource != null || string.IsNullOrEmpty(sBuff)) return;
+
+                if (permanent_buff == -99) sBuff = "buff_placeholder";
+
+                if (sBuff == "buff_placeholder" ||
+                    sBuff == "moon_shard" ||
+                    sBuff == "ultimate_scepter" ||
+                    sBuff == "silencer_glaives_of_wisdom" ||
+                    sBuff == "pudge_flesh_heap" ||
+                    sBuff == "legion_commander_duel" ||
+                    sBuff == "tome_of_knowledge" ||
+                    sBuff == "lion_finger_of_death" ||
+                    sBuff == "slark_essence_shift" ||
+                    sBuff == "abyssal_underlord_atrophy_aura" ||
+                    sBuff == "bounty_hunter_jinada" ||
+                    sBuff == "aghanims_shard" ||
+                    sBuff == "axe_culling_blade" ||
+                    sBuff == "necrolyte_reapers_scythe")
+                {
+                    // 本地有图片资源
+                    if (!dictBuffs.ContainsKey(sBuff))
+                    {
+                        dictBuffs.Add(sBuff, new BitmapImage(new System.Uri(string.Format("ms-appx:///Assets/Icons/Match/PermanentBuffs/{0}.png", sBuff))));
+                    }
+                    BuffImageSource = dictBuffs[sBuff];
+                }
+                else
+                {
+                    // 从网络获取，通常是技能图标
+                    BuffImageSource = await ImageLoader.LoadImageAsync(string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", sBuff), "ms-appx:///Assets/Icons/Match/PermanentBuffs/buff_placeholder.png");
+                }
+
+                BuffImageSource.DecodePixelType = DecodePixelType.Logical;
+                BuffImageSource.DecodePixelHeight = imageDecodeHeight;
+            }
+            catch { }
+        }
     }
 
     public class Purchase_Log

@@ -315,6 +315,11 @@
     <Content Include="Assets\Icons\Match\icon_scepter_1.png" />
     <Content Include="Assets\Icons\Match\icon_shard_0.png" />
     <Content Include="Assets\Icons\Match\icon_shard_1.png" />
+    <Content Include="Assets\Icons\Match\PermanentBuffs\aghanims_shard.png" />
+    <Content Include="Assets\Icons\Match\PermanentBuffs\axe_culling_blade.png" />
+    <Content Include="Assets\Icons\Match\PermanentBuffs\bounty_hunter_jinada.png" />
+    <Content Include="Assets\Icons\Match\PermanentBuffs\buff_placeholder.png" />
+    <Content Include="Assets\Icons\Match\PermanentBuffs\necrolyte_reapers_scythe.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_0.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_1.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_2.png" />

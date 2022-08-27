@@ -47,6 +47,7 @@
                     <Color x:Key="MATCHPLAYER_LISTITEM_BD">#484a57</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#14FFFFFF</Color>
+                    <Color x:Key="MATCHPLAYER_BUFF_BD">#14FFFFFF</Color>
                     
                     <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>
@@ -171,6 +172,7 @@
                     <Color x:Key="MATCHPLAYER_LISTITEM_BD">#08000000</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#16000000</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#20AAAAAA</Color>
+                    <Color x:Key="MATCHPLAYER_BUFF_BD">#421510</Color>
 
                     <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
                         <LinearGradientBrush.GradientStops>

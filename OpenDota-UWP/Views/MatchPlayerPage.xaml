@@ -38,42 +38,15 @@
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,0,0">
+        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,8,20">
             <StackPanel Margin="8,0">
-                <!--<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="12,0">
-                        <Grid x:Name="Buff1Grid"
-                                  Visibility="Collapsed"
-                                  Height="36"
-                                  Width="36"
-                                  Padding="-4">
-                            <Ellipse Height="32"
-                                         Width="32"
-                                         Margin="4,0"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="Green"
-                                         StrokeThickness="2.5">
-                                <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill"
-                                                    ImageSource="/Assets/Icons/PermanentBuffs/moon_shard.png" />
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <TextBlock x:Name="Buff1TextBlock"
-                                           Text=" "
-                                           Margin="0,0,0,2"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" />
-                        </Grid>
-                    </StackPanel>-->
-
                 <!--数据统计-->
                 <Grid HorizontalAlignment="Stretch" Margin="16,16,0,8">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <FontIcon Glyph="&#xEB3C;" Margin="0,0,8,0" FontSize="20"/>
                         <TextBlock Text="Overview" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                     </StackPanel>
-                    <TextBlock FontWeight="Bold" Margin="2,0,16,0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="K/D/A">
+                    <TextBlock FontWeight="Bold" Margin="2,0,20,0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="K/D/A">
                         <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.kills,Mode=OneWay}" Foreground="#63916c" CharacterSpacing="20"/>
                         <Run Text="/" FontWeight="Light"/>
                         <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.deaths,Mode=OneWay}" Foreground="#c55357" CharacterSpacing="20"/>
@@ -330,14 +303,33 @@
                 </controls:WrapPanel>
 
                 <!--永久BUFF-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,0"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
-                    <TextBlock Text="Buff" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                    <TextBlock Text="Permanent Buffs" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
+                <GridView IsItemClickEnabled="False" SelectionMode="None" Padding="6,0"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay}"
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="mdl:Permanent_Buffs">
+                            <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
+                                <Image Source="{x:Bind BuffImageSource,Mode=OneWay}" Height="36" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind stack_count}" FontSize="18" Margin="1,-1,-1,1" Foreground="#E9FFFFFF" FontWeight="Medium" Visibility="{x:Bind stack_count,Converter={StaticResource Int2Vis}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
 
                 <!--物品-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,6,0,8">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,6,0,4">
                     <FontIcon Glyph="&#xEC0A;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Items" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
@@ -443,13 +435,13 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>-->
-                
+
                 <!--物品购买记录-->
                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
                     <FontIcon Glyph="&#xE7BF;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>-->
-                
+
                 <!--神符激活记录-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
@@ -479,7 +471,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                
+
                 <!--Benchmarks-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
