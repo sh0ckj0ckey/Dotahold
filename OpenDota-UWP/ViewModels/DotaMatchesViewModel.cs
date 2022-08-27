@@ -1638,6 +1638,20 @@ namespace OpenDota_UWP.ViewModels
                     }
                     catch { }
 
+                    // buff
+                    try
+                    {
+
+                    }
+                    catch { }
+
+                    // abilities
+                    try
+                    {
+
+                    }
+                    catch { }
+
                     // benchmarks
                     try
                     {

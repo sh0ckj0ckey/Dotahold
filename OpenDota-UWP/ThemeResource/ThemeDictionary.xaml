@@ -165,7 +165,7 @@
                     <Color x:Key="RECENTMATCH_FLIPCARD_BK">#FFFFFF</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#08666666</Color>
 
-                    <Color x:Key="MATCHESLIST_LOADMOREBTN_BK">#10000000</Color>
+                    <Color x:Key="MATCHESLIST_LOADMOREBTN_BK">#08000000</Color>
                     
                     <Color x:Key="MATCHPLAYER_LISTITEM_BK">#06000000</Color>
                     <Color x:Key="MATCHPLAYER_LISTITEM_BD">#08000000</Color>
