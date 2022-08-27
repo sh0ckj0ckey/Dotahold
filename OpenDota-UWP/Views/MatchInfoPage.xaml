@@ -218,11 +218,11 @@
                         </StackPanel>
                         <StackPanel Opacity="0.8" Orientation="Horizontal" Spacing="18" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,28,0">
                             <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_team,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                                <Border Height="24" Width="24" CornerRadius="12" ToolTipService.ToolTip="Radiant">
+                                <Border Height="26" Width="26" BorderThickness="1.5" BorderBrush="#10623C" CornerRadius="12" ToolTipService.ToolTip="Radiant">
                                     <Border.Background>
                                         <ImageBrush>
                                             <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
+                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_square.png" DecodePixelHeight="26" DecodePixelType="Logical"/>
                                             </ImageBrush.ImageSource>
                                         </ImageBrush>
                                     </Border.Background>
@@ -230,11 +230,11 @@
                                 <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.radiant_team.name,Mode=OneWay}" FontSize="14" CharacterSpacing="20" Margin="8,0,0,0" FontWeight="Medium" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.CurrentMatchInfo.dire_team,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                                <Border Height="24" Width="24" CornerRadius="12" ToolTipService.ToolTip="Dire">
+                                <Border Height="26" Width="26" BorderThickness="1.5" BorderBrush="#771C10" CornerRadius="12" ToolTipService.ToolTip="Dire">
                                     <Border.Background>
                                         <ImageBrush>
                                             <ImageBrush.ImageSource>
-                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_square.png" DecodePixelHeight="24" DecodePixelType="Logical"/>
+                                                <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_square.png" DecodePixelHeight="26" DecodePixelType="Logical"/>
                                             </ImageBrush.ImageSource>
                                         </ImageBrush>
                                     </Border.Background>
@@ -454,7 +454,7 @@
                                                 </Button>
                                             </Grid>
                                             <Grid Width="1" Height="20" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1" Visibility="{x:Bind hero_id,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=80}"/>
-                                            
+
                                             <!--背包和中立物品-->
                                             <Border Margin="6,0,4,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemN,Mode=OneWay}">
                                                 <Image Width="35" Height="26" Source="{x:Bind ItemNImageSource,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
@@ -527,17 +527,24 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE9D2;" Margin="24,0,8,0" FontSize="20"/>
-                            <TextBlock Text="Radiant Advantage" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                        </StackPanel>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" 
-                                            Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
-                                            XAxes="{Binding XAxes}"
-                                            YAxes="{Binding YAxes}"
-                                            Sections="{Binding RadiantAdvSections}"
-                                            DrawMarginFrame="{Binding Frame}"
-                                            Margin="16,16,24,8" Height="320"/>
+                        <Button Margin="12,0,12,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
+                                Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickShowHideRadiantAdv">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <FontIcon Grid.Column="0" Glyph="&#xE9D2;" Margin="12,0,8,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Radiant Advantage" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" CharacterSpacing="20"/>
+                                <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE010;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.bShowRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"/>
+                                <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE011;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.bShowRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                            </Grid>
+                        </Button>
+                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
+                                            XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" Sections="{Binding RadiantAdvSections}"
+                                            DrawMarginFrame="{Binding Frame}" Margin="16,16,24,8" Height="320"
+                                            Visibility="{x:Bind ViewModel.bShowRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                     </Grid>
 
                     <!--玩家经济/经验数据走势图-->
@@ -546,36 +553,44 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xEAFC;" Margin="24,0,8,0" FontSize="20"/>
-                            <TextBlock Text="Gold&amp;Experience" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                        </StackPanel>
-                        <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,42,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Width="64" Height="28" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
-                                    Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                <TextBlock Text="GOLD" FontWeight="Medium" Foreground="{ThemeResource GOLDTEXT_FR}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Button Grid.Column="1" Width="64" Height="28" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
-                                    Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-                                <TextBlock Text="XP" FontWeight="Medium" Foreground="MediumOrchid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
-                            <Border Grid.Column="0" Width="64" Height="28" CornerRadius="6,0,0,6" Background="{ThemeResource GOLDTEXT_FR}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-                                <TextBlock Text="GOLD" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <Border Grid.Column="1" Width="64" Height="28" CornerRadius="0,6,6,0" Background="MediumOrchid" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                <TextBlock Text="XP" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}"
-                                            Series="{Binding PlayersGoldOrXPSeries,Mode=OneWay}"
-                                            YAxes="{Binding YAxes}"
-                                            Sections="{Binding PlayersGoldXPSections}"
-                                            DrawMarginFrame="{Binding Frame}"
-                                            Margin="16,16,24,8" Height="320"/>
+                        <Button Margin="12,0,12,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
+                                Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickShowHidePlayerSeries">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <FontIcon Grid.Column="0" Glyph="&#xEAFC;" Margin="12,0,8,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Gold&amp;Experience" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" TextTrimming="CharacterEllipsis" CharacterSpacing="20"/>
+                                <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE010;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"/>
+                                <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE011;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0" Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
+                                            Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                        <TextBlock Text="GOLD" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource GOLDTEXT_FR}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Button Grid.Column="1" Width="48" Height="22" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
+                                            Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                                        <TextBlock Text="XP" FontSize="12" FontWeight="Medium" Foreground="MediumOrchid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+                                    <Border Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="{ThemeResource GOLDTEXT_FR}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                                        <TextBlock Text="GOLD" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="1" Width="48" Height="22" CornerRadius="0,6,6,0" Background="MediumOrchid" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                        <TextBlock Text="XP" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Button>
+                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding PlayersGoldOrXPSeries,Mode=OneWay}"
+                                            YAxes="{Binding YAxes}" Sections="{Binding PlayersGoldXPSections}" DrawMarginFrame="{Binding Frame}"
+                                            Margin="16,16,24,8" Height="320" IsEnabled="False"
+                                            Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                     </Grid>
 
                     <!--比赛开始时间-->
@@ -593,7 +608,7 @@
                     </Grid>
 
                     <!--前往网页端查看-->
-                    <Button Margin="24,0,24,16" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
+                    <Button Margin="12,0,12,16" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
                             Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickVisitWebsite">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <TextBlock FontWeight="Medium" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">

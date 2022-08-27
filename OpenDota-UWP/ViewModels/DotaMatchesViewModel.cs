@@ -383,6 +383,21 @@ namespace OpenDota_UWP.ViewModels
             set { Set("bSelectedPlayersSeriesType", ref _bSelectedPlayersSeriesType, value); }
         }
 
+        // 是否显示天辉优势走势图
+        private bool _bShowRadiantAdv = false;
+        public bool bShowRadiantAdv
+        {
+            get { return _bShowRadiantAdv; }
+            set { Set("bShowRadiantAdv", ref _bShowRadiantAdv, value); }
+        }
+        // 是否显示玩家走势图
+        private bool _bShowPlayerSeries = false;
+        public bool bShowPlayerSeries
+        {
+            get { return _bShowPlayerSeries; }
+            set { Set("bShowPlayerSeries", ref _bShowPlayerSeries, value); }
+        }
+
         #endregion
 
         public DotaMatchesViewModel()
@@ -954,6 +969,8 @@ namespace OpenDota_UWP.ViewModels
                 bHaveRadiantAdv = false;
                 bHavePlayersSeries = false;
                 bSelectedPlayersSeriesType = true;
+                bShowRadiantAdv = false;
+                bShowPlayerSeries = false;
 
                 string url = string.Format("https://api.opendota.com/api/matches/{0}", matchId);    //e.g.3792271763
                 DotaMatchInfoModel matchInfo = null;

@@ -125,5 +125,33 @@ namespace OpenDota_UWP.Views
             }
             catch { }
         }
+
+        /// <summary>
+        /// 点击显示或折叠天辉优势图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickShowHideRadiantAdv(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.bShowRadiantAdv = !ViewModel.bShowRadiantAdv;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击显示或折叠天辉优势图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickShowHidePlayerSeries(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.bShowPlayerSeries = !ViewModel.bShowPlayerSeries;
+            }
+            catch { }
+        }
     }
 }
