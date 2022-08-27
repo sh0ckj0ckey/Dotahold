@@ -1632,10 +1632,13 @@ namespace OpenDota_UWP.ViewModels
                     // kda
                     try
                     {
-                        double ka = (CurrentMatchPlayer.kills ?? 0) + (CurrentMatchPlayer.assists ?? 0);
-                        double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
-                        double kda = ka / d;
-                        CurrentMatchPlayer.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
+                        if (string.IsNullOrEmpty(CurrentMatchPlayer.sKDA))
+                        {
+                            double ka = (CurrentMatchPlayer.kills ?? 0) + (CurrentMatchPlayer.assists ?? 0);
+                            double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
+                            double kda = ka / d;
+                            CurrentMatchPlayer.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
+                        }
                     }
                     catch { }
 
@@ -1645,22 +1648,30 @@ namespace OpenDota_UWP.ViewModels
                         Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
                         foreach (var buff in CurrentMatchPlayer.permanent_buffs)
                         {
-                            if (buff == null) continue;
+                            try
+                            {
+                                if (buff == null) continue;
 
-                            if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
-                            {
-                                buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
+                                if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
+                                {
+                                    buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
+                                }
+                                else
+                                {
+                                    // 字典里没有这个buff，则显示默认图
+                                    buff.permanent_buff = -99;
+                                    buff.sBuff = "buff_placeholder";
+                                }
                             }
-                            else
-                            {
-                                // 字典里没有这个buff，则显示默认图
-                                buff.permanent_buff = -99;
-                                buff.sBuff = "buff_placeholder";
-                            }
+                            catch { }
                         }
                         foreach (var buff in CurrentMatchPlayer.permanent_buffs)
                         {
-                            buff?.LoadItemsImageAsync(36);
+                            try
+                            {
+                                buff?.LoadItemsImageAsync(36);
+                            }
+                            catch { }
                         }
                     }
                     catch { }
@@ -1668,7 +1679,42 @@ namespace OpenDota_UWP.ViewModels
                     // abilities
                     try
                     {
+                        if (CurrentMatchPlayer.vAbilitiesUpgrade == null || CurrentMatchPlayer.vAbilitiesUpgrade.Count <= 0)
+                        {
+                            Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
+                            foreach (var ability in CurrentMatchPlayer.ability_upgrades_arr)
+                            {
+                                try
+                                {
+                                    if (ability != null && dictAbilities.ContainsKey(ability.ToString()))
+                                    {
+                                        var abilityUp = new AbilityUpgrade();
+                                        string abiName = dictAbilities[ability.ToString()];
 
+                                        if (abiName.StartsWith("special_bonus_"))
+                                            abilityUp.bIsTalent = true;
+                                        else
+                                            abilityUp.sAbilityUrl = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", abiName);
+
+                                        abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
+
+                                        if (CurrentMatchPlayer.vAbilitiesUpgrade == null)
+                                            CurrentMatchPlayer.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
+
+                                        CurrentMatchPlayer.vAbilitiesUpgrade.Add(abilityUp);
+                                    }
+                                }
+                                catch { }
+                            }
+                            foreach (var ability in CurrentMatchPlayer.vAbilitiesUpgrade)
+                            {
+                                try
+                                {
+                                    ability?.LoadAbilityImageAsync(48);
+                                }
+                                catch { }
+                            }
+                        }
                     }
                     catch { }
 
@@ -1676,7 +1722,7 @@ namespace OpenDota_UWP.ViewModels
                     try
                     {
                         var benchmarks = CurrentMatchPlayer.benchmarks;
-                        if (benchmarks != null && benchmarks.Count > 0 && CurrentMatchPlayer.vBenchmarks == null)
+                        if (benchmarks != null && benchmarks.Count > 0 && (CurrentMatchPlayer.vBenchmarks == null || CurrentMatchPlayer.vBenchmarks.Count <= 0))
                         {
                             CurrentMatchPlayer.vBenchmarks = new ObservableCollection<Benchmark>();
                             foreach (var benchmark in benchmarks)

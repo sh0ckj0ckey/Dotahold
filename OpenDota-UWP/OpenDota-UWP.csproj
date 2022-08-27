@@ -305,6 +305,8 @@
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
+    <Content Include="Assets\Icons\Match\icon_talent_tree.png" />
+    <Content Include="Assets\Icons\Match\img_dire_creep.png" />
     <Content Include="Assets\Icons\Match\icon_dire_ff4c4c.png" />
     <Content Include="Assets\Icons\Match\icon_dire_square.png" />
     <Content Include="Assets\Icons\Match\icon_dire_square_bk.png" />
@@ -320,6 +322,7 @@
     <Content Include="Assets\Icons\Match\PermanentBuffs\bounty_hunter_jinada.png" />
     <Content Include="Assets\Icons\Match\PermanentBuffs\buff_placeholder.png" />
     <Content Include="Assets\Icons\Match\PermanentBuffs\necrolyte_reapers_scythe.png" />
+    <Content Include="Assets\Icons\Match\img_radiant_creep.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_0.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_1.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_2.png" />

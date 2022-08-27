@@ -73,7 +73,7 @@ namespace OpenDota_UWP.Models
     {
         public long? match_id { get; set; }
         public int? player_slot { get; set; }
-        public List<int> ability_upgrades_arr { get; set; }
+        public List<int?> ability_upgrades_arr { get; set; }
         public long? account_id { get; set; }
         public Additional_Units[] additional_units { get; set; }
         public int? assists { get; set; }
@@ -134,12 +134,22 @@ namespace OpenDota_UWP.Models
         public int? purchase_tpscroll { get; set; } = null;
         public Dictionary<string, Benchmark> benchmarks { get; set; }
 
+        // 数据排行
         [Newtonsoft.Json.JsonIgnore]
         private ObservableCollection<Benchmark> _vBenchmarks = null;
         public ObservableCollection<Benchmark> vBenchmarks
         {
             get { return _vBenchmarks; }
             set { Set("vBenchmarks", ref _vBenchmarks, value); }
+        }
+
+        // 技能加点顺序
+        [Newtonsoft.Json.JsonIgnore]
+        private ObservableCollection<AbilityUpgrade> _vAbilitiesUpgrade = null;
+        public ObservableCollection<AbilityUpgrade> vAbilitiesUpgrade
+        {
+            get { return _vAbilitiesUpgrade; }
+            set { Set("vAbilitiesUpgrade", ref _vAbilitiesUpgrade, value); }
         }
 
         // KDA
@@ -380,22 +390,74 @@ namespace OpenDota_UWP.Models
         }
     }
 
+    public class AbilityUpgrade : ViewModels.ViewModelBase
+    {
+        [Newtonsoft.Json.JsonIgnore]
+        private static BitmapImage _DefaultAbilityImage = null;
+        [Newtonsoft.Json.JsonIgnore]
+        private static BitmapImage _TalentAbilityImage = null;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sAbilityUrl { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string sAbilityName { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public bool bIsTalent { get; set; } = false;
+
+        // 英雄图片
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _AbilityImageSource = null;
+        public BitmapImage AbilityImageSource
+        {
+            get { return _AbilityImageSource; }
+            set { Set("AbilityImageSource", ref _AbilityImageSource, value); }
+        }
+        public async Task LoadAbilityImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (AbilityImageSource != null) return;
+
+                if (bIsTalent)
+                {
+                    if (_TalentAbilityImage == null)
+                    {
+                        _TalentAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/icon_talent_tree.png"));
+                    }
+                    AbilityImageSource = _TalentAbilityImage;
+                    AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
+                    AbilityImageSource.DecodePixelWidth = decodeWidth;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(sAbilityUrl))
+                    {
+                        AbilityImageSource = await ImageLoader.LoadImageAsync(sAbilityUrl);
+                        AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
+                        AbilityImageSource.DecodePixelWidth = decodeWidth;
+                    }
+                    else
+                    {
+                        if (_DefaultAbilityImage == null)
+                        {
+                            _DefaultAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/PermanentBuffs/buff_placeholder.png"));
+                        }
+                        AbilityImageSource = _DefaultAbilityImage;
+                        AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
+                        AbilityImageSource.DecodePixelWidth = decodeWidth;
+                    }
+                }
+            }
+            catch { }
+        }
+    }
+
     public class Team
     {
         public string team_id { get; set; }
         public string name { get; set; }
-    }
-
-    public class Benchmark
-    {
-        public double raw { get; set; }
-        public double pct { get; set; }
-
-        [Newtonsoft.Json.JsonIgnore]
-        public string Name { get; set; } = string.Empty;
-
-        [Newtonsoft.Json.JsonIgnore]
-        public double BarWidth { get; set; } = 0;
     }
 
     public class Additional_Units : ViewModels.ViewModelBase
@@ -595,6 +657,7 @@ namespace OpenDota_UWP.Models
 
     public class Permanent_Buffs : ViewModels.ViewModelBase
     {
+        [Newtonsoft.Json.JsonIgnore]
         private static Dictionary<string, BitmapImage> dictBuffs = new Dictionary<string, BitmapImage>();
 
         public int? permanent_buff { get; set; }
@@ -668,4 +731,15 @@ namespace OpenDota_UWP.Models
         public int? key { get; set; }
     }
 
+    public class Benchmark
+    {
+        public double raw { get; set; }
+        public double pct { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string Name { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        public double BarWidth { get; set; } = 0;
+    }
 }

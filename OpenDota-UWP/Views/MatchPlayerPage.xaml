@@ -34,6 +34,19 @@
             <cvt:DoubleToPingIconConverter x:Key="Double2Icon"/>
             <cvt:StringToRuneConverter x:Key="Str2Rune"/>
             <cvt:DoubleToBenchmarkColorConverter x:Key="Benchmark2Color"/>
+
+            <!--覆盖系统的笔刷，去掉GridView的Reveal边框效果-->
+            <SolidColorBrush x:Key="SystemControlTransparentRevealBackgroundBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="SystemControlTransparentRevealBorderBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBorderBrush" Color="Transparent" />
+            <Thickness x:Key="GridViewItemRevealBorderThemeThickness">0</Thickness>
+            <SolidColorBrush x:Key="GridViewItemRevealBackground" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBackgroundPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBackgroundPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBackgroundSelected" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="GridViewItemRevealPlaceholderBackground" Color="Transparent" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -313,11 +326,6 @@
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay}"
                           Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="mdl:Permanent_Buffs">
                             <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
@@ -405,36 +413,24 @@
                 </Grid>
 
                 <!--技能加点-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE945;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Abilities" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <!--<GridView SelectionMode="None"
-                          IsItemClickEnabled="True"
-                          ItemsSource="{x:Bind abilityNames}"
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollMode="Disabled">
+                <GridView IsItemClickEnabled="False" SelectionMode="None" Padding="10,0"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade,Mode=OneWay}"
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="helpers:AbilityViewModel">
-                            <Grid Height="56"
-                                  Width="56"
-                                  Background="#3A808080"
-                                  Margin="2">
-                                <Image Source="{x:Bind Ability}" />
-                                <Grid Background="#BC000000"
-                                      Height="22"
-                                      Width="22"
-                                      HorizontalAlignment="Right"
-                                      VerticalAlignment="Bottom">
-                                    <TextBlock Text="{x:Bind ID}"
-                                               Foreground="White"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center" />
-                                </Grid>
+                        <DataTemplate x:DataType="mdl:AbilityUpgrade">
+                            <Grid Height="48" Width="48" Margin="0,0,4,4" CornerRadius="6" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sAbilityName}">
+                                <Image Source="{x:Bind AbilityImageSource,Mode=OneWay}" Height="48" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
-                </GridView>-->
+                </GridView>
 
                 <!--物品购买记录-->
                 <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
