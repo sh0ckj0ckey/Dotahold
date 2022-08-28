@@ -50,6 +50,7 @@ namespace OpenDota_UWP.Models
         // 比赛英雄图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -137,6 +138,7 @@ namespace OpenDota_UWP.Models
         // 数据排行
         [Newtonsoft.Json.JsonIgnore]
         private ObservableCollection<Benchmark> _vBenchmarks = null;
+        [Newtonsoft.Json.JsonIgnore]
         public ObservableCollection<Benchmark> vBenchmarks
         {
             get { return _vBenchmarks; }
@@ -146,6 +148,7 @@ namespace OpenDota_UWP.Models
         // 技能加点顺序
         [Newtonsoft.Json.JsonIgnore]
         private ObservableCollection<AbilityUpgrade> _vAbilitiesUpgrade = null;
+        [Newtonsoft.Json.JsonIgnore]
         public ObservableCollection<AbilityUpgrade> vAbilitiesUpgrade
         {
             get { return _vAbilitiesUpgrade; }
@@ -155,6 +158,7 @@ namespace OpenDota_UWP.Models
         // KDA
         [Newtonsoft.Json.JsonIgnore]
         private string _sKDA = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sKDA
         {
             get { return _sKDA; }
@@ -191,6 +195,7 @@ namespace OpenDota_UWP.Models
         // 英雄图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -252,6 +257,7 @@ namespace OpenDota_UWP.Models
         public string sItemN { get; set; } = string.Empty;
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item0ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
@@ -259,6 +265,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
@@ -266,6 +273,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
@@ -273,6 +281,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
@@ -280,6 +289,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
@@ -287,6 +297,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
@@ -294,6 +305,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
@@ -301,6 +313,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
@@ -308,6 +321,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
@@ -315,6 +329,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
@@ -409,6 +424,7 @@ namespace OpenDota_UWP.Models
         // 英雄图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _AbilityImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage AbilityImageSource
         {
             get { return _AbilityImageSource; }
@@ -517,6 +533,7 @@ namespace OpenDota_UWP.Models
         public string sItemN { get; set; } = string.Empty;
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item0ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
@@ -524,6 +541,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
@@ -531,6 +549,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
@@ -538,6 +557,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
@@ -545,6 +565,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
@@ -552,6 +573,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
@@ -559,6 +581,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
@@ -566,6 +589,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
@@ -573,6 +597,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
@@ -580,6 +605,7 @@ namespace OpenDota_UWP.Models
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
@@ -669,6 +695,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _BuffImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage BuffImageSource
         {
             get { return _BuffImageSource; }

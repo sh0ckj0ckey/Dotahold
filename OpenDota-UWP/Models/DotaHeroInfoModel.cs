@@ -68,6 +68,7 @@ namespace OpenDota_UWP.Models
         // 经过处理之后的天赋描述
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc10L = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc10L
         {
             get { return _sTalentNameLoc10L; }
@@ -76,6 +77,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc10R = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc10R
         {
             get { return _sTalentNameLoc10R; }
@@ -84,6 +86,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc15L = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc15L
         {
             get { return _sTalentNameLoc15L; }
@@ -92,6 +95,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc15R = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc15R
         {
             get { return _sTalentNameLoc15R; }
@@ -100,6 +104,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc20L = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc20L
         {
             get { return _sTalentNameLoc20L; }
@@ -108,6 +113,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc20R = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc20R
         {
             get { return _sTalentNameLoc20R; }
@@ -116,6 +122,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc25L = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc25L
         {
             get { return _sTalentNameLoc25L; }
@@ -124,6 +131,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _sTalentNameLoc25R = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string sTalentNameLoc25R
         {
             get { return _sTalentNameLoc25R; }
@@ -150,6 +158,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _notesStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string notesStr
         {
             get { return _notesStr; }
@@ -165,6 +174,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _behaviorStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string behaviorStr
         {
             get { return _behaviorStr; }
@@ -177,6 +187,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _targetStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string targetStr
         {
             get { return _targetStr; }
@@ -190,6 +201,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _damageStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string damageStr
         {
             get { return _damageStr; }
@@ -198,6 +210,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private SolidColorBrush _damageForeground = AbilityDamageTypeDefaultColor;
+        [Newtonsoft.Json.JsonIgnore]
         public SolidColorBrush damageForeground
         {
             get { return _damageForeground; }
@@ -209,6 +222,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _immunityStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string immunityStr
         {
             get { return _immunityStr; }
@@ -220,6 +234,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _dispellableStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string dispellableStr
         {
             get { return _dispellableStr; }
@@ -233,6 +248,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _castRangesStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string castRangesStr
         {
             get { return _castRangesStr; }
@@ -244,6 +260,7 @@ namespace OpenDota_UWP.Models
 
         [Newtonsoft.Json.JsonIgnore]
         private string _castPointsStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string castPointsStr
         {
             get { return _castPointsStr; }
@@ -278,6 +295,7 @@ namespace OpenDota_UWP.Models
         // 技能数值
         [Newtonsoft.Json.JsonIgnore]
         private string _specialValuesStr = string.Empty;
+        [Newtonsoft.Json.JsonIgnore]
         public string specialValuesStr
         {
             get { return _specialValuesStr; }
@@ -287,6 +305,7 @@ namespace OpenDota_UWP.Models
         // 技能图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }

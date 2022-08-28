@@ -46,10 +46,13 @@ namespace OpenDota_UWP.Helpers
             {
                 IStorageFolder applicationFolder = await GetDataFolder();
                 IStorageFile storageFile = await applicationFolder.GetFileAsync(fileName);
-                IRandomAccessStream accessStream = await storageFile.OpenReadAsync();
-                using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                if (storageFile != null)
                 {
-                    text = streamReader.ReadToEnd();
+                    IRandomAccessStream accessStream = await storageFile.OpenReadAsync();
+                    using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
+                    {
+                        text = streamReader.ReadToEnd();
+                    }
                 }
             }
             catch { }

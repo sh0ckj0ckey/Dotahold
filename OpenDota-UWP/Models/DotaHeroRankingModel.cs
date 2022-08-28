@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace OpenDota_UWP.Models
@@ -14,7 +15,7 @@ namespace OpenDota_UWP.Models
         public List<RankingPlayer> rankings { get; set; }
     }
 
-    public class RankingPlayer
+    public class RankingPlayer : ViewModels.ViewModelBase
     {
         public string account_id { get; set; }
         public string score { get; set; }
@@ -29,7 +30,13 @@ namespace OpenDota_UWP.Models
 
 
         [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage ImageSource { get; set; }
+        private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
+        public BitmapImage ImageSource
+        {
+            get { return _ImageSource; }
+            set { Set("ImageSource", ref _ImageSource, value); }
+        }
 
         public async Task LoadImageAsync(int decodeWidth)
         {

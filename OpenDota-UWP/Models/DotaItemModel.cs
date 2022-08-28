@@ -99,6 +99,7 @@ namespace OpenDota_UWP.Models
         // 装备图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }

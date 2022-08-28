@@ -43,6 +43,7 @@ namespace OpenDota_UWP.Models
         // 英雄图片
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -62,6 +63,7 @@ namespace OpenDota_UWP.Models
         // 英雄小头像
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage _IconSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage IconSource
         {
             get { return _IconSource; }

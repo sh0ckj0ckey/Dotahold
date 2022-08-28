@@ -15,7 +15,8 @@ namespace OpenDota_UWP.Models
         public string SteamId { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage _ImageSource = null;
+        private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -25,9 +26,12 @@ namespace OpenDota_UWP.Models
         {
             try
             {
-                ImageSource = await ImageLoader.LoadImageAsync(AvatarImage);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                if (ImageSource == null && !string.IsNullOrEmpty(AvatarImage))
+                {
+                    ImageSource = await ImageLoader.LoadImageAsync(AvatarImage);
+                    ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }

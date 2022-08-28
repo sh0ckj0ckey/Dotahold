@@ -75,6 +75,7 @@ namespace OpenDota_UWP.Models
         // 比赛英雄封面(大图)
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _CoverImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage CoverImageSource
         {
             get { return _CoverImageSource; }
@@ -99,6 +100,7 @@ namespace OpenDota_UWP.Models
         // 比赛英雄图片
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _HorizonImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage HorizonImageSource
         {
             get { return _HorizonImageSource; }

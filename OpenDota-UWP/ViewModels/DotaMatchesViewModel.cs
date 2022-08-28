@@ -404,6 +404,8 @@ namespace OpenDota_UWP.ViewModels
         public DotaMatchesViewModel()
         {
             InitialDotaMatches();
+
+            LoadBindedDotaIdHistory();
         }
 
         public async void InitialDotaMatches()
@@ -1521,6 +1523,9 @@ namespace OpenDota_UWP.ViewModels
                 his.SteamId = id;
                 his.AvatarImage = img;
                 vDotaIdHistory.Insert(0, his);
+
+                SaveBindedDotaIdHistory();
+
                 await his.LoadImageAsync(56);
             }
             catch { }
@@ -1748,6 +1753,43 @@ namespace OpenDota_UWP.ViewModels
                         }
                     }
                     catch { }
+                }
+            }
+            catch { }
+        }
+
+
+        private async void LoadBindedDotaIdHistory()
+        {
+            try
+            {
+                string json = await StorageFilesCourier.ReadFileAsync("DotaIdBindHis");
+                var list = JsonConvert.DeserializeObject<ObservableCollection<DotaIdBindHistoryModel>>(json);
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item == null || string.IsNullOrEmpty(item.SteamId)) continue;
+                        vDotaIdHistory.Add(item);
+                    }
+
+                    foreach (var item in vDotaIdHistory)
+                    {
+                        await item.LoadImageAsync(56);
+                    }
+                }
+            }
+            catch { }
+        }
+
+        private async void SaveBindedDotaIdHistory()
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(vDotaIdHistory);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    _ = await StorageFilesCourier.WriteFileAsync("DotaIdBindHis", json);
                 }
             }
             catch { }

@@ -31,6 +31,7 @@ namespace OpenDota_UWP.Models
         // 封面图片(英雄小头像)
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }

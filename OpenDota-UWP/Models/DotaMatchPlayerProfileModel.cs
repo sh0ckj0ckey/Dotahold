@@ -53,6 +53,7 @@ namespace OpenDota_UWP.Models
         // 玩家头像
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _AvatarSource = null;
+        [Newtonsoft.Json.JsonIgnore]
         public BitmapImage AvatarSource
         {
             get { return _AvatarSource; }
