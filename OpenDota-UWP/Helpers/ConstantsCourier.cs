@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace OpenDota_UWP.Helpers
 {
@@ -45,7 +46,10 @@ namespace OpenDota_UWP.Helpers
                 }
                 else
                 {
-                    // return local file
+                    // 先去本地的Local文件夹找，找不到就用内置的
+                    var folder = await StorageFilesCourier.GetDataFolder();
+                    var files = folder.GetFilesAsync();
+                    var item = await ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
                     return null;
                 }
             }
