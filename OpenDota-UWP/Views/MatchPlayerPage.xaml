@@ -317,7 +317,7 @@
 
                 <!--永久BUFF-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,0"
-                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay,Converter={StaticResource IsNull2Vis}}">
                     <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Permanent Buffs" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
@@ -325,7 +325,7 @@
                           ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay,Converter={StaticResource IsNull2Vis}}">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="mdl:Permanent_Buffs">
                             <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
@@ -440,7 +440,7 @@
 
                 <!--神符激活记录-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
-                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay,Converter={StaticResource IsNull2Vis}}">
                     <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
@@ -449,7 +449,7 @@
                           ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
                           Margin="6,0,0,0" Padding="8,0,8,0"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay,Converter={StaticResource IsNull2Vis}}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel/>

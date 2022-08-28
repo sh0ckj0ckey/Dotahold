@@ -1650,33 +1650,40 @@ namespace OpenDota_UWP.ViewModels
                     // buff 
                     try
                     {
-                        Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
-                        foreach (var buff in CurrentMatchPlayer.permanent_buffs)
+                        if (CurrentMatchPlayer.permanent_buffs != null && CurrentMatchPlayer.permanent_buffs.Count > 0)
                         {
-                            try
+                            Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
+                            foreach (var buff in CurrentMatchPlayer.permanent_buffs)
                             {
-                                if (buff == null) continue;
+                                try
+                                {
+                                    if (buff == null) continue;
 
-                                if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
-                                {
-                                    buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
+                                    if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
+                                    {
+                                        buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
+                                    }
+                                    else
+                                    {
+                                        // 字典里没有这个buff，则显示默认图
+                                        buff.permanent_buff = -99;
+                                        buff.sBuff = "buff_placeholder";
+                                    }
                                 }
-                                else
-                                {
-                                    // 字典里没有这个buff，则显示默认图
-                                    buff.permanent_buff = -99;
-                                    buff.sBuff = "buff_placeholder";
-                                }
+                                catch { }
                             }
-                            catch { }
-                        }
-                        foreach (var buff in CurrentMatchPlayer.permanent_buffs)
-                        {
-                            try
+                            foreach (var buff in CurrentMatchPlayer.permanent_buffs)
                             {
-                                buff?.LoadItemsImageAsync(36);
+                                try
+                                {
+                                    buff?.LoadItemsImageAsync(36);
+                                }
+                                catch { }
                             }
-                            catch { }
+                        }
+                        else
+                        {
+                            CurrentMatchPlayer.permanent_buffs = null;
                         }
                     }
                     catch { }
@@ -1686,38 +1693,41 @@ namespace OpenDota_UWP.ViewModels
                     {
                         if (CurrentMatchPlayer.vAbilitiesUpgrade == null || CurrentMatchPlayer.vAbilitiesUpgrade.Count <= 0)
                         {
-                            Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
-                            foreach (var ability in CurrentMatchPlayer.ability_upgrades_arr)
+                            if (CurrentMatchPlayer.ability_upgrades_arr != null && CurrentMatchPlayer.ability_upgrades_arr.Count > 0)
                             {
-                                try
+                                Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
+                                foreach (var ability in CurrentMatchPlayer.ability_upgrades_arr)
                                 {
-                                    if (ability != null && dictAbilities.ContainsKey(ability.ToString()))
+                                    try
                                     {
-                                        var abilityUp = new AbilityUpgrade();
-                                        string abiName = dictAbilities[ability.ToString()];
+                                        if (ability != null && dictAbilities.ContainsKey(ability.ToString()))
+                                        {
+                                            var abilityUp = new AbilityUpgrade();
+                                            string abiName = dictAbilities[ability.ToString()];
 
-                                        if (abiName.StartsWith("special_bonus_"))
-                                            abilityUp.bIsTalent = true;
-                                        else
-                                            abilityUp.sAbilityUrl = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", abiName);
+                                            if (abiName.StartsWith("special_bonus_"))
+                                                abilityUp.bIsTalent = true;
+                                            else
+                                                abilityUp.sAbilityUrl = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", abiName);
 
-                                        abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
+                                            abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
 
-                                        if (CurrentMatchPlayer.vAbilitiesUpgrade == null)
-                                            CurrentMatchPlayer.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
+                                            if (CurrentMatchPlayer.vAbilitiesUpgrade == null)
+                                                CurrentMatchPlayer.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
 
-                                        CurrentMatchPlayer.vAbilitiesUpgrade.Add(abilityUp);
+                                            CurrentMatchPlayer.vAbilitiesUpgrade.Add(abilityUp);
+                                        }
                                     }
+                                    catch { }
                                 }
-                                catch { }
-                            }
-                            foreach (var ability in CurrentMatchPlayer.vAbilitiesUpgrade)
-                            {
-                                try
+                                foreach (var ability in CurrentMatchPlayer.vAbilitiesUpgrade)
                                 {
-                                    ability?.LoadAbilityImageAsync(48);
+                                    try
+                                    {
+                                        ability?.LoadAbilityImageAsync(48);
+                                    }
+                                    catch { }
                                 }
-                                catch { }
                             }
                         }
                     }
@@ -1751,6 +1761,14 @@ namespace OpenDota_UWP.ViewModels
                                 CurrentMatchPlayer.vBenchmarks.Add(benchmark.Value);
                             }
                         }
+                    }
+                    catch { }
+
+                    // runes
+                    try
+                    {
+                        if (CurrentMatchPlayer.runes_log != null && CurrentMatchPlayer.runes_log.Count <= 0)
+                            CurrentMatchPlayer.runes_log = null;
                     }
                     catch { }
                 }
