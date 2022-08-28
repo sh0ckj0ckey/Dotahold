@@ -627,7 +627,7 @@
                                     </Flyout.FlyoutPresenterStyle>
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="Both of the following IDs are available"
+                                            <TextBlock Text="Both of the following IDs are acceptable"
                                                FontSize="18" Opacity="0.7" FontWeight="Medium"/>
                                             <TextBlock HorizontalAlignment="Left"
                                                Text="The 64-bit ID can be viewed in the address bar after"
