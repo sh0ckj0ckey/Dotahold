@@ -124,7 +124,7 @@ namespace OpenDota_UWP
         {
             try
             {
-                RegisterExceptionHandlingSynchronizationContext();
+                //RegisterExceptionHandlingSynchronizationContext();
                 base.OnActivated(args);
             }
             catch { }
