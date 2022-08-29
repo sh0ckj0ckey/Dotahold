@@ -506,7 +506,14 @@ namespace OpenDota_UWP.ViewModels
             {
                 var response = await httpClient.GetAsync(new Uri(url));
                 var jsonMessage = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<T>(jsonMessage);
+
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore,
+                };
+
+                var result = JsonConvert.DeserializeObject<T>(jsonMessage, jsonSerializerSettings);
                 return result;
             }
             catch { }

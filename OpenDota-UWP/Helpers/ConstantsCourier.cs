@@ -25,11 +25,6 @@ namespace OpenDota_UWP.Helpers
         private const string _buffsJsonFileName = "permanentbuffsjson";
         private const string _abilitiesJsonFileName = "abilitiesjson";
 
-        private string _heroesBuildInJson = string.Empty;
-        private string _itemsBuildInJson = string.Empty;
-        private string _buffsBuildInJson = string.Empty;
-        private string _abilitiesBuildInJson = string.Empty;
-
         /// <summary>
         /// 永久buff字典
         /// </summary>
@@ -50,40 +45,42 @@ namespace OpenDota_UWP.Helpers
             Dictionary<string, Models.DotaHeroModel> heroesConst = null;
             try
             {
-                //if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
-                //{
-                //    // if Time > 24h, then download new file
-                //    var heroes = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
-                //    return heroes;
-                //}
+                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore,
+                };
 
                 // 先去本地的Local文件夹找下载的最新的
-                string json = string.Empty;
                 try
                 {
-                    json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
+                    var json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
+                    heroesConst = JsonConvert.DeserializeObject<Dictionary<string, Models.DotaHeroModel>>(json, jsonSerializerSettings);
                 }
-                catch { json = string.Empty; }
+                catch { heroesConst = null; }
 
                 // 找不到就用内置的
-                if (string.IsNullOrEmpty(json))
+                if (heroesConst == null)
                 {
                     try
                     {
-                        json = await LoadBuildInJsonString(_heroesJsonFileName);
+                        var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                        heroesConst = JsonConvert.DeserializeObject<Dictionary<string, Models.DotaHeroModel>>(json, jsonSerializerSettings);
                     }
-                    catch { json = string.Empty; }
+                    catch { heroesConst = null; }
                 }
 
-                // 内置的也找不到(理论上不会找不到，以防万一而已)
-                if (string.IsNullOrEmpty(json))
+                // 内置的也找不到(不太可能)
+                if ((!ViewModels.DotaViewModel.Instance.bDisableApiRequest) && (heroesConst == null || ViewModels.DotaViewModel.Instance.bForceApiRequest))
                 {
                     try
                     {
-                        heroesConst = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes");
+                        heroesConst = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes", false, string.Empty);
                     }
                     catch { }
                 }
+
+                CheckUpdateLocalFile();
             }
             catch { }
             return heroesConst;
@@ -171,13 +168,61 @@ namespace OpenDota_UWP.Helpers
             return null;
         }
 
+        private async Task<T> LoadConstant<T>(string jsonLocalFileName)
+        {
+            try
+            {
+                Dictionary constant = null;
+                try
+                {
+                    JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore,
+                    };
+
+                    // 先去本地的Local文件夹找下载的最新的
+                    try
+                    {
+                        var json = await StorageFilesCourier.ReadFileAsync(jsonLocalFileName);
+                        constant = JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings);
+                    }
+                    catch { constant = default; }
+
+                    // 找不到就用内置的
+                    if (constant == null || constant == )
+                    {
+                        try
+                        {
+                            var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                            heroesConst = JsonConvert.DeserializeObject<Dictionary<string, Models.DotaHeroModel>>(json, jsonSerializerSettings);
+                        }
+                        catch { heroesConst = null; }
+                    }
+
+                    // 内置的也找不到(不太可能)
+                    if ((!ViewModels.DotaViewModel.Instance.bDisableApiRequest) && (heroesConst == null || ViewModels.DotaViewModel.Instance.bForceApiRequest))
+                    {
+                        try
+                        {
+                            heroesConst = await DownloadConstant<Dictionary<string, Models.DotaHeroModel>>("heroes", false, string.Empty);
+                        }
+                        catch { }
+                    }
+
+                    CheckUpdateLocalFile();
+                }
+                catch { }
+                return heroesConst;
+            }
+            catch { }
+        }
+
         /// <summary>
         /// 下载指定的Constant json文件，存储到本地，然后返回这个对象
-        /// (根据需要的频率去调用更新)
         /// </summary>
-        /// <param name="resource"></param>
         /// <returns>下载的json反序列化对象</returns>
-        private async Task<T> DownloadConstant<T>(string resource)
+        private async Task<T> DownloadConstant<T>(string resource, bool shouldSaveFile, string saveFileName)
         {
             string url = "https://api.opendota.com/api/constants/" + resource;
             try
@@ -194,70 +239,15 @@ namespace OpenDota_UWP.Helpers
 
                 if (constantModel != null)
                 {
-                    // await StorageFileHelper.WriteAsync(constantModel, resource + ".dota");
+                    if (shouldSaveFile)
+                    {
+                        await StorageFilesCourier.WriteFileAsync(saveFileName, jsonMessage);
+                    }
                     return constantModel;
                 }
             }
             catch { }
             return default;
-        }
-
-        /// <summary>
-        /// 读取内置的json
-        /// </summary>
-        /// <param name="jsonName"></param>
-        /// <returns></returns>
-        private async Task<string> LoadBuildInJsonString(string jsonName)
-        {
-            try
-            {
-                if (_heroesJsonFileName == jsonName)
-                {
-                    if (string.IsNullOrEmpty(_heroesBuildInJson))
-                    {
-                        _heroesBuildInJson = string.Empty;
-
-                        string fname = @"ConstantsJsons\heroes.json";
-                        StorageFolder installFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-                        StorageFile file = await installFolder.GetFileAsync(fname);
-                        if (file != null/* && File.Exists(file.Path)*/)
-                        {
-                            IRandomAccessStream accessStream = await file.OpenReadAsync();
-                            using (StreamReader streamReader = new StreamReader(accessStream.AsStreamForRead((int)accessStream.Size)))
-                            {
-                                _heroesBuildInJson = streamReader.ReadToEnd();
-                            }
-                        }
-                    }
-                    return _heroesBuildInJson;
-                }
-                else if (_itemsJsonFileName == jsonName)
-                {
-                    if (string.IsNullOrEmpty(_itemsBuildInJson))
-                    {
-                        _itemsBuildInJson = "";
-                    }
-                    return _itemsBuildInJson;
-                }
-                else if (_buffsJsonFileName == jsonName)
-                {
-                    if (string.IsNullOrEmpty(_buffsBuildInJson))
-                    {
-                        _buffsBuildInJson = "";
-                    }
-                    return _buffsBuildInJson;
-                }
-                else if (_abilitiesJsonFileName == jsonName)
-                {
-                    if (string.IsNullOrEmpty(_abilitiesBuildInJson))
-                    {
-                        _abilitiesBuildInJson = "";
-                    }
-                    return _abilitiesBuildInJson;
-                }
-            }
-            catch { }
-            return string.Empty;
         }
     }
 }
