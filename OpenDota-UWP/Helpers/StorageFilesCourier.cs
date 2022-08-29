@@ -35,17 +35,20 @@ namespace OpenDota_UWP.Helpers
         }
 
         /// <summary>
-        /// 读取本地文件夹根目录的文件
+        /// 读取本地文件夹根目录的文件，默认从OpenDotaData目录读取文件
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static async Task<string> ReadFileAsync(string fileName)
+        public static async Task<string> ReadFileAsync(string fileName, StorageFolder applicationFolder = null)
         {
             string text = string.Empty;
             try
             {
-                StorageFolder applicationFolder = await GetDataFolder();
+                if (applicationFolder == null) 
+                    applicationFolder = await GetDataFolder();
+
                 var storageFile = await applicationFolder.GetFileAsync(fileName);
+
                 if (storageFile != null)
                 {
                     IRandomAccessStream accessStream = await storageFile.OpenReadAsync();
@@ -65,12 +68,14 @@ namespace OpenDota_UWP.Helpers
         /// <param name="fileName"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static async Task<bool> WriteFileAsync(string fileName, string content)
+        public static async Task<bool> WriteFileAsync(string fileName, string content, StorageFolder applicationFolder = null)
         {
             try
             {
-                StorageFolder applicationFolder = await GetDataFolder();
-                StorageFile storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
+                if (applicationFolder == null)
+                    applicationFolder = await GetDataFolder();
+
+                var storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
 
                 int retryAttempts = 3;
                 const int ERROR_ACCESS_DENIED = unchecked((int)0x80070005);
