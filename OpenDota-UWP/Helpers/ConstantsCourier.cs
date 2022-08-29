@@ -16,18 +16,27 @@ namespace OpenDota_UWP.Helpers
         private static Lazy<ConstantsCourier> _lazyVM = new Lazy<ConstantsCourier>(() => new ConstantsCourier());
         public static ConstantsCourier Instance => _lazyVM.Value;
 
-        private Windows.Web.Http.HttpClient constantsHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _constantsHttpClient = new Windows.Web.Http.HttpClient();
 
+        private const string _heroesJsonFileName = "heroesjson";
+        private const string _itemsJsonFileName = "itemsjson";
+        private const string _buffsJsonFileName = "permanentbuffsjson";
+        private const string _abilitiesJsonFileName = "abilitiesjson";
+
+        private string _heroesBuildInJson = string.Empty;
+        private string _itemsBuildInJson = string.Empty;
+        private string _buffsBuildInJson = string.Empty;
+        private string _abilitiesBuildInJson = string.Empty;
 
         /// <summary>
         /// 永久buff字典
         /// </summary>
-        private Dictionary<string, string> _DictPermanentBuffs = null;
+        private Dictionary<string, string> _dictPermanentBuffs = null;
 
         /// <summary>
         /// 技能ID与名称字典
         /// </summary>
-        private Dictionary<string, string> _DictAbilitiesId = null;
+        private Dictionary<string, string> _dictAbilitiesId = null;
 
 
         /// <summary>
@@ -46,11 +55,18 @@ namespace OpenDota_UWP.Helpers
                 }
                 else
                 {
-                    // 先去本地的Local文件夹找，找不到就用内置的
-                    var folder = await StorageFilesCourier.GetDataFolder();
-                    var files = folder.GetFilesAsync();
-                    var item = await ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
-                    return null;
+                    // 先去本地的Local文件夹找下载的最新的，找不到就用内置的
+                    string json = string.Empty;
+                    try
+                    {
+                        json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
+                    }
+                    catch { json = string.Empty; }
+
+                    if (string.IsNullOrEmpty(json))
+                    {
+
+                    }
                 }
             }
             catch { }
@@ -89,16 +105,16 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (_DictPermanentBuffs != null) return _DictPermanentBuffs;
+                if (_dictPermanentBuffs != null) return _dictPermanentBuffs;
 
                 if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true/*time is ok*/ && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var buffs = await DownloadConstant<Dictionary<string, string>>("permanent_buffs");
 
-                    if (buffs != null) _DictPermanentBuffs = buffs;
+                    if (buffs != null) _dictPermanentBuffs = buffs;
 
-                    return _DictPermanentBuffs;
+                    return _dictPermanentBuffs;
                 }
                 else
                 {
@@ -118,16 +134,16 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                if (_DictAbilitiesId != null) return _DictAbilitiesId;
+                if (_dictAbilitiesId != null) return _dictAbilitiesId;
 
                 if (ViewModels.DotaViewModel.Instance.bForceApiRequest || (true/*time is ok*/ && !ViewModels.DotaViewModel.Instance.bDisableApiRequest))
                 {
                     // if Time > 24h, then download new file
                     var abilities = await DownloadConstant<Dictionary<string, string>>("ability_ids");
 
-                    if (abilities != null) _DictAbilitiesId = abilities;
+                    if (abilities != null) _dictAbilitiesId = abilities;
 
-                    return _DictAbilitiesId;
+                    return _dictAbilitiesId;
                 }
                 else
                 {
@@ -150,7 +166,7 @@ namespace OpenDota_UWP.Helpers
             string url = "https://api.opendota.com/api/constants/" + resource;
             try
             {
-                var response = await constantsHttpClient.GetAsync(new Uri(url));
+                var response = await _constantsHttpClient.GetAsync(new Uri(url));
                 string jsonMessage = await response.Content.ReadAsStringAsync();
                 JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                 {

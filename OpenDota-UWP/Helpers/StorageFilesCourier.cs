@@ -19,13 +19,13 @@ namespace OpenDota_UWP.Helpers
         private const string DataFolderName = "OpenDotaData";
 
         //存储数据的文件夹对象(单例，见下面的GetDataFolder方法)
-        private static IStorageFolder DataFolder = null;
+        private static StorageFolder DataFolder = null;
 
         /// <summary>
         /// 获取存储数据的文件夹的对象
         /// </summary>
         /// <returns></returns>
-        public static async Task<IStorageFolder> GetDataFolder()
+        public static async Task<StorageFolder> GetDataFolder()
         {
             if (DataFolder == null)
             {
@@ -44,8 +44,8 @@ namespace OpenDota_UWP.Helpers
             string text = string.Empty;
             try
             {
-                IStorageFolder applicationFolder = await GetDataFolder();
-                IStorageFile storageFile = await applicationFolder.GetFileAsync(fileName);
+                StorageFolder applicationFolder = await GetDataFolder();
+                var storageFile = await applicationFolder.GetFileAsync(fileName);
                 if (storageFile != null)
                 {
                     IRandomAccessStream accessStream = await storageFile.OpenReadAsync();
@@ -69,8 +69,8 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                IStorageFolder applicationFolder = await GetDataFolder();
-                IStorageFile storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
+                StorageFolder applicationFolder = await GetDataFolder();
+                StorageFile storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
 
                 int retryAttempts = 3;
                 const int ERROR_ACCESS_DENIED = unchecked((int)0x80070005);

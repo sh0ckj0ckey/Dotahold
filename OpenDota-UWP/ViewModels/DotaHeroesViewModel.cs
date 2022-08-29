@@ -23,10 +23,10 @@ namespace OpenDota_UWP.ViewModels
         public ObservableCollection<Models.DotaHeroModel> vIntHeroesList { get; set; } = new ObservableCollection<Models.DotaHeroModel>();
 
         // 缓存拉取过的英雄详情
-        private Dictionary<int, Models.DotaHeroInfoModel> dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
+        private Dictionary<int, Models.DotaHeroInfoModel> _dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
 
         // 缓存拉取过的英雄排行榜
-        private Dictionary<int, Models.DotaHeroRankingModel> dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
+        private Dictionary<int, Models.DotaHeroRankingModel> _dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
 
 
         // 是否正在加载英雄列表
@@ -118,8 +118,8 @@ namespace OpenDota_UWP.ViewModels
         // 是否已经成功加载过英雄列表
         private bool _bLoadedDotaHeroes = false;
 
-        private Windows.Web.Http.HttpClient heroInfoHttpClient = new Windows.Web.Http.HttpClient();
-        private Windows.Web.Http.HttpClient heroRankingHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _heroInfoHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _heroRankingHttpClient = new Windows.Web.Http.HttpClient();
 
         public DotaHeroesViewModel()
         {
@@ -236,17 +236,17 @@ namespace OpenDota_UWP.ViewModels
                 bLoadingHeroInfo = true;
                 bFailedHeroInfo = false;
 
-                if (dictHeroInfos.ContainsKey(heroId))
+                if (_dictHeroInfos.ContainsKey(heroId))
                 {
                     await Task.Delay(600);
-                    return dictHeroInfos[heroId];
+                    return _dictHeroInfos[heroId];
                 }
 
                 string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
 
                 try
                 {
-                    var response = await heroInfoHttpClient.GetAsync(new Uri(url));
+                    var response = await _heroInfoHttpClient.GetAsync(new Uri(url));
                     string jsonMessage = await response.Content.ReadAsStringAsync();
                     JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                     {
@@ -258,7 +258,7 @@ namespace OpenDota_UWP.ViewModels
 
                     if (infoModel != null)
                     {
-                        dictHeroInfos.Add(heroId, infoModel);
+                        _dictHeroInfos.Add(heroId, infoModel);
                         return infoModel;
                     }
                 }
@@ -1264,17 +1264,17 @@ namespace OpenDota_UWP.ViewModels
                 bLoadingHeroRanking = true;
                 bFailedHeroRanking = false;
 
-                if (dictHeroRankings.ContainsKey(heroId))
+                if (_dictHeroRankings.ContainsKey(heroId))
                 {
                     await Task.Delay(600);
-                    return dictHeroRankings[heroId];
+                    return _dictHeroRankings[heroId];
                 }
 
                 string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
 
                 try
                 {
-                    var response = await heroRankingHttpClient.GetAsync(new Uri(url));
+                    var response = await _heroRankingHttpClient.GetAsync(new Uri(url));
                     string jsonMessage = await response.Content.ReadAsStringAsync();
                     JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                     {
@@ -1286,7 +1286,7 @@ namespace OpenDota_UWP.ViewModels
 
                     if (rankingModel != null)
                     {
-                        dictHeroRankings.Add(heroId, rankingModel);
+                        _dictHeroRankings.Add(heroId, rankingModel);
                         return rankingModel;
                     }
                 }

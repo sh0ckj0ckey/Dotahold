@@ -33,9 +33,9 @@ namespace OpenDota_UWP.ViewModels
         // 绑定过的账号列表
         public ObservableCollection<DotaIdBindHistoryModel> vDotaIdHistory = new ObservableCollection<DotaIdBindHistoryModel>();
 
-        private Windows.Web.Http.HttpClient playerInfoHttpClient = new Windows.Web.Http.HttpClient();
-        private Windows.Web.Http.HttpClient matchHttpClient = new Windows.Web.Http.HttpClient();
-        private Windows.Web.Http.HttpClient matchInfoHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _playerInfoHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _matchHttpClient = new Windows.Web.Http.HttpClient();
+        private Windows.Web.Http.HttpClient _matchInfoHttpClient = new Windows.Web.Http.HttpClient();
 
         // 用户信息
         private DotaMatchPlayerProfileModel _PlayerProfile = null;
@@ -68,7 +68,7 @@ namespace OpenDota_UWP.ViewModels
         public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
 
         // 所有的比赛
-        private List<DotaRecentMatchModel> vAllMatchesList = new List<DotaRecentMatchModel>();
+        private List<DotaRecentMatchModel> _vAllMatchesList = new List<DotaRecentMatchModel>();
         public ObservableCollection<DotaRecentMatchModel> vAllMatches = new ObservableCollection<DotaRecentMatchModel>();
 
         // 最常用的10个英雄
@@ -152,7 +152,7 @@ namespace OpenDota_UWP.ViewModels
         }
 
         // 请求过的比赛缓存起来
-        private Dictionary<long, DotaMatchInfoModel> _MatchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
+        private Dictionary<long, DotaMatchInfoModel> _matchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
 
         #region 折线图
 
@@ -532,7 +532,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    profile = await GetResponseAsync<DotaMatchPlayerProfileModel>(url, playerInfoHttpClient);
+                    profile = await GetResponseAsync<DotaMatchPlayerProfileModel>(url, _playerInfoHttpClient);
                 }
                 catch { }
 
@@ -597,7 +597,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    wl = await GetResponseAsync<DotaMatchWinLoseModel>(url, playerInfoHttpClient);
+                    wl = await GetResponseAsync<DotaMatchWinLoseModel>(url, _playerInfoHttpClient);
                 }
                 catch { }
 
@@ -631,7 +631,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    totals = await GetResponseAsync<List<DotaMatchPlayerTotalModel>>(url, playerInfoHttpClient);
+                    totals = await GetResponseAsync<List<DotaMatchPlayerTotalModel>>(url, _playerInfoHttpClient);
                 }
                 catch { }
 
@@ -691,7 +691,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    recentMatches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, matchHttpClient);
+                    recentMatches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, _matchHttpClient);
                 }
                 catch { }
 
@@ -752,7 +752,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    heroes = await GetResponseAsync<List<DotaMatchHeroPlayedModel>>(url, matchHttpClient);
+                    heroes = await GetResponseAsync<List<DotaMatchHeroPlayedModel>>(url, _matchHttpClient);
                 }
                 catch { }
 
@@ -803,7 +803,7 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    online = await GetResponseAsync<DotaOnlinePlayersModel>(url, playerInfoHttpClient);
+                    online = await GetResponseAsync<DotaOnlinePlayersModel>(url, _playerInfoHttpClient);
                 }
                 catch { }
 
@@ -827,7 +827,7 @@ namespace OpenDota_UWP.ViewModels
 
                 bLoadingAllMatches = true;
                 bLoadedAllMatches = true;
-                vAllMatchesList.Clear();
+                _vAllMatchesList.Clear();
                 vAllMatches.Clear();
 
                 List<DotaRecentMatchModel> matches = null;
@@ -835,7 +835,7 @@ namespace OpenDota_UWP.ViewModels
                 try
                 {
                     string url = string.Format("https://api.opendota.com/api/players/{0}/matches", sSteamId);
-                    matches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, matchHttpClient);
+                    matches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, _matchHttpClient);
                 }
                 catch { }
 
@@ -860,7 +860,7 @@ namespace OpenDota_UWP.ViewModels
                                 item.bWin = !item.radiant_win;
                         }
 
-                        vAllMatchesList.Add(item);
+                        _vAllMatchesList.Add(item);
                         if (vAllMatches.Count < 40)
                         {
                             double kda = 0;
@@ -877,7 +877,7 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
 
-                if (vAllMatchesList.Count <= vAllMatches.Count)
+                if (_vAllMatchesList.Count <= vAllMatches.Count)
                 {
                     bLoadedAllMatches = true;
                 }
@@ -907,11 +907,11 @@ namespace OpenDota_UWP.ViewModels
                 if (!_bGottenAllMatchesList) return;
 
                 int index = vAllMatches.Count;
-                for (int i = index; i < index + 30 && i < vAllMatchesList.Count; i++)
+                for (int i = index; i < index + 30 && i < _vAllMatchesList.Count; i++)
                 {
-                    if (i >= vAllMatchesList.Count) break;
+                    if (i >= _vAllMatchesList.Count) break;
 
-                    var item = vAllMatchesList[i];
+                    var item = _vAllMatchesList[i];
 
                     if (DotaHeroesViewModel.Instance.dictAllHeroes.ContainsKey(item.hero_id.ToString()))
                     {
@@ -944,7 +944,7 @@ namespace OpenDota_UWP.ViewModels
                     }
                 }
 
-                if (vAllMatchesList.Count <= vAllMatches.Count)
+                if (_vAllMatchesList.Count <= vAllMatches.Count)
                 {
                     bLoadedAllMatches = true;
                 }
@@ -980,20 +980,20 @@ namespace OpenDota_UWP.ViewModels
 
                 try
                 {
-                    if (_MatchesInfoCache.ContainsKey(matchId))
+                    if (_matchesInfoCache.ContainsKey(matchId))
                     {
-                        matchInfo = _MatchesInfoCache[matchId];
+                        matchInfo = _matchesInfoCache[matchId];
                     }
                     else
                     {
-                        matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, matchInfoHttpClient);
+                        matchInfo = await GetResponseAsync<DotaMatchInfoModel>(url, _matchInfoHttpClient);
                         if (matchInfo != null)
                         {
-                            _MatchesInfoCache[matchId] = matchInfo;
-                            if (_MatchesInfoCache.Count > 100)
+                            _matchesInfoCache[matchId] = matchInfo;
+                            if (_matchesInfoCache.Count > 100)
                             {
-                                var removing = _MatchesInfoCache.ElementAt(0);
-                                _MatchesInfoCache.Remove(removing.Key);
+                                var removing = _matchesInfoCache.ElementAt(0);
+                                _matchesInfoCache.Remove(removing.Key);
                             }
                         }
                     }
@@ -1485,7 +1485,7 @@ namespace OpenDota_UWP.ViewModels
             try
             {
                 string url = string.Format("https://api.opendota.com/api/players/{0}/refresh", id);
-                await playerInfoHttpClient.PostAsync(new Uri(url), null);
+                await _playerInfoHttpClient.PostAsync(new Uri(url), null);
             }
             catch { }
         }
