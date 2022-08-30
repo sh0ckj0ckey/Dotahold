@@ -403,6 +403,24 @@ namespace OpenDota_UWP.Views
         }
 
         /// <summary>
+        /// 点击查看某个英雄的所有比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickPlayedHeroMatch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is DotaMatchHeroPlayedModel hero)
+                {
+
+                }
+                MatchFrame.Navigate(typeof(MatchesListPage));
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 点击查看所有比赛
         /// </summary>
         /// <param name="sender"></param>

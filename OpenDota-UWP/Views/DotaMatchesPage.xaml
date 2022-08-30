@@ -328,6 +328,7 @@
                                         <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
                                     </StackPanel>
                                     <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
+                                    <Button Grid.ColumnSpan="2" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

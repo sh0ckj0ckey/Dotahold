@@ -442,6 +442,15 @@ namespace OpenDota_UWP
             catch { }
         }
 
+        private void OnClickForceUpdateLocalJson(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ConstantsCourier.Instance.ResetConstantsGottenDate();
+            }
+            catch { }
+        }
+
         private void Image_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             try

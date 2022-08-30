@@ -20,6 +20,9 @@ namespace OpenDota_UWP.Helpers
 
         private Windows.Web.Http.HttpClient _constantsHttpClient = new Windows.Web.Http.HttpClient();
 
+        // 记录每个constant最近一次保存到本地的时间
+        private Dictionary<string, long> _dictConstantsGottenDate = null;
+
         private const string _heroesJsonFileName = "heroesjson";
         private const string _itemsJsonFileName = "itemsjson";
         private const string _buffsJsonFileName = "permanentbuffsjson";
@@ -51,6 +54,15 @@ namespace OpenDota_UWP.Helpers
             NullValueHandling = NullValueHandling.Ignore,
             MissingMemberHandling = MissingMemberHandling.Ignore,
         };
+
+        public ConstantsCourier()
+        {
+            try
+            {
+                LoadConstantsGottenDate();
+            }
+            catch { }
+        }
 
         /// <summary>
         /// 获取英雄列表
@@ -89,7 +101,7 @@ namespace OpenDota_UWP.Helpers
                 }
 
                 // 内置的也找不到(不太可能)
-                if (_dictHeroes == null || true/*Time > 24*/)
+                if (_dictHeroes == null || Need2UpdateJson("heroes"))
                 {
                     try
                     {
@@ -150,7 +162,7 @@ namespace OpenDota_UWP.Helpers
                 }
 
                 // 内置的也找不到(不太可能)
-                if (_dictItems == null || true/*Time > 24*/)
+                if (_dictItems == null || Need2UpdateJson("items"))
                 {
                     try
                     {
@@ -211,7 +223,7 @@ namespace OpenDota_UWP.Helpers
                 }
 
                 // 内置的也找不到(不太可能)
-                if (_dictPermanentBuffs == null || true/*Time > 24*/)
+                if (_dictPermanentBuffs == null || Need2UpdateJson("permanent_buffs"))
                 {
                     try
                     {
@@ -272,7 +284,7 @@ namespace OpenDota_UWP.Helpers
                 }
 
                 // 内置的也找不到(不太可能)
-                if (_dictAbilitiesId == null || true/*Time > 24*/)
+                if (_dictAbilitiesId == null || Need2UpdateJson("ability_ids"))
                 {
                     try
                     {
@@ -308,15 +320,82 @@ namespace OpenDota_UWP.Helpers
                 var response = await _constantsHttpClient.GetAsync(new Uri(url));
                 string jsonMessage = await response.Content.ReadAsStringAsync();
 
-                if (!string.IsNullOrEmpty(jsonMessage) && jsonMessage.Length > 96/*太短的话通常是请求失败*/)
+                try
                 {
-                    await StorageFilesCourier.WriteFileAsync(jsonFileName, jsonMessage);
+                    if (!string.IsNullOrEmpty(jsonMessage) && jsonMessage.Length > 96/*太短的话通常是请求失败*/)
+                    {
+                        bool written = await StorageFilesCourier.WriteFileAsync(jsonFileName, jsonMessage);
+
+                        if (written)
+                        {
+                            _dictConstantsGottenDate[constantName] = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+                            SaveConstantsGottenDate();
+                        }
+                    }
                 }
+                catch { }
 
                 return jsonMessage;
             }
             catch { }
             return string.Empty;
+        }
+
+
+        private bool Need2UpdateJson(string constantName)
+        {
+            try
+            {
+                long nowDate = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+                if (_dictConstantsGottenDate != null && _dictConstantsGottenDate.ContainsKey(constantName) && ((nowDate - _dictConstantsGottenDate[constantName]) <= 172800))
+                    return false;
+            }
+            catch { }
+            return true;
+        }
+
+        private async void LoadConstantsGottenDate()
+        {
+            try
+            {
+                string json = await StorageFilesCourier.ReadFileAsync("ConstantsGottenDate");
+                if (!string.IsNullOrEmpty(json))
+                {
+                    _dictConstantsGottenDate = JsonConvert.DeserializeObject<Dictionary<string, long>>(json);
+                }
+            }
+            catch { }
+            try
+            {
+                if (_dictConstantsGottenDate == null)
+                {
+                    _dictConstantsGottenDate = new Dictionary<string, long>();
+                }
+            }
+            catch { }
+        }
+
+        private async void SaveConstantsGottenDate()
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(_dictConstantsGottenDate);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    await StorageFilesCourier.WriteFileAsync("ConstantsGottenDate", json);
+                }
+            }
+            catch { }
+        }
+
+        public void ResetConstantsGottenDate()
+        {
+            try
+            {
+                _dictConstantsGottenDate?.Clear();
+                SaveConstantsGottenDate();
+            }
+            catch { }
         }
     }
 }
