@@ -425,7 +425,7 @@
                                     </Grid>
                                 </ListViewItem>
 
-                                <ListViewItem Margin="0,0,12,0">
+                                <ListViewItem Margin="0,0,22,0">
                                     <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                                         <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -452,7 +452,7 @@
                             </ListView.Template>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Ability">
-                                    <Grid Height="Auto" MinHeight="96" Margin="40,0,0,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                    <Grid Height="Auto" MinHeight="96" Margin="52,0,24,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition/>

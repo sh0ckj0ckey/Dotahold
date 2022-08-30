@@ -45,7 +45,7 @@
                 <TextBlock Grid.Column="3" Text="Against" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                 <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
             </Grid>
-            <ListView Grid.Row="1" SelectionMode="None" ItemsSource="{x:Bind ViewModel.vMostPlayedHeroes,Mode=OneWay}"
+            <ListView Grid.Row="1" SelectionMode="None" IsItemClickEnabled="False" ItemsSource="{x:Bind ViewModel.vMostPlayedHeroes,Mode=OneWay}"
                       Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                       Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
                 <ListView.ItemContainerStyle>
@@ -84,6 +84,7 @@
                             </TextBlock>
                             <TextBlock Grid.Column="4" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}" TextTrimming="CharacterEllipsis"
                                        FontSize="14" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8"/>
+                            <Button Grid.ColumnSpan="5" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

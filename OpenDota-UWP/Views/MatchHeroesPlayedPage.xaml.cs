@@ -1,4 +1,5 @@
-﻿using OpenDota_UWP.ViewModels;
+﻿using OpenDota_UWP.Models;
+using OpenDota_UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +34,18 @@ namespace OpenDota_UWP.Views
                 this.InitializeComponent();
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
+            }
+            catch { }
+        }
+
+        private void OnClickPlayedHeroMatch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is DotaMatchHeroPlayedModel hero)
+                {
+                    this.Frame.Navigate(typeof(MatchesListPage));
+                }
             }
             catch { }
         }

@@ -637,15 +637,15 @@
                                                Text="clicking personal information on the Steam client:"
                                                Margin="2,4,8,8" />
                                             <Image Source="/Assets/Icons/tutorial1.png"
-                                           HorizontalAlignment="Left"
-                                           Width="256" Margin="12,0" />
+                                               HorizontalAlignment="Left"
+                                               Width="256" Margin="12,0" />
                                             <TextBlock HorizontalAlignment="Left"
-                                               Text="The 32-bit ID can be viewed in the Dota2 client:"
-                                               Margin="2,12,8,8" />
+                                                       Text="The 32-bit ID can be viewed in the Dota2 client:"
+                                                       Margin="2,12,8,8" />
                                             <Image Source="/Assets/Icons/tutorial2.png"
-                                           HorizontalAlignment="Left"
-                                           Height="96"
-                                           Margin="12,0,12,8" />
+                                                   HorizontalAlignment="Left"
+                                                   Height="96"
+                                                   Margin="12,0,12,8" />
                                         </StackPanel>
                                     </Grid>
                                 </Flyout>
