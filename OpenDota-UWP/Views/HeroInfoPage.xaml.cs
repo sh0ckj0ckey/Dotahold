@@ -163,7 +163,7 @@ namespace OpenDota_UWP.Views
                 dialog.Content = new UI.HeroHistoryDialogContent();
                 dialog.RequestedTheme = MainViewModel.eAppTheme;
 
-                _ = await dialog.ShowAsync();
+                await dialog.ShowAsync();
             }
             catch { }
         }
@@ -202,7 +202,7 @@ namespace OpenDota_UWP.Views
 
                 ViewModel.FetchHeroRanking(ViewModel.CurrentHero.id);
 
-                _ = await dialog.ShowAsync();
+                await dialog.ShowAsync();
             }
             catch { }
         }

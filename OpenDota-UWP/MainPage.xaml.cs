@@ -450,43 +450,5 @@ namespace OpenDota_UWP
             }
             catch { }
         }
-
-        private void OnClickDisableApiRequest(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is ToggleButton btn)
-                {
-                    bool disable = btn.IsChecked == true;
-                    if (ViewModel.bDisableApiRequest != disable)
-                    {
-                        App.AppSettingContainer.Values["DisableAPI"] = disable ? "True" : "False";
-                        App.AppSettingContainer.Values["ForceAPI"] = "False";
-                        ViewModel.bDisableApiRequest = disable;
-                        ViewModel.bForceApiRequest = false;
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private void OnClickForceApiRequest(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is ToggleButton btn)
-                {
-                    bool force = btn.IsChecked == true;
-                    if (ViewModel.bForceApiRequest != force)
-                    {
-                        App.AppSettingContainer.Values["DisableAPI"] = "False";
-                        App.AppSettingContainer.Values["ForceAPI"] = force ? "True" : "False";
-                        ViewModel.bDisableApiRequest = false;
-                        ViewModel.bForceApiRequest = force;
-                    }
-                }
-            }
-            catch { }
-        }
     }
 }

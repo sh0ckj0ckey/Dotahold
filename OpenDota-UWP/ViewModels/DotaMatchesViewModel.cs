@@ -1814,7 +1814,7 @@ namespace OpenDota_UWP.ViewModels
                 var json = JsonConvert.SerializeObject(vDotaIdHistory);
                 if (!string.IsNullOrEmpty(json))
                 {
-                    _ = await StorageFilesCourier.WriteFileAsync("DotaIdBindHis", json);
+                    await StorageFilesCourier.WriteFileAsync("DotaIdBindHis", json);
                 }
             }
             catch { }
