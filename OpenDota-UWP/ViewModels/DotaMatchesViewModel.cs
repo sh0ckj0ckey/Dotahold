@@ -1788,7 +1788,7 @@ namespace OpenDota_UWP.ViewModels
         {
             try
             {
-                string json = await StorageFilesCourier.ReadFileAsync("DotaIdBindHis");
+                string json = await StorageFilesCourier.ReadFileAsync("dotaidbindhistory");
                 var list = JsonConvert.DeserializeObject<ObservableCollection<DotaIdBindHistoryModel>>(json);
                 if (list != null)
                 {
@@ -1814,7 +1814,7 @@ namespace OpenDota_UWP.ViewModels
                 var json = JsonConvert.SerializeObject(vDotaIdHistory);
                 if (!string.IsNullOrEmpty(json))
                 {
-                    await StorageFilesCourier.WriteFileAsync("DotaIdBindHis", json);
+                    await StorageFilesCourier.WriteFileAsync("dotaidbindhistory", json);
                 }
             }
             catch { }

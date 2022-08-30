@@ -358,7 +358,7 @@ namespace OpenDota_UWP.Helpers
         {
             try
             {
-                string json = await StorageFilesCourier.ReadFileAsync("ConstantsGottenDate");
+                string json = await StorageFilesCourier.ReadFileAsync("constantsgottendate");
                 if (!string.IsNullOrEmpty(json))
                 {
                     _dictConstantsGottenDate = JsonConvert.DeserializeObject<Dictionary<string, long>>(json);
@@ -382,7 +382,7 @@ namespace OpenDota_UWP.Helpers
                 var json = JsonConvert.SerializeObject(_dictConstantsGottenDate);
                 if (!string.IsNullOrEmpty(json))
                 {
-                    await StorageFilesCourier.WriteFileAsync("ConstantsGottenDate", json);
+                    await StorageFilesCourier.WriteFileAsync("constantsgottendate", json);
                 }
             }
             catch { }
