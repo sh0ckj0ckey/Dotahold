@@ -260,8 +260,6 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0" CornerRadius="6" Height="32" Width="32" Margin="12,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -282,7 +280,7 @@
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
-                                        <Button Grid.Column="1" CornerRadius="6" Height="32" Width="32" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        <Button Grid.Column="2" CornerRadius="6" Height="32" Width="Auto" Margin="0,0,12,0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center"
                                                 Background="{ThemeResource COMBOBOX_NORMAL_BK}" ToolTipService.ToolTip="Open Image Cache Folder"
                                                 Click="OnClickForceUpdateLocalJson">
                                             <Button.Content>
@@ -292,7 +290,6 @@
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
-                                        <!--<Grid Grid.Column="2" Height="28" Width="1" Margin="0,0,12,0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>-->
                                     </Grid>
                                 </StackPanel>
                             </ScrollViewer>
