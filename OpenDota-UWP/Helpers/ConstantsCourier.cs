@@ -79,7 +79,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     try
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
                         if (!string.IsNullOrEmpty(json))
                         {
                             _dictHeroes = JsonConvert.DeserializeObject<Dictionary<string, Models.DotaHeroModel>>(json, _jsonSerializerSettings);
@@ -140,7 +140,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     try
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\items.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\items.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
                         if (!string.IsNullOrEmpty(json))
                         {
                             _dictItems = JsonConvert.DeserializeObject<Dictionary<string, Models.DotaItemModel>>(json, _jsonSerializerSettings);
@@ -201,7 +201,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     try
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\permanent_buffs.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\permanent_buffs.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
                         if (!string.IsNullOrEmpty(json))
                         {
                             _dictPermanentBuffs = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
@@ -262,7 +262,7 @@ namespace OpenDota_UWP.Helpers
                 {
                     try
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"ConstantsJsons\ability_ids.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\ability_ids.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
                         if (!string.IsNullOrEmpty(json))
                         {
                             _dictAbilitiesId = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);

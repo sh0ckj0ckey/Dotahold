@@ -590,10 +590,18 @@
     <Content Include="Fonts\Radiance.ttf" />
     <Content Include="Fonts\Radiance-SemiBold.ttf" />
     <Content Include="Fonts\Reaver-Bold.ttf" />
-    <None Include="ConstantsJsons\ability_ids.json" />
-    <None Include="ConstantsJsons\heroes.json" />
-    <None Include="ConstantsJsons\items.json" />
-    <None Include="ConstantsJsons\permanent_buffs.json" />
+    <Content Include="ConstantsJsons\ability_ids.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ConstantsJsons\heroes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ConstantsJsons\items.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ConstantsJsons\permanent_buffs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="OpenDota-UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup />
