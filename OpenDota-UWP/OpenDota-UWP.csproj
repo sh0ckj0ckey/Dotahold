@@ -221,6 +221,9 @@
     <Compile Include="Views\MatchHeroesPlayedPage.xaml.cs">
       <DependentUpon>MatchHeroesPlayedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MatchHeroMatchesPage.xaml.cs">
+      <DependentUpon>MatchHeroMatchesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MatchInfoPage.xaml.cs">
       <DependentUpon>MatchInfoPage.xaml</DependentUpon>
     </Compile>
@@ -304,6 +307,7 @@
     <Content Include="Assets\Icons\Hero\icon_talents_light.png" />
     <Content Include="Assets\Icons\Hero\icon_turn_rate.png" />
     <Content Include="Assets\Icons\Hero\icon_vision.png" />
+    <Content Include="Assets\Icons\icon_empty.png" />
     <Content Include="Assets\Icons\icon_nonetwork_dark.png" />
     <Content Include="Assets\Icons\icon_nonetwork_light.png" />
     <Content Include="Assets\Icons\Match\icon_talent_tree.png" />
@@ -551,6 +555,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MatchHeroesPlayedPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MatchHeroMatchesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

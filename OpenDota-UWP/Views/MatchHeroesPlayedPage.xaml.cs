@@ -44,7 +44,8 @@ namespace OpenDota_UWP.Views
             {
                 if (sender is Button btn && btn.DataContext is DotaMatchHeroPlayedModel hero)
                 {
-                    this.Frame.Navigate(typeof(MatchesListPage));
+                    DotaMatchesViewModel.Instance.GetHeroMatchesFormAllAsync(hero);
+                    this.Frame.Navigate(typeof(MatchHeroMatchesPage));
                 }
             }
             catch { }

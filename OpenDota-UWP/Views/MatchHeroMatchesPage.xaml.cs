@@ -21,47 +21,18 @@ namespace OpenDota_UWP.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MatchesListPage : Page
+    public sealed partial class MatchHeroMatchesPage : Page
     {
         private DotaMatchesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
-        public MatchesListPage()
+        public MatchHeroMatchesPage()
         {
             try
             {
                 this.InitializeComponent();
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 重写导航至此页面的代码,显示动画
-        /// </summary>
-        /// <param name="e"></param>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            try
-            {
-                base.OnNavigatedTo(e);
-
-                await DotaMatchesViewModel.Instance.GetAllMatchesAsync();
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 加载更多比赛
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickLoadMoreMatches(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ViewModel.IncreaseFromAllMatches();
             }
             catch { }
         }
