@@ -853,23 +853,27 @@ namespace OpenDota_UWP.ViewModels
                 int index = vAllMatches.Count;
                 for (int i = index; i < index + 30 && i < _vAllMatchesList.Count; i++)
                 {
-                    if (i >= _vAllMatchesList.Count) break;
-
-                    var item = _vAllMatchesList[i];
-
-                    double kda = 0;
-                    if (item.kills != null && item.assists != null && item.deaths != null)
+                    try
                     {
-                        if (item.deaths <= 0)
-                            kda = (double)item.kills + (double)item.assists;
-                        else
-                            kda = ((double)item.kills + (double)item.assists) / (double)item.deaths;
+                        if (i >= _vAllMatchesList.Count) break;
+
+                        var item = _vAllMatchesList[i];
+
+                        double kda = 0;
+                        if (item.kills != null && item.assists != null && item.deaths != null)
+                        {
+                            if (item.deaths <= 0)
+                                kda = (double)item.kills + (double)item.assists;
+                            else
+                                kda = ((double)item.kills + (double)item.assists) / (double)item.deaths;
+                        }
+                        item.sKda = kda.ToString("f2");
+
+                        await item.LoadHorizonImageAsync(64);
+
+                        vAllMatches.Add(item);
                     }
-                    item.sKda = kda.ToString("f2");
-
-                    await item.LoadHorizonImageAsync(64);
-
-                    vAllMatches.Add(item);
+                    catch { }
                 }
 
                 if (_vAllMatchesList.Count <= vAllMatches.Count)
