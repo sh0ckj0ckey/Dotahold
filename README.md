@@ -33,11 +33,12 @@ Go to the [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X94) t
 #### v4.0
 ![6.png](ASSETS/6.png)
 
-### 引用
-| 名字 | 许可类型 | 项目网站 |
+### References
+| Name | License | Website |
 | --- | --- | --- |
 | UWP Community Toolkit | [MIT License](https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md) | [github.com/Microsoft/UWPCommunityToolkit ](https://github.com/Microsoft/UWPCommunityToolkit) |
 | Microsoft.UI.Xaml | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [github.com/Microsoft/microsoft-ui-xaml](https://github.com/Microsoft/microsoft-ui-xaml) |
 | Json.NET | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [newtonsoft.com](https://www.newtonsoft.com/json) |
+| OpenDota | [MIT License] | [newtonsoft.com](https://github.com/odota) |
 
 2019-2022 sh0ckj0ckey.
