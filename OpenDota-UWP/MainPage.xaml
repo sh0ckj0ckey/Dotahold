@@ -355,7 +355,7 @@
                                            FontWeight="Medium" FontSize="14" CharacterSpacing="60"
                                            HorizontalAlignment="Center"
                                            Margin="6,4,4,0"/>
-                                <TextBlock Text="v4.0.1"
+                                <TextBlock Text="v4.0.2"
                                            HorizontalAlignment="Center" FontWeight="Medium"
                                            Opacity="0.5" FontFamily="Consolas"/>
                                 <HyperlinkButton HorizontalAlignment="Center" Content="Rate &amp; Review on Microsoft Store" Click="HyperlinkButton_Click"/>
