@@ -30,9 +30,6 @@ Go to the [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X94) t
 #### Match Data
 ![5.png](ASSETS/5.png)
 
-#### v4.0
-![6.png](ASSETS/6.png)
-
 ### References
 | Name | License | Website |
 | --- | --- | --- |
