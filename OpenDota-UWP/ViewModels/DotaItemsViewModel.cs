@@ -149,7 +149,7 @@ namespace OpenDota_UWP.ViewModels
                 {
                     try
                     {
-                        await item.LoadImageAsync(85);
+                        _ = item.LoadImageAsync(85);
 
                         if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
                         {

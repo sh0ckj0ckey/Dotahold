@@ -159,8 +159,8 @@ namespace OpenDota_UWP.ViewModels
                 {
                     item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
                     item.Value.icon = "https://cdn.cloudflare.steamstatic.com" + item.Value.icon;
-                    await item.Value.LoadImageAsync(256);
-                    await item.Value.LoadIconAsync(36);
+                    _ = item.Value.LoadImageAsync(256);
+                    _ = item.Value.LoadIconAsync(36);
 
                     string attr = item.Value.primary_attr.ToLower();
                     if (attr.Contains("str"))

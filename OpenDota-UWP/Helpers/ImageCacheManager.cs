@@ -37,12 +37,12 @@ namespace OpenDota_UWP.Helpers
             try
             {
                 var cacheFolder = await GetCacheFolderAsync();
-                var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
-                foreach (var file in files)
-                {
-                    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                }
-                //await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                //var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
+                //foreach (var file in files)
+                //{
+                //    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                //}
+                await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
                 return true;
             }
             catch { }

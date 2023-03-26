@@ -10,6 +10,10 @@ namespace OpenDota_UWP.Models
 {
     public class DotaItemModel : ViewModels.ViewModelBase
     {
+        public static BitmapImage DefaultImageSource =
+            new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 62 };
+
         /// <summary>
         /// 使用的介绍，可能有多条，例如第一条是主动效果，第二条是被动
         /// </summary>
@@ -24,7 +28,7 @@ namespace OpenDota_UWP.Models
         /// <summary>
         /// https://steamcdn-a.akamaihd.net/ + apps/dota2/images/items/{img}.png
         /// </summary>
-        public string img { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string img { get; set; } = "";
 
         /// <summary>
         /// 显示的名字
@@ -98,7 +102,7 @@ namespace OpenDota_UWP.Models
 
         // 装备图片
         [Newtonsoft.Json.JsonIgnore]
-        private BitmapImage _ImageSource = null;
+        private BitmapImage _ImageSource = DefaultImageSource;
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
@@ -109,11 +113,13 @@ namespace OpenDota_UWP.Models
         {
             try
             {
-                if (ImageSource != null) return;
-
-                ImageSource = await ImageLoader.LoadImageAsync(img);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                var imageSource = await ImageLoader.LoadImageAsync(img);
+                if (imageSource != null)
+                {
+                    ImageSource = imageSource;
+                    ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }

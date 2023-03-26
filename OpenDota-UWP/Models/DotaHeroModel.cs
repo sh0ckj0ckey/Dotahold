@@ -10,6 +10,10 @@ namespace OpenDota_UWP.Models
 {
     public class DotaHeroModel : ViewModels.ViewModelBase
     {
+        public static BitmapImage DefaultImageSource =
+            new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
+
         public int id { get; set; }
         public string name { get; set; }
         public string localized_name { get; set; }
@@ -42,7 +46,7 @@ namespace OpenDota_UWP.Models
 
         // 英雄图片
         [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage _ImageSource = null;
+        public BitmapImage _ImageSource = DefaultImageSource;
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
@@ -53,9 +57,13 @@ namespace OpenDota_UWP.Models
         {
             try
             {
-                ImageSource = await ImageLoader.LoadImageAsync(img);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                var imageSource = await ImageLoader.LoadImageAsync(img);
+                if (imageSource != null)
+                {
+                    ImageSource = imageSource;
+                    ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }
