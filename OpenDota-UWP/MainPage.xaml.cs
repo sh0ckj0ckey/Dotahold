@@ -304,7 +304,7 @@ namespace OpenDota_UWP
         {
             try
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn"));
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold"));
             }
             catch { }
         }
@@ -346,7 +346,7 @@ namespace OpenDota_UWP
         {
             try
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/OpenDota-UWP-reborn/issues"));
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold/issues"));
             }
             catch { }
         }
