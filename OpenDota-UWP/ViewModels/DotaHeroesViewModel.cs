@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using OpenDota_UWP.Helpers;
+using Dotahold.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenDota_UWP.ViewModels
+namespace Dotahold.ViewModels
 {
     public class DotaHeroesViewModel : ViewModelBase
     {

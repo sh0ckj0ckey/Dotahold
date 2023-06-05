@@ -1,4 +1,4 @@
-﻿using OpenDota_UWP.Helpers;
+﻿using Dotahold.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace OpenDota_UWP.Models
+namespace Dotahold.Models
 {
     public class DotaIdBindHistoryModel : ViewModels.ViewModelBase
     {

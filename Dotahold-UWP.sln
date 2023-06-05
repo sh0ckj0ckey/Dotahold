@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenDota-UWP", "OpenDota-UWP\OpenDota-UWP.csproj", "{7ACBCE5F-98B4-474A-A65E-4AD74F952225}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotahold", "OpenDota-UWP\Dotahold.csproj", "{7ACBCE5F-98B4-474A-A65E-4AD74F952225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotahold.Core", "Dotahold.Core\Dotahold.Core.csproj", "{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,8 @@ Global
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Debug|x86.Build.0 = Debug|x86
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Debug|x86.Deploy.0 = Debug|x86
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|Any CPU.ActiveCfg = Release|x86
+		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|Any CPU.Build.0 = Release|x86
+		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|Any CPU.Deploy.0 = Release|x86
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|ARM.ActiveCfg = Release|ARM
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|ARM.Build.0 = Release|ARM
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|ARM.Deploy.0 = Release|ARM
@@ -47,6 +51,26 @@ Global
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|x86.ActiveCfg = Release|x86
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|x86.Build.0 = Release|x86
 		{7ACBCE5F-98B4-474A-A65E-4AD74F952225}.Release|x86.Deploy.0 = Release|x86
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|ARM.ActiveCfg = Debug|ARM
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|ARM.Build.0 = Debug|ARM
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|ARM64.Build.0 = Debug|ARM64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|x64.ActiveCfg = Debug|x64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|x64.Build.0 = Debug|x64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|x86.ActiveCfg = Debug|x86
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Debug|x86.Build.0 = Debug|x86
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|ARM.ActiveCfg = Release|ARM
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|ARM.Build.0 = Release|ARM
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|ARM64.ActiveCfg = Release|ARM64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|ARM64.Build.0 = Release|ARM64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|x64.ActiveCfg = Release|x64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|x64.Build.0 = Release|x64
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|x86.ActiveCfg = Release|x86
+		{B67DBFF2-320E-4DF6-B4FB-018A95913AF6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

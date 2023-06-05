@@ -2,8 +2,8 @@
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Newtonsoft.Json;
-using OpenDota_UWP.Helpers;
-using OpenDota_UWP.Models;
+using Dotahold.Helpers;
+using Dotahold.Models;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using Windows.ApplicationModel.Contacts.DataProvider;
 using Windows.Storage;
 using Windows.UI;
 
-namespace OpenDota_UWP.ViewModels
+namespace Dotahold.ViewModels
 {
     public class DotaMatchesViewModel : ViewModelBase
     {

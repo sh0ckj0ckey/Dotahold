@@ -1,12 +1,12 @@
 ﻿<Page
-    x:Class="OpenDota_UWP.UI.HeroPlayerRankDialogContent"
+    x:Class="Dotahold.UI.HeroPlayerRankDialogContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:OpenDota_UWP.UI"
+    xmlns:local="using:Dotahold.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:Models="using:OpenDota_UWP.Models"
-    xmlns:Converter="using:OpenDota_UWP.Converters"
+    xmlns:Models="using:Dotahold.Models"
+    xmlns:Converter="using:Dotahold.Converters"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>

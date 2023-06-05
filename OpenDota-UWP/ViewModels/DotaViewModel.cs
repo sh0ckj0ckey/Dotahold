@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace OpenDota_UWP.ViewModels
+namespace Dotahold.ViewModels
 {
     public class DotaViewModel : ViewModelBase
     {

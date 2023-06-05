@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace OpenDota_UWP.Converters
+namespace Dotahold.Converters
 {
     internal class RankTierToImageConverter : IValueConverter
     {

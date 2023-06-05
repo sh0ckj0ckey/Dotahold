@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace OpenDota_UWP.Helpers
+namespace Dotahold.Helpers
 {
     /// <summary>
     /// 这是一只信使，帮你运送你需要的"常量数据"

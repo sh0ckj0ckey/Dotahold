@@ -1,4 +1,4 @@
-﻿using OpenDota_UWP.Helpers;
+﻿using Dotahold.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace OpenDota_UWP.ViewModels
+namespace Dotahold.ViewModels
 {
     public class DotaItemsViewModel : ViewModelBase
     {

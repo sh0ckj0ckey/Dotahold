@@ -1,4 +1,4 @@
-﻿using OpenDota_UWP.Helpers;
+﻿using Dotahold.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace OpenDota_UWP
+namespace Dotahold
 {
     /// <summary>
     /// 提供特定于应用程序的行为，以补充默认的应用程序类。

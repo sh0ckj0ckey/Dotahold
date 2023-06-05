@@ -1,5 +1,5 @@
-﻿using OpenDota_UWP.Helpers;
-using OpenDota_UWP.ViewModels;
+﻿using Dotahold.Helpers;
+using Dotahold.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace OpenDota_UWP.Models
+namespace Dotahold.Models
 {
     public class DotaHeroInfoModel
     {

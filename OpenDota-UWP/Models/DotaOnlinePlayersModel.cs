@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenDota_UWP.Models
+namespace Dotahold.Models
 {
     public class DotaOnlinePlayersModel
     {

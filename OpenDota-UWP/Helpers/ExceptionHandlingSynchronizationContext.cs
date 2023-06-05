@@ -2,7 +2,7 @@
 using System.Threading;
 using Windows.UI.Xaml.Controls;
 
-namespace OpenDota_UWP.Helpers
+namespace Dotahold.Helpers
 {
     internal class ExceptionHandlingSynchronizationContext : SynchronizationContext
     {

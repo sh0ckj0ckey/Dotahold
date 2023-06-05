@@ -1,13 +1,13 @@
 ﻿<Page
-    x:Class="OpenDota_UWP.Views.MatchesListPage"
+    x:Class="Dotahold.Views.MatchesListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:OpenDota_UWP.Views"
+    xmlns:local="using:Dotahold.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:OpenDota_UWP.Models"
-    xmlns:converter="using:OpenDota_UWP.Converters" 
-    xmlns:ui="using:OpenDota_UWP.UI"
+    xmlns:models="using:Dotahold.Models"
+    xmlns:converter="using:Dotahold.Converters" 
+    xmlns:ui="using:Dotahold.UI"
     mc:Ignorable="d" NavigationCacheMode="Required"
     Background="Transparent">
 

@@ -8,7 +8,7 @@ using Windows.Storage;
 /// <summary>
 /// https://github.com/tobiichiamane/pixivfs-uwp by tobiichiamane
 /// </summary>
-namespace OpenDota_UWP.Helpers
+namespace Dotahold.Helpers
 {
     //记录临时的缓存文件及其期望的名称
     public struct TempStorageFile

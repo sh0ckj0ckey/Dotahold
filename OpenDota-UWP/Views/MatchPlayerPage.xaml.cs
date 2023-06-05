@@ -1,5 +1,5 @@
-﻿using OpenDota_UWP.Helpers;
-using OpenDota_UWP.ViewModels;
+﻿using Dotahold.Helpers;
+using Dotahold.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
-namespace OpenDota_UWP.Views
+namespace Dotahold.Views
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。

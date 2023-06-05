@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="OpenDota_UWP.App">
+      EntryPoint="Dotahold.App">
       <uap:VisualElements
         DisplayName="Dotahold"
         Square150x150Logo="Assets\Square150x150Logo.png"

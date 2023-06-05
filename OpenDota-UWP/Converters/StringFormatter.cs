@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace OpenDota_UWP.Converters
+namespace Dotahold.Converters
 {
     internal class StringFormatter : IValueConverter
     {

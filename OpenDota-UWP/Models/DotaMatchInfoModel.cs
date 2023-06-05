@@ -1,4 +1,4 @@
-﻿using OpenDota_UWP.Helpers;
+﻿using Dotahold.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace OpenDota_UWP.Models
+namespace Dotahold.Models
 {
     public class DotaMatchInfoModel
     {

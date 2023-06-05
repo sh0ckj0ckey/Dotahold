@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace OpenDota_UWP.Helpers
+namespace Dotahold.Helpers
 {
     public static class ImageLoader
     {

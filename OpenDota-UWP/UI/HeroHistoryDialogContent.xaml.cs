@@ -1,4 +1,4 @@
-﻿using OpenDota_UWP.ViewModels;
+﻿using Dotahold.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
-namespace OpenDota_UWP.UI
+namespace Dotahold.UI
 {
     public sealed partial class HeroHistoryDialogContent : Page
     {

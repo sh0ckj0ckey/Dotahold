@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 //https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
 
-namespace OpenDota_UWP.Views.Layouts
+namespace Dotahold.Views.Layouts
 {
     public sealed partial class SettingLayout : UserControl
     {
