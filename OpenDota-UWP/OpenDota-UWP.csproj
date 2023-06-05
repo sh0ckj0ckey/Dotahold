@@ -11,7 +11,7 @@
     <AssemblyName>OpenDota-UWP</AssemblyName>
     <DefaultLanguage>en-us</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -213,6 +213,9 @@
     </Compile>
     <Compile Include="Views\DotaHeroesPage.xaml.cs">
       <DependentUpon>DotaHeroesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Layouts\SettingLayout.xaml.cs">
+      <DependentUpon>SettingLayout.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MatchesListPage.xaml.cs">
       <DependentUpon>MatchesListPage.xaml</DependentUpon>
@@ -547,6 +550,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Layouts\SettingLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MatchesListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -591,8 +598,11 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Media">
       <Version>7.1.2</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.8.4</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>7.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
