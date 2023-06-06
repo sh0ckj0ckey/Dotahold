@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity
+    Name="NoMewing.Dotahold"
+    Publisher="CN=E6D8FAFA-3EF4-4E47-B885-52144C67BFF5"
+    Version="4.2.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="12b0330a-d940-4a33-82cf-cc8ef899432a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Dotahold</DisplayName>
+    <PublisherDisplayName>No Mewing</PublisherDisplayName>
+    <Logo>Assets\Manifest\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="Dotahold.App">
+      <uap:VisualElements
+        DisplayName="Dotahold"
+        Square150x150Logo="Assets\Manifest\Square150x150Logo.png"
+        Square44x44Logo="Assets\Manifest\Square44x44Logo.png"
+        Description="Dota 2 Statistics powered by OpenDota"
+        BackgroundColor="#2e2d45">
+        <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png" ShortName="Dotahold" Square71x71Logo="Assets\Manifest\SmallTile.png" Square310x310Logo="Assets\Manifest\LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="Assets\Manifest\SplashScreen.png"  BackgroundColor="#2e2d45"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

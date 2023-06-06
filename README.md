@@ -8,9 +8,11 @@
 
 
 
-This is a third party application, the match data from Steam Api and OpenDota, and the Heroes' information is from the Dota 2 official website. If you have any suggestions or violate your rights, please contact the developer yaoyiming123@live.com. (The name is taken from the Darkhold in Agents of S.H.I.E.L.D. 🤣)
+This is a third party application, the match data from Steam Api and OpenDota, and the Heroes' information is from the Dota 2 official website. If you have any suggestions or violate your rights, please contact the developer yaoyiming123@live.com. 
 
-Download from [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X94) for free
+(The name is taken from the Darkhold in Agents of S.H.I.E.L.D. 🤣)
+
+Download from [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X94)
 
 ### Screenshots
 
@@ -33,8 +35,9 @@ Download from [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X9
 | Name | License | Website |
 | --- | --- | --- |
 | UWP Community Toolkit | [MIT License](https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md) | [github.com/Microsoft/UWPCommunityToolkit ](https://github.com/Microsoft/UWPCommunityToolkit) |
-| Microsoft.UI.Xaml | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [github.com/Microsoft/microsoft-ui-xaml](https://github.com/Microsoft/microsoft-ui-xaml) |
+| Microsoft.UI.Xaml | [MIT License](https://github.com/microsoft/microsoft-ui-xaml/blob/main/LICENSE) | [github.com/Microsoft/microsoft-ui-xaml](https://github.com/Microsoft/microsoft-ui-xaml) |
 | Json.NET | [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md) | [newtonsoft.com](https://www.newtonsoft.com/json) |
-| OpenDota | MIT License | [github.com/odota](https://github.com/odota) |
+| LiveCharts2 | [MIT License](https://github.com/beto-rodriguez/LiveCharts2/blob/master/LICENSE) | [lvcharts.com](https://lvcharts.com/) |
+| OpenDota | [MIT License](https://github.com/odota/core/blob/master/LICENSE) | [github.com/odota](https://github.com/odota) |
 
-2019-2022 sh0ckj0ckey.
+2019-2023 sh0ckj0ckey.
