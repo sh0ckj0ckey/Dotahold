@@ -5,7 +5,6 @@
     xmlns:local="using:Dotahold.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:Dotahold.Helpers" 
     xmlns:ToolkitUI="using:Microsoft.Toolkit.Uwp.UI" 
     xmlns:ToolkitMedia="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:Converter="using:Dotahold.Converters" 
@@ -444,7 +443,7 @@
                         </Grid>
                         <!--英雄技能-->
                         <ListView Margin="0,4,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="False"
-                                  ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}">
+                                  ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}">
                             <ListView.Template>
                                 <ControlTemplate>
                                     <ItemsPresenter />

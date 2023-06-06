@@ -17,7 +17,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>09B331EDD3FD9068599231058812CDB6A47586D9</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>5A0BF8439709A49B4461A62D501B413C3C6D9293</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
@@ -270,13 +270,14 @@
     <Content Include="Assets\Icons\Hero\hero_ability_aghs_shard.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_scepter.png" />
     <Content Include="Assets\Icons\Hero\hero_ability_shard.png" />
-    <Content Include="Assets\Icons\Hero\hero_universal2.png" />
     <Content Include="Assets\Icons\Hero\img_agi_background_dark.png" />
     <Content Include="Assets\Icons\Hero\img_agi_background_light.png" />
     <Content Include="Assets\Icons\Hero\img_int_background_dark.png" />
     <Content Include="Assets\Icons\Hero\img_int_background_light.png" />
     <Content Include="Assets\Icons\Hero\img_str_background_dark.png" />
     <Content Include="Assets\Icons\Hero\img_str_background_light.png" />
+    <Content Include="Assets\Icons\Hero\img_uni_background_dark.png" />
+    <Content Include="Assets\Icons\Hero\img_uni_background_light.png" />
     <Content Include="Assets\Icons\Hero\lone_druid_bear.png" />
     <Content Include="Assets\Icons\Hero\lone_druid_spirit_bear_ability.png" />
     <Content Include="Assets\Icons\icon_dota2logo_dark.png" />

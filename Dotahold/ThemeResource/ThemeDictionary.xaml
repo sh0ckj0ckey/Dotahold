@@ -116,6 +116,12 @@
                     <BitmapImage x:Key="HERO_ATTR_STR_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_str_background_dark.png" />
                     <BitmapImage x:Key="HERO_ATTR_AGI_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_agi_background_dark.png" />
                     <BitmapImage x:Key="HERO_ATTR_INT_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_int_background_dark.png" />
+                    <BitmapImage x:Key="HERO_ATTR_UNI_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_uni_background_dark.png" />
+                    
+                    <BitmapImage x:Key="HERO_ATTR_STR_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_str_background_dark.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_AGI_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_agi_background_dark.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_INT_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_int_background_dark.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_UNI_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_uni_background_dark.png" DecodePixelHeight="40"/>
 
                     <BitmapImage x:Key="ONLINEPLAYERS_DOTA2LOGO_IMG" UriSource="ms-appx:///Assets/Icons/icon_dota2logo_dark.png" />
                 </ResourceDictionary>
@@ -234,6 +240,12 @@
                     <BitmapImage x:Key="HERO_ATTR_STR_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_str_background_light.png" />
                     <BitmapImage x:Key="HERO_ATTR_AGI_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_agi_background_light.png" />
                     <BitmapImage x:Key="HERO_ATTR_INT_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_int_background_light.png" />
+                    <BitmapImage x:Key="HERO_ATTR_UNI_BG_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_uni_background_light.png" />
+                    
+                    <BitmapImage x:Key="HERO_ATTR_STR_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_str_background_light.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_AGI_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_agi_background_light.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_INT_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_int_background_light.png" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="HERO_ATTR_UNI_TAB_IMG" UriSource="ms-appx:///Assets/Icons/Hero/img_uni_background_light.png" DecodePixelHeight="40"/>
 
                     <BitmapImage x:Key="ONLINEPLAYERS_DOTA2LOGO_IMG" UriSource="ms-appx:///Assets/Icons/icon_dota2logo_light.png" />
                 </ResourceDictionary>

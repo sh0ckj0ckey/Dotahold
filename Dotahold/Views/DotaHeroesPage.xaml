@@ -20,7 +20,7 @@
             <BitmapImage x:Key="HERO_TAB_STR_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_strength.png" />
             <BitmapImage x:Key="HERO_TAB_AGI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_agility.png" />
             <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_intelligence.png" />
-            <BitmapImage x:Key="HERO_TAB_UNI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_universal.png" />
+            <BitmapImage x:Key="HERO_TAB_UNI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_universal2.png" />
 
             <Style TargetType="GridViewItem" x:Key="HeroGridViewItemRevealStyle">
                 <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
@@ -148,7 +148,7 @@
             <converter:StringLengthToFontSizeConverter x:Key="Str2FS"/>
         </ResourceDictionary>
     </Page.Resources>
-    
+
     <Page.Transitions>
         <TransitionCollection>
             <NavigationThemeTransition x:Name="navigationTransition">
@@ -157,86 +157,85 @@
         </TransitionCollection>
     </Page.Transitions>
 
-    <Grid Background="{ThemeResource APPLICATION_BK}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="64"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                    Text="Heroes" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Width="164" Height="34"
-                    Margin="16,0,6,0"
-                    Click="Button_Click">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_STR_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
-                    <TextBlock x:Name="StrTextBlock" Text="STRENGTH" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
-                </StackPanel>
-            </Button>
-            <Button Width="164" Height="34"
-                    Margin="6,0"
-                    Click="Button_Click_1">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_AGI_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
-                    <TextBlock x:Name="AgiTextBlock" Text="AGILITY" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
-                </StackPanel>
-            </Button>
-            <Button Width="164" Height="34"
-                    Margin="6,0,16,0"
-                    Click="Button_Click_2">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_INT_IMG}" Height="23" VerticalAlignment="Center" Margin="0,0,0,-3"/>
-                    <TextBlock x:Name="IntTextBlock" Text="INTELLIGENCE" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
-                </StackPanel>
-            </Button>
-            <Button Width="164" Height="34"
-                    Margin="6,0,16,0"
-                    Click="Button_Click_2">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{ThemeResource HERO_TAB_UNI_IMG}" Height="22.5" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="UniTextBlock" Text="UNIVERSAL" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-        <Grid Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Image x:Name="StrAttrBkImage" Source="{ThemeResource HERO_ATTR_STR_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-4,-24"/>
-            <Image x:Name="AgiAttrBkImage" Source="{ThemeResource HERO_ATTR_AGI_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-24"/>
-            <Image x:Name="IntAttrBkImage" Source="{ThemeResource HERO_ATTR_INT_BG_IMG}" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}" Height="218" Stretch="Uniform" Opacity="0.05" Margin="0,0,-12,-28"/>
-        </Grid>
-        <GridView x:Name="StrHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=0,Mode=OneWay}"
-                  SelectionMode="None"
-                  IsItemClickEnabled="True"
-                  ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" 
-                  ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded">
-            <GridView.RenderTransform>
-                <TranslateTransform x:Name="StrHeroesGridViewTranslation"/>
-            </GridView.RenderTransform>
-        </GridView>
-        <GridView x:Name="AgiHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=1,Mode=OneWay}"
-                  SelectionMode="None"
-                  IsItemClickEnabled="True"
-                  ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
-                  ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
-                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1">
-            <GridView.RenderTransform>
-                <TranslateTransform x:Name="AgiHeroesGridViewTranslation"/>
-            </GridView.RenderTransform>
-        </GridView>
-        <GridView x:Name="IntHeroesGridView" Grid.Row="2" Visibility="{x:Bind ViewModel.iHeroAttrTabIndex,Converter={StaticResource Eq2Vis},ConverterParameter=2,Mode=OneWay}"
-                  SelectionMode="None"
-                  IsItemClickEnabled="True"
-                  ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
-                  ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
-                  ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
-                  ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2">
-            <GridView.RenderTransform>
-                <TranslateTransform x:Name="IntHeroesGridViewTranslation"/>
-            </GridView.RenderTransform>
-        </GridView>
+        <Pivot Grid.Row="1" Background="Transparent" Padding="12,0,0,0">
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource HERO_ATTR_STR_TAB_IMG}" Height="20" Opacity="0.8" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                        <TextBlock Text="STRENGTH" FontSize="16" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource HERO_ATTR_STR_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-4,-24"/>
+                    <GridView SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}" 
+                              ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
+                              Padding="20,12" ItemClick="GridView_ItemClick" Loaded="GridView_Loaded"/>
+                </Grid>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource HERO_ATTR_AGI_TAB_IMG}" Height="20" Opacity="0.8" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                        <TextBlock Text="AGILITY" FontSize="16" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource HERO_ATTR_AGI_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-24"/>
+                    <GridView SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                              ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_1"/>
+                </Grid>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource HERO_ATTR_INT_TAB_IMG}" Height="20" Opacity="0.8" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                        <TextBlock Text="INTELLIGENCE" FontSize="16" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource HERO_ATTR_INT_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-12,-28"/>
+                    <GridView SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                              ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2"/>
+                </Grid>
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource HERO_ATTR_UNI_TAB_IMG}" Height="20" VerticalAlignment="Center" Margin="0,0,0,-3"/>
+                        <TextBlock Text="UNIVERSAL" FontSize="16" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource HERO_ATTR_UNI_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-28"/>
+                    <GridView SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemRevealStyle}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}" Padding="20,12"
+                              ItemClick="GridView_ItemClick" Loaded="GridView_Loaded_2"/>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+
+        <!--Loading-->
         <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="72" Width="128" CornerRadius="6" Margin="0,-80,0,0"
               Visibility="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}">
