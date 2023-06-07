@@ -31,7 +31,7 @@
             </Storyboard>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Background="{ThemeResource APPLICATION_BK}">
+    <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
             <StackPanel x:Name="ItemInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="60,40">
                 <StackPanel.RenderTransform>
@@ -105,7 +105,7 @@
                 <TextBlock Text="Recipe" FontWeight="Medium" CharacterSpacing="20" FontSize="15" Margin="4,18,0,4"
                            Visibility="{x:Bind bHasComponents,Mode=OneWay}"/>
                 <GridView x:Name="ComponentsGridView" ItemsSource="{x:Bind vComponentsList,Mode=OneWay}" SelectionMode="None" 
-                          IsItemClickEnabled="True" ItemClick="ComponentsGridView_ItemClick"
+                          IsItemClickEnabled="True" ItemClick="OnClickComponents"
                           Visibility="{x:Bind bHasComponents,Mode=OneWay}">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="coremodel:DotaItemModel">

@@ -21,6 +21,7 @@ namespace Dotahold.ViewModels
         public ObservableCollection<Core.Models.DotaHeroModel> vStrHeroesList { get; set; } = new ObservableCollection<Core.Models.DotaHeroModel>();
         public ObservableCollection<Core.Models.DotaHeroModel> vAgiHeroesList { get; set; } = new ObservableCollection<Core.Models.DotaHeroModel>();
         public ObservableCollection<Core.Models.DotaHeroModel> vIntHeroesList { get; set; } = new ObservableCollection<Core.Models.DotaHeroModel>();
+        public ObservableCollection<Core.Models.DotaHeroModel> vUniHeroesList { get; set; } = new ObservableCollection<Core.Models.DotaHeroModel>();
 
         // 缓存拉取过的英雄详情
         private Dictionary<int, Models.DotaHeroInfoModel> _dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
@@ -126,7 +127,6 @@ namespace Dotahold.ViewModels
             //LoadDotaHeroes();
         }
 
-        // 固定返回true，用来等待返回值的
         public async Task<bool> LoadDotaHeroes()
         {
             try
@@ -144,6 +144,7 @@ namespace Dotahold.ViewModels
                 vStrHeroesList?.Clear();
                 vAgiHeroesList?.Clear();
                 vIntHeroesList?.Clear();
+                vUniHeroesList?.Clear();
                 dictAllHeroes = await ConstantsCourier.Instance.GetHeroesConstant();
 
                 bLoadingHeroes = false;
@@ -174,6 +175,10 @@ namespace Dotahold.ViewModels
                     else if (attr.Contains("int"))
                     {
                         vIntHeroesList.Add(item.Value);
+                    }
+                    else if (attr.Contains("all"))
+                    {
+                        vUniHeroesList.Add(item.Value);
                     }
                 }
             }

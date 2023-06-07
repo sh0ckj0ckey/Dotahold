@@ -12,13 +12,13 @@
                 <ResourceDictionary Source="/ThemeResource/CustomDialogStyle.xaml" />
 
                 <ResourceDictionary>
-                    <Color x:Key="SystemAccentColor">#272839</Color>
-                    <Color x:Key="SystemAccentColorLight1">#272839</Color>
-                    <Color x:Key="SystemAccentColorLight2">#272839</Color>
-                    <Color x:Key="SystemAccentColorLight3">#272839</Color>
-                    <Color x:Key="SystemAccentColorDark1">#272839</Color>
-                    <Color x:Key="SystemAccentColorDark2">#272839</Color>
-                    <Color x:Key="SystemAccentColorDark3">#272839</Color>
+                    <Color x:Key="SystemAccentColor">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight1">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight2">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight3">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark1">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark2">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark3">#DD88001B</Color>
 
                     <!--移除GridView和ListView的Reveal效果-->
                     <SolidColorBrush x:Key="SystemControlTransparentRevealBackgroundBrush" Color="Transparent" />

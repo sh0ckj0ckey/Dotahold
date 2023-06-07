@@ -172,7 +172,7 @@ namespace Dotahold.Views
             catch { }
         }
 
-        private void ComponentsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void OnClickComponents(object sender, ItemClickEventArgs e)
         {
             try
             {

@@ -89,11 +89,11 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (e.ClickedItem is Core.Models.DotaItemModel item)
+                if (sender is ListView ls && ls.SelectedItem is Core.Models.DotaItemModel item)
                 {
                     ViewModel.CurrentItem = item;
                     ItemFrame.Navigate(typeof(ItemInfoPage), null, snti);
@@ -127,24 +127,25 @@ namespace Dotahold.Views
             return text;
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void OnSearchModeRadioChecked(object sender, RoutedEventArgs e)
         {
-            try
+            if (sender is RadioButton radioButton)
             {
-                MainViewModel.bSearchFuzzy = true;
-                App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
+                if (radioButton.Tag is string tag)
+                {
+                    if (tag == "fuzzy")
+                    {
+                        MainViewModel.bSearchFuzzy = true;
+                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
+                    }
+                    else if (tag == "fullword")
+                    {
+                        MainViewModel.bSearchFuzzy = false;
+                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
+                    }
+                }
             }
-            catch { }
         }
 
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MainViewModel.bSearchFuzzy = false;
-                App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
-            }
-            catch { }
-        }
     }
 }

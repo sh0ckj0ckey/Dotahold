@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Dotahold.Converters"
     mc:Ignorable="d"
-    xmlns:models="using:Dotahold.Models" xmlns:coremodel="using:Dotahold.Core.Models"
+    xmlns:models="using:Dotahold.Models" 
+    xmlns:coremodel="using:Dotahold.Core.Models" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required">
     <Page.Resources>
         <cvt:EqualToBoolConverter x:Key="Eq2BConverter"/>
@@ -31,30 +32,22 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
-                       Text="Items" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-            <Button Grid.Row="1" Height="36" Width="36" Margin="0,0,4,0" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"
-                    Style="{ThemeResource TextBlockButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="Search Setting">
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0" Text="Items" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
+            <Button Grid.Row="1" Height="36" Width="36" Padding="0" Margin="0,0,8,0" CornerRadius="18" Background="Transparent" BorderBrush="Transparent" FontSize="18" FontFamily="Segoe Fluent Icons" Content="&#xE9E9;"
+                    HorizontalAlignment="Right" VerticalAlignment="Center" ToolTipService.ToolTip="Search Setting">
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
-                        <Flyout.FlyoutPresenterStyle>
-                            <Style TargetType="FlyoutPresenter">
-                                <Setter Property="CornerRadius" Value="6" />
-                                <Setter Property="IsDefaultShadowEnabled" Value="False"/>
-                                <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
-                            </Style>
-                        </Flyout.FlyoutPresenterStyle>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <TextBlock Text="Search Mode" FontWeight="Medium" CharacterSpacing="40" Margin="0,0,0,6"/>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Slower"
-                                         Checked="RadioButton_Checked" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=True,Mode=OneWay}">
+                                         Checked="OnSearchModeRadioChecked" Tag="fuzzy" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=True,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Fuzzy Search" FontSize="13" VerticalAlignment="Center"/>
                                     <FontIcon Glyph="&#xEA79;" Foreground="White" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-6"/>
                                 </StackPanel>
                             </RadioButton>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Faster"
-                                         Checked="RadioButton_Checked_1" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=False,Mode=OneWay}">
+                                         Checked="OnSearchModeRadioChecked" Tag="fullword" IsChecked="{x:Bind MainViewModel.bSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=False,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Full Word Match" FontSize="13" VerticalAlignment="Center"/>
                                     <FontIcon Glyph="&#xEA5E;" Foreground="White" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-2"/>
@@ -63,20 +56,20 @@
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
-                <FontIcon Glyph="&#xE9E9;" />
             </Button>
-            <TextBox Grid.Row="1" Height="36" Margin="16,8,42,10" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+            <TextBox Grid.Row="1" Height="36" Margin="16,8,48,10" Padding="10,8,10,0" CornerRadius="8" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                      PlaceholderText="Search items" AcceptsReturn="False" TextChanged="TextBox_TextChanged"/>
             <!--全部物品的列表-->
             <ListView Grid.Row="2" Background="Transparent" ItemsSource="{x:Bind ViewModel.vAllShowItemsList,Mode=OneWay}"
                       HorizontalAlignment="Stretch" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" Padding="0,0,0,8" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
-                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                      SelectionChanged="ListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="coremodel:DotaItemModel">
-                        <Grid Height="60" Padding="12,0">
+                        <Grid Height="60" Padding="0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Height="42" Width="56" CornerRadius="6" Background="{ThemeResource ITEMINFO_TIER_BK}">
                                 <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ImageSource,Mode=OneWay}"/>
@@ -86,7 +79,6 @@
                                        FontSize="15" ToolTipService.ToolTip="{x:Bind dname}"
                                        Margin="14,0" CharacterSpacing="40"
                                        TextTrimming="CharacterEllipsis"/>
-                            <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Margin="12,0,0,0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -97,10 +89,10 @@
                       Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="coremodel:DotaItemModel">
-                        <Grid Height="60" Padding="12,0">
+                        <Grid Height="60" Padding="0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Height="42" Width="56" CornerRadius="6" Background="{ThemeResource ITEMINFO_TIER_BK}">
                                 <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ImageSource,Mode=OneWay}"/>
@@ -110,21 +102,17 @@
                                        FontSize="15" ToolTipService.ToolTip="{x:Bind dname}"
                                        Margin="14,0" CharacterSpacing="40"
                                        TextTrimming="CharacterEllipsis"/>
-                            <Grid Grid.Column="1" VerticalAlignment="Bottom" Height="1" Margin="12,0,0,0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Height="56" Width="96" CornerRadius="6"
-              Visibility="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
+              Height="64" Width="128" CornerRadius="8" Visibility="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}">
             <Grid.Background>
-                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
+                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="Transparent" TintColor="Transparent"/>
             </Grid.Background>
-            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
-                          IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
+            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
         </Grid>
         <Grid x:Name="ItemGrid" Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource SPLITLINE_BK}">
             <Frame x:Name="ItemFrame"/>

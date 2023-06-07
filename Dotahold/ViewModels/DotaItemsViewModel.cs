@@ -149,7 +149,7 @@ namespace Dotahold.ViewModels
                 {
                     try
                     {
-                        _ = item.LoadImageAsync(85);
+                        await item.LoadImageAsync(85);
 
                         if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
                         {
