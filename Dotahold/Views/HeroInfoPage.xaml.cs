@@ -31,8 +31,6 @@ namespace Dotahold.Views
 
         private Style _customDialogStyle = null;
 
-        private bool _hoveringTalentButton = false;
-
         public HeroInfoPage()
         {
             this.InitializeComponent();
@@ -118,7 +116,7 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnClickGoBack(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -135,7 +133,7 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void OnClickHistory(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -172,7 +170,7 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void OnClickPlayerRank(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -225,37 +223,16 @@ namespace Dotahold.Views
             return history;
         }
 
-        private void HeroTalentsGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void OnPointerEnterHeroTalentsButton(object sender, PointerRoutedEventArgs e)
         {
-            try
-            {
-                _hoveringTalentButton = true;
-                TalentsPopGrid.Visibility = Visibility.Visible;
-                TalentsPopGridPopIn?.Begin();
-                EnterHeroTalentStoryboard?.Begin();
-            }
-            catch { }
+            //TalentColorImage.Opacity = 1.0;
+            //TalentWhiteImage.Opacity = 0.0;
         }
 
-        private void HeroTalentsGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void OnPointerExitHeroTalentsButton(object sender, PointerRoutedEventArgs e)
         {
-            try
-            {
-                _hoveringTalentButton = false;
-                TalentsPopGridPopOut?.Begin();
-                ExitHeroTalentStoryboard?.Begin();
-            }
-            catch { }
-        }
-
-        private void TalentsPopGridPopOut_Completed(object sender, object e)
-        {
-            try
-            {
-                if (_hoveringTalentButton) return;
-                TalentsPopGrid.Visibility = Visibility.Collapsed;
-            }
-            catch { }
+            //TalentColorImage.Opacity = 0.0;
+            //TalentWhiteImage.Opacity = 1.0;
         }
     }
 }

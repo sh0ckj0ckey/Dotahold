@@ -23,73 +23,91 @@
             <BitmapImage x:Key="HERO_TAB_INT_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_intelligence.png" />
             <BitmapImage x:Key="HERO_TAB_UNI_IMG" UriSource="ms-appx:///Assets/Icons/Hero/hero_universal2.png" />
 
+            <Style TargetType="GridViewItem" x:Key="HeroGridViewItemStyle">
+                <Setter Property="Margin" Value="0,0,4,4" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <Grid x:Name="RootGrid" Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.07">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.07">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut"/>
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Grid Margin="4,4" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.RenderTransform>
+                                        <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
+                                    </Grid.RenderTransform>
+                                    <Grid x:Name="ContentHolder">
+                                        <ContentPresenter x:Name="ContentPresenter" CornerRadius="0" Background="Transparent" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                          Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" AutomationProperties.AccessibilityView="Raw" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <DataTemplate x:Key="HeroItemTemplate" x:DataType="coremodel:DotaHeroModel">
-                <Grid Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
-                    <!--<VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
-                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseIn"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                        <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                    </DoubleAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
-                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.1">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseIn"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                        <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.0">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualState>
-                            <VisualState x:Name="Selected"/>
-                            <VisualState x:Name="PointerOver">
-                                <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX">
-                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.0">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseIn"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                        <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                    </DoubleAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY">
-                                        <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1.0">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseIn"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                        <EasingDoubleKeyFrame KeyTime="00:00:0.3" Value="1.1">
-                                            <EasingDoubleKeyFrame.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </EasingDoubleKeyFrame.EasingFunction>
-                                        </EasingDoubleKeyFrame>
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>-->
-                    <Border x:Name="HeroPhotoImg">
-                        <Border.RenderTransform>
-                            <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
-                        </Border.RenderTransform>
+                <Grid Width="128" Height="72" Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
+                    <ToolkitUI:Effects.Shadow>
+                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10" Color="Black" Offset="0,0,8" Opacity="0.5"/>
+                    </ToolkitUI:Effects.Shadow>
+                    <Border x:Name="HeroPhotoImg" Width="128" Height="72" CornerRadius="4">
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
                         </Border.Background>
@@ -119,7 +137,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,0"
                    Text="Heroes" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="28" CharacterSpacing="40"/>
-        <Pivot Grid.Row="1" Background="Transparent" Padding="12,0,0,0">
+        <Pivot x:Name="HeroesPivot" Grid.Row="1" Background="Transparent" Padding="12,0,0,0">
             <PivotItem>
                 <PivotItem.Header>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -127,9 +145,14 @@
                         <TextBlock Text="STRENGTH" FontSize="16" VerticalAlignment="Center" Margin="6,0,0,-1" CharacterSpacing="40" FontWeight="Medium"/>
                     </StackPanel>
                 </PivotItem.Header>
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-16,0,0,0">
                     <Image Source="{ThemeResource HERO_ATTR_STR_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-4,-24"/>
-                    <ScrollViewer ZoomMode="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                    <GridView SelectionMode="None" IsItemClickEnabled="True" Tag="0"
+                              ItemsSource="{x:Bind ViewModel.vStrHeroesList}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemStyle}"
+                              Padding="12,12,0,0" ItemClick="OnClickHero" Loaded="OnHeroesGridViewLoaded"/>
+                    <!--<ScrollViewer ZoomMode="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
                         <muxc:ItemsRepeater Margin="0,16,24,16" HorizontalAlignment="Center" 
                                             ItemsSource="{x:Bind ViewModel.vStrHeroesList,Mode=OneWay}">
                             <muxc:ItemsRepeater.Layout>
@@ -147,7 +170,7 @@
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
                         </muxc:ItemsRepeater>
-                    </ScrollViewer>
+                    </ScrollViewer>-->
                 </Grid>
             </PivotItem>
             <PivotItem>
@@ -159,28 +182,11 @@
                 </PivotItem.Header>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Image Source="{ThemeResource HERO_ATTR_AGI_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-24"/>
-                    <ScrollViewer ZoomMode="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                        <muxc:ItemsRepeater Margin="0,16,24,16" HorizontalAlignment="Center" 
-                                            ItemsSource="{x:Bind ViewModel.vAgiHeroesList,Mode=OneWay}">
-                            <muxc:ItemsRepeater.Layout>
-                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="8" MinRowSpacing="8" ItemsStretch="Uniform"/>
-                            </muxc:ItemsRepeater.Layout>
-                            <muxc:ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="coremodel:DotaHeroModel">
-                                    <Grid Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
-                                        <Border x:Name="HeroPhotoImg">
-                                            <Border.RenderTransform>
-                                                <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
-                                            </Border.RenderTransform>
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
-                                            </Border.Background>
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </muxc:ItemsRepeater.ItemTemplate>
-                        </muxc:ItemsRepeater>
-                    </ScrollViewer>
+                    <GridView SelectionMode="None" IsItemClickEnabled="True" Tag="1"
+                              ItemsSource="{x:Bind ViewModel.vAgiHeroesList}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemStyle}"
+                              Padding="12,12,0,0" ItemClick="OnClickHero" Loaded="OnHeroesGridViewLoaded"/>
                 </Grid>
             </PivotItem>
             <PivotItem>
@@ -192,28 +198,11 @@
                 </PivotItem.Header>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Image Source="{ThemeResource HERO_ATTR_INT_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-12,-28"/>
-                    <ScrollViewer ZoomMode="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                        <muxc:ItemsRepeater Margin="0,16,24,16" HorizontalAlignment="Center" 
-                                            ItemsSource="{x:Bind ViewModel.vIntHeroesList,Mode=OneWay}">
-                            <muxc:ItemsRepeater.Layout>
-                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="8" MinRowSpacing="8" ItemsStretch="Uniform"/>
-                            </muxc:ItemsRepeater.Layout>
-                            <muxc:ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="coremodel:DotaHeroModel">
-                                    <Grid Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
-                                        <Border x:Name="HeroPhotoImg">
-                                            <Border.RenderTransform>
-                                                <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
-                                            </Border.RenderTransform>
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
-                                            </Border.Background>
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </muxc:ItemsRepeater.ItemTemplate>
-                        </muxc:ItemsRepeater>
-                    </ScrollViewer>
+                    <GridView SelectionMode="None" IsItemClickEnabled="True" Tag="2"
+                              ItemsSource="{x:Bind ViewModel.vIntHeroesList}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemStyle}"
+                              Padding="12,12,0,0" ItemClick="OnClickHero" Loaded="OnHeroesGridViewLoaded"/>
                 </Grid>
             </PivotItem>
             <PivotItem>
@@ -225,28 +214,11 @@
                 </PivotItem.Header>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Image Source="{ThemeResource HERO_ATTR_UNI_BG_IMG}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-24,-28"/>
-                    <ScrollViewer ZoomMode="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
-                        <muxc:ItemsRepeater Margin="0,16,24,16" HorizontalAlignment="Center" 
-                                            ItemsSource="{x:Bind ViewModel.vUniHeroesList,Mode=OneWay}">
-                            <muxc:ItemsRepeater.Layout>
-                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="8" MinRowSpacing="8" ItemsStretch="Uniform"/>
-                            </muxc:ItemsRepeater.Layout>
-                            <muxc:ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="coremodel:DotaHeroModel">
-                                    <Grid Background="Transparent" ToolTipService.ToolTip="{x:Bind localized_name}">
-                                        <Border x:Name="HeroPhotoImg">
-                                            <Border.RenderTransform>
-                                                <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" CenterX="64" CenterY="36"/>
-                                            </Border.RenderTransform>
-                                            <Border.Background>
-                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource, Mode=OneWay}"/>
-                                            </Border.Background>
-                                        </Border>
-                                    </Grid>
-                                </DataTemplate>
-                            </muxc:ItemsRepeater.ItemTemplate>
-                        </muxc:ItemsRepeater>
-                    </ScrollViewer>
+                    <GridView SelectionMode="None" IsItemClickEnabled="True" Tag="3"
+                              ItemsSource="{x:Bind ViewModel.vUniHeroesList}"
+                              ItemTemplate="{StaticResource HeroItemTemplate}"
+                              ItemContainerStyle="{StaticResource HeroGridViewItemStyle}"
+                              Padding="12,12,0,0" ItemClick="OnClickHero" Loaded="OnHeroesGridViewLoaded"/>
                 </Grid>
             </PivotItem>
         </Pivot>
@@ -259,5 +231,6 @@
             </Grid.Background>
             <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroes,Mode=OneWay}"/>
         </Grid>
+        
     </Grid>
 </Page>

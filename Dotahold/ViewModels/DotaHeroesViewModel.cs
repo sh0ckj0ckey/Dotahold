@@ -80,14 +80,6 @@ namespace Dotahold.ViewModels
             set { Set("bFailedHeroRanking", ref _bFailedHeroRanking, value); }
         }
 
-        // 英雄属性Tab
-        private int _iHeroAttrTabIndex = 0;
-        public int iHeroAttrTabIndex
-        {
-            get { return _iHeroAttrTabIndex; }
-            set { Set("iHeroAttrTabIndex", ref _iHeroAttrTabIndex, value); }
-        }
-
         // 当前选中的英雄
         private Core.Models.DotaHeroModel _CurrentHero = null;
         public Core.Models.DotaHeroModel CurrentHero

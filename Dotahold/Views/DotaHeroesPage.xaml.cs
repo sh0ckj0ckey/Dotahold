@@ -63,48 +63,12 @@ namespace Dotahold.Views
             catch { }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iHeroAttrTabIndex == 0) return;
-
-                ViewModel.iHeroAttrTabIndex = 0;
-            }
-            catch { }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iHeroAttrTabIndex == 1) return;
-
-                int oldIndex = ViewModel.iHeroAttrTabIndex;
-                ViewModel.iHeroAttrTabIndex = 1;
-
-                if (oldIndex == 0)
-                {
-                }
-                else if (oldIndex == 2)
-                {
-                }
-            }
-            catch { }
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iHeroAttrTabIndex == 2) return;
-
-                ViewModel.iHeroAttrTabIndex = 2;
-            }
-            catch { }
-        }
-
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        /// <summary>
+        /// 点击英雄头像
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickHero(object sender, ItemClickEventArgs e)
         {
             try
             {
@@ -120,35 +84,16 @@ namespace Dotahold.Views
             catch { }
         }
 
-        private void GridView_Loaded(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 从详情页返回时，处理连续动画
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnHeroesGridViewLoaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (ViewModel.iHeroAttrTabIndex == 0 && sender is GridView gv)
-                {
-                    HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
-                }
-            }
-            catch { }
-        }
-
-        private void GridView_Loaded_1(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iHeroAttrTabIndex == 1 && sender is GridView gv)
-                {
-                    HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
-                }
-            }
-            catch { }
-        }
-
-        private void GridView_Loaded_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iHeroAttrTabIndex == 2 && sender is GridView gv)
+                if (sender is GridView gv && gv.Tag is string tag && HeroesPivot.SelectedIndex.ToString() == tag.ToString())
                 {
                     HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
                 }

@@ -31,557 +31,522 @@
             <Converter:DoubleArrayToStringConverter x:Key="DoubleArr2Str"/>
 
             <Storyboard x:Name="ShowBackgroundImage">
-                <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.3">
+                <DoubleAnimation Storyboard.TargetName="BackgroundImageBorder" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3">
                 </DoubleAnimation>
             </Storyboard>
 
             <Storyboard x:Name="PopInHeroInfoStoryboard">
                 <DoubleAnimation Storyboard.TargetName="HeroInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:1">
                     <DoubleAnimation.EasingFunction>
-                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                        <ExponentialEase Exponent="12" EasingMode="EaseOut"/>
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
-                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroInfoGrid" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
 
             <Storyboard x:Name="ShowHeroButtonStoryboard">
-                <DoubleAnimation Storyboard.TargetName="HeroHistoryButton"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.5"/>
-                <DoubleAnimation Storyboard.TargetName="HeroRankingButton"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.5"/>
-                <DoubleAnimation Storyboard.TargetName="HeroTalentsGrid"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroHistoryButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroRankingButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+                <DoubleAnimation Storyboard.TargetName="HeroTalentsButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
             </Storyboard>
-
-            <Storyboard x:Name="EnterHeroTalentStoryboard">
-                <DoubleAnimation Storyboard.TargetName="TalentWhiteImage"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="1" To="0" Duration="0:0:0.4"/>
-                <DoubleAnimation Storyboard.TargetName="TalentColorImage"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.4"/>
-            </Storyboard>
-            <Storyboard x:Name="ExitHeroTalentStoryboard">
-                <DoubleAnimation Storyboard.TargetName="TalentWhiteImage"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="0" To="1" Duration="0:0:0.4"/>
-                <DoubleAnimation Storyboard.TargetName="TalentColorImage"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="1" To="0" Duration="0:0:0.4"/>
-            </Storyboard>
-
         </ResourceDictionary>
     </Page.Resources>
-    <Grid Background="{ThemeResource APPLICATION_BK}">
-        <Grid Margin="0,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="64" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="156" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Grid.RowSpan="3">
-                <Border x:Name="BackgroundImageBorder">
-                    <Border.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
-                    </Border.Background>
-                </Border>
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Grid.Background>
-                        <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
-                                      FallbackColor="{ThemeResource ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
-                    </Grid.Background>
-                </Grid>
-            </Grid>
-            <!--返回按钮-->
-            <Button Grid.Row="1" Margin="64,0,0,0" Width="42" Height="42" CornerRadius="6"
-                    HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
-                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click">
-                <Button.Content>
-                    <FontIcon Glyph="&#xE652;" Foreground="White" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <!--背景故事按钮-->
-            <Button x:Name="HeroHistoryButton" Grid.Row="1" Margin="0,0,96,0" Width="42" Height="42" CornerRadius="6" Opacity="0"
-                    HorizontalAlignment="Right" ToolTipService.ToolTip="Read History"
-                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_1">
-                <Button.Content>
-                    <FontIcon Glyph="&#xE736;" Foreground="White" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <!--英雄榜按钮-->
-            <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="6" Opacity="0"
-                    HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
-                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click_2">
-                <Button.Content>
-                    <FontIcon Glyph="&#xE179;" Foreground="White" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <!--英雄头像和背景介绍-->
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="192"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <!--英雄头像-->
-                <Border x:Name="HeroPhotoBorder" Grid.Column="0"
-                        Width="128" Height="72" Margin="64,0,0,0"
-                        VerticalAlignment="Center">
-                    <ToolkitUI:Effects.Shadow>
-                        <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
-                                                         Color="Black"
-                                                         Offset="0,0,8"
-                                                         Opacity="0.2"/>
-                    </ToolkitUI:Effects.Shadow>
-                    <Image Width="128" Height="72" Stretch="Uniform" Source="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
-                </Border>
-                <Grid x:Name="HeroNameGrid" Grid.Column="1" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="HeroNameTextBlock" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                               Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
-                               FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="White"
-                               FontSize="26" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                    <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
-                           Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
-                    <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
-                           Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
-                    <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
-                               Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource StrArr2Str},ConverterParameter=·}"
-                               FontSize="16" Foreground="White" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
-                </Grid>
-                <Grid x:Name="HeroTalentsGrid" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      Background="Transparent" Margin="4,0,36,0" Opacity="0"
-                      Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                      PointerEntered="HeroTalentsGrid_PointerEntered" PointerExited="HeroTalentsGrid_PointerExited">
-                    <Image x:Name="TalentWhiteImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_dark.png" HorizontalAlignment="Left"/>
-                    <Image x:Name="TalentColorImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_light.png" HorizontalAlignment="Left" Opacity="0"/>
-                </Grid>
 
-                <Grid x:Name="TalentsPopGrid" Grid.ColumnSpan="3" Height="148" HorizontalAlignment="Right"
-                      Visibility="Collapsed" Margin="0,0,98,0" IsHitTestVisible="False">
-                    <Grid.Resources>
-                        <Storyboard x:Name="TalentsPopGridPopIn">
-                            <PopInThemeAnimation FromHorizontalOffset="60" Storyboard.TargetName="TalentsPopGrid" Duration="00:00:1"/>
-                        </Storyboard>
-                        <Storyboard x:Name="TalentsPopGridPopOut" Completed="TalentsPopGridPopOut_Completed">
-                            <PopOutThemeAnimation Storyboard.TargetName="TalentsPopGrid" Duration="00:00:0.1"/>
-                        </Storyboard>
-                    </Grid.Resources>
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,0,0,0" MinWidth="286" Background="{ThemeResource HEROINFO_TALENTS_BK}" 
-                          CornerRadius="6" BorderThickness="1" BorderBrush="#404040">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="24"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                        <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                        <Rectangle Grid.Row="2" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                        <TextBlock Grid.Column="0" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25L,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25R,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20L,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20R,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15L,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15R,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="0" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10L,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
-                                   Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10R,Mode=OneWay}" FontSize="12" MaxLines="2" 
-                                   TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
-                        <Border Grid.Column="1" Grid.Row="0" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
-                            <TextBlock Text="25" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
-                        </Border>
-                        <Border Grid.Column="1" Grid.Row="1" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
-                            <TextBlock Text="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
-                        </Border>
-                        <Border Grid.Column="1" Grid.Row="2" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
-                            <TextBlock Text="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
-                        </Border>
-                        <Border Grid.Column="1" Grid.Row="3" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
-                            <TextBlock Text="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
-                        </Border>
-                    </Grid>
-                    <!--<Polyline Points="0,0 8,8 0,16" StrokeThickness="6" Stroke="{ThemeResource HEROINFO_TALENTS_BK}" 
-                              Fill="{ThemeResource HEROINFO_TALENTS_BK}" StrokeLineJoin="Round"
-                              HorizontalAlignment="Right" VerticalAlignment="Center"/>-->
-                </Grid>
+    <Grid Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="156" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.RowSpan="3">
+            <Border x:Name="BackgroundImageBorder">
+                <Border.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
+                </Border.Background>
+            </Border>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Background>
+                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
+                </Grid.Background>
             </Grid>
-            <!--详细信息-->
-            <Grid x:Name="HeroInfoGrid" Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                <Grid.RenderTransform>
-                    <TranslateTransform x:Name="HeroInfoGridTranslation" Y="60"/>
-                </Grid.RenderTransform>
-                <ScrollViewer x:Name="HeroInfoScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Hidden"
-                              Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                    <StackPanel x:Name="HeroInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <!--属性信息-->
-                        <Grid Height="Auto" HorizontalAlignment="Stretch" Margin="0,16,0,0">
+        </Grid>
+        <!--返回按钮-->
+        <Button Grid.Row="1" Margin="64,0,0,0" Width="42" Height="42" CornerRadius="8"
+                HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
+                Click="OnClickGoBack">
+            <Button.Content>
+                <FontIcon Glyph="&#xE652;" Foreground="White" FontSize="16"/>
+            </Button.Content>
+        </Button>
+        <!--背景故事按钮-->
+        <Button x:Name="HeroHistoryButton" Grid.Row="1" Margin="0,0,96,0" Width="42" Height="42" CornerRadius="8" Opacity="0"
+                HorizontalAlignment="Right" ToolTipService.ToolTip="Read History"
+                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                Click="OnClickHistory">
+            <Button.Content>
+                <FontIcon Glyph="&#xE736;" Foreground="White" FontSize="16"/>
+            </Button.Content>
+        </Button>
+        <!--英雄榜按钮-->
+        <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="8" Opacity="0"
+                HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
+                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                Click="OnClickPlayerRank">
+            <Button.Content>
+                <FontIcon Glyph="&#xE179;" Foreground="White" FontSize="16"/>
+            </Button.Content>
+        </Button>
+        <!--英雄头像和背景介绍-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="192"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!--英雄头像-->
+            <Border x:Name="HeroPhotoBorder" Grid.Column="0" CornerRadius="4"
+                    Width="128" Height="72" Margin="64,0,0,0"
+                    VerticalAlignment="Center">
+                <ToolkitUI:Effects.Shadow>
+                    <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
+                                                     Color="Black"
+                                                     Offset="0,0,8"
+                                                     Opacity="0.2"/>
+                </ToolkitUI:Effects.Shadow>
+                <Image Width="128" Height="72" Stretch="Uniform" Source="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
+            </Border>
+            <Grid x:Name="HeroNameGrid" Grid.Column="1" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="HeroNameTextBlock" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
+                           FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="White"
+                           FontSize="26" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
+                       Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
+                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
+                       Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
+                <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
+                           Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource StrArr2Str},ConverterParameter=·}"
+                           FontSize="16" Foreground="White" CharacterSpacing="20" TextTrimming="CharacterEllipsis" Margin="8,0,0,0"/>
+            </Grid>
+
+            <Button x:Name="HeroTalentsButton" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Background="Transparent" BorderBrush="Transparent" Height="58" Width="58" CornerRadius="29" Margin="4,0,36,0" Opacity="0" Padding="0"
+                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
+                    PointerEntered="OnPointerEnterHeroTalentsButton" PointerExited="OnPointerExitHeroTalentsButton">
+                <Grid>
+                    <Image x:Name="TalentWhiteImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_dark.png" HorizontalAlignment="Left"/>
+                    <Image x:Name="TalentColorImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_light.png" HorizontalAlignment="Left" Opacity="0">
+                        <Image.OpacityTransition>
+                            <ScalarTransition/>
+                        </Image.OpacityTransition>
+                    </Image>
+                </Grid>
+                <Button.Flyout>
+                    <Flyout Placement="Left">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="164"/>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition Width="164"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Margin="64,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <!--<Grid Width="60" Height="60" BorderBrush="Transparent" BorderThickness="0" CornerRadius="6" Background="Transparent">
-                                    <Image Source="{ThemeResource HERO_TALENT_IMG}" Width="73"/>
-                                </Grid>-->
-                                <Grid Margin="0,0,12,0" Width="96" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="18"/>
-                                            <RowDefinition Height="18"/>
-                                            <RowDefinition Height="18"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Icons/Hero/hero_strength.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <Image Grid.Row="1" Grid.Column="0" Source="/Assets/Icons/Hero/hero_agility.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <Image Grid.Row="2" Grid.Column="0" Source="/Assets/Icons/Hero/hero_intelligence.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.str_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.int_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="0" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" MinHeight="48"/>
+                                <RowDefinition Height="Auto" MinHeight="48"/>
+                                <RowDefinition Height="Auto" MinHeight="48"/>
+                                <RowDefinition Height="Auto" MinHeight="48"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                            <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                            <Rectangle Grid.Row="2" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25L,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25R,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20L,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20R,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15L,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15R,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,0,6,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10L,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,12,0"
+                               Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10R,Mode=OneWay}" FontSize="12" MaxLines="4" 
+                               TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Center"/>
+                            <Border Grid.Column="1" Grid.Row="0" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="25" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="1" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="2" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                            <Border Grid.Column="1" Grid.Row="3" Height="24" Width="24" CornerRadius="16" BorderBrush="#C7AD1D" BorderThickness="2">
+                                <TextBlock Text="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12" Foreground="#C7AD1D"/>
+                            </Border>
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+        <!--详细信息-->
+        <Grid x:Name="HeroInfoGrid" Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+            <Grid.RenderTransform>
+                <TranslateTransform x:Name="HeroInfoGridTranslation" Y="60"/>
+            </Grid.RenderTransform>
+            <ScrollViewer x:Name="HeroInfoScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Hidden"
+                          Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                <StackPanel x:Name="HeroInfoStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <!--属性信息-->
+                    <Grid Height="Auto" HorizontalAlignment="Stretch" Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="64,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <!--<Grid Width="60" Height="60" BorderBrush="Transparent" BorderThickness="0" CornerRadius="6" Background="Transparent">
+                                <Image Source="{ThemeResource HERO_TALENT_IMG}" Width="73"/>
+                            </Grid>-->
+                            <Grid Margin="0,0,12,0" Width="96" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="18"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Row="0" Grid.Column="0" Source="/Assets/Icons/Hero/hero_strength.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Image Grid.Row="1" Grid.Column="0" Source="/Assets/Icons/Hero/hero_agility.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Image Grid.Row="2" Grid.Column="0" Source="/Assets/Icons/Hero/hero_intelligence.png" Height="16" Width="16" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.str_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.agi_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind ViewModel.CurrentHeroInfo.int_base,Mode=OneWay,Converter={StaticResource Double2Str}}" FontSize="14" FontWeight="Medium" Margin="6,0,6,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                            <Run Text="+"/>
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.str_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                            <Run Text="+"/>
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.agi_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
+                                            <Run Text="+"/>
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.int_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                            <Grid Width="156" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid Width="146" Height="20" Margin="0,0,0,6" CornerRadius="4">
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Color="#99286323" Offset="0"/>
+                                                    <GradientStop Color="#997AF03C" Offset="0.5"/>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
                                                 <Run Text="+"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.str_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                        </TextBlock>
-                                        <TextBlock Grid.Row="1" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
-                                                <Run Text="+"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.agi_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                        </TextBlock>
-                                        <TextBlock Grid.Row="2" Grid.Column="2" Opacity="0.7" FontSize="12" VerticalAlignment="Center">
-                                                <Run Text="+"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.int_gain,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
                                         </TextBlock>
                                     </Grid>
-                                </Grid>
-                                <Grid Width="156" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" BorderThickness="0" CornerRadius="6">
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Grid Width="146" Height="20" Margin="0,0,0,6" CornerRadius="4">
-                                            <Grid.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#99286323" Offset="0"/>
-                                                        <GradientStop Color="#997AF03C" Offset="0.5"/>
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_health,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
-                                                    <Run Text="+"/>
-                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.health_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                            </TextBlock>
-                                        </Grid>
-                                        <Grid Width="146" Height="20" Margin="0,0,0,0" CornerRadius="4">
-                                            <Grid.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#991056DB" Offset="0"/>
-                                                        <GradientStop Color="#9973F5FE" Offset="0.5"/>
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Grid.Background>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
-                                                    <Run Text="+"/>
-                                                    <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                            </TextBlock>
-                                        </Grid>
+                                    <Grid Width="146" Height="20" Margin="0,0,0,0" CornerRadius="4">
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Color="#991056DB" Offset="0"/>
+                                                    <GradientStop Color="#9973F5FE" Offset="0.5"/>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.max_mana,Mode=OneWay,Converter={StaticResource Double2Str}}" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" CharacterSpacing="40" FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock FontWeight="Medium" FontSize="10" Foreground="{ThemeResource HEROINFO_LISTITEM_BK}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                <Run Text="+"/>
+                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.mana_regen,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <ListView Grid.Column="1" IsItemClickEnabled="False" SelectionMode="None"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
+                                  Margin="0,16">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ToolkitUICtrl:WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_min,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            <Run Text="~"/>
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_max,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                        </TextBlock>
                                     </StackPanel>
                                 </Grid>
-                            </StackPanel>
-                            <ListView Grid.Column="1" IsItemClickEnabled="False" SelectionMode="None"
-                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                                      ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                                      Margin="0,16">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ToolkitUICtrl:WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_damage.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Damage" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_min,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                                <Run Text="~"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.damage_max,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="108" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="108" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_attack_time.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Attack Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_range,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_attack_range.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Attack Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.attack_range,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                                <Grid Width="132" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0" Visibility="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                                    <Grid Width="132" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_projectile_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Projectile Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.projectile_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.armor,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="112" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_armor.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Armor" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.armor,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_magic_resist.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.magic_resistance,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_magic_resist.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Magic Resist" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.magic_resistance,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                                <Run Text="%"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.movement_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_movement_speed.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Movement Speed" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.movement_speed,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
+                            <ListViewItem Margin="0,0,-12,0">
+                                <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.turn_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
 
-                                <ListViewItem Margin="0,0,-12,0">
-                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_turn_rate.png" Height="32" Width="32" Opacity="0.2" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Turn Rate" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock Text="{x:Bind ViewModel.CurrentHeroInfo.turn_rate,Mode=OneWay,Converter={StaticResource Double2Str}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium"/>
-                                        </StackPanel>
+                            <ListViewItem Margin="0,0,22,0">
+                                <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                    <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
+                                        <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_day,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                            <Run Text="/"/>
+                                            <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_night,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </ListViewItem>
+                        </ListView>
+                        <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                        <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    </Grid>
+                    <!--英雄技能-->
+                    <ListView Margin="0,4,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="False"
+                              ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}">
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter />
+                            </ControlTemplate>
+                        </ListView.Template>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Ability">
+                                <Grid Height="Auto" MinHeight="96" Margin="52,0,24,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource HEROINFO_LISTITEM_BK}"/>
+                                    <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" Background="{ThemeResource APPLICATION_BK}" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center" Source="{x:Bind ImageSource,Mode=OneWay}"/>
+                                        <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter"
+                                               Visibility="{x:Bind ability_is_granted_by_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
+                                        <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard"
+                                               Visibility="{x:Bind ability_is_granted_by_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
                                     </Grid>
-                                </ListViewItem>
-
-                                <ListViewItem Margin="0,0,22,0">
-                                    <Grid Width="128" Height="60" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                                        <Image Source="/Assets/Icons/Hero/icon_vision.png" Height="32" Width="32" Opacity="0.1" Margin="4,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <TextBlock Text="Vision Range" Margin="2" FontWeight="Medium" CharacterSpacing="40"/>
-                                            <TextBlock HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium">
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_day,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                                <Run Text="/"/>
-                                                <Run Text="{x:Bind ViewModel.CurrentHeroInfo.sight_range_night,Mode=OneWay,Converter={StaticResource Double2Str}}"/>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </Grid>
-                                </ListViewItem>
-                            </ListView>
-                            <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                            <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                        </Grid>
-                        <!--英雄技能-->
-                        <ListView Margin="0,4,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="False"
-                                  ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}">
-                            <ListView.Template>
-                                <ControlTemplate>
-                                    <ItemsPresenter />
-                                </ControlTemplate>
-                            </ListView.Template>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:Ability">
-                                    <Grid Height="Auto" MinHeight="96" Margin="52,0,24,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                    <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0,16" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{ThemeResource HEROINFO_LISTITEM_BK}"/>
-                                        <Grid Grid.Column="0" Grid.Row="0" Height="64" Width="64" Margin="16,16,0,16" Background="{ThemeResource APPLICATION_BK}" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image Height="64" Stretch="UniformToFill" HorizontalAlignment="Center" Source="{x:Bind ImageSource,Mode=OneWay}"/>
-                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter"
-                                                   Visibility="{x:Bind ability_is_granted_by_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
-                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Icons/Hero/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard"
-                                                   Visibility="{x:Bind ability_is_granted_by_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0,16" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <!--技能名字-->
-                                            <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" FontWeight="Bold" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
-                                            <!--技能描述-->
-                                            <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <ToolkitUICtrl:WrapPanel Grid.Row="0">
-                                                <TextBlock Visibility="{x:Bind behaviorStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="ABILITY:"/>
-                                                    <Run Text="{x:Bind behaviorStr,Mode=OneWay}"/>
-                                                </TextBlock>
-                                                <TextBlock Visibility="{x:Bind damageStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="DAMAGE TYPE:"/>
-                                                    <Run Text="{x:Bind damageStr,Mode=OneWay}" Foreground="{x:Bind damageForeground,Mode=OneWay}"/>
-                                                </TextBlock>
-                                                <TextBlock Visibility="{x:Bind dispellableStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="DISPELLABLE:"/>
-                                                    <Run Text="{x:Bind dispellableStr,Mode=OneWay}"/>
-                                                </TextBlock>
-                                                <TextBlock Visibility="{x:Bind immunityStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="PIERCES SPELL IMMUNITY:"/>
-                                                    <Run Text="{x:Bind immunityStr,Mode=OneWay}"/>
-                                                </TextBlock>
-                                                <TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="AFFECTS:"/>
-                                                    <Run Text="{x:Bind targetStr,Mode=OneWay}"/>
-                                                </TextBlock>
-                                                <!--<TextBlock Visibility="{x:Bind castRangesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="CAST RANGE:"/>
-                                                    <Run Text="{x:Bind castRangesStr,Mode=OneWay}"/>
-                                                </TextBlock>-->
-                                                <!--<TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
-                                                    <Run Text="CAST POINT:"/>
-                                                    <Run Text="{x:Bind castPointsStr,Mode=OneWay}"/>
-                                                </TextBlock>-->
-                                            </ToolkitUICtrl:WrapPanel>
-
-                                            <!--技能特殊数值-->
-                                            <TextBlock Grid.Row="1" Text="{x:Bind specialValuesStr,Mode=OneWay}" Visibility="{x:Bind specialValuesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.6" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
-
-                                            <!--备注-->
-                                            <TextBlock Grid.Row="2" Text="{x:Bind notesStr,Mode=OneWay}" Visibility="{x:Bind notesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
-
-                                            <!--神杖升级-->
-                                            <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
-                                                  Visibility="{x:Bind ability_has_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_scepter.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Scepter"/>
-                                                <TextBlock Grid.Column="1" Text="{x:Bind scepter_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-                                            </Grid>
-
-                                            <!--魔晶升级-->
-                                            <Grid Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
-                                                  Visibility="{x:Bind ability_has_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_shard.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Shard"/>
-                                                <TextBlock Grid.Column="1" Text="{x:Bind shard_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
-                                            </Grid>
-
-                                            <!--冷却时间和耗蓝-->
-                                            <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="14,6,4,0">
-                                                <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
-                                                        Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_cooldown.png"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <TextBlock Text="{x:Bind cooldowns,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
-                                                <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
-                                                        Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}">
-                                                    <Border.Background>
-                                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_mana.png"/>
-                                                    </Border.Background>
-                                                </Border>
-                                                <TextBlock Text="{x:Bind mana_costs,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
-                                            </StackPanel>
-
-                                            <!--背景描述-->
-                                            <Grid Grid.Row="6" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
-                                                <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
-                                            </Grid>
-                                            
-                                        </Grid>
+                                        <!--技能名字-->
+                                        <TextBlock Grid.Row="0" Text="{x:Bind name_loc,Mode=OneWay}" CharacterSpacing="40" FontSize="16" Margin="14,16,0,0" FontWeight="Bold" TextTrimming="CharacterEllipsis" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"/>
+                                        <!--技能描述-->
+                                        <TextBlock Grid.Row="1" Text="{x:Bind desc_loc,Mode=OneWay}" Visibility="{x:Bind desc_loc,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" FontSize="14" Margin="15,4,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
                                     </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                </ScrollViewer>
-                <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
-            </Grid>
-            <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-                <ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
-            </Grid>
+                                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,16">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <ToolkitUICtrl:WrapPanel Grid.Row="0">
+                                            <TextBlock Visibility="{x:Bind behaviorStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="ABILITY:"/>
+                                                <Run Text="{x:Bind behaviorStr,Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <TextBlock Visibility="{x:Bind damageStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="DAMAGE TYPE:"/>
+                                                <Run Text="{x:Bind damageStr,Mode=OneWay}" Foreground="{x:Bind damageForeground,Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <TextBlock Visibility="{x:Bind dispellableStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="DISPELLABLE:"/>
+                                                <Run Text="{x:Bind dispellableStr,Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <TextBlock Visibility="{x:Bind immunityStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="PIERCES SPELL IMMUNITY:"/>
+                                                <Run Text="{x:Bind immunityStr,Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="AFFECTS:"/>
+                                                <Run Text="{x:Bind targetStr,Mode=OneWay}"/>
+                                            </TextBlock>
+                                            <!--<TextBlock Visibility="{x:Bind castRangesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="CAST RANGE:"/>
+                                                <Run Text="{x:Bind castRangesStr,Mode=OneWay}"/>
+                                            </TextBlock>-->
+                                            <!--<TextBlock Visibility="{x:Bind targetStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.8" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis">
+                                                <Run Text="CAST POINT:"/>
+                                                <Run Text="{x:Bind castPointsStr,Mode=OneWay}"/>
+                                            </TextBlock>-->
+                                        </ToolkitUICtrl:WrapPanel>
+
+                                        <!--技能特殊数值-->
+                                        <TextBlock Grid.Row="1" Text="{x:Bind specialValuesStr,Mode=OneWay}" Visibility="{x:Bind specialValuesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="40" LineHeight="17" FontWeight="Medium" FontSize="12" Margin="15,8,12,0" Opacity="0.6" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+
+                                        <!--备注-->
+                                        <TextBlock Grid.Row="2" Text="{x:Bind notesStr,Mode=OneWay}" Visibility="{x:Bind notesStr,Converter={StaticResource Str2Vis},Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="15,4,12,0" Opacity="0.4" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+
+                                        <!--神杖升级-->
+                                        <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
+                                              Visibility="{x:Bind ability_has_scepter,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_scepter.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Scepter"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind scepter_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <!--魔晶升级-->
+                                        <Grid Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_GRANTED_BK}" Margin="12,8,12,0" Padding="0,6"
+                                              Visibility="{x:Bind ability_has_shard,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Source="/Assets/Icons/Hero/hero_ability_shard.png" Margin="8,0,4,0" Height="30" Width="30" VerticalAlignment="Center" ToolTipService.ToolTip="Upgraded by Shard"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind shard_loc,Mode=OneWay}" CharacterSpacing="20" FontSize="13" Margin="8,0,12,0" Opacity="0.9" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <!--冷却时间和耗蓝-->
+                                        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="14,6,4,0">
+                                            <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
+                                                    Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_cooldown.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="{x:Bind cooldowns,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind cooldowns,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                            <Border Width="14" Height="14" Margin="0,8,2,0" CornerRadius="3" BorderBrush="#10162c" BorderThickness="1"
+                                                    Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}">
+                                                <Border.Background>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Icons/Data/icon_mana.png"/>
+                                                </Border.Background>
+                                            </Border>
+                                            <TextBlock Text="{x:Bind mana_costs,Mode=OneWay,Converter={StaticResource DoubleArr2Str},ConverterParameter=/}" FontWeight="Medium" FontSize="13" Margin="4,8,12,0" Visibility="{x:Bind mana_costs,Converter={StaticResource Null2Vis},Mode=OneWay}"/>
+                                        </StackPanel>
+
+                                        <!--背景描述-->
+                                        <Grid Grid.Row="6" Background="{ThemeResource APPLICATION_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
+                                            <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
+            <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+        </Grid>
+        <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+            <ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
         </Grid>
     </Grid>
 </Page>

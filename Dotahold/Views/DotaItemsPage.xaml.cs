@@ -103,6 +103,31 @@ namespace Dotahold.Views
         }
 
         /// <summary>
+        /// 切换搜索模式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSearchModeRadioChecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton)
+            {
+                if (radioButton.Tag is string tag)
+                {
+                    if (tag == "fuzzy")
+                    {
+                        MainViewModel.bSearchFuzzy = true;
+                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
+                    }
+                    else if (tag == "fullword")
+                    {
+                        MainViewModel.bSearchFuzzy = false;
+                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Unicode转换汉字
         /// </summary>
         /// <param name="text"></param>
@@ -125,26 +150,6 @@ namespace Dotahold.Views
                 }
             }
             return text;
-        }
-
-        private void OnSearchModeRadioChecked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton radioButton)
-            {
-                if (radioButton.Tag is string tag)
-                {
-                    if (tag == "fuzzy")
-                    {
-                        MainViewModel.bSearchFuzzy = true;
-                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
-                    }
-                    else if (tag == "fullword")
-                    {
-                        MainViewModel.bSearchFuzzy = false;
-                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
-                    }
-                }
-            }
         }
 
     }
