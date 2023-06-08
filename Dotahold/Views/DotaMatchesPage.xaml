@@ -115,13 +115,13 @@
                         <Rectangle Height="32" Width="14" RadiusX="4" RadiusY="4" Margin="6,0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#20AAAAAA"/>
                         <Rectangle Height="32" Width="14" RadiusX="4" RadiusY="4" Margin="6,0" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="#20AAAAAA"/>
                     </Grid>
-                    <FlipView Grid.Row="1" CornerRadius="6" Margin="20,0,22,16" Height="120" 
+                    <FlipView Grid.Row="1" CornerRadius="8" Margin="20,0,22,16" Height="120"
                               ItemsSource="{x:Bind ViewModel.vRecentMatchesForFlip,Mode=OneWay}"
                               HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                                <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="6">
-                                    <Grid Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" BorderBrush="{ThemeResource RECENTMATCH_FLIPCARD_BD}" BorderThickness="1" CornerRadius="6" Height="100" VerticalAlignment="Bottom">
+                                <Grid Background="Transparent" Height="120" HorizontalAlignment="Stretch" CornerRadius="8">
+                                    <Grid Background="{ThemeResource RECENTMATCH_FLIPCARD_BK}" BorderBrush="{ThemeResource RECENTMATCH_FLIPCARD_BD}" BorderThickness="1" CornerRadius="8" Height="100" VerticalAlignment="Bottom">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
@@ -267,7 +267,7 @@
                                 </ListView.Template>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:DotaMatchPlayerTotalModel">
-                                        <Grid Margin="-12,0,0,0" MinWidth="84" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="On Average">
+                                        <Grid Margin="-16,0,0,0" MinWidth="96" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="8" ToolTipService.ToolTip="On Average">
                                             <FontIcon Glyph="{x:Bind field,Converter={StaticResource Field2Icon}}" Foreground="{ThemeResource APPLICATION_FR}" FontSize="28" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                             <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
                                                 <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
@@ -302,7 +302,7 @@
                     <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                               ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                              Margin="0,8,0,16" Padding="32,0,18,0"
+                              Margin="0,8,10,16" Padding="20,0,0,0"
                               ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -311,8 +311,8 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:DotaMatchHeroPlayedModel">
-                                <Grid Width="Auto" MinWidth="96" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" Padding="12,4,24,4"
-                                      ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-24,0,10,0">
+                                <Grid Width="Auto" MinWidth="108" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="4" Padding="18,4,18,4"
+                                      ToolTipService.ToolTip="{x:Bind sHeroName}" Margin="-16,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="32"/>
                                         <ColumnDefinition/>
@@ -323,7 +323,7 @@
                                         <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
                                     </StackPanel>
                                     <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
-                                    <Button Grid.ColumnSpan="2" BorderThickness="0" Background="Transparent" CornerRadius="6" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
+                                    <Button Grid.ColumnSpan="2" BorderThickness="0" Background="Transparent" CornerRadius="4" Margin="-18,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -354,8 +354,8 @@
                         <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.2" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                         <Rectangle HorizontalAlignment="Left" Margin="20,8,0,0" Height="48" Width="356" RadiusX="6" RadiusY="6" Opacity="0.1" Fill="{ThemeResource HEROINFO_LISTITEM_BK}"/>
                     </StackPanel>
-                    <ListView Grid.Row="6" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True"
-                              ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" ItemClick="OnClickListRecentMatch">
+                    <ListView Grid.Row="6" Margin="16,4,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.vRecentMatches,Mode=OneWay}" HorizontalContentAlignment="Stretch" ItemClick="OnClickListRecentMatch">
                         <ListView.Template>
                             <ControlTemplate>
                                 <ItemsPresenter />
@@ -363,13 +363,13 @@
                         </ListView.Template>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:DotaRecentMatchModel">
-                                <Grid Height="56" Width="364" Padding="12,0">
+                                <Grid Height="56" HorizontalAlignment="Stretch">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource APPLICATION_FR}" Opacity="0.1"/>
+                                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,2,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource APPLICATION_FR}" Opacity="0.1"/>
                                     <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
                                         <Grid.Background>
                                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HorizonImageSource,Mode=OneWay}"/>
@@ -384,17 +384,17 @@
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,-7,0,2">
                                             <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                     Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
-                                                <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                                <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                                             </Border>
                                             <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center"
                                                     Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                                <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource RECENTMATCH_FLIPCARD_BK}"/>
+                                                <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                                             </Border>
                                             <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" Margin="6,0,0,-10" FontSize="12" Opacity="0.7"
                                                        HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
                                         </StackPanel>
                                     </Grid>
-                                    <Grid Grid.Column="2" Margin="12,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Grid Grid.Column="2" Margin="12,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
@@ -408,11 +408,11 @@
                                             <Run Text="{x:Bind assists}"/>
                                         </TextBlock>
                                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="GPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" VerticalAlignment="Center" CharacterSpacing="20"/>
+                                            <TextBlock Text="GPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" Opacity="0.7" VerticalAlignment="Center" CharacterSpacing="20"/>
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
                                         </StackPanel>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="MediumOrchid" VerticalAlignment="Top" CharacterSpacing="20"/>
+                                            <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Top" CharacterSpacing="20"/>
                                             <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
                                         </StackPanel>
                                     </Grid>
@@ -476,14 +476,13 @@
                 </Grid>
                 <!--搜索框-->
                 <TextBox x:Name="TitleSearchTextBox" Grid.Column="1" Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
-                         Height="36" Width="218" Margin="0,0,8,0" Padding="10,8,10,0" CornerRadius="12" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                         Height="36" Width="218" Margin="0,0,8,0" Padding="10,7,10,0" CornerRadius="8" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Center"
                          PlaceholderText="Search by match id" AcceptsReturn="False"
                          IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}"/>
 
                 <!--搜索-->
-                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
-                        Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
+                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0"
+                        Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Search"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                         Click="OnClickSearch">
                     <Button.Content>
@@ -491,56 +490,47 @@
                     </Button.Content>
                 </Button>
                 <!--确认搜索-->
-                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
-                        Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
+                <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0"
+                        Margin="0,0,0,0" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Search"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                         Click="OnClickGoSearch">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE72A;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="16"/>
+                        <FontIcon Glyph="&#xE72A;" FontSize="16"/>
                     </Button.Content>
                 </Button>
                 <!--菜单-->
-                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
-                        Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Menu"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
+                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0"
+                        Margin="6,0,22,0" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Menu"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE700;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="16"/>
+                        <FontIcon Glyph="&#xE700;" FontSize="16"/>
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
-                            <MenuFlyout.MenuFlyoutPresenterStyle>
-                                <Style TargetType="MenuFlyoutPresenter">
-                                    <Setter Property="CornerRadius" Value="6" />
-                                    <Setter Property="IsDefaultShadowEnabled" Value="False"/>
-                                    <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
-                                </Style>
-                            </MenuFlyout.MenuFlyoutPresenterStyle>
-                            <MenuFlyoutItem x:Name="SteamCommunityLinkMenuFlyoutItem" Text="Steam Profile" Click="SteamCommunityLinkMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                            <MenuFlyoutItem x:Name="SteamCommunityLinkMenuFlyoutItem" Text="Steam Profile" Click="SteamCommunityLinkMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="ContactInfo" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                             <!--<MenuFlyoutItem x:Name="UpdateProfileMenuFlyoutItem" Text="Update Data" 
-                                            Click="UpdateProfileMenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                                            Click="UpdateProfileMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Sync" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>-->
-                            <MenuFlyoutItem Text="Change Account" Click="MenuFlyoutItem_Click_2" CornerRadius="4" Margin="4,0">
+                            <MenuFlyoutItem Text="Change Account" Click="MenuFlyoutItem_Click_2">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="People" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                             <MenuFlyoutSeparator Opacity="0.3"/>
                             <MenuFlyoutItem x:Name="GameIDMenuFlyoutItem" Text="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource StrForamt},ConverterParameter=ID: {0}}"
-                                            CornerRadius="4" Margin="4,0" Click="GameIDMenuFlyoutItem_Click">
+                                            Click="GameIDMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0"/>
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Refresh" Click="MenuFlyoutItem_Click" CornerRadius="4" Margin="4,0">
+                            <MenuFlyoutItem Text="Refresh" Click="MenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Refresh" Margin="0,4,0,0" />
                                 </MenuFlyoutItem.Icon>
@@ -549,13 +539,12 @@
                     </Button.Flyout>
                 </Button>
                 <!--取消搜索-->
-                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
-                        Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Cancel Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
+                <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0"
+                        Margin="6,0,22,0" Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Cancel Search"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                         Click="OnClickCancelSearch">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE711;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="18"/>
+                        <FontIcon Glyph="&#xE711;" FontSize="18"/>
                     </Button.Content>
                 </Button>
             </Grid>
@@ -599,7 +588,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Height="Auto" Width="380" CornerRadius="6" Background="{ThemeResource APPLICATION_BK}">
+                <Grid Grid.Row="0" Height="Auto" Width="380" CornerRadius="8" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="64"/>
                         <RowDefinition Height="92"/>
@@ -611,14 +600,13 @@
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Margin="16,0,4,0" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                    CharacterSpacing="40" Opacity="0.8" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="DodgerBlue">
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{ThemeResource TextBlockButtonStyle}" Foreground="DodgerBlue">
                             <Button.Flyout>
                                 <Flyout x:Name="WhatIDFlyout" Placement="Bottom">
                                     <Flyout.FlyoutPresenterStyle>
                                         <Style TargetType="FlyoutPresenter">
                                             <Setter Property="CornerRadius" Value="6" />
                                             <Setter Property="IsDefaultShadowEnabled" Value="False"/>
-                                            <Setter Property="Background" Value="{ThemeResource APPLICATION_BK}"/>
                                         </Style>
                                     </Flyout.FlyoutPresenterStyle>
                                     <StackPanel>

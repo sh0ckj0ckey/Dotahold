@@ -110,13 +110,9 @@
             <Border x:Name="HeroPhotoBorder" Grid.Column="0" CornerRadius="4"
                     Width="128" Height="72" Margin="64,0,0,0"
                     VerticalAlignment="Center">
-                <ToolkitUI:Effects.Shadow>
-                    <ToolkitMedia:AttachedCardShadow x:Name="DropShadowHolder" BlurRadius="10"
-                                                     Color="Black"
-                                                     Offset="0,0,8"
-                                                     Opacity="0.2"/>
-                </ToolkitUI:Effects.Shadow>
-                <Image Width="128" Height="72" Stretch="Uniform" Source="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
+                <Border.Background>
+                    <ImageBrush Stretch="UniformToFill" Source="{x:Bind ViewModel.CurrentHero.ImageSource,Mode=OneWay}"/>
+                </Border.Background>
             </Border>
             <Grid x:Name="HeroNameGrid" Grid.Column="1" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Grid.RowDefinitions>

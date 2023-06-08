@@ -15,16 +15,15 @@
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
                     <Color x:Key="SPLITLINE_BK">#20AAAAAA</Color>
                     <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
-                    <Color x:Key="HEROINFO_TALENTS_BK">#2E3044</Color>
-                    <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#80363746</Color>
-                    <Color x:Key="HEROINFO_ABILITY_BK">#802F3041</Color>
-                    <Color x:Key="HEROINFO_ACRYLIC_FALLBACK_BK">#272839</Color>
-
-                    <Color x:Key="HEROINFO_LISTITEM_BK">#80363746</Color>
+                    <Color x:Key="HEROINFO_TALENTS_BK">#08FFFFFF</Color>
+                    <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#08FFFFFF</Color>
+                    <Color x:Key="HEROINFO_ABILITY_BK">#08FFFFFF</Color>
+                    <Color x:Key="HEROINFO_ACRYLIC_FALLBACK_BK">#202020</Color>
+                    <Color x:Key="HEROINFO_LISTITEM_BK">#08FFFFFF</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#404040</Color>
 
-                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#353545</Color>
+                    <Color x:Key="RECENTMATCH_FLIPCARD_BK">#08FFFFFF</Color>
                     <Color x:Key="RECENTMATCH_FLIPCARD_BD">#18FFFFFF</Color>
 
                     <Color x:Key="MATCHESLIST_LOADMOREBTN_BK">#363746</Color>
@@ -129,7 +128,6 @@
                     <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#80FFFFFF</Color>
                     <Color x:Key="HEROINFO_ABILITY_BK">#80FAFAFC</Color>
                     <Color x:Key="HEROINFO_ACRYLIC_FALLBACK_BK">#DD88001B</Color>
-
                     <Color x:Key="HEROINFO_LISTITEM_BK">#80FFFFFF</Color>
 
                     <Color x:Key="PLAYERPROFILE_AVATAR_BD">#08AAAAAA</Color>
