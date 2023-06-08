@@ -7,9 +7,7 @@
     <Application.Resources>
         <muxc:XamlControlsResources>
             <muxc:XamlControlsResources.MergedDictionaries>
-                <ResourceDictionary Source="/ThemeResource/ContentDialogStyle.xaml"/>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml"/>
-                <ResourceDictionary Source="/ThemeResource/CustomDialogStyle.xaml" />
 
                 <ResourceDictionary>
                     <Color x:Key="SystemAccentColor">#DD88001B</Color>

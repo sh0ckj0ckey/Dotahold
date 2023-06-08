@@ -29,8 +29,6 @@ namespace Dotahold.Views
         private DotaHeroesViewModel ViewModel = null;
         private DotaViewModel MainViewModel = null;
 
-        private Style _customDialogStyle = null;
-
         public HeroInfoPage()
         {
             this.InitializeComponent();
@@ -142,17 +140,7 @@ namespace Dotahold.Views
                 string loc = TrimHeroHistory(ViewModel.CurrentHeroInfo.bio_loc);
                 ViewModel.CurrentHeroInfo.bio_loc = loc;
 
-                if (_customDialogStyle == null)
-                {
-                    _customDialogStyle = (Style)Application.Current.Resources["CustomDialogStyle"];
-                }
-
                 ContentDialog dialog = new ContentDialog();
-
-                if (_customDialogStyle != null)
-                {
-                    dialog.Style = _customDialogStyle;
-                }
 
                 dialog.CloseButtonText = "Close";
                 dialog.IsPrimaryButtonEnabled = false;
@@ -179,17 +167,7 @@ namespace Dotahold.Views
                 string loc = TrimHeroHistory(ViewModel.CurrentHeroInfo.bio_loc);
                 ViewModel.CurrentHeroInfo.bio_loc = loc;
 
-                if (_customDialogStyle == null)
-                {
-                    _customDialogStyle = (Style)Application.Current.Resources["CustomDialogStyle"];
-                }
-
                 ContentDialog dialog = new ContentDialog();
-
-                if (_customDialogStyle != null)
-                {
-                    dialog.Style = _customDialogStyle;
-                }
 
                 dialog.CloseButtonText = "Close";
                 dialog.IsPrimaryButtonEnabled = false;
@@ -223,16 +201,9 @@ namespace Dotahold.Views
             return history;
         }
 
-        private void OnPointerEnterHeroTalentsButton(object sender, PointerRoutedEventArgs e)
+        private void OnClickHeroTalents(object sender, RoutedEventArgs e)
         {
-            //TalentColorImage.Opacity = 1.0;
-            //TalentWhiteImage.Opacity = 0.0;
-        }
-
-        private void OnPointerExitHeroTalentsButton(object sender, PointerRoutedEventArgs e)
-        {
-            //TalentColorImage.Opacity = 0.0;
-            //TalentWhiteImage.Opacity = 1.0;
+            HeroTanlentsTeachingTip.IsOpen = true;
         }
     }
 }

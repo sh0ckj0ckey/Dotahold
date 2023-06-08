@@ -6,14 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:Models="using:Dotahold.Models"
-    xmlns:Converter="using:Dotahold.Converters"
+    xmlns:Converter="using:Dotahold.Converters" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <Converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
@@ -21,26 +22,25 @@
     <Grid MaxHeight="520" Margin="-14,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="52"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal" Background="#20808080">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal">
             <Image Source="{x:Bind ViewModel.CurrentHero.IconSource,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center" Margin="22,0,0,0"/>
             <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                        FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40" Margin="8,0,0,0"/>-->
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Top100 Players"
                        FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40" Margin="8,0,4,0"/>
         </StackPanel>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="36" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Height="36" VerticalAlignment="Top" Background="#20808080">
+            <Grid Grid.Row="0" Height="36" VerticalAlignment="Top" CornerRadius="8" Background="#20808080">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="300" />
-                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="298" />
+                    <ColumnDefinition Width="64"/>
                     <ColumnDefinition Width="56"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
@@ -67,7 +67,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="56" />
                                 <ColumnDefinition Width="38" />
-                                <ColumnDefinition Width="176"/>
+                                <ColumnDefinition Width="164"/>
                                 <ColumnDefinition Width="128"/>
                                 <ColumnDefinition Width="64" />
                             </Grid.ColumnDefinitions>
@@ -106,9 +106,9 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid Grid.Row="2" Width="482" MinHeight="320" Visibility="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-            <ProgressRing Height="32" Width="32" Margin="0,0,0,-60" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay}"/>
+        <Grid Grid.Row="1" Height="360" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay}"/>
         </Grid>
-        <local:SomethingWrongControl Grid.Row="2" Visibility="{x:Bind ViewModel.bFailedHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Margin="-10"/>
+        <local:SomethingWrongControl Grid.Row="1" Visibility="{x:Bind ViewModel.bFailedHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Margin="-10"/>
     </Grid>
 </Page>

@@ -149,14 +149,17 @@ namespace Dotahold.ViewModels
                 {
                     try
                     {
-                        await item.LoadImageAsync(85);
-
                         if (!string.IsNullOrEmpty(item.qual) || (!string.IsNullOrEmpty(item.tier) && item.tier != "0"))
                         {
                             vAllShowItemsList.Add(item);
                         }
                     }
                     catch { }
+                }
+
+                foreach (var item in _vAllItems)
+                {
+                    await item.LoadImageAsync(85);
                 }
             }
             catch { _bLoadedDotaItems = false; }

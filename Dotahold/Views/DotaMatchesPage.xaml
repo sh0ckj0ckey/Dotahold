@@ -10,7 +10,7 @@
     xmlns:converter="using:Dotahold.Converters"
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ui="using:Dotahold.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    NavigationCacheMode="Required">
+    NavigationCacheMode="Required" d:RequestedTheme="Dark">
 
     <Page.Transitions>
         <TransitionCollection>
@@ -568,7 +568,7 @@
                     <AcrylicBrush BackgroundSource="Backdrop" TintColor="{ThemeResource HEROINFO_LISTITEM_BK}" 
                                   FallbackColor="{ThemeResource HEROINFO_LISTITEM_BK}" TintLuminosityOpacity="1" TintOpacity="0.1"/>
                 </Grid.Background>
-                <muxc:ProgressBar Foreground="{ThemeResource APPLICATION_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                <muxc:ProgressBar Foreground="{ThemeResource APPLICATION_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10" Opacity="0.5"/>
                 <TextBlock Text="fetching heroes and items list..." FontWeight="Medium" CharacterSpacing="40" FontSize="12" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,12,0,18"/>
             </Grid>
         </Grid>

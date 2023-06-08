@@ -142,73 +142,65 @@
 
             <Button x:Name="HeroTalentsButton" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Background="Transparent" BorderBrush="Transparent" Height="58" Width="58" CornerRadius="29" Margin="4,0,36,0" Opacity="0" Padding="0"
-                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                    PointerEntered="OnPointerEnterHeroTalentsButton" PointerExited="OnPointerExitHeroTalentsButton">
-                <Grid>
-                    <Image x:Name="TalentWhiteImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_dark.png" HorizontalAlignment="Left"/>
-                    <Image x:Name="TalentColorImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_light.png" HorizontalAlignment="Left" Opacity="0">
-                        <Image.OpacityTransition>
-                            <ScalarTransition/>
-                        </Image.OpacityTransition>
-                    </Image>
-                </Grid>
-                <Button.Flyout>
-                    <Flyout Placement="Left">
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="-12,-8,-12,-16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="186"/>
-                                <ColumnDefinition Width="24"/>
-                                <ColumnDefinition Width="186"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" MinHeight="48"/>
-                                <RowDefinition Height="Auto" MinHeight="48"/>
-                                <RowDefinition Height="Auto" MinHeight="48"/>
-                                <RowDefinition Height="Auto" MinHeight="48"/>
-                            </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                            <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                            <Rectangle Grid.Row="2" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
-                            <TextBlock Grid.Column="0" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
+                    Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Click="OnClickHeroTalents">
+                <Image x:Name="TalentWhiteImage" Width="54" Source="/Assets/Icons/Hero/icon_talents_dark.png" HorizontalAlignment="Left"/>
+            </Button>
+            <muxc:TeachingTip x:Name="HeroTanlentsTeachingTip" Target="{x:Bind HeroTalentsButton}" IsLightDismissEnabled="True" PreferredPlacement="Left">
+                <muxc:TeachingTip.Content>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                        <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                        <Rectangle Grid.Row="2" Grid.ColumnSpan="3" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Fill="{ThemeResource HEROINFO_TALENTS_SPLIT_BK}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25L,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Right"/>
-                            <TextBlock Grid.Column="2" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
+                        <TextBlock Grid.Column="2" Grid.Row="0" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc25R,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
+                        <TextBlock Grid.Column="0" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20L,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Right"/>
-                            <TextBlock Grid.Column="2" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
+                        <TextBlock Grid.Column="2" Grid.Row="1" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc20R,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
-                            <TextBlock Grid.Column="0" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
+                        <TextBlock Grid.Column="0" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15L,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Right"/>
-                            <TextBlock Grid.Column="2" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
+                        <TextBlock Grid.Column="2" Grid.Row="2" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc15R,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
-                            <TextBlock Grid.Column="0" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
+                        <TextBlock Grid.Column="0" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12,4,6,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10L,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Right"/>
-                            <TextBlock Grid.Column="2" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
+                        <TextBlock Grid.Column="2" Grid.Row="3" CharacterSpacing="20" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,4,12,4"
                                Text="{x:Bind ViewModel.CurrentHeroInfo.sTalentNameLoc10R,Mode=OneWay}" FontSize="12" MaxLines="4" 
                                TextWrapping="Wrap"  TextTrimming="CharacterEllipsis" HorizontalTextAlignment="Left"/>
-                            <Border Grid.Column="1" Grid.Row="0" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
-                                <TextBlock Text="25" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12.5"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="1" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
-                                <TextBlock Text="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12.5"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="2" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
-                                <TextBlock Text="15" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12.5"/>
-                            </Border>
-                            <Border Grid.Column="1" Grid.Row="3" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
-                                <TextBlock Text="10" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="12.5"/>
-                            </Border>
-                        </Grid>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
+                        <Border Grid.Column="1" Grid.Row="0" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
+                            <TextBlock Text="25" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12.5"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="1" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
+                            <TextBlock Text="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12.5"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="2" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
+                            <TextBlock Text="15" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12.5"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="3" Opacity="0.7" Height="24" Width="24" CornerRadius="16" Background="#80C7AD1D">
+                            <TextBlock Text="10" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" FontSize="12.5"/>
+                        </Border>
+                    </Grid>
+                </muxc:TeachingTip.Content>
+            </muxc:TeachingTip>
         </Grid>
         <!--详细信息-->
         <Grid x:Name="HeroInfoGrid" Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">

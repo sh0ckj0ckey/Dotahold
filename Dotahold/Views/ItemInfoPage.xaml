@@ -38,7 +38,7 @@
                     <TranslateTransform x:Name="ItemInfoGridTranslation" Y="60"/>
                 </StackPanel.RenderTransform>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                    <Grid Height="62" Width="85" CornerRadius="6" Background="{ThemeResource ITEMINFO_TIER_BK}">
+                    <Grid Height="62" Width="85" CornerRadius="8" Background="{ThemeResource ITEMINFO_TIER_BK}">
                         <Image Height="62" Width="85" Stretch="UniformToFill" Source="{x:Bind ViewModel.CurrentItem.ImageSource,Mode=OneWay}"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
