@@ -18,7 +18,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid MaxHeight="520" Background="{ThemeResource APPLICATION_BK}" Margin="-14,0">
+    <Grid MaxHeight="520" Margin="-14,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="52"/>
             <RowDefinition Height="Auto"/>
@@ -59,7 +59,7 @@
                            VerticalAlignment="Center"
                            Margin="0,0,0,0" />
             </Grid>
-            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.vRankingPlayers,Mode=OneWay}" ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
+            <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.vRankingPlayers,Mode=OneWay}"
                       HorizontalAlignment="Stretch" SelectionMode="None" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="Models:RankingPlayer">

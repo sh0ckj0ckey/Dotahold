@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{ThemeResource APPLICATION_BK}">
+    <Grid>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Image Source="{ThemeResource NONETWORKPLACEHOLDER_IMG}"
