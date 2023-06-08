@@ -104,7 +104,7 @@
                                 </Button>
                                 <ProgressRing Grid.Column="1" Height="14" Width="14" IsActive="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay}"
                                                       Visibility="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
-                                                      Margin="0,0,156,0" Foreground="{ThemeResource SIMPLETEXT_FR}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                      Margin="0,0,156,0" Foreground="{ThemeResource APPLICATION_FR}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             </Grid>
 
                             --><!--实验性--><!--

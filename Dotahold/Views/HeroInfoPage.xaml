@@ -69,7 +69,7 @@
             </Border>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Background>
-                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
+                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource HEROINFO_ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
                 </Grid.Background>
             </Grid>
         </Grid>
@@ -414,7 +414,7 @@
                         </ListView.Template>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:Ability">
-                                <Grid Height="Auto" MinHeight="96" Margin="52,0,24,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" HorizontalAlignment="Stretch">
+                                <Grid Height="Auto" MinHeight="96" Margin="52,0,24,6" Padding="0,0" CornerRadius="6" Background="{ThemeResource HEROINFO_ABILITY_BK}" HorizontalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition/>
@@ -529,7 +529,7 @@
                                         </StackPanel>
 
                                         <!--背景描述-->
-                                        <Grid Grid.Row="6" Background="{ThemeResource HEROINFO_ABILITY_TITLE_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
+                                        <Grid Grid.Row="6" Background="{ThemeResource HEROINFO_ABILITY_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
                                             <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
                                         </Grid>
 
@@ -543,7 +543,7 @@
             <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.bFailedHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
         </Grid>
         <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
+            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay}"/>
         </Grid>
     </Grid>
 </Page>

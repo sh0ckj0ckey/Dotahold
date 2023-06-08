@@ -110,9 +110,9 @@
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center"
               Height="64" Width="128" CornerRadius="8" Visibility="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}">
             <Grid.Background>
-                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="Transparent" TintColor="Transparent"/>
+                <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent"/>
             </Grid.Background>
-            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
+            <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
         </Grid>
         <Grid x:Name="ItemGrid" Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource SPLITLINE_BK}">
             <Frame x:Name="ItemFrame"/>

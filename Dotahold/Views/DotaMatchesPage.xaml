@@ -9,7 +9,7 @@
     xmlns:models="using:Dotahold.Models"
     xmlns:converter="using:Dotahold.Converters"
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:ui="using:Dotahold.UI"
+    xmlns:ui="using:Dotahold.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required">
 
     <Page.Transitions>
@@ -81,7 +81,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource APPLICATION_BK}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="2.3*"/>
@@ -91,7 +91,7 @@
             <Frame x:Name="MatchFrame"/>
         </Grid>
 
-        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" Background="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid x:Name="PlayerProfileGrid" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -159,7 +159,7 @@
                                         <TextBlock Grid.Row="3" Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" FontWeight="Medium" Margin="18,0,4,8" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom"
                                                    FontSize="12" Opacity="0.7" CharacterSpacing="60"/>
 
-                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickFlipRecentMatch"/>
+                                        <Button Grid.RowSpan="4" BorderThickness="0" Background="Transparent" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickFlipRecentMatch"/>
                                     </Grid>
                                     <Image Width="220" Source="{x:Bind CoverImageSource,Mode=OneWay}" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
                                 </Grid>
@@ -240,7 +240,7 @@
                                 </StackPanel>
                                 <StackPanel x:Name="WinLoseStackPanel" Grid.Column="1" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,16,0">
                                     <TextBlock Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
-                                        <Run Text="Win" Foreground="ForestGreen"/>
+                                        <Run Text="Win" CharacterSpacing="160" Foreground="ForestGreen"/>
                                         <Run Text="{x:Bind ViewModel.PlayerWinLose.win,Mode=OneWay}" FontSize="12"/>
                                     </TextBlock>
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40">
@@ -268,7 +268,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:DotaMatchPlayerTotalModel">
                                         <Grid Margin="-12,0,0,0" MinWidth="84" Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="On Average">
-                                            <FontIcon Glyph="{x:Bind field,Converter={StaticResource Field2Icon}}" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="28" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                            <FontIcon Glyph="{x:Bind field,Converter={StaticResource Field2Icon}}" Foreground="{ThemeResource APPLICATION_FR}" FontSize="28" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                             <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0">
                                                 <TextBlock Text="{x:Bind field}" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
                                                 <TextBlock Text="{x:Bind n}" HorizontalAlignment="Center" Opacity="0.7" FontSize="13" FontWeight="Medium" CharacterSpacing="20"/>
@@ -279,18 +279,18 @@
                             </ListView>
                         </StackPanel>
                     </ScrollViewer>
-                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                    <!--<Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>-->
                     <!--常用英雄-->
-                    <Button Grid.Row="3" Height="38" Margin="0,0" Background="Transparent" ToolTipService.ToolTip="View All"
-                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
-                            Click="OnClickMostPlayedHeroes" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
+                    <HyperlinkButton Grid.Row="3" Margin="8,0" Background="Transparent" ToolTipService.ToolTip="View All"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{ThemeResource APPLICATION_FR}"
+                                     Click="OnClickMostPlayedHeroes" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
                         <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                             <TextBlock Text="Heroes Played" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                        Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <FontIcon Glyph="&#xE013;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
-                    </Button>
+                    </HyperlinkButton>
                     <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="20,8,0,20" Opacity="0.7"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind ViewModel.vMostPlayed10Heroes.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
@@ -323,23 +323,23 @@
                                         <TextBlock Text="{x:Bind sWinRate}" FontSize="12" Foreground="ForestGreen" FontWeight="Medium"/>
                                     </StackPanel>
                                     <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}"/>-->
-                                    <Button Grid.ColumnSpan="2" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
+                                    <Button Grid.ColumnSpan="2" BorderThickness="0" Background="Transparent" CornerRadius="6" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
+                    <!--<Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
+                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>-->
                     <!--最近比赛-->
-                    <Button Grid.Row="5" Height="38" Margin="0,0" Background="Transparent" ToolTipService.ToolTip="View All"
-                            BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
-                            Click="OnClickRecentMatches" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
+                    <HyperlinkButton Grid.Row="5" Margin="8,0" Background="Transparent" ToolTipService.ToolTip="View All"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{ThemeResource APPLICATION_FR}"
+                                     Click="OnClickRecentMatches" IsEnabled="{x:Bind ViewModel.bLoadingHeroesAndItems,Converter={StaticResource BoolReverse},Mode=OneWay}">
                         <Grid Width="360" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Stretch">
                             <TextBlock Text="Recent Matches" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
                                        Margin="0,0,0,0" CharacterSpacing="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <FontIcon Glyph="&#xE013;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
-                    </Button>
+                    </HyperlinkButton>
                     <StackPanel Grid.Row="6" Orientation="Vertical" Opacity="0.7"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
                                 Visibility="{x:Bind ViewModel.vRecentMatches.Count,Mode=OneWay,Converter={StaticResource Int2Vis},ConverterParameter=-}">
@@ -369,7 +369,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1"/>
+                                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Height="1" Margin="14,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource APPLICATION_FR}" Opacity="0.1"/>
                                     <Grid Grid.Column="0" Width="64" Height="36" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="4">
                                         <Grid.Background>
                                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HorizonImageSource,Mode=OneWay}"/>
@@ -483,30 +483,30 @@
                 <!--搜索-->
                 <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
                         Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
                         Click="OnClickSearch">
                     <Button.Content>
-                        <FontIcon Glyph="&#xF78B;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
+                        <FontIcon Glyph="&#xF78B;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="16"/>
                     </Button.Content>
                 </Button>
                 <!--确认搜索-->
                 <Button Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
                         Margin="0,0,0,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                         Click="OnClickGoSearch">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE72A;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
+                        <FontIcon Glyph="&#xE72A;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="16"/>
                     </Button.Content>
                 </Button>
                 <!--菜单-->
                 <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
                         Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Menu"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE700;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="16"/>
+                        <FontIcon Glyph="&#xE700;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="16"/>
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -551,11 +551,11 @@
                 <!--取消搜索-->
                 <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Padding="0,0,0,0" CornerRadius="6"
                         Margin="6,0,22,0" BorderThickness="1.5" Background="Transparent" ToolTipService.ToolTip="Cancel Search"
-                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource SIMPLETEXT_FR}"
+                        Style="{StaticResource ButtonRevealStyle}" Foreground="{ThemeResource APPLICATION_FR}"
                         Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                         Click="OnClickCancelSearch">
                     <Button.Content>
-                        <FontIcon Glyph="&#xE711;" Foreground="{ThemeResource SIMPLETEXT_FR}" FontSize="18"/>
+                        <FontIcon Glyph="&#xE711;" Foreground="{ThemeResource APPLICATION_FR}" FontSize="18"/>
                     </Button.Content>
                 </Button>
             </Grid>
@@ -568,7 +568,7 @@
                     <AcrylicBrush BackgroundSource="Backdrop" TintColor="{ThemeResource HEROINFO_LISTITEM_BK}" 
                                   FallbackColor="{ThemeResource HEROINFO_LISTITEM_BK}" TintLuminosityOpacity="1" TintOpacity="0.1"/>
                 </Grid.Background>
-                <ProgressBar Foreground="{ThemeResource SIMPLETEXT_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                <muxc:ProgressBar Foreground="{ThemeResource APPLICATION_FR}" IsIndeterminate="{x:Bind ViewModel.bLoadingHeroesAndItems,Mode=OneWay}" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                 <TextBlock Text="fetching heroes and items list..." FontWeight="Medium" CharacterSpacing="40" FontSize="12" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,12,0,18"/>
             </Grid>
         </Grid>
@@ -606,7 +606,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Grid Grid.Row="0" Background="{ThemeResource APPLICATION_FR}" Opacity="0.1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Margin="16,0,4,0" Text="Enter your ID" FontSize="18" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver"
@@ -666,7 +666,7 @@
                             <DataTemplate x:DataType="models:DotaIdBindHistoryModel">
                                 <Grid Width="98" Height="112" Margin="0,0,0,0" CornerRadius="4">
                                     <Grid.Background>
-                                        <SolidColorBrush Color="{ThemeResource SIMPLETEXT_FR}" Opacity="0.05"/>
+                                        <SolidColorBrush Color="{ThemeResource APPLICATION_FR}" Opacity="0.05"/>
                                     </Grid.Background>
                                     <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Border Height="56" Width="56" CornerRadius="28" HorizontalAlignment="Center">
@@ -681,7 +681,7 @@
                                         </Border>
                                         <TextBlock Text="{x:Bind PlayerName}" Margin="12,10,12,0" CharacterSpacing="30" FontWeight="Bold" FontSize="12" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                     </StackPanel>
-                                    <Button Click="OnClickDotaIdHistory" DataContext="{x:Bind}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource NoClickEffectButtonStyle}" ToolTipService.ToolTip="{x:Bind PlayerName}"/>
+                                    <Button Click="OnClickDotaIdHistory" DataContext="{x:Bind}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTipService.ToolTip="{x:Bind PlayerName}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

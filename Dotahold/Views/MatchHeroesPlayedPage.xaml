@@ -84,7 +84,7 @@
                             </TextBlock>
                             <TextBlock Grid.Column="4" Text="{x:Bind last_played,Converter={StaticResource Long2Time}}" TextTrimming="CharacterEllipsis"
                                        FontSize="14" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8"/>
-                            <Button Grid.ColumnSpan="5" BorderThickness="0" Background="Transparent" CornerRadius="6" Style="{StaticResource NoClickEffectButtonStyle}" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
+                            <Button Grid.ColumnSpan="5" BorderThickness="0" Background="Transparent" CornerRadius="6" Margin="-12,-4,-24,-4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OnClickPlayedHeroMatch"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -97,7 +97,7 @@
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
-            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
+            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingPlayed,Mode=OneWay}"/>
         </Grid>
     </Grid>

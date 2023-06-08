@@ -8,20 +8,20 @@ using Windows.Storage;
 
 namespace Dotahold.Core.DataShop
 {
-    public class SettingsService : ViewModelBase
+    public class SettingsCourier : ViewModelBase
     {
         private const string SETTING_NAME_APPEARANCEINDEX = "iAppearanceIndex";
         private const string SETTING_NAME_STARTUPINDEX = "iStartupPageIndex";
         private const string SETTING_NAME_LANGUAGEINDEX = "iLanguageIndex";
 
-        private static Lazy<SettingsService> _lazyVM = new Lazy<SettingsService>(() => new SettingsService());
-        public static SettingsService Instance => _lazyVM.Value;
+        private static Lazy<SettingsCourier> _lazyVM = new Lazy<SettingsCourier>(() => new SettingsCourier());
+        public static SettingsCourier Instance => _lazyVM.Value;
 
         private ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
-        private SettingsService() { }
+        private SettingsCourier() { }
 
-        // 设置的应用程序的主题 0-明亮 1-黑暗
+        // 设置的应用程序的主题 0-黑暗 1-明亮
         private int _iAppearanceIndex = -1;
         public int iAppearanceIndex
         {

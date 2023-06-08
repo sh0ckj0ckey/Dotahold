@@ -24,7 +24,7 @@ namespace Dotahold.ViewModels
         public ObservableCollection<Core.Models.DotaHeroModel> vUniHeroesList { get; set; } = new ObservableCollection<Core.Models.DotaHeroModel>();
 
         // 缓存拉取过的英雄详情
-        private Dictionary<int, Models.DotaHeroInfoModel> _dictHeroInfos { get; set; } = new Dictionary<int, Models.DotaHeroInfoModel>();
+        private Dictionary<int, Dictionary<int, Models.DotaHeroInfoModel>> _dictHeroInfos { get; set; } = new Dictionary<int, Dictionary<int, Models.DotaHeroInfoModel>>();
 
         // 缓存拉取过的英雄排行榜
         private Dictionary<int, Models.DotaHeroRankingModel> _dictHeroRankings { get; set; } = new Dictionary<int, Models.DotaHeroRankingModel>();
@@ -233,10 +233,11 @@ namespace Dotahold.ViewModels
                 bLoadingHeroInfo = true;
                 bFailedHeroInfo = false;
 
-                if (_dictHeroInfos.ContainsKey(heroId))
+                if (_dictHeroInfos.ContainsKey(SettingsCourier.Instance.iLanguageIndex) &&
+                    _dictHeroInfos[SettingsCourier.Instance.iLanguageIndex].ContainsKey(heroId))
                 {
                     await Task.Delay(600);
-                    return _dictHeroInfos[heroId];
+                    return _dictHeroInfos[SettingsCourier.Instance.iLanguageIndex][heroId];
                 }
 
                 string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
@@ -255,7 +256,14 @@ namespace Dotahold.ViewModels
 
                     if (infoModel != null)
                     {
-                        _dictHeroInfos.Add(heroId, infoModel);
+                        if (!_dictHeroInfos.ContainsKey(SettingsCourier.Instance.iLanguageIndex))
+                        {
+                            _dictHeroInfos.Add(SettingsCourier.Instance.iLanguageIndex, new Dictionary<int, Models.DotaHeroInfoModel>());
+                        }
+                        if (!_dictHeroInfos[SettingsCourier.Instance.iLanguageIndex].ContainsKey(heroId))
+                        {
+                            _dictHeroInfos[SettingsCourier.Instance.iLanguageIndex].Add(heroId, infoModel);
+                        }
                         return infoModel;
                     }
                 }

@@ -135,7 +135,7 @@
                                 </Grid>
 
                                 <!--分割线-->
-                                <Grid Height="36" Width="1.5" Background="{ThemeResource SIMPLETEXT_FR}" Margin="0,0,12,0" Opacity="0.05"
+                                <Grid Height="36" Width="1.5" Background="{ThemeResource APPLICATION_FR}" Margin="0,0,12,0" Opacity="0.05"
                                       Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
 
                                 <!--BanPick-->
@@ -251,7 +251,6 @@
                               ScrollViewer.HorizontalScrollMode="Disabled"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                               HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
-                              ItemContainerStyle="{StaticResource CornerListViewItemStyle}"
                               SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnClickPlayer"
                               ItemsSource="{x:Bind ViewModel.CurrentMatchInfo.players,Mode=OneWay}">
                         <ListView.Template>
@@ -385,7 +384,7 @@
                                                         </ImageBrush.ImageSource>
                                                     </ImageBrush>
                                                 </Grid.Background>
-                                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="Transparent" Style="{StaticResource NoClickEffectButtonStyle}">
+                                                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="Transparent">
                                                     <Button.Flyout>
                                                         <Flyout Placement="Right">
                                                             <Flyout.FlyoutPresenterStyle>
@@ -453,7 +452,7 @@
                                                     </Button.Flyout>
                                                 </Button>
                                             </Grid>
-                                            <Grid Width="1" Height="20" Background="{ThemeResource SIMPLETEXT_FR}" Opacity="0.1" Visibility="{x:Bind hero_id,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=80}"/>
+                                            <Grid Width="1" Height="20" Background="{ThemeResource APPLICATION_FR}" Opacity="0.1" Visibility="{x:Bind hero_id,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=80}"/>
 
                                             <!--背包和中立物品-->
                                             <Border Margin="6,0,4,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sNameItemN,Mode=OneWay}">
@@ -513,9 +512,6 @@
                                             <TextBlock FontFamily="Consolas" FontWeight="Bold" FontSize="12" Text="{x:Bind iPartyId,Mode=OneWay}" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
-
-                                    <!--<Button Grid.ColumnSpan="4" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource NoClickEffectButtonStyle}"/>-->
-
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -571,11 +567,11 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Button Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
-                                            Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                            Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                         <TextBlock Text="GOLD" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource GOLDTEXT_FR}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Button>
                                     <Button Grid.Column="1" Width="48" Height="22" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
-                                            Style="{StaticResource NoClickEffectButtonStyle}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                                            Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                         <TextBlock Text="XP" FontSize="12" FontWeight="Medium" Foreground="MediumOrchid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Button>
                                     <Border Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="{ThemeResource GOLDTEXT_FR}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
@@ -601,8 +597,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource SIMPLETEXT_FR}"/>
-                        <Rectangle Grid.Column="3" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource SIMPLETEXT_FR}"/>
+                        <Rectangle Grid.Column="0" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource APPLICATION_FR}"/>
+                        <Rectangle Grid.Column="3" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource APPLICATION_FR}"/>
                         <FontIcon Grid.Column="1" Glyph="&#xE823;" FontSize="14" Opacity="0.5" VerticalAlignment="Center" Margin="0,0,6,-2"/>
                         <TextBlock Grid.Column="2" Opacity="0.5" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" CharacterSpacing="40" FontSize="15" FontWeight="Medium"/>
                     </Grid>
@@ -636,7 +632,7 @@
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
-            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource SIMPLETEXT_FR}"
+            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}"/>
         </Grid>
     </Grid>

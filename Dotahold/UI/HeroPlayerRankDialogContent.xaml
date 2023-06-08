@@ -107,7 +107,7 @@
             </ListView>
         </Grid>
         <Grid Grid.Row="2" Width="482" MinHeight="320" Visibility="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
-            <ProgressRing Height="32" Width="32" Margin="0,0,0,-60" Foreground="{ThemeResource SIMPLETEXT_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay}"/>
+            <ProgressRing Height="32" Width="32" Margin="0,0,0,-60" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingHeroRanking,Mode=OneWay}"/>
         </Grid>
         <local:SomethingWrongControl Grid.Row="2" Visibility="{x:Bind ViewModel.bFailedHeroRanking,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Margin="-10"/>
     </Grid>
