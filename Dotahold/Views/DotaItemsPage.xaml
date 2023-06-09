@@ -72,7 +72,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Height="42" Width="56" CornerRadius="8" Background="{ThemeResource ITEMINFO_TIER_BK}">
+                            <Grid Height="42" Width="56" CornerRadius="8" Background="{ThemeResource ITEM_COMMON_BK}">
                                 <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                             </Grid>
                             <TextBlock Grid.Column="1" FontWeight="Medium"
@@ -95,7 +95,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Height="42" Width="56" CornerRadius="8" Background="{ThemeResource ITEMINFO_TIER_BK}">
+                            <Grid Height="42" Width="56" CornerRadius="8" Background="{ThemeResource ITEM_COMMON_BK}">
                                 <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ImageSource,Mode=OneWay}"/>
                             </Grid>
                             <TextBlock Grid.Column="1" FontWeight="Medium"

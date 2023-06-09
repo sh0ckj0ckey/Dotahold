@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace Dotahold.Models
         public int estimate { get; set; }
     }
 
-    public class Profile : ViewModels.ViewModelBase
+    public class Profile : ViewModelBase
     {
         public long account_id { get; set; }
         public string personaname { get; set; }
@@ -42,7 +43,7 @@ namespace Dotahold.Models
         public string steamid { get; set; }
         public string avatar { get; set; }
         public string avatarmedium { get; set; }
-        public string avatarfull { get; set; } = "ms-appx:///Assets/Icons/avatar_placeholder.png";
+        public string avatarfull { get; set; }
         public string profileurl { get; set; }
         public object last_login { get; set; }
         public object loccountrycode { get; set; }
@@ -52,20 +53,28 @@ namespace Dotahold.Models
 
         // 玩家头像
         [Newtonsoft.Json.JsonIgnore]
-        private BitmapImage _AvatarSource = null;
+        private BitmapImage _AvatarSource = ConstantsCourier.DefaultAvatarImageSource72;
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage AvatarSource
         {
             get { return _AvatarSource; }
-            set { Set("AvatarSource", ref _AvatarSource, value); }
+            private set { Set("AvatarSource", ref _AvatarSource, value); }
         }
-        public async Task LoadIconAsync(int decodeWidth)
+        [Newtonsoft.Json.JsonIgnore]
+        private bool _loadedAvatar = false;
+        public async Task LoadAvatarAsync(int decodeWidth)
         {
             try
             {
-                AvatarSource = await ImageCourier.GetImageAsync(avatarfull, false);
-                AvatarSource.DecodePixelType = DecodePixelType.Logical;
-                AvatarSource.DecodePixelWidth = decodeWidth;
+                if (_loadedAvatar || string.IsNullOrWhiteSpace(this.avatarfull)) return;
+                var avatarSource = await ImageCourier.GetImageAsync(this.avatarfull, false);
+                if (avatarSource != null)
+                {
+                    this.AvatarSource = avatarSource;
+                    this.AvatarSource.DecodePixelType = DecodePixelType.Logical;
+                    this.AvatarSource.DecodePixelWidth = decodeWidth;
+                    _loadedAvatar = true;
+                }
             }
             catch { }
         }

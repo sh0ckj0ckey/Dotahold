@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Dotahold.Models
     //    public List<DotaRecentMatchModel> vRecentMatches { get; set; }
     //}
 
-    public class DotaRecentMatchModel : ViewModels.ViewModelBase
+    public class DotaRecentMatchModel : ViewModelBase
     {
         public long? match_id { get; set; }
         public int? player_slot { get; set; }
@@ -58,19 +59,19 @@ namespace Dotahold.Models
         public int? party_size { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroCoverImage { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string sHeroCoverImage { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroHorizonImage { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string sHeroHorizonImage { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroName { get; set; } = string.Empty;
+        public string sHeroName { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public bool? bWin { get; set; } = null;
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sKda { get; set; } = string.Empty;
+        public string sKda { get; set; }
 
         // 比赛英雄封面(大图)
         [Newtonsoft.Json.JsonIgnore]
@@ -79,19 +80,20 @@ namespace Dotahold.Models
         public BitmapImage CoverImageSource
         {
             get { return _CoverImageSource; }
-            set { Set("CoverImageSource", ref _CoverImageSource, value); }
+            private set { Set("CoverImageSource", ref _CoverImageSource, value); }
         }
         public async Task LoadCoverImageAsync(int decodeWidth)
         {
             try
             {
-                if (CoverImageSource != null) return;
+                if (this.CoverImageSource != null || string.IsNullOrWhiteSpace(this.sHeroCoverImage)) return;
 
-                CoverImageSource = await ImageCourier.GetImageAsync(sHeroCoverImage, true);
-                if (CoverImageSource != null)
+                var coverImageSource = await ImageCourier.GetImageAsync(this.sHeroCoverImage, true);
+                if (coverImageSource != null)
                 {
-                    CoverImageSource.DecodePixelType = DecodePixelType.Logical;
-                    CoverImageSource.DecodePixelWidth = decodeWidth;
+                    this.CoverImageSource = coverImageSource;
+                    this.CoverImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.CoverImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }
@@ -104,21 +106,23 @@ namespace Dotahold.Models
         public BitmapImage HorizonImageSource
         {
             get { return _HorizonImageSource; }
-            set { Set("HorizonImageSource", ref _HorizonImageSource, value); }
+            private set { Set("HorizonImageSource", ref _HorizonImageSource, value); }
         }
         public async Task LoadHorizonImageAsync(int decodeWidth)
         {
             try
             {
-                if (HorizonImageSource != null) return;
+                if (this.HorizonImageSource != null || string.IsNullOrWhiteSpace(this.sHeroHorizonImage)) return;
 
-                HorizonImageSource = await ImageCourier.GetImageAsync(sHeroHorizonImage);
-                HorizonImageSource.DecodePixelType = DecodePixelType.Logical;
-                HorizonImageSource.DecodePixelWidth = decodeWidth;
+                var horizonImageSource = await ImageCourier.GetImageAsync(this.sHeroHorizonImage);
+                if (horizonImageSource != null)
+                {
+                    this.HorizonImageSource = horizonImageSource;
+                    this.HorizonImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.HorizonImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }
-
     }
-
 }

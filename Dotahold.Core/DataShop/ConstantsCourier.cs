@@ -21,6 +21,10 @@ namespace Dotahold.Core.DataShop
             new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
             { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
 
+        public static BitmapImage DefaultAvatarImageSource72 =
+            new BitmapImage(new Uri("ms-appx:///Assets/Icons/avatar_placeholder.jpeg"))
+            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
+
 
         private static Lazy<ConstantsCourier> _lazyVM = new Lazy<ConstantsCourier>(() => new ConstantsCourier());
         public static ConstantsCourier Instance => _lazyVM.Value;

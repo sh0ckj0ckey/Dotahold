@@ -138,6 +138,7 @@
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToGameModeConverter.cs" />
     <Compile Include="Converters\IntToLobbyTypeConverter.cs" />
+    <Compile Include="Converters\ItemTierToColorConverter.cs" />
     <Compile Include="Converters\LongToMinutesConverter.cs" />
     <Compile Include="Converters\IntToSkillConverter.cs" />
     <Compile Include="Converters\LongToTimeAgoConverter.cs" />
@@ -183,7 +184,6 @@
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
     <Compile Include="ViewModels\DotaViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\HeroInfoPage.xaml.cs">
       <DependentUpon>HeroInfoPage.xaml</DependentUpon>
     </Compile>

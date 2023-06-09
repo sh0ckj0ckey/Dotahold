@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,36 +16,42 @@ namespace Dotahold.Models
         public List<RankingPlayer> rankings { get; set; }
     }
 
-    public class RankingPlayer : ViewModels.ViewModelBase
+    public class RankingPlayer : ViewModelBase
     {
         public string account_id { get; set; }
         public string score { get; set; }
         public string personaname { get; set; }
         public string name { get; set; }
-        public string avatar { get; set; } = "ms-appx:///Assets/Icons/avatar_placeholder.jpeg";
+        public string avatar { get; set; }
         public string last_login { get; set; }
         public string rank_tier { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public int iRank { get; set; }
 
-
         [Newtonsoft.Json.JsonIgnore]
-        private BitmapImage _ImageSource = null;
+        private BitmapImage _ImageSource = ConstantsCourier.DefaultAvatarImageSource72;
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
-
+        [Newtonsoft.Json.JsonIgnore]
+        private bool _loadedImage = false;
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                ImageSource = await ImageCourier.GetImageAsync(avatar, false);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                if (_loadedImage || string.IsNullOrWhiteSpace(this.avatar)) return;
+                var imageSource = await ImageCourier.GetImageAsync(this.avatar, false);
+                if (imageSource != null)
+                {
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                    _loadedImage = true;
+                }
             }
             catch { }
         }

@@ -23,7 +23,7 @@ namespace Dotahold.Core.DataShop.ImageLoader
         //临时目录
         private static StorageFolder tmpFolder = ApplicationData.Current.TemporaryFolder;
 
-        //获取临时目录，确保目录存在
+        // 获取临时目录，确保目录存在
         internal static async Task<StorageFolder> GetCacheFolderAsync()
         {
             var cacheFolder = await tmpFolder.TryGetItemAsync("Cache");
@@ -31,26 +31,21 @@ namespace Dotahold.Core.DataShop.ImageLoader
             else return cacheFolder as StorageFolder;
         }
 
-        //清除缓存
-        internal static async Task<bool> ClearCacheAsync()
+        // 获取缓存目录大小
+        internal static async Task<long> GetCacheSizeAsync()
         {
             try
             {
-                var cacheFolder = await GetCacheFolderAsync();
-                //var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
-                //foreach (var file in files)
-                //{
-                //    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                //}
-                await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                return true;
+                var tar = await GetCacheFolderAsync();
+                var size = await GetFolderSizeAsync(tar);
+                return size;
             }
             catch { }
-            return false;
+            return 0;
         }
 
-        //得到目录大小
-        private static async Task<long> getFolderSizeAsync(StorageFolder target)
+        // 获取指定目录大小
+        private static async Task<long> GetFolderSizeAsync(StorageFolder target)
         {
             try
             {
@@ -62,19 +57,6 @@ namespace Dotahold.Core.DataShop.ImageLoader
             }
             catch { }
             return -1;
-        }
-
-        //得到缓存目录大小
-        internal static async Task<long> GetCacheSizeAsync()
-        {
-            try
-            {
-                var tar = await GetCacheFolderAsync();
-                var size = await getFolderSizeAsync(tar);
-                return size;
-            }
-            catch { }
-            return 0;
         }
 
         //得到缓存文件
@@ -146,6 +128,24 @@ namespace Dotahold.Core.DataShop.ImageLoader
             {
                 return false;
             }
+        }
+
+        // 清理缓存
+        internal static async Task<bool> ClearCacheAsync()
+        {
+            try
+            {
+                var cacheFolder = await GetCacheFolderAsync();
+                //var files = (await cacheFolder.GetFilesAsync()).Where(p => p.DisplayName.StartsWith("http"));
+                //foreach (var file in files)
+                //{
+                //    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                //}
+                await cacheFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                return true;
+            }
+            catch { }
+            return false;
         }
 
         // 清理名称为GUID的临时文件

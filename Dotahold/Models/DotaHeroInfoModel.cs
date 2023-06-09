@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using Dotahold.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -290,7 +291,7 @@ namespace Dotahold.Models
 
         // 技能图片
         [Newtonsoft.Json.JsonIgnore]
-        public string sAbilityImageUrl = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string sAbilityImageUrl;
 
         // 技能数值
         [Newtonsoft.Json.JsonIgnore]
@@ -309,15 +310,20 @@ namespace Dotahold.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                ImageSource = await ImageCourier.GetImageAsync(sAbilityImageUrl);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sAbilityImageUrl)) return;
+                var imageSource = await ImageCourier.GetImageAsync(this.sAbilityImageUrl);
+                if (imageSource != null)
+                {
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }

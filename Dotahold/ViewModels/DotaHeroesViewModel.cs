@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -171,15 +172,19 @@ namespace Dotahold.ViewModels
                         vUniHeroesList.Add(item.Value);
                     }
                 }
-                foreach (var item in dictAllHeroes)
-                {
-                    await item.Value.LoadImageAsync(256);
-                    await item.Value.LoadIconAsync(36);
-                }
             }
             catch { _bLoadedDotaHeroes = false; }
             finally { bLoadingHeroes = false; }
             return true;
+        }
+
+        public async void LoadHeroesImages()
+        {
+            foreach (var item in dictAllHeroes)
+            {
+                await item.Value.LoadImageAsync(256);
+                await item.Value.LoadIconAsync(36);
+            }
         }
 
         /// <summary>
@@ -1274,7 +1279,7 @@ namespace Dotahold.ViewModels
 
                 if (_dictHeroRankings.ContainsKey(heroId))
                 {
-                    await Task.Delay(600);
+                    //await Task.Delay(600);
                     return _dictHeroRankings[heroId];
                 }
 

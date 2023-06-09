@@ -42,9 +42,9 @@ namespace Dotahold.Views
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
 
-                ViewModel.ActUpdatePieChart += (win, lose) =>
+                ViewModel.ActUpdateWinRateCapsule += (win, lose) =>
                 {
-                    ShowPieChart(win, lose);
+                    ShowWinRateCapsule(win, lose);
                 };
 
                 MatchFrame.Navigate(typeof(BlankPage));
@@ -70,6 +70,111 @@ namespace Dotahold.Views
                 if (string.IsNullOrEmpty(DotaMatchesViewModel.Instance.sSteamId))
                 {
                     BindAccount();
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击查看常用英雄
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickMostPlayedHeroes(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MatchFrame.Navigate(typeof(MatchHeroesPlayedPage));
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击查看某个英雄的所有比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickPlayedHeroMatch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is DotaMatchHeroPlayedModel hero)
+                {
+                    DotaMatchesViewModel.Instance.GetHeroMatchesFormAllAsync(hero);
+                    MatchFrame.Navigate(typeof(MatchHeroMatchesPage));
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击查看所有比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickRecentMatches(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MatchFrame.Navigate(typeof(MatchesListPage));
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 查看最近的一场比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickFlipRecentMatch(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
+                {
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
+                    MatchFrame.Navigate(typeof(MatchInfoPage));
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 查看最近的一场比赛
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickListRecentMatch(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (e.ClickedItem is Models.DotaRecentMatchModel match && match.match_id != null)
+                {
+                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
+                    MatchFrame.Navigate(typeof(MatchInfoPage));
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 点击绑定历史账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is Button btn && btn.DataContext is Models.DotaIdBindHistoryModel steamId)
+                {
+                    if (steamId.SteamId != ViewModel.sSteamId)
+                    {
+                        ViewModel.SetSteamID(steamId.SteamId);
+                        ViewModel.InitialDotaMatches();
+                        MatchFrame.Navigate(typeof(BlankPage));
+                    }
+                    HideBindingAccountGrid();
                 }
             }
             catch { }
@@ -291,12 +396,12 @@ namespace Dotahold.Views
 
         #endregion
 
-        #region 胜率饼状图
+        #region 胜率图
 
         /// <summary>
-        /// 显示饼状图
+        /// 显示胜率图
         /// </summary>
-        public void ShowPieChart(double win, double lose)
+        public void ShowWinRateCapsule(double win, double lose)
         {
             try
             {
@@ -310,45 +415,23 @@ namespace Dotahold.Views
                     rate = (Math.Floor(100 * rate) / 100);
                 }
 
-                double x = 24, y = 48;
-                bool isWinRateBigger = false;
-                if (rate > 0.5)
+                AllLoseBorder.Visibility = Visibility.Collapsed;
+                AllWinBorder.Visibility = Visibility.Collapsed;
+                WinRateGrid.Visibility = Visibility.Collapsed;
+                if (rate <= 0)
                 {
-                    rate = 1 - rate;
-                    //胜率大于50%,应该左边表示胜利
-                    isWinRateBigger = true;
+                    AllLoseBorder.Visibility = Visibility.Visible;
                 }
-                if (rate < 0)
+                else if (rate >= 1)
                 {
-                    x = 24; y = 48;
-                }
-                else if (rate <= 0.25)
-                {
-                    x = 24 + 24 * Math.Sin(2 * Math.PI * rate);
-                    y = 24 - 24 * Math.Cos(2 * Math.PI * rate);
-                }
-                else if (rate > 0.25 && rate <= 0.5)
-                {
-                    x = 24 + 24 * Math.Cos((2 * rate - 0.5) * Math.PI);
-                    y = 24 + 24 * Math.Sin((2 * rate - 0.5) * Math.PI);
+                    AllWinBorder.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    x = 24; y = 48;
-                }
-                RateArcSegment.Point = new Point(x, y);
-                RatePolyLineSegment.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x, y) };
-                RatePolyline.Points = new PointCollection { new Point(24, 0), new Point(24, 24), new Point(x + 2, y + 2) };
-
-                if (isWinRateBigger)
-                {
-                    LeftPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                    RightPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
-                }
-                else
-                {
-                    RightPieChart.Fill = new SolidColorBrush(Colors.ForestGreen);
-                    LeftPieChart.Fill = new SolidColorBrush(Colors.Firebrick);
+                    WinRateGrid.Visibility = Visibility.Visible;
+                    rate *= 100;
+                    WinColumn.Width = new GridLength(rate, GridUnitType.Star);
+                    LoseColumn.Width = new GridLength(100 - rate, GridUnitType.Star);
                 }
             }
             catch { }
@@ -384,110 +467,7 @@ namespace Dotahold.Views
 
         #endregion
 
-        /// <summary>
-        /// 点击查看常用英雄
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickMostPlayedHeroes(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MatchFrame.Navigate(typeof(MatchHeroesPlayedPage));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 点击查看某个英雄的所有比赛
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickPlayedHeroMatch(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button btn && btn.DataContext is DotaMatchHeroPlayedModel hero)
-                {
-                    DotaMatchesViewModel.Instance.GetHeroMatchesFormAllAsync(hero);
-                    MatchFrame.Navigate(typeof(MatchHeroMatchesPage));
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 点击查看所有比赛
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickRecentMatches(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MatchFrame.Navigate(typeof(MatchesListPage));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 查看最近的一场比赛
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickFlipRecentMatch(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button btn && btn.DataContext is Models.DotaRecentMatchModel match && match.match_id != null)
-                {
-                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
-                    MatchFrame.Navigate(typeof(MatchInfoPage));
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 查看最近的一场比赛
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickListRecentMatch(object sender, ItemClickEventArgs e)
-        {
-            try
-            {
-                if (e.ClickedItem is Models.DotaRecentMatchModel match && match.match_id != null)
-                {
-                    ViewModel.GetMatchInfoAsync(match.match_id ?? 0);
-                    MatchFrame.Navigate(typeof(MatchInfoPage));
-                }
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 点击绑定历史账号
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button btn && btn.DataContext is Models.DotaIdBindHistoryModel steamId)
-                {
-                    if (steamId.SteamId != ViewModel.sSteamId)
-                    {
-                        ViewModel.SetSteamID(steamId.SteamId);
-                        ViewModel.InitialDotaMatches();
-                        MatchFrame.Navigate(typeof(BlankPage));
-                    }
-                    HideBindingAccountGrid();
-                }
-            }
-            catch { }
-        }
+        #region 搜索
 
         /// <summary>
         /// 显示搜索框
@@ -546,5 +526,8 @@ namespace Dotahold.Views
             }
             catch { }
         }
+
+        #endregion
+
     }
 }

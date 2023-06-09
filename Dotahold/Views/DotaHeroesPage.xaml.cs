@@ -58,7 +58,8 @@ namespace Dotahold.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                await DotaHeroesViewModel.Instance?.LoadDotaHeroes();
+                bool load = await DotaHeroesViewModel.Instance?.LoadDotaHeroes();
+                if (load) DotaHeroesViewModel.Instance?.LoadHeroesImages();
             }
             catch { }
         }

@@ -1,14 +1,16 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
-    public class DotaIdBindHistoryModel : ViewModels.ViewModelBase
+    public class DotaIdBindHistoryModel : ViewModelBase
     {
         public string PlayerName { get; set; } = string.Empty;
         public string AvatarImage { get; set; } = string.Empty;
@@ -20,17 +22,20 @@ namespace Dotahold.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (ImageSource == null && !string.IsNullOrEmpty(AvatarImage))
+                if (this.ImageSource != null && string.IsNullOrWhiteSpace(this.AvatarImage)) return;
+
+                var imageSource = await ImageCourier.GetImageAsync(this.AvatarImage);
+                if (imageSource != null)
                 {
-                    ImageSource = await ImageCourier.GetImageAsync(AvatarImage);
-                    ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ImageSource.DecodePixelWidth = decodeWidth;
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }

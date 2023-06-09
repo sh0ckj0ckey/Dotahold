@@ -12,9 +12,9 @@ namespace Dotahold.Core.DataShop.ImageLoader
 {
     internal static class ImageLoader
     {
-        private static HttpClient http = new HttpClient();
+        private static HttpClient _http = new HttpClient();
 
-        private static Dictionary<string, BitmapImage> dictImageCache = new Dictionary<string, BitmapImage>();
+        private static Dictionary<string, BitmapImage> _dictImageCache = new Dictionary<string, BitmapImage>();
 
         internal static async Task<BitmapImage> LoadImageAsync(string Uri, bool bCache)
         {
@@ -22,9 +22,9 @@ namespace Dotahold.Core.DataShop.ImageLoader
             {
                 if (string.IsNullOrWhiteSpace(Uri)) return null;
 
-                if (dictImageCache.ContainsKey(Uri))
+                if (_dictImageCache.ContainsKey(Uri))
                 {
-                    return dictImageCache[Uri];
+                    return _dictImageCache[Uri];
                 }
 
                 BitmapImage bm = null;
@@ -42,11 +42,11 @@ namespace Dotahold.Core.DataShop.ImageLoader
                     }
                 }
 
-                if (dictImageCache.Count > 3000)
+                if (_dictImageCache.Count > 5000)
                 {
-                    dictImageCache.Clear();
+                    _dictImageCache.Clear();
                 }
-                dictImageCache[Uri] = bm;
+                _dictImageCache[Uri] = bm;
 
                 return bm;
             }
@@ -62,7 +62,7 @@ namespace Dotahold.Core.DataShop.ImageLoader
         }
 
         // 带缓存的图像下载
-        internal static async Task<MemoryStream> DownloadImage(string Uri, bool bCache)
+        private static async Task<MemoryStream> DownloadImage(string Uri, bool bCache)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace Dotahold.Core.DataShop.ImageLoader
             try
             {
                 if (string.IsNullOrEmpty(url)) return null;
-                var response = await http.GetAsync(new Uri(url));
+                var response = await _http.GetAsync(new Uri(url));
                 //response.EnsureSuccessStatusCode();
                 return response;
             }

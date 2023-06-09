@@ -16,8 +16,8 @@ namespace Dotahold.Core.Models
         public string primary_attr { get; set; }
         public string attack_type { get; set; }
         public string[] roles { get; set; }
-        public string img { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
-        public string icon { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string img { get; set; }
+        public string icon { get; set; }
         public double base_health { get; set; }
         public double base_health_regen { get; set; }
         public double base_mana { get; set; }
@@ -47,18 +47,22 @@ namespace Dotahold.Core.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
+        [Newtonsoft.Json.JsonIgnore]
+        private bool _loadedImage = false;
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                var imageSource = await ImageCourier.GetImageAsync(img);
+                if (_loadedImage || string.IsNullOrWhiteSpace(this.img)) return;
+                var imageSource = await ImageCourier.GetImageAsync(this.img);
                 if (imageSource != null)
                 {
-                    ImageSource = imageSource;
-                    ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ImageSource.DecodePixelWidth = decodeWidth;
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                    _loadedImage = true;
                 }
             }
             catch { }
@@ -71,18 +75,22 @@ namespace Dotahold.Core.Models
         public BitmapImage IconSource
         {
             get { return _IconSource; }
-            set { Set("IconSource", ref _IconSource, value); }
+            private set { Set("IconSource", ref _IconSource, value); }
         }
         public async Task LoadIconAsync(int decodeWidth)
         {
             try
             {
-                IconSource = await ImageCourier.GetImageAsync(icon);
-                IconSource.DecodePixelType = DecodePixelType.Logical;
-                IconSource.DecodePixelWidth = decodeWidth;
+                if (this.IconSource != null || string.IsNullOrWhiteSpace(this.icon)) return;
+                var iconSource = await ImageCourier.GetImageAsync(this.icon);
+                if (iconSource != null)
+                {
+                    this.IconSource = iconSource;
+                    this.IconSource.DecodePixelType = DecodePixelType.Logical;
+                    this.IconSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }
     }
-
 }

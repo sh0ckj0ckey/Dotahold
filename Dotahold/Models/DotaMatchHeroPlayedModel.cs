@@ -1,14 +1,16 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
-    public class DotaMatchHeroPlayedModel : ViewModels.ViewModelBase
+    public class DotaMatchHeroPlayedModel : ViewModelBase
     {
         public string hero_id { get; set; }
         public double? last_played { get; set; }
@@ -20,7 +22,7 @@ namespace Dotahold.Models
         public double? against_win { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
-        public string sHeroCoverImage { get; set; } = "ms-appx:///Assets/Icons/item_placeholder.png";
+        public string sHeroCoverImage { get; set; }
 
         [Newtonsoft.Json.JsonIgnore]
         public string sHeroName { get; set; } = string.Empty;
@@ -35,16 +37,21 @@ namespace Dotahold.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (ImageSource != null) return;
-                ImageSource = await ImageCourier.GetImageAsync(sHeroCoverImage);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroCoverImage)) return;
+
+                var imageSource = await ImageCourier.GetImageAsync(this.sHeroCoverImage);
+                if (imageSource != null)
+                {
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }

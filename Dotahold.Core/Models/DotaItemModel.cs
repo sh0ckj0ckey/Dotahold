@@ -25,7 +25,7 @@ namespace Dotahold.Core.Models
         /// <summary>
         /// https://steamcdn-a.akamaihd.net/ + apps/dota2/images/items/{img}.png
         /// </summary>
-        public string img { get; set; } = "";
+        public string img { get; set; }
 
         /// <summary>
         /// 显示的名字
@@ -104,18 +104,22 @@ namespace Dotahold.Core.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
+        [Newtonsoft.Json.JsonIgnore]
+        private bool _loadedImage = false;
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                var imageSource = await ImageCourier.GetImageAsync(img);
+                if (_loadedImage || string.IsNullOrWhiteSpace(this.img)) return;
+                var imageSource = await ImageCourier.GetImageAsync(this.img);
                 if (imageSource != null)
                 {
-                    ImageSource = imageSource;
-                    ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ImageSource.DecodePixelWidth = decodeWidth;
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                    _loadedImage = true;
                 }
             }
             catch { }

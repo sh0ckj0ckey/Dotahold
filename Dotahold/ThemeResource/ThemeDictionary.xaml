@@ -14,7 +14,7 @@
                     
                     <Color x:Key="GOLDTEXT_FR">Gold</Color>
                     <Color x:Key="SPLITLINE_BK">#20AAAAAA</Color>
-                    <Color x:Key="ITEMINFO_TIER_BK">#20FFFFFF</Color>
+                    <Color x:Key="ITEM_COMMON_BK">#20FFFFFF</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#08FFFFFF</Color>
                     <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#08FFFFFF</Color>
                     <Color x:Key="HEROINFO_ABILITY_BK">#08FFFFFF</Color>
@@ -123,7 +123,7 @@
 
                     <Color x:Key="GOLDTEXT_FR">#e6b03f</Color>
                     <Color x:Key="SPLITLINE_BK">#20000000</Color>
-                    <Color x:Key="ITEMINFO_TIER_BK">#66E6E6E6</Color>
+                    <Color x:Key="ITEM_COMMON_BK">#66E6E6E6</Color>
                     <Color x:Key="HEROINFO_TALENTS_BK">#EBECF0</Color>
                     <Color x:Key="HEROINFO_ABILITY_GRANTED_BK">#80FFFFFF</Color>
                     <Color x:Key="HEROINFO_ABILITY_BK">#80FAFAFC</Color>

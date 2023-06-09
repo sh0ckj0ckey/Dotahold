@@ -14,6 +14,7 @@ using Windows.ApplicationModel.Contacts.DataProvider;
 using Windows.Storage;
 using Windows.UI;
 using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 
 namespace Dotahold.ViewModels
 {
@@ -113,8 +114,8 @@ namespace Dotahold.ViewModels
             set { Set("bSearchingByMatchId", ref _bSearchingByMatchId, value); }
         }
 
-        // 刷新胜负场次的饼状图
-        public Action<double, double> ActUpdatePieChart = null;
+        // 刷新胜负场次图
+        public Action<double, double> ActUpdateWinRateCapsule = null;
 
         // 是否已经拉取过所有比赛的列表
         private bool _bGottenAllMatchesList = false;
@@ -563,7 +564,7 @@ namespace Dotahold.ViewModels
 
                 if (PlayerProfile?.profile != null)
                 {
-                    await PlayerProfile?.profile?.LoadIconAsync(72);
+                    await PlayerProfile?.profile?.LoadAvatarAsync(72);
                 }
 
                 if (PlayerProfile?.profile != null)
@@ -604,7 +605,7 @@ namespace Dotahold.ViewModels
                     wl.winRate = (Math.Floor(10000 * rate) / 100).ToString() + "%";
 
                     PlayerWinLose = wl;
-                    ActUpdatePieChart?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
+                    ActUpdateWinRateCapsule?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
                 }
             }
             catch { }
@@ -1608,7 +1609,7 @@ namespace Dotahold.ViewModels
                             {
                                 try
                                 {
-                                    buff?.LoadItemsImageAsync(36);
+                                    buff?.LoadBuffImageAsync(36);
                                 }
                                 catch { }
                             }

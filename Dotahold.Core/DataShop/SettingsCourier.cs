@@ -8,6 +8,9 @@ using Windows.Storage;
 
 namespace Dotahold.Core.DataShop
 {
+    /// <summary>
+    /// 这是一只信使，帮你运送你需要的设置项
+    /// </summary>
     public class SettingsCourier : ViewModelBase
     {
         private const string SETTING_NAME_APPEARANCEINDEX = "iAppearanceIndex";

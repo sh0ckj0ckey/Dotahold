@@ -18,11 +18,12 @@
             <converter:IntToBoolConverter x:Key="Int2Bool"/>
             <converter:IntToVisibilityConverter x:Key="Int2Vis"/>
             <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
+            <converter:ItemTierToColorConverter x:Key="Tier2Color"/>
 
             <Storyboard x:Name="PopInItemInfoStoryboard">
-                <DoubleAnimation Storyboard.TargetName="ItemInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:0.8">
+                <DoubleAnimation Storyboard.TargetName="ItemInfoGridTranslation" Storyboard.TargetProperty="Y" From="60" To="0" Duration="0:0:0.4">
                     <DoubleAnimation.EasingFunction>
-                        <ExponentialEase Exponent="12" EasingMode="EaseOut" />
+                        <ExponentialEase Exponent="2" EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                 </DoubleAnimation>
                 <DoubleAnimation Storyboard.TargetName="ItemInfoStackPanel"
@@ -38,7 +39,7 @@
                     <TranslateTransform x:Name="ItemInfoGridTranslation" Y="60"/>
                 </StackPanel.RenderTransform>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                    <Grid Height="62" Width="85" CornerRadius="8" Background="{ThemeResource ITEMINFO_TIER_BK}">
+                    <Grid Height="62" Width="85" CornerRadius="8" Background="{ThemeResource ITEM_COMMON_BK}">
                         <Image Height="62" Width="85" Stretch="UniformToFill" Source="{x:Bind ViewModel.CurrentItem.ImageSource,Mode=OneWay}"/>
                     </Grid>
                     <StackPanel Orientation="Vertical">
@@ -53,10 +54,10 @@
                                    Source="/Assets/Icons/Data/icon_gold.png"/>
                             <TextBlock Grid.Column="2" Height="28" VerticalAlignment="Center" CharacterSpacing="20"
                                        FontSize="18" FontWeight="Medium" Opacity="0.7" Text="{x:Bind ViewModel.CurrentItem.cost,Mode=OneWay}"/>
-                            <StackPanel Margin="12,0" Orientation="Horizontal" Background="{ThemeResource ITEMINFO_TIER_BK}" HorizontalAlignment="Left" Height="18" CornerRadius="4" Padding="8,2" 
+                            <StackPanel Margin="12,0" Orientation="Horizontal" Background="{x:Bind ViewModel.CurrentItem.tier,Converter={StaticResource Tier2Color},Mode=OneWay}" HorizontalAlignment="Left" Height="18" CornerRadius="2" Padding="8,2" 
                                         Visibility="{x:Bind ViewModel.CurrentItem.tier,Converter={StaticResource Int2Vis},Mode=OneWay}">
-                                <TextBlock Text="Neutral T" FontWeight="Medium" FontSize="12" Margin="0,0,0,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="{x:Bind ViewModel.CurrentItem.tier,Mode=OneWay}" FontWeight="Medium" FontSize="12" VerticalAlignment="Center"/>
+                                <TextBlock Text="Neutral T" FontWeight="Medium" FontSize="12" Foreground="#99FFFFFF" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind ViewModel.CurrentItem.tier,Mode=OneWay}" Foreground="#99FFFFFF" FontWeight="Medium" FontSize="12" VerticalAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

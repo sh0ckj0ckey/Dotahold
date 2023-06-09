@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,7 +32,7 @@ namespace Dotahold.Models
         public List<Player> players { get; set; }
     }
 
-    public class Picks_Bans : ViewModels.ViewModelBase
+    public class Picks_Bans : ViewModelBase
     {
         public bool? is_pick { get; set; }
         public int? hero_id { get; set; }
@@ -54,23 +55,27 @@ namespace Dotahold.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (ImageSource != null) return;
+                if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroImage)) return;
 
-                ImageSource = await ImageCourier.GetImageAsync(sHeroImage);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage);
+                if (imageSource != null)
+                {
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }
     }
 
-    public class Player : ViewModels.ViewModelBase
+    public class Player : ViewModelBase
     {
         public long? match_id { get; set; }
         public int? player_slot { get; set; }
@@ -199,17 +204,21 @@ namespace Dotahold.Models
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
-            set { Set("ImageSource", ref _ImageSource, value); }
+            private set { Set("ImageSource", ref _ImageSource, value); }
         }
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (ImageSource != null) return;
+                if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroImage)) return;
 
-                ImageSource = await ImageCourier.GetImageAsync(sHeroImage);
-                ImageSource.DecodePixelType = DecodePixelType.Logical;
-                ImageSource.DecodePixelWidth = decodeWidth;
+                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage);
+                if (imageSource != null)
+                {
+                    this.ImageSource = imageSource;
+                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ImageSource.DecodePixelWidth = decodeWidth;
+                }
             }
             catch { }
         }
@@ -261,7 +270,7 @@ namespace Dotahold.Models
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
-            set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
+            private set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
@@ -269,7 +278,7 @@ namespace Dotahold.Models
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
-            set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
+            private set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
@@ -277,7 +286,7 @@ namespace Dotahold.Models
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
-            set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
+            private set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
@@ -285,7 +294,7 @@ namespace Dotahold.Models
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
-            set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
+            private set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
@@ -293,7 +302,7 @@ namespace Dotahold.Models
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
-            set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
+            private set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
@@ -301,7 +310,7 @@ namespace Dotahold.Models
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
-            set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
+            private set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
@@ -309,7 +318,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
-            set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
+            private set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
@@ -317,7 +326,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
-            set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
+            private set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
@@ -325,7 +334,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
-            set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
+            private set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
@@ -333,68 +342,68 @@ namespace Dotahold.Models
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
-            set { Set("ItemNImageSource", ref _ItemNImageSource, value); }
+            private set { Set("ItemNImageSource", ref _ItemNImageSource, value); }
         }
 
         public async Task LoadItemsImageAsync(int itemDecodeWidth, int backpackDecodeWidth, int neutralDecodeWidth)
         {
             try
             {
-                if (Item0ImageSource == null && !string.IsNullOrEmpty(sItem0))
+                if (Item0ImageSource == null && !string.IsNullOrWhiteSpace(sItem0))
                 {
                     Item0ImageSource = await ImageCourier.GetImageAsync(sItem0);
                     Item0ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item0ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item1ImageSource == null && !string.IsNullOrEmpty(sItem1))
+                if (Item1ImageSource == null && !string.IsNullOrWhiteSpace(sItem1))
                 {
                     Item1ImageSource = await ImageCourier.GetImageAsync(sItem1);
                     Item1ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item1ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item2ImageSource == null && !string.IsNullOrEmpty(sItem2))
+                if (Item2ImageSource == null && !string.IsNullOrWhiteSpace(sItem2))
                 {
                     Item2ImageSource = await ImageCourier.GetImageAsync(sItem2);
                     Item2ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item2ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item3ImageSource == null && !string.IsNullOrEmpty(sItem3))
+                if (Item3ImageSource == null && !string.IsNullOrWhiteSpace(sItem3))
                 {
                     Item3ImageSource = await ImageCourier.GetImageAsync(sItem3);
                     Item3ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item3ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item4ImageSource == null && !string.IsNullOrEmpty(sItem4))
+                if (Item4ImageSource == null && !string.IsNullOrWhiteSpace(sItem4))
                 {
                     Item4ImageSource = await ImageCourier.GetImageAsync(sItem4);
                     Item4ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item4ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item5ImageSource == null && !string.IsNullOrEmpty(sItem5))
+                if (Item5ImageSource == null && !string.IsNullOrWhiteSpace(sItem5))
                 {
                     Item5ImageSource = await ImageCourier.GetImageAsync(sItem5);
                     Item5ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item5ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (ItemB0ImageSource == null && !string.IsNullOrEmpty(sItemB0))
+                if (ItemB0ImageSource == null && !string.IsNullOrWhiteSpace(sItemB0))
                 {
                     ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0);
                     ItemB0ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB0ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemB1ImageSource == null && !string.IsNullOrEmpty(sItemB1))
+                if (ItemB1ImageSource == null && !string.IsNullOrWhiteSpace(sItemB1))
                 {
                     ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1);
                     ItemB1ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB1ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemB2ImageSource == null && !string.IsNullOrEmpty(sItemB2))
+                if (ItemB2ImageSource == null && !string.IsNullOrWhiteSpace(sItemB2))
                 {
                     ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2);
                     ItemB2ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB2ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemNImageSource == null && !string.IsNullOrEmpty(sItemN))
+                if (ItemNImageSource == null && !string.IsNullOrWhiteSpace(sItemN))
                 {
                     ItemNImageSource = await ImageCourier.GetImageAsync(sItemN);
                     ItemNImageSource.DecodePixelType = DecodePixelType.Logical;
@@ -405,12 +414,12 @@ namespace Dotahold.Models
         }
     }
 
-    public class AbilityUpgrade : ViewModels.ViewModelBase
+    public class AbilityUpgrade : ViewModelBase
     {
         [Newtonsoft.Json.JsonIgnore]
-        private static BitmapImage _DefaultAbilityImage = null;
+        private static BitmapImage _defaultAbilityImage = null;
         [Newtonsoft.Json.JsonIgnore]
-        private static BitmapImage _TalentAbilityImage = null;
+        private static BitmapImage _talentAbilityImage = null;
 
         [Newtonsoft.Json.JsonIgnore]
         public string sAbilityUrl { get; set; }
@@ -428,7 +437,7 @@ namespace Dotahold.Models
         public BitmapImage AbilityImageSource
         {
             get { return _AbilityImageSource; }
-            set { Set("AbilityImageSource", ref _AbilityImageSource, value); }
+            private set { Set("AbilityImageSource", ref _AbilityImageSource, value); }
         }
         public async Task LoadAbilityImageAsync(int decodeWidth)
         {
@@ -438,17 +447,17 @@ namespace Dotahold.Models
 
                 if (bIsTalent)
                 {
-                    if (_TalentAbilityImage == null)
+                    if (_talentAbilityImage == null)
                     {
-                        _TalentAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/icon_talent_tree.png"));
+                        _talentAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/icon_talent_tree.png"));
                     }
-                    AbilityImageSource = _TalentAbilityImage;
+                    AbilityImageSource = _talentAbilityImage;
                     AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
                     AbilityImageSource.DecodePixelWidth = decodeWidth;
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(sAbilityUrl))
+                    if (!string.IsNullOrWhiteSpace(sAbilityUrl))
                     {
                         AbilityImageSource = await ImageCourier.GetImageAsync(sAbilityUrl);
                         AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
@@ -456,11 +465,11 @@ namespace Dotahold.Models
                     }
                     else
                     {
-                        if (_DefaultAbilityImage == null)
+                        if (_defaultAbilityImage == null)
                         {
-                            _DefaultAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/PermanentBuffs/buff_placeholder.png"));
+                            _defaultAbilityImage = new BitmapImage(new System.Uri("ms-appx:///Assets/Icons/Match/PermanentBuffs/buff_placeholder.png"));
                         }
-                        AbilityImageSource = _DefaultAbilityImage;
+                        AbilityImageSource = _defaultAbilityImage;
                         AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
                         AbilityImageSource.DecodePixelWidth = decodeWidth;
                     }
@@ -476,7 +485,7 @@ namespace Dotahold.Models
         public string name { get; set; }
     }
 
-    public class Additional_Units : ViewModels.ViewModelBase
+    public class Additional_Units : ViewModelBase
     {
         public string unitname { get; set; }
         public int? item_0 { get; set; }
@@ -537,7 +546,7 @@ namespace Dotahold.Models
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
-            set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
+            private set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
@@ -545,7 +554,7 @@ namespace Dotahold.Models
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
-            set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
+            private set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
@@ -553,7 +562,7 @@ namespace Dotahold.Models
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
-            set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
+            private set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
@@ -561,7 +570,7 @@ namespace Dotahold.Models
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
-            set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
+            private set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
@@ -569,7 +578,7 @@ namespace Dotahold.Models
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
-            set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
+            private set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
@@ -577,7 +586,7 @@ namespace Dotahold.Models
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
-            set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
+            private set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
@@ -585,7 +594,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
-            set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
+            private set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
@@ -593,7 +602,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
-            set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
+            private set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
@@ -601,7 +610,7 @@ namespace Dotahold.Models
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
-            set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
+            private set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
         }
         [Newtonsoft.Json.JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
@@ -609,68 +618,68 @@ namespace Dotahold.Models
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
-            set { Set("ItemNImageSource", ref _ItemNImageSource, value); }
+            private set { Set("ItemNImageSource", ref _ItemNImageSource, value); }
         }
 
         public async Task LoadItemsImageAsync(int itemDecodeWidth, int backpackDecodeWidth, int neutralDecodeWidth)
         {
             try
             {
-                if (Item0ImageSource == null && !string.IsNullOrEmpty(sItem0))
+                if (Item0ImageSource == null && !string.IsNullOrWhiteSpace(sItem0))
                 {
                     Item0ImageSource = await ImageCourier.GetImageAsync(sItem0);
                     Item0ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item0ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item1ImageSource == null && !string.IsNullOrEmpty(sItem1))
+                if (Item1ImageSource == null && !string.IsNullOrWhiteSpace(sItem1))
                 {
                     Item1ImageSource = await ImageCourier.GetImageAsync(sItem1);
                     Item1ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item1ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item2ImageSource == null && !string.IsNullOrEmpty(sItem2))
+                if (Item2ImageSource == null && !string.IsNullOrWhiteSpace(sItem2))
                 {
                     Item2ImageSource = await ImageCourier.GetImageAsync(sItem2);
                     Item2ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item2ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item3ImageSource == null && !string.IsNullOrEmpty(sItem3))
+                if (Item3ImageSource == null && !string.IsNullOrWhiteSpace(sItem3))
                 {
                     Item3ImageSource = await ImageCourier.GetImageAsync(sItem3);
                     Item3ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item3ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item4ImageSource == null && !string.IsNullOrEmpty(sItem4))
+                if (Item4ImageSource == null && !string.IsNullOrWhiteSpace(sItem4))
                 {
                     Item4ImageSource = await ImageCourier.GetImageAsync(sItem4);
                     Item4ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item4ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (Item5ImageSource == null && !string.IsNullOrEmpty(sItem5))
+                if (Item5ImageSource == null && !string.IsNullOrWhiteSpace(sItem5))
                 {
                     Item5ImageSource = await ImageCourier.GetImageAsync(sItem5);
                     Item5ImageSource.DecodePixelType = DecodePixelType.Logical;
                     Item5ImageSource.DecodePixelWidth = itemDecodeWidth;
                 }
-                if (ItemB0ImageSource == null && !string.IsNullOrEmpty(sItemB0))
+                if (ItemB0ImageSource == null && !string.IsNullOrWhiteSpace(sItemB0))
                 {
                     ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0);
                     ItemB0ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB0ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemB1ImageSource == null && !string.IsNullOrEmpty(sItemB1))
+                if (ItemB1ImageSource == null && !string.IsNullOrWhiteSpace(sItemB1))
                 {
                     ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1);
                     ItemB1ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB1ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemB2ImageSource == null && !string.IsNullOrEmpty(sItemB2))
+                if (ItemB2ImageSource == null && !string.IsNullOrWhiteSpace(sItemB2))
                 {
                     ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2);
                     ItemB2ImageSource.DecodePixelType = DecodePixelType.Logical;
                     ItemB2ImageSource.DecodePixelWidth = backpackDecodeWidth;
                 }
-                if (ItemNImageSource == null && !string.IsNullOrEmpty(sItemN))
+                if (ItemNImageSource == null && !string.IsNullOrWhiteSpace(sItemN))
                 {
                     ItemNImageSource = await ImageCourier.GetImageAsync(sItemN);
                     ItemNImageSource.DecodePixelType = DecodePixelType.Logical;
@@ -681,10 +690,10 @@ namespace Dotahold.Models
         }
     }
 
-    public class Permanent_Buffs : ViewModels.ViewModelBase
+    public class Permanent_Buffs : ViewModelBase
     {
         [Newtonsoft.Json.JsonIgnore]
-        private static Dictionary<string, BitmapImage> dictBuffs = new Dictionary<string, BitmapImage>();
+        private static Dictionary<string, BitmapImage> _dictBuffs = new Dictionary<string, BitmapImage>();
 
         public int? permanent_buff { get; set; }
         public int? stack_count { get; set; }
@@ -694,19 +703,20 @@ namespace Dotahold.Models
         public string sBuff { get; set; } = string.Empty;
 
         [Newtonsoft.Json.JsonIgnore]
-        private BitmapImage _BuffImageSource = null;
+        private BitmapImage _BuffImageSource = ConstantsCourier.DefaultItemImageSource72;
         [Newtonsoft.Json.JsonIgnore]
         public BitmapImage BuffImageSource
         {
             get { return _BuffImageSource; }
-            set { Set("BuffImageSource", ref _BuffImageSource, value); }
+            private set { Set("BuffImageSource", ref _BuffImageSource, value); }
         }
-
-        public async Task LoadItemsImageAsync(int imageDecodeHeight)
+        [Newtonsoft.Json.JsonIgnore]
+        private bool _loadedPermanentBuffImage = false;
+        public async Task LoadBuffImageAsync(int imageDecodeHeight)
         {
             try
             {
-                if (BuffImageSource != null || string.IsNullOrEmpty(sBuff)) return;
+                if (_loadedPermanentBuffImage || string.IsNullOrWhiteSpace(this.sBuff)) return;
 
                 if (permanent_buff == -99) sBuff = "buff_placeholder";
 
@@ -726,20 +736,21 @@ namespace Dotahold.Models
                     sBuff == "necrolyte_reapers_scythe")
                 {
                     // 本地有图片资源
-                    if (!dictBuffs.ContainsKey(sBuff))
+                    if (!_dictBuffs.ContainsKey(sBuff))
                     {
-                        dictBuffs.Add(sBuff, new BitmapImage(new System.Uri(string.Format("ms-appx:///Assets/Icons/Match/PermanentBuffs/{0}.png", sBuff))));
+                        _dictBuffs.Add(sBuff, new BitmapImage(new System.Uri(string.Format("ms-appx:///Assets/Icons/Match/PermanentBuffs/{0}.png", sBuff))));
                     }
-                    BuffImageSource = dictBuffs[sBuff];
+                    this.BuffImageSource = _dictBuffs[sBuff];
                 }
                 else
                 {
                     // 从网络获取，通常是技能图标
-                    BuffImageSource = await ImageCourier.GetImageAsync(string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", sBuff), true);
+                    this.BuffImageSource = await ImageCourier.GetImageAsync(string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", this.sBuff), true);
                 }
 
-                BuffImageSource.DecodePixelType = DecodePixelType.Logical;
-                BuffImageSource.DecodePixelHeight = imageDecodeHeight;
+                this.BuffImageSource.DecodePixelType = DecodePixelType.Logical;
+                this.BuffImageSource.DecodePixelHeight = imageDecodeHeight;
+                _loadedPermanentBuffImage = true;
             }
             catch { }
         }

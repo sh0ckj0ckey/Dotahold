@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -156,15 +157,18 @@ namespace Dotahold.ViewModels
                     }
                     catch { }
                 }
-
-                foreach (var item in _vAllItems)
-                {
-                    await item.LoadImageAsync(85);
-                }
             }
             catch { _bLoadedDotaItems = false; }
             finally { bLoadingItems = false; }
             return true;
+        }
+
+        public async void LoadItemsImages()
+        {
+            foreach (var item in _vAllItems)
+            {
+                await item.LoadImageAsync(85);
+            }
         }
 
         // 搜索
