@@ -206,8 +206,6 @@
                                 </ListView>
                             </StackPanel>
                         </ScrollViewer>
-                        <Rectangle IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                        <Rectangle IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
                     </Grid>
 
                     <!--玩家列表标题-->

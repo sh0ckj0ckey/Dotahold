@@ -267,5 +267,15 @@ namespace Dotahold.Views
             }
             catch { }
         }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void OnClickGoToStoreRate(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

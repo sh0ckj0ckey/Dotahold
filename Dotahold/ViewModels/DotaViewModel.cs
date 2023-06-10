@@ -22,89 +22,6 @@ namespace Dotahold.ViewModels
             set { Set("iSideMenuTabIndex", ref _iSideMenuTabIndex, value); }
         }
 
-        // 应用程序的主题
-        private ElementTheme _eAppTheme = ElementTheme.Light;
-        public ElementTheme eAppTheme
-        {
-            get { return _eAppTheme; }
-            set
-            {
-                Set("eAppTheme", ref _eAppTheme, value);
-                switch (value)
-                {
-                    case ElementTheme.Light:
-                        iAppearanceIndex = 1;
-                        break;
-                    case ElementTheme.Dark:
-                        iAppearanceIndex = 0;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        // 设置的应用程序的主题
-        private int _iAppearanceIndex = 0;
-        public int iAppearanceIndex
-        {
-            get { return _iAppearanceIndex; }
-            set
-            {
-                if (value > 2 || value < 0)
-                {
-                    return;
-                }
-                Set("iAppearanceIndex", ref _iAppearanceIndex, value);
-            }
-        }
-
-        // 设置的启动页面: 0-Heroes 1-Items 2-Matches
-        private int _iStartupTabIndex = 0;
-        public int iStartupTabIndex
-        {
-            get { return _iStartupTabIndex; }
-            set
-            {
-                if (value > 2 || value < 0)
-                {
-                    return;
-                }
-                Set("iStartupTabIndex", ref _iStartupTabIndex, value);
-            }
-        }
-
-        // 设置的语言: 0-english 1-schinese 2-russian
-        private int _iLanguageIndex = 0;
-        public int iLanguageIndex
-        {
-            get { return _iLanguageIndex; }
-            set
-            {
-                if (value > 2 || value < 0)
-                {
-                    return;
-                }
-                Set("iLanguageIndex", ref _iLanguageIndex, value);
-            }
-        }
-
-        // 是否在一些页面间显示分割线
-        private bool _bShowSplitLine = false;
-        public bool bShowSplitLine
-        {
-            get { return _bShowSplitLine; }
-            set { Set("bShowSplitLine", ref _bShowSplitLine, value); }
-        }
-
-        // 物品-搜索模式, true:模糊匹配, false:全字匹配
-        private bool _bSearchFuzzy = true;
-        public bool bSearchFuzzy
-        {
-            get { return _bSearchFuzzy; }
-            set { Set("bSearchFuzzy", ref _bSearchFuzzy, value); }
-        }
-
         // 图片缓存大小
         private string _sImageCacheSize = string.Empty;
         public string sImageCacheSize
@@ -206,28 +123,6 @@ namespace Dotahold.ViewModels
                     else
                     {
                         iLanguageIndex = 0;
-                    }
-                }
-                catch { }
-
-                // 读取是否显示分割线
-                try
-                {
-                    if (App.AppSettingContainer?.Values["ShowSplitLine"] == null)
-                    {
-                        this.bShowSplitLine = false;
-                    }
-                    else if (App.AppSettingContainer?.Values["ShowSplitLine"]?.ToString() == "True")
-                    {
-                        this.bShowSplitLine = true;
-                    }
-                    else if (App.AppSettingContainer?.Values["ShowSplitLine"]?.ToString() == "False")
-                    {
-                        this.bShowSplitLine = false;
-                    }
-                    else
-                    {
-                        this.bShowSplitLine = false;
                     }
                 }
                 catch { }

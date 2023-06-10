@@ -13,9 +13,10 @@ namespace Dotahold.Core.DataShop
     /// </summary>
     public class SettingsCourier : ViewModelBase
     {
-        private const string SETTING_NAME_APPEARANCEINDEX = "iAppearanceIndex";
-        private const string SETTING_NAME_STARTUPINDEX = "iStartupPageIndex";
-        private const string SETTING_NAME_LANGUAGEINDEX = "iLanguageIndex";
+        private const string SETTING_NAME_APPEARANCEINDEX = "AppearanceIndex";
+        private const string SETTING_NAME_STARTUPINDEX = "StartupPage";
+        private const string SETTING_NAME_LANGUAGEINDEX = "Language";
+        private const string SETTING_NAME_SEARCHMODE = "ItemsSearchFuzzy";
 
         private static Lazy<SettingsCourier> _lazyVM = new Lazy<SettingsCourier>(() => new SettingsCourier());
         public static SettingsCourier Instance => _lazyVM.Value;

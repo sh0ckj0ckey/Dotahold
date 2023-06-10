@@ -8,7 +8,7 @@
     mc:Ignorable="d" NavigationCacheMode="Required">
     <Grid>
         <Image Source="{ThemeResource BLANKPLACEHOLDER_IMG}" Height="100" Opacity="0.1"/>
-        <TextBlock Text="www.opendota.com" FontFamily="/Fonts/Radiance.ttf#Reaver" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" CharacterSpacing="36"
+        <TextBlock Text="www.opendota.com" FontFamily="/Fonts/Radiance.ttf#Radiance" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" CharacterSpacing="36"
                    Opacity="0.1" FontSize="16"/>
     </Grid>
 </Page>

@@ -261,8 +261,6 @@
                             </ListView>
                         </StackPanel>
                     </ScrollViewer>
-                    <!--<Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                    <Rectangle Grid.Row="2" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>-->
                     <!--常用英雄-->
                     <HyperlinkButton Grid.Row="3" Margin="8,0" Background="Transparent" ToolTipService.ToolTip="View All"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{ThemeResource APPLICATION_FR}"
@@ -284,7 +282,7 @@
                     <ListView Grid.Row="4" IsItemClickEnabled="False" SelectionMode="None"
                               ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
                               ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                              Margin="0,8,10,16" Padding="20,0,0,0"
+                              Margin="0,8,0,16" Padding="20,0,20,0"
                               ItemsSource="{x:Bind ViewModel.vMostPlayed10Heroes,Mode=OneWay}">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -310,8 +308,6 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <!--<Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Left" Width="18" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>
-                    <Rectangle Grid.Row="4" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>-->
                     <!--最近比赛-->
                     <HyperlinkButton Grid.Row="5" Margin="8,0" Background="Transparent" ToolTipService.ToolTip="View All"
                                      HorizontalAlignment="Stretch" VerticalAlignment="Center" Foreground="{ThemeResource APPLICATION_FR}"

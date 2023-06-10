@@ -69,7 +69,7 @@
             </Border>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.Background>
-                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource HEROINFO_ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.0" TintOpacity="0.5"/>
+                    <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource HEROINFO_ACRYLIC_FALLBACK_BK}" TintLuminosityOpacity="0.3" TintOpacity="0.3"/>
                 </Grid.Background>
             </Grid>
         </Grid>
@@ -390,8 +390,6 @@
                             </Grid>
                         </ListViewItem>
                     </ListView>
-                    <!--<Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Right" Width="36" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTRIGHTMASK_BK}"/>
-                            <Rectangle Grid.Column="1" IsHitTestVisible="False" HorizontalAlignment="Left" Width="12" VerticalAlignment="Stretch" Fill="{ThemeResource HEROINFO_LISTLEFTMASK_BK}"/>-->
                     <!--英雄技能-->
                     <ListView Margin="0,4,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollMode="Disabled" SelectionMode="None" IsItemClickEnabled="False"
                               ItemsSource="{x:Bind ViewModel.CurrentHeroInfo.abilities,Mode=OneWay}">
