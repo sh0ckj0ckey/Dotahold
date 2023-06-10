@@ -26,6 +26,8 @@ namespace Dotahold.Views
     /// </summary>
     public sealed partial class SettingPage : Page
     {
+        private string _appVersion = string.Empty;
+        private long _lastTimeCleanCache = 0;
         public SettingPage()
         {
             this.InitializeComponent();

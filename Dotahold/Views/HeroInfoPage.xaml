@@ -127,9 +127,9 @@
                            Text="{x:Bind ViewModel.CurrentHero.localized_name,Mode=OneWay}"
                            FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" Foreground="White"
                            FontSize="26" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
-                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
+                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HEROINFO_ATTKTYPE_MELLE_IMG}" Height="18" Stretch="Uniform"
                        Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Melee}"/>
-                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HERO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
+                <Image Grid.Row="1" Grid.Column="0" Opacity="0.7" Source="{ThemeResource HEROINFO_ATTKTYPE_RANGE_IMG}" Height="18" Stretch="Uniform"
                        Visibility="{x:Bind ViewModel.CurrentHero.attack_type,Mode=OneWay,Converter={StaticResource Eql2Vis},ConverterParameter=Ranged}"/>
                 <TextBlock x:Name="HeroRoleTextBlock" Grid.Row="1" Grid.Column="1" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
                            Text="{x:Bind ViewModel.CurrentHero.roles,Mode=OneWay,Converter={StaticResource StrArr2Str},ConverterParameter=·}"

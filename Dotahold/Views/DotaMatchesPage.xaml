@@ -177,6 +177,9 @@
                                       Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
 
+                            <Grid Margin="0,0,12,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="274" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
+                                  Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
+
                             <!--DotaPlus-->
                             <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.PlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                                   Width="Auto" Height="64" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
@@ -189,9 +192,6 @@
                                     <TextBlock Text="Dota Plus" Margin="0,2,0,0" HorizontalAlignment="Left" FontWeight="Medium" CharacterSpacing="40"/>
                                     <TextBlock HorizontalAlignment="Left" Opacity="0.7" FontSize="13" FontWeight="Medium" Text="Subscriber"/>
                                 </StackPanel>
-
-                                <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="320" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{ThemeResource HEROINFO_LISTITEM_BK}"
-                                      Visibility="{x:Bind ViewModel.PlayerProfile,Converter={StaticResource Null2Vis},ConverterParameter=-,Mode=OneWay}"/>
                             </Grid>
 
                             <!--胜率-->
@@ -205,16 +205,16 @@
                                 <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="0,0,0,4">
                                     <Border x:Name="AllWinBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="ForestGreen" Height="16" CornerRadius="4"/>
                                     <Border x:Name="AllLoseBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Firebrick" Height="16" CornerRadius="4"/>
-                                    <Grid x:Name="WinRateGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Transparent" Height="16">
+                                    <Grid x:Name="WinRateGrid" UseLayoutRounding="False" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Transparent" Height="16">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition x:Name="WinColumn" Width="*"/>
-                                            <ColumnDefinition Width="10"/>
+                                            <ColumnDefinition Width="14"/>
                                             <ColumnDefinition x:Name="LoseColumn" Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" Height="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="4,0,0,4" Background="ForestGreen"/>
-                                        <PathIcon Grid.Column="1" Data="F1 M 0,0 0,16 6,0" Foreground="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                        <PathIcon Grid.Column="1" Data="F1 M 0,16 6,16 6,0" Foreground="Firebrick" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                        <Border Grid.Column="2" Height="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="0,4,4,0" Background="Firebrick"/>
+                                        <Border Grid.Column="0" Height="16" Margin="0,0,-1,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="4,0,0,4" Background="ForestGreen"/>
+                                        <PathIcon Grid.Column="1" Data="F1 M 0,0 0,16 2,16 8,0" Foreground="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <PathIcon Grid.Column="1" Data="F1 M 0,16 8,16 8,0 6,0" Foreground="Firebrick" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="2" Height="16" Margin="-1,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="0,4,4,0" Background="Firebrick"/>
                                     </Grid>
                                 </Grid>
                                 <StackPanel x:Name="WinRateStackPanel" Grid.Row="1" Orientation="Horizontal" Opacity="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -411,7 +411,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{ThemeResource ONLINEPLAYERS_DOTA2LOGO_IMG}" Height="16" Width="16" UseLayoutRounding="True" VerticalAlignment="Center"/>
+                        <Image Grid.Column="0" Source="{ThemeResource DOTA2LOGO_IMG}" Height="16" Width="16" UseLayoutRounding="True" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.sOnlilnePlayersCount,Mode=OneWay}" FontSize="14" FontWeight="Medium" VerticalAlignment="Center" Margin="6,0,4,0"/>
                         <TextBlock Grid.Column="2" Text="players in game now" FontSize="13" Opacity="0.7" VerticalAlignment="Center"/>
                     </Grid>
