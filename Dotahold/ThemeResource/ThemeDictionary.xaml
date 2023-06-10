@@ -47,18 +47,6 @@
                             <GradientStop Color="#00404040" Offset="1"/>
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#272839" Offset="0"/>
-                            <GradientStop Color="#00272839" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROINFO_LISTRIGHTMASK_BK" StartPoint="1,0" EndPoint="0,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#272839" Offset="0"/>
-                            <GradientStop Color="#00272839" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
 
                     <!--Items-->
                     <Color x:Key="ITEM_COMMON_BK">#20FFFFFF</Color>
@@ -74,26 +62,6 @@
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_BUFF_BD">#14FFFFFF</Color>
-
-                    <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#2e303f" Offset="0"/>
-                            <GradientStop Color="#2e303f" Offset="0.1"/>
-                            <GradientStop Color="#002e303f" Offset="1.0"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROPLAYED_LISTTOPMASK_BK" StartPoint="0,0" EndPoint="0,1">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#272839" Offset="0"/>
-                            <GradientStop Color="#00272839" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROPLAYED_LISTBTMMASK_BK" StartPoint="0,1" EndPoint="0,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#272839" Offset="0"/>
-                            <GradientStop Color="#00272839" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
 
                     <!--Settings-->
                     <Color x:Key="SETTING_TITLE_BK">#14FFFFFF</Color>
@@ -154,18 +122,6 @@
                             <GradientStop Color="#00404040" Offset="1"/>
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROINFO_LISTLEFTMASK_BK" StartPoint="0,0" EndPoint="1,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F3F4F8" Offset="0"/>
-                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROINFO_LISTRIGHTMASK_BK" StartPoint="1,0" EndPoint="0,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F3F4F8" Offset="0"/>
-                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
 
                     <!--Items-->
                     <Color x:Key="ITEM_COMMON_BK">#66E6E6E6</Color>
@@ -181,26 +137,6 @@
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#16000000</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#20AAAAAA</Color>
                     <Color x:Key="MATCHPLAYER_BUFF_BD">#421510</Color>
-                    
-                    <LinearGradientBrush x:Key="MATCHPLAYER_LISTMASK_BK" StartPoint="0,0" EndPoint="1,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F3F4F8" Offset="0"/>
-                            <GradientStop Color="#F3F4F8" Offset="0.0"/>
-                            <GradientStop Color="#00F3F4F8" Offset="1.0"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROPLAYED_LISTTOPMASK_BK" StartPoint="0,0" EndPoint="0,1">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F3F4F8" Offset="0"/>
-                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush x:Key="HEROPLAYED_LISTBTMMASK_BK" StartPoint="0,1" EndPoint="0,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#F3F4F8" Offset="0"/>
-                            <GradientStop Color="#00F3F4F8" Offset="0.7"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
 
                     <!--Settings-->
                     <Color x:Key="SETTING_TITLE_BK">#0D000000</Color>
