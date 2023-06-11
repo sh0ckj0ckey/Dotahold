@@ -1544,32 +1544,32 @@ namespace Dotahold.ViewModels
         /// 分析当前选择玩家的数据
         /// </summary>
         /// <returns></returns>
-        public async void AnalyzePlayerInfo()
+        public async void AnalyzePlayerInfo(Models.Player player)
         {
             try
             {
-                if (CurrentMatchPlayer != null)
+                if (player != null)
                 {
                     // kda
                     try
                     {
-                        if (string.IsNullOrEmpty(CurrentMatchPlayer.sKDA))
+                        if (string.IsNullOrEmpty(player.sKDA))
                         {
-                            double ka = (CurrentMatchPlayer.kills ?? 0) + (CurrentMatchPlayer.assists ?? 0);
-                            double d = ((CurrentMatchPlayer.deaths ?? 0) <= 0) ? 1.0 : (double)CurrentMatchPlayer.deaths;
+                            double ka = (player.kills ?? 0) + (player.assists ?? 0);
+                            double d = ((player.deaths ?? 0) <= 0) ? 1.0 : (double)player.deaths;
                             double kda = ka / d;
-                            CurrentMatchPlayer.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
+                            player.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
                         }
                     }
                     catch { }
 
-                    // buff 
+                    // buffs
                     try
                     {
-                        if (CurrentMatchPlayer.permanent_buffs != null && CurrentMatchPlayer.permanent_buffs.Count > 0)
+                        if (player.permanent_buffs != null && player.permanent_buffs.Count > 0)
                         {
                             Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
-                            foreach (var buff in CurrentMatchPlayer.permanent_buffs)
+                            foreach (var buff in player.permanent_buffs)
                             {
                                 try
                                 {
@@ -1588,7 +1588,7 @@ namespace Dotahold.ViewModels
                                 }
                                 catch { }
                             }
-                            foreach (var buff in CurrentMatchPlayer.permanent_buffs)
+                            foreach (var buff in player.permanent_buffs)
                             {
                                 try
                                 {
@@ -1599,7 +1599,10 @@ namespace Dotahold.ViewModels
                         }
                         else
                         {
-                            CurrentMatchPlayer.permanent_buffs = null;
+                            if (player.permanent_buffs == null)
+                            {
+                                player.permanent_buffs = new List<Permanent_Buffs>();
+                            }
                         }
                     }
                     catch { }
@@ -1607,12 +1610,12 @@ namespace Dotahold.ViewModels
                     // abilities
                     try
                     {
-                        if (CurrentMatchPlayer.vAbilitiesUpgrade == null || CurrentMatchPlayer.vAbilitiesUpgrade.Count <= 0)
+                        if (player.vAbilitiesUpgrade == null || player.vAbilitiesUpgrade.Count <= 0)
                         {
-                            if (CurrentMatchPlayer.ability_upgrades_arr != null && CurrentMatchPlayer.ability_upgrades_arr.Count > 0)
+                            if (player.ability_upgrades_arr != null && player.ability_upgrades_arr.Count > 0)
                             {
                                 Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
-                                foreach (var ability in CurrentMatchPlayer.ability_upgrades_arr)
+                                foreach (var ability in player.ability_upgrades_arr)
                                 {
                                     try
                                     {
@@ -1628,15 +1631,15 @@ namespace Dotahold.ViewModels
 
                                             abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
 
-                                            if (CurrentMatchPlayer.vAbilitiesUpgrade == null)
-                                                CurrentMatchPlayer.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
+                                            if (player.vAbilitiesUpgrade == null)
+                                                player.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
 
-                                            CurrentMatchPlayer.vAbilitiesUpgrade.Add(abilityUp);
+                                            player.vAbilitiesUpgrade.Add(abilityUp);
                                         }
                                     }
                                     catch { }
                                 }
-                                foreach (var ability in CurrentMatchPlayer.vAbilitiesUpgrade)
+                                foreach (var ability in player.vAbilitiesUpgrade)
                                 {
                                     try
                                     {
@@ -1652,10 +1655,10 @@ namespace Dotahold.ViewModels
                     // benchmarks
                     try
                     {
-                        var benchmarks = CurrentMatchPlayer.benchmarks;
-                        if (benchmarks != null && benchmarks.Count > 0 && (CurrentMatchPlayer.vBenchmarks == null || CurrentMatchPlayer.vBenchmarks.Count <= 0))
+                        var benchmarks = player.benchmarks;
+                        if (benchmarks != null && benchmarks.Count > 0 && (player.vBenchmarks == null || player.vBenchmarks.Count <= 0))
                         {
-                            CurrentMatchPlayer.vBenchmarks = new ObservableCollection<Benchmark>();
+                            player.vBenchmarks = new ObservableCollection<Benchmark>();
                             foreach (var benchmark in benchmarks)
                             {
                                 if (benchmark.Value == null)
@@ -1674,7 +1677,7 @@ namespace Dotahold.ViewModels
                                 if (benchmark.Value.BarWidth < 0) benchmark.Value.BarWidth = 0;
                                 if (benchmark.Value.BarWidth > 120) benchmark.Value.BarWidth = 120;
 
-                                CurrentMatchPlayer.vBenchmarks.Add(benchmark.Value);
+                                player.vBenchmarks.Add(benchmark.Value);
                             }
                         }
                     }
@@ -1683,11 +1686,12 @@ namespace Dotahold.ViewModels
                     // runes
                     try
                     {
-                        if (CurrentMatchPlayer.runes_log != null && CurrentMatchPlayer.runes_log.Count <= 0)
-                            CurrentMatchPlayer.runes_log = null;
+                        if (player.runes_log != null && player.runes_log.Count <= 0)
+                            player.runes_log = null;
                     }
                     catch { }
                 }
+                this.CurrentMatchPlayer = player;
             }
             catch { }
         }

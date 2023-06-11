@@ -134,8 +134,7 @@ namespace Dotahold.Views
             {
                 if (e.ClickedItem is Models.Player player)
                 {
-                    ViewModel.CurrentMatchPlayer = player;
-                    ViewModel.AnalyzePlayerInfo();
+                    ViewModel.AnalyzePlayerInfo(player);
                     this.Frame.Navigate(typeof(MatchPlayerPage), null, SlideNaviTransition);
                 }
             }

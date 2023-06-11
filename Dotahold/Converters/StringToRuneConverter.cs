@@ -19,6 +19,8 @@ namespace Dotahold.Converters
         private BitmapImage BountyRune = null;
         private BitmapImage ArcaneRune = null;
         private BitmapImage WaterRune = null;
+        private BitmapImage WisdomRune = null;
+        private BitmapImage ShieldRune = null;
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -61,12 +63,20 @@ namespace Dotahold.Converters
                             if (WaterRune == null) WaterRune = new BitmapImage(new Uri("ms-appx:///Assets/Icons/Match/Runes/img_rune_7.png"));
                             return WaterRune;
 
+                        case "8":   // 智慧
+                            if (WisdomRune == null) WisdomRune = new BitmapImage(new Uri("ms-appx:///Assets/Icons/Match/Runes/img_rune_8.png"));
+                            return WisdomRune;
+
+                        case "9":   // 护盾
+                            if (ShieldRune == null) ShieldRune = new BitmapImage(new Uri("ms-appx:///Assets/Icons/Match/Runes/img_rune_9.png"));
+                            return ShieldRune;
+
                         default:
                             //var image = await ImageCourier.GetImageAsync(string.Format("ms-appx:///Assets/Icons/Match/Runes/img_rune_{0}.png", rune), "");
                             var image = new BitmapImage();
                             image.DecodePixelType = DecodePixelType.Logical;
                             image.DecodePixelWidth = 32;
-                            image.UriSource = new Uri(string.Format("ms-appx:///Assets/Icons/Match/Runes/img_rune_{0}.png", rune));
+                            image.UriSource = new Uri(string.Format("https://www.opendota.com/assets/images/dota2/runes/{0}.png", rune));
                             return image;
                     }
                 }

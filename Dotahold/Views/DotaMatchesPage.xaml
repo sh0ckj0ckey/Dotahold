@@ -624,12 +624,12 @@
                               ItemsSource="{x:Bind ViewModel.vDotaIdHistory,Mode=OneWay}">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ToolkitUICtrl:WrapPanel/>
+                                <ToolkitUICtrl:WrapPanel HorizontalSpacing="0"/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:DotaIdBindHistoryModel">
-                                <Grid Width="98" Height="112" Margin="0,0,0,0" CornerRadius="4">
+                                <Grid Width="98" Height="112" Margin="-8,0,-8,0" CornerRadius="4">
                                     <Grid.Background>
                                         <SolidColorBrush Color="{ThemeResource APPLICATION_FR}" Opacity="0.05"/>
                                     </Grid.Background>

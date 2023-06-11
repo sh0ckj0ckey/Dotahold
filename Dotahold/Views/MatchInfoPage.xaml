@@ -99,7 +99,7 @@
 
                     <!--数据统计和BP-->
                     <Grid>
-                        <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,4,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
+                        <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,16,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Orientation="Horizontal" Padding="16,0">
                                 <!--Game Mode-->
                                 <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
@@ -178,7 +178,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Picks_Bans">
                                             <Grid Margin="-20,0,0,0" Width="86" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="{x:Bind sHeroName}">
-                                                <Image Source="{x:Bind ImageSource}" Width="86" Height="48"/>
+                                                <Image Source="{x:Bind ImageSource}" Width="86" Height="48" Stretch="UniformToFill"/>
                                                 <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch">
                                                     <Grid.Background>
                                                         <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
@@ -219,7 +219,7 @@
                     </Grid>
 
                     <!--玩家列表标题-->
-                    <Grid Margin="0,12,0,0">
+                    <Grid Margin="0,0,0,0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <FontIcon Glyph="&#xE99A;" Margin="24,0,8,0" FontSize="20"/>
                             <TextBlock Text="Players" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
@@ -507,8 +507,8 @@
                                     </Grid>
 
                                     <!--当前玩家边框-->
-                                    <Grid Grid.ColumnSpan="4" CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"
-                                          BorderThickness="3" BorderBrush="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Background="Transparent"
+                                    <Grid Grid.ColumnSpan="4" CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"
+                                          BorderThickness="1.5" BorderBrush="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Background="Transparent"
                                           Visibility="{x:Bind bIsCurrentPlayer,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
 
                                     <!--开黑标识-->
@@ -531,8 +531,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Button Margin="12,0,12,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
-                                Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickShowHideRadiantAdv">
+                        <Button Margin="16,0,16,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="OnClickShowHideRadiantAdv">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -557,8 +556,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Button Margin="12,0,12,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
-                                Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickShowHidePlayerSeries">
+                        <Button Margin="16,0,16,0" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="OnClickShowHidePlayerSeries">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -574,18 +572,18 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
+                                    <Button Grid.Column="0" Width="48" Height="22" Padding="0" CornerRadius="6,0,0,6" Background="Transparent" BorderThickness="1.5,1.5,0,1.5" BorderBrush="{ThemeResource GOLDTEXT_FR}" Click="OnClickShowGoldSeries"
                                             Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                         <TextBlock Text="GOLD" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource GOLDTEXT_FR}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Button>
-                                    <Button Grid.Column="1" Width="48" Height="22" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
+                                    <Button Grid.Column="1" Width="48" Height="22" Padding="0" CornerRadius="0,6,6,0" Background="Transparent" BorderThickness="0,1.5,1.5,1.5" BorderBrush="MediumOrchid" Click="OnClickShowXPSeries"
                                             Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                         <TextBlock Text="XP" FontSize="12" FontWeight="Medium" Foreground="MediumOrchid" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Button>
-                                    <Border Grid.Column="0" Width="48" Height="22" CornerRadius="6,0,0,6" Background="{ThemeResource GOLDTEXT_FR}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                                    <Border Grid.Column="0" Width="48" Height="22" Padding="0" CornerRadius="6,0,0,6" Background="{ThemeResource GOLDTEXT_FR}" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                                         <TextBlock Text="GOLD" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
-                                    <Border Grid.Column="1" Width="48" Height="22" CornerRadius="0,6,6,0" Background="MediumOrchid" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                    <Border Grid.Column="1" Width="48" Height="22" Padding="0" CornerRadius="0,6,6,0" Background="MediumOrchid" Visibility="{x:Bind ViewModel.bSelectedPlayersSeriesType,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
                                         <TextBlock Text="XP" FontSize="12" FontWeight="Medium" Foreground="{ThemeResource APPLICATION_BK}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </Grid>
@@ -615,8 +613,7 @@
                     </Grid>
 
                     <!--前往网页端查看-->
-                    <Button Margin="12,0,12,16" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="42" CornerRadius="6" 
-                            Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}" BorderThickness="0" Style="{ThemeResource ButtonRevealStyle}" Click="OnClickVisitWebsite">
+                    <Button Margin="16,0,16,16" Height="42" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="OnClickVisitWebsite">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <TextBlock FontWeight="Medium" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Run Text="Visit"/>
@@ -628,7 +625,7 @@
                     </Button>
                 </StackPanel>
             </ScrollViewer>
-            <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
+            <!--<ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>-->
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32">
                 <Grid.Background>
                     <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 

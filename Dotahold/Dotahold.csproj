@@ -331,6 +331,8 @@
     <Content Include="Assets\Icons\Match\Runes\img_rune_5.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_6.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_7.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_8.png" />
+    <Content Include="Assets\Icons\Match\Runes\img_rune_9.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
     <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />
