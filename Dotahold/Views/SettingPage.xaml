@@ -26,6 +26,9 @@
             <converter:EqualToHeroTabBorderBrushConverter x:Key="Eq2BD"/>
             <converter:EqualToVisibilityConverter x:Key="Eq2Vis"/>
             <converter:StringLengthToFontSizeConverter x:Key="Str2FS"/>
+            <converter:BoolToVisibilityConverter x:Key="Bool2Vis"/>
+            <converter:BoolReverseConverter x:Key="BoolReverse"/>
+            <converter:StringToVisibilityConverter x:Key="Str2Vis"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -52,7 +55,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Margin="20,0,8,0" Tapped="Image_Tapped">
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Margin="20,0,8,0" 
+                           DoubleTapped="OnDotaholdImageDoubleTapped">
                         <Image.Source>
                             <BitmapImage UriSource="/Assets/Logos/logo_opendotaplus.png" DecodePixelHeight="120"/>
                         </Image.Source>
@@ -84,8 +88,8 @@
                         <TextBlock Text="Appearance" FontWeight="Medium" CharacterSpacing="40"/>
                         <TextBlock Text="Choose how Dotahold looks to you" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
-                    <ComboBox x:Name="ThemeComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,16,0" MinWidth="128" 
-                              SelectedIndex="{x:Bind MainViewModel.AppSettings.iAppearanceIndex,Mode=TwoWay}" SelectionChanged="ThemeComboBox_SelectionChanged">
+                    <ComboBox x:Name="ThemeComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128" 
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.iAppearanceIndex,Mode=TwoWay}" SelectionChanged="OnAppearanceSelectiongChanged">
                         <ComboBoxItem Content="Dark"/>
                         <ComboBoxItem Content="Light"/>
                     </ComboBox>
@@ -101,8 +105,8 @@
                         <TextBlock Text="Startup Page" FontWeight="Medium" CharacterSpacing="40"/>
                         <TextBlock Text="Choose the launch page for this app" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
-                    <ComboBox x:Name="StartupPageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,16,0" MinWidth="128" 
-                              SelectedIndex="{x:Bind ViewModel.iStartupTabIndex,Mode=OneWay}" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox x:Name="StartupPageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128" 
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.iStartupPageIndex,Mode=TwoWay}">
                         <ComboBoxItem Content="Heroes"/>
                         <ComboBoxItem Content="Items"/>
                         <ComboBoxItem Content="Matches"/>
@@ -131,7 +135,7 @@
                     <muxc:ProgressRing Grid.Column="2" Height="14" Width="14" IsActive="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay}"
                                        Visibility="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
                                        Foreground="{ThemeResource APPLICATION_FR}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    <Button Grid.Column="3" Margin="12,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <Button Grid.Column="3" Margin="12,0,0,0" MinWidth="128" HorizontalAlignment="Right" VerticalAlignment="Center" 
                             IsEnabled="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay,Converter={StaticResource BoolReverse}}" Click="OnClickClearImageCache">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -154,8 +158,8 @@
                         <TextBlock Text="Language" FontWeight="Medium" CharacterSpacing="40"/>
                         <TextBlock Text="Partial pages only" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
-                    <ComboBox x:Name="LanguageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,20,0" MinWidth="128"
-                              SelectedIndex="{x:Bind ViewModel.iLanguageIndex,Mode=OneWay}" SelectionChanged="LanguageComboBox_SelectionChanged">
+                    <ComboBox x:Name="LanguageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.iLanguageIndex,Mode=TwoWay}">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Chinese (partially supported)"/>
                         <ComboBoxItem Content="Russian (partially supported)"/>
@@ -227,13 +231,13 @@
                                 <TextBlock Text="Send Email" VerticalAlignment="Center" FontSize="13" Margin="8,0,0,0" FontWeight="Medium"/>
                             </StackPanel>
                         </Button>
-                        <Button Height="36" Click="Button_Click_2">
+                        <Button Height="36" Click="OnClickGitHubIssue">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Width="24" Height="24" Margin="0,0,0,0"/>
                                 <TextBlock Text="Report issue" VerticalAlignment="Center" FontSize="13" Margin="8,0,2,0" FontWeight="Medium"/>
                             </StackPanel>
                         </Button>
-                        <Button Height="36" Click="Button_Click_1">
+                        <Button Height="36" Click="OnClickSteamProfile">
                             <Image Source="{ThemeResource ABOUT_FEEDBACK_STEAM_IMG}" Width="20" Height="20" Margin="0,0,0,0"/>
                         </Button>
                     </StackPanel>
@@ -271,7 +275,7 @@
                         <TextBlock Text="Source Code" FontWeight="Medium" CharacterSpacing="40"/>
                         <TextBlock Text="Dotahold is open source" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
-                    <Button Grid.Column="2" HorizontalAlignment="Right" Height="36" Click="Button_Click" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/Dotahold">
+                    <Button Grid.Column="2" HorizontalAlignment="Right" Height="36" Click="OnClickGitHub" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/Dotahold">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Image Source="{ThemeResource ABOUT_FEEDBACK_GITHUB_IMG}" Width="24" Height="24" Margin="0,0,0,0"/>
                             <TextBlock Text="GitHub" VerticalAlignment="Center" FontSize="13" Margin="8,0,2,0" FontWeight="Medium"/>
@@ -279,7 +283,7 @@
                     </Button>
                 </Grid>
                 
-                <TextBlock Text="2019 - 2023 sh0ckj0ckey." FontFamily="/Fonts/Radiance.ttf#Radiance" Opacity="0.5" Margin="0,8,0,0"/>
+                <TextBlock Text="2019 - 2023 sh0ckj0ckey." FontFamily="/Fonts/Radiance.ttf#Radiance" Opacity="0.5" Margin="0,8,0,16"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

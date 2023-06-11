@@ -198,11 +198,11 @@ namespace Dotahold.ViewModels
                 this.CurrentHero = selectedHero;
 
                 string language = "english";
-                if (DotaViewModel.Instance.iLanguageIndex == 1)
+                if (DotaViewModel.Instance.AppSettings.iLanguageIndex == 1)
                 {
                     language = "schinese";
                 }
-                else if (DotaViewModel.Instance.iLanguageIndex == 2)
+                else if (DotaViewModel.Instance.AppSettings.iLanguageIndex == 2)
                 {
                     language = "russian";
                 }

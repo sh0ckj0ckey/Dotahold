@@ -42,9 +42,19 @@
         <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
             <ScrollViewer x:Name="MatchInfoScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis}}">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                    <Grid HorizontalAlignment="Stretch" Padding="16,32,24,16">
+                    <Grid HorizontalAlignment="Stretch" Padding="16,38,24,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Row="0" Margin="0,0,8,0" Width="42" Height="48" HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back" RequestedTheme="Dark" Click="OnClickGoBack">
+                            <Button.Content>
+                                <FontIcon Glyph="&#xE652;" FontSize="16"/>
+                            </Button.Content>
+                        </Button>
                         <!--天辉获胜-->
-                        <Grid Height="48" HorizontalAlignment="Left" CornerRadius="6" Background="#4a7954" BorderBrush="#518a5a" BorderThickness="2" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                        <Grid Grid.Column="1" Height="48" HorizontalAlignment="Left" CornerRadius="4" Background="#4a7954" BorderBrush="#518a5a" BorderThickness="1.5" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},Mode=OneWay}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -57,7 +67,7 @@
                             <TextBlock Grid.Column="1" Text="Radiant Victory" Foreground="#dfece0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="0,0,16,0"/>
                         </Grid>
                         <!--夜魇获胜-->
-                        <Grid Height="48" HorizontalAlignment="Left" CornerRadius="6" Background="#9e3c44" BorderBrush="#b74046" BorderThickness="2" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
+                        <Grid Grid.Column="1" Height="48" HorizontalAlignment="Left" CornerRadius="4" Background="#9e3c44" BorderBrush="#b74046" BorderThickness="1.5" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -71,7 +81,7 @@
                         </Grid>
 
                         <!--比赛ID和比分-->
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <!--比赛ID-->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
                                         Visibility="{x:Bind ViewModel.CurrentMatchInfo.match_id,Mode=OneWay,Converter={StaticResource Null2Vis}}">
@@ -92,7 +102,7 @@
                         <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,4,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Orientation="Horizontal" Padding="16,0">
                                 <!--Game Mode-->
-                                <Grid Margin="0,0,12,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                                     <FontIcon Glyph="&#xE7FC;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <TextBlock Text="Game Mode" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
@@ -100,7 +110,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <!--Lobby Type-->
-                                <Grid Margin="0,0,12,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                                     <FontIcon Glyph="&#xE80F;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <TextBlock Text="Lobby Type" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
@@ -108,7 +118,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <!--第一滴血时间-->
-                                <Grid Margin="0,0,12,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
+                                <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
                                       Visibility="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                                     <FontIcon Glyph="&#xEB42;" Margin="4,3" FontSize="18" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -117,7 +127,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <!--比赛时长-->
-                                <Grid Margin="0,0,12,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
+                                <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                                     <FontIcon Glyph="&#xE916;" Margin="4,2" FontSize="19" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <TextBlock Text="Duration" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
@@ -125,7 +135,7 @@
                                     </StackPanel>
                                 </Grid>
                                 <!--评级(N H VH)-->
-                                <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.skill,Mode=OneWay,Converter={StaticResource Null2Vis}}"
+                                <Grid Margin="0,0,8,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.skill,Mode=OneWay,Converter={StaticResource Null2Vis}}"
                                       MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
                                     <FontIcon Glyph="&#xF272;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                     <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -135,11 +145,11 @@
                                 </Grid>
 
                                 <!--分割线-->
-                                <Grid Height="36" Width="1.5" Background="{ThemeResource APPLICATION_FR}" Margin="0,0,12,0" Opacity="0.05"
+                                <Grid Height="36" Width="1.5" Background="{ThemeResource APPLICATION_FR}" Margin="0,0,8,0" Opacity="0.05"
                                       Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
 
                                 <!--BanPick-->
-                                <Grid Margin="0,0,12,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"
+                                <Grid Margin="0,0,8,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"
                                       Width="34" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="Ban Pick">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="4,6">
                                         <FontIcon Glyph="&#xF0AD;" Margin="0" FontSize="18" Opacity="0.3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -167,7 +177,7 @@
                                     </ListView.Template>
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Picks_Bans">
-                                            <Grid Margin="-12,0,0,0" Width="86" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="{x:Bind sHeroName}">
+                                            <Grid Margin="-20,0,0,0" Width="86" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="{x:Bind sHeroName}">
                                                 <Image Source="{x:Bind ImageSource}" Width="86" Height="48"/>
                                                 <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch">
                                                     <Grid.Background>
@@ -243,7 +253,7 @@
                     </Grid>
 
                     <!--玩家列表-->
-                    <ListView Margin="0,8"
+                    <ListView Margin="12,8"
                               ScrollViewer.VerticalScrollMode="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               ScrollViewer.HorizontalScrollMode="Disabled"
@@ -258,7 +268,7 @@
                         </ListView.Template>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:Player">
-                                <Grid Height="78" MinHeight="64" Margin="0,2" CornerRadius="6" HorizontalAlignment="Stretch" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
+                                <Grid Height="78" MinHeight="64" Margin="-12,2,-8,2" CornerRadius="4" HorizontalAlignment="Stretch" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -586,6 +596,9 @@
                                             Margin="16,16,24,8" Height="320" IsEnabled="False"
                                             Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                     </Grid>
+
+
+                    <TextBlock Text="十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例" Foreground="Red" Margin="0,30"/>
 
                     <!--比赛开始时间-->
                     <Grid Padding="12,18,12,24">

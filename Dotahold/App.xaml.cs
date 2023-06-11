@@ -1,4 +1,5 @@
-﻿using Dotahold.Core.Utils;
+﻿using Dotahold.Core.DataShop;
+using Dotahold.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,8 +27,6 @@ namespace Dotahold
     /// </summary>
     sealed partial class App : Application
     {
-        public static ApplicationDataContainer AppSettingContainer = ApplicationData.Current.LocalSettings;
-
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -47,16 +46,12 @@ namespace Dotahold
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-//#if DEBUG
-//            if (System.Diagnostics.Debugger.IsAttached)
-//            {
-//                this.DebugSettings.EnableFrameRateCounter = true;
-//            }
-//#endif
-
-            RegisterExceptionHandlingSynchronizationContext();
-
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                this.DebugSettings.EnableFrameRateCounter = true;
+            }
+#endif
             Frame rootFrame = Window.Current.Content as Frame;
 
             // 不要在窗口已包含内容时重复应用程序初始化，
@@ -65,6 +60,9 @@ namespace Dotahold
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
                 rootFrame = new Frame();
+
+                // 设置一下主题
+                rootFrame.RequestedTheme = SettingsCourier.Instance.iAppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -75,6 +73,8 @@ namespace Dotahold
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
+
+                RegisterExceptionHandlingSynchronizationContext();
             }
 
             if (e.PrelaunchActivated == false)
@@ -108,7 +108,6 @@ namespace Dotahold
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             e.Handled = true;
-            //throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
         /// <summary>
@@ -131,15 +130,12 @@ namespace Dotahold
             Debug.WriteLine("Exception Message: " + e.Message);
             Debug.WriteLine("Instance caused this exception: " + e.Exception.InnerException);
             Debug.WriteLine("\n stack trace: " + e.Exception.StackTrace);
-            //DialogShower.ShowDialog("Exception Message:", "Instance caused this exception: " + e.Exception.InnerException + "\n stack trace: " + e.Exception.StackTrace);
-            //LogHelper.Log("OnUnhandledException::" + e.Exception.InnerException + "\n stack trace: " + e.Exception.StackTrace);
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
         {
             // 后台线程异常
-            //DialogShower.ShowDialog("Async process Exception: ", e.ExceptionObject.ToString());
-            //LogHelper.Log("CurrentDomain_UnhandledException(Async process Exception)::" + e.ExceptionObject.ToString());
+            Debug.WriteLine("CurrentDomain Unhandled Exception:\r\n" + e.ExceptionObject.ToString());
         }
 
         private void RegisterExceptionHandlingSynchronizationContext()

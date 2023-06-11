@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dotahold.Core.Utils
 {
-    public class MD5Utils
+    public static class MD5Utils
     {
         public static string StringMD5(string OriString)
         {

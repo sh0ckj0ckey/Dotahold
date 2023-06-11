@@ -16,6 +16,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Dotahold.ViewModels;
+using Windows.ApplicationModel;
+using Dotahold.Core.Utils;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -26,37 +29,55 @@ namespace Dotahold.Views
     /// </summary>
     public sealed partial class SettingPage : Page
     {
+        private DotaViewModel ViewModel = null;
         private string _appVersion = string.Empty;
         private long _lastTimeCleanCache = 0;
+
         public SettingPage()
         {
+            ViewModel = DotaViewModel.Instance;
             this.InitializeComponent();
+
+            _appVersion = AppVersionUtils.GetAppVersion();
         }
 
-        /// <summary>
-        /// 切换夜间主题
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             try
             {
-                Switch2DarkMode();
+                if (DateTime.Now.Ticks - _lastTimeCleanCache > TimeSpan.FromSeconds(5).Ticks)
+                {
+                    _lastTimeCleanCache = DateTime.Now.Ticks;
+                    DotaViewModel.Instance.GetImageCacheSize();
+                }
             }
             catch { }
         }
 
         /// <summary>
-        /// 切换白天主题
+        /// 双击打开调试选项
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        private void OnDotaholdImageDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             try
             {
-                Switch2LightMode();
+                DotaViewModel.Instance.bShowDevTools = true;
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 打分评价
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnClickGoToStoreRate(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await Launcher.LaunchUriAsync(new Uri($"ms-windows-store:REVIEW?PFN={Package.Current.Id.FamilyName}"));
             }
             catch { }
         }
@@ -66,18 +87,14 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AppearanceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnAppearanceSelectiongChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                int index = 0;// SettingsService.SelectedIndex;
-                if (index == 1)
+                DotaViewModel.Instance.ActChangeTitleBarTheme?.Invoke();
+                if (Window.Current.Content is FrameworkElement rootElement && sender is ComboBox cb)
                 {
-                    Switch2LightMode();
-                }
-                else if (index == 0)
-                {
-                    Switch2DarkMode();
+                    rootElement.RequestedTheme = cb.SelectedIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
                 }
             }
             catch { }
@@ -90,14 +107,10 @@ namespace Dotahold.Views
         {
             try
             {
-                //ViewModel.eAppTheme = ElementTheme.Light;
-
                 var titleBar = ApplicationView.GetForCurrentView().TitleBar;
                 titleBar.ButtonForegroundColor = Colors.Black;
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
-
-                App.AppSettingContainer.Values["Theme"] = "Light";
             }
             catch { }
         }
@@ -109,108 +122,10 @@ namespace Dotahold.Views
         {
             try
             {
-                //ViewModel.eAppTheme = ElementTheme.Dark;
-
                 var titleBar = ApplicationView.GetForCurrentView().TitleBar;
                 titleBar.ButtonForegroundColor = Colors.White;
                 titleBar.ButtonHoverForegroundColor = Colors.White;
                 titleBar.ButtonPressedForegroundColor = Colors.White;
-
-                App.AppSettingContainer.Values["Theme"] = "Dark";
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 访问 GitHub
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold"));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 打分评价
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9NSKQN4V8X94"));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 访问 Steam 个人页面
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 访问 GitHub Issues
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold/issues"));
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 选择启动页面
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                int index = 0;// StartupPageComboBox.SelectedIndex;
-                //if (ViewModel.iStartupTabIndex != index)
-                //{
-                //    App.AppSettingContainer.Values["StartupPage"] = index;
-                //    ViewModel.iStartupTabIndex = index;
-                //}
-            }
-            catch { }
-        }
-
-        /// <summary>
-        /// 选择语言
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                int index = 0;// LanguageComboBox.SelectedIndex;
-                //if (ViewModel.iLanguageIndex != index)
-                //{
-                //    App.AppSettingContainer.Values["Language"] = index;
-                //    ViewModel.iLanguageIndex = index;
-                //}
             }
             catch { }
         }
@@ -224,12 +139,13 @@ namespace Dotahold.Views
         {
             try
             {
-                //ViewModel.ClearImageCache();
+                DotaViewModel.Instance.ClearImageCache();
+                _lastTimeCleanCache = 0;
             }
             catch { }
         }
 
-
+        // 打开配置文件保存目录
         private async void OnClickOpenDataDir(object sender, RoutedEventArgs e)
         {
             try
@@ -240,6 +156,7 @@ namespace Dotahold.Views
             catch { }
         }
 
+        // 打开图片缓存目录
         private async void OnClickOpenImageCacheDir(object sender, RoutedEventArgs e)
         {
             try
@@ -250,6 +167,7 @@ namespace Dotahold.Views
             catch { }
         }
 
+        // 强制下次更新常量数据
         private void OnClickForceUpdateLocalJson(object sender, RoutedEventArgs e)
         {
             try
@@ -259,23 +177,34 @@ namespace Dotahold.Views
             catch { }
         }
 
-        private void Image_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        // 访问 GitHub Issues
+        private async void OnClickGitHubIssue(object sender, RoutedEventArgs e)
         {
             try
             {
-               // ViewModel.bShowDevTools = true;
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold/issues"));
             }
             catch { }
         }
 
-        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        // 访问 GitHub
+        private async void OnClickGitHub(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold"));
+            }
+            catch { }
         }
 
-        private void OnClickGoToStoreRate(object sender, RoutedEventArgs e)
+        // 访问 Steam 个人页面
+        private async void OnClickSteamProfile(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
+            }
+            catch { }
         }
     }
 }

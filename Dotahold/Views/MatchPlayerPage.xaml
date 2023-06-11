@@ -474,18 +474,18 @@
                     <FontIcon Glyph="&#xED5E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Benchmarks" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <ListView HorizontalContentAlignment="Stretch"
-                          SelectionMode="None" IsItemClickEnabled="False" Padding="24,0,24,0"
+                <ListView HorizontalContentAlignment="Stretch" Padding="8,0,8,0"
+                          SelectionMode="None" IsItemClickEnabled="False"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks,Mode=OneWay}"
                           Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
+                            <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="mdl:Benchmark">
-                            <Grid CornerRadius="6" Margin="-24,0,6,8" MinWidth="120" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
+                            <Grid CornerRadius="4" Margin="-10,0,-10,8" MinWidth="120" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -532,7 +532,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="38" Height="38" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Style="{StaticResource ButtonRevealStyle}" Click="Button_Click" ToolTipService.ToolTip="Go Back">
+                    Click="Button_Click" ToolTipService.ToolTip="Go Back">
                 <FontIcon Glyph="&#xE652;" FontSize="16"/>
             </Button>
             <Grid Grid.Column="0" Grid.Row="1" Width="96" Height="54" CornerRadius="6" Margin="0,12,8,0" HorizontalAlignment="Left" VerticalAlignment="Top">

@@ -74,29 +74,23 @@
             </Grid>
         </Grid>
         <!--返回按钮-->
-        <Button Grid.Row="1" Margin="64,0,0,0" Width="42" Height="42" CornerRadius="8"
-                HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back"
-                Click="OnClickGoBack">
+        <Button Grid.Row="1" Margin="64,0,0,0" Width="42" Height="42" HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back" RequestedTheme="Dark" Click="OnClickGoBack">
             <Button.Content>
-                <FontIcon Glyph="&#xE652;" Foreground="White" FontSize="16"/>
+                <FontIcon Glyph="&#xE652;" FontSize="16"/>
             </Button.Content>
         </Button>
         <!--背景故事按钮-->
-        <Button x:Name="HeroHistoryButton" Grid.Row="1" Margin="0,0,96,0" Width="42" Height="42" CornerRadius="8" Opacity="0"
-                HorizontalAlignment="Right" ToolTipService.ToolTip="Read History"
-                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                Click="OnClickHistory">
+        <Button x:Name="HeroHistoryButton" Grid.Row="1" Margin="0,0,96,0" Width="42" Height="42" Opacity="0" HorizontalAlignment="Right" RequestedTheme="Dark" ToolTipService.ToolTip="Read History"
+                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Click="OnClickHistory">
             <Button.Content>
-                <FontIcon Glyph="&#xE736;" Foreground="White" FontSize="16"/>
+                <FontIcon Glyph="&#xE736;" FontSize="16"/>
             </Button.Content>
         </Button>
         <!--英雄榜按钮-->
-        <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" CornerRadius="8" Opacity="0"
-                HorizontalAlignment="Right" ToolTipService.ToolTip="Rankings"
-                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"
-                Click="OnClickPlayerRank">
+        <Button x:Name="HeroRankingButton" Grid.Row="1" Margin="0,0,36,0" Width="42" Height="42" Opacity="0" HorizontalAlignment="Right" RequestedTheme="Dark" ToolTipService.ToolTip="Rankings"
+                Visibility="{x:Bind ViewModel.bLoadingHeroInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}" Click="OnClickPlayerRank">
             <Button.Content>
-                <FontIcon Glyph="&#xE179;" Foreground="White" FontSize="16"/>
+                <FontIcon Glyph="&#xE179;" FontSize="16"/>
             </Button.Content>
         </Button>
         <!--英雄头像和背景介绍-->
@@ -143,7 +137,7 @@
             </Button>
             <muxc:TeachingTip x:Name="HeroTanlentsTeachingTip" Target="{x:Bind HeroTalentsButton}" IsLightDismissEnabled="True" PreferredPlacement="Left">
                 <muxc:TeachingTip.Content>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -515,7 +509,7 @@
                                         </StackPanel>
 
                                         <!--背景描述-->
-                                        <Grid Grid.Row="6" Background="{ThemeResource HEROINFO_ABILITY_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
+                                        <Grid Grid.Row="6" Background="{ThemeResource HEROINFO_LISTITEM_BK}" Margin="14,12,14,0" CornerRadius="4" Visibility="{x:Bind lore_loc,Converter={StaticResource Str2Vis},Mode=OneWay}">
                                             <TextBlock Text="{x:Bind lore_loc,Mode=OneWay}" Opacity="0.4" Margin="12,10" FontSize="13" FontStyle="Italic" CharacterSpacing="20" TextWrapping="WrapWholeWords"/>
                                         </Grid>
 

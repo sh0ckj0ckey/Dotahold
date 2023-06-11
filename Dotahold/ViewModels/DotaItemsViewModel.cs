@@ -182,7 +182,7 @@ namespace Dotahold.ViewModels
                 {
                     bSearchingItems = true;
 
-                    bool searchFuzzy = DotaViewModel.Instance.bSearchFuzzy;
+                    bool searchFuzzy = DotaViewModel.Instance.AppSettings.bItemsSearchFuzzy;
                     if (searchFuzzy)
                     {
                         // 模糊匹配搜索

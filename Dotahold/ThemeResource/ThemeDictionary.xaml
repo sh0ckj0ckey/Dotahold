@@ -88,9 +88,9 @@
                     <BitmapImage x:Key="DOTA2LOGO_IMG" UriSource="ms-appx:///Assets/Icons/icon_dota2logo_light.png" />
 
                     <!--Main-->
-                    <BitmapImage x:Key="SIDEMENU_TABHEROES_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_dark.png" />
-                    <BitmapImage x:Key="SIDEMENU_TABITEMS_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_dark.png" />
-                    <BitmapImage x:Key="SIDEMENU_TABMATCHES_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_dark.png" />
+                    <BitmapImage x:Key="SIDEMENU_TABHEROES_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_hero_light.png" />
+                    <BitmapImage x:Key="SIDEMENU_TABITEMS_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_item_light.png" />
+                    <BitmapImage x:Key="SIDEMENU_TABMATCHES_IMG" UriSource="ms-appx:///Assets/Icons/Tab/tabicon_match_light.png" />
                     <BitmapImage x:Key="BLANKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Logos/logo_black.png" />
                     <BitmapImage x:Key="NONETWORKPLACEHOLDER_IMG" UriSource="ms-appx:///Assets/Icons/icon_nonetwork_light.png" />
 

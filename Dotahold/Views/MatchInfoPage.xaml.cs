@@ -46,6 +46,23 @@ namespace Dotahold.Views
         }
 
         /// <summary>
+        /// 返回
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnClickGoBack(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(this.Frame.CanGoBack)
+                {
+                    this.Frame.GoBack();
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 重写导航至此页面的代码,显示动画
         /// </summary>
         /// <param name="e"></param>
@@ -152,5 +169,6 @@ namespace Dotahold.Views
             }
             catch { }
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dotahold.Core.DataShop;
+using Dotahold.ViewModels;
 using Dotahold.Views;
 using System;
 using System.Collections.Generic;
@@ -36,33 +37,44 @@ namespace Dotahold
             try
             {
                 this.InitializeComponent();
-                ViewModel = ViewModels.DotaViewModel.Instance;
 
-                SetTitleBar();
+                ViewModel = DotaViewModel.Instance;
 
-                if (ViewModel.iStartupTabIndex == 1)
+                this.Loaded += (s, e) =>
                 {
-                    MainFrame.Navigate(typeof(DotaItemsPage));
-                    ViewModel.iSideMenuTabIndex = 1;
-                }
-                else if (ViewModel.iStartupTabIndex == 2)
-                {
-                    MainFrame.Navigate(typeof(DotaMatchesPage));
-                    ViewModel.iSideMenuTabIndex = 2;
-                }
-                else
-                {
-                    MainFrame.Navigate(typeof(DotaHeroesPage));
-                    ViewModel.iSideMenuTabIndex = 0;
-                }
+                    try
+                    {
+                        SetTitleBarArea();
+                        SetTitleBarTheme();
+
+                        DotaViewModel.Instance.ActChangeTitleBarTheme = SetTitleBarTheme;
+
+                        var index = DotaViewModel.Instance.AppSettings.iStartupPageIndex;
+                        if (index == 1)
+                        {
+                            MainFrame.Navigate(typeof(DotaItemsPage));
+                            ViewModel.iSideMenuTabIndex = 1;
+                        }
+                        else if (index == 2)
+                        {
+                            MainFrame.Navigate(typeof(DotaMatchesPage));
+                            ViewModel.iSideMenuTabIndex = 2;
+                        }
+                        else
+                        {
+                            MainFrame.Navigate(typeof(DotaHeroesPage));
+                            ViewModel.iSideMenuTabIndex = 0;
+                        }
+                    }
+                    catch { }
+                };
             }
             catch { }
         }
 
-        /// <summary>
-        /// 设置标题栏样式
-        /// </summary>
-        private void SetTitleBar()
+        #region 处理标题栏样式
+
+        private void SetTitleBarArea()
         {
             try
             {
@@ -75,21 +87,37 @@ namespace Dotahold
                 titleBar.ButtonHoverBackgroundColor = new Color() { A = 33, R = 0, G = 0, B = 0 };
                 titleBar.ButtonPressedBackgroundColor = new Color() { A = 55, R = 0, G = 0, B = 0 };
 
-                if (ViewModel.eAppTheme == ElementTheme.Light)
-                {
-                    titleBar.ButtonForegroundColor = Colors.Black;
-                    titleBar.ButtonHoverForegroundColor = Colors.Black;
-                    titleBar.ButtonPressedForegroundColor = Colors.Black;
-                }
-                else
+            }
+            catch { }
+        }
+
+        private void SetTitleBarTheme()
+        {
+            try
+            {
+                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+                if (DotaViewModel.Instance.AppSettings.iAppearanceIndex == 0)
                 {
                     titleBar.ButtonForegroundColor = Colors.White;
                     titleBar.ButtonHoverForegroundColor = Colors.White;
                     titleBar.ButtonPressedForegroundColor = Colors.White;
+                    titleBar.ButtonHoverBackgroundColor = new Color() { A = 16, R = 255, G = 255, B = 255 };
+                    titleBar.ButtonPressedBackgroundColor = new Color() { A = 24, R = 255, G = 255, B = 255 };
+                }
+                else if (DotaViewModel.Instance.AppSettings.iAppearanceIndex == 1)
+                {
+                    titleBar.ButtonForegroundColor = Colors.Black;
+                    titleBar.ButtonHoverForegroundColor = Colors.Black;
+                    titleBar.ButtonPressedForegroundColor = Colors.Black;
+                    titleBar.ButtonHoverBackgroundColor = new Color() { A = 8, R = 0, G = 0, B = 0 };
+                    titleBar.ButtonPressedBackgroundColor = new Color() { A = 16, R = 0, G = 0, B = 0 };
                 }
             }
             catch { }
         }
+
+        #endregion
 
         /// <summary>
         /// 点击选择侧边栏
@@ -144,7 +172,6 @@ namespace Dotahold
                 {
                     MainFrame.Navigate(typeof(SettingPage));
                     ViewModel.iSideMenuTabIndex = 3;
-                    ViewModel.GetImageCacheSize();
                 }
             }
             catch { }

@@ -407,14 +407,14 @@ namespace Dotahold.ViewModels
                 vOneHeroMatches.Clear();
                 CurrentHeroForPlayedMatches = null;
 
-                sSteamId = GetSteamID();
+                sSteamId = DotaViewModel.Instance.AppSettings.sSteamID;
 
                 bLoadingHeroesAndItems = true;
                 bool triedLoadHeroes = await DotaHeroesViewModel.Instance.LoadDotaHeroes();
                 bool triedLoadItems = await DotaItemsViewModel.Instance.LoadDotaItems();
 
                 // 先等获取完英雄和物品列表
-                if (!string.IsNullOrEmpty(sSteamId))
+                if (!string.IsNullOrWhiteSpace(sSteamId))
                 {
                     if (triedLoadHeroes && triedLoadItems)
                     {
@@ -461,27 +461,10 @@ namespace Dotahold.ViewModels
                     decimal id64 = Convert.ToDecimal(steamId);
                     steamId = (id64 - 76561197960265728).ToString();
                 }
-                App.AppSettingContainer.Values["SteamID"] = steamId;
+                DotaViewModel.Instance.AppSettings.sSteamID = steamId;
                 sSteamId = steamId;
             }
             catch { }
-        }
-
-        /// <summary>
-        /// 读取保存的用户的SteamID
-        /// </summary>
-        /// <returns></returns>
-        public string GetSteamID()
-        {
-            try
-            {
-                if (App.AppSettingContainer?.Values["SteamID"] != null)
-                {
-                    return App.AppSettingContainer?.Values["SteamID"].ToString();
-                }
-            }
-            catch { }
-            return string.Empty;
         }
 
         /// <summary>

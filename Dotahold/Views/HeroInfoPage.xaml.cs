@@ -146,7 +146,7 @@ namespace Dotahold.Views
                 dialog.IsPrimaryButtonEnabled = false;
                 dialog.IsSecondaryButtonEnabled = false;
                 dialog.Content = new UI.HeroHistoryDialogContent();
-                dialog.RequestedTheme = MainViewModel.eAppTheme;
+                dialog.RequestedTheme = MainViewModel.AppSettings.iAppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
 
                 await dialog.ShowAsync();
             }
@@ -173,7 +173,7 @@ namespace Dotahold.Views
                 dialog.IsPrimaryButtonEnabled = false;
                 dialog.IsSecondaryButtonEnabled = false;
                 dialog.Content = new UI.HeroPlayerRankDialogContent();
-                dialog.RequestedTheme = MainViewModel.eAppTheme;
+                dialog.RequestedTheme = MainViewModel.AppSettings.iAppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
 
                 ViewModel.FetchHeroRanking(ViewModel.CurrentHero.id);
 

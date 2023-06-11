@@ -17,6 +17,7 @@ namespace Dotahold.Core.DataShop
         private const string SETTING_NAME_STARTUPINDEX = "StartupPage";
         private const string SETTING_NAME_LANGUAGEINDEX = "Language";
         private const string SETTING_NAME_SEARCHMODE = "ItemsSearchFuzzy";
+        private const string SETTING_NAME_STEAMID = "SteamID";
 
         private static Lazy<SettingsCourier> _lazyVM = new Lazy<SettingsCourier>(() => new SettingsCourier());
         public static SettingsCourier Instance => _lazyVM.Value;
@@ -31,7 +32,6 @@ namespace Dotahold.Core.DataShop
         {
             get
             {
-                // 读取设置的应用程序主题
                 try
                 {
                     if (_iAppearanceIndex < 0)
@@ -151,46 +151,44 @@ namespace Dotahold.Core.DataShop
             }
         }
 
-
-        //// 是否开启关注主播开播提醒
-        //private bool? _bSubscribeOnlineNotice = null;
-        //public bool bSubscribeOnlineNotice
-        //{
-        //    get
-        //    {
-        //        // 读取是否开启订阅开播通知
-        //        try
-        //        {
-        //            if (_bSubscribeOnlineNotice == null)
-        //            {
-        //                if (_localSettings.Values[SETTING_NAME_SUBSCRIBENOTICE] == null)
-        //                {
-        //                    _bSubscribeOnlineNotice = false;
-        //                }
-        //                else if (_localSettings.Values[SETTING_NAME_SUBSCRIBENOTICE].ToString() == "True")
-        //                {
-        //                    _bSubscribeOnlineNotice = true;
-        //                }
-        //                else if (_localSettings.Values[SETTING_NAME_SUBSCRIBENOTICE].ToString() == "False")
-        //                {
-        //                    _bSubscribeOnlineNotice = false;
-        //                }
-        //                else
-        //                {
-        //                    _bSubscribeOnlineNotice = false;
-        //                }
-        //            }
-        //        }
-        //        catch { }
-        //        if (_bSubscribeOnlineNotice == null) _bSubscribeOnlineNotice = false;
-        //        return _bSubscribeOnlineNotice ?? false;
-        //    }
-        //    set
-        //    {
-        //        Set("bSubscribeOnlineNotice", ref _bSubscribeOnlineNotice, value);
-        //        ApplicationData.Current.LocalSettings.Values[SETTING_NAME_SUBSCRIBENOTICE] = _bSubscribeOnlineNotice;
-        //    }
-        //}
+        // 物品页是否开启模糊搜索
+        private bool? _bItemsSearchFuzzy = null;
+        public bool bItemsSearchFuzzy
+        {
+            get
+            {
+                try
+                {
+                    if (_bItemsSearchFuzzy == null)
+                    {
+                        if (_localSettings.Values[SETTING_NAME_SEARCHMODE] == null)
+                        {
+                            _bItemsSearchFuzzy = false;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_SEARCHMODE].ToString() == "True")
+                        {
+                            _bItemsSearchFuzzy = true;
+                        }
+                        else if (_localSettings.Values[SETTING_NAME_SEARCHMODE].ToString() == "False")
+                        {
+                            _bItemsSearchFuzzy = false;
+                        }
+                        else
+                        {
+                            _bItemsSearchFuzzy = false;
+                        }
+                    }
+                }
+                catch { }
+                if (_bItemsSearchFuzzy == null) _bItemsSearchFuzzy = false;
+                return _bItemsSearchFuzzy ?? false;
+            }
+            set
+            {
+                Set("bItemsSearchFuzzy", ref _bItemsSearchFuzzy, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_SEARCHMODE] = _bItemsSearchFuzzy;
+            }
+        }
 
         //// 直播间亮度(0.0~100.0)
         //private double _dBrightness = -1;
@@ -228,37 +226,36 @@ namespace Dotahold.Core.DataShop
         //    }
         //}
 
-        //// 记住密码的账号
-        //private string _sRememberAccount = null;
-        //public string sRememberAccount
-        //{
-        //    get
-        //    {
-        //        // 读取记住密码的账号
-        //        try
-        //        {
-        //            if (_sRememberAccount == null)
-        //            {
-        //                if (_localSettings.Values[SETTING_NAME_REMEMBERACCOUNT] == null)
-        //                {
-        //                    _sRememberAccount = "";
-        //                }
-        //                else
-        //                {
-        //                    string rememberAcc = _localSettings.Values[SETTING_NAME_REMEMBERACCOUNT].ToString();
-        //                    _sRememberAccount = rememberAcc;
-        //                }
-        //            }
-        //        }
-        //        catch { }
-        //        if (_sRememberAccount == null) _sRememberAccount = "";
-        //        return _sRememberAccount == null ? "" : _sRememberAccount;
-        //    }
-        //    set
-        //    {
-        //        Set("sRememberAccount", ref _sRememberAccount, value);
-        //        ApplicationData.Current.LocalSettings.Values[SETTING_NAME_REMEMBERACCOUNT] = _sRememberAccount;
-        //    }
-        //}
+        // SteamID
+        private string _sSteamID = null;
+        public string sSteamID
+        {
+            get
+            {
+                try
+                {
+                    if (_sSteamID == null)
+                    {
+                        if (_localSettings.Values[SETTING_NAME_STEAMID] == null)
+                        {
+                            _sSteamID = "";
+                        }
+                        else
+                        {
+                            string steamId = _localSettings.Values[SETTING_NAME_STEAMID].ToString();
+                            _sSteamID = steamId;
+                        }
+                    }
+                }
+                catch { }
+                if (_sSteamID == null) _sSteamID = "";
+                return _sSteamID == null ? "" : _sSteamID;
+            }
+            set
+            {
+                Set("sSteamID", ref _sSteamID, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_STEAMID] = _sSteamID;
+            }
+        }
     }
 }

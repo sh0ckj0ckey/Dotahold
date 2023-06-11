@@ -116,13 +116,11 @@ namespace Dotahold.Views
                 {
                     if (tag == "fuzzy")
                     {
-                        MainViewModel.bSearchFuzzy = true;
-                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "True";
+                        MainViewModel.AppSettings.bItemsSearchFuzzy = true;
                     }
                     else if (tag == "fullword")
                     {
-                        MainViewModel.bSearchFuzzy = false;
-                        App.AppSettingContainer.Values["ItemsSearchFuzzy"] = "False";
+                        MainViewModel.AppSettings.bItemsSearchFuzzy = false;
                     }
                 }
             }

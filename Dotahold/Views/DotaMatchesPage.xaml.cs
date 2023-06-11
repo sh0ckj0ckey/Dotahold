@@ -67,7 +67,7 @@ namespace Dotahold.Views
                     navigationTransition.DefaultNavigationTransitionInfo = transition;
                 }
 
-                if (string.IsNullOrEmpty(DotaMatchesViewModel.Instance.sSteamId))
+                if (string.IsNullOrWhiteSpace(DotaMatchesViewModel.Instance.sSteamId))
                 {
                     BindAccount();
                 }
