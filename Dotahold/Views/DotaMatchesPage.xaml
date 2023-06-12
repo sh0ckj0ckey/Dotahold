@@ -9,7 +9,8 @@
     xmlns:models="using:Dotahold.Models"
     xmlns:converter="using:Dotahold.Converters"
     xmlns:ToolkitUICtrl="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:ui="using:Dotahold.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="using:Dotahold.UI" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required" d:RequestedTheme="Dark">
 
     <Page.Transitions>
@@ -85,7 +86,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="MatchGrid" Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource SPLITLINE_BK}">
-            <Frame x:Name="MatchFrame"/>
+            <Frame x:Name="MatchFrame" ui:UIElementExtensions.ClipToBounds="True"/>
         </Grid>
 
         <Grid x:Name="PlayerProfileGrid" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

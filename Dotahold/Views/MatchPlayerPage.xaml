@@ -34,6 +34,7 @@
             <cvt:DoubleToPingIconConverter x:Key="Double2Icon"/>
             <cvt:StringToRuneConverter x:Key="Str2Rune"/>
             <cvt:DoubleToBenchmarkColorConverter x:Key="Benchmark2Color"/>
+            <cvt:BuffStringLengthToFontSizeConverter x:Key="BuffStr2FontSize"/>
 
             <!--覆盖系统的笔刷，去掉GridView的Reveal边框效果-->
             <SolidColorBrush x:Key="SystemControlTransparentRevealBackgroundBrush" Color="Transparent" />
@@ -330,7 +331,7 @@
                         <DataTemplate x:DataType="mdl:Permanent_Buffs">
                             <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
                                 <Image Source="{x:Bind BuffImageSource,Mode=OneWay}" Height="36" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Text="{x:Bind stack_count}" FontSize="18" Margin="1,-1,-1,1" Foreground="#E9FFFFFF" FontWeight="Medium" Visibility="{x:Bind stack_count,Converter={StaticResource Int2Vis}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ui:OutlinedTextBlock Text="{x:Bind stack_count}" Margin="-4,0" FontSize="{x:Bind stack_count,Mode=OneWay,Converter={StaticResource BuffStr2FontSize}}" Foreground="#FFFFFF" OutlineColor="Black" OutlineThickness="2" FontWeight="Medium" Visibility="{x:Bind stack_count,Converter={StaticResource Int2Vis}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>

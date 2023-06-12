@@ -17,7 +17,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>5A0BF8439709A49B4461A62D501B413C3C6D9293</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>09B331EDD3FD9068599231058812CDB6A47586D9</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Converters\BoolReverseConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BuffStringLengthToFontSizeConverter.cs" />
     <Compile Include="Converters\DoubleToBenchmarkColorConverter.cs" />
     <Compile Include="Converters\DoubleToPingColorConverter.cs" />
     <Compile Include="Converters\DoubleToPingIconConverter.cs" />
@@ -178,9 +179,11 @@
     <Compile Include="UI\HeroPlayerRankDialogContent.xaml.cs">
       <DependentUpon>HeroPlayerRankDialogContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\OutlinedTextBlock.cs" />
     <Compile Include="UI\SomethingWrongControl.xaml.cs">
       <DependentUpon>SomethingWrongControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\UIElementExtensions.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />

@@ -1566,7 +1566,9 @@ namespace Dotahold.ViewModels
                     // buffs
                     try
                     {
-                        if (player.permanent_buffs != null && player.permanent_buffs.Count > 0)
+                        if (player.permanent_buffs == null) player.permanent_buffs = new List<Permanent_Buffs>();
+
+                        if (player.permanent_buffs.Count > 0)
                         {
                             Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
                             foreach (var buff in player.permanent_buffs)
@@ -1597,23 +1599,19 @@ namespace Dotahold.ViewModels
                                 catch { }
                             }
                         }
-                        else
-                        {
-                            if (player.permanent_buffs == null)
-                            {
-                                player.permanent_buffs = new List<Permanent_Buffs>();
-                            }
-                        }
                     }
                     catch { }
 
                     // abilities
                     try
                     {
-                        if (player.vAbilitiesUpgrade == null || player.vAbilitiesUpgrade.Count <= 0)
+                        if (player.vAbilitiesUpgrade == null) player.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
+
+                        if (player.vAbilitiesUpgrade.Count <= 0)
                         {
                             if (player.ability_upgrades_arr != null && player.ability_upgrades_arr.Count > 0)
                             {
+                                player.vAbilitiesUpgrade.Clear();
                                 Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
                                 foreach (var ability in player.ability_upgrades_arr)
                                 {
@@ -1630,9 +1628,6 @@ namespace Dotahold.ViewModels
                                                 abilityUp.sAbilityUrl = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", abiName);
 
                                             abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
-
-                                            if (player.vAbilitiesUpgrade == null)
-                                                player.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
 
                                             player.vAbilitiesUpgrade.Add(abilityUp);
                                         }
@@ -1655,10 +1650,12 @@ namespace Dotahold.ViewModels
                     // benchmarks
                     try
                     {
+                        if (player.vBenchmarks == null) player.vBenchmarks = new ObservableCollection<Benchmark>();
+
                         var benchmarks = player.benchmarks;
-                        if (benchmarks != null && benchmarks.Count > 0 && (player.vBenchmarks == null || player.vBenchmarks.Count <= 0))
+                        if (benchmarks != null && benchmarks.Count > 0 && player.vBenchmarks.Count <= 0)
                         {
-                            player.vBenchmarks = new ObservableCollection<Benchmark>();
+                            player.vBenchmarks.Clear();
                             foreach (var benchmark in benchmarks)
                             {
                                 if (benchmark.Value == null)
@@ -1686,8 +1683,7 @@ namespace Dotahold.ViewModels
                     // runes
                     try
                     {
-                        if (player.runes_log != null && player.runes_log.Count <= 0)
-                            player.runes_log = null;
+                        if (player.runes_log == null) player.runes_log = new List<Runes_Log>();
                     }
                     catch { }
                 }
