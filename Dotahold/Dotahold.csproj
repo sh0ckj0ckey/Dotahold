@@ -186,7 +186,9 @@
     <Compile Include="UI\UIElementExtensions.cs" />
     <Compile Include="ViewModels\DotaHeroesViewModel.cs" />
     <Compile Include="ViewModels\DotaItemsViewModel.cs" />
+    <Compile Include="ViewModels\DotaMatchesViewModel_MatchInfo.cs" />
     <Compile Include="ViewModels\DotaMatchesViewModel.cs" />
+    <Compile Include="ViewModels\DotaMatchesViewModel_SteamId.cs" />
     <Compile Include="ViewModels\DotaViewModel.cs" />
     <Compile Include="Views\HeroInfoPage.xaml.cs">
       <DependentUpon>HeroInfoPage.xaml</DependentUpon>
