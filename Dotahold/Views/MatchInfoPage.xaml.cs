@@ -168,5 +168,10 @@ namespace Dotahold.Views
             }
             catch { }
         }
+
+        private void OnPerformancesRadioSelected(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
