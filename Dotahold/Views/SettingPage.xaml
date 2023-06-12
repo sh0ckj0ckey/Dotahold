@@ -64,7 +64,7 @@
                     <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,-4">
                             <TextBlock Text="Dotahold" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40"/>
-                            <TextBlock Text="4.4.0" FontFamily="Consolas" FontSize="14" VerticalAlignment="Bottom" Margin="0,-4,0,4" Opacity="0.5"/>
+                            <TextBlock Text="{x:Bind _appVersion,Mode=OneWay}" FontFamily="Consolas" FontSize="14" VerticalAlignment="Bottom" Margin="0,-4,0,4" Opacity="0.5"/>
                         </StackPanel>
                         <TextBlock Text="Powered by OpenDota" Opacity="0.7" FontFamily="/Fonts/Radiance.ttf#Radiance"/>
                     </StackPanel>
@@ -260,7 +260,7 @@
                         <HyperlinkButton NavigateUri="http://www.dota2.com/" Content="www.dota2.com" HorizontalAlignment="Center"/>
                         <Image Width="24" Source="/Assets/Icons/About/icon_opendota.png" Margin="16,0,0,0"/>
                         <HyperlinkButton NavigateUri="https://www.opendota.com/" Content="www.opendota.com" HorizontalAlignment="Center"/>
-                        <Image Width="32" Source="/Assets/Icons/About/icon_dotapedia.png" Margin="16,0,0,0"/>
+                        <Image Width="32" Source="/Assets/Icons/About/icon_dotapedia.png" Margin="12,0,0,0"/>
                         <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>

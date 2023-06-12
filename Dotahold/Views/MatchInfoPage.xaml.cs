@@ -168,6 +168,5 @@ namespace Dotahold.Views
             }
             catch { }
         }
-
     }
 }

@@ -10,8 +10,9 @@
     xmlns:cvt="using:Dotahold.Converters"
     xmlns:ui="using:Dotahold.UI" 
     xmlns:models="using:Dotahold.Models" 
-    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Uno"
-    mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent">
+    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Uno" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent" d:RequestedTheme="Dark">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -525,6 +526,24 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8A4;" Margin="24,0,8,0" FontSize="20"/>
+                        <TextBlock Text="Performances" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
+                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Spacing="8">
+                            <muxc:ProgressBar Foreground="Red" Maximum="100" Value="70" FlowDirection="RightToLeft"/>
+                            <muxc:ProgressBar Foreground="Orange" Maximum="100" Value="55" FlowDirection="RightToLeft"/>
+                            <muxc:ProgressBar Foreground="CadetBlue" Maximum="100" Value="30" FlowDirection="RightToLeft"/>
+                            <muxc:ProgressBar Foreground="ForestGreen" Maximum="100" Value="20" FlowDirection="RightToLeft"/>
+                            <muxc:ProgressBar Foreground="Firebrick" Maximum="100" Value="10" FlowDirection="RightToLeft"/>
+                        </StackPanel>
+                    </Grid>
+
                     <!--天辉优势图-->
                     <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                         <Grid.RowDefinitions>
@@ -594,9 +613,6 @@
                                             Margin="16,16,24,8" Height="320" IsEnabled="False"
                                             Visibility="{x:Bind ViewModel.bShowPlayerSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                     </Grid>
-
-
-                    <TextBlock Text="十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例十个英雄的输出、经济比例" Foreground="Red" Margin="0,30"/>
 
                     <!--比赛开始时间-->
                     <Grid Padding="12,18,12,24">
