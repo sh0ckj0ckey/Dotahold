@@ -54,7 +54,7 @@ namespace Dotahold.Views
         {
             try
             {
-                if(this.Frame.CanGoBack)
+                if (this.Frame.CanGoBack)
                 {
                     this.Frame.GoBack();
                 }
@@ -78,29 +78,18 @@ namespace Dotahold.Views
         }
 
         /// <summary>
-        /// 切换到玩家经济走势图
+        /// 离开当前页面时关闭图表
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnClickShowGoldSeries(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             try
             {
-                ViewModel.SwitchPlayersGoldOrXPSeries(true, ViewModel.CurrentMatchInfo);
-            }
-            catch { }
-        }
+                base.OnNavigatedFrom(e);
 
-        /// <summary>
-        /// 切换到玩家经验走势图
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickShowXPSeries(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ViewModel.SwitchPlayersGoldOrXPSeries(false, ViewModel.CurrentMatchInfo);
+                RadiantAdvToggleButton.IsChecked = false;
+                PlayersGoldToggleButton.IsChecked = false;
+                PlayersExpToggleButton.IsChecked = false;
             }
             catch { }
         }
@@ -146,32 +135,19 @@ namespace Dotahold.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnClickShowHideRadiantAdv(object sender, RoutedEventArgs e)
+        private void OnRadiantAdvToggleChecked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                ViewModel.bShowRadiantAdv = !ViewModel.bShowRadiantAdv;
-            }
-            catch { }
+            ViewModel.LoadRadiantAdvSeries();
         }
 
-        /// <summary>
-        /// 点击显示或折叠天辉优势图
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickShowHidePlayerSeries(object sender, RoutedEventArgs e)
+        private void OnPlayersGoldToggleChecked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                ViewModel.bShowPlayerSeries = !ViewModel.bShowPlayerSeries;
-            }
-            catch { }
+            ViewModel.LoadPlayersGoldSeries();
         }
 
-        private void OnPerformancesRadioSelected(object sender, SelectionChangedEventArgs e)
+        private void OnPlayersExpToggleChecked(object sender, RoutedEventArgs e)
         {
-
+            ViewModel.LoadPlayersXpSeries();
         }
     }
 }

@@ -54,10 +54,8 @@ namespace Dotahold.ViewModels
                 bLoadingOneMatchInfo = true;
 
                 bHaveRadiantAdv = false;
-                bHavePlayersSeries = false;
-                bSelectedPlayersSeriesType = true;
-                bShowRadiantAdv = false;
-                bShowPlayerSeries = false;
+                bHavePlayersGoldSeries = false;
+                bHavePlayersXpSeries = false;
 
                 string url = string.Format("https://api.opendota.com/api/matches/{0}", matchId);    //e.g.3792271763
                 DotaMatchInfoModel matchInfo = null;
@@ -474,13 +472,6 @@ namespace Dotahold.ViewModels
                                 }
                                 catch { }
 
-                                // 玩家的经济经验走势
-                                try
-                                {
-                                    bHavePlayersSeries = SwitchPlayersGoldOrXPSeries(true, matchInfo);
-                                }
-                                catch { }
-
                                 // 处理表现对比
                                 if (player.isRadiant != false)
                                 {
@@ -493,7 +484,6 @@ namespace Dotahold.ViewModels
                             }
                             catch { }
                         }
-
                         foreach (var player in matchInfo.players)
                         {
                             try
@@ -569,42 +559,6 @@ namespace Dotahold.ViewModels
                     }
                     catch { }
 
-                    // 天辉优势图
-                    try
-                    {
-                        if (matchInfo?.radiant_gold_adv != null && matchInfo?.radiant_xp_adv != null)
-                        {
-                            if (RadiantAdvantageSeries[0].Values is ObservableCollection<double> v1 && v1 != null)
-                            {
-                                v1.Clear();
-                                foreach (var item in matchInfo.radiant_gold_adv)
-                                {
-                                    v1.Add(item);
-                                }
-                            }
-                            else
-                            {
-                                RadiantAdvantageSeries[0].Values = new ObservableCollection<double>(matchInfo.radiant_gold_adv);
-                            }
-
-                            if (RadiantAdvantageSeries[1].Values is ObservableCollection<double> v2 && v2 != null)
-                            {
-                                v2.Clear();
-                                foreach (var item in matchInfo.radiant_xp_adv)
-                                {
-                                    v2.Add(item);
-                                }
-                            }
-                            else
-                            {
-                                RadiantAdvantageSeries[1].Values = new ObservableCollection<double>(matchInfo.radiant_xp_adv);
-                            }
-
-                            bHaveRadiantAdv = true;
-                        }
-                    }
-                    catch { }
-
                     // 双方职业战队
                     try
                     {
@@ -630,57 +584,6 @@ namespace Dotahold.ViewModels
             }
             catch { }
             finally { bLoadingOneMatchInfo = false; }
-        }
-
-        /// <summary>
-        /// 加载玩家的经济或者经验走势
-        /// </summary>
-        /// <param name="isGold"></param>
-        /// <returns></returns>
-        public bool SwitchPlayersGoldOrXPSeries(bool isGold, DotaMatchInfoModel matchInfo)
-        {
-            try
-            {
-                bSelectedPlayersSeriesType = isGold;
-
-                bool havePlayersSeries = false;
-                for (int i = 0; i < matchInfo.players.Count && i < PlayersGoldOrXPSeries.Length; i++)
-                {
-                    var player = matchInfo.players[i];
-                    if (player == null) continue;
-
-                    List<double> list = isGold ? player.gold_t : player.xp_t;
-
-                    if (PlayersGoldOrXPSeries[i].Values is ObservableCollection<double> v && v != null)
-                    {
-                        v.Clear();
-                        if (list != null && list.Count > 0)
-                        {
-                            foreach (var item in list)
-                            {
-                                v.Add(item);
-                            }
-                            havePlayersSeries = true;
-                        }
-                    }
-                    else
-                    {
-                        if (list != null && list.Count > 0)
-                        {
-                            PlayersGoldOrXPSeries[i].Values = new ObservableCollection<double>(list);
-                            havePlayersSeries = true;
-                        }
-                        else
-                        {
-                            PlayersGoldOrXPSeries[i].Values = new ObservableCollection<double>();
-                        }
-                    }
-                    PlayersGoldOrXPSeries[i].Name = player.sHeroName;
-                }
-                return havePlayersSeries;
-            }
-            catch { }
-            return false;
         }
 
         /// <summary>
@@ -865,8 +768,8 @@ namespace Dotahold.ViewModels
             set { Set("RadiantAdvantageSeries", ref _RadiantAdvantageSeries, value); }
         }
 
-        // 玩家经济/经验走势
-        private LiveChartsCore.ISeries[] _PlayersGoldOrXPSeries = new LiveChartsCore.ISeries[]
+        // 玩家经济走势
+        private LiveChartsCore.ISeries[] _PlayersGoldSeries = new LiveChartsCore.ISeries[]
         {
             new LineSeries<double>
             {
@@ -949,10 +852,100 @@ namespace Dotahold.ViewModels
                 Name = "Player10"
             },
         };
-        public LiveChartsCore.ISeries[] PlayersGoldOrXPSeries
+        public LiveChartsCore.ISeries[] PlayersGoldSeries
         {
-            get { return _PlayersGoldOrXPSeries; }
-            set { Set("PlayersGoldOrXPSeries", ref _PlayersGoldOrXPSeries, value); }
+            get { return _PlayersGoldSeries; }
+            set { Set("PlayersGoldSeries", ref _PlayersGoldSeries, value); }
+        }
+
+        // 玩家经验走势
+        private LiveChartsCore.ISeries[] _PlayersXpSeries = new LiveChartsCore.ISeries[]
+        {
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(51,117,255,255), 2),
+                Name = "Player1"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(102,255,191,255), 2),
+                Name = "Player2"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(191,0,191,255), 2),
+                Name = "Player3"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(243,240,11,255), 2),
+                Name = "Player4"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(255,107,0,255), 2),
+                Name = "Player5"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(254,134,194,255), 2),
+                Name = "Player6"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(161,180,71,255), 2),
+                Name = "Player7"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(101,217,247,255), 2),
+                Name = "Player8"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(0,131,33,255), 2),
+                Name = "Player9"
+            },
+            new LineSeries<double>
+            {
+                Values = new ObservableCollection<double>(),
+                Fill = null,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(164,105,0,255), 2),
+                Name = "Player10"
+            },
+        };
+        public LiveChartsCore.ISeries[] PlayersXpSeries
+        {
+            get { return _PlayersXpSeries; }
+            set { Set("PlayersXpSeries", ref _PlayersXpSeries, value); }
         }
 
         public Axis[] XAxes { get; set; } =
@@ -1049,35 +1042,199 @@ namespace Dotahold.ViewModels
             set { Set("bHaveRadiantAdv", ref _bHaveRadiantAdv, value); }
         }
 
-        // 是否有玩家走势
-        private bool _bHavePlayersSeries = false;
-        public bool bHavePlayersSeries
+        // 是否有玩家Gold走势
+        private bool _bHavePlayersGoldSeries = false;
+        public bool bHavePlayersGoldSeries
         {
-            get { return _bHavePlayersSeries; }
-            set { Set("bHavePlayersSeries", ref _bHavePlayersSeries, value); }
+            get { return _bHavePlayersGoldSeries; }
+            set { Set("bHavePlayersGoldSeries", ref _bHavePlayersGoldSeries, value); }
         }
 
-        // 当前查看的玩家走势类型（true-经济/false-经验）
-        private bool _bSelectedPlayersSeriesType = true;
-        public bool bSelectedPlayersSeriesType
+        // 是否有玩家Xp走势
+        private bool _bHavePlayersXpSeries = false;
+        public bool bHavePlayersXpSeries
         {
-            get { return _bSelectedPlayersSeriesType; }
-            set { Set("bSelectedPlayersSeriesType", ref _bSelectedPlayersSeriesType, value); }
+            get { return _bHavePlayersXpSeries; }
+            set { Set("bHavePlayersXpSeries", ref _bHavePlayersXpSeries, value); }
         }
 
-        // 是否显示天辉优势走势图
-        private bool _bShowRadiantAdv = false;
-        public bool bShowRadiantAdv
+        /// <summary>
+        /// 生成天辉优势图
+        /// </summary>
+        public void LoadRadiantAdvSeries()
         {
-            get { return _bShowRadiantAdv; }
-            set { Set("bShowRadiantAdv", ref _bShowRadiantAdv, value); }
+            try
+            {
+                if (this.CurrentMatchInfo?.radiant_gold_adv != null && this.CurrentMatchInfo?.radiant_xp_adv != null)
+                {
+                    if (RadiantAdvantageSeries[0].Values is ObservableCollection<double> v1 && v1 != null)
+                    {
+                        v1.Clear();
+                        foreach (var item in this.CurrentMatchInfo.radiant_gold_adv)
+                        {
+                            v1.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        RadiantAdvantageSeries[0].Values = new ObservableCollection<double>(this.CurrentMatchInfo.radiant_gold_adv);
+                    }
+
+                    if (RadiantAdvantageSeries[1].Values is ObservableCollection<double> v2 && v2 != null)
+                    {
+                        v2.Clear();
+                        foreach (var item in this.CurrentMatchInfo.radiant_xp_adv)
+                        {
+                            v2.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        RadiantAdvantageSeries[1].Values = new ObservableCollection<double>(this.CurrentMatchInfo.radiant_xp_adv);
+                    }
+
+                    bHaveRadiantAdv = true;
+                }
+                else
+                {
+                    if (RadiantAdvantageSeries[0].Values is ObservableCollection<double> v1)
+                    {
+                        v1?.Clear();
+                    }
+
+                    if (RadiantAdvantageSeries[1].Values is ObservableCollection<double> v2)
+                    {
+                        v2?.Clear();
+                    }
+
+                    bHaveRadiantAdv = false;
+                }
+            }
+            catch { }
         }
-        // 是否显示玩家走势图
-        private bool _bShowPlayerSeries = false;
-        public bool bShowPlayerSeries
+
+        /// <summary>
+        /// 生成玩家经济走势图
+        /// </summary>
+        public void LoadPlayersGoldSeries()
         {
-            get { return _bShowPlayerSeries; }
-            set { Set("bShowPlayerSeries", ref _bShowPlayerSeries, value); }
+            try
+            {
+                if (this.CurrentMatchInfo?.players != null && this.CurrentMatchInfo?.players.Count > 0)
+                {
+                    bool havePlayersSeries = false;
+                    for (int i = 0; i < this.CurrentMatchInfo.players.Count && i < PlayersGoldSeries.Length; i++)
+                    {
+                        var player = this.CurrentMatchInfo.players[i];
+                        if (player == null) continue;
+
+                        List<double> list = player.gold_t;
+
+                        if (PlayersGoldSeries[i].Values is ObservableCollection<double> v && v != null)
+                        {
+                            v.Clear();
+                            if (list != null && list.Count > 0)
+                            {
+                                foreach (var item in list)
+                                {
+                                    v.Add(item);
+                                }
+                                havePlayersSeries = true;
+                            }
+                        }
+                        else
+                        {
+                            if (list != null && list.Count > 0)
+                            {
+                                PlayersGoldSeries[i].Values = new ObservableCollection<double>(list);
+                                havePlayersSeries = true;
+                            }
+                            else
+                            {
+                                PlayersGoldSeries[i].Values = new ObservableCollection<double>();
+                            }
+                        }
+                        PlayersGoldSeries[i].Name = player.sHeroName;
+                    }
+
+                    bHavePlayersGoldSeries = havePlayersSeries;
+                }
+                else
+                {
+                    bHavePlayersGoldSeries = false;
+
+                    foreach (var item in PlayersGoldSeries)
+                    {
+                        if (item.Values is ObservableCollection<double> v)
+                        {
+                            v?.Clear();
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// 生成玩家经验走势图
+        /// </summary>
+        public void LoadPlayersXpSeries()
+        {
+            try
+            {
+                if (this.CurrentMatchInfo?.players != null && this.CurrentMatchInfo?.players.Count > 0)
+                {
+                    bool havePlayersSeries = false;
+                    for (int i = 0; i < this.CurrentMatchInfo.players.Count && i < PlayersXpSeries.Length; i++)
+                    {
+                        var player = this.CurrentMatchInfo.players[i];
+                        if (player == null) continue;
+
+                        List<double> list = player.xp_t;
+
+                        if (PlayersXpSeries[i].Values is ObservableCollection<double> v && v != null)
+                        {
+                            v.Clear();
+                            if (list != null && list.Count > 0)
+                            {
+                                foreach (var item in list)
+                                {
+                                    v.Add(item);
+                                }
+                                havePlayersSeries = true;
+                            }
+                        }
+                        else
+                        {
+                            if (list != null && list.Count > 0)
+                            {
+                                PlayersXpSeries[i].Values = new ObservableCollection<double>(list);
+                                havePlayersSeries = true;
+                            }
+                            else
+                            {
+                                PlayersXpSeries[i].Values = new ObservableCollection<double>();
+                            }
+                        }
+                        PlayersXpSeries[i].Name = player.sHeroName;
+                    }
+
+                    bHavePlayersXpSeries = havePlayersSeries;
+                }
+                else
+                {
+                    bHavePlayersXpSeries = false;
+
+                    foreach (var item in PlayersXpSeries)
+                    {
+                        if (item.Values is ObservableCollection<double> v)
+                        {
+                            v?.Clear();
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         #endregion

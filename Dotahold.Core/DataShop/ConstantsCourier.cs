@@ -125,7 +125,7 @@ namespace Dotahold.Core.DataShop
                         }
                         else
                         {
-                            await GetConstant("heroes", _heroesJsonFileName);
+                            _ = await GetConstant("heroes", _heroesJsonFileName);
                         }
                     }
                     catch { }
@@ -186,7 +186,7 @@ namespace Dotahold.Core.DataShop
                         }
                         else
                         {
-                            await GetConstant("items", _itemsJsonFileName);
+                            _ = await GetConstant("items", _itemsJsonFileName);
                         }
                     }
                     catch { }
@@ -247,7 +247,7 @@ namespace Dotahold.Core.DataShop
                         }
                         else
                         {
-                            await GetConstant("permanent_buffs", _buffsJsonFileName);
+                            _ = await GetConstant("permanent_buffs", _buffsJsonFileName);
                         }
                     }
                     catch { }
@@ -308,7 +308,7 @@ namespace Dotahold.Core.DataShop
                         }
                         else
                         {
-                            await GetConstant("ability_ids", _abilitiesJsonFileName);
+                            _ = await GetConstant("ability_ids", _abilitiesJsonFileName);
                         }
                     }
                     catch { }
