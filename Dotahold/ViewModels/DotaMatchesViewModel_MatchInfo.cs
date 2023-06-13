@@ -34,6 +34,9 @@ namespace Dotahold.ViewModels
             set { Set("CurrentMatchPlayer", ref _CurrentMatchPlayer, value); }
         }
 
+        // 当前比赛的占比数据对比
+        public ObservableCollection<DotaMatchPerformCompareModel> CurrentMatchPerformCompare { get; set; } = new ObservableCollection<DotaMatchPerformCompareModel>();
+
         // 请求过的比赛缓存起来
         private Dictionary<long, DotaMatchInfoModel> _matchesInfoCache = new Dictionary<long, DotaMatchInfoModel>();
 
@@ -324,6 +327,9 @@ namespace Dotahold.ViewModels
                         Dictionary<long, int> playersPartyDict = new Dictionary<long, int>();
                         int partyId = 0;
 
+                        List<Player> leftPlayers = new List<Player>();
+                        List<Player> rightPlayers = new List<Player>();
+
                         for (int i = 0; i < matchInfo.players.Count; i++)
                         {
                             try
@@ -474,6 +480,16 @@ namespace Dotahold.ViewModels
                                     bHavePlayersSeries = SwitchPlayersGoldOrXPSeries(true, matchInfo);
                                 }
                                 catch { }
+
+                                // 处理表现对比
+                                if (player.isRadiant != false)
+                                {
+                                    leftPlayers.Add(player);
+                                }
+                                else
+                                {
+                                    rightPlayers.Add(player);
+                                }
                             }
                             catch { }
                         }
@@ -491,6 +507,65 @@ namespace Dotahold.ViewModels
                             }
                             catch { }
                         }
+
+                        // 玩家表现对比
+                        try
+                        {
+                            CurrentMatchPerformCompare.Clear();
+
+                            int count = Math.Max(leftPlayers.Count, rightPlayers.Count);
+
+                            // 双方阵营伤害和击杀总和
+                            double leftTotalDamage = 0;
+                            double rightTotalDamage = 0;
+                            double leftTotalTeamfight = 0;
+                            double rightTotalTeamfight = 0;
+                            if (leftPlayers != null)
+                            {
+                                foreach (var item in leftPlayers)
+                                {
+                                    leftTotalDamage += item.hero_damage ?? 0;
+                                    leftTotalTeamfight += item.kills ?? 0;
+                                }
+                            }
+                            if (rightPlayers != null)
+                            {
+                                foreach (var item in rightPlayers)
+                                {
+                                    rightTotalDamage += item.hero_damage ?? 0;
+                                    rightTotalTeamfight += item.kills ?? 0;
+                                }
+                            }
+
+                            for (int i = 0; i < count; i++)
+                            {
+                                Player leftPlayer = leftPlayers.Count > i ? leftPlayers[i] : null;
+                                Player rightPlayer = rightPlayers.Count > i ? rightPlayers[i] : null;
+                                DotaMatchPerformCompareModel compare = new DotaMatchPerformCompareModel();
+                                if (leftPlayer != null)
+                                {
+                                    compare.LeftDamageValue = leftTotalDamage > 0 ? ((leftPlayer.hero_damage ?? 0) / leftTotalDamage) : 0;
+                                    compare.LeftTeamfightValue = leftTotalTeamfight > 0 ? (((leftPlayer.kills ?? 0) + (leftPlayer.assists ?? 0)) / leftTotalTeamfight) : 0;
+                                    compare.LeftPlayerSlot = leftPlayer.player_slot;
+                                    compare.LeftImageSource = leftPlayer.ImageSource;
+
+                                    compare.LeftDamageValue = (Math.Floor(1000 * compare.LeftDamageValue) / 10);
+                                    compare.LeftTeamfightValue = (Math.Floor(1000 * compare.LeftTeamfightValue) / 10);
+                                }
+                                if (rightPlayer != null)
+                                {
+                                    compare.RightDamageValue = rightTotalDamage > 0 ? ((rightPlayer.hero_damage ?? 0) / rightTotalDamage) : 0;
+                                    compare.RightTeamfightValue = rightTotalTeamfight > 0 ? (((rightPlayer.kills ?? 0) + (rightPlayer.assists ?? 0)) / rightTotalTeamfight) : 0;
+                                    compare.RightPlayerSlot = rightPlayer.player_slot;
+                                    compare.RightImageSource = rightPlayer.ImageSource;
+
+                                    compare.RightDamageValue = Math.Floor(1000 * compare.RightDamageValue) / 10;
+                                    compare.RightTeamfightValue = Math.Floor(1000 * compare.RightTeamfightValue) / 10;
+                                }
+                                CurrentMatchPerformCompare.Add(compare);
+                            }
+                        }
+                        catch { }
                     }
                     catch { }
 

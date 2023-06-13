@@ -36,7 +36,7 @@
         <ScrollViewer Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}" HorizontalAlignment="Stretch">
             <StackPanel Visibility="{x:Bind ViewModel.vAllMatches.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
                 <ListView SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.vAllMatches,Mode=OneWay}" ItemClick="OnClickMatch"
-                          ItemContainerStyle="{StaticResource CornerListViewItemStyle}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <ListView.Template>
                         <ControlTemplate>
                             <ItemsPresenter />
@@ -103,8 +103,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Margin="0,24,0,28" Height="38" Padding="18,0" BorderThickness="0" CornerRadius="20" Background="{ThemeResource MATCHESLIST_LOADMOREBTN_BK}"
-                        Style="{ThemeResource ButtonRevealStyle}" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                <Button Margin="0,24,0,28" Height="38" Padding="18,0" CornerRadius="16" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                         Visibility="{x:Bind ViewModel.bLoadedAllMatches,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}"
                         Click="OnClickLoadMoreMatches">
                     <StackPanel Background="Transparent" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

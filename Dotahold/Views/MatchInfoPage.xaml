@@ -49,7 +49,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Row="0" Margin="0,0,8,0" Width="42" Height="48" HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back" RequestedTheme="Dark" Click="OnClickGoBack">
+                        <Button Grid.Row="0" Margin="0,0,8,0" Width="42" Height="48" HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back" Click="OnClickGoBack">
                             <Button.Content>
                                 <FontIcon Glyph="&#xE652;" FontSize="16"/>
                             </Button.Content>
@@ -526,22 +526,112 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
+                    <!--数据对比-->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <FontIcon Glyph="&#xE8A4;" Margin="24,0,8,0" FontSize="20"/>
                         <TextBlock Text="Performances" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                     </StackPanel>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Spacing="8">
-                            <muxc:ProgressBar Foreground="Red" Maximum="100" Value="70" FlowDirection="RightToLeft"/>
-                            <muxc:ProgressBar Foreground="Orange" Maximum="100" Value="55" FlowDirection="RightToLeft"/>
-                            <muxc:ProgressBar Foreground="CadetBlue" Maximum="100" Value="30" FlowDirection="RightToLeft"/>
-                            <muxc:ProgressBar Foreground="ForestGreen" Maximum="100" Value="20" FlowDirection="RightToLeft"/>
-                            <muxc:ProgressBar Foreground="Firebrick" Maximum="100" Value="10" FlowDirection="RightToLeft"/>
-                        </StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="DamagePerfCompareGrid" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="4" Height="32" Margin="16,0" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
+                                <TextBlock Text="Damage Ratio" FontWeight="Medium" Opacity="0.7" CharacterSpacing="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <muxc:ItemsRepeater Grid.Row="1" Margin="16,8" ItemsSource="{x:Bind ViewModel.CurrentMatchPerformCompare,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:DotaMatchPerformCompareModel">
+                                    <Grid Margin="8,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="42"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="42"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontWeight="Medium" FontSize="12" Opacity="0.7" CharacterSpacing="60" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind LeftDamageValue,Mode=OneWay}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                        <muxc:ProgressBar Grid.Column="1" Foreground="{x:Bind LeftPlayerSlot,Mode=OneWay,Converter={StaticResource Slot2Color}}" Background="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Maximum="100" Value="{x:Bind LeftDamageValue,Mode=OneWay}" FlowDirection="RightToLeft" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="2" Height="32" Width="32" CornerRadius="16" Margin="8,0,2,0" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind LeftImageSource,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border Grid.Column="3" Height="32" Width="32" CornerRadius="16" Margin="2,0,8,0" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind RightImageSource,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <muxc:ProgressBar Grid.Column="4" Foreground="{x:Bind RightPlayerSlot,Mode=OneWay,Converter={StaticResource Slot2Color}}" Background="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Maximum="100" Value="{x:Bind RightDamageValue,Mode=OneWay}" FlowDirection="LeftToRight" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" FontWeight="Medium" FontSize="12" Opacity="0.7" CharacterSpacing="60" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind RightDamageValue,Mode=OneWay}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+                        </Grid>
+                        <Grid x:Name="TeamfightPerfCompareGrid" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="4" Height="32" Margin="16,0" Background="{ThemeResource MATCHPLAYER_LISTITEM_BK}">
+                                <TextBlock Text="Teamfight Ratio" FontWeight="Medium" Opacity="0.7" CharacterSpacing="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <muxc:ItemsRepeater Grid.Row="1" Margin="16,8" ItemsSource="{x:Bind ViewModel.CurrentMatchPerformCompare,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:DotaMatchPerformCompareModel">
+                                    <Grid Margin="8,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="42"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="42"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontWeight="Medium" FontSize="12" Opacity="0.7" CharacterSpacing="60" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind LeftTeamfightValue,Mode=OneWay}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                        <muxc:ProgressBar Grid.Column="1" Foreground="{x:Bind LeftPlayerSlot,Mode=OneWay,Converter={StaticResource Slot2Color}}" Background="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Maximum="100" Value="{x:Bind LeftTeamfightValue,Mode=OneWay}" FlowDirection="RightToLeft" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="2" Height="32" Width="32" CornerRadius="16" Margin="8,0,2,0" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind LeftImageSource,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border Grid.Column="3" Height="32" Width="32" CornerRadius="16" Margin="2,0,8,0" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind RightImageSource,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <muxc:ProgressBar Grid.Column="4" Foreground="{x:Bind RightPlayerSlot,Mode=OneWay,Converter={StaticResource Slot2Color}}" Background="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Maximum="100" Value="{x:Bind RightTeamfightValue,Mode=OneWay}" FlowDirection="LeftToRight" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" FontWeight="Medium" FontSize="12" Opacity="0.7" CharacterSpacing="60" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind RightTeamfightValue,Mode=OneWay}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+                        </Grid>
                     </Grid>
 
                     <!--天辉优势图-->
@@ -641,7 +731,7 @@
                     </Button>
                 </StackPanel>
             </ScrollViewer>
-            <!--<ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>-->
+            <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="32">
                 <Grid.Background>
                     <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="{ThemeResource APPLICATION_BK}" 
@@ -659,5 +749,42 @@
             <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}"/>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <!--大尺寸界面，左右分布-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="980"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.RowSpan)" Value="2"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.Column)" Value="1"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.RowSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <!--小尺寸界面，上下分布-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="DamagePerfCompareGrid.(Grid.RowSpan)" Value="1"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.Row)" Value="1"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="TeamfightPerfCompareGrid.(Grid.RowSpan)" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

@@ -532,7 +532,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="38" Height="38" CornerRadius="6" HorizontalAlignment="Left" VerticalAlignment="Top"
+            <Button Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="38" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Click="Button_Click" ToolTipService.ToolTip="Go Back">
                 <FontIcon Glyph="&#xE652;" FontSize="16"/>
             </Button>
