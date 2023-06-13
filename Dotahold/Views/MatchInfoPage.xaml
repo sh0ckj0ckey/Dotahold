@@ -531,7 +531,7 @@
                         <FontIcon Glyph="&#xE8A4;" Margin="24,0,8,0" FontSize="20"/>
                         <TextBlock Text="Performances" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                     </StackPanel>
-                    <Grid HorizontalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -683,7 +683,7 @@
                                             Margin="16,16,24,8" Height="320" CornerRadius="8"
                                             Visibility="{x:Bind PlayersGoldToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                     </Grid>
-                    
+
                     <!--玩家经验数据走势图-->
                     <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHavePlayersXpSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
                         <Grid.RowDefinitions>
@@ -753,6 +753,10 @@
             </Grid.Background>
             <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}"/>
+        </Grid>
+
+        <Grid Background="Red" Grid.Row="1">
+            <TextBlock Text="加载数据时判断下是否有走势图，现在没判断，始终不显示了" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
