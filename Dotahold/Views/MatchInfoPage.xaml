@@ -755,7 +755,7 @@
                 <!--大尺寸界面，左右分布-->
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="980"/>
+                        <AdaptiveTrigger MinWindowWidth="1200"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="DamagePerfCompareGrid.(Grid.Column)" Value="0"/>
