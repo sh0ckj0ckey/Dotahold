@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Dotahold.Models"
     xmlns:converter="using:Dotahold.Converters" 
-    xmlns:ui="using:Dotahold.UI"
+    xmlns:ui="using:Dotahold.UI" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d" NavigationCacheMode="Required"
     Background="Transparent">
     <Page.Resources>
@@ -96,7 +97,7 @@
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
-            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
+            <muxc:ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingPlayed,Mode=OneWay}"/>
         </Grid>
     </Grid>

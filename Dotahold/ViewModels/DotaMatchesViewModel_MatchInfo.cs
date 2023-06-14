@@ -732,6 +732,43 @@ namespace Dotahold.ViewModels
                         if (player.runes_log == null) player.runes_log = new List<Runes_Log>();
                     }
                     catch { }
+
+                    // purchase log
+                    try
+                    {
+                        if (player.vPurchaseLog == null) player.vPurchaseLog = new ObservableCollection<Purchase_Log>();
+
+                        var purchaseLog = player.purchase_log;
+                        if (purchaseLog != null && purchaseLog.Count > 0 && player.vPurchaseLog.Count <= 0)
+                        {
+                            player.vPurchaseLog.Clear();
+                            foreach (var purchase in purchaseLog)
+                            {
+                                if (purchase == null)
+                                    continue;
+
+                                int time = 0;
+                                if (purchase.time != null && purchase.time > 0) time = purchase.time ?? 0;
+                                purchase.PurchaseTime = (time / 60) + ":" + (time % 60).ToString("00");
+
+                                purchase.ItemCharges = purchase.charges == null ? string.Empty : purchase.charges?.ToString();
+
+                                string itemUrl = GetItemImgByName(purchase.key);
+                                purchase.key = itemUrl;
+
+                                player.vPurchaseLog.Add(purchase);
+                            }
+                            foreach (var purchase in player.vPurchaseLog)
+                            {
+                                try
+                                {
+                                    purchase?.LoadImageAsync(44);
+                                }
+                                catch { }
+                            }
+                        }
+                    }
+                    catch { }
                 }
                 this.CurrentMatchPlayer = player;
             }

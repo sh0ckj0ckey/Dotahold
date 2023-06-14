@@ -140,6 +140,16 @@ namespace Dotahold.Models
         public int? purchase_tpscroll { get; set; } = null;
         public Dictionary<string, Benchmark> benchmarks { get; set; }
 
+        // 物品购买记录
+        [Newtonsoft.Json.JsonIgnore]
+        private ObservableCollection<Purchase_Log> _vPurchaseLog = null;
+        [Newtonsoft.Json.JsonIgnore]
+        public ObservableCollection<Purchase_Log> vPurchaseLog
+        {
+            get { return _vPurchaseLog; }
+            set { Set("vPurchaseLog", ref _vPurchaseLog, value); }
+        }
+
         // 数据排行
         [Newtonsoft.Json.JsonIgnore]
         private ObservableCollection<Benchmark> _vBenchmarks = null;
@@ -756,11 +766,43 @@ namespace Dotahold.Models
         }
     }
 
-    public class Purchase_Log
+    public class Purchase_Log : ViewModelBase
     {
         public int? time { get; set; }
         public string key { get; set; }
         public int? charges { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string PurchaseTime { get; set; }
+
+        [Newtonsoft.Json.JsonIgnore]
+        public string ItemCharges { get; set; } = string.Empty;
+
+        [Newtonsoft.Json.JsonIgnore]
+        private BitmapImage _ItemImageSource = null;
+        [Newtonsoft.Json.JsonIgnore]
+        public BitmapImage ItemImageSource
+        {
+            get { return _ItemImageSource; }
+            private set { Set("ItemImageSource", ref _ItemImageSource, value); }
+        }
+
+        public async Task LoadImageAsync(int decodeWidth)
+        {
+            try
+            {
+                if (this.ItemImageSource != null || string.IsNullOrWhiteSpace(this.key) || !Uri.IsWellFormedUriString(this.key, UriKind.Absolute)) return;
+
+                var imageSource = await ImageCourier.GetImageAsync(this.key);
+                if (imageSource != null)
+                {
+                    this.ItemImageSource = imageSource;
+                    this.ItemImageSource.DecodePixelType = DecodePixelType.Logical;
+                    this.ItemImageSource.DecodePixelWidth = decodeWidth;
+                }
+            }
+            catch { }
+        }
     }
 
     public class Runes_Log

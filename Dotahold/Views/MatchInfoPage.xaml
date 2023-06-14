@@ -635,7 +635,7 @@
                     </Grid>
 
                     <!--天辉优势图-->
-                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                    <Grid Margin="0,12,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -653,14 +653,27 @@
                                 <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE011;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind RadiantAdvToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                             </Grid>
                         </ToggleButton>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
-                                            XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" Sections="{Binding RadiantAdvSections}"
-                                            DrawMarginFrame="{Binding Frame}" Margin="16,16,24,8" Height="320" CornerRadius="8"
-                                            Visibility="{x:Bind RadiantAdvToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                        <Grid Grid.Row="1" Visibility="{x:Bind RadiantAdvToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                            <lvc:CartesianChart DataContext="{x:Bind ViewModel}" Series="{Binding RadiantAdvantageSeries,Mode=OneWay}" 
+                                                XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" Sections="{Binding RadiantAdvSections}"
+                                                DrawMarginFrame="{Binding Frame}" Margin="16,16,24,8" Height="320" CornerRadius="8" 
+                                                Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                            <StackPanel Margin="0,16,0,12" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE928;" Opacity="0.7" FontSize="24" VerticalAlignment="Center"/>
+                                <StackPanel Margin="12,0,0,0" Orientation="Vertical">
+                                    <TextBlock Text="The replay for this match has not yet been parsed." Opacity="0.8" FontSize="15" FontWeight="Medium"/>
+                                    <HyperlinkButton Padding="0" Click="OnClickVisitWebsite">
+                                        <HyperlinkButton.Content>
+                                            <TextBlock Text="Parse this match on OpenDota"/>
+                                        </HyperlinkButton.Content>
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
 
                     <!--玩家经济数据走势图-->
-                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHavePlayersGoldSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                    <Grid Margin="0,12,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -678,14 +691,27 @@
                                 <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE011;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind PlayersGoldToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                             </Grid>
                         </ToggleButton>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding PlayersGoldSeries,Mode=OneWay}"
-                                            YAxes="{Binding YAxes}" Sections="{Binding PlayersGoldXPSections}" DrawMarginFrame="{Binding Frame}"
-                                            Margin="16,16,24,8" Height="320" CornerRadius="8"
-                                            Visibility="{x:Bind PlayersGoldToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                        <Grid Grid.Row="1" Visibility="{x:Bind PlayersGoldToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                            <lvc:CartesianChart DataContext="{x:Bind ViewModel}" Series="{Binding PlayersGoldSeries,Mode=OneWay}"
+                                                YAxes="{Binding YAxes}" Sections="{Binding PlayersGoldXPSections}" DrawMarginFrame="{Binding Frame}"
+                                                Margin="16,16,24,8" Height="320" CornerRadius="8"
+                                                Visibility="{x:Bind ViewModel.bHavePlayersGoldSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                            <StackPanel Margin="0,16,0,12" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE928;" Opacity="0.7" FontSize="24" VerticalAlignment="Center"/>
+                                <StackPanel Margin="12,0,0,0" Orientation="Vertical">
+                                    <TextBlock Text="The replay for this match has not yet been parsed." Opacity="0.8" FontSize="15" FontWeight="Medium"/>
+                                    <HyperlinkButton Padding="0" Click="OnClickVisitWebsite">
+                                        <HyperlinkButton.Content>
+                                            <TextBlock Text="Parse this match on OpenDota"/>
+                                        </HyperlinkButton.Content>
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
 
                     <!--玩家经验数据走势图-->
-                    <Grid Margin="0,12,0,0" Visibility="{x:Bind ViewModel.bHavePlayersXpSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                    <Grid Margin="0,12,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -703,10 +729,23 @@
                                 <FontIcon Grid.Column="2" Margin="2,0,12,0" Glyph="&#xE011;" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{x:Bind PlayersExpToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
                             </Grid>
                         </ToggleButton>
-                        <lvc:CartesianChart Grid.Row="1" DataContext="{x:Bind ViewModel}" Series="{Binding PlayersXpSeries,Mode=OneWay}"
-                                            YAxes="{Binding YAxes}" Sections="{Binding PlayersGoldXPSections}" DrawMarginFrame="{Binding Frame}"
-                                            Margin="16,16,24,8" Height="320" CornerRadius="8"
-                                            Visibility="{x:Bind PlayersExpToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                        <Grid Grid.Row="1" Visibility="{x:Bind PlayersExpToggleButton.IsChecked,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                            <lvc:CartesianChart DataContext="{x:Bind ViewModel}" Series="{Binding PlayersXpSeries,Mode=OneWay}"
+                                                YAxes="{Binding YAxes}" Sections="{Binding PlayersGoldXPSections}" DrawMarginFrame="{Binding Frame}"
+                                                Margin="16,16,24,8" Height="320" CornerRadius="8" 
+                                                Visibility="{x:Bind ViewModel.bHavePlayersXpSeries,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+                            <StackPanel Margin="0,16,0,12" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Visibility="{x:Bind ViewModel.bHaveRadiantAdv,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE928;" Opacity="0.7" FontSize="24" VerticalAlignment="Center"/>
+                                <StackPanel Margin="12,0,0,0" Orientation="Vertical">
+                                    <TextBlock Text="The replay for this match has not yet been parsed." Opacity="0.8" FontSize="15" FontWeight="Medium"/>
+                                    <HyperlinkButton Padding="0" Click="OnClickVisitWebsite">
+                                        <HyperlinkButton.Content>
+                                            <TextBlock Text="Parse this match on OpenDota"/>
+                                        </HyperlinkButton.Content>
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
 
                     <!--比赛开始时间-->
@@ -751,12 +790,8 @@
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource APPLICATION_BK}" TintColor="Transparent" />
             </Grid.Background>
-            <ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
+            <muxc:ProgressRing Height="28" Width="28" Foreground="{ThemeResource APPLICATION_FR}"
                           IsActive="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay}"/>
-        </Grid>
-
-        <Grid Background="Red" Grid.Row="1">
-            <TextBlock Text="加载数据时判断下是否有走势图，现在没判断，始终不显示了" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

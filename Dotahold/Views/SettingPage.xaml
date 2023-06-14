@@ -167,7 +167,7 @@
                 </Grid>
 
                 <TextBlock Text="Debug" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0" Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
-                <Grid Margin="0,4,0,0" CornerRadius="8,8,8,8" Padding="20,12,20,12" Background="{ThemeResource SETTING_CONTENT_BK}" Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                <Grid Margin="0,4,0,0" CornerRadius="8,8,8,8" Padding="20,12,0,12" Background="{ThemeResource SETTING_CONTENT_BK}" Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>

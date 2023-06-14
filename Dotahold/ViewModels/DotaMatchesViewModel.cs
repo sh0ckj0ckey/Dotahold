@@ -554,6 +554,27 @@ namespace Dotahold.ViewModels
             return string.Empty;
         }
 
+        /// <summary>
+        /// 从物品字典中查找物品，返回其图片地址
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string GetItemImgByName(string name)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    if (DotaItemsViewModel.Instance.dictNameToAllItems?.ContainsKey(name) == true)
+                    {
+                        return DotaItemsViewModel.Instance.dictNameToAllItems[name].img;
+                    }
+                }
+            }
+            catch { }
+            return string.Empty;
+        }
+
         #region Heroes Played
 
         // 最常用的10个英雄

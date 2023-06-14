@@ -8,7 +8,9 @@
     mc:Ignorable="d"
     xmlns:cvt="using:Dotahold.Converters"
     xmlns:ui="using:Dotahold.UI" 
-    xmlns:mdl="using:Dotahold.Models" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:mdl="using:Dotahold.Models" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     NavigationCacheMode="Required" Background="Transparent">
 
     <Page.Resources>
@@ -52,10 +54,10 @@
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="8,148,8,0">
-            <StackPanel Margin="8,0,8,16">
+        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="0,148,0,16">
+            <StackPanel>
                 <!--数据统计-->
-                <Grid HorizontalAlignment="Stretch" Margin="16,16,0,8">
+                <Grid HorizontalAlignment="Stretch" Margin="26,16,0,8">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <FontIcon Glyph="&#xEB3C;" Margin="0,0,8,0" FontSize="20"/>
                         <TextBlock Text="Overview" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
@@ -68,7 +70,7 @@
                         <Run Text="{x:Bind ViewModel.CurrentMatchPlayer.assists,Mode=OneWay}" Foreground="#647e8e" CharacterSpacing="20"/>
                     </TextBlock>
                 </Grid>
-                <controls:WrapPanel Margin="8,0,0,0">
+                <controls:WrapPanel Margin="26,0,0,0">
                     <Border CornerRadius="6" Margin="0,0,6,8" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}" ToolTipService.ToolTip="Ping"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.pings,Mode=OneWay,Converter={StaticResource Null2Vis}}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -317,32 +319,30 @@
                 </controls:WrapPanel>
 
                 <!--永久BUFF-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,0"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE95E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Permanent Buffs" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <GridView IsItemClickEnabled="False" SelectionMode="None" Padding="6,0"
-                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="mdl:Permanent_Buffs">
-                            <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
-                                <Image Source="{x:Bind BuffImageSource,Mode=OneWay}" Height="36" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <ui:OutlinedTextBlock Text="{x:Bind stack_count}" Margin="-4,0" FontSize="{x:Bind stack_count,Mode=OneWay,Converter={StaticResource BuffStr2FontSize}}" Foreground="#FFFFFF" OutlineColor="Black" OutlineThickness="2" FontWeight="Medium" Visibility="{x:Bind stack_count,Converter={StaticResource Int2Vis}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                <muxc:ItemsRepeater Margin="26,0,0,0" ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs,Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.CurrentMatchPlayer.permanent_buffs.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <muxc:ItemsRepeater.Layout>
+                        <muxc:UniformGridLayout MinColumnSpacing="4" MinRowSpacing="4"/>
+                    </muxc:ItemsRepeater.Layout>
+                    <DataTemplate x:DataType="mdl:Permanent_Buffs">
+                        <Grid Height="36" Width="36" CornerRadius="18" Background="{ThemeResource MATCHPLAYER_ITEM_BK}">
+                            <Image Source="{x:Bind BuffImageSource,Mode=OneWay}" Height="36" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ui:OutlinedTextBlock Text="{x:Bind stack_count}" Margin="-4,0" FontSize="{x:Bind stack_count,Mode=OneWay,Converter={StaticResource BuffStr2FontSize}}" Foreground="#FFFFFF" OutlineColor="Black" OutlineThickness="2" FontWeight="Medium" Visibility="{x:Bind stack_count,Converter={StaticResource Int2Vis}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </muxc:ItemsRepeater>
 
                 <!--物品-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,6,0,4">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,12,0,4">
                     <FontIcon Glyph="&#xEC0A;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Items" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="10,0,0,0">
+                <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" Margin="26,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -414,51 +414,66 @@
                 </Grid>
 
                 <!--技能加点-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE945;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Abilities" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <GridView IsItemClickEnabled="False" SelectionMode="None" Padding="10,0"
-                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="mdl:AbilityUpgrade">
-                            <Grid Height="48" Width="48" Margin="0,0,4,4" CornerRadius="6" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sAbilityName}">
-                                <Image Source="{x:Bind AbilityImageSource,Mode=OneWay}" Height="48" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                <muxc:ItemsRepeater Margin="26,0,8,0" ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade,Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vAbilitiesUpgrade.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <muxc:ItemsRepeater.Layout>
+                        <muxc:UniformGridLayout MinColumnSpacing="4" MinRowSpacing="4"/>
+                    </muxc:ItemsRepeater.Layout>
+                    <DataTemplate x:DataType="mdl:AbilityUpgrade">
+                        <Grid Height="48" Width="48" Margin="0,0,4,4" CornerRadius="6" Background="{ThemeResource MATCHPLAYER_ITEM_BK}" ToolTipService.ToolTip="{x:Bind sAbilityName}">
+                            <Image Source="{x:Bind AbilityImageSource,Mode=OneWay}" Height="48" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </muxc:ItemsRepeater>
 
                 <!--物品购买记录-->
-                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="8,16,0,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
+                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xE7BF;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                </StackPanel>-->
+                </StackPanel>
+                <ScrollViewer Padding="26,0,8,0" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="0"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="mdl:Purchase_Log">
+                            <Grid Visibility="{x:Bind key,Converter={StaticResource Null2Vis}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.Row="0" Height="1" Width="6" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{ThemeResource MATCHPLAYER_DATA_BK}"/>
+                                <Rectangle Grid.Row="0" Height="1" Width="6" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="{ThemeResource MATCHPLAYER_DATA_BK}"/>
+                                <Border Grid.Row="0" CornerRadius="8" Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Width="44" Height="32" VerticalAlignment="Center" Source="{x:Bind ItemImageSource,Mode=OneWay}"/>
+                                </Border>
+                                <TextBlock Grid.Row="1" Text="{x:Bind PurchaseTime,Mode=OneWay}" FontSize="12.5" Opacity="0.5" Margin="0,4,0,0" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
                 <!--神符激活记录-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xF159;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Runes" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <ListView IsItemClickEnabled="False" SelectionMode="None"
-                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                          Margin="6,0,0,0" Padding="8,0,8,0"
-                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
+                <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                              Visibility="{x:Bind ViewModel.CurrentMatchPlayer.runes_log.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
+                    <muxc:ItemsRepeater Margin="26,0,12,0" ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.runes_log,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="8"/>
+                        </muxc:ItemsRepeater.Layout>
                         <DataTemplate x:DataType="mdl:Runes_Log">
-                            <Border CornerRadius="6" Margin="-16,0,0,0" Padding="10,4,10,4" Background="{ThemeResource MATCHPLAYER_DATA_BK}"
+                            <Border CornerRadius="4" Margin="0,0,0,0" Padding="10,4,10,4" Background="{ThemeResource MATCHPLAYER_DATA_BK}"
                                     Visibility="{x:Bind key,Converter={StaticResource Null2Vis}}">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Image Height="32" Width="32" VerticalAlignment="Center" Source="{x:Bind key,Converter={StaticResource Str2Rune}}"/>
@@ -466,16 +481,16 @@
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
                 <!--Benchmarks-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,16,0,12"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
                             Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
                     <FontIcon Glyph="&#xED5E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Benchmarks" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <ListView HorizontalContentAlignment="Stretch" Padding="8,0,8,0"
+                <ListView HorizontalContentAlignment="Stretch" Margin="22,0"
                           SelectionMode="None" IsItemClickEnabled="False"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks,Mode=OneWay}"
                           Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
