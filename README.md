@@ -28,7 +28,7 @@ Download from [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X9
 #### Matches
 ![4.png](ASSETS/4.png)
 
-#### Match Data
+#### Match Detail
 ![5.png](ASSETS/5.png)
 
 ### References
