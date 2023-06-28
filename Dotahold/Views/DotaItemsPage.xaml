@@ -87,7 +87,8 @@
             <!--搜索时显示的列表-->
             <ListView Grid.Row="2" Background="Transparent" ItemsSource="{x:Bind ViewModel.vSearchItemsList,Mode=OneWay}"
                       HorizontalAlignment="Stretch" SelectionMode="Single" IsSynchronizedWithCurrentItem="False" Padding="0,0,0,8" ShowsScrollingPlaceholders="True" HorizontalContentAlignment="Stretch"
-                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}">
+                      Visibility="{x:Bind ViewModel.bSearchingItems,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
+                      SelectionChanged="ListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="coremodel:DotaItemModel">
                         <Grid Height="60" Padding="0,0">

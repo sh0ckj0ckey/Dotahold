@@ -54,7 +54,7 @@
     </Page.Resources>
 
     <Grid>
-        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="0,148,0,16">
+        <ScrollViewer x:Name="PlayerInfoScrollViewer" Padding="0,148,0,0">
             <StackPanel>
                 <!--数据统计-->
                 <Grid HorizontalAlignment="Stretch" Margin="26,16,0,8">
@@ -437,9 +437,9 @@
                     <FontIcon Glyph="&#xE7BF;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Purchase" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <ScrollViewer Padding="26,0,8,0" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                <ScrollViewer Padding="0,0,0,0" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                               Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog,Mode=OneWay}">
+                    <muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vPurchaseLog,Mode=OneWay}" Margin="24,0,12,0">
                         <muxc:ItemsRepeater.Layout>
                             <muxc:StackLayout Orientation="Horizontal" Spacing="0"/>
                         </muxc:ItemsRepeater.Layout>
@@ -490,7 +490,7 @@
                     <FontIcon Glyph="&#xED5E;" Margin="0,0,8,0" FontSize="20"/>
                     <TextBlock Text="Benchmarks" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
                 </StackPanel>
-                <ListView HorizontalContentAlignment="Stretch" Margin="22,0"
+                <ListView HorizontalContentAlignment="Stretch" Margin="22,0,22,12"
                           SelectionMode="None" IsItemClickEnabled="False"
                           ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks,Mode=OneWay}"
                           Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">

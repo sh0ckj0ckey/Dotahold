@@ -110,7 +110,7 @@
                           Visibility="{x:Bind bHasComponents,Mode=OneWay}">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="coremodel:DotaItemModel">
-                            <Grid Height="34" Width="45" Margin="5,0" CornerRadius="2" ToolTipService.ToolTip="{x:Bind dname}">
+                            <Grid Height="34" Width="45" Margin="5,0" CornerRadius="6" ToolTipService.ToolTip="{x:Bind dname}">
                                 <Grid.Background>
                                     <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ImageSource,Mode=OneWay}"/>
                                 </Grid.Background>

@@ -277,6 +277,10 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
+                                    <!--当前玩家-->
+                                    <Grid Grid.ColumnSpan="4" CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"
+                                          Background="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Visibility="{x:Bind bIsCurrentPlayer,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
+
                                     <!--阵营底图-->
                                     <Grid Grid.ColumnSpan="4" CornerRadius="8">
                                         <Image Visibility="{x:Bind isRadiant,Mode=OneWay,Converter={StaticResource Bool2Vis}}" Source="/Assets/Icons/Match/icon_radiant_square_bk.png" HorizontalAlignment="Right" VerticalAlignment="Stretch" Stretch="UniformToFill" Height="108" Width="108" Opacity="0.5"/>
@@ -506,11 +510,6 @@
                                             </Image.Source>
                                         </Image>
                                     </Grid>
-
-                                    <!--当前玩家边框-->
-                                    <Grid Grid.ColumnSpan="4" CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"
-                                          BorderThickness="1.5" BorderBrush="{ThemeResource MATCHPLAYER_LISTITEM_BD}" Background="Transparent"
-                                          Visibility="{x:Bind bIsCurrentPlayer,Mode=OneWay,Converter={StaticResource Bool2Vis}}"/>
 
                                     <!--开黑标识-->
                                     <Grid Visibility="{x:Bind iPartyId,Mode=OneWay,Converter={StaticResource Int2Vis}}">

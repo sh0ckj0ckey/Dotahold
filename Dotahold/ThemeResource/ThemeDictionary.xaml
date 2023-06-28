@@ -58,7 +58,7 @@
 
                     <Color x:Key="MATCHESLIST_LOADMOREBTN_BK">#363746</Color>
                     <Color x:Key="MATCHPLAYER_LISTITEM_BK">#08FFFFFF</Color>
-                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#484a57</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#66484a57</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#14FFFFFF</Color>
                     <Color x:Key="MATCHPLAYER_BUFF_BD">#14FFFFFF</Color>
@@ -133,7 +133,7 @@
 
                     <Color x:Key="MATCHESLIST_LOADMOREBTN_BK">#08000000</Color>
                     <Color x:Key="MATCHPLAYER_LISTITEM_BK">#06000000</Color>
-                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#08000000</Color>
+                    <Color x:Key="MATCHPLAYER_LISTITEM_BD">#09000000</Color>
                     <Color x:Key="MATCHPLAYER_ITEM_BK">#16000000</Color>
                     <Color x:Key="MATCHPLAYER_DATA_BK">#20AAAAAA</Color>
                     <Color x:Key="MATCHPLAYER_BUFF_BD">#421510</Color>
