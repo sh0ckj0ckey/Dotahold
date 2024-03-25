@@ -1,4 +1,4 @@
-## <img src="ASSETS/Logo.png" width="50px"> <b>Dotahold —— Dota 2 Statistics powered by OpenDota</b>
+## <img src="ASSETS/Logo.png" width="50px"> <b>Dotahold — Dota 2 Statistics powered by OpenDota</b>
 
 ### OpenDota
 
@@ -9,8 +9,6 @@
 
 
 This is a third party application, the match data from Steam Api and OpenDota, and the Heroes' information is from the Dota 2 official website. If you have any suggestions or violate your rights, please contact the developer yaoyiming123@live.com. 
-
-(The name is taken from the Darkhold in Agents of S.H.I.E.L.D. 🤣)
 
 Download from [Microsoft Store](https://www.microsoft.com/store/apps/9NSKQN4V8X94)
 
