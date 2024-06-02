@@ -25,7 +25,7 @@
             <ColumnDefinition Width="64"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource SPLITLINE_BK}">
+        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
             <!--Side bar-->
             <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"

@@ -116,7 +116,7 @@
             </Grid.Background>
             <muxc:ProgressRing Height="32" Width="32" Foreground="{ThemeResource APPLICATION_FR}" IsActive="{x:Bind ViewModel.bLoadingItems,Mode=OneWay}"/>
         </Grid>
-        <Grid x:Name="ItemGrid" Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource SPLITLINE_BK}">
+        <Grid x:Name="ItemGrid" Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
             <Frame x:Name="ItemFrame"/>
         </Grid>
     </Grid>

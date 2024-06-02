@@ -47,7 +47,7 @@
                 <TextBlock Grid.Column="4" Text="" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
             </Grid>
             <ListView Grid.Row="1" SelectionMode="None" IsItemClickEnabled="False" ItemsSource="{x:Bind ViewModel.vMostPlayedHeroes,Mode=OneWay}"
-                      Padding="0,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                      Padding="0,0,0,20" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                       Visibility="{x:Bind ViewModel.vMostPlayedHeroes.Count,Converter={StaticResource Int2Vis},Mode=OneWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

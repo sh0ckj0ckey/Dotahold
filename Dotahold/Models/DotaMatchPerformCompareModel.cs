@@ -14,8 +14,7 @@ namespace Dotahold.Models
 {
     public class DotaMatchPerformCompareModel : ViewModelBase
     {
-        public double LeftDamageValue { get; set; } = 0;
-        public double LeftTeamfightValue { get; set; } = 0;
+        public double LeftValue { get; set; } = 0;
         public int? LeftPlayerSlot { get; set; }
 
         private BitmapImage _LeftImageSource = null;
@@ -25,8 +24,7 @@ namespace Dotahold.Models
             set { Set("LeftImageSource", ref _LeftImageSource, value); }
         }
 
-        public double RightDamageValue { get; set; } = 0;
-        public double RightTeamfightValue { get; set; } = 0;
+        public double RightValue { get; set; } = 0;
         public int? RightPlayerSlot { get; set; }
 
         private BitmapImage _RightImageSource = null;
