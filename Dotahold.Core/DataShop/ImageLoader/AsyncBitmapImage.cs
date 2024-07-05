@@ -15,14 +15,12 @@ namespace Dotahold.Core.DataShop.ImageLoader
 
         public async Task LoadImageAsync(int decodeWidth, bool cache)
         {
-            ImageSource = await ImageCourier.GetImageAsync(ImageUri, cache);
-            ImageSource.DecodePixelType = DecodePixelType.Logical;
-            ImageSource.DecodePixelWidth = decodeWidth;
+            ImageSource = await ImageCourier.GetImageAsync(ImageUri, decodeWidth, 0, cache);
         }
 
         public async Task LoadRawImageAsync(bool cache)
         {
-            RawImageSource = await ImageCourier.GetImageAsync(ImageUri, cache);
+            RawImageSource = await ImageCourier.GetImageAsync(ImageUri, 0, 0, cache);
         }
     }
 }

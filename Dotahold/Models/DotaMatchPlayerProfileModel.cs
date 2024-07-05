@@ -67,12 +67,10 @@ namespace Dotahold.Models
             try
             {
                 if (_loadedAvatar || string.IsNullOrWhiteSpace(this.avatarfull)) return;
-                var avatarSource = await ImageCourier.GetImageAsync(this.avatarfull, false);
+                var avatarSource = await ImageCourier.GetImageAsync(this.avatarfull, decodeWidth, 0, false);
                 if (avatarSource != null)
                 {
                     this.AvatarSource = avatarSource;
-                    this.AvatarSource.DecodePixelType = DecodePixelType.Logical;
-                    this.AvatarSource.DecodePixelWidth = decodeWidth;
                     _loadedAvatar = true;
                 }
             }

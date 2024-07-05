@@ -16,19 +16,21 @@ namespace Dotahold.Core.DataShop.ImageLoader
 
         private static Dictionary<string, BitmapImage> _dictImageCache = new Dictionary<string, BitmapImage>();
 
-        internal static async Task<BitmapImage> LoadImageAsync(string Uri, bool bCache)
+        internal static async Task<BitmapImage> LoadImageAsync(string uri, int width, int height, bool cache)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(Uri)) return null;
+                if (string.IsNullOrWhiteSpace(uri)) return null;
 
-                if (_dictImageCache.ContainsKey(Uri))
+                string imgKey = $"{uri}_{width}_{height}";
+
+                if (_dictImageCache.ContainsKey(uri))
                 {
-                    return _dictImageCache[Uri];
+                    return _dictImageCache[uri];
                 }
 
                 BitmapImage bm = null;
-                using (var memStream = await DownloadImage(Uri, bCache))
+                using (var memStream = await DownloadImage(uri, cache))
                 {
                     if (memStream == null)
                     {
@@ -42,21 +44,28 @@ namespace Dotahold.Core.DataShop.ImageLoader
                     }
                 }
 
+                if (bm == null) return null;
+
+                bm.DecodePixelType = DecodePixelType.Logical;
+                if (width > 0)
+                {
+                    bm.DecodePixelWidth = width;
+                }
+                if (height > 0)
+                {
+                    bm.DecodePixelHeight = height;
+                }
+
                 if (_dictImageCache.Count > 5000)
                 {
                     _dictImageCache.Clear();
                 }
-                _dictImageCache[Uri] = bm;
+                _dictImageCache[imgKey] = bm;
 
                 return bm;
             }
             catch
             {
-                try
-                {
-                    return null;
-                }
-                catch { }
                 return null;
             }
         }

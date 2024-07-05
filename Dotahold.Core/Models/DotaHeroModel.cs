@@ -56,12 +56,10 @@ namespace Dotahold.Core.Models
             try
             {
                 if (_loadedImage || string.IsNullOrWhiteSpace(this.img)) return;
-                var imageSource = await ImageCourier.GetImageAsync(this.img);
+                var imageSource = await ImageCourier.GetImageAsync(this.img, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ImageSource = imageSource;
-                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ImageSource.DecodePixelWidth = decodeWidth;
                     _loadedImage = true;
                 }
             }
@@ -82,12 +80,10 @@ namespace Dotahold.Core.Models
             try
             {
                 if (this.IconSource != null || string.IsNullOrWhiteSpace(this.icon)) return;
-                var iconSource = await ImageCourier.GetImageAsync(this.icon);
+                var iconSource = await ImageCourier.GetImageAsync(this.icon, decodeWidth, 0);
                 if (iconSource != null)
                 {
                     this.IconSource = iconSource;
-                    this.IconSource.DecodePixelType = DecodePixelType.Logical;
-                    this.IconSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }

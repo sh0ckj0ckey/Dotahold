@@ -88,12 +88,10 @@ namespace Dotahold.Models
             {
                 if (this.CoverImageSource != null || string.IsNullOrWhiteSpace(this.sHeroCoverImage)) return;
 
-                var coverImageSource = await ImageCourier.GetImageAsync(this.sHeroCoverImage, true);
+                var coverImageSource = await ImageCourier.GetImageAsync(this.sHeroCoverImage, decodeWidth, 0, true);
                 if (coverImageSource != null)
                 {
                     this.CoverImageSource = coverImageSource;
-                    this.CoverImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.CoverImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }
@@ -114,12 +112,10 @@ namespace Dotahold.Models
             {
                 if (this.HorizonImageSource != null || string.IsNullOrWhiteSpace(this.sHeroHorizonImage)) return;
 
-                var horizonImageSource = await ImageCourier.GetImageAsync(this.sHeroHorizonImage);
+                var horizonImageSource = await ImageCourier.GetImageAsync(this.sHeroHorizonImage, decodeWidth, 0);
                 if (horizonImageSource != null)
                 {
                     this.HorizonImageSource = horizonImageSource;
-                    this.HorizonImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.HorizonImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }

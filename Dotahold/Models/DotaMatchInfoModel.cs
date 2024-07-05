@@ -63,12 +63,10 @@ namespace Dotahold.Models
             {
                 if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroImage)) return;
 
-                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage);
+                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ImageSource = imageSource;
-                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }
@@ -222,12 +220,10 @@ namespace Dotahold.Models
             {
                 if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroImage)) return;
 
-                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage);
+                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ImageSource = imageSource;
-                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }
@@ -361,63 +357,43 @@ namespace Dotahold.Models
             {
                 if (Item0ImageSource == null && !string.IsNullOrWhiteSpace(sItem0))
                 {
-                    Item0ImageSource = await ImageCourier.GetImageAsync(sItem0);
-                    Item0ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item0ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item0ImageSource = await ImageCourier.GetImageAsync(sItem0, itemDecodeWidth, 0);
                 }
                 if (Item1ImageSource == null && !string.IsNullOrWhiteSpace(sItem1))
                 {
-                    Item1ImageSource = await ImageCourier.GetImageAsync(sItem1);
-                    Item1ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item1ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item1ImageSource = await ImageCourier.GetImageAsync(sItem1, itemDecodeWidth, 0);
                 }
                 if (Item2ImageSource == null && !string.IsNullOrWhiteSpace(sItem2))
                 {
-                    Item2ImageSource = await ImageCourier.GetImageAsync(sItem2);
-                    Item2ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item2ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item2ImageSource = await ImageCourier.GetImageAsync(sItem2, itemDecodeWidth, 0);
                 }
                 if (Item3ImageSource == null && !string.IsNullOrWhiteSpace(sItem3))
                 {
-                    Item3ImageSource = await ImageCourier.GetImageAsync(sItem3);
-                    Item3ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item3ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item3ImageSource = await ImageCourier.GetImageAsync(sItem3, itemDecodeWidth, 0);
                 }
                 if (Item4ImageSource == null && !string.IsNullOrWhiteSpace(sItem4))
                 {
-                    Item4ImageSource = await ImageCourier.GetImageAsync(sItem4);
-                    Item4ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item4ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item4ImageSource = await ImageCourier.GetImageAsync(sItem4, itemDecodeWidth, 0);
                 }
                 if (Item5ImageSource == null && !string.IsNullOrWhiteSpace(sItem5))
                 {
-                    Item5ImageSource = await ImageCourier.GetImageAsync(sItem5);
-                    Item5ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item5ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item5ImageSource = await ImageCourier.GetImageAsync(sItem5, itemDecodeWidth, 0);
                 }
                 if (ItemB0ImageSource == null && !string.IsNullOrWhiteSpace(sItemB0))
                 {
-                    ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0);
-                    ItemB0ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB0ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0, itemDecodeWidth, 0);
                 }
                 if (ItemB1ImageSource == null && !string.IsNullOrWhiteSpace(sItemB1))
                 {
-                    ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1);
-                    ItemB1ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB1ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1, itemDecodeWidth, 0);
                 }
                 if (ItemB2ImageSource == null && !string.IsNullOrWhiteSpace(sItemB2))
                 {
-                    ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2);
-                    ItemB2ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB2ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2, itemDecodeWidth, 0);
                 }
                 if (ItemNImageSource == null && !string.IsNullOrWhiteSpace(sItemN))
                 {
-                    ItemNImageSource = await ImageCourier.GetImageAsync(sItemN);
-                    ItemNImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemNImageSource.DecodePixelWidth = neutralDecodeWidth;
+                    ItemNImageSource = await ImageCourier.GetImageAsync(sItemN, itemDecodeWidth, 0);
                 }
             }
             catch { }
@@ -469,9 +445,7 @@ namespace Dotahold.Models
                 {
                     if (!string.IsNullOrWhiteSpace(sAbilityUrl))
                     {
-                        AbilityImageSource = await ImageCourier.GetImageAsync(sAbilityUrl);
-                        AbilityImageSource.DecodePixelType = DecodePixelType.Logical;
-                        AbilityImageSource.DecodePixelWidth = decodeWidth;
+                        AbilityImageSource = await ImageCourier.GetImageAsync(sAbilityUrl, decodeWidth, 0);
                     }
                     else
                     {
@@ -637,63 +611,43 @@ namespace Dotahold.Models
             {
                 if (Item0ImageSource == null && !string.IsNullOrWhiteSpace(sItem0))
                 {
-                    Item0ImageSource = await ImageCourier.GetImageAsync(sItem0);
-                    Item0ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item0ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item0ImageSource = await ImageCourier.GetImageAsync(sItem0, itemDecodeWidth, 0);
                 }
                 if (Item1ImageSource == null && !string.IsNullOrWhiteSpace(sItem1))
                 {
-                    Item1ImageSource = await ImageCourier.GetImageAsync(sItem1);
-                    Item1ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item1ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item1ImageSource = await ImageCourier.GetImageAsync(sItem1, itemDecodeWidth, 0);
                 }
                 if (Item2ImageSource == null && !string.IsNullOrWhiteSpace(sItem2))
                 {
-                    Item2ImageSource = await ImageCourier.GetImageAsync(sItem2);
-                    Item2ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item2ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item2ImageSource = await ImageCourier.GetImageAsync(sItem2, itemDecodeWidth, 0);
                 }
                 if (Item3ImageSource == null && !string.IsNullOrWhiteSpace(sItem3))
                 {
-                    Item3ImageSource = await ImageCourier.GetImageAsync(sItem3);
-                    Item3ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item3ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item3ImageSource = await ImageCourier.GetImageAsync(sItem3, itemDecodeWidth, 0);
                 }
                 if (Item4ImageSource == null && !string.IsNullOrWhiteSpace(sItem4))
                 {
-                    Item4ImageSource = await ImageCourier.GetImageAsync(sItem4);
-                    Item4ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item4ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item4ImageSource = await ImageCourier.GetImageAsync(sItem4, itemDecodeWidth, 0);
                 }
                 if (Item5ImageSource == null && !string.IsNullOrWhiteSpace(sItem5))
                 {
-                    Item5ImageSource = await ImageCourier.GetImageAsync(sItem5);
-                    Item5ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    Item5ImageSource.DecodePixelWidth = itemDecodeWidth;
+                    Item5ImageSource = await ImageCourier.GetImageAsync(sItem5, itemDecodeWidth, 0);
                 }
                 if (ItemB0ImageSource == null && !string.IsNullOrWhiteSpace(sItemB0))
                 {
-                    ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0);
-                    ItemB0ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB0ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB0ImageSource = await ImageCourier.GetImageAsync(sItemB0, itemDecodeWidth, 0);
                 }
                 if (ItemB1ImageSource == null && !string.IsNullOrWhiteSpace(sItemB1))
                 {
-                    ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1);
-                    ItemB1ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB1ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB1ImageSource = await ImageCourier.GetImageAsync(sItemB1, itemDecodeWidth, 0);
                 }
                 if (ItemB2ImageSource == null && !string.IsNullOrWhiteSpace(sItemB2))
                 {
-                    ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2);
-                    ItemB2ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemB2ImageSource.DecodePixelWidth = backpackDecodeWidth;
+                    ItemB2ImageSource = await ImageCourier.GetImageAsync(sItemB2, itemDecodeWidth, 0);
                 }
                 if (ItemNImageSource == null && !string.IsNullOrWhiteSpace(sItemN))
                 {
-                    ItemNImageSource = await ImageCourier.GetImageAsync(sItemN);
-                    ItemNImageSource.DecodePixelType = DecodePixelType.Logical;
-                    ItemNImageSource.DecodePixelWidth = neutralDecodeWidth;
+                    ItemNImageSource = await ImageCourier.GetImageAsync(sItemN, itemDecodeWidth, 0);
                 }
             }
             catch { }
@@ -748,18 +702,19 @@ namespace Dotahold.Models
                     // 本地有图片资源
                     if (!_dictBuffs.ContainsKey(sBuff))
                     {
-                        _dictBuffs.Add(sBuff, new BitmapImage(new System.Uri(string.Format("ms-appx:///Assets/Icons/Match/PermanentBuffs/{0}.png", sBuff))));
+                        var img = new BitmapImage(new System.Uri(string.Format("ms-appx:///Assets/Icons/Match/PermanentBuffs/{0}.png", sBuff)));
+                        img.DecodePixelType = DecodePixelType.Logical;
+                        img.DecodePixelHeight = imageDecodeHeight;
+                        _dictBuffs.Add(sBuff, img);
                     }
                     this.BuffImageSource = _dictBuffs[sBuff];
                 }
                 else
                 {
                     // 从网络获取，通常是技能图标
-                    this.BuffImageSource = await ImageCourier.GetImageAsync(string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", this.sBuff), true);
+                    this.BuffImageSource = await ImageCourier.GetImageAsync(string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", this.sBuff), 0, imageDecodeHeight, true);
                 }
 
-                this.BuffImageSource.DecodePixelType = DecodePixelType.Logical;
-                this.BuffImageSource.DecodePixelHeight = imageDecodeHeight;
                 _loadedPermanentBuffImage = true;
             }
             catch { }
@@ -793,12 +748,10 @@ namespace Dotahold.Models
             {
                 if (this.ItemImageSource != null || string.IsNullOrWhiteSpace(this.key) || !Uri.IsWellFormedUriString(this.key, UriKind.Absolute)) return;
 
-                var imageSource = await ImageCourier.GetImageAsync(this.key);
+                var imageSource = await ImageCourier.GetImageAsync(this.key, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ItemImageSource = imageSource;
-                    this.ItemImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ItemImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }

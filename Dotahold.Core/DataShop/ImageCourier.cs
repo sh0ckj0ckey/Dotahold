@@ -21,9 +21,9 @@ namespace Dotahold.Core.DataShop
         /// <param name="Uri"></param>
         /// <param name="bCache"></param>
         /// <returns></returns>
-        public static async Task<BitmapImage> GetImageAsync(string Uri, bool bCache = true)
+        public static async Task<BitmapImage> GetImageAsync(string uri, int width, int height, bool cache = true)
         {
-            return await ImageLoader.ImageLoader.LoadImageAsync(Uri, bCache);
+            return await ImageLoader.ImageLoader.LoadImageAsync(uri, width, height, cache);
         }
 
         /// <summary>

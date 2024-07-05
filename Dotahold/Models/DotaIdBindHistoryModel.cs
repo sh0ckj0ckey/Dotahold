@@ -30,12 +30,10 @@ namespace Dotahold.Models
             {
                 if (this.ImageSource != null && string.IsNullOrWhiteSpace(this.AvatarImage)) return;
 
-                var imageSource = await ImageCourier.GetImageAsync(this.AvatarImage);
+                var imageSource = await ImageCourier.GetImageAsync(this.AvatarImage, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ImageSource = imageSource;
-                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }

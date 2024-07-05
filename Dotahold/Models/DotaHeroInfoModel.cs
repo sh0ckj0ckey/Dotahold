@@ -317,12 +317,10 @@ namespace Dotahold.Models
             try
             {
                 if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sAbilityImageUrl)) return;
-                var imageSource = await ImageCourier.GetImageAsync(this.sAbilityImageUrl);
+                var imageSource = await ImageCourier.GetImageAsync(this.sAbilityImageUrl, decodeWidth, 0);
                 if (imageSource != null)
                 {
                     this.ImageSource = imageSource;
-                    this.ImageSource.DecodePixelType = DecodePixelType.Logical;
-                    this.ImageSource.DecodePixelWidth = decodeWidth;
                 }
             }
             catch { }
