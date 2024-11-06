@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using Dotahold.ViewModels;
 using Windows.ApplicationModel;
 using Dotahold.Core.Utils;
+using System.Threading.Tasks;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -29,43 +30,34 @@ namespace Dotahold.Views
     /// </summary>
     public sealed partial class SettingPage : Page
     {
-        private DotaViewModel ViewModel = null;
-        private string _appVersion = string.Empty;
-        private long _lastTimeCleanCache = 0;
+        private DotaViewModel _viewModel = null;
+
+        private DateTime _lastTimeCheckCacheSize = new DateTime(1970, 1, 1);
 
         public SettingPage()
         {
-            ViewModel = DotaViewModel.Instance;
+            _viewModel = DotaViewModel.Instance;
+
             this.InitializeComponent();
 
-            _appVersion = AppVersionUtils.GetAppVersion();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            try
+            this.Loaded += async (s, e) =>
             {
-                if (DateTime.Now.Ticks - _lastTimeCleanCache > TimeSpan.FromSeconds(5).Ticks)
+                try
                 {
-                    _lastTimeCleanCache = DateTime.Now.Ticks;
-                    DotaViewModel.Instance.GetImageCacheSize();
-                }
-            }
-            catch { }
-        }
+                    // 获取版本号
+                    string version = GetAppVersion();
+                    VersionTextBlock.Text = version;
 
-        /// <summary>
-        /// 双击打开调试选项
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDotaholdImageDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            try
-            {
-                DotaViewModel.Instance.bShowDevTools = true;
-            }
-            catch { }
+                    // 获取图片缓存大小
+                    if (DateTime.Now - _lastTimeCheckCacheSize > TimeSpan.FromSeconds(3))
+                    {
+                        _lastTimeCheckCacheSize = DateTime.Now;
+                        string size = await GetImageCacheSize();
+
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            };
         }
 
         /// <summary>
@@ -79,7 +71,7 @@ namespace Dotahold.Views
             {
                 await Launcher.LaunchUriAsync(new Uri($"ms-windows-store:REVIEW?PFN={Package.Current.Id.FamilyName}"));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -97,37 +89,73 @@ namespace Dotahold.Views
                     rootElement.RequestedTheme = cb.SelectedIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
-        /// 切换到白天主题
+        /// 获取版本号
         /// </summary>
-        public void Switch2LightMode()
+        /// <returns></returns>
+        private static string GetAppVersion()
         {
             try
             {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
+                PackageVersion version = Package.Current.Id.Version;
+                return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+
+            return "";
+        }
+
+        #region Image Cache
+
+        /// <summary>
+        /// 获取图片缓存的大小
+        /// </summary>
+        private async Task<string> GetImageCacheSize()
+        {
+            long size = await ImageCourier.GetCacheSizeAsync();
+            string cacheSize = ConvertSize(size);
+            return cacheSize;
         }
 
         /// <summary>
-        /// 切换到夜间主题
+        /// 清理图片缓存
         /// </summary>
-        public void Switch2DarkMode()
+        public async void ClearImageCache()
         {
             try
             {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedForegroundColor = Colors.White;
+                bCleaningImageCache = true;
+                bool result = await ImageCourier.ClearCacheAsync();
+
+                if (result) GetImageCacheSize();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            finally { bCleaningImageCache = false; }
+        }
+
+        private string ConvertSize(long size)
+        {
+            try
+            {
+                if (size / (1024 * 1024 * 1024) >= 1)
+                {
+                    return $"{Math.Round(size / (float)(1024 * 1024 * 1024), 2)}GB";
+                }
+                else if (size / (1024 * 1024) >= 1)
+                {
+                    return $"{Math.Round(size / (float)(1024 * 1024), 2)}MB";
+                }
+                else if (size / 1024 >= 1)
+                {
+                    return $"{Math.Round(size / (float)1024, 2)}KB";
+                }
+            }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+
+            return $"{size}B";
         }
 
         /// <summary>
@@ -142,10 +170,33 @@ namespace Dotahold.Views
                 DotaViewModel.Instance.ClearImageCache();
                 _lastTimeCleanCache = 0;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 打开配置文件保存目录
+        #endregion
+
+        #region Dev Tools
+
+        /// <summary>
+        /// 双击打开调试选项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDotaholdImageDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            try
+            {
+                DebugToolsHeader.Visibility = Visibility.Visible;
+                DebugToolsGrid.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+        }
+
+        /// <summary>
+        /// 打开配置文件保存目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnClickOpenDataDir(object sender, RoutedEventArgs e)
         {
             try
@@ -153,10 +204,14 @@ namespace Dotahold.Views
                 var folder = await StorageFilesCourier.GetDataFolder();
                 await Launcher.LaunchFolderAsync(folder);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 打开图片缓存目录
+        /// <summary>
+        /// 打开图片缓存目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnClickOpenImageCacheDir(object sender, RoutedEventArgs e)
         {
             try
@@ -164,47 +219,70 @@ namespace Dotahold.Views
                 var folder = await ImageCourier.GetCacheFolderAsync();
                 await Launcher.LaunchFolderAsync(folder);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 强制下次更新常量数据
+        /// <summary>
+        /// 强制下次更新常量数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClickForceUpdateLocalJson(object sender, RoutedEventArgs e)
         {
             try
             {
                 ConstantsCourier.Instance.ResetConstantsGottenDate();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 访问 GitHub Issues
+        #endregion
+
+        #region Contact Me
+
+        /// <summary>
+        /// 访问 GitHub Issues
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnClickGitHubIssue(object sender, RoutedEventArgs e)
         {
             try
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold/issues"));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 访问 GitHub
+        /// <summary>
+        /// 访问 GitHub
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnClickGitHub(object sender, RoutedEventArgs e)
         {
             try
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/sh0ckj0ckey/Dotahold"));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 访问 Steam 个人页面
+        /// <summary>
+        /// 访问 Steam 个人页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void OnClickSteamProfile(object sender, RoutedEventArgs e)
         {
             try
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
+
+        #endregion
+
     }
 }

@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -13,17 +11,11 @@ namespace Dotahold.Core.DataShop
     /// </summary>
     public class ConstantsCourier
     {
-        public static BitmapImage DefaultHeroImageSource72 =
-            new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
-            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
+        public static BitmapImage DefaultHeroImageSource72 = null;
 
-        public static BitmapImage DefaultItemImageSource72 =
-            new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
-            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
+        public static BitmapImage DefaultItemImageSource72 = null;
 
-        public static BitmapImage DefaultAvatarImageSource72 =
-            new BitmapImage(new Uri("ms-appx:///Assets/Icons/avatar_placeholder.jpeg"))
-            { DecodePixelType = DecodePixelType.Logical, DecodePixelHeight = 72 };
+        public static BitmapImage DefaultAvatarImageSource72 = null;
 
         private static Lazy<ConstantsCourier> _lazyVM = new Lazy<ConstantsCourier>(() => new ConstantsCourier());
         public static ConstantsCourier Instance => _lazyVM.Value;
@@ -58,20 +50,31 @@ namespace Dotahold.Core.DataShop
         /// </summary>
         private Dictionary<string, string> _dictAbilitiesId = null;
 
-
-        private JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore,
-        };
-
         public ConstantsCourier()
         {
             try
             {
                 LoadConstantsGottenDate();
+
+                DefaultHeroImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+                {
+                    DecodePixelType = DecodePixelType.Logical,
+                    DecodePixelHeight = 144
+                };
+
+                DefaultItemImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+                {
+                    DecodePixelType = DecodePixelType.Logical,
+                    DecodePixelHeight = 144
+                };
+
+                DefaultAvatarImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/avatar_placeholder.jpeg"))
+                {
+                    DecodePixelType = DecodePixelType.Logical,
+                    DecodePixelHeight = 144
+                };
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -80,58 +83,55 @@ namespace Dotahold.Core.DataShop
         /// <returns></returns>
         public async Task<Dictionary<string, Core.Models.DotaHeroModel>> GetHeroesConstant()
         {
-            try
+            // 先去本地的Local文件夹找下载的最新的
+            if (_dictHeroes == null)
             {
-                // 先去本地的Local文件夹找下载的最新的
-                if (_dictHeroes == null)
+                try
                 {
-                    try
+                    var json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictHeroes = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaHeroModel>>(json, _jsonSerializerSettings);
-                        }
+                        _dictHeroes = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaHeroModel>>(json);
                     }
-                    catch { }
                 }
-
-                // 找不到就用内置的
-                if (_dictHeroes == null)
-                {
-                    try
-                    {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictHeroes = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaHeroModel>>(json, _jsonSerializerSettings);
-                        }
-                    }
-                    catch { }
-                }
-
-                // 内置的也找不到(不太可能)
-                if (_dictHeroes == null || Need2UpdateJson("heroes"))
-                {
-                    try
-                    {
-                        if (_dictHeroes == null)
-                        {
-                            var json = await GetConstant("heroes", _heroesJsonFileName);
-                            if (!string.IsNullOrEmpty(json))
-                            {
-                                _dictHeroes = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaHeroModel>>(json, _jsonSerializerSettings);
-                            }
-                        }
-                        else
-                        {
-                            _ = await GetConstant("heroes", _heroesJsonFileName);
-                        }
-                    }
-                    catch { }
-                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+
+            // 找不到就用内置的
+            if (_dictHeroes == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\heroes.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictHeroes = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaHeroModel>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 内置的也找不到(不太可能)
+            if (_dictHeroes == null || CheckNeed2UpdateJson("heroes"))
+            {
+                try
+                {
+                    if (_dictHeroes == null)
+                    {
+                        var json = await GetConstant("heroes", _heroesJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictHeroes = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaHeroModel>>(json);
+                        }
+                    }
+                    else
+                    {
+                        _ = await GetConstant("heroes", _heroesJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
             return _dictHeroes;
         }
 
@@ -141,58 +141,55 @@ namespace Dotahold.Core.DataShop
         /// <returns></returns>
         public async Task<Dictionary<string, Core.Models.DotaItemModel>> GetItemsConstant()
         {
-            try
+            // 先去本地的Local文件夹找下载的最新的
+            if (_dictItems == null)
             {
-                // 先去本地的Local文件夹找下载的最新的
-                if (_dictItems == null)
+                try
                 {
-                    try
+                    var json = await StorageFilesCourier.ReadFileAsync(_itemsJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(_itemsJsonFileName);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictItems = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaItemModel>>(json, _jsonSerializerSettings);
-                        }
+                        _dictItems = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaItemModel>>(json);
                     }
-                    catch { }
                 }
-
-                // 找不到就用内置的
-                if (_dictItems == null)
-                {
-                    try
-                    {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\items.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictItems = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaItemModel>>(json, _jsonSerializerSettings);
-                        }
-                    }
-                    catch { }
-                }
-
-                // 内置的也找不到(不太可能)
-                if (_dictItems == null || Need2UpdateJson("items"))
-                {
-                    try
-                    {
-                        if (_dictItems == null)
-                        {
-                            var json = await GetConstant("items", _itemsJsonFileName);
-                            if (!string.IsNullOrEmpty(json))
-                            {
-                                _dictItems = JsonConvert.DeserializeObject<Dictionary<string, Core.Models.DotaItemModel>>(json, _jsonSerializerSettings);
-                            }
-                        }
-                        else
-                        {
-                            _ = await GetConstant("items", _itemsJsonFileName);
-                        }
-                    }
-                    catch { }
-                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+
+            // 找不到就用内置的
+            if (_dictItems == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\items.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictItems = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaItemModel>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 内置的也找不到(不太可能)
+            if (_dictItems == null || CheckNeed2UpdateJson("items"))
+            {
+                try
+                {
+                    if (_dictItems == null)
+                    {
+                        var json = await GetConstant("items", _itemsJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictItems = JsonSerializer.Deserialize<Dictionary<string, Core.Models.DotaItemModel>>(json);
+                        }
+                    }
+                    else
+                    {
+                        _ = await GetConstant("items", _itemsJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
             return _dictItems;
         }
 
@@ -202,58 +199,55 @@ namespace Dotahold.Core.DataShop
         /// <returns></returns>
         public async Task<Dictionary<string, string>> GetPermanentBuffsConstant()
         {
-            try
+            // 先去本地的Local文件夹找下载的最新的
+            if (_dictPermanentBuffs == null)
             {
-                // 先去本地的Local文件夹找下载的最新的
-                if (_dictPermanentBuffs == null)
+                try
                 {
-                    try
+                    var json = await StorageFilesCourier.ReadFileAsync(_buffsJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(_buffsJsonFileName);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictPermanentBuffs = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                        }
+                        _dictPermanentBuffs = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
                     }
-                    catch { }
                 }
-
-                // 找不到就用内置的
-                if (_dictPermanentBuffs == null)
-                {
-                    try
-                    {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\permanent_buffs.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictPermanentBuffs = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                        }
-                    }
-                    catch { }
-                }
-
-                // 内置的也找不到(不太可能)
-                if (_dictPermanentBuffs == null || Need2UpdateJson("permanent_buffs"))
-                {
-                    try
-                    {
-                        if (_dictPermanentBuffs == null)
-                        {
-                            var json = await GetConstant("permanent_buffs", _buffsJsonFileName);
-                            if (!string.IsNullOrEmpty(json))
-                            {
-                                _dictPermanentBuffs = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                            }
-                        }
-                        else
-                        {
-                            _ = await GetConstant("permanent_buffs", _buffsJsonFileName);
-                        }
-                    }
-                    catch { }
-                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+
+            // 找不到就用内置的
+            if (_dictPermanentBuffs == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\permanent_buffs.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictPermanentBuffs = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 内置的也找不到(不太可能)
+            if (_dictPermanentBuffs == null || CheckNeed2UpdateJson("permanent_buffs"))
+            {
+                try
+                {
+                    if (_dictPermanentBuffs == null)
+                    {
+                        var json = await GetConstant("permanent_buffs", _buffsJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictPermanentBuffs = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                        }
+                    }
+                    else
+                    {
+                        _ = await GetConstant("permanent_buffs", _buffsJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
             return _dictPermanentBuffs;
         }
 
@@ -263,58 +257,55 @@ namespace Dotahold.Core.DataShop
         /// <returns></returns>
         public async Task<Dictionary<string, string>> GetAbilityIDsConstant()
         {
-            try
+            // 先去本地的Local文件夹找下载的最新的
+            if (_dictAbilitiesId == null)
             {
-                // 先去本地的Local文件夹找下载的最新的
-                if (_dictAbilitiesId == null)
+                try
                 {
-                    try
+                    var json = await StorageFilesCourier.ReadFileAsync(_abilitiesJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
                     {
-                        var json = await StorageFilesCourier.ReadFileAsync(_abilitiesJsonFileName);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictAbilitiesId = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                        }
+                        _dictAbilitiesId = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
                     }
-                    catch { }
                 }
-
-                // 找不到就用内置的
-                if (_dictAbilitiesId == null)
-                {
-                    try
-                    {
-                        var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\ability_ids.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
-                        if (!string.IsNullOrEmpty(json))
-                        {
-                            _dictAbilitiesId = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                        }
-                    }
-                    catch { }
-                }
-
-                // 内置的也找不到(不太可能)
-                if (_dictAbilitiesId == null || Need2UpdateJson("ability_ids"))
-                {
-                    try
-                    {
-                        if (_dictAbilitiesId == null)
-                        {
-                            var json = await GetConstant("ability_ids", _abilitiesJsonFileName);
-                            if (!string.IsNullOrEmpty(json))
-                            {
-                                _dictAbilitiesId = JsonConvert.DeserializeObject<Dictionary<string, string>>(json, _jsonSerializerSettings);
-                            }
-                        }
-                        else
-                        {
-                            _ = await GetConstant("ability_ids", _abilitiesJsonFileName);
-                        }
-                    }
-                    catch { }
-                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+
+            // 找不到就用内置的
+            if (_dictAbilitiesId == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\ability_ids.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictAbilitiesId = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 内置的也找不到(不太可能)
+            if (_dictAbilitiesId == null || CheckNeed2UpdateJson("ability_ids"))
+            {
+                try
+                {
+                    if (_dictAbilitiesId == null)
+                    {
+                        var json = await GetConstant("ability_ids", _abilitiesJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictAbilitiesId = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                        }
+                    }
+                    else
+                    {
+                        _ = await GetConstant("ability_ids", _abilitiesJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
             return _dictAbilitiesId;
         }
 
@@ -324,43 +315,47 @@ namespace Dotahold.Core.DataShop
         /// <returns>下载的json</returns>
         private async Task<string> GetConstant(string constantName, string jsonFileName)
         {
+            string constantJson = string.Empty;
             string url = "https://api.opendota.com/api/constants/" + constantName;
             try
             {
                 var response = await _constantsHttpClient.GetAsync(new Uri(url));
-                string jsonMessage = await response.Content.ReadAsStringAsync();
+                constantJson = await response.Content.ReadAsStringAsync();
 
-                try
+                if (!string.IsNullOrWhiteSpace(constantJson) && constantJson.Length > 256/*太短的话认为是请求失败*/)
                 {
-                    if (!string.IsNullOrEmpty(jsonMessage) && jsonMessage.Length > 96/*太短的话通常是请求失败*/)
-                    {
-                        bool written = await StorageFilesCourier.WriteFileAsync(jsonFileName, jsonMessage);
+                    bool written = await StorageFilesCourier.WriteFileAsync(jsonFileName, constantJson);
 
-                        if (written)
-                        {
-                            _dictConstantsGottenDate[constantName] = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-                            SaveConstantsGottenDate();
-                        }
+                    if (written)
+                    {
+                        _dictConstantsGottenDate[constantName] = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+                        SaveConstantsGottenDate();
                     }
                 }
-                catch { }
-
-                return jsonMessage;
             }
-            catch { }
-            return string.Empty;
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+
+            return constantJson;
         }
 
 
-        private bool Need2UpdateJson(string constantName)
+        private bool CheckNeed2UpdateJson(string constantName)
         {
             try
             {
-                long nowDate = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-                if (_dictConstantsGottenDate != null && _dictConstantsGottenDate.ContainsKey(constantName) && ((nowDate - _dictConstantsGottenDate[constantName]) <= 172800))
+                long nowDateTime = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+
+                if (_dictConstantsGottenDate?.ContainsKey(constantName) == true &&
+                    nowDateTime - _dictConstantsGottenDate[constantName] <= 172800)
+                {
                     return false;
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+            }
+
             return true;
         }
 
@@ -369,33 +364,34 @@ namespace Dotahold.Core.DataShop
             try
             {
                 string json = await StorageFilesCourier.ReadFileAsync("constantsgottendate");
-                if (!string.IsNullOrEmpty(json))
+                if (!string.IsNullOrWhiteSpace(json))
                 {
-                    _dictConstantsGottenDate = JsonConvert.DeserializeObject<Dictionary<string, long>>(json);
+                    _dictConstantsGottenDate = JsonSerializer.Deserialize<Dictionary<string, long>>(json);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+
             try
             {
-                if (_dictConstantsGottenDate == null)
+                if (_dictConstantsGottenDate is null)
                 {
                     _dictConstantsGottenDate = new Dictionary<string, long>();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private async void SaveConstantsGottenDate()
         {
             try
             {
-                var json = JsonConvert.SerializeObject(_dictConstantsGottenDate);
-                if (!string.IsNullOrEmpty(json))
+                var json = JsonSerializer.Serialize(_dictConstantsGottenDate);
+                if (!string.IsNullOrWhiteSpace(json))
                 {
                     await StorageFilesCourier.WriteFileAsync("constantsgottendate", json);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         public void ResetConstantsGottenDate()
@@ -405,7 +401,7 @@ namespace Dotahold.Core.DataShop
                 _dictConstantsGottenDate?.Clear();
                 SaveConstantsGottenDate();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

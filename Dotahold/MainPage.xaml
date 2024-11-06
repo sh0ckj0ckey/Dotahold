@@ -30,7 +30,7 @@
             <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
                         FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="heroes" Click="OnClickSidebarButton">
-                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}" Opacity="{x:Bind ViewModel.iSideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=0}">
+                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=0}">
                         <Image.OpacityTransition>
                             <ScalarTransition />
                         </Image.OpacityTransition>
@@ -38,7 +38,7 @@
                 </Button>
                 <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
                         FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="items" Click="OnClickSidebarButton">
-                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}" Opacity="{x:Bind ViewModel.iSideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=1}">
+                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=1}">
                         <Image.OpacityTransition>
                             <ScalarTransition />
                         </Image.OpacityTransition>
@@ -46,7 +46,7 @@
                 </Button>
                 <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
                         FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="matches" Click="OnClickSidebarButton">
-                    <Image Width="32" Height="32" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}" Opacity="{x:Bind ViewModel.iSideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=2}">
+                    <Image Width="32" Height="32" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=2}">
                         <Image.OpacityTransition>
                             <ScalarTransition />
                         </Image.OpacityTransition>
@@ -54,8 +54,9 @@
                 </Button>
             </StackPanel>
             <!--Setting button-->
-            <Button Width="54" Height="48" Margin="0,0,0,4" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="OnClickSettingsButton">
-                <muxc:AnimatedIcon x:Name="SettingsAnimatedIcon" Height="22" Width="22" Opacity="{x:Bind ViewModel.iSideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=3}">
+            <Button Width="54" Height="48" Margin="0,0,0,4" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                    FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="settings" Click="OnClickSidebarButton">
+                <muxc:AnimatedIcon x:Name="SettingsAnimatedIcon" Height="22" Width="22" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=3}">
                     <muxc:AnimatedIcon.Source>
                         <animatedvisuals:AnimatedSettingsVisualSource/>
                     </muxc:AnimatedIcon.Source>
@@ -65,6 +66,7 @@
                 </muxc:AnimatedIcon>
             </Button>
         </Grid>
+        
         <Frame x:Name="MainFrame" Grid.Column="1" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

@@ -18,7 +18,7 @@ namespace Dotahold.Converters
                     return value.ToString().ToLower() == parameter.ToString().ToLower() ? 1.0 : 0.5;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return 0.5;
         }
 

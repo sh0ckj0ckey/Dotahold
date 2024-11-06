@@ -52,7 +52,7 @@ namespace Dotahold.ViewModels
                 {
                     profile = await GetResponseAsync<DotaMatchPlayerProfileModel>(url, _playerInfoHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (profile != null)
                 {
@@ -94,7 +94,7 @@ namespace Dotahold.ViewModels
                     AddDotaIdHistory(prof.personaname, prof.avatarfull, steamId);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Dotahold.ViewModels
                 DotaViewModel.Instance.AppSettings.sSteamID = steamId;
                 sSteamId = steamId;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Dotahold.ViewModels
 
                 await his.LoadImageAsync(56);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private async void LoadBindedDotaIdHistory()
@@ -179,7 +179,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private async void SaveBindedDotaIdHistory()
@@ -192,7 +192,7 @@ namespace Dotahold.ViewModels
                     await StorageFilesCourier.WriteFileAsync("dotaidbindhistory", json);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
     }

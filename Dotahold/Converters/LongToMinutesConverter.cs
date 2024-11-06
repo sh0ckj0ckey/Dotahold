@@ -39,7 +39,7 @@ namespace Dotahold.Converters
                 stringBuilder.Append(sec);
                 return stringBuilder.ToString();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return "00:00";
         }
 

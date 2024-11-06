@@ -29,7 +29,7 @@ namespace Dotahold.UI
             {
                 ViewModel = DotaHeroesViewModel.Instance;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

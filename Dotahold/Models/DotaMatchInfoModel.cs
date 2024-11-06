@@ -42,16 +42,16 @@ namespace Dotahold.Models
         //public int ord { get; set; }
         //public long match_id { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroImage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroName { get; set; }
 
         // 比赛英雄图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -69,7 +69,7 @@ namespace Dotahold.Models
                     this.ImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
@@ -139,9 +139,9 @@ namespace Dotahold.Models
         public Dictionary<string, Benchmark> benchmarks { get; set; }
 
         // 物品购买记录
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private ObservableCollection<Purchase_Log> _vPurchaseLog = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public ObservableCollection<Purchase_Log> vPurchaseLog
         {
             get { return _vPurchaseLog; }
@@ -149,9 +149,9 @@ namespace Dotahold.Models
         }
 
         // 数据排行
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private ObservableCollection<Benchmark> _vBenchmarks = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public ObservableCollection<Benchmark> vBenchmarks
         {
             get { return _vBenchmarks; }
@@ -159,9 +159,9 @@ namespace Dotahold.Models
         }
 
         // 技能加点顺序
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private ObservableCollection<AbilityUpgrade> _vAbilitiesUpgrade = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public ObservableCollection<AbilityUpgrade> vAbilitiesUpgrade
         {
             get { return _vAbilitiesUpgrade; }
@@ -169,9 +169,9 @@ namespace Dotahold.Models
         }
 
         // KDA
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sKDA = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sKDA
         {
             get { return _sKDA; }
@@ -179,36 +179,36 @@ namespace Dotahold.Models
         }
 
         // 目前只处理熊灵这一个额外单位
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public Additional_Units SpiritBear { get; set; } = null;
 
         // 开黑队伍编号
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public int iPartyId { get; set; } = 0;
 
         // 是否是当前登录玩家
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public bool bIsCurrentPlayer { get; set; } = false;
 
         // 是否激活神杖
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public bool bHaveAghanimScepter { get; set; } = false;
 
         // 是否激活魔晶
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public bool bHaveAghanimShard { get; set; } = false;
 
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroImage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroName { get; set; }
 
         // 英雄图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -226,125 +226,125 @@ namespace Dotahold.Models
                     this.ImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem3 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem4 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem5 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemN { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem3 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem4 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem5 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemN { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item0ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
             private set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
             private set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
             private set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
             private set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
             private set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
             private set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
             private set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
             private set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
             private set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
@@ -396,30 +396,30 @@ namespace Dotahold.Models
                     ItemNImageSource = await ImageCourier.GetImageAsync(sItemN, itemDecodeWidth, 0);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
     public class AbilityUpgrade : ViewModelBase
     {
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private static BitmapImage _defaultAbilityImage = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private static BitmapImage _talentAbilityImage = null;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sAbilityUrl { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sAbilityName { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public bool bIsTalent { get; set; } = false;
 
         // 英雄图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _AbilityImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage AbilityImageSource
         {
             get { return _AbilityImageSource; }
@@ -459,7 +459,7 @@ namespace Dotahold.Models
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
@@ -483,122 +483,122 @@ namespace Dotahold.Models
         public int? backpack_2 { get; set; }
         public int? item_neutral { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem3 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem4 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItem5 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemB2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sNameItemN { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem3 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem4 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItem5 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB0 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB1 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemB2 { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sItemN { get; set; } = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item0ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item0ImageSource
         {
             get { return _Item0ImageSource; }
             private set { Set("Item0ImageSource", ref _Item0ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item1ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item1ImageSource
         {
             get { return _Item1ImageSource; }
             private set { Set("Item1ImageSource", ref _Item1ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item2ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item2ImageSource
         {
             get { return _Item2ImageSource; }
             private set { Set("Item2ImageSource", ref _Item2ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item3ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item3ImageSource
         {
             get { return _Item3ImageSource; }
             private set { Set("Item3ImageSource", ref _Item3ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item4ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item4ImageSource
         {
             get { return _Item4ImageSource; }
             private set { Set("Item4ImageSource", ref _Item4ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _Item5ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage Item5ImageSource
         {
             get { return _Item5ImageSource; }
             private set { Set("Item5ImageSource", ref _Item5ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB0ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB0ImageSource
         {
             get { return _ItemB0ImageSource; }
             private set { Set("ItemB0ImageSource", ref _ItemB0ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB1ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB1ImageSource
         {
             get { return _ItemB1ImageSource; }
             private set { Set("ItemB1ImageSource", ref _ItemB1ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemB2ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemB2ImageSource
         {
             get { return _ItemB2ImageSource; }
             private set { Set("ItemB2ImageSource", ref _ItemB2ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemNImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemNImageSource
         {
             get { return _ItemNImageSource; }
@@ -650,31 +650,31 @@ namespace Dotahold.Models
                     ItemNImageSource = await ImageCourier.GetImageAsync(sItemN, itemDecodeWidth, 0);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
     public class Permanent_Buffs : ViewModelBase
     {
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private static Dictionary<string, BitmapImage> _dictBuffs = new Dictionary<string, BitmapImage>();
 
         public int? permanent_buff { get; set; }
         public int? stack_count { get; set; }
 
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sBuff { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _BuffImageSource = ConstantsCourier.DefaultItemImageSource72;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage BuffImageSource
         {
             get { return _BuffImageSource; }
             private set { Set("BuffImageSource", ref _BuffImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private bool _loadedPermanentBuffImage = false;
         public async Task LoadBuffImageAsync(int imageDecodeHeight)
         {
@@ -717,7 +717,7 @@ namespace Dotahold.Models
 
                 _loadedPermanentBuffImage = true;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
@@ -727,15 +727,15 @@ namespace Dotahold.Models
         public string key { get; set; }
         public int? charges { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string PurchaseTime { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string ItemCharges { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ItemImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ItemImageSource
         {
             get { return _ItemImageSource; }
@@ -754,7 +754,7 @@ namespace Dotahold.Models
                     this.ItemImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 
@@ -769,10 +769,10 @@ namespace Dotahold.Models
         public double raw { get; set; }
         public double pct { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string Name { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public double BarWidth { get; set; } = 0;
     }
 }

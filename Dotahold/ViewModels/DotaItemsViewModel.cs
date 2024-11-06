@@ -141,7 +141,7 @@ namespace Dotahold.ViewModels
                             dictIdToAllItems.Add(item.id, item);
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
 
                 bLoadingItems = false;
@@ -155,7 +155,7 @@ namespace Dotahold.ViewModels
                             vAllShowItemsList.Add(item);
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
             }
             catch { _bLoadedDotaItems = false; }
@@ -218,7 +218,7 @@ namespace Dotahold.ViewModels
                     bSearchingItems = false;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

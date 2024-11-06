@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI;
 using Windows.Foundation;
+using Dotahold.Core.DataShop;
 
 namespace Dotahold.UI
 {
@@ -187,7 +188,7 @@ namespace Dotahold.UI
                     args.DrawingSession.DrawTextLayout(textLayout, offset, offset, this.TextColor);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         protected override Size MeasureOverride(Size availableSize)

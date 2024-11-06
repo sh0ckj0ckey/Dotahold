@@ -1,14 +1,13 @@
-﻿using Dotahold.Core.DataShop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Dotahold.Core.DataShop;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Core.Models
 {
-    public class DotaHeroModel : ViewModelBase
+    public class DotaHeroModel : ObservableObject
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -40,22 +39,42 @@ namespace Dotahold.Core.Models
         public bool? cm_enabled { get; set; }
         public double legs { get; set; }
 
-        // 英雄图片
-        [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage _ImageSource = ConstantsCourier.DefaultHeroImageSource72;
-        [Newtonsoft.Json.JsonIgnore]
+
+        [JsonIgnore] private bool _loadedImage = false;
+
+        [JsonIgnore] private BitmapImage _imageSource = ConstantsCourier.DefaultHeroImageSource72;
+
+        [JsonIgnore] private BitmapImage _iconSource = null;
+
+        /// <summary>
+        /// 英雄图片
+        /// </summary>
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
-            get { return _ImageSource; }
-            private set { Set("ImageSource", ref _ImageSource, value); }
+            get => _imageSource;
+            private set => SetProperty(ref _imageSource, value);
         }
-        [Newtonsoft.Json.JsonIgnore]
-        private bool _loadedImage = false;
+
+        /// <summary>
+        /// 英雄小头像
+        /// </summary>
+        [JsonIgnore]
+        public BitmapImage IconSource
+        {
+            get => _iconSource;
+            private set => SetProperty(ref _iconSource, value);
+        }
+
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (_loadedImage || string.IsNullOrWhiteSpace(this.img)) return;
+                if (_loadedImage || string.IsNullOrWhiteSpace(this.img))
+                {
+                    return;
+                }
+
                 var imageSource = await ImageCourier.GetImageAsync(this.img, decodeWidth, 0);
                 if (imageSource != null)
                 {
@@ -63,30 +82,25 @@ namespace Dotahold.Core.Models
                     _loadedImage = true;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        // 英雄小头像
-        [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage _IconSource = null;
-        [Newtonsoft.Json.JsonIgnore]
-        public BitmapImage IconSource
-        {
-            get { return _IconSource; }
-            private set { Set("IconSource", ref _IconSource, value); }
-        }
         public async Task LoadIconAsync(int decodeWidth)
         {
             try
             {
-                if (this.IconSource != null || string.IsNullOrWhiteSpace(this.icon)) return;
+                if (this.IconSource != null || string.IsNullOrWhiteSpace(this.icon))
+                {
+                    return;
+                }
+
                 var iconSource = await ImageCourier.GetImageAsync(this.icon, decodeWidth, 0);
                 if (iconSource != null)
                 {
                     this.IconSource = iconSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

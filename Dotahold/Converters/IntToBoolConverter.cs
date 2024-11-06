@@ -29,7 +29,7 @@ namespace Dotahold.Converters
                     return parameter.ToString() == value.ToString();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return false;
         }
 

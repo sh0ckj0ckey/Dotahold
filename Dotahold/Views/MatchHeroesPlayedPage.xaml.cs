@@ -35,7 +35,7 @@ namespace Dotahold.Views
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void OnClickPlayedHeroMatch(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace Dotahold.Views
                     this.Frame.Navigate(typeof(MatchHeroMatchesPage));
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

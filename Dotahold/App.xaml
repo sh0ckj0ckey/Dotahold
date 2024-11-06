@@ -34,7 +34,7 @@
                     <SolidColorBrush x:Key="GridViewItemRevealBackgroundSelectedPressed" Color="Transparent" />
                     <SolidColorBrush x:Key="GridViewItemRevealPlaceholderBackground" Color="Transparent" />
 
-                    <Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>
+                    <!--<Thickness x:Key="ScrollViewerScrollBarMargin">0</Thickness>-->
 
                 </ResourceDictionary>
             </muxc:XamlControlsResources.MergedDictionaries>

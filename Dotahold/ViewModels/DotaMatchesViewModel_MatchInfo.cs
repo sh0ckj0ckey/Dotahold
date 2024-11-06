@@ -296,7 +296,7 @@ namespace Dotahold.ViewModels
                     //}
                     #endregion
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (matchInfo != null && matchInfo.match_id == CurrentMatchId)
                 {
@@ -317,7 +317,7 @@ namespace Dotahold.ViewModels
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 玩家列表
                     try
@@ -344,7 +344,7 @@ namespace Dotahold.ViewModels
                                         player.sHeroImage = DotaHeroesViewModel.Instance.dictAllHeroes[player.hero_id.ToString()].img;
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 玩家的物品
                                 try
@@ -370,7 +370,7 @@ namespace Dotahold.ViewModels
                                     player.sNameItemB2 = GetItemNameById(player.backpack_2?.ToString());
                                     player.sNameItemN = GetItemNameById(player.item_neutral?.ToString());
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 判断是天辉还是夜魇
                                 try
@@ -380,7 +380,7 @@ namespace Dotahold.ViewModels
                                         player.isRadiant = player.player_slot < 128 ? true : false;
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 判断是否是当前绑定账号的玩家
                                 try
@@ -390,7 +390,7 @@ namespace Dotahold.ViewModels
                                         player.bIsCurrentPlayer = true;
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 神杖和魔晶
                                 try
@@ -412,7 +412,7 @@ namespace Dotahold.ViewModels
                                         }
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 玩家的开黑编号
                                 try
@@ -429,7 +429,7 @@ namespace Dotahold.ViewModels
                                         player.iPartyId = playersPartyDict[id];
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 额外单位，目前只处理德鲁伊(hero_id=80)的熊灵
                                 try
@@ -471,7 +471,7 @@ namespace Dotahold.ViewModels
                                         }
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                                 // 处理表现对比
                                 if (player.isRadiant != false)
@@ -483,7 +483,7 @@ namespace Dotahold.ViewModels
                                     rightPlayers.Add(player);
                                 }
                             }
-                            catch { }
+                            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                         }
                         foreach (var player in matchInfo.players)
                         {
@@ -496,7 +496,7 @@ namespace Dotahold.ViewModels
                                     await player.SpiritBear?.LoadItemsImageAsync(44, 35, 134);
                                 }
                             }
-                            catch { }
+                            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                         }
 
                         // 玩家表现对比
@@ -583,9 +583,9 @@ namespace Dotahold.ViewModels
                                 CurrentMatchTeamfightPerformCompare.Add(compare);
                             }
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 双方职业战队
                     try
@@ -605,12 +605,12 @@ namespace Dotahold.ViewModels
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     CurrentMatchInfo = matchInfo;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingOneMatchInfo = false; }
         }
 
@@ -635,7 +635,7 @@ namespace Dotahold.ViewModels
                             player.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // buffs
                     try
@@ -662,7 +662,7 @@ namespace Dotahold.ViewModels
                                         buff.sBuff = "buff_placeholder";
                                     }
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                             }
                             foreach (var buff in player.permanent_buffs)
                             {
@@ -670,11 +670,11 @@ namespace Dotahold.ViewModels
                                 {
                                     buff?.LoadBuffImageAsync(36);
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // abilities
                     try
@@ -706,7 +706,7 @@ namespace Dotahold.ViewModels
                                             player.vAbilitiesUpgrade.Add(abilityUp);
                                         }
                                     }
-                                    catch { }
+                                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                                 }
                                 foreach (var ability in player.vAbilitiesUpgrade)
                                 {
@@ -714,12 +714,12 @@ namespace Dotahold.ViewModels
                                     {
                                         ability?.LoadAbilityImageAsync(48);
                                     }
-                                    catch { }
+                                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                                 }
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // benchmarks
                     try
@@ -752,14 +752,14 @@ namespace Dotahold.ViewModels
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // runes
                     try
                     {
                         if (player.runes_log == null) player.runes_log = new List<Runes_Log>();
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // purchase log
                     try
@@ -792,15 +792,15 @@ namespace Dotahold.ViewModels
                                 {
                                     purchase?.LoadImageAsync(44);
                                 }
-                                catch { }
+                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
                 this.CurrentMatchPlayer = player;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #region 折线图
@@ -1175,7 +1175,7 @@ namespace Dotahold.ViewModels
                     bHaveRadiantAdv = false;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -1237,7 +1237,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -1299,7 +1299,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion

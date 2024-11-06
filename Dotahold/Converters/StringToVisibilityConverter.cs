@@ -19,7 +19,7 @@ namespace Dotahold.Converters
                     return Visibility.Visible;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return Visibility.Collapsed;
         }
 

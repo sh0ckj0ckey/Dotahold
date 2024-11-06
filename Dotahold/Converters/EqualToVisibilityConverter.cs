@@ -19,7 +19,7 @@ namespace Dotahold.Converters
                     return value.ToString().ToLower() == parameter.ToString().ToLower() ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return Visibility.Collapsed;
         }
 

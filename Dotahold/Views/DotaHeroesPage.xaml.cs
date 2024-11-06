@@ -41,7 +41,7 @@ namespace Dotahold.Views
                 ViewModel = DotaHeroesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
         /// <summary>
         /// 重写导航至此页面的代码,显示动画
@@ -61,7 +61,7 @@ namespace Dotahold.Views
                 bool load = await DotaHeroesViewModel.Instance?.LoadDotaHeroes();
                 if (load) DotaHeroesViewModel.Instance?.LoadHeroesImages();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Dotahold.Views
                     Frame.Navigate(typeof(HeroInfoPage), null, snti);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Dotahold.Views
                     HandleAnimationBackFromHeroInfo(gv, ViewModel.CurrentHero);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private async void HandleAnimationBackFromHeroInfo(GridView gv, Core.Models.DotaHeroModel item)
@@ -125,7 +125,7 @@ namespace Dotahold.Views
                     gv.Focus(FocusState.Programmatic);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

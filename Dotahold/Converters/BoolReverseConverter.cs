@@ -19,7 +19,7 @@ namespace Dotahold.Converters
                     return bool.Parse(value?.ToString() ?? "True") ? false : true;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return false;
         }
 

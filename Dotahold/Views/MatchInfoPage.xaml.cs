@@ -42,7 +42,7 @@ namespace Dotahold.Views
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Dotahold.Views
                     this.Frame.GoBack();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Dotahold.Views
 
                 BanPickScrollViewer?.ChangeView(0, 0, 1, true);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Dotahold.Views
                 PlayersGoldToggleButton.IsChecked = false;
                 PlayersExpToggleButton.IsChecked = false;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Dotahold.Views
                     await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Dotahold.Views
                     this.Frame.Navigate(typeof(MatchPlayerPage), null, SlideNaviTransition);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>

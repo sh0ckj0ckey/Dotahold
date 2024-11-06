@@ -26,18 +26,18 @@ namespace Dotahold.Models
         public string last_login { get; set; }
         public string rank_tier { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public int iRank { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = ConstantsCourier.DefaultAvatarImageSource72;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
             private set { Set("ImageSource", ref _ImageSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private bool _loadedImage = false;
         public async Task LoadImageAsync(int decodeWidth)
         {
@@ -51,7 +51,7 @@ namespace Dotahold.Models
                     _loadedImage = true;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 

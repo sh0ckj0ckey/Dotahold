@@ -1,16 +1,14 @@
-﻿using Dotahold.Core.DataShop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Dotahold.Core.DataShop;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Core.Models
 {
-    public class DotaItemModel : ViewModelBase
+    public class DotaItemModel : ObservableObject
     {
-
         /// <summary>
         /// 使用的介绍，可能有多条，例如第一条是主动效果，第二条是被动
         /// </summary>
@@ -97,22 +95,30 @@ namespace Dotahold.Core.Models
         /// </summary>
         public string mc { get; set; }
 
-        // 装备图片
-        [Newtonsoft.Json.JsonIgnore]
-        private BitmapImage _ImageSource = ConstantsCourier.DefaultItemImageSource72;
-        [Newtonsoft.Json.JsonIgnore]
+
+        [JsonIgnore] private bool _loadedImage = false;
+
+        [JsonIgnore] private BitmapImage _imageSource = ConstantsCourier.DefaultItemImageSource72;
+
+        /// <summary>
+        /// 装备图片
+        /// </summary>
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
-            get { return _ImageSource; }
-            private set { Set("ImageSource", ref _ImageSource, value); }
+            get => _imageSource;
+            private set => SetProperty(ref _imageSource, value);
         }
-        [Newtonsoft.Json.JsonIgnore]
-        private bool _loadedImage = false;
+
         public async Task LoadImageAsync(int decodeWidth)
         {
             try
             {
-                if (_loadedImage || string.IsNullOrWhiteSpace(this.img)) return;
+                if (_loadedImage || string.IsNullOrWhiteSpace(this.img))
+                {
+                    return;
+                }
+
                 var imageSource = await ImageCourier.GetImageAsync(this.img, decodeWidth, 0);
                 if (imageSource != null)
                 {
@@ -120,7 +126,7 @@ namespace Dotahold.Core.Models
                     _loadedImage = true;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 

@@ -62,7 +62,7 @@ namespace Dotahold
                 rootFrame = new Frame();
 
                 // 设置一下主题
-                rootFrame.RequestedTheme = SettingsCourier.Instance.iAppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
+                rootFrame.RequestedTheme = SettingsCourier.Instance.AppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -73,8 +73,6 @@ namespace Dotahold
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
-
-                RegisterExceptionHandlingSynchronizationContext();
             }
 
             if (e.PrelaunchActivated == false)
@@ -93,11 +91,7 @@ namespace Dotahold
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            try
-            {
-                base.OnActivated(args);
-            }
-            catch { }
+            base.OnActivated(args);
         }
 
         /// <summary>
@@ -108,6 +102,7 @@ namespace Dotahold
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             e.Handled = true;
+            LogCourier.LogAsync($"Navigation to {e?.SourcePageType} failed, {e?.Exception?.Message}");
         }
 
         /// <summary>
@@ -120,33 +115,19 @@ namespace Dotahold
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: 保存应用程序状态并停止任何后台活动
+            // 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            Debug.WriteLine("Exception Message: " + e.Message);
-            Debug.WriteLine("Instance caused this exception: " + e.Exception.InnerException);
-            Debug.WriteLine("\n stack trace: " + e.Exception.StackTrace);
+            LogCourier.LogAsync($"Unhandled exception: {e?.Message}");
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
         {
-            // 后台线程异常
-            Debug.WriteLine("CurrentDomain Unhandled Exception:\r\n" + e.ExceptionObject.ToString());
-        }
-
-        private void RegisterExceptionHandlingSynchronizationContext()
-        {
-            ExceptionHandlingSynchronizationContext.Register().UnhandledException += SynchronizationContext_UnhandledException;
-        }
-
-        private void SynchronizationContext_UnhandledException(object sender, AysncUnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
-            Debug.WriteLine("Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message);
+            LogCourier.LogAsync($"CurrentDomain unhandled exception: {e?.ExceptionObject}");
         }
     }
 }

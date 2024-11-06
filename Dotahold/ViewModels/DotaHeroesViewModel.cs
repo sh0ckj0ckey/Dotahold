@@ -12,9 +12,6 @@ namespace Dotahold.ViewModels
 {
     public class DotaHeroesViewModel : ViewModelBase
     {
-        private static Lazy<DotaHeroesViewModel> _lazyVM = new Lazy<DotaHeroesViewModel>(() => new DotaHeroesViewModel());
-        public static DotaHeroesViewModel Instance => _lazyVM.Value;
-
         // 所有英雄
         public Dictionary<string, Core.Models.DotaHeroModel> dictAllHeroes { get; set; } = new Dictionary<string, Core.Models.DotaHeroModel>();
 
@@ -275,9 +272,9 @@ namespace Dotahold.ViewModels
                         return infoModel;
                     }
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingHeroInfo = false; }
             return null;
         }
@@ -305,7 +302,7 @@ namespace Dotahold.ViewModels
                                 talentNameLoc = talentNameLoc.Replace($"{{s:{v.name}}}", value);
                             }
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
                     foreach (var abi in info.abilities)
                     {
@@ -323,7 +320,7 @@ namespace Dotahold.ViewModels
                                             talentNameLoc = talentNameLoc.Replace($"{{s:bonus_{v.name}}}", value);
                                         }
                                     }
-                                    catch { }
+                                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                                 }
                             }
                         }
@@ -341,7 +338,7 @@ namespace Dotahold.ViewModels
                 info.sTalentNameLoc25L = info?.talents[6]?.name_loc;
                 info.sTalentNameLoc25R = info?.talents[7]?.name_loc;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
             #region JavaScriptCode from dota2.com 2022/8/7 main.js?v=7ovgxfp53jKo&l=english&_cdn=cloudflare
             // Ri = function(e, t)
@@ -412,7 +409,7 @@ namespace Dotahold.ViewModels
                             ability.notesStr = notesLocSb.ToString();
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能是否有神杖效果
                     try
@@ -430,7 +427,7 @@ namespace Dotahold.ViewModels
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能是否有魔晶效果
                     try
@@ -448,7 +445,7 @@ namespace Dotahold.ViewModels
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能伤害类型
                     try
@@ -473,7 +470,7 @@ namespace Dotahold.ViewModels
                                 break;
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能是否可以驱散
                     try
@@ -491,7 +488,7 @@ namespace Dotahold.ViewModels
                                 break;
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能是否无视魔免
                     try
@@ -511,7 +508,7 @@ namespace Dotahold.ViewModels
                                 break;
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能作用目标
                     try
@@ -548,7 +545,7 @@ namespace Dotahold.ViewModels
                                 break;
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能类型
                     try
@@ -577,7 +574,7 @@ namespace Dotahold.ViewModels
                                                 ? "Passive" : string.Empty;
                         }
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     // 技能其他的数值
                     try
@@ -625,7 +622,7 @@ namespace Dotahold.ViewModels
                         ability.specialValuesStr = specialValuesSb.ToString().TrimEnd('\n');
                         ability.specialValuesStr = OrganizeLocString(ability.specialValuesStr, null);
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     //// 技能范围
                     //try
@@ -655,7 +652,7 @@ namespace Dotahold.ViewModels
                     //        }
                     //    }
                     //}
-                    //catch { }
+                    //catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                     //// 技能间隔
                     //try
@@ -685,7 +682,7 @@ namespace Dotahold.ViewModels
                     //        }
                     //    }
                     //}
-                    //catch { }
+                    //catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
 
                 foreach (var ability in info.abilities)
@@ -693,7 +690,7 @@ namespace Dotahold.ViewModels
                     await ability.LoadImageAsync(64);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
             #region JavaScriptCode from dota2.com 2022/8/7 main.js?v=7ovgxfp53jKo&l=english&_cdn=cloudflare
             /*
@@ -1251,7 +1248,7 @@ namespace Dotahold.ViewModels
                             item.score = score;
                             vRankingPlayers.Add(item);
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
                     foreach (var item in ranking.rankings)
                     {
@@ -1259,7 +1256,7 @@ namespace Dotahold.ViewModels
                         {
                             await item.LoadImageAsync(36);
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
                 }
             }
@@ -1303,9 +1300,9 @@ namespace Dotahold.ViewModels
                         return rankingModel;
                     }
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingHeroRanking = false; }
             return null;
         }
@@ -1336,7 +1333,7 @@ namespace Dotahold.ViewModels
                 }
                 return strText;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return str;
         }
     }

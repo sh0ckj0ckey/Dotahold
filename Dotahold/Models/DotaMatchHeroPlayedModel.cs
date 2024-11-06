@@ -21,19 +21,19 @@ namespace Dotahold.Models
         public double? against_games { get; set; }
         public double? against_win { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroCoverImage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroName { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sWinRate { get; set; } = string.Empty;
 
         // 封面图片(英雄小头像)
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -51,7 +51,7 @@ namespace Dotahold.Models
                     this.ImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Dotahold.Models
         public string AvatarImage { get; set; } = string.Empty;
         public string SteamId { get; set; } = string.Empty;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -36,7 +36,7 @@ namespace Dotahold.Models
                     this.ImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingHeroesAndItems = false; }
         }
 
@@ -182,7 +182,7 @@ namespace Dotahold.ViewModels
                 var result = JsonConvert.DeserializeObject<T>(jsonMessage, jsonSerializerSettings);
                 return result;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return default;
         }
 
@@ -206,7 +206,7 @@ namespace Dotahold.ViewModels
                 {
                     wl = await GetResponseAsync<DotaMatchWinLoseModel>(url, _playerInfoHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (wl != null && (wl.win + wl.lose) > 0)
                 {
@@ -217,7 +217,7 @@ namespace Dotahold.ViewModels
                     ActUpdateWinRateCapsule?.Invoke(PlayerWinLose.win, PlayerWinLose.lose);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Dotahold.ViewModels
                 {
                     totals = await GetResponseAsync<List<DotaMatchPlayerTotalModel>>(url, _playerInfoHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (totals != null && totals.Count > 0)
                 {
@@ -276,7 +276,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Dotahold.ViewModels
                 {
                     recentMatches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, _matchHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (recentMatches != null)
                 {
@@ -336,7 +336,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -356,14 +356,14 @@ namespace Dotahold.ViewModels
                 {
                     online = await GetResponseAsync<DotaOnlinePlayersModel>(url, _playerInfoHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (online?.response?.result == 1)
                 {
                     sOnlilnePlayersCount = online.response.player_count.ToString();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace Dotahold.ViewModels
                     string url = string.Format("https://api.opendota.com/api/players/{0}/matches", sSteamId);
                     matches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, _matchHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (matches == null) return _vAllMatchesList;
 
@@ -444,7 +444,7 @@ namespace Dotahold.ViewModels
 
                 return _vAllMatchesList;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingAllMatches = false; }
             return _vAllMatchesList;
         }
@@ -483,7 +483,7 @@ namespace Dotahold.ViewModels
 
                         vAllMatches.Add(item);
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
 
                 if (_vAllMatchesList.Count <= vAllMatches.Count)
@@ -495,7 +495,7 @@ namespace Dotahold.ViewModels
                     bLoadedAllMatches = false;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Dotahold.ViewModels
                 string url = string.Format("https://api.opendota.com/api/players/{0}/refresh", id);
                 await _playerInfoHttpClient.PostAsync(new Uri(url), null);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return string.Empty;
         }
 
@@ -550,7 +550,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return string.Empty;
         }
 
@@ -571,7 +571,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return string.Empty;
         }
 
@@ -624,7 +624,7 @@ namespace Dotahold.ViewModels
                 {
                     heroes = await GetResponseAsync<List<DotaMatchHeroPlayedModel>>(url, _matchHttpClient);
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 if (heroes != null)
                 {
@@ -654,7 +654,7 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             finally { bLoadingPlayed = false; }
         }
 
@@ -693,7 +693,7 @@ namespace Dotahold.ViewModels
                                 vOneHeroMatches.Add(item);
                             }
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
 
                     foreach (var item in vOneHeroMatches)
@@ -702,11 +702,11 @@ namespace Dotahold.ViewModels
                         {
                             await item.LoadHorizonImageAsync(64);
                         }
-                        catch { }
+                        catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion

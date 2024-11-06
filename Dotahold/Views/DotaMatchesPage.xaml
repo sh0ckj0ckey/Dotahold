@@ -451,7 +451,7 @@
                                Text="{x:Bind ViewModel.PlayerProfile.profile.personaname,Mode=OneWay}" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis}}"/>
                     <TextBlock TextTrimming="CharacterEllipsis" CharacterSpacing="60" Margin="0,2,4,0"
                                FontSize="20" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"
-                               Text="{x:Bind ViewModel.sSteamId,Mode=OneWay}" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
+                               Text="{x:Bind ViewModel.SteamId,Mode=OneWay}" Visibility="{x:Bind ViewModel.PlayerProfile,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
                 </Grid>
                 <!--搜索框-->
                 <TextBox x:Name="TitleSearchTextBox" Grid.Column="1" Visibility="{x:Bind ViewModel.bSearchingByMatchId,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
@@ -503,7 +503,7 @@
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                             <MenuFlyoutSeparator Opacity="0.3"/>
-                            <MenuFlyoutItem x:Name="GameIDMenuFlyoutItem" Text="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource StrForamt},ConverterParameter=ID: {0}}"
+                            <MenuFlyoutItem x:Name="GameIDMenuFlyoutItem" Text="{x:Bind ViewModel.SteamId,Mode=OneWay,Converter={StaticResource StrForamt},ConverterParameter=ID: {0}}"
                                             Click="GameIDMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="Placeholder" Margin="0,4,0,0"/>
@@ -605,7 +605,7 @@
                             HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent"
                             Padding="0" Content="&#xF78A;" FontSize="14" FontFamily="{ThemeResource SymbolThemeFontFamily}"
                             Click="BackAppBarButton_Click"
-                            Visibility="{x:Bind ViewModel.sSteamId,Mode=OneWay,Converter={StaticResource Str2Vis}}"/>
+                            Visibility="{x:Bind ViewModel.SteamID,Mode=OneWay,Converter={StaticResource Str2Vis}}"/>
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-4,0,0">
                         <TextBox x:Name="SteamIDTextBox" Height="38" Width="256" Margin="0,0,12,0" FontWeight="Medium" CharacterSpacing="60" UseLayoutRounding="True"

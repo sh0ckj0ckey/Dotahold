@@ -48,7 +48,7 @@ namespace Dotahold.Converters
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return Ping0Color;
         }
 

@@ -1,9 +1,5 @@
-﻿using Dotahold.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.Storage;
 
 namespace Dotahold.Core.DataShop
@@ -11,7 +7,7 @@ namespace Dotahold.Core.DataShop
     /// <summary>
     /// 这是一只信使，帮你运送你需要的设置项
     /// </summary>
-    public class SettingsCourier : ViewModelBase
+    public class SettingsCourier : ObservableObject
     {
         private const string SETTING_NAME_APPEARANCEINDEX = "AppearanceIndex";
         private const string SETTING_NAME_STARTUPINDEX = "StartupPage";
@@ -19,242 +15,215 @@ namespace Dotahold.Core.DataShop
         private const string SETTING_NAME_SEARCHMODE = "ItemsSearchFuzzy";
         private const string SETTING_NAME_STEAMID = "SteamID";
 
-        private static Lazy<SettingsCourier> _lazyVM = new Lazy<SettingsCourier>(() => new SettingsCourier());
-        public static SettingsCourier Instance => _lazyVM.Value;
+        private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
-        private ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+        public Action<int> OnAppearanceSettingChanged { get; set; } = null;
 
-        private SettingsCourier() { }
+        private int _appearanceIndex = -1;
+        private int _startupPageIndex = -1;
+        private int _languageIndex = -1;
+        private bool? _itemsSearchFuzzy = null;
+        private string _steamID = null;
 
-        // 设置的应用程序的主题 0-黑暗 1-明亮
-        private int _iAppearanceIndex = -1;
-        public int iAppearanceIndex
+        /// <summary>
+        /// 应用程序的主题 0-黑暗 1-明亮
+        /// </summary>
+        public int AppearanceIndex
         {
             get
             {
                 try
                 {
-                    if (_iAppearanceIndex < 0)
+                    if (_appearanceIndex < 0)
                     {
                         if (_localSettings.Values[SETTING_NAME_APPEARANCEINDEX] == null)
                         {
-                            _iAppearanceIndex = 0;
+                            _appearanceIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_APPEARANCEINDEX]?.ToString() == "0")
                         {
-                            _iAppearanceIndex = 0;
+                            _appearanceIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_APPEARANCEINDEX]?.ToString() == "1")
                         {
-                            _iAppearanceIndex = 1;
+                            _appearanceIndex = 1;
                         }
                         else
                         {
-                            _iAppearanceIndex = 0;
+                            _appearanceIndex = 0;
                         }
                     }
                 }
-                catch { }
-                if (_iAppearanceIndex < 0) _iAppearanceIndex = 0;
-                return _iAppearanceIndex < 0 ? 0 : _iAppearanceIndex;
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                if (_appearanceIndex < 0) _appearanceIndex = 0;
+                return _appearanceIndex < 0 ? 0 : _appearanceIndex;
             }
             set
             {
-                Set("iAppearanceIndex", ref _iAppearanceIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_APPEARANCEINDEX] = _iAppearanceIndex;
+                SetProperty(ref _appearanceIndex, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_APPEARANCEINDEX] = _appearanceIndex;
+                OnAppearanceSettingChanged?.Invoke(_appearanceIndex);
             }
         }
 
-        // 启动页面 0-Heroes 1-Items 2-Matches
-        private int _iStartupPageIndex = -1;
-        public int iStartupPageIndex
+        /// <summary>
+        /// 启动页面 0-Heroes 1-Items 2-Matches
+        /// </summary>
+        public int StartupPageIndex
         {
             get
             {
                 try
                 {
-                    if (_iStartupPageIndex < 0)
+                    if (_startupPageIndex < 0)
                     {
                         if (_localSettings.Values[SETTING_NAME_STARTUPINDEX] == null)
                         {
-                            _iStartupPageIndex = 0;
+                            _startupPageIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_STARTUPINDEX]?.ToString() == "0")
                         {
-                            _iStartupPageIndex = 0;
+                            _startupPageIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_STARTUPINDEX]?.ToString() == "1")
                         {
-                            _iStartupPageIndex = 1;
+                            _startupPageIndex = 1;
                         }
                         else if (_localSettings.Values[SETTING_NAME_STARTUPINDEX]?.ToString() == "2")
                         {
-                            _iStartupPageIndex = 2;
+                            _startupPageIndex = 2;
                         }
                         else
                         {
-                            _iStartupPageIndex = 0;
+                            _startupPageIndex = 0;
                         }
                     }
                 }
-                catch { }
-                if (_iStartupPageIndex < 0) _iStartupPageIndex = 0;
-                return _iStartupPageIndex < 0 ? 0 : _iStartupPageIndex;
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                if (_startupPageIndex < 0) _startupPageIndex = 0;
+                return _startupPageIndex < 0 ? 0 : _startupPageIndex;
             }
             set
             {
-                Set("iStartupPageIndex", ref _iStartupPageIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_STARTUPINDEX] = _iStartupPageIndex;
+                SetProperty(ref _startupPageIndex, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_STARTUPINDEX] = _startupPageIndex;
             }
         }
 
-        // 语言 0-English 1-Chinese 2-Russian
-        private int _iLanguageIndex = -1;
-        public int iLanguageIndex
+        /// <summary>
+        /// 语言 0-English 1-Chinese 2-Russian
+        /// </summary>
+        public int LanguageIndex
         {
             get
             {
                 try
                 {
-                    if (_iLanguageIndex < 0)
+                    if (_languageIndex < 0)
                     {
                         if (_localSettings.Values[SETTING_NAME_LANGUAGEINDEX] == null)
                         {
-                            _iLanguageIndex = 0;
+                            _languageIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_LANGUAGEINDEX].ToString() == "0")
                         {
-                            _iLanguageIndex = 0;
+                            _languageIndex = 0;
                         }
                         else if (_localSettings.Values[SETTING_NAME_LANGUAGEINDEX].ToString() == "1")
                         {
-                            _iLanguageIndex = 1;
+                            _languageIndex = 1;
                         }
                         else if (_localSettings.Values[SETTING_NAME_LANGUAGEINDEX].ToString() == "2")
                         {
-                            _iLanguageIndex = 2;
+                            _languageIndex = 2;
                         }
                         else
                         {
-                            _iLanguageIndex = 0;
+                            _languageIndex = 0;
                         }
                     }
                 }
-                catch { }
-                if (_iLanguageIndex < 0) _iLanguageIndex = 0;
-                return _iLanguageIndex < 0 ? 0 : _iLanguageIndex;
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                if (_languageIndex < 0) _languageIndex = 0;
+                return _languageIndex < 0 ? 0 : _languageIndex;
             }
             set
             {
-                Set("iLanguageIndex", ref _iLanguageIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_LANGUAGEINDEX] = _iLanguageIndex;
+                SetProperty(ref _languageIndex, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_LANGUAGEINDEX] = _languageIndex;
             }
         }
 
-        // 物品页是否开启模糊搜索
-        private bool? _bItemsSearchFuzzy = null;
-        public bool bItemsSearchFuzzy
+        /// <summary>
+        /// 物品页是否开启模糊搜索
+        /// </summary>
+        public bool ItemsSearchFuzzy
         {
             get
             {
                 try
                 {
-                    if (_bItemsSearchFuzzy == null)
+                    if (_itemsSearchFuzzy == null)
                     {
                         if (_localSettings.Values[SETTING_NAME_SEARCHMODE] == null)
                         {
-                            _bItemsSearchFuzzy = false;
+                            _itemsSearchFuzzy = false;
                         }
                         else if (_localSettings.Values[SETTING_NAME_SEARCHMODE].ToString() == "True")
                         {
-                            _bItemsSearchFuzzy = true;
+                            _itemsSearchFuzzy = true;
                         }
                         else if (_localSettings.Values[SETTING_NAME_SEARCHMODE].ToString() == "False")
                         {
-                            _bItemsSearchFuzzy = false;
+                            _itemsSearchFuzzy = false;
                         }
                         else
                         {
-                            _bItemsSearchFuzzy = false;
+                            _itemsSearchFuzzy = false;
                         }
                     }
                 }
-                catch { }
-                if (_bItemsSearchFuzzy == null) _bItemsSearchFuzzy = false;
-                return _bItemsSearchFuzzy ?? false;
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                if (_itemsSearchFuzzy == null) _itemsSearchFuzzy = false;
+                return _itemsSearchFuzzy ?? false;
             }
             set
             {
-                Set("bItemsSearchFuzzy", ref _bItemsSearchFuzzy, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_SEARCHMODE] = _bItemsSearchFuzzy;
+                SetProperty(ref _itemsSearchFuzzy, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_SEARCHMODE] = _itemsSearchFuzzy;
             }
         }
 
-        //// 直播间亮度(0.0~100.0)
-        //private double _dBrightness = -1;
-        //public double dBrightness
-        //{
-        //    get
-        //    {
-        //        // 读取直播间亮度
-        //        try
-        //        {
-        //            if (_dBrightness < 0)
-        //            {
-        //                if (_localSettings.Values[SETTING_NAME_BRIGHTNESS] == null)
-        //                {
-        //                    _dBrightness = 100;
-        //                }
-        //                else
-        //                {
-        //                    string volumeStr = _localSettings.Values[SETTING_NAME_BRIGHTNESS].ToString();
-        //                    if (double.TryParse(volumeStr, out double volume))
-        //                    {
-        //                        _dBrightness = volume;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch { }
-        //        if (_dBrightness < 0) _dBrightness = 100;
-        //        return _dBrightness < 0 ? 100 : _dBrightness;
-        //    }
-        //    set
-        //    {
-        //        Set("dBrightness", ref _dBrightness, value);
-        //        ApplicationData.Current.LocalSettings.Values[SETTING_NAME_BRIGHTNESS] = _dBrightness;
-        //    }
-        //}
-
-        // SteamID
-        private string _sSteamID = null;
-        public string sSteamID
+        /// <summary>
+        /// SteamID
+        /// </summary>
+        public string SteamID
         {
             get
             {
                 try
                 {
-                    if (_sSteamID == null)
+                    if (_steamID == null)
                     {
                         if (_localSettings.Values[SETTING_NAME_STEAMID] == null)
                         {
-                            _sSteamID = "";
+                            _steamID = "";
                         }
                         else
                         {
                             string steamId = _localSettings.Values[SETTING_NAME_STEAMID].ToString();
-                            _sSteamID = steamId;
+                            _steamID = steamId;
                         }
                     }
                 }
-                catch { }
-                if (_sSteamID == null) _sSteamID = "";
-                return _sSteamID == null ? "" : _sSteamID;
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                if (_steamID == null) _steamID = "";
+                return _steamID == null ? "" : _steamID;
             }
             set
             {
-                Set("sSteamID", ref _sSteamID, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_STEAMID] = _sSteamID;
+                SetProperty(ref _steamID, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_NAME_STEAMID] = _steamID;
             }
         }
     }

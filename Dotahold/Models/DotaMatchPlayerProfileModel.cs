@@ -52,15 +52,15 @@ namespace Dotahold.Models
         public object is_subscriber { get; set; }
 
         // 玩家头像
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _AvatarSource = ConstantsCourier.DefaultAvatarImageSource72;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage AvatarSource
         {
             get { return _AvatarSource; }
             private set { Set("AvatarSource", ref _AvatarSource, value); }
         }
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private bool _loadedAvatar = false;
         public async Task LoadAvatarAsync(int decodeWidth)
         {
@@ -74,7 +74,7 @@ namespace Dotahold.Models
                     _loadedAvatar = true;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 

@@ -35,7 +35,7 @@ namespace Dotahold.Views
                 ViewModel = DotaMatchesViewModel.Instance;
                 MainViewModel = DotaViewModel.Instance;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Dotahold.Views
 
                 PlayerInfoScrollViewer?.ChangeView(0, 0, 1, true);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Dotahold.Views
                     this.Frame.GoBack();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

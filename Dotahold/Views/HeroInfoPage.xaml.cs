@@ -44,7 +44,7 @@ namespace Dotahold.Views
                     {
                         PopInHeroInfoStoryboard?.Begin();
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 };
 
                 ViewModel.ActShowHeroInfoButton += () =>
@@ -53,10 +53,10 @@ namespace Dotahold.Views
                     {
                         ShowHeroButtonStoryboard?.Begin();
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 };
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Dotahold.Views
                     animation.TryStart(HeroPhotoBorder, new UIElement[] { HeroNameGrid });
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Dotahold.Views
             {
                 HeroInfoScrollViewer?.ChangeView(0, 0, 1, true);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Dotahold.Views
                     this.Frame.GoBack();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Dotahold.Views
 
                 await dialog.ShowAsync();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Dotahold.Views
 
                 await dialog.ShowAsync();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Dotahold.Views
                 strText = strText.Replace("\r", "\n");
                 return strText;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return history;
         }
 

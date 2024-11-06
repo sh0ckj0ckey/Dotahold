@@ -1,10 +1,12 @@
-﻿using Dotahold.Core.DataShop;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Dotahold.Core.DataShop;
 using Dotahold.Core.Models;
 using Dotahold.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
@@ -28,7 +30,7 @@ namespace Dotahold.Models
         public Hero[] heroes { get; set; }
     }
 
-    public class Hero : ViewModelBase
+    public class Hero : ObservableObject
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -67,72 +69,71 @@ namespace Dotahold.Models
 
 
         // 经过处理之后的天赋描述
-        [Newtonsoft.Json.JsonIgnore]
-        private string _sTalentNameLoc10L = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore] private string _sTalentNameLoc10L = string.Empty;
+        [JsonIgnore]
         public string sTalentNameLoc10L
         {
             get { return _sTalentNameLoc10L; }
             set { Set("sTalentNameLoc10L", ref _sTalentNameLoc10L, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc10R = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc10R
         {
             get { return _sTalentNameLoc10R; }
             set { Set("sTalentNameLoc10R", ref _sTalentNameLoc10R, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc15L = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc15L
         {
             get { return _sTalentNameLoc15L; }
             set { Set("sTalentNameLoc15L", ref _sTalentNameLoc15L, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc15R = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc15R
         {
             get { return _sTalentNameLoc15R; }
             set { Set("sTalentNameLoc15R", ref _sTalentNameLoc15R, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc20L = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc20L
         {
             get { return _sTalentNameLoc20L; }
             set { Set("sTalentNameLoc20L", ref _sTalentNameLoc20L, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc20R = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc20R
         {
             get { return _sTalentNameLoc20R; }
             set { Set("sTalentNameLoc20R", ref _sTalentNameLoc20R, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc25L = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc25L
         {
             get { return _sTalentNameLoc25L; }
             set { Set("sTalentNameLoc25L", ref _sTalentNameLoc25L, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _sTalentNameLoc25R = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sTalentNameLoc25R
         {
             get { return _sTalentNameLoc25R; }
@@ -157,9 +158,9 @@ namespace Dotahold.Models
 
         public string[] notes_loc { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _notesStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string notesStr
         {
             get { return _notesStr; }
@@ -173,9 +174,9 @@ namespace Dotahold.Models
         // 技能类型，例如点目标、AOE、切换等
         public string behavior { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _behaviorStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string behaviorStr
         {
             get { return _behaviorStr; }
@@ -186,9 +187,9 @@ namespace Dotahold.Models
         public double target_team { get; set; }
         public int target_type { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _targetStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string targetStr
         {
             get { return _targetStr; }
@@ -200,18 +201,18 @@ namespace Dotahold.Models
         // 伤害类型
         public double damage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _damageStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string damageStr
         {
             get { return _damageStr; }
             set { Set("damageStr", ref _damageStr, value); }
         }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private SolidColorBrush _damageForeground = AbilityDamageTypeDefaultColor;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public SolidColorBrush damageForeground
         {
             get { return _damageForeground; }
@@ -221,9 +222,9 @@ namespace Dotahold.Models
         // 是否无视魔免
         public double immunity { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _immunityStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string immunityStr
         {
             get { return _immunityStr; }
@@ -233,9 +234,9 @@ namespace Dotahold.Models
         // 是否可驱散
         public double dispellable { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _dispellableStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string dispellableStr
         {
             get { return _dispellableStr; }
@@ -247,9 +248,9 @@ namespace Dotahold.Models
         // 范围
         public double[] cast_ranges { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _castRangesStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string castRangesStr
         {
             get { return _castRangesStr; }
@@ -259,9 +260,9 @@ namespace Dotahold.Models
         // 间隔
         public double[] cast_points { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _castPointsStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string castPointsStr
         {
             get { return _castPointsStr; }
@@ -290,13 +291,13 @@ namespace Dotahold.Models
         public double item_quality { get; set; }
 
         // 技能图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sAbilityImageUrl;
 
         // 技能数值
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private string _specialValuesStr = string.Empty;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string specialValuesStr
         {
             get { return _specialValuesStr; }
@@ -304,9 +305,9 @@ namespace Dotahold.Models
         }
 
         // 技能图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _ImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage ImageSource
         {
             get { return _ImageSource; }
@@ -323,7 +324,7 @@ namespace Dotahold.Models
                     this.ImageSource = imageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 

@@ -43,7 +43,7 @@ namespace Dotahold.Views
 
                 ItemFrame.Navigate(typeof(BlankPage));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Dotahold.Views
                 bool load = await DotaItemsViewModel.Instance.LoadDotaItems();
                 if (load) DotaItemsViewModel.Instance.LoadItemsImages();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Dotahold.Views
                     ViewModel.SearchItems(searching);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Dotahold.Views
                     ItemFrame.Navigate(typeof(ItemInfoPage), null, snti);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>

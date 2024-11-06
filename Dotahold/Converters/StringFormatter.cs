@@ -22,7 +22,7 @@ namespace Dotahold.Converters
 
                 return value.ToString();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return "StringFormatter Error";
         }
 

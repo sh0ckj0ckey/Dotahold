@@ -49,7 +49,7 @@ namespace Dotahold.Views
 
                 MatchFrame.Navigate(typeof(BlankPage));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Dotahold.Views
                     BindAccount();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Dotahold.Views
             {
                 MatchFrame.Navigate(typeof(MatchHeroesPlayedPage));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Dotahold.Views
                     MatchFrame.Navigate(typeof(MatchHeroMatchesPage));
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Dotahold.Views
             {
                 MatchFrame.Navigate(typeof(MatchesListPage));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Dotahold.Views
                     MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Dotahold.Views
                     MatchFrame.Navigate(typeof(MatchInfoPage));
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Dotahold.Views
                     HideBindingAccountGrid();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #region 菜单
@@ -223,7 +223,7 @@ namespace Dotahold.Views
 
             //    ViewModel.PostRefreshAsync(ViewModel.sSteamId);
             //}
-            //catch { }
+            //catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Dotahold.Views
                 dataPackage.SetText(ViewModel.sSteamId);
                 Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Dotahold.Views
             {
                 BindAccount();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Dotahold.Views
                 ViewModel.InitialDotaMatches();
                 MatchFrame.Navigate(typeof(BlankPage));
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion
@@ -294,7 +294,7 @@ namespace Dotahold.Views
                     OKButton.IsEnabled = false;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Dotahold.Views
                     SetInputSteamId();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Dotahold.Views
             {
                 SetInputSteamId();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Dotahold.Views
                 BindGrid.Visibility = Visibility.Visible;
                 BindingGridPopIn.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Dotahold.Views
             {
                 HideBindingAccountGrid();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void BindingGridPopOut_Completed(object sender, object e)
@@ -361,7 +361,7 @@ namespace Dotahold.Views
             {
                 BindGrid.Visibility = Visibility.Collapsed;
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void SetInputSteamId()
@@ -378,10 +378,10 @@ namespace Dotahold.Views
                         HideBindingAccountGrid();
                         MatchFrame.Navigate(typeof(BlankPage));
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void HideBindingAccountGrid()
@@ -391,7 +391,7 @@ namespace Dotahold.Views
                 SteamIDTextBox.Text = "";
                 BindingGridPopOut.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion
@@ -434,7 +434,7 @@ namespace Dotahold.Views
                     LoseColumn.Width = new GridLength(100 - rate, GridUnitType.Star);
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Dotahold.Views
             {
                 HoverToShowWinLose?.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace Dotahold.Views
             {
                 ExitToShowWinRate?.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion
@@ -481,7 +481,7 @@ namespace Dotahold.Views
                 ViewModel.bSearchingByMatchId = true;
                 ShowTitleSearchTextBox?.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Dotahold.Views
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Dotahold.Views
                 TitleSearchTextBox.Text = "";
                 ShowTitlePersonaname?.Begin();
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion

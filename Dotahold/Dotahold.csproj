@@ -10,7 +10,7 @@
     <AssemblyName>Dotahold</AssemblyName>
     <DefaultLanguage>en-us</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -338,18 +338,8 @@
     <Content Include="Assets\Icons\Match\Runes\img_rune_7.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_8.png" />
     <Content Include="Assets\Icons\Match\Runes\img_rune_9.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_behavior_dark.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_behavior_light.png" />
     <Content Include="Assets\Icons\item_placeholder.png" />
     <Content Include="Assets\Icons\patchnote_cover.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_chart_dark.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_chart_light.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_json_dark.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_json_light.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_toolkit_dark.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_toolkit_light.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_xaml_dark.png" />
-    <Content Include="Assets\Icons\Ref\icon_ref_xaml_light.png" />
     <Content Include="Assets\Icons\Tab\tabicon_hero_dark.png" />
     <Content Include="Assets\Icons\Tab\tabicon_hero_light.png" />
     <Content Include="Assets\Icons\Tab\tabicon_item_dark.png" />
@@ -582,10 +572,7 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.4</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
+      <Version>2.8.6</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

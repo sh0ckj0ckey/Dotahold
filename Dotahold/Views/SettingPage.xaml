@@ -64,7 +64,7 @@
                     <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,-4">
                             <TextBlock Text="Dotahold" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind _appVersion,Mode=OneWay}" FontFamily="Consolas" FontSize="14" VerticalAlignment="Bottom" Margin="0,-4,0,4" Opacity="0.5"/>
+                            <TextBlock x:Name="VersionTextBlock" FontFamily="Consolas" FontSize="14" VerticalAlignment="Bottom" Margin="0,-4,0,4" Opacity="0.5"/>
                         </StackPanel>
                         <TextBlock Text="Powered by OpenDota" Opacity="0.7" FontFamily="/Fonts/Radiance.ttf#Radiance"/>
                     </StackPanel>
@@ -75,7 +75,7 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                
+
                 <TextBlock Text="Customize" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0"/>
                 <Grid Margin="0,4,0,0" CornerRadius="8,8,0,0" Padding="20,12,20,12" Background="{ThemeResource SETTING_CONTENT_BK}">
                     <Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
                         <TextBlock Text="Choose how Dotahold looks to you" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
                     <ComboBox x:Name="ThemeComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128" 
-                              SelectedIndex="{x:Bind ViewModel.AppSettings.iAppearanceIndex,Mode=TwoWay}" SelectionChanged="OnAppearanceSelectiongChanged">
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.AppearanceIndex,Mode=TwoWay}" SelectionChanged="OnAppearanceSelectiongChanged">
                         <ComboBoxItem Content="Dark"/>
                         <ComboBoxItem Content="Light"/>
                     </ComboBox>
@@ -106,13 +106,13 @@
                         <TextBlock Text="Choose the launch page for this app" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
                     <ComboBox x:Name="StartupPageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128" 
-                              SelectedIndex="{x:Bind ViewModel.AppSettings.iStartupPageIndex,Mode=TwoWay}">
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.StartupPageIndex,Mode=TwoWay}">
                         <ComboBoxItem Content="Heroes"/>
                         <ComboBoxItem Content="Items"/>
                         <ComboBoxItem Content="Matches"/>
                     </ComboBox>
                 </Grid>
-                
+
                 <TextBlock Text="Data" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0"/>
                 <Grid Margin="0,4,0,0" CornerRadius="8,8,8,8" Padding="20,12,20,12" Background="{ThemeResource SETTING_CONTENT_BK}">
                     <Grid.ColumnDefinitions>
@@ -124,13 +124,7 @@
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA99;" />
                     <StackPanel Grid.Column="1" Orientation="Vertical" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock Text="Cache" FontWeight="Medium" CharacterSpacing="40"/>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Image Cache" CharacterSpacing="20" Opacity="0.7"/>
-                            <TextBlock Opacity="0.7" CharacterSpacing="20" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.sImageCacheSize,Mode=OneWay,Converter={StaticResource Str2Vis}}">
-                                <Run Text="·"/>
-                                <Run Text="{x:Bind ViewModel.sImageCacheSize,Mode=OneWay}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <TextBlock Text="Image caching of heroes, items, player avatars, etc." CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
                     <muxc:ProgressRing Grid.Column="2" Height="14" Width="14" IsActive="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay}"
                                        Visibility="{x:Bind ViewModel.bCleaningImageCache,Mode=OneWay,Converter={StaticResource Bool2Vis}}"
@@ -159,15 +153,15 @@
                         <TextBlock Text="Partial pages only" CharacterSpacing="20" Opacity="0.7"/>
                     </StackPanel>
                     <ComboBox x:Name="LanguageComboBox" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
-                              SelectedIndex="{x:Bind ViewModel.AppSettings.iLanguageIndex,Mode=TwoWay}">
+                              SelectedIndex="{x:Bind ViewModel.AppSettings.LanguageIndex,Mode=TwoWay}">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Chinese (partially supported)"/>
                         <ComboBoxItem Content="Russian (partially supported)"/>
                     </ComboBox>
                 </Grid>
 
-                <TextBlock Text="Debug" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0" Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}"/>
-                <Grid Margin="0,4,0,0" CornerRadius="8,8,8,8" Padding="20,12,0,12" Background="{ThemeResource SETTING_CONTENT_BK}" Visibility="{x:Bind ViewModel.bShowDevTools,Converter={StaticResource Bool2Vis},Mode=OneWay}">
+                <TextBlock x:Name="DebugToolsHeader" Text="Debug" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0" Visibility="Collapsed"/>
+                <Grid x:Name="DebugToolsGrid" Margin="0,4,0,0" CornerRadius="8,8,8,8" Padding="20,12,0,12" Visibility="Collapsed" Background="{ThemeResource SETTING_CONTENT_BK}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
@@ -242,7 +236,7 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                
+
                 <TextBlock Text="About" FontWeight="Bold" FontSize="16" CharacterSpacing="40" Margin="0,20,0,0"/>
                 <Grid Margin="0,8,0,0" CornerRadius="8,8,0,0" Padding="20,12,20,12" Background="{ThemeResource SETTING_CONTENT_BK}">
                     <Grid.ColumnDefinitions>
@@ -282,7 +276,7 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                
+
                 <TextBlock Text="2019 - 2023 sh0ckj0ckey." FontFamily="/Fonts/Radiance.ttf#Radiance" Opacity="0.5" Margin="0,8,0,16"/>
             </StackPanel>
         </ScrollViewer>

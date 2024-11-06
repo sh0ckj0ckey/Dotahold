@@ -21,7 +21,7 @@ namespace Dotahold.Models
         /// </summary>
         public double lose { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string winRate { get; set; } = string.Empty;
     }
 }

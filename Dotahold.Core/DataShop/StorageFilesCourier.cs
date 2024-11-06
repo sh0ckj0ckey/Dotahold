@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace Dotahold.Core.DataShop
 {
@@ -57,7 +54,7 @@ namespace Dotahold.Core.DataShop
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return text;
         }
 
@@ -93,10 +90,10 @@ namespace Dotahold.Core.DataShop
                     {
                         await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(1));
                     }
-                    catch { }
+                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return false;
         }
     }

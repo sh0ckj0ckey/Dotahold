@@ -58,25 +58,25 @@ namespace Dotahold.Models
         public string leaver_status { get; set; }
         public int? party_size { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroCoverImage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroHorizonImage { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sHeroName { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public bool? bWin { get; set; } = null;
 
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public string sKda { get; set; }
 
         // 比赛英雄封面(大图)
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _CoverImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage CoverImageSource
         {
             get { return _CoverImageSource; }
@@ -94,13 +94,13 @@ namespace Dotahold.Models
                     this.CoverImageSource = coverImageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         // 比赛英雄图片
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         private BitmapImage _HorizonImageSource = null;
-        [Newtonsoft.Json.JsonIgnore]
+        [JsonIgnore]
         public BitmapImage HorizonImageSource
         {
             get { return _HorizonImageSource; }
@@ -118,7 +118,7 @@ namespace Dotahold.Models
                     this.HorizonImageSource = horizonImageSource;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

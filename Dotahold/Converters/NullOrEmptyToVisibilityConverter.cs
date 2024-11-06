@@ -24,7 +24,7 @@ namespace Dotahold.Converters
                     return (value == null || string.IsNullOrEmpty(value?.ToString())) ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return Visibility.Collapsed;
         }
 

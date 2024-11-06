@@ -30,46 +30,42 @@ namespace Dotahold
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        ViewModels.DotaViewModel ViewModel = null;
+        private ViewModels.DotaViewModel _viewModel = null;
 
         public MainPage()
         {
-            try
+            _viewModel = DotaViewModel.Instance;
+
+            this.InitializeComponent();
+
+            this.Loaded += (s, e) =>
             {
-                this.InitializeComponent();
-
-                ViewModel = DotaViewModel.Instance;
-
-                this.Loaded += (s, e) =>
+                try
                 {
-                    try
+                    SetTitleBarArea();
+                    SetTitleBarTheme();
+
+                    DotaViewModel.Instance.ActChangeTitleBarTheme = SetTitleBarTheme;
+
+                    var index = DotaViewModel.Instance.AppSettings.StartupPageIndex;
+                    if (index == 1)
                     {
-                        SetTitleBarArea();
-                        SetTitleBarTheme();
-
-                        DotaViewModel.Instance.ActChangeTitleBarTheme = SetTitleBarTheme;
-
-                        var index = DotaViewModel.Instance.AppSettings.iStartupPageIndex;
-                        if (index == 1)
-                        {
-                            MainFrame.Navigate(typeof(DotaItemsPage));
-                            ViewModel.iSideMenuTabIndex = 1;
-                        }
-                        else if (index == 2)
-                        {
-                            MainFrame.Navigate(typeof(DotaMatchesPage));
-                            ViewModel.iSideMenuTabIndex = 2;
-                        }
-                        else
-                        {
-                            MainFrame.Navigate(typeof(DotaHeroesPage));
-                            ViewModel.iSideMenuTabIndex = 0;
-                        }
+                        MainFrame.Navigate(typeof(DotaItemsPage));
+                        _viewModel.SideMenuTabIndex = 1;
                     }
-                    catch { }
-                };
-            }
-            catch { }
+                    else if (index == 2)
+                    {
+                        MainFrame.Navigate(typeof(DotaMatchesPage));
+                        _viewModel.SideMenuTabIndex = 2;
+                    }
+                    else
+                    {
+                        MainFrame.Navigate(typeof(DotaHeroesPage));
+                        _viewModel.SideMenuTabIndex = 0;
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            };
         }
 
         #region 处理标题栏样式
@@ -88,7 +84,7 @@ namespace Dotahold
                 titleBar.ButtonPressedBackgroundColor = new Color() { A = 55, R = 0, G = 0, B = 0 };
 
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void SetTitleBarTheme()
@@ -97,7 +93,7 @@ namespace Dotahold
             {
                 var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-                if (DotaViewModel.Instance.AppSettings.iAppearanceIndex == 0)
+                if (DotaViewModel.Instance.AppSettings.AppearanceIndex == 0)
                 {
                     titleBar.ButtonForegroundColor = Colors.White;
                     titleBar.ButtonHoverForegroundColor = Colors.White;
@@ -105,7 +101,7 @@ namespace Dotahold
                     titleBar.ButtonHoverBackgroundColor = new Color() { A = 16, R = 255, G = 255, B = 255 };
                     titleBar.ButtonPressedBackgroundColor = new Color() { A = 24, R = 255, G = 255, B = 255 };
                 }
-                else if (DotaViewModel.Instance.AppSettings.iAppearanceIndex == 1)
+                else if (DotaViewModel.Instance.AppSettings.AppearanceIndex == 1)
                 {
                     titleBar.ButtonForegroundColor = Colors.Black;
                     titleBar.ButtonHoverForegroundColor = Colors.Black;
@@ -114,7 +110,7 @@ namespace Dotahold
                     titleBar.ButtonPressedBackgroundColor = new Color() { A = 16, R = 0, G = 0, B = 0 };
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         #endregion
@@ -133,48 +129,37 @@ namespace Dotahold
                     switch (btn.Tag.ToString())
                     {
                         case "heroes":
-                            if (ViewModel.iSideMenuTabIndex != 0)
+                            if (_viewModel.SideMenuTabIndex != 0)
                             {
                                 MainFrame.Navigate(typeof(DotaHeroesPage));
-                                ViewModel.iSideMenuTabIndex = 0;
+                                _viewModel.SideMenuTabIndex = 0;
                             }
                             break;
                         case "items":
-                            if (ViewModel.iSideMenuTabIndex != 1)
+                            if (_viewModel.SideMenuTabIndex != 1)
                             {
                                 MainFrame.Navigate(typeof(DotaItemsPage));
-                                ViewModel.iSideMenuTabIndex = 1;
+                                _viewModel.SideMenuTabIndex = 1;
                             }
                             break;
                         case "matches":
-                            if (ViewModel.iSideMenuTabIndex != 2)
+                            if (_viewModel.SideMenuTabIndex != 2)
                             {
                                 MainFrame.Navigate(typeof(DotaMatchesPage));
-                                ViewModel.iSideMenuTabIndex = 2;
+                                _viewModel.SideMenuTabIndex = 2;
+                            }
+                            break;
+                        case "settings":
+                            if (_viewModel.SideMenuTabIndex != 3)
+                            {
+                                MainFrame.Navigate(typeof(SettingPage));
+                                _viewModel.SideMenuTabIndex = 3;
                             }
                             break;
                     }
                 }
             }
-            catch { }
-        }
-
-        /// <summary>
-        /// 打开设置
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickSettingsButton(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.iSideMenuTabIndex != 3)
-                {
-                    MainFrame.Navigate(typeof(SettingPage));
-                    ViewModel.iSideMenuTabIndex = 3;
-                }
-            }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

@@ -41,14 +41,14 @@
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <TextBlock Text="Search Mode" FontWeight="Medium" CharacterSpacing="40" Margin="0,0,0,6"/>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Slower"
-                                         Checked="OnSearchModeRadioChecked" Tag="fuzzy" IsChecked="{x:Bind MainViewModel.AppSettings.bItemsSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=True,Mode=OneWay}">
+                                         Checked="OnSearchModeRadioChecked" Tag="fuzzy" IsChecked="{x:Bind MainViewModel.AppSettings.ItemsSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=True,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Fuzzy Search" FontSize="13" VerticalAlignment="Center"/>
                                     <FontIcon Glyph="&#xEA79;" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-6"/>
                                 </StackPanel>
                             </RadioButton>
                             <RadioButton GroupName="SearchModeGroup" ToolTipService.ToolTip="Faster"
-                                         Checked="OnSearchModeRadioChecked" Tag="fullword" IsChecked="{x:Bind MainViewModel.AppSettings.bItemsSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=False,Mode=OneWay}">
+                                         Checked="OnSearchModeRadioChecked" Tag="fullword" IsChecked="{x:Bind MainViewModel.AppSettings.ItemsSearchFuzzy,Converter={StaticResource Eq2BConverter},ConverterParameter=False,Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Full Word Match" FontSize="13" VerticalAlignment="Center"/>
                                     <FontIcon Glyph="&#xEA5E;" FontSize="16" Opacity="0.8" VerticalAlignment="Center" Margin="4,0,2,-2"/>

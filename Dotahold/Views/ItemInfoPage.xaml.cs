@@ -94,7 +94,7 @@ namespace Dotahold.Views
                 //FrameShadow.Receivers.Add(ItemsListGrid);
                 //ItemGrid.Translation += new System.Numerics.Vector3(0, 0, 36);
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Dotahold.Views
                 {
                     PopInItemInfoStoryboard?.Begin();
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
                 try
                 {
@@ -167,9 +167,9 @@ namespace Dotahold.Views
                     sAttribInfo = attribSb.ToString().Replace("\r\n","");
 
                 }
-                catch { }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         private void OnClickComponents(object sender, ItemClickEventArgs e)
@@ -185,7 +185,7 @@ namespace Dotahold.Views
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

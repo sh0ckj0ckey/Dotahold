@@ -1,10 +1,5 @@
-﻿using Dotahold.Core.DataShop.ImageLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Dotahold.Core.DataShop.ImageDownloader;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -18,12 +13,14 @@ namespace Dotahold.Core.DataShop
         /// <summary>
         /// 下载图片
         /// </summary>
-        /// <param name="Uri"></param>
-        /// <param name="bCache"></param>
+        /// <param name="uri"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="cache"></param>
         /// <returns></returns>
         public static async Task<BitmapImage> GetImageAsync(string uri, int width, int height, bool cache = true)
         {
-            return await ImageLoader.ImageLoader.LoadImageAsync(uri, width, height, cache);
+            return await ImageDownloader.ImageDownloader.LoadImageAsync(uri, width, height, cache);
         }
 
         /// <summary>

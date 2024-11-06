@@ -11,7 +11,7 @@
     <AssemblyName>Dotahold.Core</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -122,26 +122,25 @@
   <ItemGroup>
     <Compile Include="DataShop\ConstantsCourier.cs" />
     <Compile Include="DataShop\ImageCourier.cs" />
-    <Compile Include="DataShop\ImageLoader\AsyncBitmapImage.cs" />
-    <Compile Include="DataShop\ImageLoader\ImageCacheManager.cs" />
-    <Compile Include="DataShop\ImageLoader\ImageLoader.cs" />
+    <Compile Include="DataShop\ImageDownloader\ImageCacheManager.cs" />
+    <Compile Include="DataShop\ImageDownloader\ImageDownloader.cs" />
+    <Compile Include="DataShop\LogCourier.cs" />
     <Compile Include="DataShop\SettingsCourier.cs" />
     <Compile Include="DataShop\StorageFilesCourier.cs" />
     <Compile Include="Models\DotaHeroModel.cs" />
     <Compile Include="Models\DotaItemModel.cs" />
-    <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\AppVersionUtils.cs" />
-    <Compile Include="Utils\ExceptionHandlingSynchronizationContext.cs" />
-    <Compile Include="Utils\MD5Utils.cs" />
     <EmbeddedResource Include="Properties\Dotahold.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.3.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

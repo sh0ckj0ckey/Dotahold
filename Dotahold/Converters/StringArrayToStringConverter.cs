@@ -35,7 +35,7 @@ namespace Dotahold.Converters
                     return stringBuilder.ToString();
                 }
             }
-            catch { }
+            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
             return string.Empty;
         }
 
