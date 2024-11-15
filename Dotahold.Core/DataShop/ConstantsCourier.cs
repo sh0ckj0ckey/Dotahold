@@ -29,6 +29,7 @@ namespace Dotahold.Core.DataShop
         private const string _itemsJsonFileName = "itemsjson";
         private const string _buffsJsonFileName = "permanentbuffsjson";
         private const string _abilitiesJsonFileName = "abilitiesjson";
+        private const string _itemColorsJsonFileName = "itemcolorsjson";
 
         /// <summary>
         /// 英雄字典
@@ -49,6 +50,11 @@ namespace Dotahold.Core.DataShop
         /// 技能ID与名称字典
         /// </summary>
         private Dictionary<string, string> _dictAbilitiesId = null;
+
+        /// <summary>
+        /// 物品种类与颜色字典
+        /// </summary>
+        private Dictionary<string, string> _dictItemColors = null;
 
         public ConstantsCourier()
         {
@@ -307,6 +313,64 @@ namespace Dotahold.Core.DataShop
             }
 
             return _dictAbilitiesId;
+        }
+
+        /// <summary>
+        /// 获取物品分类和颜色列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Dictionary<string, string>> GetItemColorsConstant()
+        {
+            // 先去本地的Local文件夹找下载的最新的
+            if (_dictItemColors == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(_itemColorsJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictItemColors = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 找不到就用内置的
+            if (_dictItemColors == null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(@"\ConstantsJsons\item_colors.json", Windows.ApplicationModel.Package.Current.InstalledLocation);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictItemColors = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            // 内置的也找不到(不太可能)
+            if (_dictItemColors == null || CheckNeed2UpdateJson("item_colors"))
+            {
+                try
+                {
+                    if (_dictItemColors == null)
+                    {
+                        var json = await GetConstant("item_colors", _itemColorsJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictItemColors = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                        }
+                    }
+                    else
+                    {
+                        _ = await GetConstant("item_colors", _itemColorsJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            return _dictItemColors;
         }
 
         /// <summary>
