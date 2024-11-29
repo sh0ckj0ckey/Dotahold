@@ -10,11 +10,6 @@ namespace Dotahold.Core.Models
     public class DotaItemModel : ObservableObject
     {
         /// <summary>
-        /// 使用的介绍，可能有多条，例如第一条是主动效果，第二条是被动
-        /// </summary>
-        public string[] hint { get; set; }
-
-        /// <summary>
         /// 物品的 id
         /// int/bool
         /// </summary>
@@ -31,20 +26,16 @@ namespace Dotahold.Core.Models
         public string dname { get; set; }
 
         /// <summary>
-        /// 物品分类，“神秘”“圣物”等等
-        /// </summary>
-        public string qual { get; set; }
-
-        /// <summary>
-        /// 价格
+        /// mana cost 魔法消耗 
         /// int/bool
         /// </summary>
-        public string cost { get; set; }
+        public string mc { get; set; }
 
         /// <summary>
-        /// 备注，比如风杖的 notes 是你不能对友军使用
+        /// health cost 生命消耗 
+        /// int/bool
         /// </summary>
-        public string notes { get; set; }
+        public string hc { get; set; }
 
         /// <summary>
         /// 冷却时间
@@ -53,9 +44,51 @@ namespace Dotahold.Core.Models
         public string cd { get; set; }
 
         /// <summary>
+        /// 价格
+        /// int/bool
+        /// </summary>
+        public string cost { get; set; }
+
+        /// <summary>
+        /// 物品分类, "common", "rare"等等
+        /// </summary>
+        public string qual { get; set; }
+
+        /// <summary>
+        /// 使用的介绍, 可能有多条, 例如第一条是主动效果, 第二条是被动
+        /// </summary>
+        public string[] hint { get; set; }
+
+        /// <summary>
+        /// 备注, 比如风杖的 notes 是你不能对友军使用
+        /// </summary>
+        public string notes { get; set; }
+
+        /// <summary>
         /// 背景介绍，就是物品介绍界面最底部那几句介绍的话
         /// </summary>
         public string lore { get; set; }
+
+        /// <summary>
+        /// 消耗品, 例如芒果的 charges = 1, 吃树的 charges = 3 
+        /// int/bool
+        /// </summary>
+        public string charges { get; set; }
+
+        /// <summary>
+        /// 行为, "Unit Target", "Instant Cast", "No Target", "AOE" 等等
+        /// </summary>
+        public string[] behavior { get; set; }
+
+        /// <summary>
+        /// 驱散类型, "Strong Dispels Only", "Yes" 等等
+        /// </summary>
+        public string dispellable { get; set; }
+
+        /// <summary>
+        /// 表示物品是否需要合成
+        /// </summary>
+        public bool created { get; set; }
 
         /// <summary>
         /// 合成配方
@@ -63,25 +96,19 @@ namespace Dotahold.Core.Models
         public string[] components { get; set; }
 
         /// <summary>
-        /// 似乎是表示物品是否需要合成
+        /// 目标阵营, "Enemy", "Both" 等等
         /// </summary>
-        public bool created { get; set; }
+        public string[] target_team { get; set; }
 
         /// <summary>
-        /// 属性加成
+        /// 目标类型, "Basic", "Hero" 等等
         /// </summary>
-        public Attrib[] attrib { get; set; }
+        public string[] target_type { get; set; }
 
         /// <summary>
-        /// 似乎没什么用，只有二级散失有这个值，对应的是其他物品的 hint
+        /// 伤害类型, "Physical", "Magical" 等等
         /// </summary>
-        public string desc { get; set; }
-
-        /// <summary>
-        /// 消耗品，例如芒果的 charges = 1，吃树的 charges = 3 
-        /// int/bool
-        /// </summary>
-        public string charges { get; set; }
+        public string dmg_type { get; set; }
 
         /// <summary>
         /// 中立物品等级 
@@ -90,10 +117,24 @@ namespace Dotahold.Core.Models
         public string tier { get; set; }
 
         /// <summary>
-        /// mana cost 魔法消耗 
-        /// int/bool
+        /// 是否无视BKB
         /// </summary>
-        public string mc { get; set; }
+        public string bkbpierce { get; set; }
+
+
+
+
+
+        /// <summary>
+        /// 属性加成
+        /// </summary>
+        public Attrib[] attrib { get; set; }
+
+
+
+
+
+
 
 
         [JsonIgnore] private bool _loadedImage = false;
