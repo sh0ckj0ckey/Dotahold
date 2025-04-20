@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="22189NoMewing.Dota2"
-    Publisher="CN=NoMewing"
-    Version="4.2.0.0" />
+    Name="8bb0802d-77cf-4100-a5c4-a5728376f06c"
+    Publisher="CN=Shock Jockey"
+    Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="12b0330a-d940-4a33-82cf-cc8ef899432a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="8bb0802d-77cf-4100-a5c4-a5728376f06c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Dotahold</DisplayName>
-    <PublisherDisplayName>No Mewing</PublisherDisplayName>
+    <PublisherDisplayName>Shock Jockey</PublisherDisplayName>
     <Logo>Assets\Manifest\StoreLogo.png</Logo>
   </Properties>
 
@@ -35,16 +35,16 @@
         DisplayName="Dotahold"
         Square150x150Logo="Assets\Manifest\Square150x150Logo.png"
         Square44x44Logo="Assets\Manifest\Square44x44Logo.png"
-        Description="Dota 2 Statistics powered by OpenDota"
-        BackgroundColor="#2e2d45">
-        <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png" ShortName="Dotahold" Square71x71Logo="Assets\Manifest\SmallTile.png" Square310x310Logo="Assets\Manifest\LargeTile.png">
+        Description="Dota 2 Statistics powered by OpenDota."
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png" Square310x310Logo="Assets\Manifest\LargeTile.png" Square71x71Logo="Assets\Manifest\SmallTile.png" ShortName="Dotahold">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
             <uap:ShowOn Tile="square310x310Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\Manifest\SplashScreen.png"  BackgroundColor="#2e2d45"/>
+        <uap:SplashScreen Image="Assets\Manifest\SplashScreen.png"  BackgroundColor="transparent"/>
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
           <uap:Rotation Preference="portrait"/>

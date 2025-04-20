@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<Nullable>enable</Nullable>
+		<UseUwp>true</UseUwp>
+		<DefaultLanguage>zh-CN</DefaultLanguage>
+		<IsAotCompatible>true</IsAotCompatible>
+		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="DataShop\ConstantsJsons\ability_ids.json" />
+		<None Remove="DataShop\ConstantsJsons\heroes.json" />
+		<None Remove="DataShop\ConstantsJsons\items.json" />
+		<None Remove="DataShop\ConstantsJsons\item_colors.json" />
+		<None Remove="DataShop\ConstantsJsons\permanent_buffs.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="DataShop\ConstantsJsons\ability_ids.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="DataShop\ConstantsJsons\heroes.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="DataShop\ConstantsJsons\items.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="DataShop\ConstantsJsons\item_colors.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="DataShop\ConstantsJsons\permanent_buffs.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+	</ItemGroup>
+</Project>

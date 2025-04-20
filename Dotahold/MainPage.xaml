@@ -4,69 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Dotahold"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:converters="using:Dotahold.Converters"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    mc:Ignorable="d" d:Height="640" d:Width="960"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True" Background="Transparent">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        <converters:EqualToVisibilityConverter x:Key="Eq2VisConverter"/>
-        <converters:UnequalToVisibilityConverter x:Key="Ueq2VisConverter"/>
-        <converters:EqualToBoolConverter x:Key="Eq2BConverter"/>
-        <converters:StringToVisibilityConverter x:Key="Str2Vis"/>
-        <converters:BoolToVisibilityConverter x:Key="Bool2Vis"/>
-        <converters:SidebarIndexToOpacityConverter x:Key="Index2Opacity"/>
-    </Page.Resources>
+    <Grid>
 
-    <Grid Background="Transparent">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="64"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource ControlElevationBorderBrush}">
-            <!--Side bar-->
-            <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
-                        FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="heroes" Click="OnClickSidebarButton">
-                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABHEROES_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=0}">
-                        <Image.OpacityTransition>
-                            <ScalarTransition />
-                        </Image.OpacityTransition>
-                    </Image>
-                </Button>
-                <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
-                        FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="items" Click="OnClickSidebarButton">
-                    <Image Width="28" Height="28" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABITEMS_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=1}">
-                        <Image.OpacityTransition>
-                            <ScalarTransition />
-                        </Image.OpacityTransition>
-                    </Image>
-                </Button>
-                <Button Width="54" Height="54" Padding="0" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
-                        FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="matches" Click="OnClickSidebarButton">
-                    <Image Width="32" Height="32" UseLayoutRounding="True" Source="{ThemeResource SIDEMENU_TABMATCHES_IMG}" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=2}">
-                        <Image.OpacityTransition>
-                            <ScalarTransition />
-                        </Image.OpacityTransition>
-                    </Image>
-                </Button>
-            </StackPanel>
-            <!--Setting button-->
-            <Button Width="54" Height="48" Margin="0,0,0,4" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    FocusVisualPrimaryThickness="0" FocusVisualSecondaryThickness="0" Tag="settings" Click="OnClickSidebarButton">
-                <muxc:AnimatedIcon x:Name="SettingsAnimatedIcon" Height="22" Width="22" Opacity="{x:Bind _viewModel.SideMenuTabIndex,Mode=OneWay,Converter={StaticResource Index2Opacity},ConverterParameter=3}">
-                    <muxc:AnimatedIcon.Source>
-                        <animatedvisuals:AnimatedSettingsVisualSource/>
-                    </muxc:AnimatedIcon.Source>
-                    <muxc:AnimatedIcon.FallbackIconSource>
-                        <muxc:SymbolIconSource Symbol="Setting"/>
-                    </muxc:AnimatedIcon.FallbackIconSource>
-                </muxc:AnimatedIcon>
-            </Button>
-        </Grid>
-        
-        <Frame x:Name="MainFrame" Grid.Column="1" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>
