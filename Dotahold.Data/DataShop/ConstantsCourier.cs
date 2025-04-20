@@ -72,19 +72,19 @@ namespace Dotahold.Data.DataShop
             {
                 LoadConstantsGottenDate();
 
-                DefaultHeroImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+                DefaultHeroImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
                 {
                     DecodePixelType = DecodePixelType.Logical,
                     DecodePixelHeight = 144
                 };
 
-                DefaultItemImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/item_placeholder.png"))
+                DefaultItemImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
                 {
                     DecodePixelType = DecodePixelType.Logical,
                     DecodePixelHeight = 144
                 };
 
-                DefaultAvatarImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/avatar_placeholder.jpeg"))
+                DefaultAvatarImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/img_default_avatar.jpeg"))
                 {
                     DecodePixelType = DecodePixelType.Logical,
                     DecodePixelHeight = 144
