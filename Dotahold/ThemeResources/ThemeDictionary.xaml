@@ -25,7 +25,7 @@
                 <ResourceDictionary>
                     <!--Common-->
                     <Color x:Key="DotaholdApplicationPageBackground">#F3F4F8</Color>
-                    <Color x:Key="DotaholdApplicationForeground">#222222</Color>
+                    <Color x:Key="DotaholdApplicationForeground">#000000</Color>
                     <Color x:Key="DotaholdSeparatorColor">#20000000</Color>
 
                     <Color x:Key="DotaholdGoldForeground">#E6B03F</Color>
