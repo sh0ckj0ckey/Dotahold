@@ -5,10 +5,85 @@
     xmlns:local="using:Dotahold"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:localConverters="using:Dotahold.Converters"
+    xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True" Background="Transparent">
+    <Page.Resources>
+        <localConverters:PageToTabIconOpacityConverter x:Key="PageToTabIconOpacityConverter"/>
+    </Page.Resources>
 
-    <Grid>
+    <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <!--Tab Buttons-->
+        <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="HeroesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Width="28" Height="28" Source="{ThemeResource DotaholdTabHeroesIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=0}">
+                    <Image.OpacityTransition>
+                        <ScalarTransition/>
+                    </Image.OpacityTransition>
+                </Image>
+            </Button>
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="ItemsTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Width="28" Height="28" Source="{ThemeResource DotaholdTabItemsIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=1}">
+                    <Image.OpacityTransition>
+                        <ScalarTransition/>
+                    </Image.OpacityTransition>
+                </Image>
+            </Button>
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="MatchesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Width="32" Height="32" Source="{ThemeResource DotaholdTabMatchesIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=2}">
+                    <Image.OpacityTransition>
+                        <ScalarTransition/>
+                    </Image.OpacityTransition>
+                </Image>
+            </Button>
+        </StackPanel>
+
+        <!--Settings Button-->
+        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" Click="SettingsTabButton_Click" Margin="0,0,0,6" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <muxc:AnimatedIcon Height="22" Width="22" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=3}">
+                <muxc:AnimatedIcon.Source>
+                    <animatedVisuals:AnimatedSettingsVisualSource/>
+                </muxc:AnimatedIcon.Source>
+                <muxc:AnimatedIcon.FallbackIconSource>
+                    <muxc:SymbolIconSource Symbol="Setting"/>
+                </muxc:AnimatedIcon.FallbackIconSource>
+            </muxc:AnimatedIcon>
+        </Button>
+
+        <!--GoBack Button-->
+        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" Click="BackTabButton_Click" Margin="0,6,0,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <muxc:AnimatedIcon Height="22" Width="22">
+                <muxc:AnimatedIcon.Source>
+                    <animatedVisuals:AnimatedBackVisualSource/>
+                </muxc:AnimatedIcon.Source>
+                <muxc:AnimatedIcon.FallbackIconSource>
+                    <muxc:SymbolIconSource Symbol="Back"/>
+                </muxc:AnimatedIcon.FallbackIconSource>
+            </muxc:AnimatedIcon>
+        </Button>
+
+        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Frame x:Name="MainFrame" Grid.Row="0" Grid.RowSpan="2" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+
+            <Grid x:Name="AppTitleBarGrid" Grid.Row="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="1"/>
+
+        </Grid>
     </Grid>
 </Page>

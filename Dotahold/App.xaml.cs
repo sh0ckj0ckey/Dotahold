@@ -1,4 +1,5 @@
 ﻿using System;
+using Dotahold.Data.DataShop;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -19,8 +20,9 @@ namespace Dotahold
         public App()
         {
             InitializeComponent();
-
             Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         /// <inheritdoc/>
@@ -64,7 +66,8 @@ namespace Dotahold
         /// <param name="e">Details about the navigation failure.</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception($"Failed to load page '{e.SourcePageType.FullName}'.");
+            LogCourier.LogAsync($"Failed to load page '{e.SourcePageType.FullName}'.", LogCourier.LogType.Error);
+            e.Handled = true;
         }
 
         /// <summary>
@@ -80,6 +83,20 @@ namespace Dotahold
 
             // TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            LogCourier.LogAsync(e.Message, LogCourier.LogType.Error);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception exception)
+            {
+                LogCourier.LogAsync(exception.Message, LogCourier.LogType.Error);
+            }
         }
     }
 }

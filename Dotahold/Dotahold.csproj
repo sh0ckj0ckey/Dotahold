@@ -16,11 +16,24 @@
 		<EnableMsixTooling>true</EnableMsixTooling>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Fonts\Radiance-SemiBold.ttf" />
+	  <None Remove="Fonts\Radiance.ttf" />
+	  <None Remove="Fonts\Reaver-Bold.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="Fonts\Radiance-SemiBold.ttf" />
+	  <Content Include="Fonts\Radiance.ttf" />
+	  <Content Include="Fonts\Reaver-Bold.ttf" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Controls.Segmented" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Converters" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Extensions" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Media" Version="8.2.250402" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Dotahold.Data\Dotahold.Data.csproj" />
 	</ItemGroup>
 </Project>

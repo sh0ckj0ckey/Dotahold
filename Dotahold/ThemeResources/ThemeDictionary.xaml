@@ -1,0 +1,41 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Dark">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!--Common-->
+                    <Color x:Key="DotaholdApplicationPageBackground">#272839</Color>
+                    <Color x:Key="DotaholdApplicationForeground">#FFFFFF</Color>
+                    <Color x:Key="DotaholdSeparatorColor">#20AAAAAA</Color>
+
+                    <Color x:Key="DotaholdGoldForeground">#FFD700</Color>
+
+                    <BitmapImage x:Key="DotaholdTabHeroesIcon" UriSource="ms-appx:///Assets/Tabs/icon_hero_dark.png"/>
+                    <BitmapImage x:Key="DotaholdTabItemsIcon" UriSource="ms-appx:///Assets/Tabs/icon_item_dark.png"/>
+                    <BitmapImage x:Key="DotaholdTabMatchesIcon" UriSource="ms-appx:///Assets/Tabs/icon_match_dark.png"/>
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <!--Common-->
+                    <Color x:Key="DotaholdApplicationPageBackground">#F3F4F8</Color>
+                    <Color x:Key="DotaholdApplicationForeground">#222222</Color>
+                    <Color x:Key="DotaholdSeparatorColor">#20000000</Color>
+
+                    <Color x:Key="DotaholdGoldForeground">#E6B03F</Color>
+
+                    <BitmapImage x:Key="DotaholdTabHeroesIcon" UriSource="ms-appx:///Assets/Tabs/icon_hero_light.png"/>
+                    <BitmapImage x:Key="DotaholdTabItemsIcon" UriSource="ms-appx:///Assets/Tabs/icon_item_light.png"/>
+                    <BitmapImage x:Key="DotaholdTabMatchesIcon" UriSource="ms-appx:///Assets/Tabs/icon_match_light.png"/>
+
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

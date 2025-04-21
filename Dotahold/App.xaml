@@ -2,6 +2,31 @@
     x:Class="Dotahold.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Dotahold">
+    xmlns:local="using:Dotahold"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
 
+    <Application.Resources>
+        <muxc:XamlControlsResources>
+            <muxc:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="/ThemeResources/ThemeDictionary.xaml"/>
+
+                <ResourceDictionary>
+
+                    <FontFamily x:Key="SymbolThemeFontFamily">Segoe Fluent Icons</FontFamily>
+                    <FontFamily x:Key="ReaverBold">/Fonts/Reaver-Bold.ttf#Reaver Bold</FontFamily>
+                    <FontFamily x:Key="RadianceSemiBold">/Fonts/Radiance-SemiBold.ttf#Radiance-SemiBold</FontFamily>
+                    <FontFamily x:Key="Radiance">/Fonts/Radiance.ttf#Radiance</FontFamily>
+
+                    <Color x:Key="SystemAccentColor">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight1">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight2">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorLight3">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark1">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark2">#DD88001B</Color>
+                    <Color x:Key="SystemAccentColorDark3">#DD88001B</Color>
+                    
+                </ResourceDictionary>
+            </muxc:XamlControlsResources.MergedDictionaries>
+        </muxc:XamlControlsResources>
+    </Application.Resources>
 </Application>

@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="Dotahold.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d" NavigationCacheMode="Disabled">
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Margin="32,36,0,20" Text="Settings" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
+        <Border x:Name="SettingsPageHeaderSeperatorLineBorder" Grid.Row="1" Height="1" Opacity="0" Background="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+        <ScrollViewer Grid.Row="2" ViewChanged="ScrollViewer_ViewChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Margin="20,0,20,20" Spacing="4" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+               
+                <communityControls:SettingsCard>
+                    <communityControls:SettingsCard.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <Image Height="64" Width="64" DoubleTapped="Image_DoubleTapped">
+                                <Image.Source>
+                                    <BitmapImage DecodePixelHeight="128" DecodePixelType="Logical" UriSource="/Assets/Dotahold.png"/>
+                                </Image.Source>
+                            </Image>
+                            <StackPanel Spacing="4" Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="Dotahold" FontFamily="{ThemeResource ReaverBold}" FontSize="20"/>
+                                <TextBlock Text="Powered by OpenDota" FontFamily="{ThemeResource Radiance}" FontSize="14" Opacity="0.7"/>
+                                <TextBlock Text="{x:Bind _viewModel.AppVersion,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="14"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </communityControls:SettingsCard.Header>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Center" Click="RateButton_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F498;"/>
+                            <TextBlock Text="Rate&amp;Review" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </communityControls:SettingsCard>
+
+                <TextBlock Text="Customize" FontWeight="Bold" FontSize="16" Margin="12,20,0,0"/>
+
+                <communityControls:SettingsCard Header="Appearance" Description="Choose how Dotahold looks to you">
+                    <communityControls:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE771;"/>
+                    </communityControls:SettingsCard.HeaderIcon>
+                    <ComboBox x:Name="ThemeComboBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
+                              SelectedIndex="{x:Bind _viewModel.AppSettings.AppearanceIndex,Mode=TwoWay}">
+                        <ComboBoxItem Content="Dark"/>
+                        <ComboBoxItem Content="Light"/>
+                    </ComboBox>
+                </communityControls:SettingsCard>
+
+                <TextBlock Text="©2025 NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,4,0,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
