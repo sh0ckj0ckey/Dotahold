@@ -104,7 +104,7 @@
 
                 <TextBlock Text="About" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
 
-                <communityControls:SettingsCard Header="Feedback" Description="Your ideas matters! Share your thoughts with us.">
+                <communityControls:SettingsCard Header="Feedback" Description="Your ideas matters! Share your thoughts with us">
                     <communityControls:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xED15;"/>
                     </communityControls:SettingsCard.HeaderIcon>
