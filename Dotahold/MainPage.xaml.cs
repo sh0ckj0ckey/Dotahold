@@ -1,6 +1,9 @@
 ﻿using System;
 using Dotahold.Data.DataShop;
 using Dotahold.Pages;
+using Dotahold.Pages.Heroes;
+using Dotahold.Pages.Items;
+using Dotahold.Pages.Matches;
 using Dotahold.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
@@ -25,6 +28,8 @@ namespace Dotahold
             {
                 SetTitleBarArea();
                 UpdateAppTheme();
+
+                MainFrameNavigateToPage(_viewModel.AppSettings.StartupPageIndex);
             };
 
             _viewModel.AppSettings.AppearanceSettingChanged += (_, _) =>
@@ -37,26 +42,54 @@ namespace Dotahold
 
         private void HeroesTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            _viewModel.TabIndex = 0;
+            MainFrameNavigateToPage(0);
         }
 
         private void ItemsTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            _viewModel.TabIndex = 1;
+            MainFrameNavigateToPage(1);
         }
 
         private void MatchesTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            _viewModel.TabIndex = 2;
+            MainFrameNavigateToPage(2);
         }
 
         private void SettingsTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            _viewModel.TabIndex = 3;
+            MainFrameNavigateToPage(3);
+        }
 
-            if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(SettingsPage)))
+        private void MainFrameNavigateToPage(int pageIndex)
+        {
+            _viewModel.TabIndex = pageIndex;
+
+            switch (_viewModel.TabIndex)
             {
-                MainFrame.Navigate(typeof(SettingsPage), _viewModel);
+                case 0:
+                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroesPage)))
+                    {
+                        MainFrame.Navigate(typeof(HeroesPage), _viewModel);
+                    }
+                    break;
+                case 1:
+                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(ItemsPage)))
+                    {
+                        MainFrame.Navigate(typeof(ItemsPage), _viewModel);
+                    }
+                    break;
+                case 2:
+                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(OverviewPage)))
+                    {
+                        MainFrame.Navigate(typeof(OverviewPage), _viewModel);
+                    }
+                    break;
+                case 3:
+                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(SettingsPage)))
+                    {
+                        MainFrame.Navigate(typeof(SettingsPage), _viewModel);
+                    }
+                    break;
             }
         }
 

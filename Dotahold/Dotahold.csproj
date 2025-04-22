@@ -16,6 +16,13 @@
 		<EnableMsixTooling>true</EnableMsixTooling>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Assets\Store\**" />
+	  <Content Remove="Assets\Store\**" />
+	  <EmbeddedResource Remove="Assets\Store\**" />
+	  <None Remove="Assets\Store\**" />
+	  <Page Remove="Assets\Store\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <None Remove="Fonts\Radiance-SemiBold.ttf" />
 	  <None Remove="Fonts\Radiance.ttf" />
 	  <None Remove="Fonts\Reaver-Bold.ttf" />
@@ -35,5 +42,8 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Dotahold.Data\Dotahold.Data.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PRIResource Remove="Assets\Store\**" />
 	</ItemGroup>
 </Project>

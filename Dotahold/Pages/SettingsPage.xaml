@@ -88,7 +88,7 @@
                     </StackPanel>
                 </communityControls:SettingsCard>
 
-                <TextBlock Text="Experimental" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
+                <!--<TextBlock Text="Experimental" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
 
                 <communityControls:SettingsCard Header="Language" Description="Partial pages only">
                     <communityControls:SettingsCard.HeaderIcon>
@@ -100,9 +100,53 @@
                         <ComboBoxItem Content="Chinese (partially supported)"/>
                         <ComboBoxItem Content="Russian (partially supported)"/>
                     </ComboBox>
-                </communityControls:SettingsCard>
+                </communityControls:SettingsCard>-->
 
                 <TextBlock Text="About" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
+
+                <communityControls:SettingsCard Header="Source Code" Description="Dotahold is open source">
+                    <communityControls:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE943;"/>
+                    </communityControls:SettingsCard.HeaderIcon>
+                    <Button Click="GitHubPageButton_Click" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/Dotahold">
+                        <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center">
+                            <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_github.png" Width="24" Height="24" ShowAsMonochrome="True" VerticalAlignment="Center"/>
+                            <TextBlock Text="GitHub Repository" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </communityControls:SettingsCard>
+                
+                <communityControls:SettingsExpander Header="Data Sources" Description="The data is referenced from these websites">
+                    <communityControls:SettingsExpander.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF6FA;"/>
+                    </communityControls:SettingsExpander.HeaderIcon>
+                    <communityControls:SettingsExpander.Items>
+                        <communityControls:SettingsCard>
+                            <communityControls:SettingsCard.Description>
+                                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_dota2.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
+                                    <HyperlinkButton Padding="8" FontSize="14" NavigateUri="http://www.dota2.com/" Content="www.dota2.com" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </communityControls:SettingsCard.Description>
+                        </communityControls:SettingsCard>
+                        <communityControls:SettingsCard>
+                            <communityControls:SettingsCard.Description>
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_opendota.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
+                                    <HyperlinkButton Padding="8" FontSize="14" NavigateUri="https://www.opendota.com/" Content="www.opendota.com" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </communityControls:SettingsCard.Description>
+                        </communityControls:SettingsCard>
+                        <communityControls:SettingsCard>
+                            <communityControls:SettingsCard.Description>
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_dotapedia.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
+                                    <HyperlinkButton Padding="8" FontSize="14" NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </communityControls:SettingsCard.Description>
+                        </communityControls:SettingsCard>
+                    </communityControls:SettingsExpander.Items>
+                </communityControls:SettingsExpander>
 
                 <communityControls:SettingsCard Header="Feedback" Description="Your ideas matters! Share your thoughts with us">
                     <communityControls:SettingsCard.HeaderIcon>
@@ -130,44 +174,6 @@
                             <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_steam.png" Width="24" Height="24" ShowAsMonochrome="True" VerticalAlignment="Center"/>
                         </Button>
                     </StackPanel>
-                </communityControls:SettingsCard>
-
-                <communityControls:SettingsExpander Header="Data Sources" Description="The data is referenced from these websites">
-                    <communityControls:SettingsExpander.HeaderIcon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF6FA;"/>
-                    </communityControls:SettingsExpander.HeaderIcon>
-                    <communityControls:SettingsExpander.Items>
-                        <communityControls:SettingsCard>
-                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_dota2.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
-                                <HyperlinkButton NavigateUri="http://www.dota2.com/" Content="www.dota2.com" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </communityControls:SettingsCard>
-                        <communityControls:SettingsCard>
-                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_opendota.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
-                                <HyperlinkButton NavigateUri="https://www.opendota.com/" Content="www.opendota.com" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </communityControls:SettingsCard>
-                        <communityControls:SettingsCard>
-                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_dotapedia.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
-                                <HyperlinkButton NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </communityControls:SettingsCard>
-                    </communityControls:SettingsExpander.Items>
-                </communityControls:SettingsExpander>
-
-                <communityControls:SettingsCard Header="Source Code" Description="Dotahold is open source">
-                    <communityControls:SettingsCard.HeaderIcon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE943;"/>
-                    </communityControls:SettingsCard.HeaderIcon>
-                    <Button Click="GitHubPageButton_Click" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/Dotahold">
-                        <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center">
-                            <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_github.png" Width="24" Height="24" ShowAsMonochrome="True" VerticalAlignment="Center"/>
-                            <TextBlock Text="GitHub Repository" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
                 </communityControls:SettingsCard>
 
                 <TextBlock x:Name="DevelopmentHeaderTextBlock" Visibility="Collapsed" Text="Development" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
