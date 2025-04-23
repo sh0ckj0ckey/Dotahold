@@ -17,13 +17,13 @@
                     <FontFamily x:Key="RadianceSemiBold">/Fonts/Radiance-SemiBold.ttf#Radiance-SemiBold</FontFamily>
                     <FontFamily x:Key="Radiance">/Fonts/Radiance.ttf#Radiance</FontFamily>
 
-                    <Color x:Key="SystemAccentColor">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorLight1">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorLight2">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorLight3">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorDark1">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorDark2">#6C1E06</Color>
-                    <Color x:Key="SystemAccentColorDark3">#6C1E06</Color>
+                    <Color x:Key="SystemAccentColor">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorLight1">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorLight2">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorLight3">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorDark1">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorDark2">#6C1C0C</Color>
+                    <Color x:Key="SystemAccentColorDark3">#6C1C0C</Color>
                     
                 </ResourceDictionary>
             </muxc:XamlControlsResources.MergedDictionaries>
