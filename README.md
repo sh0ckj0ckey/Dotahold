@@ -18,19 +18,19 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 ### Screenshots
 
 #### Heroes List
-![1.png](Dotahold\Assets\Store\1.png)
+![1.png](Dotahold/Assets/Store/1.png)
 
 #### Hero Info
-![2.png](Dotahold\Assets\Store\2.png)
+![2.png](Dotahold/Assets/Store/2.png)
 
 #### Items
-![3.png](Dotahold\Assets\Store\3.png)
+![3.png](Dotahold/Assets/Store/3.png)
 
 #### Matches
-![4.png](Dotahold\Assets\Store\4.png)
+![4.png](Dotahold/Assets/Store/4.png)
 
 #### Match Detail
-![5.png](Dotahold\Assets\Store\5.png)
+![5.png](Dotahold/Assets/Store/5.png)
 
 ### References
 | Name | License | Website |
