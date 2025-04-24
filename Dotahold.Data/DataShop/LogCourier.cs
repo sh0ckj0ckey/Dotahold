@@ -36,14 +36,21 @@ namespace Dotahold.Data.DataShop
 
         public static void LogAsync(string message, LogType logType = LogType.Info)
         {
-            var stackTrace = new StackTrace();
-            var stackFrame = stackTrace.GetFrame(1);
-            string callingMethodName = stackFrame is not null ? DiagnosticMethodInfo.Create(stackFrame)?.Name ?? "" : "";
+            try
+            {
+                var stackTrace = new StackTrace();
+                var stackFrame = stackTrace.GetFrame(1);
+                string callingMethodName = stackFrame is not null ? DiagnosticMethodInfo.Create(stackFrame)?.Name ?? "" : "";
 
-            string logMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{logType}] {callingMethodName}: {message}";
-            Debug.WriteLine(logMessage);
-            _logQueue.Enqueue(logMessage);
-            _logEvent.Set();
+                string logMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{logType}] {callingMethodName}: {message}";
+                Debug.WriteLine(logMessage);
+                _logQueue.Enqueue(logMessage);
+                _logEvent.Set();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
         }
 
         private static async Task ProcessLogQueue(CancellationToken token)
@@ -54,7 +61,14 @@ namespace Dotahold.Data.DataShop
 
                 while (_logQueue.TryDequeue(out string? logMessage))
                 {
-                    await WriteLogToFileAsync(logMessage);
+                    try
+                    {
+                        await WriteLogToFileAsync(logMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.WriteLine(ex.Message);
+                    }
                 }
             }
         }
@@ -87,24 +101,24 @@ namespace Dotahold.Data.DataShop
 
         private static async Task ClearOldLogsAsync(StorageFile logFile)
         {
-            try
-            {
-                // 只保留后半部分日志
-                var lines = await FileIO.ReadLinesAsync(logFile);
-                var newLines = lines.Skip(lines.Count / 2);
-                await FileIO.WriteLinesAsync(logFile, newLines);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+            // 只保留后半部分日志
+            var lines = await FileIO.ReadLinesAsync(logFile);
+            var newLines = lines.Skip(lines.Count / 2);
+            await FileIO.WriteLinesAsync(logFile, newLines);
         }
 
         public static void StopLogging()
         {
-            _cancellationTokenSource.Cancel();
-            _logEvent.Set();
-            _logTask.Wait();
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _logEvent.Set();
+                _logTask.Wait();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
         }
     }
 }

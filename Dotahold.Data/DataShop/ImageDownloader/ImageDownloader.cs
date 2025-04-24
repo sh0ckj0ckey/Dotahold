@@ -92,57 +92,37 @@ namespace Dotahold.Data.DataShop.ImageDownloader
                     return memStream;
                 }
 
-                using var resStream = await DownloadImage(url);
-                if (resStream is not null)
-                {
-                    var memStream = new MemoryStream();
-                    await resStream.CopyToAsync(memStream);
-                    memStream.Position = 0;
-
-                    if (shouldCache)
-                    {
-                        var newCachedFile = await ImageCacheManager.CreateCacheFileAsync(tmpFileName);
-                        if (newCachedFile.Value.File is not null)
-                        {
-                            using var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync();
-                            await memStream.CopyToAsync(fileStream);
-                            memStream.Position = 0;
-
-                            await ImageCacheManager.FinishCacheFileAsync(newCachedFile.Value, true);
-                        }
-                    }
-
-                    return memStream;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
-            }
-
-            return null;
-        }
-
-        private static async Task<Stream?> DownloadImage(string url)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(url))
-                {
-                    throw new Exception("Invalid URL");
-                }
-
                 var response = await _httpClient.GetAsync(new Uri(url));
                 // response.EnsureSuccessStatusCode();
-
                 if (response?.Content is not null)
                 {
-                    return await response.Content.ReadAsStreamAsync();
+                    using var resStream = await response.Content.ReadAsStreamAsync();
+                    if (resStream is not null)
+                    {
+                        var memStream = new MemoryStream();
+                        await resStream.CopyToAsync(memStream);
+                        memStream.Position = 0;
+
+                        if (shouldCache)
+                        {
+                            var newCachedFile = await ImageCacheManager.CreateCacheFileAsync(tmpFileName);
+                            if (newCachedFile.Value.File is not null)
+                            {
+                                using var fileStream = await newCachedFile.Value.File.OpenStreamForWriteAsync();
+                                await memStream.CopyToAsync(fileStream);
+                                memStream.Position = 0;
+
+                                await ImageCacheManager.FinishCacheFileAsync(newCachedFile.Value, true);
+                            }
+                        }
+
+                        return memStream;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync($"Donwload image failed, Url is {url}, {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.LogAsync($"Getting image({url}) failed, {ex.Message}", LogCourier.LogType.Error);
             }
 
             return null;

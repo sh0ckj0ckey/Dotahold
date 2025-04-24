@@ -143,8 +143,9 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             catch (Exception ex)
             {
                 LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
-                return false;
             }
+
+            return false;
         }
 
         /// <summary>
