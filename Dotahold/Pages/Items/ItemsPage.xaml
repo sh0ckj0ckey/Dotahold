@@ -21,19 +21,19 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Margin="32,36,0,8" Text="Items" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
             <Grid Grid.Row="1" Margin="20,0" HorizontalAlignment="Stretch">
-                <TextBox PlaceholderText="Search items" FontSize="14" Padding="30,6,4,0" Height="34" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <TextBox PlaceholderText="Search items" FontSize="14" Padding="30,6,4,0" Height="34" TextChanged="TextBox_TextChanged" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE094;" Opacity="0.7" FontSize="14" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"/>
             </Grid>
-            <ListView Grid.Row="2" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" Padding="16,8,16,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ListView Grid.Row="2" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ItemModel">
-                        <Grid Height="60" Padding="0,0">
+                        <Grid Height="64">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Height="42" Width="56" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}">
-                                <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ItemImage.Image,Mode=OneWay}"/>
+                                <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ItemImage.Image,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                             <TextBlock Grid.Column="1" FontWeight="Medium" FontSize="16" Margin="16,0" TextTrimming="CharacterEllipsis"
                                        Text="{x:Bind DotaItemAttributes.dname}" ToolTipService.ToolTip="{x:Bind DotaItemAttributes.dname}"

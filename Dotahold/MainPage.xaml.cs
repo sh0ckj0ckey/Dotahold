@@ -22,6 +22,8 @@ namespace Dotahold
 
         public MainPage()
         {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
             _viewModel = new MainViewModel();
 
             _viewModel.AppSettings.AppearanceSettingChanged += (_, _) =>
@@ -34,8 +36,6 @@ namespace Dotahold
                 Window.Current.SetTitleBar(AppTitleBarGrid);
                 MainFrameNavigateToPage(_viewModel.AppSettings.StartupPageIndex);
             };
-
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
             UpdateAppTheme();
 

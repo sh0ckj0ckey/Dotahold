@@ -87,8 +87,8 @@ namespace Dotahold.Data.Models
         /// <summary>
         /// 中立物品等级
         /// </summary>
-        [JsonConverter(typeof(SafeStringConverter))]
-        public string tier { get; set; } = string.Empty;
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int tier { get; set; }
 
         /// <summary>
         /// 合成配方

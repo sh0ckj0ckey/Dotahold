@@ -7,8 +7,6 @@ namespace Dotahold.Data.Models
 {
     public partial class AsyncImage : ObservableObject
     {
-
-
         private bool _loaded = false;
 
         private BitmapImage? _image = null;

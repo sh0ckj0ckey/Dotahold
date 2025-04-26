@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.ApplicationModel;
@@ -115,6 +116,7 @@ namespace Dotahold.Pages
                 ClearCacheProgressRing.IsActive = true;
                 CacheSizeTextBlock.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
+                await Task.Delay(1000);
                 bool isSuccessful = await ImageCourier.ClearCacheAsync();
 
                 button.IsEnabled = true;

@@ -13,7 +13,7 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// HeroId to HeroModel
         /// </summary>
-        private Dictionary<string, HeroModel> _heroModels { get; set; } = [];
+        private Dictionary<string, HeroModel> _heroModels = [];
 
         /// <summary>
         /// Heroes with Strength as their Primary Attribute
@@ -70,7 +70,6 @@ namespace Dotahold.ViewModels
                     var heroModel = new HeroModel(hero);
 
                     string primary = heroModel.DotaHeroAttributes.primary_attr?.ToLower() ?? "";
-
                     if (primary.Contains("str"))
                     {
                         this.StrHeroes.Add(heroModel);
@@ -92,8 +91,28 @@ namespace Dotahold.ViewModels
                         this.UniHeroes.Add(heroModel);
                     }
 
-                    _ = heroModel.HeroImage.LoadImageAsync();
-                    _ = heroModel.HeroIcon.LoadImageAsync();
+                    _heroModels[heroModel.DotaHeroAttributes.id.ToString()] = heroModel;
+                }
+
+                foreach (var hero in this.StrHeroes)
+                {
+                    await hero.HeroImage.LoadImageAsync();
+                    await hero.HeroIcon.LoadImageAsync();
+                }
+                foreach (var hero in this.AgiHeroes)
+                {
+                    await hero.HeroImage.LoadImageAsync();
+                    await hero.HeroIcon.LoadImageAsync();
+                }
+                foreach (var hero in this.IntHeroes)
+                {
+                    await hero.HeroImage.LoadImageAsync();
+                    await hero.HeroIcon.LoadImageAsync();
+                }
+                foreach (var hero in this.UniHeroes)
+                {
+                    await hero.HeroImage.LoadImageAsync();
+                    await hero.HeroIcon.LoadImageAsync();
                 }
             }
             catch (Exception ex)

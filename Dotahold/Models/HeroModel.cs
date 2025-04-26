@@ -20,7 +20,7 @@ namespace Dotahold.Models
 
         public HeroModel(DotaHeroModel hero)
         {
-            DefaultHeroImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
+            DefaultHeroImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
                 DecodePixelHeight = 144,

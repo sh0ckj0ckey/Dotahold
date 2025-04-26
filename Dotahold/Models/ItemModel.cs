@@ -14,7 +14,7 @@ namespace Dotahold.Models
         /// <summary>
         /// 默认物品图片
         /// </summary>
-        public static BitmapImage? DefaultItemImageSource72 = null;
+        public static BitmapImage? DefaultItemImageSource42 = null;
 
         public DotaItemModel DotaItemAttributes { get; private set; }
 
@@ -22,14 +22,14 @@ namespace Dotahold.Models
 
         public ItemModel(DotaItemModel item)
         {
-            DefaultItemImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
+            DefaultItemImageSource42 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
-                DecodePixelHeight = 144
+                DecodePixelHeight = 84
             };
 
             this.DotaItemAttributes = item;
-            this.ItemImage = new AsyncImage($"https://steamcdn-a.akamaihd.net{this.DotaItemAttributes.img}", 0, 144, DefaultItemImageSource72);
+            this.ItemImage = new AsyncImage($"https://steamcdn-a.akamaihd.net{this.DotaItemAttributes.img}", 0, 84, DefaultItemImageSource42);
         }
     }
 }

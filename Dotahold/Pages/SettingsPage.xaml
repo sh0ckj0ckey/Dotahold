@@ -5,6 +5,7 @@
     xmlns:local="using:Dotahold.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
     mc:Ignorable="d" NavigationCacheMode="Disabled">
 
@@ -74,8 +75,8 @@
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE958;"/>
                     </communityControls:SettingsCard.HeaderIcon>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <ProgressRing x:Name="ClearCacheProgressRing" Height="14" Width="14" IsActive="False" Visibility="Collapsed"
-                                      Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
+                        <muxc:ProgressRing x:Name="ClearCacheProgressRing" Height="14" Width="14" IsActive="False" Visibility="Collapsed"
+                                           Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                         <TextBlock x:Name="CacheSizeTextBlock" Opacity="0.7" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                         <Button IsEnabled="True" Margin="12,0,0,0" MinWidth="128" VerticalAlignment="Center" Click="ClearCacheButton_Click">
                             <Button.Content>

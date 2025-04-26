@@ -24,5 +24,10 @@ namespace Dotahold.Pages.Items
             _viewModel = e.Parameter as MainViewModel;
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = (sender as TextBox)?.Text ?? string.Empty;
+            _viewModel?.ItemsViewModel?.FilterItems(searchText);
+        }
     }
 }

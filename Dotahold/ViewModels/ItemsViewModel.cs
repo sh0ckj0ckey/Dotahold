@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
+using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
@@ -13,7 +15,12 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// ItemId to ItemModel
         /// </summary>
-        private Dictionary<string, ItemModel> _itemModels { get; set; } = [];
+        private Dictionary<string, ItemModel> _itemModels = [];
+
+        /// <summary>
+        /// All items
+        /// </summary>
+        private List<ItemModel> _allItems = new List<ItemModel>();
 
         /// <summary>
         /// Items list
@@ -43,17 +50,29 @@ namespace Dotahold.ViewModels
                 this.Loading = true;
 
                 _itemModels.Clear();
+                _allItems.Clear();
                 this.Items.Clear();
 
                 Dictionary<string, Data.Models.DotaItemModel> itemsConstant = await ConstantsCourier.GetItemsConstant();
 
                 foreach (var item in itemsConstant.Values)
                 {
+                    if (string.IsNullOrWhiteSpace(item.dname))
+                    {
+                        continue;
+                    }
+
                     var itemModel = new ItemModel(item);
 
-                    this.Items.Add(itemModel);
+                    _allItems.Add(itemModel);
+                    _itemModels[item.id.ToString()] = itemModel;
+                }
 
-                    _ = itemModel.ItemImage.LoadImageAsync();
+                FilterItems(string.Empty);
+
+                foreach (var item in _allItems)
+                {
+                    await item.ItemImage.LoadImageAsync();
                 }
             }
             catch (Exception ex)
@@ -63,6 +82,34 @@ namespace Dotahold.ViewModels
             finally
             {
                 this.Loading = false;
+            }
+        }
+
+        public void FilterItems(string keyword)
+        {
+            this.Items.Clear();
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                foreach (var item in _allItems)
+                {
+                    if (!string.IsNullOrWhiteSpace(item.DotaItemAttributes.qual) || item.DotaItemAttributes.tier > 0)
+                    {
+                        this.Items.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                string regex = ".*" + string.Join(".*", keyword.ToCharArray()) + ".*";
+
+                foreach (var item in _allItems)
+                {
+                    if (Regex.IsMatch(item.DotaItemAttributes.dname!.ToLower(), regex.ToLower()))
+                    {
+                        this.Items.Add(item);
+                    }
+                }
             }
         }
     }
