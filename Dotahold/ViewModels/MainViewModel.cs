@@ -5,7 +5,11 @@ namespace Dotahold.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
-        public SettingsCourier AppSettings { get; } = new SettingsCourier();
+        public SettingsCourier AppSettings { get; } = SettingsCourier.Instance;
+
+        public HeroesViewModel HeroesViewModel { get; } = new HeroesViewModel();
+
+        public ItemsViewModel ItemsViewModel { get; } = new ItemsViewModel();
 
         private int _tabIndex = 0;
 

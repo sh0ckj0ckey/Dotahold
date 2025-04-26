@@ -4,15 +4,198 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Dotahold.Pages.Heroes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:community="using:CommunityToolkit.WinUI"
+    xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:Dotahold.Models"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <communityMedia:AttachedCardShadow x:Key="CommonShadow" Offset="2" CornerRadius="5" BlurRadius="16" Opacity="0.8"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX" To="1.1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY" To="1.1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX" To="1.07" Duration="0:0:0.1"/>
+                                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY" To="1.07" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="RootBorder" Background="Transparent">
+                                <ContentPresenter RenderTransformOrigin="0.5,0.5" community:Effects.Shadow="{StaticResource CommonShadow}">
+                                    <ContentPresenter.RenderTransform>
+                                        <ScaleTransform x:Name="ScaleTransform" ScaleX="1.0" ScaleY="1.0"/>
+                                    </ContentPresenter.RenderTransform>
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="32,36,0,20" Text="Heroes" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
+        <TextBlock Grid.Row="0" Margin="32,36,0,0" Text="Heroes" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
+        <Pivot x:Name="HeroesPivot" Grid.Row="1" Padding="0">
+            <Pivot.LeftHeader>
+                <Grid Width="20"/>
+            </Pivot.LeftHeader>
+            <PivotItem Margin="42,0">
+                <PivotItem.Header>
+                    <StackPanel Spacing="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource DotaholdHeroesPivotItemHeaderStrIcon}" Height="20" Opacity="0.8" VerticalAlignment="Center"/>
+                        <TextBlock Text="STRENGTH" FontSize="18" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,2,0,-2" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource DotaholdHeroesPivotBackgroundStrIcon}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-48,-24"/>
 
+                    <ScrollViewer Margin="-24,0" Padding="-12,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.StrHeroes,Mode=OneWay}" Margin="24,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="models:HeroModel">
+                                    <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
+                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HeroImage.Image, Mode=OneWay}"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Button>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Margin="42,0">
+                <PivotItem.Header>
+                    <StackPanel Spacing="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource DotaholdHeroesPivotItemHeaderAgiIcon}" Height="20" Opacity="0.8" VerticalAlignment="Center"/>
+                        <TextBlock Text="AGILITY" FontSize="18" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,2,0,-2" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource DotaholdHeroesPivotBackgroundAgiIcon}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-62,-24"/>
+
+                    <ScrollViewer Margin="-24,0" Padding="-12,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.AgiHeroes,Mode=OneWay}" Margin="24,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="models:HeroModel">
+                                    <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
+                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HeroImage.Image, Mode=OneWay}"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Button>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Margin="42,0">
+                <PivotItem.Header>
+                    <StackPanel Spacing="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource DotaholdHeroesPivotItemHeaderIntIcon}" Height="20" Opacity="0.8" VerticalAlignment="Center"/>
+                        <TextBlock Text="INTELLIGENCE" FontSize="18" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,2,0,-2" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource DotaholdHeroesPivotBackgroundIntIcon}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-54,-28"/>
+
+                    <ScrollViewer Margin="-24,0" Padding="-12,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.IntHeroes,Mode=OneWay}" Margin="24,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="models:HeroModel">
+                                    <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
+                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HeroImage.Image, Mode=OneWay}"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Button>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Margin="42,0">
+                <PivotItem.Header>
+                    <StackPanel Spacing="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Image Source="{ThemeResource DotaholdHeroesPivotItemHeaderUniIcon}" Height="20" Opacity="0.8" VerticalAlignment="Center"/>
+                        <TextBlock Text="UNIVERSAL" FontSize="18" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,2,0,-2" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </PivotItem.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Image Source="{ThemeResource DotaholdHeroesPivotBackgroundUniIcon}" Height="218" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="Uniform" Opacity="0.05" Margin="0,0,-56,-28"/>
+
+                    <ScrollViewer Margin="-24,0" Padding="-12,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.UniHeroes,Mode=OneWay}" Margin="24,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:UniformGridLayout Orientation="Horizontal" MinItemWidth="128" MinItemHeight="72" MinColumnSpacing="12" MinRowSpacing="12" ItemsStretch="Uniform"/>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="models:HeroModel">
+                                    <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
+                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border CornerRadius="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Border.Background>
+                                                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind HeroImage.Image, Mode=OneWay}"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Button>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>
+
+    
+   

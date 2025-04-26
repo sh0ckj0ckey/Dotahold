@@ -16,6 +16,16 @@
                     <BitmapImage x:Key="DotaholdTabItemsIcon" UriSource="ms-appx:///Assets/Tabs/icon_item_dark.png"/>
                     <BitmapImage x:Key="DotaholdTabMatchesIcon" UriSource="ms-appx:///Assets/Tabs/icon_match_dark.png"/>
 
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderStrIcon" UriSource="ms-appx:///Assets/Heroes/icon_str_background_dark.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderAgiIcon" UriSource="ms-appx:///Assets/Heroes/icon_agi_background_dark.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_dark.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_dark.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundStrIcon" UriSource="ms-appx:///Assets/Heroes/icon_str_background_dark.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundAgiIcon" UriSource="ms-appx:///Assets/Heroes/icon_agi_background_dark.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_dark.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_dark.png"/>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -32,6 +42,15 @@
                     <BitmapImage x:Key="DotaholdTabItemsIcon" UriSource="ms-appx:///Assets/Tabs/icon_item_light.png"/>
                     <BitmapImage x:Key="DotaholdTabMatchesIcon" UriSource="ms-appx:///Assets/Tabs/icon_match_light.png"/>
 
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderStrIcon" UriSource="ms-appx:///Assets/Heroes/icon_str_background_light.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderAgiIcon" UriSource="ms-appx:///Assets/Heroes/icon_agi_background_light.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_light.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotItemHeaderUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_light.png" DecodePixelType="Logical" DecodePixelHeight="40"/>
+
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundStrIcon" UriSource="ms-appx:///Assets/Heroes/icon_str_background_light.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundAgiIcon" UriSource="ms-appx:///Assets/Heroes/icon_agi_background_light.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_light.png"/>
+                    <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_light.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

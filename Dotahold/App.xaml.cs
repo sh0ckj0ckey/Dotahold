@@ -33,7 +33,10 @@ namespace Dotahold
             if (Window.Current.Content is not Frame rootFrame)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+                rootFrame = new Frame()
+                {
+                    RequestedTheme = SettingsCourier.Instance.AppearanceIndex == 1 ? ElementTheme.Light : ElementTheme.Dark,
+                };
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

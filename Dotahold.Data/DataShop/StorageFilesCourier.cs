@@ -9,7 +9,7 @@ namespace Dotahold.Data.DataShop
     /// <summary>
     /// 这是一只信使，帮你运送你需要的本地文件
     /// </summary>
-    public class StorageFilesCourier
+    public static class StorageFilesCourier
     {
         /// <summary>
         /// 存储数据的文件夹名称

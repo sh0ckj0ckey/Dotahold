@@ -21,21 +21,21 @@
 
         <!--Tab Buttons-->
         <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="HeroesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" UseSystemFocusVisuals="False" Click="HeroesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Width="28" Height="28" Source="{ThemeResource DotaholdTabHeroesIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=0}">
                     <Image.OpacityTransition>
                         <ScalarTransition/>
                     </Image.OpacityTransition>
                 </Image>
             </Button>
-            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="ItemsTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" UseSystemFocusVisuals="False" Click="ItemsTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Width="28" Height="28" Source="{ThemeResource DotaholdTabItemsIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=1}">
                     <Image.OpacityTransition>
                         <ScalarTransition/>
                     </Image.OpacityTransition>
                 </Image>
             </Button>
-            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="MatchesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" UseSystemFocusVisuals="False" Click="MatchesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Width="32" Height="32" Source="{ThemeResource DotaholdTabMatchesIcon}" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=2}">
                     <Image.OpacityTransition>
                         <ScalarTransition/>
@@ -45,7 +45,7 @@
         </StackPanel>
 
         <!--Settings Button-->
-        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" Click="SettingsTabButton_Click" Margin="0,0,0,6" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" UseSystemFocusVisuals="False" Click="SettingsTabButton_Click" Margin="0,0,0,6" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <muxc:AnimatedIcon Height="22" Width="22" Opacity="{x:Bind _viewModel.TabIndex,Mode=OneWay,Converter={StaticResource PageToTabIconOpacityConverter},ConverterParameter=3}">
                 <muxc:AnimatedIcon.Source>
                     <animatedVisuals:AnimatedSettingsVisualSource/>
@@ -57,7 +57,7 @@
         </Button>
 
         <!--GoBack Button-->
-        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" Click="BackTabButton_Click" Margin="0,6,0,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Button Width="54" Height="48" Background="Transparent" BorderBrush="Transparent" UseSystemFocusVisuals="False" Click="BackTabButton_Click" Margin="0,6,0,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top">
             <muxc:AnimatedIcon Height="22" Width="22">
                 <muxc:AnimatedIcon.Source>
                     <animatedVisuals:AnimatedBackVisualSource/>

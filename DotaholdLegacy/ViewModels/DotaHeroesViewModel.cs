@@ -116,69 +116,7 @@ namespace Dotahold.ViewModels
 
         public async Task<bool> LoadDotaHeroes()
         {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Loading Heroes ---> " + DateTime.Now.Ticks);
-
-                if (_bLoadedDotaHeroes)
-                    return true;
-
-                _bLoadedDotaHeroes = true;
-
-                bLoadingHeroes = true;
-
-                dictAllHeroes?.Clear();
-                vStrHeroesList?.Clear();
-                vAgiHeroesList?.Clear();
-                vIntHeroesList?.Clear();
-                vUniHeroesList?.Clear();
-                dictAllHeroes = await ConstantsCourier.Instance.GetHeroesConstant();
-
-                bLoadingHeroes = false;
-
-                if (dictAllHeroes == null || dictAllHeroes.Count <= 0)
-                {
-                    _bLoadedDotaHeroes = false;
-                    return true;
-                }
-
-                // 处理图片下载等流程，然后逐个添加到列表里面
-                foreach (var item in dictAllHeroes)
-                {
-                    item.Value.img = "https://cdn.cloudflare.steamstatic.com" + item.Value.img;
-                    item.Value.icon = "https://cdn.cloudflare.steamstatic.com" + item.Value.icon;
-
-                    string attr = item.Value.primary_attr.ToLower();
-                    if (attr.Contains("str"))
-                    {
-                        vStrHeroesList.Add(item.Value);
-                    }
-                    else if (attr.Contains("agi"))
-                    {
-                        vAgiHeroesList.Add(item.Value);
-                    }
-                    else if (attr.Contains("int"))
-                    {
-                        vIntHeroesList.Add(item.Value);
-                    }
-                    else if (attr.Contains("all"))
-                    {
-                        vUniHeroesList.Add(item.Value);
-                    }
-                }
-            }
-            catch { _bLoadedDotaHeroes = false; }
-            finally { bLoadingHeroes = false; }
-            return true;
-        }
-
-        public async void LoadHeroesImages()
-        {
-            foreach (var item in dictAllHeroes)
-            {
-                await item.Value.LoadImageAsync(256);
-                await item.Value.LoadIconAsync(36);
-            }
+           
         }
 
         /// <summary>

@@ -7,8 +7,12 @@ namespace Dotahold.Data.DataShop
     /// <summary>
     /// 这是一只信使，帮你运送你需要的设置项
     /// </summary>
-    public class SettingsCourier : ObservableObject
+    public partial class SettingsCourier : ObservableObject
     {
+        private static readonly Lazy<SettingsCourier> _lazy = new(() => new SettingsCourier());
+
+        public static SettingsCourier Instance { get { return _lazy.Value; } }
+
         private const string SETTING_APPEARANCE = "AppearanceIndex";
         private const string SETTING_STARTUP = "StartupPage";
         private const string SETTING_LANGUAGE = "Language";
@@ -17,6 +21,7 @@ namespace Dotahold.Data.DataShop
         private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
         public event EventHandler<int>? AppearanceSettingChanged = null;
+        private SettingsCourier() { }
 
         private int _appearanceIndex = -1;
         private int _startupPageIndex = -1;

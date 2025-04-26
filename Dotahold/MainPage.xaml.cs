@@ -38,6 +38,8 @@ namespace Dotahold
             };
 
             InitializeComponent();
+
+            _ = _viewModel.HeroesViewModel.LoadHeroes();
         }
 
         private void HeroesTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
