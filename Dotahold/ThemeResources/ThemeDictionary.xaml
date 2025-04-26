@@ -9,6 +9,7 @@
                     <Color x:Key="DotaholdApplicationPageBackground">#272839</Color>
                     <Color x:Key="DotaholdApplicationForeground">#FFFFFF</Color>
                     <Color x:Key="DotaholdSeparatorColor">#20AAAAAA</Color>
+                    <Color x:Key="DotaholdPlaceholderBackgroundColor">#20AAAAAA</Color>
 
                     <Color x:Key="DotaholdGoldForeground">#FFD700</Color>
 
@@ -35,6 +36,7 @@
                     <Color x:Key="DotaholdApplicationPageBackground">#F3F4F8</Color>
                     <Color x:Key="DotaholdApplicationForeground">#000000</Color>
                     <Color x:Key="DotaholdSeparatorColor">#20000000</Color>
+                    <Color x:Key="DotaholdPlaceholderBackgroundColor">#20000000</Color>
 
                     <Color x:Key="DotaholdGoldForeground">#E6B03F</Color>
 

@@ -50,7 +50,7 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (this.Loading)
+                if (this.Loading || _heroModels.Count > 0)
                 {
                     return;
                 }

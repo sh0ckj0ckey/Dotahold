@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Dotahold.Data.Models
@@ -114,6 +116,90 @@ namespace Dotahold.Data.Models
         public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
         {
             writer.WriteBooleanValue(value);
+        }
+    }
+
+    public class SafeStringConverter : JsonConverter<string>
+    {
+        public override string Read(ref Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+        {
+            try
+            {
+                if (reader.TokenType == JsonTokenType.StartArray)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    bool first = true;
+
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonTokenType.EndArray)
+                        {
+                            break;
+                        }
+
+                        if (!first)
+                        {
+                            stringBuilder.Append(", ");
+                        }
+                        else
+                        {
+                            first = false;
+                        }
+
+                        string append = string.Empty;
+
+                        if (reader.TokenType == JsonTokenType.String)
+                        {
+                            append = reader.GetString() ?? string.Empty;
+                        }
+                        else if (reader.TokenType == JsonTokenType.Number)
+                        {
+                            if (reader.TryGetDouble(out double doubleValue))
+                            {
+                                append = doubleValue.ToString();
+                            }
+                            else if (reader.TryGetInt32(out int intValue))
+                            {
+                                append = intValue.ToString();
+                            }
+                        }
+
+                        stringBuilder.Append(append);
+                    }
+
+                    return stringBuilder.ToString();
+                }
+                else if (reader.TokenType == JsonTokenType.String)
+                {
+                    return reader.GetString() ?? string.Empty;
+                }
+                else if (reader.TokenType == JsonTokenType.Number)
+                {
+                    if (reader.TryGetDouble(out double doubleValue))
+                    {
+                        return doubleValue.ToString();
+                    }
+                    else if (reader.TryGetInt32(out int intValue))
+                    {
+                        return intValue.ToString();
+                    }
+                }
+                else
+                {
+                    reader.Skip();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"Read error in SafeStringConverter: {ex.Message}");
+            }
+
+            return string.Empty;
+        }
+
+        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value);
         }
     }
 }

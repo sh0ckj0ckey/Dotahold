@@ -5,14 +5,43 @@
     xmlns:local="using:Dotahold.Pages.Items"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Dotahold.Models"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="32,36,0,20" Text="Items" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
-
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="360"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="32,36,0,8" Text="Items" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
+            <Grid Grid.Row="1" Margin="20,0" HorizontalAlignment="Stretch">
+                <TextBox PlaceholderText="Search items" FontSize="14" Padding="30,6,4,0" Height="34" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE094;" Opacity="0.7" FontSize="14" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"/>
+            </Grid>
+            <ListView Grid.Row="2" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" Padding="16,8,16,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ItemModel">
+                        <Grid Height="60" Padding="0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Height="42" Width="56" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}">
+                                <Image Height="42" Width="56" Stretch="UniformToFill" Source="{x:Bind ItemImage.Image,Mode=OneWay}"/>
+                            </Grid>
+                            <TextBlock Grid.Column="1" FontWeight="Medium" FontSize="16" Margin="16,0" TextTrimming="CharacterEllipsis"
+                                       Text="{x:Bind DotaItemAttributes.dname}" ToolTipService.ToolTip="{x:Bind DotaItemAttributes.dname}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Page>

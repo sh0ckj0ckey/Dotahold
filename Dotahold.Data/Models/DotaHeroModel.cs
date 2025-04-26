@@ -7,13 +7,25 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int id { get; set; }
 
-        public string? name { get; set; } = string.Empty;
-        public string? localized_name { get; set; } = string.Empty;
-        public string? primary_attr { get; set; } = string.Empty;
-        public string? attack_type { get; set; } = string.Empty;
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string name { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string localized_name { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string primary_attr { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string attack_type { get; set; } = string.Empty;
+
         public string[]? roles { get; set; } = [];
-        public string? img { get; set; } = string.Empty;
-        public string? icon { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string img { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string icon { get; set; } = string.Empty;
 
         [JsonConverter(typeof(SafeDoubleConverter))]
         public double base_health { get; set; }

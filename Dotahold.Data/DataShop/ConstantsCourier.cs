@@ -12,21 +12,6 @@ namespace Dotahold.Data.DataShop
     /// </summary>
     public static class ConstantsCourier
     {
-        /// <summary>
-        /// 默认英雄图片
-        /// </summary>
-        public static readonly BitmapImage? DefaultHeroImageSource72 = null;
-
-        /// <summary>
-        /// 默认物品图片
-        /// </summary>
-        public static readonly BitmapImage? DefaultItemImageSource72 = null;
-
-        /// <summary>
-        /// 默认玩家图片
-        /// </summary>
-        public static readonly BitmapImage? DefaultAvatarImageSource72 = null;
-
         private static readonly Windows.Web.Http.HttpClient _constantsHttpClient = new();
 
         private static Dictionary<string, long>? _dictConstantsGottenDate = null;
@@ -68,29 +53,7 @@ namespace Dotahold.Data.DataShop
 
         static ConstantsCourier()
         {
-            try
-            {
-                LoadConstantsGottenDate();
-
-                DefaultHeroImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
-                {
-                    DecodePixelType = DecodePixelType.Logical,
-                    DecodePixelHeight = 144
-                };
-
-                DefaultItemImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/icon_placeholder.png"))
-                {
-                    DecodePixelType = DecodePixelType.Logical,
-                    DecodePixelHeight = 144
-                };
-
-                DefaultAvatarImageSource72 = new BitmapImage(new Uri("ms-appx:///Assets/Icons/img_default_avatar.jpeg"))
-                {
-                    DecodePixelType = DecodePixelType.Logical,
-                    DecodePixelHeight = 144
-                };
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            LoadConstantsGottenDate();
         }
 
         /// <summary>

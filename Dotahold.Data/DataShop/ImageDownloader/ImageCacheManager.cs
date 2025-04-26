@@ -19,6 +19,11 @@ namespace Dotahold.Data.DataShop.ImageDownloader
     /// </summary>
     internal static class ImageCacheManager
     {
+        static ImageCacheManager()
+        {
+            _ = GetCacheFolderAsync();
+        }
+
         /// <summary>
         /// 获取图片缓存目录，如果不存在会创建
         /// </summary>

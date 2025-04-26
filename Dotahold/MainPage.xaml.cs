@@ -24,22 +24,25 @@ namespace Dotahold
         {
             _viewModel = new MainViewModel();
 
-            this.Loaded += (_, _) =>
-            {
-                SetTitleBarArea();
-                UpdateAppTheme();
-
-                MainFrameNavigateToPage(_viewModel.AppSettings.StartupPageIndex);
-            };
-
             _viewModel.AppSettings.AppearanceSettingChanged += (_, _) =>
             {
                 UpdateAppTheme();
             };
 
+            this.Loaded += (_, _) =>
+            {
+                Window.Current.SetTitleBar(AppTitleBarGrid);
+                MainFrameNavigateToPage(_viewModel.AppSettings.StartupPageIndex);
+            };
+
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
+            UpdateAppTheme();
+
             InitializeComponent();
 
             _ = _viewModel.HeroesViewModel.LoadHeroes();
+            _ = _viewModel.ItemsViewModel.LoadItems();
         }
 
         private void HeroesTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -98,12 +101,6 @@ namespace Dotahold
         private void BackTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-        }
-
-        private void SetTitleBarArea()
-        {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(AppTitleBarGrid);
         }
 
         private void UpdateAppTheme()
