@@ -1,5 +1,4 @@
 ﻿using System;
-using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
 using Windows.UI.Xaml.Media.Imaging;
 

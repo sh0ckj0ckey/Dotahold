@@ -1,4 +1,6 @@
-﻿using Dotahold.ViewModels;
+﻿using System.Linq;
+using Dotahold.Models;
+using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -28,6 +30,29 @@ namespace Dotahold.Pages.Items
         {
             string searchText = (sender as TextBox)?.Text ?? string.Empty;
             _viewModel?.ItemsViewModel?.FilterItems(searchText);
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_viewModel is null)
+            {
+                return;
+            }
+
+            if (e.AddedItems?.FirstOrDefault() is ItemModel addedItem && addedItem is not null)
+            {
+                if (_viewModel.ItemsViewModel.SelectedItem != addedItem)
+                {
+                    _viewModel.ItemsViewModel.SelectedItem = addedItem;
+                }
+            }
+            else if (e.RemovedItems?.FirstOrDefault() is ItemModel removedItem && removedItem is not null)
+            {
+                if (_viewModel.ItemsViewModel.SelectedItem == removedItem)
+                {
+                    _viewModel.ItemsViewModel.SelectedItem = null;
+                }
+            }
         }
     }
 }

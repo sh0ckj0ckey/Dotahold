@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
@@ -29,6 +28,8 @@ namespace Dotahold.ViewModels
 
         private bool _loading = false;
 
+        private ItemModel? _selectedItem = null;
+
         /// <summary>
         /// Indicates whether the items list is being loaded
         /// </summary>
@@ -36,6 +37,15 @@ namespace Dotahold.ViewModels
         {
             get => _loading;
             set => SetProperty(ref _loading, value);
+        }
+
+        /// <summary>
+        /// Selected item in the list
+        /// </summary>
+        public ItemModel? SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
         }
 
         public async Task LoadItems()

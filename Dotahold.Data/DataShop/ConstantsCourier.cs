@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Dotahold.Data.Models;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Data.DataShop
 {
