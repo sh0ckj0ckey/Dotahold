@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using Dotahold.Data.DataShop;
 using Dotahold.Models;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
@@ -14,6 +16,8 @@ namespace Dotahold.Pages.Items
     public sealed partial class ItemsPage : Page
     {
         private MainViewModel? _viewModel;
+
+        private readonly ObservableCollection<ItemModel> _components = [];
 
         public ItemsPage()
         {
@@ -34,24 +38,72 @@ namespace Dotahold.Pages.Items
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_viewModel is null)
+            try
             {
-                return;
-            }
+                if (_viewModel is null)
+                {
+                    return;
+                }
 
-            if (e.AddedItems?.FirstOrDefault() is ItemModel addedItem && addedItem is not null)
-            {
-                if (_viewModel.ItemsViewModel.SelectedItem != addedItem)
+                if (e.AddedItems?.FirstOrDefault() is ItemModel addedItem && addedItem is not null)
                 {
-                    _viewModel.ItemsViewModel.SelectedItem = addedItem;
+                    if (_viewModel.ItemsViewModel.SelectedItem != addedItem)
+                    {
+                        _viewModel.ItemsViewModel.SelectedItem = addedItem;
+                        ShowItemInfoStoryboard?.Begin();
+                    }
+                }
+                else if (e.RemovedItems?.FirstOrDefault() is ItemModel removedItem && removedItem is not null)
+                {
+                    if (_viewModel.ItemsViewModel.SelectedItem == removedItem)
+                    {
+                        _viewModel.ItemsViewModel.SelectedItem = null;
+                        HideItemInfoStoryboard?.Begin();
+                    }
+                }
+
+                // Update components list
+                _components.Clear();
+                if (_viewModel.ItemsViewModel.SelectedItem is not null)
+                {
+                    if (_viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.components?.Length > 0)
+                    {
+                        foreach (var itemKey in _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.components!)
+                        {
+                            var item = _viewModel.ItemsViewModel.GetItemModel(itemKey);
+                            if (item is not null)
+                            {
+                                _components.Add(item);
+                            }
+                        }
+                    }
                 }
             }
-            else if (e.RemovedItems?.FirstOrDefault() is ItemModel removedItem && removedItem is not null)
+            catch (System.Exception ex)
             {
-                if (_viewModel.ItemsViewModel.SelectedItem == removedItem)
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
+            }
+        }
+
+        private void ComponentsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                if (_viewModel is null)
                 {
-                    _viewModel.ItemsViewModel.SelectedItem = null;
+                    return;
                 }
+
+                if (e.ClickedItem is ItemModel item)
+                {
+                    _viewModel.ItemsViewModel.SelectedItem = item;
+                    ItemsListView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
+                    ShowItemInfoStoryboard?.Begin();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
         }
     }

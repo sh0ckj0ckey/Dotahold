@@ -53,7 +53,7 @@ namespace Dotahold.Data.DataShop
                         }
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
                 if (_appearanceIndex < 0) _appearanceIndex = 0;
                 return _appearanceIndex < 0 ? 0 : _appearanceIndex;
             }
@@ -94,7 +94,7 @@ namespace Dotahold.Data.DataShop
                         }
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
                 if (_startupPageIndex < 0) _startupPageIndex = 0;
                 return _startupPageIndex < 0 ? 0 : _startupPageIndex;
             }
@@ -134,7 +134,7 @@ namespace Dotahold.Data.DataShop
                         }
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
                 if (_languageIndex < 0) _languageIndex = 0;
                 return _languageIndex < 0 ? 0 : _languageIndex;
             }
@@ -166,7 +166,7 @@ namespace Dotahold.Data.DataShop
                         }
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
                 _steamID ??= "";
                 return _steamID;
             }

@@ -65,17 +65,22 @@ namespace Dotahold.ViewModels
 
                 Dictionary<string, Data.Models.DotaItemModel> itemsConstant = await ConstantsCourier.GetItemsConstant();
 
-                foreach (var item in itemsConstant.Values)
+                foreach (var item in itemsConstant)
                 {
-                    if (string.IsNullOrWhiteSpace(item.dname))
+                    if (string.IsNullOrWhiteSpace(item.Key))
                     {
                         continue;
                     }
 
-                    var itemModel = new ItemModel(item);
+                    if (string.IsNullOrWhiteSpace(item.Value.dname))
+                    {
+                        continue;
+                    }
+
+                    var itemModel = new ItemModel(item.Value);
 
                     _allItems.Add(itemModel);
-                    _itemModels[item.id.ToString()] = itemModel;
+                    _itemModels[item.Key] = itemModel;
                 }
 
                 FilterItems(string.Empty);
@@ -87,7 +92,7 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync($"Loading items failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Loading items failed: {ex.ToString()}", LogCourier.LogType.Error);
             }
             finally
             {
@@ -121,6 +126,16 @@ namespace Dotahold.ViewModels
                     }
                 }
             }
+        }
+
+        public ItemModel? GetItemModel(string itemName)
+        {
+            if (_itemModels.TryGetValue(itemName, out ItemModel? itemModel))
+            {
+                return itemModel;
+            }
+
+            return null;
         }
     }
 }

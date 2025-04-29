@@ -58,7 +58,7 @@ namespace Dotahold.Data.DataShop
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return text;
@@ -97,13 +97,13 @@ namespace Dotahold.Data.DataShop
                     }
                     catch (Exception ex)
                     {
-                        LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                        LogCourier.Log(ex.Message, LogCourier.LogType.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return false;

@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
+using Dotahold.Data.Models;
 using Windows.UI.Xaml.Data;
 
 namespace Dotahold.Converters
 {
-    internal partial class StringArrayToStringConverter : IValueConverter
+    internal partial class StringToUpperConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
-                if (value is string[] stringArray)
+                if (!string.IsNullOrWhiteSpace(value?.ToString()))
                 {
-                    string separator = parameter as string ?? "\r\n";
-                    return string.Join(separator, stringArray);
+                    return value?.ToString()?.ToUpper() ?? string.Empty;
                 }
             }
             catch (Exception ex)

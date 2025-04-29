@@ -64,7 +64,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return null;
@@ -122,7 +122,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync($"Getting image({url}) failed, {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"Getting image({url}) failed, {ex.Message}", LogCourier.LogType.Error);
             }
 
             return null;
@@ -149,7 +149,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return originalString;

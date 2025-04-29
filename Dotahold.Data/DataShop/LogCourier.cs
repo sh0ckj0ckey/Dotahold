@@ -34,7 +34,7 @@ namespace Dotahold.Data.DataShop
 
         private const int _maxLogLines = 10000;
 
-        public static void LogAsync(string message, LogType logType = LogType.Info)
+        public static void Log(string message, LogType logType = LogType.Info)
         {
             try
             {

@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -26,21 +28,16 @@ namespace Dotahold.Pages
             {
                 try
                 {
-                    static string ConvertSize(long size)
+                    await Task.Run(async () =>
                     {
-                        if (size < 1024)
-                            return $"{size} B";
-                        else if (size < 1024 * 1024)
-                            return $"{Math.Round(size / 1024.0, 2)} KB";
-                        else if (size < 1024 * 1024 * 1024)
-                            return $"{Math.Round(size / (1024.0 * 1024), 2)} MB";
-                        else
-                            return $"{Math.Round(size / (1024.0 * 1024 * 1024), 2)} GB";
-                    }
+                        long size = await ImageCourier.GetCacheSizeAsync();
+                        string cacheSize = ConvertSize(size);
 
-                    long size = await ImageCourier.GetCacheSizeAsync();
-                    string cacheSize = ConvertSize(size);
-                    CacheSizeTextBlock.Text = cacheSize;
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            CacheSizeTextBlock.Text = cacheSize;
+                        });
+                    });
                 }
                 catch { }
             };
@@ -191,6 +188,18 @@ namespace Dotahold.Pages
         private void ForceUpdateButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ConstantsCourier.ResetConstantsGottenDate();
+        }
+
+        private static string ConvertSize(long size)
+        {
+            if (size < 1024)
+                return $"{size} B";
+            else if (size < 1024 * 1024)
+                return $"{Math.Round(size / 1024.0, 2)} KB";
+            else if (size < 1024 * 1024 * 1024)
+                return $"{Math.Round(size / (1024.0 * 1024), 2)} MB";
+            else
+                return $"{Math.Round(size / (1024.0 * 1024 * 1024), 2)} GB";
         }
     }
 }

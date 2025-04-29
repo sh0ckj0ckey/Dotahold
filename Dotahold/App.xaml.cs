@@ -69,7 +69,7 @@ namespace Dotahold
         /// <param name="e">Details about the navigation failure.</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            LogCourier.LogAsync($"Failed to load page '{e.SourcePageType.FullName}'.", LogCourier.LogType.Error);
+            LogCourier.Log($"Failed to load page '{e.SourcePageType.FullName}'.", LogCourier.LogType.Error);
             e.Handled = true;
         }
 
@@ -91,14 +91,14 @@ namespace Dotahold
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            LogCourier.LogAsync(e.Message, LogCourier.LogType.Error);
+            LogCourier.Log(e.Message, LogCourier.LogType.Error);
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
         {
             if (e.ExceptionObject is Exception exception)
             {
-                LogCourier.LogAsync(exception.Message, LogCourier.LogType.Error);
+                LogCourier.Log(exception.Message, LogCourier.LogType.Error);
             }
         }
     }

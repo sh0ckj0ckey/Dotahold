@@ -71,7 +71,7 @@ namespace Dotahold.Data.DataShop
                         _dictHeroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictHeroes is null)
@@ -84,7 +84,7 @@ namespace Dotahold.Data.DataShop
                         _dictHeroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictHeroes is null || CheckNeed2UpdateJson("heroes"))
@@ -104,7 +104,7 @@ namespace Dotahold.Data.DataShop
                         _ = await GetConstant("heroes", _heroesJsonFileName);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             _dictHeroes ??= new Dictionary<string, DotaHeroModel>();
@@ -128,7 +128,7 @@ namespace Dotahold.Data.DataShop
                         _dictItems = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictItems is null)
@@ -141,7 +141,7 @@ namespace Dotahold.Data.DataShop
                         _dictItems = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictItems is null || CheckNeed2UpdateJson("items"))
@@ -161,7 +161,7 @@ namespace Dotahold.Data.DataShop
                         _ = await GetConstant("items", _itemsJsonFileName);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             _dictItems ??= new Dictionary<string, Models.DotaItemModel>();
@@ -185,7 +185,7 @@ namespace Dotahold.Data.DataShop
                         _dictPermanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictPermanentBuffs is null)
@@ -198,7 +198,7 @@ namespace Dotahold.Data.DataShop
                         _dictPermanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictPermanentBuffs is null || CheckNeed2UpdateJson("permanent_buffs"))
@@ -218,7 +218,7 @@ namespace Dotahold.Data.DataShop
                         _ = await GetConstant("permanent_buffs", _buffsJsonFileName);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             _dictPermanentBuffs ??= new Dictionary<string, string>();
@@ -242,7 +242,7 @@ namespace Dotahold.Data.DataShop
                         _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictAbilitiesId is null)
@@ -255,7 +255,7 @@ namespace Dotahold.Data.DataShop
                         _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictAbilitiesId is null || CheckNeed2UpdateJson("ability_ids"))
@@ -275,7 +275,7 @@ namespace Dotahold.Data.DataShop
                         _ = await GetConstant("ability_ids", _abilitiesJsonFileName);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             _dictAbilitiesId ??= new Dictionary<string, string>();
@@ -299,7 +299,7 @@ namespace Dotahold.Data.DataShop
                         _dictItemColors = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictItemColors is null)
@@ -312,7 +312,7 @@ namespace Dotahold.Data.DataShop
                         _dictItemColors = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             if (_dictItemColors is null || CheckNeed2UpdateJson("item_colors"))
@@ -332,7 +332,7 @@ namespace Dotahold.Data.DataShop
                         _ = await GetConstant("item_colors", _itemColorsJsonFileName);
                     }
                 }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
             _dictItemColors ??= new Dictionary<string, string>();
@@ -366,7 +366,7 @@ namespace Dotahold.Data.DataShop
                     }
                 }
             }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
 
             return constantJson;
         }
@@ -386,7 +386,7 @@ namespace Dotahold.Data.DataShop
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return true;
@@ -402,7 +402,7 @@ namespace Dotahold.Data.DataShop
                     _dictConstantsGottenDate = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringInt64);
                 }
             }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
 
             _dictConstantsGottenDate ??= new Dictionary<string, long>();
         }
@@ -417,7 +417,7 @@ namespace Dotahold.Data.DataShop
                     await StorageFilesCourier.WriteFileAsync("constantsgottendate", json);
                 }
             }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
         }
 
         public static void ResetConstantsGottenDate()
@@ -427,7 +427,7 @@ namespace Dotahold.Data.DataShop
                 _dictConstantsGottenDate?.Clear();
                 SaveConstantsGottenDate();
             }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

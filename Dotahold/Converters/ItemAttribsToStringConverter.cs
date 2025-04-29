@@ -36,7 +36,7 @@ namespace Dotahold.Converters
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return string.Empty;

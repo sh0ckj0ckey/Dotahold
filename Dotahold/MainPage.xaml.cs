@@ -142,7 +142,7 @@ namespace Dotahold
             }
             catch (System.Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
         }
     }

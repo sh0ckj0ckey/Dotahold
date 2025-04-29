@@ -117,7 +117,7 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync($"Loading heroes failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Loading heroes failed: {ex.ToString()}", LogCourier.LogType.Error);
             }
             finally
             {

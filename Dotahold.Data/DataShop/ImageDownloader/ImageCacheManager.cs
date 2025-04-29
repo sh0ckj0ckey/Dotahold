@@ -59,7 +59,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return null;
@@ -79,7 +79,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return null;
@@ -147,7 +147,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return false;
@@ -173,7 +173,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return 0;
@@ -201,7 +201,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
 
             return false;
@@ -223,7 +223,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
             }
         }
     }
