@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
-using Dotahold.Data.Models;
 using Windows.UI.Xaml.Data;
 
 namespace Dotahold.Converters
