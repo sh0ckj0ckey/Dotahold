@@ -27,6 +27,8 @@
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_dark.png"/>
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_dark.png"/>
 
+                    <Color x:Key="DotaholdAcrylicFallbackColor">#202020</Color>
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -53,6 +55,9 @@
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundAgiIcon" UriSource="ms-appx:///Assets/Heroes/icon_agi_background_light.png"/>
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundIntIcon" UriSource="ms-appx:///Assets/Heroes/icon_int_background_light.png"/>
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_light.png"/>
+
+                    <Color x:Key="DotaholdAcrylicFallbackColor">#F3F3F3</Color>
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
