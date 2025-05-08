@@ -210,12 +210,12 @@
                                             </LinearGradientBrush>
                                         </Border.Background>
                                         <TextBlock TextWrapping="WrapWholeWords" CharacterSpacing="42" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <Run Text="{x:Bind type,Mode=OneWay,Converter={StaticResource StringToUpperConverter}}" FontSize="13"/>
+                                            <Run Text="{x:Bind type,Converter={StaticResource StringToUpperConverter}}" FontSize="13"/>
                                             <Run Text=": "/>
-                                            <Run Text="{x:Bind title,Mode=OneWay}" FontWeight="Medium"/>
+                                            <Run Text="{x:Bind title}" FontWeight="Medium"/>
                                         </TextBlock>
                                     </Border>
-                                    <TextBlock Grid.Row="1" Margin="12,6,12,10" Text="{x:Bind description,Mode=OneWay}" TextWrapping="WrapWholeWords" Opacity="0.8" CharacterSpacing="42"/>
+                                    <TextBlock Grid.Row="1" Margin="12,6,12,10" Text="{x:Bind description}" TextWrapping="WrapWholeWords" Opacity="0.8" CharacterSpacing="42"/>
                                 </Grid>
                             </DataTemplate>
                         </muxc:ItemsRepeater.ItemTemplate>

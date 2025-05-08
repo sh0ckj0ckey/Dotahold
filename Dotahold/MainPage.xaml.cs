@@ -72,27 +72,32 @@ namespace Dotahold
             switch (_viewModel.TabIndex)
             {
                 case 0:
-                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroesPage)))
+                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroesPage))
+                        && !Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroPage)))
                     {
                         MainFrame.Navigate(typeof(HeroesPage), _viewModel);
+                        MainFrame.BackStack.Clear();
                     }
                     break;
                 case 1:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(ItemsPage)))
                     {
                         MainFrame.Navigate(typeof(ItemsPage), _viewModel);
+                        MainFrame.BackStack.Clear();
                     }
                     break;
                 case 2:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(OverviewPage)))
                     {
                         MainFrame.Navigate(typeof(OverviewPage), _viewModel);
+                        MainFrame.BackStack.Clear();
                     }
                     break;
                 case 3:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(SettingsPage)))
                     {
                         MainFrame.Navigate(typeof(SettingsPage), _viewModel);
+                        MainFrame.BackStack.Clear();
                     }
                     break;
             }

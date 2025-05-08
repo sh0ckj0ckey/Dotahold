@@ -20,6 +20,8 @@ namespace Dotahold.Pages.Heroes
     {
         private readonly Visual _visual;
 
+        private MainViewModel? _viewModel;
+
         private HeroModel? _heroModel;
 
         public HeroPage()
@@ -33,12 +35,15 @@ namespace Dotahold.Pages.Heroes
         {
             base.OnNavigatedTo(e);
 
-            _heroModel = e.Parameter as HeroModel;
+            var param = e.Parameter as Tuple<MainViewModel, HeroModel>;
+
+            _viewModel = param?.Item1;
+            _heroModel = param?.Item2;
 
             try
             {
                 ConnectedAnimation? animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Hero");
-                animation?.TryStart(HeroImageBorder, new UIElement[] { HeroNameGrid });
+                animation?.TryStart(HeroImageBorder);
             }
             catch (Exception ex)
             {
@@ -55,6 +60,29 @@ namespace Dotahold.Pages.Heroes
                 ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("HeroBack", HeroImageBorder);
                 animation.Configuration = new BasicConnectedAnimationConfiguration();
             }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+        }
+
+        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RankingButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LanguageRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

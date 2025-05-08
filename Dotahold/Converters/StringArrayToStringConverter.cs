@@ -12,7 +12,13 @@ namespace Dotahold.Converters
             {
                 if (value is string[] stringArray)
                 {
-                    string separator = parameter as string ?? "\r\n";
+                    string separator = "\r\n";
+
+                    if (parameter is string param && !string.IsNullOrWhiteSpace(param))
+                    {
+                        separator = $" {param} ";
+                    }
+
                     return string.Join(separator, stringArray);
                 }
             }

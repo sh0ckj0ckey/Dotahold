@@ -60,7 +60,7 @@ namespace Dotahold.Pages.Heroes
                 ConnectedAnimation heroAnimation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Hero", _connectedAnimationButton);
                 heroAnimation.Configuration = new BasicConnectedAnimationConfiguration();
 
-                this.Frame.Navigate(typeof(HeroPage), heroModel, new SuppressNavigationTransitionInfo());
+                this.Frame.Navigate(typeof(HeroPage), new Tuple<MainViewModel, HeroModel>(_viewModel!, heroModel), new SuppressNavigationTransitionInfo());
             }
         }
     }
