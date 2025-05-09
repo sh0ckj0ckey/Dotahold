@@ -96,7 +96,7 @@ namespace Dotahold.Pages
         private void Image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
             DevelopmentHeaderTextBlock.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            DevelopmentSettingsCard.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            DevelopmentSettingsExpander.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         /// <summary>
@@ -159,14 +159,40 @@ namespace Dotahold.Pages
         }
 
         /// <summary>
+        /// 打开日志文件所在的目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ViewLogButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            try
+            {
+                var folder = await StorageFilesCourier.GetDataFolder();
+                folder = await folder.GetParentAsync();
+                await Launcher.LaunchFolderAsync(folder);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// 打开数据文件夹
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void DataFolerButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var folder = await StorageFilesCourier.GetDataFolder();
-            await Launcher.LaunchFolderAsync(folder);
+            try
+            {
+                var folder = await StorageFilesCourier.GetDataFolder();
+                await Launcher.LaunchFolderAsync(folder);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -176,8 +202,15 @@ namespace Dotahold.Pages
         /// <param name="e"></param>
         private async void ImageCacheFolderButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var folder = await ImageCourier.GetCacheFolderAsync();
-            await Launcher.LaunchFolderAsync(folder);
+            try
+            {
+                var folder = await ImageCourier.GetCacheFolderAsync();
+                await Launcher.LaunchFolderAsync(folder);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -201,5 +234,6 @@ namespace Dotahold.Pages
             else
                 return $"{Math.Round(size / (1024.0 * 1024 * 1024), 2)} GB";
         }
+
     }
 }

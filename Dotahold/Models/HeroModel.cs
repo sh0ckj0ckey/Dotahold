@@ -26,8 +26,8 @@ namespace Dotahold.Models
             };
 
             this.DotaHeroAttributes = hero;
-            this.HeroImage = new AsyncImage($"https://cdn.cloudflare.steamstatic.com{this.DotaHeroAttributes.img}", 0, 144, DefaultHeroImageSource72);
-            this.HeroIcon = new AsyncImage($"https://cdn.cloudflare.steamstatic.com{this.DotaHeroAttributes.icon}", 0, 36);
+            this.HeroImage = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaHeroAttributes.img}", 0, 144, DefaultHeroImageSource72);
+            this.HeroIcon = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaHeroAttributes.icon}", 0, 36);
         }
     }
 }

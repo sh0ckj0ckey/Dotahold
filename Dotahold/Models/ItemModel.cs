@@ -24,7 +24,7 @@ namespace Dotahold.Models
             };
 
             this.DotaItemAttributes = item;
-            this.ItemImage = new AsyncImage($"https://steamcdn-a.akamaihd.net{this.DotaItemAttributes.img}", 0, 84, DefaultItemImageSource42);
+            this.ItemImage = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaItemAttributes.img}", 0, 84, DefaultItemImageSource42);
         }
     }
 }

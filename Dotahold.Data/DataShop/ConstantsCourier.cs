@@ -50,6 +50,11 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         private static Dictionary<string, string>? _dictItemColors = null;
 
+        /// <summary>
+        /// 英雄和物品图片地址的域名
+        /// </summary>
+        public static string ImageSourceDomain { get; set; } = "https://cdn.akamai.steamstatic.com";
+
         static ConstantsCourier()
         {
             LoadConstantsGottenDate();

@@ -89,6 +89,18 @@
                     </StackPanel>
                 </communityControls:SettingsCard>
 
+                <communityControls:SettingsCard Header="Image Source" Description="Select the source for loading images">
+                    <communityControls:SettingsCard.HeaderIcon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE7C5;"/>
+                    </communityControls:SettingsCard.HeaderIcon>
+                    <ComboBox HorizontalAlignment="Right" VerticalAlignment="Center" Margin="4,0,0,0" MinWidth="128"
+                              SelectedIndex="{x:Bind _viewModel.AppSettings.ImageSourceCDNIndex,Mode=TwoWay}">
+                        <ComboBoxItem Content="Server A"/>
+                        <ComboBoxItem Content="Server B"/>
+                        <ComboBoxItem Content="Server C"/>
+                    </ComboBox>
+                </communityControls:SettingsCard>
+
                 <TextBlock Text="About" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
 
                 <communityControls:SettingsCard Header="Source Code" Description="Dotahold is open source">
@@ -102,7 +114,7 @@
                         </StackPanel>
                     </Button>
                 </communityControls:SettingsCard>
-                
+
                 <communityControls:SettingsExpander Header="Data Sources" Description="The data is referenced from these websites">
                     <communityControls:SettingsExpander.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF6FA;"/>
@@ -157,47 +169,64 @@
                                 <TextBlock Text="Report issue" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-                        <Button Click="SteamPageButton_Click">
+                        <!--<Button Click="SteamPageButton_Click">
                             <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_steam.png" Width="24" Height="24" ShowAsMonochrome="True" VerticalAlignment="Center"/>
-                        </Button>
+                        </Button>-->
                     </StackPanel>
                 </communityControls:SettingsCard>
 
                 <TextBlock x:Name="DevelopmentHeaderTextBlock" Visibility="Collapsed" Text="Development" FontWeight="Bold" FontSize="16" Margin="12,8,0,4"/>
 
-                <communityControls:SettingsCard x:Name="DevelopmentSettingsCard" Visibility="Collapsed" Header="Debug" Description="Just for developer">
-                    <communityControls:SettingsCard.HeaderIcon>
+                <communityControls:SettingsExpander x:Name="DevelopmentSettingsExpander" Visibility="Collapsed" IsExpanded="True" Header="Debug" Description="Just for developer">
+                    <communityControls:SettingsExpander.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEC7A;"/>
-                    </communityControls:SettingsCard.HeaderIcon>
-                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                        <Button Grid.Column="0" ToolTipService.ToolTip="Open Data Folder" Click="DataFolerButton_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="6">
-                                    <FontIcon Glyph="&#xED43;" FontSize="15" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Data Folder" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                        <Button Grid.Column="1" ToolTipService.ToolTip="Open Image Cache Folder" Click="ImageCacheFolderButton_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="6">
-                                    <FontIcon Glyph="&#xEB9F;" FontSize="15" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Image Cache Folder" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                        <Button Grid.Column="2" ToolTipService.ToolTip="Force Update Local Json" Click="ForceUpdateButton_Click">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="6">
-                                    <FontIcon Glyph="&#xE72C;" FontSize="15" VerticalAlignment="Center"/>
-                                    <TextBlock Text="Update Local Json" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                </communityControls:SettingsCard>
+                    </communityControls:SettingsExpander.HeaderIcon>
+                    <communityControls:SettingsExpander.Items>
+                        <communityControls:SettingsCard Description="Inspect application log files">
+                            <Button Click="ViewLogButton_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <FontIcon Glyph="&#xE9D9;" FontSize="15" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Log Files" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </communityControls:SettingsCard>
+                        <communityControls:SettingsCard Description="Open data folder">
+                            <Button Click="DataFolerButton_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <FontIcon Glyph="&#xED43;" FontSize="15" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Data Folder" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </communityControls:SettingsCard>
+                        <communityControls:SettingsCard Description="Open image cache folder">
+                            <Button Click="ImageCacheFolderButton_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <FontIcon Glyph="&#xEB9F;" FontSize="15" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Image Cache Folder" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </communityControls:SettingsCard>
+                        <communityControls:SettingsCard Description="Force constants JSON refresh on next startup">
+                            <Button Click="ForceUpdateButton_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <FontIcon Glyph="&#xE72C;" FontSize="15" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </communityControls:SettingsCard>
+                    </communityControls:SettingsExpander.Items>
+                </communityControls:SettingsExpander>
 
-                <TextBlock Text="©2025 NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,4,0,0"/>
+                <TextBlock Text="Better to run than curse the road." Opacity="0.5" FontFamily="Segoe Script" FontStyle="Italic" FontSize="14" Margin="4,0,0,0"/>
+                <TextBlock Text="©2025 NoMewing." Opacity="0.5" FontFamily="Consolas" FontSize="13" Margin="4,0,0,0"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

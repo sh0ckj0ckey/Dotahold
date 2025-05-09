@@ -41,6 +41,14 @@ namespace Dotahold
 
             InitializeComponent();
 
+            ConstantsCourier.ImageSourceDomain = _viewModel.AppSettings.ImageSourceCDNIndex switch
+            {
+                0 => "https://cdn.akamai.steamstatic.com",
+                1 => "https://cdn.cloudflare.steamstatic.com",
+                2 => "https://steamcdn-a.akamaihd.net",
+                _ => "https://cdn.akamai.steamstatic.com",
+            };
+
             _ = _viewModel.HeroesViewModel.LoadHeroes();
             _ = _viewModel.ItemsViewModel.LoadItems();
         }

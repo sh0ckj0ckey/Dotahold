@@ -13,8 +13,9 @@ namespace Dotahold.Data.DataShop
 
         public static SettingsCourier Instance { get { return _lazy.Value; } }
 
-        private const string SETTING_APPEARANCE = "AppearanceIndex";
+        private const string SETTING_APPEARANCE = "Appearance";
         private const string SETTING_STARTUP = "StartupPage";
+        private const string SETTING_CDN = "ImageSourceCDN";
         private const string SETTING_LANGUAGE = "Language";
         private const string SETTING_STEAMID = "SteamID";
 
@@ -25,6 +26,7 @@ namespace Dotahold.Data.DataShop
 
         private int _appearanceIndex = -1;
         private int _startupPageIndex = -1;
+        private int _imageSourceCDNIndex = -1;
         private int _languageIndex = -1;
         private string? _steamID = null;
 
@@ -102,6 +104,46 @@ namespace Dotahold.Data.DataShop
             {
                 SetProperty(ref _startupPageIndex, value);
                 ApplicationData.Current.LocalSettings.Values[SETTING_STARTUP] = _startupPageIndex;
+            }
+        }
+
+        /// <summary>
+        /// 图片源
+        /// </summary>
+        public int ImageSourceCDNIndex
+        {
+            get
+            {
+                try
+                {
+                    if (_imageSourceCDNIndex < 0)
+                    {
+                        if (_localSettings.Values[SETTING_CDN] == null)
+                        {
+                            _imageSourceCDNIndex = 0;
+                        }
+                        else if (_localSettings.Values[SETTING_CDN]?.ToString() == "1")
+                        {
+                            _imageSourceCDNIndex = 1;
+                        }
+                        else if (_localSettings.Values[SETTING_CDN]?.ToString() == "2")
+                        {
+                            _imageSourceCDNIndex = 2;
+                        }
+                        else
+                        {
+                            _imageSourceCDNIndex = 0;
+                        }
+                    }
+                }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+                if (_imageSourceCDNIndex < 0) _imageSourceCDNIndex = 0;
+                return _imageSourceCDNIndex < 0 ? 0 : _imageSourceCDNIndex;
+            }
+            set
+            {
+                SetProperty(ref _imageSourceCDNIndex, value);
+                ApplicationData.Current.LocalSettings.Values[SETTING_CDN] = _imageSourceCDNIndex;
             }
         }
 
