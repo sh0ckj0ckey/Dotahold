@@ -83,6 +83,8 @@ namespace Dotahold.ViewModels
                     _itemModels[item.Key] = itemModel;
                 }
 
+                this.Loading = false;
+
                 FilterItems(string.Empty);
 
                 foreach (var item in _allItems)

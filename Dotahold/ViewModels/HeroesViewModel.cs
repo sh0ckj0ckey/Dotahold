@@ -94,6 +94,8 @@ namespace Dotahold.ViewModels
                     _heroModels[heroModel.DotaHeroAttributes.id.ToString()] = heroModel;
                 }
 
+                this.Loading = false;
+
                 foreach (var hero in this.StrHeroes)
                 {
                     await hero.HeroImage.LoadImageAsync();

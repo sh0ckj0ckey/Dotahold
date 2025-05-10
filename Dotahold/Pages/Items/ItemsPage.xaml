@@ -57,6 +57,7 @@
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE094;" Opacity="0.7" FontSize="14" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"/>
             </Grid>
             <Rectangle Grid.Row="2" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
+            
             <ListView x:Name="ItemsListView" Grid.Row="3" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" 
                       SelectedItem="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay}" 
                       SelectionChanged="ListView_SelectionChanged" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -97,8 +98,7 @@
                 </communityAnimations:Implicit.HideAnimations>
             </Image>
 
-            <ScrollViewer x:Name="ItemInfoScrollViewer" Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ItemInfoScrollViewer" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
                 <ScrollViewer.RenderTransform>
                     <TranslateTransform x:Name="ItemInfoScrollViewerTranslation" Y="32"/>
                 </ScrollViewer.RenderTransform>

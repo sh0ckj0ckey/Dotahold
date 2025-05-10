@@ -1,8 +1,9 @@
 ﻿using System;
-using Dotahold.Data.DataShop;
 using Dotahold.Models;
 using Dotahold.ViewModels;
+using Windows.System;
 using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
@@ -29,6 +30,20 @@ namespace Dotahold.Pages.Heroes
             this.InitializeComponent();
 
             _visual = ElementCompositionPreview.GetElementVisual(this);
+
+            this.Loaded += (_, _) =>
+            {
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
+                Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+                SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+            };
+
+            this.Unloaded += (_, _) =>
+            {
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
+                Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -62,12 +77,49 @@ namespace Dotahold.Pages.Heroes
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private bool TryGoBack()
         {
             if (this.Frame.CanGoBack)
             {
                 this.Frame.GoBack();
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        {
+            if (e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown
+                && e.VirtualKey == VirtualKey.Left
+                && e.KeyStatus.IsMenuKeyDown == true
+                && !e.Handled)
+            {
+                e.Handled = TryGoBack();
+            }
+        }
+
+        private void System_BackRequested(object? sender, BackRequestedEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = TryGoBack();
+            }
+        }
+
+        private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
+        {
+            if (e.CurrentPoint.Properties.IsXButton1Pressed)
+            {
+                e.Handled = TryGoBack();
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            TryGoBack();
         }
 
         private void HistoryButton_Click(object sender, RoutedEventArgs e)
