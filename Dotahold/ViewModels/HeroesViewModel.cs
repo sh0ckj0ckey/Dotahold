@@ -16,6 +16,11 @@ namespace Dotahold.ViewModels
         private Dictionary<string, HeroModel> _heroModels = [];
 
         /// <summary>
+        /// Language to HeroId to HeroDataModel
+        /// </summary>
+        private Dictionary<int, Dictionary<int, HeroDataModel>> _heroDataModels = [];
+
+        /// <summary>
         /// Heroes with Strength as their Primary Attribute
         /// </summary>
         public ObservableCollection<HeroModel> StrHeroes { get; set; } = [];
@@ -37,6 +42,10 @@ namespace Dotahold.ViewModels
 
         private bool _loading = false;
 
+        private bool _loadingHeroData = false;
+
+        private HeroDataModel? _pickedHeroData = null;
+
         /// <summary>
         /// Indicates whether the heroes list is being loaded
         /// </summary>
@@ -44,6 +53,24 @@ namespace Dotahold.ViewModels
         {
             get => _loading;
             set => SetProperty(ref _loading, value);
+        }
+
+        /// <summary>
+        /// Indicates whether the hero data is being loaded
+        /// </summary>
+        public bool LoadingHeroData
+        {
+            get => _loadingHeroData;
+            set => SetProperty(ref _loadingHeroData, value);
+        }
+
+        /// <summary>
+        /// The hero data of the currently picked hero
+        /// </summary>
+        public HeroDataModel? PickedHeroData
+        {
+            get => _pickedHeroData;
+            set => SetProperty(ref _pickedHeroData, value);
         }
 
         public async Task LoadHeroes()
@@ -124,6 +151,55 @@ namespace Dotahold.ViewModels
             finally
             {
                 this.Loading = false;
+            }
+        }
+
+        public async Task PickHero(int heroId, int languageIndex)
+        {
+            try
+            {
+                if (heroId < 0)
+                {
+                    return;
+                }
+
+                this.LoadingHeroData = true;
+
+                string language = languageIndex switch
+                {
+                    0 => "english",
+                    1 => "schinese",
+                    2 => "russian",
+                    _ => "english"
+                };
+
+                if (_heroDataModels.TryGetValue(languageIndex, out var dataModels)
+                    && dataModels.TryGetValue(heroId, out var dataModel))
+                {
+                    await Task.Delay(600);
+                    this.PickedHeroData = dataModel;
+                    return;
+                }
+
+                var heroDataModel = await ApiCourier.GetHeroData(heroId, language);
+                if (heroDataModel is not null)
+                {
+                    if (!_heroDataModels.TryGetValue(languageIndex, out _))
+                    {
+                        _heroDataModels[languageIndex] = [];
+                    }
+
+                    _heroDataModels[languageIndex][heroId] = new HeroDataModel(heroDataModel);
+                    this.PickedHeroData = _heroDataModels[languageIndex][heroId];
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"Getting hero data failed: {ex.ToString()}", LogCourier.LogType.Error);
+            }
+            finally
+            {
+                this.LoadingHeroData = false;
             }
         }
     }

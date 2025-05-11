@@ -57,7 +57,7 @@
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE094;" Opacity="0.7" FontSize="14" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"/>
             </Grid>
             <Rectangle Grid.Row="2" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
-            
+
             <ListView x:Name="ItemsListView" Grid.Row="3" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" 
                       SelectedItem="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay}" 
                       SelectionChanged="ListView_SelectionChanged" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -183,7 +183,7 @@
                     <!--Attributes-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.attrib,Mode=OneWay,Converter={StaticResource ItemAttribsToVisibilityConverter}}"
                                Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.attrib,Mode=OneWay,Converter={StaticResource ItemAttribsToStringConverter}}"
-                               Margin="0,0,0,12" TextWrapping="WrapWholeWords" FontWeight="Medium" Opacity="0.9" CharacterSpacing="42"/>
+                               LineHeight="28" Margin="0,4,0,4" TextWrapping="WrapWholeWords" FontWeight="Medium" Opacity="0.9" CharacterSpacing="42"/>
 
                     <!--Abilities-->
                     <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.abilities,Mode=OneWay}" HorizontalAlignment="Stretch">
@@ -192,10 +192,10 @@
                         </muxc:ItemsRepeater.Layout>
                         <muxc:ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="dataModels:Ability">
-                                <Grid Margin="0,0,0,8" CornerRadius="4" BorderThickness="1" HorizontalAlignment="Stretch">
-                                    <Grid.BorderBrush>
-                                        <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.9"/>
-                                    </Grid.BorderBrush>
+                                <Grid Margin="0,0,0,8" CornerRadius="4" HorizontalAlignment="Stretch">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.5"/>
+                                    </Grid.Background>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
@@ -204,7 +204,7 @@
                                         <Border.Background>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                 <LinearGradientBrush.GradientStops>
-                                                    <GradientStop Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Offset="0.0"/>
+                                                    <GradientStop Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Offset="0.3"/>
                                                     <GradientStop Color="Transparent" Offset="1.0"/>
                                                 </LinearGradientBrush.GradientStops>
                                             </LinearGradientBrush>
@@ -223,10 +223,10 @@
 
                     <!--Hint-->
                     <Border Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.hint,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4" BorderThickness="1">
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.9"/>
-                        </Border.BorderBrush>
+                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4">
+                        <Border.Background>
+                            <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.5"/>
+                        </Border.Background>
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.hint,Mode=OneWay,Converter={StaticResource StringArrayToStringConverter}}"
                                    TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42"/>
                     </Border>
@@ -243,10 +243,7 @@
 
                     <!--Lore-->
                     <Border Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4">
-                        <Border.Background>
-                            <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.5"/>
-                        </Border.Background>
+                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4" BorderThickness="1.5" BorderBrush="{ThemeResource DotaholdPlaceholderBackgroundColor}">
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay}"
                                    TextWrapping="WrapWholeWords" Opacity="0.6" FontSize="13" FontStyle="Italic" CharacterSpacing="42"/>
                     </Border>

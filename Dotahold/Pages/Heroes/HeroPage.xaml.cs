@@ -1,4 +1,5 @@
 ﻿using System;
+using Dotahold.Data.DataShop;
 using Dotahold.Models;
 using Dotahold.ViewModels;
 using Windows.System;
@@ -25,6 +26,8 @@ namespace Dotahold.Pages.Heroes
 
         private HeroModel? _heroModel;
 
+        private int _lastLanguageIndex = -1;
+
         public HeroPage()
         {
             this.InitializeComponent();
@@ -33,6 +36,8 @@ namespace Dotahold.Pages.Heroes
 
             this.Loaded += (_, _) =>
             {
+                DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
@@ -50,11 +55,6 @@ namespace Dotahold.Pages.Heroes
         {
             base.OnNavigatedTo(e);
 
-            var param = e.Parameter as Tuple<MainViewModel, HeroModel>;
-
-            _viewModel = param?.Item1;
-            _heroModel = param?.Item2;
-
             try
             {
                 ConnectedAnimation? animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Hero");
@@ -64,6 +64,16 @@ namespace Dotahold.Pages.Heroes
             {
                 System.Diagnostics.Trace.WriteLine(ex.Message);
             }
+
+            var param = e.Parameter as Tuple<MainViewModel, HeroModel>;
+
+            _viewModel = param?.Item1;
+            _heroModel = param?.Item2;
+
+            int heroId = _heroModel?.DotaHeroAttributes.id ?? -1;
+            int languageIndex = _viewModel?.AppSettings.LanguageIndex ?? 0;
+            _lastLanguageIndex = languageIndex;
+            _ = _viewModel?.HeroesViewModel.PickHero(heroId, languageIndex);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -75,6 +85,11 @@ namespace Dotahold.Pages.Heroes
                 ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("HeroBack", HeroImageBorder);
                 animation.Configuration = new BasicConnectedAnimationConfiguration();
             }
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
         }
 
         private bool TryGoBack()
@@ -134,7 +149,16 @@ namespace Dotahold.Pages.Heroes
 
         private void LanguageRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int heroId = _heroModel?.DotaHeroAttributes.id ?? -1;
+            int languageIndex = (sender as Microsoft.UI.Xaml.Controls.RadioButtons)?.SelectedIndex ?? 0;
 
+            if (languageIndex != _lastLanguageIndex)
+            {
+                LanguageFlyout?.Hide();
+
+                _lastLanguageIndex = languageIndex;
+                _ = _viewModel?.HeroesViewModel.PickHero(heroId, languageIndex);
+            }
         }
     }
 }
