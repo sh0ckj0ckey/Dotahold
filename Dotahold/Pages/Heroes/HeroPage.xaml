@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
@@ -29,17 +30,18 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border.Background>
+        <Grid Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.Background>
                 <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _heroModel.HeroImage.Image,Mode=OneWay}"/>
-            </Border.Background>
+            </Grid.Background>
             <communityAnimations:Implicit.ShowAnimations>
                 <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1.2"/>
             </communityAnimations:Implicit.ShowAnimations>
-        </Border>
+            <Rectangle Width="512" Height="192" Fill="{ThemeResource DotaholdAcrylicTitleBarBackdropColor}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        </Grid>
         <Grid Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.Background>
-                <AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="Black" FallbackColor="{ThemeResource DotaholdAcrylicFallbackColor}" TintLuminosityOpacity="0.3" TintOpacity="0.3"/>
+                <muxm:AcrylicBrush AlwaysUseFallback="False" BackgroundSource="Backdrop" TintColor="#202020" FallbackColor="{ThemeResource DotaholdAcrylicFallbackColor}" TintLuminosityOpacity="0.3" TintOpacity="0.3"/>
             </Grid.Background>
         </Grid>
         <Grid Grid.Row="0" Padding="64,0,64,0" ColumnSpacing="16" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">

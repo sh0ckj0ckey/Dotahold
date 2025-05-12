@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:media="using:Microsoft.UI.Xaml.Media">
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
@@ -28,6 +29,7 @@
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_dark.png"/>
 
                     <Color x:Key="DotaholdAcrylicFallbackColor">#202020</Color>
+                    <SolidColorBrush x:Key="DotaholdAcrylicTitleBarBackdropColor">Transparent</SolidColorBrush>
 
                     <Color x:Key="DotaholdItemBackgroundColor">#08FFFFFF</Color>
                 </ResourceDictionary>
@@ -58,6 +60,10 @@
                     <BitmapImage x:Key="DotaholdHeroesPivotBackgroundUniIcon" UriSource="ms-appx:///Assets/Heroes/icon_uni_background_light.png"/>
 
                     <Color x:Key="DotaholdAcrylicFallbackColor">#6C1C0C</Color>
+                    <media:RadialGradientBrush x:Key="DotaholdAcrylicTitleBarBackdropColor" Center="1,0" RadiusX="0.5" RadiusY="0.5" GradientOrigin="1,0">
+                        <GradientStop Color="#EAEAEA" Offset="0.0"/>
+                        <GradientStop Color="Transparent" Offset="1.0"/>
+                    </media:RadialGradientBrush>
 
                     <Color x:Key="DotaholdItemBackgroundColor">#EAEAEA</Color>
                 </ResourceDictionary>
