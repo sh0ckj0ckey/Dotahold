@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="Dotahold.Pages.Heroes.HeroRankingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Pages.Heroes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid MaxHeight="480">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" ColumnSpacing="12" Padding="12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="{x:Bind _heroModel.HeroIcon.Image,Mode=OneWay}" Height="36" Width="36" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="{x:Bind _heroModel.DotaHeroAttributes.localized_name}"
+                   FontFamily="{ThemeResource ReaverBold}" FontSize="24" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
+
+        <muxc:ProgressRing x:Name="LoadingProgressRing" Grid.Row="1" Height="42" Width="42" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsActive="False" Visibility="Collapsed"/>
+
+        <ScrollViewer x:Name="RankingsScrollViewer" Grid.Row="1" Visibility="Collapsed" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        </ScrollViewer>
+    </Grid>
+</UserControl>

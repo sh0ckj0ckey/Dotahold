@@ -9,6 +9,7 @@
 		<DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+		<SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="DataShop\ConstantsJsons\ability_ids.json" />

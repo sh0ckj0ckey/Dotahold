@@ -14,6 +14,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
 		<EnableMsixTooling>true</EnableMsixTooling>
+		<SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="Assets\Store\**" />

@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using System;
-using Dotahold.Data.Models;
+﻿using System;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Dotahold.Data.Models;
 
 namespace Dotahold.Data.DataShop
 {
@@ -35,6 +35,34 @@ namespace Dotahold.Data.DataShop
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
 
             return null;
+        }
+
+        /// <summary>
+        /// 获取英雄的排行榜数据
+        /// </summary>
+        /// <param name="heroId"></param>
+        /// <returns></returns>
+        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId)
+        {
+            string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var heroDataResponse = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaHeroRankingResponse);
+                if (heroDataResponse?.hero_id == heroId && heroDataResponse.rankings is not null)
+                {
+                    return heroDataResponse.rankings;
+                }
+                else
+                {
+                    throw new Exception($"Hero ID mismatch, {heroId} != {heroDataResponse?.hero_id}");
+                }
+            }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+
+            return [];
         }
     }
 }

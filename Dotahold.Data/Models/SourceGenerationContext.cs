@@ -8,6 +8,7 @@ namespace Dotahold.Data.Models
     [JsonSerializable(typeof(Dictionary<string, string>))]
     [JsonSerializable(typeof(Dictionary<string, long>))]
     [JsonSerializable(typeof(DotaHeroDataResponse))]
+    [JsonSerializable(typeof(DotaHeroRankingResponse))]
     internal partial class SourceGenerationContext : JsonSerializerContext
     {
     }
