@@ -13,32 +13,32 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// HeroId to HeroModel
         /// </summary>
-        private Dictionary<string, HeroModel> _heroModels = [];
+        private readonly Dictionary<string, HeroModel> _heroModels = [];
 
         /// <summary>
         /// Language to HeroId to HeroDataModel
         /// </summary>
-        private Dictionary<int, Dictionary<int, HeroDataModel>> _heroDataModels = [];
+        private readonly Dictionary<int, Dictionary<int, HeroDataModel>> _heroDataModels = [];
 
         /// <summary>
         /// Heroes with Strength as their Primary Attribute
         /// </summary>
-        public ObservableCollection<HeroModel> StrHeroes { get; set; } = [];
+        public ObservableCollection<HeroModel> StrHeroes { get; } = [];
 
         /// <summary>
         /// Heroes with Agility as their Primary Attribute
         /// </summary>
-        public ObservableCollection<HeroModel> AgiHeroes { get; set; } = [];
+        public ObservableCollection<HeroModel> AgiHeroes { get; } = [];
 
         /// <summary>
         /// Heroes with Intelligence as their Primary Attribute
         /// </summary>
-        public ObservableCollection<HeroModel> IntHeroes { get; set; } = [];
+        public ObservableCollection<HeroModel> IntHeroes { get; } = [];
 
         /// <summary>
         /// Heroes with Universal as their Primary Attribute
         /// </summary>
-        public ObservableCollection<HeroModel> UniHeroes { get; set; } = [];
+        public ObservableCollection<HeroModel> UniHeroes { get; } = [];
 
         private bool _loading = false;
 
@@ -146,7 +146,7 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"Loading heroes failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Loading heroes failed: {ex}", LogCourier.LogType.Error);
             }
             finally
             {
@@ -181,21 +181,21 @@ namespace Dotahold.ViewModels
                     return;
                 }
 
-                var heroDataModel = await ApiCourier.GetHeroData(heroId, language);
-                if (heroDataModel is not null)
+                var dotaHeroDataModel = await ApiCourier.GetHeroData(heroId, language);
+                if (dotaHeroDataModel is not null)
                 {
                     if (!_heroDataModels.TryGetValue(languageIndex, out _))
                     {
                         _heroDataModels[languageIndex] = [];
                     }
 
-                    _heroDataModels[languageIndex][heroId] = new HeroDataModel(heroDataModel);
+                    _heroDataModels[languageIndex][heroId] = new HeroDataModel(dotaHeroDataModel);
                     this.PickedHeroData = _heroDataModels[languageIndex][heroId];
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"Getting hero data failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Getting hero data failed: {ex}", LogCourier.LogType.Error);
             }
             finally
             {

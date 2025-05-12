@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
-    internal class HeroModel
+    public class HeroModel
     {
         /// <summary>
         /// 默认英雄图片

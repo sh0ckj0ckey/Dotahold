@@ -81,7 +81,7 @@ namespace Dotahold
             {
                 case 0:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroesPage))
-                        && !Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroPage)))
+                        && !Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroDataPage)))
                     {
                         MainFrame.Navigate(typeof(HeroesPage), _viewModel);
                         MainFrame.BackStack.Clear();

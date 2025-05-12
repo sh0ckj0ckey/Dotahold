@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
-    internal class ItemModel
+    public class ItemModel
     {
         /// <summary>
         /// 默认物品图片

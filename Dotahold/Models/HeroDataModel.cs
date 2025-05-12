@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
-    internal class HeroDataModel
+    public class HeroDataModel
     {
         public DotaHeroDataModel DotaHeroData { get; private set; }
 
@@ -32,7 +27,7 @@ namespace Dotahold.Models
         }
     }
 
-    internal class HeroFacetModel
+    public class HeroFacetModel
     {
         public AsyncImage IconImage { get; private set; }
 

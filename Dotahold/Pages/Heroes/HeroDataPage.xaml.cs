@@ -18,7 +18,7 @@ namespace Dotahold.Pages.Heroes
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class HeroPage : Page
+    public sealed partial class HeroDataPage : Page
     {
         private readonly Visual _visual;
 
@@ -28,7 +28,7 @@ namespace Dotahold.Pages.Heroes
 
         private int _lastLanguageIndex = -1;
 
-        public HeroPage()
+        public HeroDataPage()
         {
             this.InitializeComponent();
 
@@ -137,14 +137,52 @@ namespace Dotahold.Pages.Heroes
             TryGoBack();
         }
 
-        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        private async void HistoryButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (_heroModel is not null)
+                {
+                    await (new ContentDialog
+                    {
+                        XamlRoot = this.XamlRoot,
+                        RequestedTheme = this.ActualTheme,
+                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                        IsPrimaryButtonEnabled = false,
+                        IsSecondaryButtonEnabled = false,
+                        CloseButtonText = "Close",
+                        Content = new HeroHistoryView(_heroModel, _viewModel?.HeroesViewModel.PickedHeroData?.DotaHeroData?.bio_loc ?? "Failed to fetch hero's history."),
+                    }).ShowAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"Show hero history failed: {ex.ToString()}", LogCourier.LogType.Error);
+            }
         }
 
-        private void RankingButton_Click(object sender, RoutedEventArgs e)
+        private async void RankingButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                if (_heroModel is not null)
+                {
+                    await (new ContentDialog
+                    {
+                        XamlRoot = this.XamlRoot,
+                        RequestedTheme = this.ActualTheme,
+                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                        IsPrimaryButtonEnabled = false,
+                        IsSecondaryButtonEnabled = false,
+                        CloseButtonText = "Close",
+                        Content = new HeroRankingsView(_heroModel),
+                    }).ShowAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"Show hero rankings failed: {ex.ToString()}", LogCourier.LogType.Error);
+            }
         }
 
         private void LanguageRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)

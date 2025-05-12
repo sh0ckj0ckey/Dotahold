@@ -14,17 +14,17 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// ItemId to ItemModel
         /// </summary>
-        private Dictionary<string, ItemModel> _itemModels = [];
+        private readonly Dictionary<string, ItemModel> _itemModels = [];
 
         /// <summary>
         /// All items
         /// </summary>
-        private List<ItemModel> _allItems = new List<ItemModel>();
+        private readonly List<ItemModel> _allItems = [];
 
         /// <summary>
         /// Items list
         /// </summary>
-        public ObservableCollection<ItemModel> Items { get; set; } = [];
+        public ObservableCollection<ItemModel> Items { get; } = [];
 
         private bool _loading = false;
 
@@ -94,7 +94,7 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"Loading items failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Loading items failed: {ex}", LogCourier.LogType.Error);
             }
             finally
             {
