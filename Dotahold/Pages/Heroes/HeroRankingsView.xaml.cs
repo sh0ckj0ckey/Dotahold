@@ -15,10 +15,13 @@ namespace Dotahold.Pages.Heroes
 
         private readonly HeroModel _heroModel;
 
+        private bool _unloaded = false;
+
         public HeroRankingsView(HeroModel heroModel)
         {
             _heroModel = heroModel;
             this.Loaded += (_, _) => _ = LoadHeroRankings(_heroModel.DotaHeroAttributes.id);
+            this.Unloaded += (_, _) => _unloaded = true;
 
             this.InitializeComponent();
         }
@@ -44,14 +47,16 @@ namespace Dotahold.Pages.Heroes
                     var dotaHeroRankingModels = await ApiCourier.GetHeroRankings(heroId);
                     if (dotaHeroRankingModels is not null)
                     {
-                        foreach (var item in dotaHeroRankingModels)
+                        for (int i = 0; i < dotaHeroRankingModels.Length; i++)
                         {
-                            heroRankings.Add(new HeroRankingModel(item));
+                            heroRankings.Add(new HeroRankingModel(dotaHeroRankingModels[i], i + 1));
                         }
 
                         _heroRankingModels[heroId] = heroRankings;
                     }
                 }
+
+                RankingsItemsRepeater.ItemsSource = heroRankings;
 
                 RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -60,6 +65,11 @@ namespace Dotahold.Pages.Heroes
                 foreach (var heroRanking in heroRankings)
                 {
                     await heroRanking.AvatarImage.LoadImageAsync();
+
+                    if (_unloaded)
+                    {
+                        break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -68,9 +78,12 @@ namespace Dotahold.Pages.Heroes
             }
             finally
             {
-                RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                LoadingProgressRing.IsActive = false;
+                if (!_unloaded)
+                {
+                    RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    LoadingProgressRing.IsActive = false;
+                }
             }
         }
     }

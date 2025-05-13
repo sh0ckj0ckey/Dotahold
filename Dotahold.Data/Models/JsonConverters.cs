@@ -20,7 +20,36 @@ namespace Dotahold.Data.Models
                 }
                 else if (reader.TokenType == JsonTokenType.Number)
                 {
-                    return reader.GetInt32();
+                    if (reader.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    else if (reader.TryGetDouble(out double doubleValue))
+                    {
+                        if (doubleValue > int.MaxValue || doubleValue < int.MinValue)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return (int)doubleValue;
+                        }
+                    }
+                    else if (reader.TryGetInt64(out long longValue))
+                    {
+                        if (longValue > int.MaxValue || longValue < int.MinValue)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return (int)longValue;
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
                 else
                 {
@@ -57,7 +86,22 @@ namespace Dotahold.Data.Models
                 }
                 else if (reader.TokenType == JsonTokenType.Number)
                 {
-                    return reader.GetDouble();
+                    if (reader.TryGetDouble(out double value))
+                    {
+                        return value;
+                    }
+                    else if (reader.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    else if (reader.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    else
+                    {
+                        return 0.0;
+                    }
                 }
                 else
                 {

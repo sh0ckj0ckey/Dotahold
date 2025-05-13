@@ -15,8 +15,8 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeStringConverter))]
         public string account_id { get; set; } = string.Empty;
 
-        [JsonConverter(typeof(SafeStringConverter))]
-        public string score { get; set; } = string.Empty;
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int score { get; set; }
 
         [JsonConverter(typeof(SafeStringConverter))]
         public string personaname { get; set; } = string.Empty;

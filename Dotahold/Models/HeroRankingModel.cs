@@ -13,9 +13,11 @@ namespace Dotahold.Models
 
         public DotaHeroRankingModel DotaHeroRanking { get; private set; }
 
+        public int Rank { get; set; }
+
         public AsyncImage AvatarImage { get; private set; }
 
-        public HeroRankingModel(DotaHeroRankingModel ranking)
+        public HeroRankingModel(DotaHeroRankingModel ranking, int rank)
         {
             DefaultAvatarImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Profile/img_default_avatar.jpeg"))
             {
@@ -24,6 +26,7 @@ namespace Dotahold.Models
             };
 
             this.DotaHeroRanking = ranking;
+            this.Rank = rank;
             this.AvatarImage = new AsyncImage(this.DotaHeroRanking.avatar, 0, 32, DefaultAvatarImageSource32);
         }
     }

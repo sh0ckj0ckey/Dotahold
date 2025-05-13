@@ -19,7 +19,7 @@ namespace Dotahold
         /// </summary>
         public new static App Current => (App)Application.Current;
 
-        internal MainViewModel MainViewModel{get; private set; }
+        internal MainViewModel MainViewModel { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
