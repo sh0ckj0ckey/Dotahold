@@ -24,7 +24,7 @@ namespace Dotahold
         {
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
 
-            _viewModel = new MainViewModel();
+            _viewModel = App.Current.MainViewModel;
 
             _viewModel.AppSettings.AppearanceSettingChanged += (_, _) =>
             {
@@ -109,11 +109,6 @@ namespace Dotahold
                     }
                     break;
             }
-        }
-
-        private void BackTabButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
         }
 
         private void UpdateAppTheme()

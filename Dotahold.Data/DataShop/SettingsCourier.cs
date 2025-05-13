@@ -9,10 +9,6 @@ namespace Dotahold.Data.DataShop
     /// </summary>
     public partial class SettingsCourier : ObservableObject
     {
-        private static readonly Lazy<SettingsCourier> _lazy = new(() => new SettingsCourier());
-
-        public static SettingsCourier Instance { get { return _lazy.Value; } }
-
         private const string SETTING_APPEARANCE = "Appearance";
         private const string SETTING_STARTUP = "StartupPage";
         private const string SETTING_CDN = "ImageSourceCDN";
@@ -22,7 +18,6 @@ namespace Dotahold.Data.DataShop
         private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
         public event EventHandler<int>? AppearanceSettingChanged = null;
-        private SettingsCourier() { }
 
         private int _appearanceIndex = -1;
         private int _startupPageIndex = -1;

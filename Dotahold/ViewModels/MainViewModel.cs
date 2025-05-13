@@ -5,7 +5,7 @@ namespace Dotahold.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
-        public SettingsCourier AppSettings { get; } = SettingsCourier.Instance;
+        public SettingsCourier AppSettings { get; } = new SettingsCourier();
 
         public HeroesViewModel HeroesViewModel { get; } = new HeroesViewModel();
 
