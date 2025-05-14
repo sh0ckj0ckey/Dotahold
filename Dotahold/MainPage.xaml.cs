@@ -83,28 +83,28 @@ namespace Dotahold
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroesPage))
                         && !Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroDataPage)))
                     {
-                        MainFrame.Navigate(typeof(HeroesPage), _viewModel);
+                        MainFrame.Navigate(typeof(HeroesPage));
                         MainFrame.BackStack.Clear();
                     }
                     break;
                 case 1:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(ItemsPage)))
                     {
-                        MainFrame.Navigate(typeof(ItemsPage), _viewModel);
+                        MainFrame.Navigate(typeof(ItemsPage));
                         MainFrame.BackStack.Clear();
                     }
                     break;
                 case 2:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(OverviewPage)))
                     {
-                        MainFrame.Navigate(typeof(OverviewPage), _viewModel);
+                        MainFrame.Navigate(typeof(OverviewPage));
                         MainFrame.BackStack.Clear();
                     }
                     break;
                 case 3:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(SettingsPage)))
                     {
-                        MainFrame.Navigate(typeof(SettingsPage), _viewModel);
+                        MainFrame.Navigate(typeof(SettingsPage));
                         MainFrame.BackStack.Clear();
                     }
                     break;

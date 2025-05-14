@@ -7,7 +7,6 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -18,12 +17,14 @@ namespace Dotahold.Pages.Items
     /// </summary>
     public sealed partial class ItemsPage : Page
     {
-        private MainViewModel? _viewModel;
+        private readonly MainViewModel _viewModel;
 
         private readonly ObservableCollection<ItemModel> _components = [];
 
         public ItemsPage()
         {
+            _viewModel = App.Current.MainViewModel;
+
             this.InitializeComponent();
 
             this.Loaded += (_, _) =>
@@ -41,15 +42,9 @@ namespace Dotahold.Pages.Items
             };
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            _viewModel = e.Parameter as MainViewModel;
-        }
-
         private bool TryGoBack()
         {
-            if (_viewModel?.ItemsViewModel.SelectedItem is not null)
+            if (_viewModel.ItemsViewModel.SelectedItem is not null)
             {
                 _viewModel.ItemsViewModel.SelectedItem = null;
                 HideItemInfoStoryboard?.Begin();
@@ -88,18 +83,13 @@ namespace Dotahold.Pages.Items
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = (sender as TextBox)?.Text ?? string.Empty;
-            _viewModel?.ItemsViewModel?.FilterItems(searchText);
+            _viewModel.ItemsViewModel.FilterItems(searchText);
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (_viewModel is null)
-                {
-                    return;
-                }
-
                 if (e.AddedItems?.FirstOrDefault() is ItemModel addedItem && addedItem is not null)
                 {
                     if (_viewModel.ItemsViewModel.SelectedItem != addedItem)
@@ -144,11 +134,6 @@ namespace Dotahold.Pages.Items
         {
             try
             {
-                if (_viewModel is null)
-                {
-                    return;
-                }
-
                 if (e.ClickedItem is ItemModel item)
                 {
                     _viewModel.ItemsViewModel.SelectedItem = item;

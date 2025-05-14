@@ -16,14 +16,16 @@ namespace Dotahold.Pages.Heroes
     /// </summary>
     public sealed partial class HeroesPage : Page
     {
-        private readonly Visual _visual;
+        private readonly MainViewModel _viewModel;
 
-        private MainViewModel? _viewModel;
+        private readonly Visual _visual;
 
         private Button? _connectedAnimationButton;
 
         public HeroesPage()
         {
+            _viewModel = App.Current.MainViewModel;
+
             this.InitializeComponent();
 
             _visual = ElementCompositionPreview.GetElementVisual(this);
@@ -32,8 +34,6 @@ namespace Dotahold.Pages.Heroes
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            _viewModel = e.Parameter as MainViewModel;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Dotahold.Pages.Heroes
                 ConnectedAnimation heroAnimation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Hero", _connectedAnimationButton);
                 heroAnimation.Configuration = new BasicConnectedAnimationConfiguration();
 
-                this.Frame.Navigate(typeof(HeroDataPage), new Tuple<MainViewModel, HeroModel>(_viewModel!, heroModel), new SuppressNavigationTransitionInfo());
+                this.Frame.Navigate(typeof(HeroDataPage), heroModel, new SuppressNavigationTransitionInfo());
             }
         }
     }

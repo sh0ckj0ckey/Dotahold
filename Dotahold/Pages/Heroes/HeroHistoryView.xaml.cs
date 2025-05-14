@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Dotahold.Data.DataShop;
-using Dotahold.Data.Models;
 using Dotahold.Models;
 using Windows.UI.Xaml.Controls;
 
@@ -11,8 +9,6 @@ namespace Dotahold.Pages.Heroes
 {
     public sealed partial class HeroHistoryView : UserControl
     {
-        private static readonly Dictionary<int, DotaHeroRankingModel[]> _heroRankingsCache = new();
-
         private readonly HeroModel _heroModel;
 
         private readonly string _historyContent;

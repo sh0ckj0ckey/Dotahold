@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.Background>
-                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _heroModel.HeroImage.Image,Mode=OneWay}"/>
+                <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.HeroesViewModel.PickedHero.HeroImage.Image,Mode=OneWay}"/>
             </Grid.Background>
             <communityAnimations:Implicit.ShowAnimations>
                 <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1.2"/>
@@ -100,10 +100,10 @@
                 </StackPanel>
                 <Button.Flyout>
                     <Flyout x:Name="LanguageFlyout" Placement="BottomEdgeAlignedRight">
-                        <muxc:RadioButtons SelectedIndex="{x:Bind _viewModel.AppSettings.LanguageIndex,Mode=TwoWay}" MaxColumns="1" SelectionChanged="LanguageRadioButtons_SelectionChanged">
-                            <x:String>English</x:String>
-                            <x:String>Chinese</x:String>
-                            <x:String>Russian</x:String>
+                        <muxc:RadioButtons SelectedIndex="{x:Bind _viewModel.AppSettings.LanguageIndex,Mode=OneTime}" MaxColumns="1">
+                            <RadioButton Content="English" GroupName="LanguageRadio" Checked="RadioButton_Checked"/>
+                            <RadioButton Content="Chinese" GroupName="LanguageRadio" Checked="RadioButton_Checked"/>
+                            <RadioButton Content="Russian" GroupName="LanguageRadio" Checked="RadioButton_Checked"/>
                         </muxc:RadioButtons>
                     </Flyout>
                 </Button.Flyout>
@@ -118,7 +118,7 @@
             </Grid.ColumnDefinitions>
             <Border x:Name="HeroImageBorder" Grid.Column="0" Margin="64,0,6,0" Width="128" Height="72" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _heroModel.HeroImage.Image,Mode=OneWay}"/>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.HeroesViewModel.PickedHero.HeroImage.Image,Mode=OneWay}"/>
                 </Border.Background>
             </Border>
             <Grid Grid.Column="1" RowSpacing="2" Margin="12,0" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -129,7 +129,7 @@
 
                 <!--Name-->
                 <TextBlock Grid.Row="0" FontFamily="{ThemeResource ReaverBold}" Foreground="#FFFFFF" FontSize="26" TextTrimming="CharacterEllipsis"
-                           Text="{x:Bind _heroModel.DotaHeroAttributes.localized_name}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                           Text="{x:Bind _viewModel.HeroesViewModel.PickedHero.DotaHeroAttributes.localized_name}" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <communityAnimations:Implicit.ShowAnimations>
                         <communityAnimations:TranslationAnimation From="0,16,0" To="0,0,0" EasingMode="EaseOut" Delay="0:0:0.2" Duration="0:0:0.8"/>
                         <communityAnimations:OpacityAnimation From="0" To="1" Delay="0:0:0.2" Duration="0:0:0.4"/>
@@ -148,15 +148,15 @@
 
                     <!--Icon Melee-->
                     <Image Grid.Column="0" Opacity="0.7" Source="/Assets/Heroes/hero_melee.png" Height="18" Stretch="Uniform"
-                           Visibility="{x:Bind _heroModel.DotaHeroAttributes.attack_type,Converter={StaticResource EqualToVisibilityConverter},ConverterParameter=Melee}"/>
+                           Visibility="{x:Bind _viewModel.HeroesViewModel.PickedHero.DotaHeroAttributes.attack_type,Converter={StaticResource EqualToVisibilityConverter},ConverterParameter=Melee}"/>
 
                     <!--Icon Ranged-->
                     <Image Grid.Column="0" Opacity="0.7" Source="/Assets/Heroes/hero_ranged.png" Height="18" Stretch="Uniform"
-                           Visibility="{x:Bind _heroModel.DotaHeroAttributes.attack_type,Converter={StaticResource EqualToVisibilityConverter},ConverterParameter=Ranged}"/>
+                           Visibility="{x:Bind _viewModel.HeroesViewModel.PickedHero.DotaHeroAttributes.attack_type,Converter={StaticResource EqualToVisibilityConverter},ConverterParameter=Ranged}"/>
 
                     <!--Role-->
                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium"
-                               Text="{x:Bind _heroModel.DotaHeroAttributes.roles,Converter={StaticResource StringArrayToStringConverter},ConverterParameter=·}"
+                               Text="{x:Bind _viewModel.HeroesViewModel.PickedHero.DotaHeroAttributes.roles,Converter={StaticResource StringArrayToStringConverter},ConverterParameter=·}"
                                FontSize="16" Foreground="#B2FFFFFF" TextTrimming="CharacterEllipsis"/>
                 </Grid>
             </Grid>

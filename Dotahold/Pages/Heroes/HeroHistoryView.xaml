@@ -22,7 +22,7 @@
                        FontFamily="{ThemeResource ReaverBold}" FontSize="24" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Grid>
 
-        <ScrollViewer Grid.Row="1" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ScrollViewer Grid.Row="1" Padding="16,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <TextBlock Text="{x:Bind _historyContent}" FontSize="16" FontWeight="Medium" Opacity="0.8" LineHeight="24" IsTextSelectionEnabled="True" TextWrapping="WrapWholeWords"/>
         </ScrollViewer>
     </Grid>

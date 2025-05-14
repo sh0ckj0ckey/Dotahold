@@ -22,14 +22,14 @@ namespace Dotahold.Pages.Heroes
     {
         private readonly Visual _visual;
 
-        private MainViewModel? _viewModel;
+        private readonly MainViewModel _viewModel;
 
         private HeroModel? _heroModel;
 
-        private int _lastLanguageIndex = -1;
-
         public HeroDataPage()
         {
+            _viewModel = App.Current.MainViewModel;
+
             this.InitializeComponent();
 
             _visual = ElementCompositionPreview.GetElementVisual(this);
@@ -65,15 +65,12 @@ namespace Dotahold.Pages.Heroes
                 System.Diagnostics.Trace.WriteLine(ex.Message);
             }
 
-            var param = e.Parameter as Tuple<MainViewModel, HeroModel>;
+            _heroModel = e.Parameter as HeroModel;
 
-            _viewModel = param?.Item1;
-            _heroModel = param?.Item2;
-
-            int heroId = _heroModel?.DotaHeroAttributes.id ?? -1;
-            int languageIndex = _viewModel?.AppSettings.LanguageIndex ?? 0;
-            _lastLanguageIndex = languageIndex;
-            _ = _viewModel?.HeroesViewModel.PickHero(heroId, languageIndex);
+            if (_heroModel is not null)
+            {
+                _ = _viewModel.HeroesViewModel.PickHero(_heroModel, _viewModel.AppSettings.LanguageIndex);
+            }
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -141,7 +138,7 @@ namespace Dotahold.Pages.Heroes
         {
             try
             {
-                if (_heroModel is not null)
+                if (_viewModel.HeroesViewModel.PickedHero is not null)
                 {
                     await (new ContentDialog
                     {
@@ -151,13 +148,13 @@ namespace Dotahold.Pages.Heroes
                         IsPrimaryButtonEnabled = false,
                         IsSecondaryButtonEnabled = false,
                         CloseButtonText = "Close",
-                        Content = new HeroHistoryView(_heroModel, _viewModel?.HeroesViewModel.PickedHeroData?.DotaHeroData?.bio_loc ?? "Failed to fetch hero's history."),
+                        Content = new HeroHistoryView(_viewModel.HeroesViewModel.PickedHero, _viewModel.HeroesViewModel.PickedHeroData?.DotaHeroData?.bio_loc ?? "Failed to fetch hero's history."),
                     }).ShowAsync();
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"Show hero history failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Show hero history failed: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 
@@ -165,7 +162,7 @@ namespace Dotahold.Pages.Heroes
         {
             try
             {
-                if (_heroModel is not null)
+                if (_viewModel.HeroesViewModel.PickedHero is not null)
                 {
                     await (new ContentDialog
                     {
@@ -175,27 +172,41 @@ namespace Dotahold.Pages.Heroes
                         IsPrimaryButtonEnabled = false,
                         IsSecondaryButtonEnabled = false,
                         CloseButtonText = "Close",
-                        Content = new HeroRankingsView(_heroModel),
+                        Content = new HeroRankingsView(_viewModel.HeroesViewModel.PickedHero),
                     }).ShowAsync();
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"Show hero rankings failed: {ex.ToString()}", LogCourier.LogType.Error);
+                LogCourier.Log($"Show hero rankings failed: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 
-        private void LanguageRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            int heroId = _heroModel?.DotaHeroAttributes.id ?? -1;
-            int languageIndex = (sender as Microsoft.UI.Xaml.Controls.RadioButtons)?.SelectedIndex ?? 0;
-
-            if (languageIndex != _lastLanguageIndex)
+            if (sender is RadioButton btn)
             {
-                LanguageFlyout?.Hide();
+                string languageName = btn.Content.ToString() ?? "English";
 
-                _lastLanguageIndex = languageIndex;
-                _ = _viewModel?.HeroesViewModel.PickHero(heroId, languageIndex);
+                int index = languageName switch
+                {
+                    "English" => 0,
+                    "Chinese" => 1,
+                    "Russian" => 2,
+                    _ => 0
+                };
+
+                if (_viewModel.AppSettings.LanguageIndex != index)
+                {
+                    LanguageFlyout?.Hide();
+
+                    _viewModel.AppSettings.LanguageIndex = index;
+
+                    if (_heroModel is not null)
+                    {
+                        _ = _viewModel.HeroesViewModel.PickHero(_heroModel, _viewModel.AppSettings.LanguageIndex);
+                    }
+                }
             }
         }
     }

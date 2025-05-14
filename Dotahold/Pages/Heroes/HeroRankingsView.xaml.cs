@@ -20,6 +20,7 @@ namespace Dotahold.Pages.Heroes
         public HeroRankingsView(HeroModel heroModel)
         {
             _heroModel = heroModel;
+
             this.Loaded += (_, _) => _ = LoadHeroRankings(_heroModel.DotaHeroAttributes.id);
             this.Unloaded += (_, _) => _unloaded = true;
 

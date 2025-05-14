@@ -7,7 +7,6 @@ using Windows.ApplicationModel.Core;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -18,10 +17,12 @@ namespace Dotahold.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        private MainViewModel? _viewModel;
+        private readonly MainViewModel _viewModel;
 
         public SettingsPage()
         {
+            _viewModel = App.Current.MainViewModel;
+
             this.InitializeComponent();
 
             this.Loaded += async (_, _) =>
@@ -41,12 +42,6 @@ namespace Dotahold.Pages
                 }
                 catch { }
             };
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            _viewModel = e.Parameter as MainViewModel;
         }
 
         /// <summary>

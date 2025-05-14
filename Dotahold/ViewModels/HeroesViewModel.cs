@@ -44,6 +44,8 @@ namespace Dotahold.ViewModels
 
         private bool _loadingHeroData = false;
 
+        private HeroModel? _pickedHero = null;
+
         private HeroDataModel? _pickedHeroData = null;
 
         /// <summary>
@@ -62,6 +64,15 @@ namespace Dotahold.ViewModels
         {
             get => _loadingHeroData;
             set => SetProperty(ref _loadingHeroData, value);
+        }
+
+        /// <summary>
+        /// The currently picked hero
+        /// </summary>
+        public HeroModel? PickedHero
+        {
+            get => _pickedHero;
+            set => SetProperty(ref _pickedHero, value);
         }
 
         /// <summary>
@@ -154,16 +165,13 @@ namespace Dotahold.ViewModels
             }
         }
 
-        public async Task PickHero(int heroId, int languageIndex)
+        public async Task PickHero(HeroModel heroModel, int languageIndex)
         {
             try
             {
-                if (heroId < 0)
-                {
-                    return;
-                }
-
                 this.LoadingHeroData = true;
+
+                this.PickedHero = heroModel;
 
                 string language = languageIndex switch
                 {
@@ -174,14 +182,14 @@ namespace Dotahold.ViewModels
                 };
 
                 if (_heroDataModels.TryGetValue(languageIndex, out var dataModels)
-                    && dataModels.TryGetValue(heroId, out var dataModel))
+                    && dataModels.TryGetValue(heroModel.DotaHeroAttributes.id, out var dataModel))
                 {
                     await Task.Delay(600);
                     this.PickedHeroData = dataModel;
                     return;
                 }
 
-                var dotaHeroDataModel = await ApiCourier.GetHeroData(heroId, language);
+                var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language);
                 if (dotaHeroDataModel is not null)
                 {
                     if (!_heroDataModels.TryGetValue(languageIndex, out _))
@@ -189,8 +197,8 @@ namespace Dotahold.ViewModels
                         _heroDataModels[languageIndex] = [];
                     }
 
-                    _heroDataModels[languageIndex][heroId] = new HeroDataModel(dotaHeroDataModel);
-                    this.PickedHeroData = _heroDataModels[languageIndex][heroId];
+                    _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id] = new HeroDataModel(dotaHeroDataModel);
+                    this.PickedHeroData = _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id];
                 }
             }
             catch (Exception ex)
