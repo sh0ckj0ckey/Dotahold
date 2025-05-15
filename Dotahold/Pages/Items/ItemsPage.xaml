@@ -20,6 +20,7 @@
         <converters:ItemAttribsToVisibilityConverter x:Key="ItemAttribsToVisibilityConverter"/>
         <converters:ItemAttribsToStringConverter x:Key="ItemAttribsToStringConverter"/>
         <converters:StringToUpperConverter x:Key="StringToUpperConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
         <Storyboard x:Name="ShowItemInfoStoryboard">
             <DoubleAnimation Storyboard.TargetName="ItemInfoScrollViewer" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
@@ -57,10 +58,13 @@
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE094;" Opacity="0.7" FontSize="14" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="False"/>
             </Grid>
             <Rectangle Grid.Row="2" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
-
+            <muxc:ProgressRing Grid.Row="3" IsActive="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay}"
+                               Visibility="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ListView x:Name="ItemsListView" Grid.Row="3" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" 
                       SelectedItem="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay}" 
-                      SelectionChanged="ListView_SelectionChanged" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                      SelectionChanged="ListView_SelectionChanged" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                      Visibility="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ItemModel">
                         <Grid Height="64">

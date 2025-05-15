@@ -8,10 +8,13 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
+    xmlns:converters="using:Dotahold.Converters"
     xmlns:models="using:Dotahold.Models"
     mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
         <communityMedia:AttachedCardShadow x:Key="CommonShadow" Offset="2" CornerRadius="5" BlurRadius="16" Opacity="0.5"/>
 
         <Style TargetType="Button">
@@ -61,7 +64,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Margin="32,36,0,0" Text="Heroes" FontFamily="{ThemeResource ReaverBold}" FontSize="28"/>
-        <Pivot x:Name="HeroesPivot" Grid.Row="1" Padding="0">
+        <muxc:ProgressRing Grid.Row="1" IsActive="{x:Bind _viewModel.HeroesViewModel.Loading,Mode=OneWay}"
+                           Visibility="{x:Bind _viewModel.HeroesViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Pivot x:Name="HeroesPivot" Grid.Row="1" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+               Visibility="{x:Bind _viewModel.HeroesViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
             <Pivot.LeftHeader>
                 <Grid Width="20"/>
             </Pivot.LeftHeader>
