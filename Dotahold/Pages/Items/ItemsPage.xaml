@@ -247,7 +247,7 @@
 
                     <!--Lore-->
                     <Border Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4" BorderThickness="1.5" BorderBrush="{ThemeResource DotaholdPlaceholderBackgroundColor}">
+                            Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4" BorderThickness="1,1,1,1.7" BorderBrush="{ThemeResource DotaholdPlaceholderBackgroundColor}">
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay}"
                                    TextWrapping="WrapWholeWords" Opacity="0.6" FontSize="13" FontStyle="Italic" CharacterSpacing="42"/>
                     </Border>

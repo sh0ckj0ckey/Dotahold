@@ -24,6 +24,17 @@ namespace Dotahold.Data.Models
                     {
                         return intValue;
                     }
+                    else if (reader.TryGetInt64(out long longValue))
+                    {
+                        if (longValue > int.MaxValue || longValue < int.MinValue)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return (int)longValue;
+                        }
+                    }
                     else if (reader.TryGetDouble(out double doubleValue))
                     {
                         if (doubleValue > int.MaxValue || doubleValue < int.MinValue)
@@ -35,15 +46,15 @@ namespace Dotahold.Data.Models
                             return (int)doubleValue;
                         }
                     }
-                    else if (reader.TryGetInt64(out long longValue))
+                    else if (reader.TryGetSingle(out float floatValue))
                     {
-                        if (longValue > int.MaxValue || longValue < int.MinValue)
+                        if (floatValue > int.MaxValue || floatValue < int.MinValue)
                         {
                             return 0;
                         }
                         else
                         {
-                            return (int)longValue;
+                            return (int)floatValue;
                         }
                     }
                     else
@@ -89,6 +100,10 @@ namespace Dotahold.Data.Models
                     if (reader.TryGetDouble(out double value))
                     {
                         return value;
+                    }
+                    else if (reader.TryGetSingle(out float floatValue))
+                    {
+                        return floatValue;
                     }
                     else if (reader.TryGetInt32(out int intValue))
                     {
@@ -222,9 +237,17 @@ namespace Dotahold.Data.Models
                     {
                         return doubleValue.ToString();
                     }
+                    else if (reader.TryGetSingle(out float floatValue))
+                    {
+                        return floatValue.ToString();
+                    }
                     else if (reader.TryGetInt32(out int intValue))
                     {
                         return intValue.ToString();
+                    }
+                    else if (reader.TryGetInt64(out long longValue))
+                    {
+                        return longValue.ToString();
                     }
                 }
                 else
