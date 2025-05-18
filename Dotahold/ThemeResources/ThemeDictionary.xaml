@@ -32,6 +32,7 @@
                     <SolidColorBrush x:Key="DotaholdAcrylicTitleBarBackdropColor">Transparent</SolidColorBrush>
 
                     <Color x:Key="DotaholdItemBackgroundColor">#08FFFFFF</Color>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -66,6 +67,7 @@
                     </media:RadialGradientBrush>
 
                     <Color x:Key="DotaholdItemBackgroundColor">#EAEAEA</Color>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

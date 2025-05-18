@@ -210,9 +210,15 @@ namespace Dotahold.Pages.Heroes
             }
         }
 
+        private void TalentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            HeroTalentsTeachingTip.IsOpen = !HeroTalentsTeachingTip.IsOpen;
+        }
+
         private void InnateButton_Click(object sender, RoutedEventArgs e)
         {
             HeroInnateTeachingTip.IsOpen = !HeroInnateTeachingTip.IsOpen;
         }
+
     }
 }

@@ -162,8 +162,8 @@
             </Grid>
 
             <!--Talents Button-->
-            <Button Grid.Column="2" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    RequestedTheme="Dark" Padding="0" Margin="0,0,24,0" Height="56" Width="56" CornerRadius="28"
+            <Button x:Name="TalentsButton" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    RequestedTheme="Dark" Padding="0" Margin="0,0,24,0" Height="56" Width="56" CornerRadius="28" Click="TalentsButton_Click"
                     Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
                 <communityAnimations:Implicit.ShowAnimations>
                     <communityAnimations:CenterPointAnimation From="28,28,0" To="28,28,0"/>
@@ -176,6 +176,54 @@
                     </Image.Source>
                 </Image>
             </Button>
+            <muxc:TeachingTip x:Name="HeroTalentsTeachingTip" Target="{x:Bind TalentsButton}" Background="Transparent" IsLightDismissEnabled="True" PreferredPlacement="Left">
+                <muxc:TeachingTip.Content>
+                    <Grid ColumnSpacing="16" RowSpacing="8" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                            <RowDefinition Height="Auto" MinHeight="48"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="0" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameLeftLevel25,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="0" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameRightLevel25,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Left"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameLeftLevel20,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="1" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameRightLevel20,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Left"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameLeftLevel15,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="2" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameRightLevel15,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Left"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameLeftLevel10,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Right"/>
+                        <TextBlock Grid.Column="2" Grid.Row="3" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameRightLevel10,Mode=OneWay}" FontSize="15" Opacity="0.7"
+                                   TextWrapping="Wrap" HorizontalTextAlignment="Left"/>
+
+                        <TextBlock Grid.Column="1" Grid.Row="0" Text="25" FontFamily="{ThemeResource ReaverBold}" FontSize="14" Foreground="{ThemeResource DotaholdGoldForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="20" FontFamily="{ThemeResource ReaverBold}" FontSize="14" Foreground="{ThemeResource DotaholdGoldForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="15" FontFamily="{ThemeResource ReaverBold}" FontSize="14" Foreground="{ThemeResource DotaholdGoldForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="10" FontFamily="{ThemeResource ReaverBold}" FontSize="14" Foreground="{ThemeResource DotaholdGoldForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Grid>
+                </muxc:TeachingTip.Content>
+            </muxc:TeachingTip>
 
             <!--Innate Button-->
             <Button x:Name="InnateButton" Grid.Column="3" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -194,13 +242,13 @@
             </Button>
             <muxc:TeachingTip x:Name="HeroInnateTeachingTip" Target="{x:Bind InnateButton}" Background="Transparent" IsLightDismissEnabled="True" PreferredPlacement="Left">
                 <muxc:TeachingTip.Content>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowSpacing="8" Padding="8">
+                    <Grid RowSpacing="8" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Name,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="20" FontWeight="Bold" TextWrapping="WrapWholeWords" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Row="1" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="16" Opacity="0.7" TextWrapping="WrapWholeWords" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="0" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Name,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                     </Grid>
                 </muxc:TeachingTip.Content>
             </muxc:TeachingTip>
