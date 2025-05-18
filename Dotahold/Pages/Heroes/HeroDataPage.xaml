@@ -178,8 +178,8 @@
             </Button>
 
             <!--Innate Button-->
-            <Button Grid.Column="3" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    RequestedTheme="Dark" Padding="0" Margin="0,0,64,0" Height="56" Width="56" CornerRadius="28"
+            <Button x:Name="InnateButton" Grid.Column="3" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    RequestedTheme="Dark" Padding="0" Margin="0,0,64,0" Height="56" Width="56" CornerRadius="28" Click="InnateButton_Click"
                     Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
                 <communityAnimations:Implicit.ShowAnimations>
                     <communityAnimations:CenterPointAnimation From="28,28,0" To="28,28,0"/>
@@ -192,6 +192,18 @@
                     </Image.Source>
                 </Image>
             </Button>
+            <muxc:TeachingTip x:Name="HeroInnateTeachingTip" Target="{x:Bind InnateButton}" Background="Transparent" IsLightDismissEnabled="True" PreferredPlacement="Left">
+                <muxc:TeachingTip.Content>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowSpacing="8" Padding="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Name,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="20" FontWeight="Bold" TextWrapping="WrapWholeWords" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="16" Opacity="0.7" TextWrapping="WrapWholeWords" HorizontalAlignment="Left"/>
+                    </Grid>
+                </muxc:TeachingTip.Content>
+            </muxc:TeachingTip>
         </Grid>
 
         <Rectangle Grid.Row="2" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>

@@ -148,6 +148,8 @@ namespace Dotahold.Data.Models
 
         public double[]? health_costs { get; set; } = [];
 
+        public SpecialValueData[]? special_values { get; set; } = [];
+
         public bool ability_has_scepter { get; set; }
 
         public bool ability_has_shard { get; set; }
