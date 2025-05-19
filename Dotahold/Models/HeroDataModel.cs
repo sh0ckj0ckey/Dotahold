@@ -33,14 +33,14 @@ namespace Dotahold.Models
             this.Innate = new HeroInnateModel(this.DotaHeroData.abilities);
 
             // Talents
-            this.Talents = new HeroTalentsModel(this.DotaHeroData.talents, this.DotaHeroData.abilities);
+            this.Talents = new HeroTalentsModel(this.DotaHeroData.talents, this.DotaHeroData.abilities, this.DotaHeroData.facet_abilities);
 
             // Facets
             if (this.DotaHeroData.facets is not null)
             {
                 foreach (var facet in this.DotaHeroData.facets)
                 {
-                    this.Facets.Add(new HeroFacetModel(facet));
+                    this.Facets.Add(new HeroFacetModel(facet, this.DotaHeroData.talents, this.DotaHeroData.abilities, this.DotaHeroData.facet_abilities));
                 }
             }
         }
@@ -87,13 +87,13 @@ namespace Dotahold.Models
 
         public string TalentNameRightLevel25 { get; private set; } = string.Empty;
 
-        public HeroTalentsModel(AbilityData[]? talents, AbilityData[]? abilities)
+        public HeroTalentsModel(AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
         {
             if (talents is not null && talents.Length > 0)
             {
                 foreach (var talent in talents)
                 {
-                    talent.name_loc = StringFormatter.FormatPlainText(StringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities));
+                    talent.name_loc = StringFormatter.FormatPlainText(StringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities, facetAbilities));
                 }
 
                 this.TalentNameLeftLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
@@ -108,9 +108,20 @@ namespace Dotahold.Models
         }
     }
 
-    public class HeroFacetModel(FacetData facetData)
+    public class HeroFacetModel
     {
-        public AsyncImage IconImage { get; private set; } = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72);
+        public AsyncImage IconImage { get; private set; }
+
+        public string Name { get; private set; } = string.Empty;
+
+        public string Description { get; private set; } = string.Empty;
+
+        public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        {
+            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72);
+            this.Name = facetData.title_loc;
+            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData.name, talents, abilities, facetAbilities));
+        }
     }
 
     public static partial class StringFormatter
@@ -188,7 +199,7 @@ namespace Dotahold.Models
             return result;
         }
 
-        public static string FormatTalentSpecialValues(string originalString, string talentName, SpecialValueData[]? specialValues, AbilityData[]? abilities)
+        public static string FormatTalentSpecialValues(string originalString, string talentName, SpecialValueData[]? specialValues, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
         {
             string result = originalString;
 
@@ -247,11 +258,182 @@ namespace Dotahold.Models
                             }
                         }
                     }
+
+                    if (facetAbilities is not null)
+                    {
+                        foreach (var facetAbility in facetAbilities)
+                        {
+                            if (facetAbility.abilities is not null)
+                            {
+                                foreach (var ability in facetAbility.abilities)
+                                {
+                                    if (ability.special_values is not null)
+                                    {
+                                        foreach (var specialValue in ability.special_values)
+                                        {
+                                            if (specialValue.bonuses is not null)
+                                            {
+                                                foreach (var bonus in specialValue.bonuses)
+                                                {
+                                                    if (bonus.name == talentName)
+                                                    {
+                                                        string value = (Math.Floor(100 * bonus.value) / 100).ToString();
+                                                        result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                                       .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 LogCourier.Log($"FormatTalentSpecialValues Error: {ex.Message}", LogCourier.LogType.Error);
+            }
+
+            return result;
+        }
+
+        public static string FormatFacetSpecialValues(string originalString, string facetName, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        {
+            string result = originalString;
+
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(originalString))
+                {
+                    if (talents is not null)
+                    {
+                        foreach (var talent in talents)
+                        {
+                            if (talent.special_values is not null)
+                            {
+                                foreach (var specialValue in talent.special_values)
+                                {
+                                    if (specialValue.facet_bonus is not null)
+                                    {
+                                        if (specialValue.facet_bonus.name == facetName)
+                                        {
+                                            string value = "0";
+
+                                            if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
+                                            {
+                                                StringBuilder valueStringBuider = new();
+
+                                                for (int i = 0; i < specialValue.facet_bonus.values.Length; i++)
+                                                {
+                                                    valueStringBuider.Append(Math.Floor(100 * specialValue.facet_bonus.values[i]) / 100);
+                                                    if (i < specialValue.facet_bonus.values.Length - 1)
+                                                    {
+                                                        valueStringBuider.Append('/');
+                                                    }
+                                                }
+
+                                                value = valueStringBuider.ToString();
+                                            }
+
+                                            result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                           .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (abilities is not null)
+                    {
+                        foreach (var ability in abilities)
+                        {
+                            if (ability.special_values is not null)
+                            {
+                                foreach (var specialValue in ability.special_values)
+                                {
+                                    if (specialValue.facet_bonus is not null)
+                                    {
+                                        if (specialValue.facet_bonus.name == facetName)
+                                        {
+                                            string value = "0";
+
+                                            if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
+                                            {
+                                                StringBuilder valueStringBuider = new();
+
+                                                for (int i = 0; i < specialValue.facet_bonus.values.Length; i++)
+                                                {
+                                                    valueStringBuider.Append(Math.Floor(100 * specialValue.facet_bonus.values[i]) / 100);
+                                                    if (i < specialValue.facet_bonus.values.Length - 1)
+                                                    {
+                                                        valueStringBuider.Append('/');
+                                                    }
+                                                }
+
+                                                value = valueStringBuider.ToString();
+                                            }
+
+                                            result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                           .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (facetAbilities is not null)
+                    {
+                        foreach (var facetAbility in facetAbilities)
+                        {
+                            if (facetAbility.abilities is not null)
+                            {
+                                foreach (var ability in facetAbility.abilities)
+                                {
+                                    if (ability.special_values is not null)
+                                    {
+                                        foreach (var specialValue in ability.special_values)
+                                        {
+                                            if (specialValue.facet_bonus is not null)
+                                            {
+                                                if (specialValue.facet_bonus.name == facetName)
+                                                {
+                                                    string value = "0";
+
+                                                    if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
+                                                    {
+                                                        StringBuilder valueStringBuider = new();
+
+                                                        for (int i = 0; i < specialValue.facet_bonus.values.Length; i++)
+                                                        {
+                                                            valueStringBuider.Append(Math.Floor(100 * specialValue.facet_bonus.values[i]) / 100);
+                                                            if (i < specialValue.facet_bonus.values.Length - 1)
+                                                            {
+                                                                valueStringBuider.Append('/');
+                                                            }
+                                                        }
+
+                                                        value = valueStringBuider.ToString();
+                                                    }
+
+                                                    result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                                   .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"FormatFacetSpecialValues Error: {ex.Message}", LogCourier.LogType.Error);
             }
 
             return result;

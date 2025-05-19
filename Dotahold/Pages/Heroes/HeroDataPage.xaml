@@ -190,7 +190,7 @@
                             <RowDefinition Height="Auto" MinHeight="48"/>
                             <RowDefinition Height="Auto" MinHeight="48"/>
                         </Grid.RowDefinitions>
-                        
+
                         <TextBlock Grid.Column="0" Grid.Row="0" FontFamily="{ThemeResource Radiance}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                    Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Talents.TalentNameLeftLevel25,Mode=OneWay}" FontSize="15" Opacity="0.7"
                                    TextWrapping="Wrap" HorizontalTextAlignment="Right"/>
@@ -270,6 +270,8 @@
                           HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <TextBlock Text="ATTRIBUTES" Margin="68,20,64,0" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+
                     <ScrollViewer x:Name="DataAttributesScrollViewer"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
@@ -459,6 +461,38 @@
 
                         </StackPanel>
                     </ScrollViewer>
+
+                    <TextBlock Text="FACETS" Margin="68,0,64,16" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+
+                    <muxc:ItemsRepeater x:Name="FacetsItemsRepeater" ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Stretch">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <muxc:ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="models:HeroFacetModel">
+                                <Grid Margin="64,0" Padding="16" ColumnSpacing="16" RowSpacing="4" CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Column="0" Grid.RowSpan="2" Height="36" Width="36" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Name}" FontSize="16" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind Description}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                </Grid>
+                            </DataTemplate>
+                        </muxc:ItemsRepeater.ItemTemplate>
+                    </muxc:ItemsRepeater>
+
                 </StackPanel>
             </ScrollViewer>
         </Grid>

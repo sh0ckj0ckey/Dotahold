@@ -186,19 +186,30 @@ namespace Dotahold.ViewModels
                 {
                     await Task.Delay(600);
                     this.PickedHeroData = dataModel;
-                    return;
+                }
+                else
+                {
+                    var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language);
+                    if (dotaHeroDataModel is not null)
+                    {
+                        if (!_heroDataModels.TryGetValue(languageIndex, out _))
+                        {
+                            _heroDataModels[languageIndex] = [];
+                        }
+
+                        _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id] = new HeroDataModel(dotaHeroDataModel);
+                        this.PickedHeroData = _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id];
+                    }
                 }
 
-                var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language);
-                if (dotaHeroDataModel is not null)
-                {
-                    if (!_heroDataModels.TryGetValue(languageIndex, out _))
-                    {
-                        _heroDataModels[languageIndex] = [];
-                    }
+                this.LoadingHeroData = false;
 
-                    _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id] = new HeroDataModel(dotaHeroDataModel);
-                    this.PickedHeroData = _heroDataModels[languageIndex][heroModel.DotaHeroAttributes.id];
+                if (this.PickedHeroData is not null)
+                {
+                    foreach (var facet in this.PickedHeroData.Facets)
+                    {
+                        await facet.IconImage.LoadImageAsync();
+                    }
                 }
             }
             catch (Exception ex)
