@@ -18,7 +18,7 @@ namespace Dotahold.Models
         /// <summary>
         /// 天赋树
         /// </summary>
-        public HeroTalentModel Talents { get; private set; }
+        public HeroTalentsModel Talents { get; private set; }
 
         /// <summary>
         /// 命石列表
@@ -30,32 +30,12 @@ namespace Dotahold.Models
             this.DotaHeroData = heroData;
 
             // Innate
-
-            if (this.DotaHeroData.abilities is not null && this.DotaHeroData.abilities.Length > 0)
-            {
-                foreach (var ability in this.DotaHeroData.abilities)
-                {
-                    if (ability.ability_is_innate)
-                    {
-                        this.Innate = new HeroInnateModel(ability);
-                        break;
-                    }
-                }
-            }
-
-            this.Innate ??= new HeroInnateModel();
+            this.Innate = new HeroInnateModel(this.DotaHeroData.abilities);
 
             // Talents
-
-            if (this.DotaHeroData.talents is not null && this.DotaHeroData.talents.Length > 0)
-            {
-                this.Talents = new HeroTalentModel(this.DotaHeroData.talents, this.DotaHeroData.abilities);
-            }
-
-            this.Talents ??= new HeroTalentModel();
+            this.Talents = new HeroTalentsModel(this.DotaHeroData.talents, this.DotaHeroData.abilities);
 
             // Facets
-
             if (this.DotaHeroData.facets is not null)
             {
                 foreach (var facet in this.DotaHeroData.facets)
@@ -68,68 +48,63 @@ namespace Dotahold.Models
 
     public class HeroInnateModel
     {
-        public string Name { get; set; }
+        public string Name { get; private set; } = string.Empty;
 
-        public string Description { get; set; }
+        public string Description { get; private set; } = string.Empty;
 
-        public HeroInnateModel(AbilityData abilityData)
+        public HeroInnateModel(AbilityData[]? abilities)
         {
-            this.Name = abilityData.name_loc;
-            this.Description = StringFormatter.FormatAbilitySpecialValues(StringFormatter.FormatPlainText(abilityData.desc_loc), abilityData.special_values);
-        }
-
-        public HeroInnateModel()
-        {
-            this.Name = string.Empty;
-            this.Description = string.Empty;
+            if (abilities is not null && abilities.Length > 0)
+            {
+                foreach (var ability in abilities)
+                {
+                    if (ability.ability_is_innate)
+                    {
+                        this.Name = ability.name_loc;
+                        this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(ability.desc_loc, ability.special_values));
+                        break;
+                    }
+                }
+            }
         }
     }
 
-    public class HeroTalentModel
+    public class HeroTalentsModel
     {
-        public string TalentNameLeftLevel10 { get; set; } = string.Empty;
+        public string TalentNameLeftLevel10 { get; private set; } = string.Empty;
 
-        public string TalentNameRightLevel10 { get; set; } = string.Empty;
+        public string TalentNameRightLevel10 { get; private set; } = string.Empty;
 
-        public string TalentNameLeftLevel15 { get; set; } = string.Empty;
+        public string TalentNameLeftLevel15 { get; private set; } = string.Empty;
 
-        public string TalentNameRightLevel15 { get; set; } = string.Empty;
+        public string TalentNameRightLevel15 { get; private set; } = string.Empty;
 
-        public string TalentNameLeftLevel20 { get; set; } = string.Empty;
+        public string TalentNameLeftLevel20 { get; private set; } = string.Empty;
 
-        public string TalentNameRightLevel20 { get; set; } = string.Empty;
+        public string TalentNameRightLevel20 { get; private set; } = string.Empty;
 
-        public string TalentNameLeftLevel25 { get; set; } = string.Empty;
+        public string TalentNameLeftLevel25 { get; private set; } = string.Empty;
 
-        public string TalentNameRightLevel25 { get; set; } = string.Empty;
+        public string TalentNameRightLevel25 { get; private set; } = string.Empty;
 
-        public HeroTalentModel(AbilityData[] talents, AbilityData[]? abilities)
+        public HeroTalentsModel(AbilityData[]? talents, AbilityData[]? abilities)
         {
-            foreach (var talent in talents)
+            if (talents is not null && talents.Length > 0)
             {
-                talent.name_loc = StringFormatter.FormatTalentSpecialValues(StringFormatter.FormatPlainText(talent.name_loc), talent.name, talent.special_values, abilities);
+                foreach (var talent in talents)
+                {
+                    talent.name_loc = StringFormatter.FormatPlainText(StringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities));
+                }
+
+                this.TalentNameLeftLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel10 = talents.Length > 1 ? (talents[1]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel15 = talents.Length > 2 ? (talents[2]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel15 = talents.Length > 3 ? (talents[3]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel20 = talents.Length > 4 ? (talents[4]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel20 = talents.Length > 5 ? (talents[5]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel25 = talents.Length > 6 ? (talents[6]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel25 = talents.Length > 7 ? (talents[7]?.name_loc ?? string.Empty) : string.Empty;
             }
-
-            this.TalentNameLeftLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameRightLevel10 = talents.Length > 1 ? (talents[1]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameLeftLevel15 = talents.Length > 2 ? (talents[2]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameRightLevel15 = talents.Length > 3 ? (talents[3]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameLeftLevel20 = talents.Length > 4 ? (talents[4]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameRightLevel20 = talents.Length > 5 ? (talents[5]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameLeftLevel25 = talents.Length > 6 ? (talents[6]?.name_loc ?? string.Empty) : string.Empty;
-            this.TalentNameRightLevel25 = talents.Length > 7 ? (talents[7]?.name_loc ?? string.Empty) : string.Empty;
-        }
-
-        public HeroTalentModel()
-        {
-            this.TalentNameLeftLevel10 = string.Empty;
-            this.TalentNameRightLevel10 = string.Empty;
-            this.TalentNameLeftLevel15 = string.Empty;
-            this.TalentNameRightLevel15 = string.Empty;
-            this.TalentNameLeftLevel20 = string.Empty;
-            this.TalentNameRightLevel20 = string.Empty;
-            this.TalentNameLeftLevel25 = string.Empty;
-            this.TalentNameRightLevel25 = string.Empty;
         }
     }
 
