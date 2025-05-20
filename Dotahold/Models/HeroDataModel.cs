@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
@@ -110,6 +111,11 @@ namespace Dotahold.Models
 
     public class HeroFacetModel
     {
+        /// <summary>
+        /// 默认玩家头像图片
+        /// </summary>
+        public static BitmapImage? DefaultFacetImageSource72 = null;
+
         public AsyncImage IconImage { get; private set; }
 
         public string Name { get; private set; } = string.Empty;
@@ -118,7 +124,13 @@ namespace Dotahold.Models
 
         public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
         {
-            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72);
+            DefaultFacetImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/icon_dota2.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 72,
+            };
+
+            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, DefaultFacetImageSource72);
             this.Name = facetData.title_loc;
             this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData.name, talents, abilities, facetAbilities));
         }

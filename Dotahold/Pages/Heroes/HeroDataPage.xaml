@@ -480,7 +480,7 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <Border Grid.Column="0" Grid.RowSpan="2" Height="36" Width="36" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Border Grid.Column="0" Grid.RowSpan="2" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Border.Background>
                                             <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
                                         </Border.Background>
