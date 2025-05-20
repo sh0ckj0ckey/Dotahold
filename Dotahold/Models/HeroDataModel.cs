@@ -39,9 +39,11 @@ namespace Dotahold.Models
             // Facets
             if (this.DotaHeroData.facets is not null)
             {
-                foreach (var facet in this.DotaHeroData.facets)
+                for (int i = 0; i < this.DotaHeroData.facets.Length; i++)
                 {
-                    this.Facets.Add(new HeroFacetModel(facet, this.DotaHeroData.talents, this.DotaHeroData.abilities, this.DotaHeroData.facet_abilities));
+                    var facet = this.DotaHeroData.facets[i];
+                    var facetAbility = this.DotaHeroData.facet_abilities?.Length > i ? this.DotaHeroData.facet_abilities[i] : null;
+                    this.Facets.Add(new HeroFacetModel(facet, this.DotaHeroData.talents, this.DotaHeroData.abilities, facetAbility));
                 }
             }
         }
@@ -122,7 +124,7 @@ namespace Dotahold.Models
 
         public string Description { get; private set; } = string.Empty;
 
-        public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
         {
             DefaultFacetImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/icon_dota2.png"))
             {
@@ -132,7 +134,7 @@ namespace Dotahold.Models
 
             this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, DefaultFacetImageSource72);
             this.Name = facetData.title_loc;
-            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData.name, talents, abilities, facetAbilities));
+            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
         }
     }
 
@@ -175,7 +177,7 @@ namespace Dotahold.Models
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(originalString) && specialValues is not null)
+                if (!string.IsNullOrWhiteSpace(result) && specialValues is not null)
                 {
                     foreach (var specialValue in specialValues)
                     {
@@ -217,7 +219,7 @@ namespace Dotahold.Models
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(originalString))
+                if (!string.IsNullOrWhiteSpace(result))
                 {
                     if (specialValues is not null)
                     {
@@ -301,6 +303,8 @@ namespace Dotahold.Models
                             }
                         }
                     }
+
+                    result = result.Replace("%%", "%");
                 }
             }
             catch (Exception ex)
@@ -311,13 +315,13 @@ namespace Dotahold.Models
             return result;
         }
 
-        public static string FormatFacetSpecialValues(string originalString, string facetName, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        public static string FormatFacetSpecialValues(string originalString, FacetData facet, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
         {
             string result = originalString;
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(originalString))
+                if (!string.IsNullOrWhiteSpace(result))
                 {
                     if (talents is not null)
                     {
@@ -329,10 +333,8 @@ namespace Dotahold.Models
                                 {
                                     if (specialValue.facet_bonus is not null)
                                     {
-                                        if (specialValue.facet_bonus.name == facetName)
+                                        if (specialValue.facet_bonus.name == facet.name)
                                         {
-                                            string value = "0";
-
                                             if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
                                             {
                                                 StringBuilder valueStringBuider = new();
@@ -346,11 +348,13 @@ namespace Dotahold.Models
                                                     }
                                                 }
 
-                                                value = valueStringBuider.ToString();
-                                            }
+                                                string value = valueStringBuider.ToString();
 
-                                            result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
-                                                           .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                                result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                               .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value)
+                                                               .Replace($"%bonus_{specialValue.name}%", value)
+                                                               .Replace($"%bonus_{specialValue.name.ToLower()}%", value);
+                                            }
                                         }
                                     }
                                 }
@@ -368,10 +372,8 @@ namespace Dotahold.Models
                                 {
                                     if (specialValue.facet_bonus is not null)
                                     {
-                                        if (specialValue.facet_bonus.name == facetName)
+                                        if (specialValue.facet_bonus.name == facet.name)
                                         {
-                                            string value = "0";
-
                                             if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
                                             {
                                                 StringBuilder valueStringBuider = new();
@@ -385,11 +387,13 @@ namespace Dotahold.Models
                                                     }
                                                 }
 
-                                                value = valueStringBuider.ToString();
-                                            }
+                                                string value = valueStringBuider.ToString();
 
-                                            result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
-                                                           .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                                result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                               .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value)
+                                                               .Replace($"%bonus_{specialValue.name}%", value)
+                                                               .Replace($"%bonus_{specialValue.name.ToLower()}%", value);
+                                            }
                                         }
                                     }
                                 }
@@ -397,42 +401,39 @@ namespace Dotahold.Models
                         }
                     }
 
-                    if (facetAbilities is not null)
+                    if (facetAbility is not null)
                     {
-                        foreach (var facetAbility in facetAbilities)
+                        if (facetAbility.abilities is not null)
                         {
-                            if (facetAbility.abilities is not null)
+                            foreach (var ability in facetAbility.abilities)
                             {
-                                foreach (var ability in facetAbility.abilities)
+                                if (ability.special_values is not null)
                                 {
-                                    if (ability.special_values is not null)
+                                    foreach (var specialValue in ability.special_values)
                                     {
-                                        foreach (var specialValue in ability.special_values)
+                                        if (specialValue.facet_bonus is not null)
                                         {
-                                            if (specialValue.facet_bonus is not null)
+                                            if (specialValue.facet_bonus.name == facet.name)
                                             {
-                                                if (specialValue.facet_bonus.name == facetName)
+                                                if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
                                                 {
-                                                    string value = "0";
+                                                    StringBuilder valueStringBuider = new();
 
-                                                    if (specialValue.facet_bonus.values is not null && specialValue.facet_bonus.values.Length > 0)
+                                                    for (int i = 0; i < specialValue.facet_bonus.values.Length; i++)
                                                     {
-                                                        StringBuilder valueStringBuider = new();
-
-                                                        for (int i = 0; i < specialValue.facet_bonus.values.Length; i++)
+                                                        valueStringBuider.Append(Math.Floor(100 * specialValue.facet_bonus.values[i]) / 100);
+                                                        if (i < specialValue.facet_bonus.values.Length - 1)
                                                         {
-                                                            valueStringBuider.Append(Math.Floor(100 * specialValue.facet_bonus.values[i]) / 100);
-                                                            if (i < specialValue.facet_bonus.values.Length - 1)
-                                                            {
-                                                                valueStringBuider.Append('/');
-                                                            }
+                                                            valueStringBuider.Append('/');
                                                         }
-
-                                                        value = valueStringBuider.ToString();
                                                     }
 
+                                                    string value = valueStringBuider.ToString();
+
                                                     result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
-                                                                   .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value);
+                                                                   .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value)
+                                                                   .Replace($"%bonus_{specialValue.name}%", value)
+                                                                   .Replace($"%bonus_{specialValue.name.ToLower()}%", value);
                                                 }
                                             }
                                         }
@@ -441,6 +442,50 @@ namespace Dotahold.Models
                             }
                         }
                     }
+
+                    if (facetAbility is not null)
+                    {
+                        if (facetAbility.abilities is not null)
+                        {
+                            foreach (var ability in facetAbility.abilities)
+                            {
+                                if (ability.special_values is not null)
+                                {
+                                    foreach (var specialValue in ability.special_values)
+                                    {
+                                        if (specialValue.values_float is not null && specialValue.values_float.Length > 0)
+                                        {
+                                            StringBuilder valueStringBuider = new();
+
+                                            for (int i = 0; i < specialValue.values_float.Length; i++)
+                                            {
+                                                valueStringBuider.Append(Math.Floor(100 * specialValue.values_float[i]) / 100);
+                                                if (i < specialValue.values_float.Length - 1)
+                                                {
+                                                    valueStringBuider.Append('/');
+                                                }
+                                            }
+
+                                            string value = valueStringBuider.ToString();
+
+                                            result = result.Replace($"{{s:bonus_{specialValue.name}}}", value)
+                                                           .Replace($"{{s:bonus_{specialValue.name.ToLower()}}}", value)
+                                                           .Replace($"%bonus_{specialValue.name}%", value)
+                                                           .Replace($"%bonus_{specialValue.name.ToLower()}%", value)
+                                                           .Replace($"{{s:{specialValue.name}}}", value)
+                                                           .Replace($"{{s:{specialValue.name.ToLower()}}}", value)
+                                                           .Replace($"%{specialValue.name}%", value)
+                                                           .Replace($"%{specialValue.name.ToLower()}%", value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    result = result.Replace("%facet_ability_name%", facet.title_loc)
+                                   .Replace("{s:facet_ability_name}", facet.title_loc)
+                                   .Replace("%%", "%");
                 }
             }
             catch (Exception ex)

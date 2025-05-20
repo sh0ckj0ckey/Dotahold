@@ -486,7 +486,7 @@
                                         </Border.Background>
                                     </Border>
 
-                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Name}" FontSize="16" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind Description}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 </Grid>
                             </DataTemplate>
