@@ -146,6 +146,10 @@ namespace Dotahold.Models
         [System.Text.RegularExpressions.GeneratedRegex("&[^;]+;")]
         private static partial System.Text.RegularExpressions.Regex RegexSpecialCharacters();
 
+
+        [System.Text.RegularExpressions.GeneratedRegex(@"\{s:[^}]+\}")]
+        private static partial System.Text.RegularExpressions.Regex RegexPlaceholder();
+
         public static string FormatPlainText(string originalString)
         {
             string result = originalString;
@@ -181,7 +185,7 @@ namespace Dotahold.Models
                 {
                     foreach (var specialValue in specialValues)
                     {
-                        string value = "0";
+                        string value = "?";
 
                         if (specialValue.values_float is not null && specialValue.values_float.Length > 0)
                         {
@@ -202,6 +206,8 @@ namespace Dotahold.Models
                         result = result.Replace($"%{specialValue.name}%", value)
                                        .Replace($"%{specialValue.name.ToLower()}%", value);
                         result = result.Replace("%%", "%");
+
+                        result = RegexPlaceholder().Replace(result, "?");
                     }
                 }
             }
@@ -225,7 +231,7 @@ namespace Dotahold.Models
                     {
                         foreach (var specialValue in specialValues)
                         {
-                            string value = "0";
+                            string value = "?";
 
                             if (specialValue.values_float is not null && specialValue.values_float.Length > 0)
                             {
@@ -305,6 +311,8 @@ namespace Dotahold.Models
                     }
 
                     result = result.Replace("%%", "%");
+
+                    result = RegexPlaceholder().Replace(result, "?");
                 }
             }
             catch (Exception ex)
@@ -486,6 +494,8 @@ namespace Dotahold.Models
                     result = result.Replace("%facet_ability_name%", facet.title_loc)
                                    .Replace("{s:facet_ability_name}", facet.title_loc)
                                    .Replace("%%", "%");
+
+                    result = RegexPlaceholder().Replace(result, "?");
                 }
             }
             catch (Exception ex)
