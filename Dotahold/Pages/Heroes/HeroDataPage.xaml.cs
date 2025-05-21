@@ -37,7 +37,7 @@ namespace Dotahold.Pages.Heroes
             this.Loaded += (_, _) =>
             {
                 DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
-                FacetsItemsRepeater.Width = RootGrid.ActualWidth;
+                FacetsItemsRepeater.Width = RootGrid.ActualWidth - 128;
 
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
@@ -88,7 +88,7 @@ namespace Dotahold.Pages.Heroes
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
-            FacetsItemsRepeater.Width = RootGrid.ActualWidth;
+            FacetsItemsRepeater.Width = RootGrid.ActualWidth - 128;
         }
 
         private bool TryGoBack()

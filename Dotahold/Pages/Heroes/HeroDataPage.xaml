@@ -464,30 +464,34 @@
 
                     <TextBlock Text="FACETS" Margin="68,0,64,16" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
 
-                    <muxc:ItemsRepeater x:Name="FacetsItemsRepeater" ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Stretch">
+                    <muxc:ItemsRepeater x:Name="FacetsItemsRepeater" ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Center">
                         <muxc:ItemsRepeater.Layout>
-                            <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                            <muxc:UniformGridLayout Orientation="Horizontal" MinColumnSpacing="8" MinRowSpacing="8" MinItemHeight="96" MinItemWidth="196" ItemsStretch="Uniform"/>
                         </muxc:ItemsRepeater.Layout>
                         <muxc:ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="models:HeroFacetModel">
-                                <Grid Margin="64,0" Padding="16" ColumnSpacing="16" RowSpacing="4" CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                <Grid CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <Border Grid.Column="0" Grid.RowSpan="2" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
-                                        </Border.Background>
-                                    </Border>
+                                    <Grid Grid.Row="0" ColumnSpacing="12" Padding="12,12,12,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Bind Description}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <Border Grid.Column="0" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+
+                                        <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" Margin="0,2,0,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </Grid>
+
+                                    <TextBlock Grid.Row="1" Margin="12,4,12,12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 </Grid>
                             </DataTemplate>
                         </muxc:ItemsRepeater.ItemTemplate>
