@@ -176,7 +176,7 @@
                     </Image.Source>
                 </Image>
             </Button>
-            <muxc:TeachingTip x:Name="HeroTalentsTeachingTip" Target="{x:Bind TalentsButton}" Background="Transparent" IsLightDismissEnabled="True" PreferredPlacement="Left">
+            <muxc:TeachingTip x:Name="HeroTalentsTeachingTip" Target="{x:Bind TalentsButton}" IsLightDismissEnabled="True" PreferredPlacement="Left">
                 <muxc:TeachingTip.Content>
                     <Grid ColumnSpacing="16" RowSpacing="8" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -240,7 +240,7 @@
                     </Image.Source>
                 </Image>
             </Button>
-            <muxc:TeachingTip x:Name="HeroInnateTeachingTip" Target="{x:Bind InnateButton}" Background="Transparent" IsLightDismissEnabled="True" PreferredPlacement="Left">
+            <muxc:TeachingTip x:Name="HeroInnateTeachingTip" Target="{x:Bind InnateButton}" IsLightDismissEnabled="True" PreferredPlacement="Left">
                 <muxc:TeachingTip.Content>
                     <Grid RowSpacing="8" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
@@ -248,7 +248,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Name,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="20" FontWeight="Bold" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Row="1" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Text="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Innate.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                     </Grid>
                 </muxc:TeachingTip.Content>
             </muxc:TeachingTip>

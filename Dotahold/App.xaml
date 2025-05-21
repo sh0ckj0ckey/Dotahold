@@ -24,7 +24,10 @@
                     <Color x:Key="SystemAccentColorDark1">#6C1C0C</Color>
                     <Color x:Key="SystemAccentColorDark2">#6C1C0C</Color>
                     <Color x:Key="SystemAccentColorDark3">#6C1C0C</Color>
-                    
+
+                    <!--When the IsLightDismissEnabled property of TeachingTip is set to True, its background color cannot be modified directly.-->
+                    <SolidColorBrush x:Key="TeachingTipTransientBackground" Color="{ThemeResource DotaholdApplicationPageBackground}"/>
+
                 </ResourceDictionary>
             </muxc:XamlControlsResources.MergedDictionaries>
         </muxc:XamlControlsResources>
