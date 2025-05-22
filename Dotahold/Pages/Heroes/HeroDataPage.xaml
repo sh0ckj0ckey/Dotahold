@@ -256,7 +256,7 @@
 
         <Rectangle Grid.Row="2" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <muxc:ProgressRing Grid.Row="3" Height="42" Width="42" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <muxc:ProgressRing Grid.Row="3" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"
                            IsActive="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
@@ -464,39 +464,10 @@
 
                     <TextBlock Text="FACETS" Margin="68,0,64,16" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
 
-                    <muxc:ItemsRepeater x:Name="FacetsItemsRepeater" ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Center">
-                        <muxc:ItemsRepeater.Layout>
-                            <muxc:UniformGridLayout Orientation="Horizontal" MinColumnSpacing="8" MinRowSpacing="8" MinItemHeight="96" MinItemWidth="196" ItemsStretch="Uniform"/>
-                        </muxc:ItemsRepeater.Layout>
-                        <muxc:ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="models:HeroFacetModel">
-                                <Grid CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                    <Grid x:Name="FacetsGrid">
 
-                                    <Grid Grid.Row="0" ColumnSpacing="12" Padding="12,12,12,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border Grid.Column="0" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
-                                            </Border.Background>
-                                        </Border>
-
-                                        <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" Margin="0,2,0,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    </Grid>
-
-                                    <TextBlock Grid.Row="1" Margin="12,4,12,12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                </Grid>
-                            </DataTemplate>
-                        </muxc:ItemsRepeater.ItemTemplate>
-                    </muxc:ItemsRepeater>
-
+                    </Grid>
+                    
                 </StackPanel>
             </ScrollViewer>
         </Grid>

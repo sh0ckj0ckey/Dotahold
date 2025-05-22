@@ -93,11 +93,12 @@ namespace Dotahold.Data.DataShop
                     }
                     catch (Exception ex) when ((ex.HResult == ERROR_ACCESS_DENIED) || (ex.HResult == ERROR_SHARING_VIOLATION))
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        await Task.Delay(TimeSpan.FromSeconds(2));
                     }
                     catch (Exception ex)
                     {
                         LogCourier.Log(ex.Message, LogCourier.LogType.Error);
+                        await Task.Delay(TimeSpan.FromSeconds(2));
                     }
                 }
             }

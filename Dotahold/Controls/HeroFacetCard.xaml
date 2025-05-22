@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="Dotahold.Controls.HeroFacetCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+    <Grid Margin="4" CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" ColumnSpacing="12" Padding="12,12,12,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush ImageSource="{x:Bind _heroFacetModel.IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+
+            <TextBlock Grid.Column="1" Text="{x:Bind _heroFacetModel.Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" Margin="0,2,0,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
+
+        <TextBlock Grid.Row="1" Margin="12,4,12,12" Text="{x:Bind _heroFacetModel.Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </Grid>
+</UserControl>
