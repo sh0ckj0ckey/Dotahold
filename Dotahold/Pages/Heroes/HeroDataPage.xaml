@@ -22,6 +22,9 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+
+        <BitmapImage x:Key="DotaholdRippleTextureImage" UriSource="/Assets/Heroes/ripple_texture.png" DecodePixelType="Logical" DecodePixelHeight="48"/>
+
     </Page.Resources>
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -266,22 +269,27 @@
                            IsActive="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-        <Grid Grid.Row="3" Opacity="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
               Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
-            <communityAnimations:Implicit.ShowAnimations>
-                <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1"/>
-                <communityAnimations:TranslationAnimation From="0,64,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1"/>
-            </communityAnimations:Implicit.ShowAnimations>
             <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                           HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                    <TextBlock Text="ATTRIBUTES" Margin="68,20,64,0" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                    <TextBlock Text="ATTRIBUTES" Margin="68,20,64,0" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.1"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.1"/>
+                        </communityAnimations:Implicit.ShowAnimations>
+                    </TextBlock>
 
                     <ScrollViewer x:Name="DataAttributesScrollViewer"
                                   HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
                                   HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1" Delay="0:0:0.2"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.2"/>
+                        </communityAnimations:Implicit.ShowAnimations>
                         <StackPanel Orientation="Horizontal" Spacing="8" Margin="64,16" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                             <Grid Width="112" Height="64" Padding="12,4" CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}">
@@ -468,9 +476,18 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <TextBlock Text="FACETS" Margin="68,0,64,16" Opacity="0.8" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                    <TextBlock Text="FACETS" Margin="68,0,64,16" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.3"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.3"/>
+                        </communityAnimations:Implicit.ShowAnimations>
+                    </TextBlock>
 
                     <Grid x:Name="FacetsGrid">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1" Delay="0:0:0.4"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.4"/>
+                        </communityAnimations:Implicit.ShowAnimations>
                         <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Stretch">
                             <muxc:ItemsRepeater.Layout>
                                 <controls:UniformGridLayout MinItemWidth="296"/>
@@ -479,26 +496,26 @@
                                 <DataTemplate x:DataType="models:HeroFacetModel">
                                     <Grid Margin="4" CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="48"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <Grid Grid.Row="0" ColumnSpacing="12" Padding="12,12,12,8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Grid Grid.Row="0" ColumnSpacing="12" Background="{x:Bind BackgroundBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="48"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Border Grid.Column="0" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <Border.Background>
-                                                    <ImageBrush ImageSource="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
-                                                </Border.Background>
+                                            <Image Grid.Column="0" Grid.ColumnSpan="2" Opacity="0.3" Stretch="UniformToFill" Source="{StaticResource DotaholdRippleTextureImage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                                            <Border Grid.Column="0" Background="#16000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <Image Height="24" Width="24" Source="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
 
-                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="16" Margin="0,2,0,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Grid>
 
-                                        <TextBlock Grid.Row="1" Margin="12,4,12,12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     </Grid>
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
