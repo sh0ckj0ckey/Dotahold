@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
@@ -81,10 +82,19 @@ namespace Dotahold.Models
         }
     }
 
+    /// <summary>
+    /// 命石先天技能
+    /// </summary>
     public class HeroInnateModel
     {
+        /// <summary>
+        /// 先天技能名称
+        /// </summary>
         public string Name { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// 先天技能描述
+        /// </summary>
         public string Description { get; private set; } = string.Empty;
 
         public HeroInnateModel(AbilityData[]? abilities)
@@ -104,6 +114,9 @@ namespace Dotahold.Models
         }
     }
 
+    /// <summary>
+    /// 英雄天赋树
+    /// </summary>
     public class HeroTalentsModel
     {
         public string TalentNameLeftLevel10 { get; private set; } = string.Empty;
@@ -143,6 +156,9 @@ namespace Dotahold.Models
         }
     }
 
+    /// <summary>
+    /// 英雄命石
+    /// </summary>
     public class HeroFacetModel
     {
         /// <summary>
@@ -150,13 +166,30 @@ namespace Dotahold.Models
         /// </summary>
         private static BitmapImage? _defaultFacetImageSource72 = null;
 
+        /// <summary>
+        /// 命石图标
+        /// </summary>
         public AsyncImage IconImage { get; private set; }
 
+        /// <summary>
+        /// 命石名称
+        /// </summary>
         public string Name { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// 命石描述
+        /// </summary>
         public string Description { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// 命石背景色
+        /// </summary>
         public LinearGradientBrush BackgroundBrush { get; private set; }
+
+        /// <summary>
+        /// 命石索引
+        /// </summary>
+        public int Index { get; private set; } = -1;
 
         public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
         {
@@ -170,9 +203,13 @@ namespace Dotahold.Models
             this.Name = facetData.title_loc;
             this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
             this.BackgroundBrush = AbilityColorsHelper.GetFacetGradientBrush($"FacetColor{AbilityColorsHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
+            this.Index = facetData.index;
         }
     }
 
+    /// <summary>
+    /// 英雄技能
+    /// </summary>
     public class HeroAbilityModel
     {
         /// <summary>
@@ -218,7 +255,7 @@ namespace Dotahold.Models
         /// <summary>
         /// 技能受到命石增强效果的描述
         /// </summary>
-        public List<Tuple<HeroFacetModel, string>> FacetsDescription { get; private set; } = [];
+        public List<HeroAbilityFacetUpgradeModel> FacetsDescriptions { get; private set; } = [];
 
         /// <summary>
         /// 技能施法行为描述
@@ -312,7 +349,7 @@ namespace Dotahold.Models
             this.Name = abilityData.name_loc;
             this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.desc_loc, abilityData.special_values));
             this.Lore = StringFormatter.FormatPlainText(abilityData.lore_loc);
-            this.Notes = abilityData.notes_loc?.Length > 0 ? string.Join("\n", abilityData.notes_loc) : string.Empty;
+            this.Notes = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.notes_loc?.Length > 0 ? string.Join("\n", abilityData.notes_loc) : string.Empty, abilityData.special_values));
             this.ShardDescription = abilityData.ability_has_shard ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.shard_loc, abilityData.special_values)) : string.Empty;
             this.ScepterDescription = abilityData.ability_has_scepter ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.scepter_loc, abilityData.special_values)) : string.Empty;
 
@@ -320,9 +357,13 @@ namespace Dotahold.Models
             {
                 for (int i = 0; i < abilityData.facets_loc.Length; i++)
                 {
-                    if (facets.Count > i)
+                    if (!string.IsNullOrWhiteSpace(abilityData.facets_loc[i]))
                     {
-                        this.FacetsDescription.Add(new Tuple<HeroFacetModel, string>(facets[i], StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.facets_loc[i], abilityData.special_values))));
+                        var facet = facets.FirstOrDefault(x => x.Index == i);
+                        if (facet is not null)
+                        {
+                            this.FacetsDescriptions.Add(new HeroAbilityFacetUpgradeModel(facet, StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.facets_loc[i], abilityData.special_values))));
+                        }
                     }
                 }
             }
@@ -385,10 +426,10 @@ namespace Dotahold.Models
                 _ => string.Empty,
             };
 
-            this.CastRanges = abilityData.cast_ranges?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.cast_ranges, x => Math.Floor(100 * x) / 100)) : string.Empty;
-            this.Cooldowns = abilityData.cooldowns?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.cooldowns, x => Math.Floor(100 * x) / 100)) : string.Empty;
-            this.ManaCosts = abilityData.mana_costs?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.mana_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
-            this.HealthCosts = abilityData.health_costs?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.health_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.CastRanges = (abilityData.cast_ranges?.Length > 0 && !(abilityData.cast_ranges.Length == 1 && abilityData.cast_ranges[0] == 0)) ? string.Join("/", Array.ConvertAll(abilityData.cast_ranges, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.Cooldowns = (abilityData.cooldowns?.Length > 0 && !(abilityData.cooldowns.Length == 1 && abilityData.cooldowns[0] == 0)) ? string.Join("/", Array.ConvertAll(abilityData.cooldowns, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.ManaCosts = (abilityData.mana_costs?.Length > 0 && !(abilityData.mana_costs.Length == 1 && abilityData.mana_costs[0] == 0)) ? string.Join("/", Array.ConvertAll(abilityData.mana_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.HealthCosts = (abilityData.health_costs?.Length > 0 && !(abilityData.health_costs.Length == 1 && abilityData.health_costs[0] == 0)) ? string.Join("/", Array.ConvertAll(abilityData.health_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
 
             if (abilityData.special_values?.Length > 0)
             {
@@ -421,7 +462,7 @@ namespace Dotahold.Models
                     }
                 }
 
-                this.SpecialValueDescription = specialValuesDescriptionStringBuilder.ToString();
+                this.SpecialValueDescription = StringFormatter.FormatPlainText(specialValuesDescriptionStringBuilder.ToString().TrimEnd('\n'));
             }
 
             this.IsGrantedByScepter = abilityData.ability_is_granted_by_scepter;
@@ -430,6 +471,24 @@ namespace Dotahold.Models
             this.IsGrantedByFacet = grantedFacet is not null;
             this.GrantedFacet = grantedFacet;
         }
+    }
+
+    /// <summary>
+    /// 技能受到命石增强效果
+    /// </summary>
+    /// <param name="facet"></param>
+    /// <param name="description"></param>
+    public class HeroAbilityFacetUpgradeModel(HeroFacetModel facet, string description)
+    {
+        /// <summary>
+        /// 增强技能的命石
+        /// </summary>
+        public HeroFacetModel Facet { get; private set; } = facet;
+
+        /// <summary>
+        /// 命石对技能增强的描述
+        /// </summary>
+        public string Description { get; private set; } = description;
     }
 
     public static partial class StringFormatter

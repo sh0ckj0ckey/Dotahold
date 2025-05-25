@@ -213,7 +213,10 @@ namespace Dotahold.ViewModels
 
                     foreach (var ability in this.PickedHeroData.Abilities)
                     {
-                        await ability.IconImage.LoadImageAsync();
+                        if (!ability.IsInnateAbility)
+                        {
+                            await ability.IconImage.LoadImageAsync();
+                        }
                     }
                 }
             }

@@ -43,6 +43,7 @@ namespace Dotahold.Pages.Heroes
 
                 DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
                 FacetsGrid.Width = RootGrid.ActualWidth - 128;
+                AbilitiesGrid.Width = RootGrid.ActualWidth - 128;
             };
 
             this.Unloaded += (_, _) =>
@@ -90,6 +91,7 @@ namespace Dotahold.Pages.Heroes
         {
             DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
             FacetsGrid.Width = RootGrid.ActualWidth - 128;
+            AbilitiesGrid.Width = RootGrid.ActualWidth - 128;
         }
 
         /// <summary>

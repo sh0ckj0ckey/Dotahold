@@ -121,7 +121,7 @@
 
                         <StackPanel Grid.Column="1" Spacing="6" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <!--Name-->
-                            <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dname,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="22" CharacterSpacing="42" TextWrapping="WrapWholeWords" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dname,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="22" CharacterSpacing="42" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
                             <StackPanel Orientation="Horizontal">
                                 <!--Price-->
                                 <StackPanel Orientation="Horizontal" Spacing="8" Padding="0,0,16,0" Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.cost,Converter={StaticResource IntToVisibilityConverter},Mode=OneWay}">
@@ -144,42 +144,42 @@
 
                     <!--Ability Behavior-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.behavior,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Ability: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.behavior,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
 
                     <!--Target Team-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.target_team,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Affects: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.target_team,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
 
                     <!--Damage Type-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dmg_type,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Damage Type: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dmg_type,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
 
                     <!--Pierces Debuff Immunity-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.bkbpierce,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Pierces Debuff Immunity: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.bkbpierce,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
 
                     <!--Dispellable-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dispellable,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Dispellable: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.dispellable,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
 
                     <!--Target Type-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.target_type,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
-                               Margin="0,0,0,4" TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42">
+                               Margin="0,0,0,4" TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42">
                         <Run Text="Target: " FontSize="12"/>
                         <Run Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.target_type,Mode=OneWay}" FontSize="13" FontWeight="Medium"/>
                     </TextBlock>
@@ -187,7 +187,7 @@
                     <!--Attributes-->
                     <TextBlock Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.attrib,Mode=OneWay,Converter={StaticResource ItemAttribsToVisibilityConverter}}"
                                Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.attrib,Mode=OneWay,Converter={StaticResource ItemAttribsToStringConverter}}"
-                               LineHeight="28" Margin="0,4,0,4" TextWrapping="WrapWholeWords" FontWeight="Medium" Opacity="0.9" CharacterSpacing="42"/>
+                               LineHeight="28" Margin="0,4,0,4" TextWrapping="Wrap" FontWeight="Medium" Opacity="0.9" CharacterSpacing="42"/>
 
                     <!--Abilities-->
                     <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.abilities,Mode=OneWay}" HorizontalAlignment="Stretch">
@@ -213,13 +213,13 @@
                                                 </LinearGradientBrush.GradientStops>
                                             </LinearGradientBrush>
                                         </Border.Background>
-                                        <TextBlock TextWrapping="WrapWholeWords" CharacterSpacing="42" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock TextWrapping="Wrap" CharacterSpacing="42" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <Run Text="{x:Bind type,Converter={StaticResource StringToUpperConverter}}" FontSize="13"/>
                                             <Run Text=": "/>
                                             <Run Text="{x:Bind title}" FontWeight="Medium"/>
                                         </TextBlock>
                                     </Border>
-                                    <TextBlock Grid.Row="1" Margin="12,6,12,10" Text="{x:Bind description}" TextWrapping="WrapWholeWords" Opacity="0.8" CharacterSpacing="42"/>
+                                    <TextBlock Grid.Row="1" Margin="12,6,12,10" Text="{x:Bind description}" TextWrapping="Wrap" Opacity="0.8" CharacterSpacing="42"/>
                                 </Grid>
                             </DataTemplate>
                         </muxc:ItemsRepeater.ItemTemplate>
@@ -232,7 +232,7 @@
                             <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.5"/>
                         </Border.Background>
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.hint,Mode=OneWay,Converter={StaticResource StringArrayToStringConverter}}"
-                                   TextWrapping="WrapWholeWords" Opacity="0.6" CharacterSpacing="42"/>
+                                   TextWrapping="Wrap" Opacity="0.6" CharacterSpacing="42"/>
                     </Border>
 
                     <!--Notes-->
@@ -242,14 +242,14 @@
                             <SolidColorBrush Color="{ThemeResource DotaholdPlaceholderBackgroundColor}" Opacity="0.7"/>
                         </Border.Background>
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.notes,Mode=OneWay}"
-                                   TextWrapping="WrapWholeWords" Opacity="0.8" CharacterSpacing="42"/>
+                                   TextWrapping="Wrap" Opacity="0.8" CharacterSpacing="42"/>
                     </Border>
 
                     <!--Lore-->
                     <Border Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}"
                             Margin="0,0,0,8" Padding="12,6,12,10" CornerRadius="4" BorderThickness="1,1,1,1.7" BorderBrush="{ThemeResource DotaholdPlaceholderBackgroundColor}">
                         <TextBlock Text="{x:Bind _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.lore,Mode=OneWay}"
-                                   TextWrapping="WrapWholeWords" Opacity="0.6" FontSize="13" FontStyle="Italic" CharacterSpacing="42"/>
+                                   TextWrapping="Wrap" Opacity="0.6" FontSize="13" FontStyle="Italic" CharacterSpacing="42"/>
                     </Border>
 
                     <!--Mana Cost, Health Cost, Cool Down-->

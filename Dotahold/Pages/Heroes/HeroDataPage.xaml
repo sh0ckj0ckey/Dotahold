@@ -9,6 +9,7 @@
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:community="using:CommunityToolkit.WinUI"
+    xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
     xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
     xmlns:models="using:Dotahold.Models"
@@ -22,6 +23,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
 
         <BitmapImage x:Key="DotaholdRippleTextureImage" UriSource="/Assets/Heroes/ripple_texture.png" DecodePixelType="Logical" DecodePixelHeight="48"/>
         <BitmapImage x:Key="DotaholdCooldownIcon" UriSource="/Assets/Heroes/icon_cooldown.png" DecodePixelType="Logical" DecodePixelHeight="28"/>
@@ -276,7 +278,7 @@
             <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                           HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                     <TextBlock Text="ATTRIBUTES" Margin="68,24,64,0" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
                         <communityAnimations:Implicit.ShowAnimations>
                             <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.1"/>
@@ -514,7 +516,7 @@
                                                 <Image Height="24" Width="24" Source="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
 
-                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Grid>
 
                                         <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
@@ -536,20 +538,196 @@
                             <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1" Delay="0:0:0.6"/>
                             <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.6"/>
                         </communityAnimations:Implicit.ShowAnimations>
-                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Stretch">
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Abilities,Mode=OneWay}" HorizontalAlignment="Stretch">
                             <muxc:ItemsRepeater.Layout>
                                 <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
                             </muxc:ItemsRepeater.Layout>
                             <muxc:ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="models:HeroAbilityModel">
-                                    <Grid CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid CornerRadius="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Grid.Background>
+                                            <SolidColorBrush Color="{ThemeResource DotaholdItemBackgroundColor}" Opacity="0.5"/>
+                                        </Grid.Background>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{ThemeResource DotaholdItemBackgroundColor}"/>
+
+                                        <!--Ability Icon-->
+                                        <Grid Grid.Row="0" Grid.Column="0" CornerRadius="4" Height="64" Width="64" Margin="16,16,8,16" controls:UIElementExtensions.ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="{x:Bind IconImage.Image,Mode=OneWay}" Visibility="{x:Bind IsInnateAbility,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Height="42" Width="42" Stretch="UniformToFill" Source="/Assets/Heroes/icon_innate.png" Visibility="{x:Bind IsInnateAbility,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Heroes/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter" Visibility="{x:Bind IsGrantedByScepter,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                            <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Heroes/hero_ability_aghs_shard.png" ToolTipService.ToolTip="Granted by Shard" Visibility="{x:Bind IsGrantedByShard,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                            <Border Height="64" Width="64" Visibility="{x:Bind IsGrantedByFacet,Converter={StaticResource BoolToVisibilityConverter}}" ToolTipService.ToolTip="Granted by Facet" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                                                        <GradientStopCollection>
+                                                            <GradientStop Color="#222222" Offset="0.0"/>
+                                                            <GradientStop Color="#00222222" Offset="0.6"/>
+                                                            <GradientStop Color="#00222222" Offset="1.0"/>
+                                                        </GradientStopCollection>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Image Height="18" Width="18" Margin="4" Opacity="0.8" Stretch="UniformToFill" Source="{x:Bind GrantedFacet.IconImage.Image,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <Grid Grid.Row="0" Grid.Column="1" Margin="8,16,16,16" RowSpacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <!--Ability Name-->
+                                            <TextBlock Grid.Row="0" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <!--Ability Description-->
+                                            <TextBlock Grid.Row="1" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" Visibility="{x:Bind Description,Converter={StaticResource EmptyToVisibilityConverter}}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Grid.Column="1" Padding="10,8,20,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <communityControls:WrapPanel Grid.Row="0" HorizontalSpacing="16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                                <TextBlock Visibility="{x:Bind BehaviorDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
+                                                    <Run Text="ABILITY: " FontWeight="Normal"/><Run Text="{x:Bind BehaviorDescription}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind ImmunityDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
+                                                    <Run Text="PIERCES SPELL IMMUNITY: " FontWeight="Normal"/><Run Text="{x:Bind ImmunityDescription}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind TargetDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
+                                                    <Run Text="AFFECTS: " FontWeight="Normal"/><Run Text="{x:Bind TargetDescription}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind DispellableDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
+                                                    <Run Text="DISPELLABLE: " FontWeight="Normal"/><Run Text="{x:Bind DispellableDescription}"/>
+                                                </TextBlock>
+                                                <TextBlock Visibility="{x:Bind DamageType,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
+                                                    <Run Text="DAMAGE TYPE: " FontWeight="Normal"/><Run Text="{x:Bind DamageType}" Foreground="{x:Bind DamageTypeForeground}"/>
+                                                </TextBlock>
+                                            </communityControls:WrapPanel>
+
+                                            <!--Ability Values-->
+                                            <TextBlock Grid.Row="1" Text="{x:Bind SpecialValueDescription}" Visibility="{x:Bind SpecialValueDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="20" FontWeight="Medium" FontSize="14" Opacity="0.8" TextWrapping="Wrap"/>
+
+                                            <!--Notes-->
+                                            <TextBlock Grid.Row="2" Text="{x:Bind Notes}" Visibility="{x:Bind Notes,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="16" FontSize="14" Opacity="0.4" TextWrapping="Wrap"/>
+
+                                            <!--Aghanim's Scepter Upgrade-->
+                                            <Grid Grid.Row="3" CornerRadius="4" Margin="0,12,0,0" Padding="12" ColumnSpacing="8" Visibility="{x:Bind ScepterDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="/Assets/Heroes/hero_ability_scepter.png" Height="30" Width="30" ToolTipService.ToolTip="Upgraded by Aghanim's Scepter" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind ScepterDescription}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                            <!--Aghanim's Shard Upgrade-->
+                                            <Grid Grid.Row="4" CornerRadius="4" Margin="0,12,0,0" Padding="12" ColumnSpacing="8" Visibility="{x:Bind ShardDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="/Assets/Heroes/hero_ability_shard.png" Height="30" Width="30" ToolTipService.ToolTip="Upgraded by Aghanim's Shard" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind ShardDescription}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                            </Grid>
+
+                                            <!--Facets Upgrade-->
+                                            <muxc:ItemsRepeater Grid.Row="5" Margin="0,12,0,0" ItemsSource="{x:Bind FacetsDescriptions}" Visibility="{x:Bind FacetsDescriptions.Count,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Stretch">
+                                                <muxc:ItemsRepeater.Layout>
+                                                    <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                                                </muxc:ItemsRepeater.Layout>
+                                                <muxc:ItemsRepeater.ItemTemplate>
+                                                    <DataTemplate x:DataType="models:HeroAbilityFacetUpgradeModel">
+                                                        <Grid CornerRadius="4" Padding="12" ColumnSpacing="8" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Border Height="30" Width="30" CornerRadius="2" Background="{x:Bind Facet.BackgroundBrush}">
+                                                                <Image Grid.Column="0" Source="{x:Bind Facet.IconImage.Image,Mode=OneWay}" Height="18" Width="18" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                            <TextBlock Grid.Column="1" Text="{x:Bind Description}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </muxc:ItemsRepeater.ItemTemplate>
+                                            </muxc:ItemsRepeater>
+
+                                            <StackPanel Grid.Row="6" Orientation="Horizontal" Padding="4,0">
+
+                                                <!--Cooldowns-->
+                                                <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind Cooldowns,Converter={StaticResource EmptyToVisibilityConverter}}">
+                                                    <Border.Background>
+                                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Heroes/icon_cooldown.png"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind Cooldowns}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind Cooldowns,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                                                <!--ManaCosts-->
+                                                <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind ManaCosts,Converter={StaticResource EmptyToVisibilityConverter}}">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStopCollection>
+                                                                <GradientStop Color="#009FD3" Offset="0.0"/>
+                                                                <GradientStop Color="#017297" Offset="1.0"/>
+                                                            </GradientStopCollection>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind ManaCosts}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind ManaCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                                                <!--HealthCosts-->
+                                                <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind HealthCosts,Converter={StaticResource EmptyToVisibilityConverter}}">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStopCollection>
+                                                                <GradientStop Color="#F83E58" Offset="0.0"/>
+                                                                <GradientStop Color="#CC163E" Offset="1.0"/>
+                                                            </GradientStopCollection>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind HealthCosts}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind HealthCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                                                <!--CastRanges-->
+                                                <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind CastRanges,Converter={StaticResource EmptyToVisibilityConverter}}">
+                                                    <Border.Background>
+                                                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Heroes/icon_castrange.png"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <TextBlock Text="{x:Bind CastRanges}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind CastRanges,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+
+                                            </StackPanel>
+
+                                            <!--Lore-->
+                                            <Grid Grid.Row="7" Padding="12,6,12,8" Margin="0,16,0,0" CornerRadius="4" Visibility="{x:Bind Lore,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Left">
+                                                <Grid.Background>
+                                                    <SolidColorBrush Color="{ThemeResource DotaholdItemBackgroundColor}"/>
+                                                </Grid.Background>
+                                                <TextBlock Text="{x:Bind Lore}" FontSize="13" FontStyle="Italic" Opacity="0.6" TextWrapping="Wrap"/>
+                                            </Grid>
+
+                                        </Grid>
 
                                     </Grid>
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
                         </muxc:ItemsRepeater>
                     </Grid>
-
                 </StackPanel>
             </ScrollViewer>
         </Grid>

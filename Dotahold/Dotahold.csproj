@@ -35,6 +35,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
+		<PackageReference Include="CommunityToolkit.Uwp.Controls.Primitives" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Controls.Segmented" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.Uwp.Converters" Version="8.2.250402" />
