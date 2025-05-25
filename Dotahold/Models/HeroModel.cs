@@ -9,7 +9,7 @@ namespace Dotahold.Models
         /// <summary>
         /// 默认英雄图片
         /// </summary>
-        public static BitmapImage? DefaultHeroImageSource144 = null;
+        private static BitmapImage? _defaultHeroImageSource144 = null;
 
         public DotaHeroModel DotaHeroAttributes { get; private set; }
 
@@ -19,14 +19,14 @@ namespace Dotahold.Models
 
         public HeroModel(DotaHeroModel hero)
         {
-            DefaultHeroImageSource144 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder.png"))
+            _defaultHeroImageSource144 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
                 DecodePixelHeight = 144,
             };
 
             this.DotaHeroAttributes = hero;
-            this.HeroImage = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaHeroAttributes.img}", 0, 144, DefaultHeroImageSource144);
+            this.HeroImage = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaHeroAttributes.img}", 0, 144, _defaultHeroImageSource144);
             this.HeroIcon = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}{this.DotaHeroAttributes.icon}", 0, 36);
         }
     }

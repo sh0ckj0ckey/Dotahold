@@ -118,6 +118,8 @@ namespace Dotahold.Data.Models
 
         public int type { get; set; }
 
+        public long behavior { get; set; }
+
         public int target_team { get; set; }
 
         public int target_type { get; set; }

@@ -29,6 +29,11 @@ namespace Dotahold.Models
         /// </summary>
         public List<HeroFacetModel> Facets { get; private set; } = [];
 
+        /// <summary>
+        /// 技能列表
+        /// </summary>
+        public List<HeroAbilityModel> Abilities { get; private set; } = [];
+
         public HeroDataModel(DotaHeroDataModel heroData)
         {
             this.DotaHeroData = heroData;
@@ -44,9 +49,33 @@ namespace Dotahold.Models
             {
                 for (int i = 0; i < this.DotaHeroData.facets.Length; i++)
                 {
-                    var facet = this.DotaHeroData.facets[i];
-                    var facetAbility = this.DotaHeroData.facet_abilities?.Length > i ? this.DotaHeroData.facet_abilities[i] : null;
-                    this.Facets.Add(new HeroFacetModel(facet, this.DotaHeroData.talents, this.DotaHeroData.abilities, facetAbility));
+                    this.Facets.Add(new HeroFacetModel(this.DotaHeroData.facets[i], this.DotaHeroData.talents, this.DotaHeroData.abilities, (this.DotaHeroData.facet_abilities?.Length > i ? this.DotaHeroData.facet_abilities[i] : null)));
+                }
+            }
+
+            // Abilities
+            if (this.DotaHeroData.abilities is not null)
+            {
+                for (int i = 0; i < this.DotaHeroData.abilities.Length; i++)
+                {
+                    this.Abilities.Add(new HeroAbilityModel(this.DotaHeroData.abilities[i], this.Facets));
+                }
+            }
+
+            // Facet Abilities
+            if (this.DotaHeroData.facet_abilities is not null)
+            {
+                for (int i = 0; i < this.DotaHeroData.facet_abilities.Length; i++)
+                {
+                    FacetAbilityData facetAbility = this.DotaHeroData.facet_abilities[i];
+
+                    if (facetAbility.abilities is not null)
+                    {
+                        foreach (var ability in facetAbility.abilities)
+                        {
+                            this.Abilities.Add(new HeroAbilityModel(ability, this.Facets, this.Facets.Count > i ? this.Facets[i] : null));
+                        }
+                    }
                 }
             }
         }
@@ -102,14 +131,14 @@ namespace Dotahold.Models
                     talent.name_loc = StringFormatter.FormatPlainText(StringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities, facetAbilities));
                 }
 
-                this.TalentNameLeftLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameRightLevel10 = talents.Length > 1 ? (talents[1]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameLeftLevel15 = talents.Length > 2 ? (talents[2]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameRightLevel15 = talents.Length > 3 ? (talents[3]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameLeftLevel20 = talents.Length > 4 ? (talents[4]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameRightLevel20 = talents.Length > 5 ? (talents[5]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameLeftLevel25 = talents.Length > 6 ? (talents[6]?.name_loc ?? string.Empty) : string.Empty;
-                this.TalentNameRightLevel25 = talents.Length > 7 ? (talents[7]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel10 = talents.Length > 1 ? (talents[1]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel15 = talents.Length > 2 ? (talents[2]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel15 = talents.Length > 3 ? (talents[3]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel20 = talents.Length > 4 ? (talents[4]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel20 = talents.Length > 5 ? (talents[5]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameRightLevel25 = talents.Length > 6 ? (talents[6]?.name_loc ?? string.Empty) : string.Empty;
+                this.TalentNameLeftLevel25 = talents.Length > 7 ? (talents[7]?.name_loc ?? string.Empty) : string.Empty;
             }
         }
     }
@@ -117,9 +146,9 @@ namespace Dotahold.Models
     public class HeroFacetModel
     {
         /// <summary>
-        /// 默认玩家头像图片
+        /// 默认命石图标
         /// </summary>
-        public static BitmapImage? DefaultFacetImageSource72 = null;
+        private static BitmapImage? _defaultFacetImageSource72 = null;
 
         public AsyncImage IconImage { get; private set; }
 
@@ -131,16 +160,267 @@ namespace Dotahold.Models
 
         public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
         {
-            DefaultFacetImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/icon_dota2.png"))
+            _defaultFacetImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/icon_dota2.png"))
             {
                 DecodePixelType = DecodePixelType.Logical,
                 DecodePixelHeight = 72,
             };
 
-            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, DefaultFacetImageSource72);
+            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, _defaultFacetImageSource72);
             this.Name = facetData.title_loc;
             this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
-            this.BackgroundBrush = FacetColorHelper.GetFacetGradientBrush($"FacetColor{FacetColorHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
+            this.BackgroundBrush = AbilityColorsHelper.GetFacetGradientBrush($"FacetColor{AbilityColorsHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
+        }
+    }
+
+    public class HeroAbilityModel
+    {
+        /// <summary>
+        /// 默认技能图标
+        /// </summary>
+        private static BitmapImage? _defaultAbilityImageSource128 = null;
+
+        /// <summary>
+        /// 技能图标
+        /// </summary>
+        public AsyncImage IconImage { get; private set; }
+
+        /// <summary>
+        /// 技能名称
+        /// </summary>
+        public string Name { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能描述
+        /// </summary>
+        public string Description { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能背景故事
+        /// </summary>
+        public string Lore { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能备注信息
+        /// </summary>
+        public string Notes { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能受到魔晶增强效果的描述
+        /// </summary>
+        public string ShardDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能受到神杖增强效果的描述
+        /// </summary>
+        public string ScepterDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能受到命石增强效果的描述
+        /// </summary>
+        public List<Tuple<HeroFacetModel, string>> FacetsDescription { get; private set; } = [];
+
+        /// <summary>
+        /// 技能施法行为描述
+        /// </summary>
+        public string BehaviorDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能目标描述
+        /// </summary>
+        public string TargetDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能伤害类型
+        /// </summary>
+        public string DamageType { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能伤害类型的字体颜色
+        /// </summary>
+        public SolidColorBrush DamageTypeForeground { get; private set; }
+
+        /// <summary>
+        /// 技能对减益免疫的描述
+        /// </summary>
+        public string ImmunityDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能驱散类型描述
+        /// </summary>
+        public string DispellableDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能施法范围
+        /// </summary>
+        public string CastRanges { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能冷却时间
+        /// </summary>
+        public string Cooldowns { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能魔法消耗
+        /// </summary>
+        public string ManaCosts { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能生命消耗
+        /// </summary>
+        public string HealthCosts { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能的一些数值
+        /// </summary>
+        public string SpecialValueDescription { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// 技能来自神杖
+        /// </summary>
+        public bool IsGrantedByScepter { get; private set; }
+
+        /// <summary>
+        /// 技能来自魔晶
+        /// </summary>
+        public bool IsGrantedByShard { get; private set; }
+
+        /// <summary>
+        /// 技能来自命石
+        /// </summary>
+        public bool IsGrantedByFacet { get; private set; }
+
+        /// <summary>
+        /// 技能来源的命石
+        /// </summary>
+        public HeroFacetModel? GrantedFacet { get; private set; }
+
+        public HeroAbilityModel(AbilityData abilityData, List<HeroFacetModel> facets, HeroFacetModel? grantedFacet = null)
+        {
+            _defaultAbilityImageSource128 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder_square.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 128,
+            };
+
+            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/abilities/{abilityData.name}.png", 0, 72, _defaultAbilityImageSource128);
+            this.Name = abilityData.name_loc;
+            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.desc_loc, abilityData.special_values));
+            this.Lore = StringFormatter.FormatPlainText(abilityData.lore_loc);
+            this.Notes = abilityData.notes_loc?.Length > 0 ? string.Join("\n", abilityData.notes_loc) : string.Empty;
+            this.ShardDescription = abilityData.ability_has_shard ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.shard_loc, abilityData.special_values)) : string.Empty;
+            this.ScepterDescription = abilityData.ability_has_scepter ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.scepter_loc, abilityData.special_values)) : string.Empty;
+
+            if (abilityData.facets_loc?.Length > 0)
+            {
+                for (int i = 0; i < abilityData.facets_loc.Length; i++)
+                {
+                    if (facets.Count > i)
+                    {
+                        this.FacetsDescription.Add(new Tuple<HeroFacetModel, string>(facets[i], StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.facets_loc[i], abilityData.special_values))));
+                    }
+                }
+            }
+
+            this.BehaviorDescription = 0 != (65536 & abilityData.behavior) ? "Aura"
+                                     : 0 != (4 & abilityData.behavior) ? "No Target"
+                                     : 0 != (8 & abilityData.behavior) ? "Unit Ttarget"
+                                     : 0 != (16 & abilityData.behavior) ? "Point Target"
+                                     : 0 != (32 & abilityData.behavior) ? "Point Aoe"
+                                     : 0 != (128 & abilityData.behavior) ? "Channeled"
+                                     : 0 != (512 & abilityData.behavior) ? "Toggle"
+                                     : 0 != (4096 & abilityData.behavior) ? "Autocast"
+                                     : 0 != (2 & abilityData.behavior) ? "Passive" : string.Empty;
+
+
+            this.TargetDescription = abilityData.target_team switch
+            {
+                1 => 7 == (7 & abilityData.target_type) ? "Allied Units And Buildings"
+                   : 3 == (3 & abilityData.target_type) ? "Allied Units"
+                   : 5 == (5 & abilityData.target_type) ? "Allied Heroes And Buildings"
+                   : 1 == (1 & abilityData.target_type) ? "Allied Heroes"
+                   : 2 == (2 & abilityData.target_type) ? "Allied Creeps" : "Allies",
+                2 => 7 == (7 & abilityData.target_type) ? "Enemy Units And Buildings"
+                   : 3 == (3 & abilityData.target_type) ? "Enemy Units"
+                   : 5 == (5 & abilityData.target_type) ? "Enemy Heroes And Buildings"
+                   : 1 == (1 & abilityData.target_type) ? "Enemy Heroes"
+                   : 2 == (2 & abilityData.target_type) ? "Enemy Creeps" : "Enemies",
+                3 => 1 == (1 & abilityData.target_type) ? "Heroes" : "Units",
+                _ => string.Empty,
+            };
+
+            this.DamageType = abilityData.damage switch
+            {
+                1 => "Physical",
+                2 => "Magical",
+                4 => "Pure",
+                8 => "HP Removal",
+                _ => string.Empty,
+            };
+
+            this.DamageTypeForeground = AbilityColorsHelper.GetDamageTypeColor(abilityData.damage);
+
+            this.ImmunityDescription = abilityData.immunity switch
+            {
+                1 => "Yes",
+                2 => "No",
+                3 => "Yes",
+                4 => "No",
+                5 => "Allies Yes Enemies No",
+                _ => string.Empty,
+            };
+
+            this.DispellableDescription = abilityData.dispellable switch
+            {
+                1 => "Strong",
+                2 => "Yes",
+                3 => "No",
+                _ => string.Empty,
+            };
+
+            this.CastRanges = abilityData.cast_ranges?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.cast_ranges, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.Cooldowns = abilityData.cooldowns?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.cooldowns, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.ManaCosts = abilityData.mana_costs?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.mana_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
+            this.HealthCosts = abilityData.health_costs?.Length > 0 ? string.Join("/", Array.ConvertAll(abilityData.health_costs, x => Math.Floor(100 * x) / 100)) : string.Empty;
+
+            if (abilityData.special_values?.Length > 0)
+            {
+                var specialValuesDescriptionStringBuilder = new StringBuilder();
+
+                for (int i = 0; i < abilityData.special_values.Length; i++)
+                {
+                    SpecialValueData specialValue = abilityData.special_values[i];
+
+                    if (specialValue.name.StartsWith('#') && string.IsNullOrEmpty(specialValue.heading_loc))
+                    {
+                        specialValue.heading_loc = StringFormatter.FormatSpecialValueNameWithHashSign(specialValue.name);
+                    }
+
+                    if (!string.IsNullOrEmpty(specialValue.heading_loc))
+                    {
+                        specialValuesDescriptionStringBuilder.Append(specialValue.heading_loc.Replace("\n", "").Trim()).Append(' ');
+
+                        if (specialValue.values_float?.Length > 0)
+                        {
+                            specialValuesDescriptionStringBuilder.Append(string.Join("/", Array.ConvertAll(specialValue.values_float, x => Math.Floor(100 * x) / 100)));
+
+                            if (specialValue.is_percentage)
+                            {
+                                specialValuesDescriptionStringBuilder.Append('%');
+                            }
+                        }
+
+                        specialValuesDescriptionStringBuilder.Append('\n');
+                    }
+                }
+
+                this.SpecialValueDescription = specialValuesDescriptionStringBuilder.ToString();
+            }
+
+            this.IsGrantedByScepter = abilityData.ability_is_granted_by_scepter;
+            this.IsGrantedByShard = abilityData.ability_is_granted_by_shard;
+            this.IsGrantedByFacet = grantedFacet is not null;
+            this.GrantedFacet = grantedFacet;
         }
     }
 
@@ -511,12 +791,49 @@ namespace Dotahold.Models
 
             return result;
         }
+
+        public static string FormatSpecialValueNameWithHashSign(string originalString)
+        {
+            string result = originalString;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(result))
+                {
+                    return result;
+                }
+
+                var words = result[1..].Replace('_', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < words.Length; i++)
+                {
+                    if (words[i].Length > 0)
+                    {
+                        words[i] = char.ToUpper(words[i][0]) + words[i][1..];
+                    }
+                }
+
+                result = string.Join(" ", words);
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"FormatSpecialValueName Error: {ex.Message}", LogCourier.LogType.Error);
+            }
+
+            return result;
+        }
     }
 
-    public static partial class FacetColorHelper
+    public static partial class AbilityColorsHelper
     {
-        private static readonly Dictionary<string, LinearGradientBrush> _gradientBrushes = [];
+        private static readonly Dictionary<string, LinearGradientBrush> _facetGradientBrushes = [];
 
+        private static readonly Dictionary<int, SolidColorBrush> _damageTypeForegroundBrushes = [];
+
+        /// <summary>
+        /// 获取命石颜色名称
+        /// </summary>
+        /// <param name="facetColor"></param>
+        /// <returns></returns>
         public static string GetFacetColorName(int facetColor)
         {
             return facetColor switch
@@ -540,7 +857,7 @@ namespace Dotahold.Models
         {
             try
             {
-                if (_gradientBrushes.TryGetValue(gradientName, out var brush))
+                if (_facetGradientBrushes.TryGetValue(gradientName, out var brush))
                 {
                     return brush;
                 }
@@ -573,7 +890,7 @@ namespace Dotahold.Models
                     _ => CreateBrush("#00000000", "#00000000"),
                 };
 
-                _gradientBrushes[gradientName] = newBrush;
+                _facetGradientBrushes[gradientName] = newBrush;
                 return newBrush;
             }
             catch (Exception ex)
@@ -581,6 +898,32 @@ namespace Dotahold.Models
                 LogCourier.Log($"GetGradientBrush({gradientName}) Error: {ex.Message}", LogCourier.LogType.Error);
                 return CreateBrush("#00000000", "#00000000");
             }
+        }
+
+        /// <summary>
+        /// 获取技能的伤害类型字体颜色
+        /// </summary>
+        /// <param name="damageType"></param>
+        /// <returns></returns>
+        public static SolidColorBrush GetDamageTypeColor(int damageType)
+        {
+            if (_damageTypeForegroundBrushes.TryGetValue(damageType, out var color))
+            {
+                return color;
+            }
+
+            SolidColorBrush newColor = damageType switch
+            {
+                1 => new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)),
+                2 => new SolidColorBrush(Color.FromArgb(255, 163, 220, 238)),
+                4 => new SolidColorBrush(Color.FromArgb(255, 255, 165, 0)),
+                8 => new SolidColorBrush(Color.FromArgb(255, 165, 15, 121)),
+                _ => new SolidColorBrush(Color.FromArgb(255, 204, 204, 204)),
+            };
+
+            _damageTypeForegroundBrushes[damageType] = newColor;
+
+            return newColor;
         }
 
         /// <summary>

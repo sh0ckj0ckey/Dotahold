@@ -9,7 +9,7 @@ namespace Dotahold.Models
         /// <summary>
         /// 默认玩家头像图片
         /// </summary>
-        public static BitmapImage? DefaultAvatarImageSource32 = null;
+        private static BitmapImage? _defaultAvatarImageSource32 = null;
 
         public DotaHeroRankingModel DotaHeroRanking { get; private set; }
 
@@ -19,7 +19,7 @@ namespace Dotahold.Models
 
         public HeroRankingModel(DotaHeroRankingModel ranking, int rank)
         {
-            DefaultAvatarImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Profile/img_default_avatar.jpeg"))
+            _defaultAvatarImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Profile/img_default_avatar.jpeg"))
             {
                 DecodePixelType = DecodePixelType.Logical,
                 DecodePixelHeight = 32,
@@ -27,7 +27,7 @@ namespace Dotahold.Models
 
             this.DotaHeroRanking = ranking;
             this.Rank = rank;
-            this.AvatarImage = new AsyncImage(this.DotaHeroRanking.avatar, 0, 32, DefaultAvatarImageSource32);
+            this.AvatarImage = new AsyncImage(this.DotaHeroRanking.avatar, 0, 32, _defaultAvatarImageSource32);
         }
     }
 }
