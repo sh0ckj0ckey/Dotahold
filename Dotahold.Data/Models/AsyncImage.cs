@@ -46,7 +46,7 @@ namespace Dotahold.Data.Models
 
         public async Task LoadImageAsync()
         {
-            if (this.Loaded)
+            if (this.Loaded || string.IsNullOrWhiteSpace(_url))
             {
                 return;
             }

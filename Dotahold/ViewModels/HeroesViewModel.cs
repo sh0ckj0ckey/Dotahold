@@ -210,6 +210,11 @@ namespace Dotahold.ViewModels
                     {
                         await facet.IconImage.LoadImageAsync();
                     }
+
+                    foreach (var ability in this.PickedHeroData.Abilities)
+                    {
+                        await ability.IconImage.LoadImageAsync();
+                    }
                 }
             }
             catch (Exception ex)

@@ -286,6 +286,11 @@ namespace Dotahold.Models
         public bool IsGrantedByShard { get; private set; }
 
         /// <summary>
+        /// 技能是否是先天技能
+        /// </summary>
+        public bool IsInnateAbility { get; private set; }
+
+        /// <summary>
         /// 技能来自命石
         /// </summary>
         public bool IsGrantedByFacet { get; private set; }
@@ -303,7 +308,7 @@ namespace Dotahold.Models
                 DecodePixelHeight = 128,
             };
 
-            this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/abilities/{abilityData.name}.png", 0, 72, _defaultAbilityImageSource128);
+            this.IconImage = new AsyncImage(!abilityData.ability_is_innate ? $"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/abilities/{abilityData.name}.png" : string.Empty, 0, 72, _defaultAbilityImageSource128);
             this.Name = abilityData.name_loc;
             this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.desc_loc, abilityData.special_values));
             this.Lore = StringFormatter.FormatPlainText(abilityData.lore_loc);
@@ -322,16 +327,18 @@ namespace Dotahold.Models
                 }
             }
 
-            this.BehaviorDescription = 0 != (65536 & abilityData.behavior) ? "Aura"
-                                     : 0 != (4 & abilityData.behavior) ? "No Target"
-                                     : 0 != (8 & abilityData.behavior) ? "Unit Ttarget"
-                                     : 0 != (16 & abilityData.behavior) ? "Point Target"
-                                     : 0 != (32 & abilityData.behavior) ? "Point Aoe"
-                                     : 0 != (128 & abilityData.behavior) ? "Channeled"
-                                     : 0 != (512 & abilityData.behavior) ? "Toggle"
-                                     : 0 != (4096 & abilityData.behavior) ? "Autocast"
-                                     : 0 != (2 & abilityData.behavior) ? "Passive" : string.Empty;
-
+            if (long.TryParse(abilityData.behavior, out long behavior))
+            {
+                this.BehaviorDescription = 0 != (65536 & behavior) ? "Aura"
+                                         : 0 != (4 & behavior) ? "No Target"
+                                         : 0 != (8 & behavior) ? "Unit Ttarget"
+                                         : 0 != (16 & behavior) ? "Point Target"
+                                         : 0 != (32 & behavior) ? "Point Aoe"
+                                         : 0 != (128 & behavior) ? "Channeled"
+                                         : 0 != (512 & behavior) ? "Toggle"
+                                         : 0 != (4096 & behavior) ? "Autocast"
+                                         : 0 != (2 & behavior) ? "Passive" : string.Empty;
+            }
 
             this.TargetDescription = abilityData.target_team switch
             {
@@ -419,6 +426,7 @@ namespace Dotahold.Models
 
             this.IsGrantedByScepter = abilityData.ability_is_granted_by_scepter;
             this.IsGrantedByShard = abilityData.ability_is_granted_by_shard;
+            this.IsInnateAbility = abilityData.ability_is_innate;
             this.IsGrantedByFacet = grantedFacet is not null;
             this.GrantedFacet = grantedFacet;
         }

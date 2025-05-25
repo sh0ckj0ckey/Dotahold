@@ -118,7 +118,7 @@ namespace Dotahold.Data.Models
 
         public int type { get; set; }
 
-        public long behavior { get; set; }
+        public string behavior { get; set; } = string.Empty;
 
         public int target_team { get; set; }
 

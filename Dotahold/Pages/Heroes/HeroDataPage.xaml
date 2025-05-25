@@ -24,6 +24,8 @@
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
 
         <BitmapImage x:Key="DotaholdRippleTextureImage" UriSource="/Assets/Heroes/ripple_texture.png" DecodePixelType="Logical" DecodePixelHeight="48"/>
+        <BitmapImage x:Key="DotaholdCooldownIcon" UriSource="/Assets/Heroes/icon_cooldown.png" DecodePixelType="Logical" DecodePixelHeight="28"/>
+        <BitmapImage x:Key="DotaholdCastRangeIcon" UriSource="/Assets/Heroes/icon_castrange.png" DecodePixelType="Logical" DecodePixelHeight="28"/>
 
     </Page.Resources>
 
@@ -275,7 +277,7 @@
                           HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                    <TextBlock Text="ATTRIBUTES" Margin="68,20,64,0" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
+                    <TextBlock Text="ATTRIBUTES" Margin="68,24,64,0" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
                         <communityAnimations:Implicit.ShowAnimations>
                             <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.1"/>
                             <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.1"/>
@@ -476,7 +478,7 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <TextBlock Text="FACETS" Margin="68,0,64,16" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
+                    <TextBlock Text="FACETS" Margin="68,8,64,12" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
                         <communityAnimations:Implicit.ShowAnimations>
                             <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.3"/>
                             <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.3"/>
@@ -515,7 +517,33 @@
                                             <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Grid>
 
-                                        <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </Grid>
+
+                    <TextBlock Text="ABILITIES" Margin="68,20,64,16" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="0.8" Duration="0:0:1" Delay="0:0:0.5"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.5"/>
+                        </communityAnimations:Implicit.ShowAnimations>
+                    </TextBlock>
+
+                    <Grid x:Name="AbilitiesGrid">
+                        <communityAnimations:Implicit.ShowAnimations>
+                            <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:1" Delay="0:0:0.6"/>
+                            <communityAnimations:TranslationAnimation From="0,32,0" To="0,0,0" EasingMode="EaseOut" EasingType="Default" Duration="0:0:1" Delay="0:0:0.6"/>
+                        </communityAnimations:Implicit.ShowAnimations>
+                        <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Facets,Mode=OneWay}" HorizontalAlignment="Stretch">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="models:HeroAbilityModel">
+                                    <Grid CornerRadius="6" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
                                     </Grid>
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
