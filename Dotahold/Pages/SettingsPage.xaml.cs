@@ -138,10 +138,10 @@ namespace Dotahold.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void SteamPageButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
-        }
+        //private async void SteamPageButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        //{
+        //    await Launcher.LaunchUriAsync(new Uri("https://steamcommunity.com/profiles/76561198194624815/"));
+        //}
 
         /// <summary>
         /// 前往 GitHub 项目页面

@@ -14,7 +14,7 @@ namespace Dotahold.Converters
             {
                 if (value is Attrib[] attribs && attribs?.Length > 0)
                 {
-                    StringBuilder attribsStringBuider = new StringBuilder();
+                    var attribsStringBuider = new StringBuilder();
                     foreach (Attrib attrib in attribs)
                     {
                         if (!string.IsNullOrWhiteSpace(attrib.display))

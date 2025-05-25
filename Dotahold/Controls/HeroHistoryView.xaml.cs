@@ -13,6 +13,12 @@ namespace Dotahold.Controls
 
         private readonly string _historyContent;
 
+        [System.Text.RegularExpressions.GeneratedRegex("&[^;]+;")]
+        private static partial System.Text.RegularExpressions.Regex RegexSpecialCharacters();
+
+        [System.Text.RegularExpressions.GeneratedRegex("<[^>]+>")]
+        private static partial System.Text.RegularExpressions.Regex RegexHTMLTags();
+
         public HeroHistoryView(HeroModel heroModel, string history)
         {
             _heroModel = heroModel;
@@ -26,12 +32,12 @@ namespace Dotahold.Controls
         /// </summary>
         /// <param name="history"></param>
         /// <returns></returns>
-        private string FormatHeroHistory(string history)
+        private static string FormatHeroHistory(string history)
         {
             try
             {
-                string strText = System.Text.RegularExpressions.Regex.Replace(history, "<[^>]+>", "");
-                strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
+                string strText = RegexHTMLTags().Replace(history, "");
+                strText = RegexSpecialCharacters().Replace(strText, "");
                 strText = strText.Replace("\t", "");
                 strText = strText.Replace("\r", "\n");
                 return strText;

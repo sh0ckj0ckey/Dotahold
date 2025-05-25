@@ -51,7 +51,7 @@ namespace Dotahold.Controls
         /// <returns><see cref="Point"/> containing difference in position of elements.</returns>
         public static Point CoordinatesFrom(this UIElement target, UIElement parent)
         {
-            return target.TransformToVisual(parent).TransformPoint(default(Point));
+            return target.TransformToVisual(parent).TransformPoint(default);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Dotahold.Controls
         /// <returns><see cref="Point"/> containing difference in position of elements.</returns>
         public static Point CoordinatesTo(this UIElement parent, UIElement target)
         {
-            return target.TransformToVisual(parent).TransformPoint(default(Point));
+            return target.TransformToVisual(parent).TransformPoint(default);
         }
     }
 }
