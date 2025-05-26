@@ -540,7 +540,7 @@
                         </communityAnimations:Implicit.ShowAnimations>
                         <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.HeroesViewModel.PickedHeroData.Abilities,Mode=OneWay}" HorizontalAlignment="Stretch">
                             <muxc:ItemsRepeater.Layout>
-                                <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                                <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
                             </muxc:ItemsRepeater.Layout>
                             <muxc:ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="models:HeroAbilityModel">
@@ -603,28 +603,44 @@
                                             </Grid.RowDefinitions>
 
                                             <communityControls:WrapPanel Grid.Row="0" HorizontalSpacing="16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                                                <TextBlock Visibility="{x:Bind BehaviorDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
-                                                    <Run Text="ABILITY: " FontWeight="Normal"/><Run Text="{x:Bind BehaviorDescription}"/>
+
+                                                <!--Ability Behavior-->
+                                                <TextBlock Visibility="{x:Bind BehaviorDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,4,0,0" TextWrapping="Wrap" Opacity="0.5">
+                                                    <Run Text="ABILITY: " FontSize="12"/>
+                                                    <Run Text="{x:Bind BehaviorDescription}" FontSize="13" FontWeight="Medium"/>
                                                 </TextBlock>
-                                                <TextBlock Visibility="{x:Bind ImmunityDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
-                                                    <Run Text="PIERCES SPELL IMMUNITY: " FontWeight="Normal"/><Run Text="{x:Bind ImmunityDescription}"/>
+
+                                                <!--PIERCES SPELL IMMUNITY-->
+                                                <TextBlock Visibility="{x:Bind ImmunityDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,4,0,0" TextWrapping="Wrap" Opacity="0.5">
+                                                    <Run Text="PIERCES SPELL IMMUNITY: " FontSize="12"/>
+                                                    <Run Text="{x:Bind ImmunityDescription}" FontSize="13" FontWeight="Medium"/>
                                                 </TextBlock>
-                                                <TextBlock Visibility="{x:Bind TargetDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
-                                                    <Run Text="AFFECTS: " FontWeight="Normal"/><Run Text="{x:Bind TargetDescription}"/>
+
+                                                <!--Target Team-->
+                                                <TextBlock Visibility="{x:Bind TargetDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,4,0,0" TextWrapping="Wrap" Opacity="0.5">
+                                                    <Run Text="AFFECTS: " FontSize="12"/>
+                                                    <Run Text="{x:Bind TargetDescription}" FontSize="13" FontWeight="Medium"/>
                                                 </TextBlock>
-                                                <TextBlock Visibility="{x:Bind DispellableDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
-                                                    <Run Text="DISPELLABLE: " FontWeight="Normal"/><Run Text="{x:Bind DispellableDescription}"/>
+
+                                                <!--Dispellable-->
+                                                <TextBlock Visibility="{x:Bind DispellableDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,4,0,0" TextWrapping="Wrap" Opacity="0.5">
+                                                    <Run Text="DISPELLABLE: " FontSize="12"/>
+                                                    <Run Text="{x:Bind DispellableDescription}" FontSize="13" FontWeight="Medium"/>
                                                 </TextBlock>
-                                                <TextBlock Visibility="{x:Bind DamageType,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" FontWeight="Medium" FontSize="12" Opacity="0.7" TextWrapping="Wrap">
-                                                    <Run Text="DAMAGE TYPE: " FontWeight="Normal"/><Run Text="{x:Bind DamageType}" Foreground="{x:Bind DamageTypeForeground}"/>
+
+                                                <!--Damage Type-->
+                                                <TextBlock Visibility="{x:Bind DamageType,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,4,0,0" TextWrapping="Wrap" Opacity="0.5">
+                                                    <Run Text="DAMAGE TYPE: " FontSize="12"/>
+                                                    <Run Text="{x:Bind DamageType}" Foreground="{x:Bind DamageTypeForeground}" FontSize="13" FontWeight="Medium"/>
                                                 </TextBlock>
+
                                             </communityControls:WrapPanel>
 
                                             <!--Ability Values-->
-                                            <TextBlock Grid.Row="1" Text="{x:Bind SpecialValueDescription}" Visibility="{x:Bind SpecialValueDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="20" FontWeight="Medium" FontSize="14" Opacity="0.8" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.Row="1" Text="{x:Bind SpecialValueDescription}" Visibility="{x:Bind SpecialValueDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="20" FontSize="14" FontWeight="Medium" Opacity="0.8" TextWrapping="Wrap"/>
 
                                             <!--Notes-->
-                                            <TextBlock Grid.Row="2" Text="{x:Bind Notes}" Visibility="{x:Bind Notes,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="16" FontSize="14" Opacity="0.4" TextWrapping="Wrap"/>
+                                            <TextBlock Grid.Row="2" Text="{x:Bind Notes}" Visibility="{x:Bind Notes,Converter={StaticResource EmptyToVisibilityConverter}}" Margin="0,8,0,0" LineHeight="16" FontSize="14" Opacity="0.5" TextWrapping="Wrap"/>
 
                                             <!--Aghanim's Scepter Upgrade-->
                                             <Grid Grid.Row="3" CornerRadius="4" Margin="0,12,0,0" Padding="12" ColumnSpacing="8" Visibility="{x:Bind ScepterDescription,Converter={StaticResource EmptyToVisibilityConverter}}" Background="{ThemeResource DotaholdItemBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -633,7 +649,7 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <Image Grid.Column="0" Source="/Assets/Heroes/hero_ability_scepter.png" Height="30" Width="30" ToolTipService.ToolTip="Upgraded by Aghanim's Scepter" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="1" Text="{x:Bind ScepterDescription}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind ScepterDescription}" FontSize="14" Opacity="0.7" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                             </Grid>
 
                                             <!--Aghanim's Shard Upgrade-->
@@ -643,13 +659,13 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <Image Grid.Column="0" Source="/Assets/Heroes/hero_ability_shard.png" Height="30" Width="30" ToolTipService.ToolTip="Upgraded by Aghanim's Shard" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="1" Text="{x:Bind ShardDescription}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind ShardDescription}" FontSize="14" Opacity="0.7" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                             </Grid>
 
                                             <!--Facets Upgrade-->
                                             <muxc:ItemsRepeater Grid.Row="5" Margin="0,12,0,0" ItemsSource="{x:Bind FacetsDescriptions}" Visibility="{x:Bind FacetsDescriptions.Count,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Stretch">
                                                 <muxc:ItemsRepeater.Layout>
-                                                    <muxc:StackLayout Orientation="Vertical" Spacing="8"/>
+                                                    <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
                                                 </muxc:ItemsRepeater.Layout>
                                                 <muxc:ItemsRepeater.ItemTemplate>
                                                     <DataTemplate x:DataType="models:HeroAbilityFacetUpgradeModel">
@@ -661,7 +677,7 @@
                                                             <Border Height="30" Width="30" CornerRadius="2" Background="{x:Bind Facet.BackgroundBrush}">
                                                                 <Image Grid.Column="0" Source="{x:Bind Facet.IconImage.Image,Mode=OneWay}" Height="18" Width="18" VerticalAlignment="Center"/>
                                                             </Border>
-                                                            <TextBlock Grid.Column="1" Text="{x:Bind Description}" FontSize="14" Opacity="0.8" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                                            <TextBlock Grid.Column="1" Text="{x:Bind Description}" FontSize="14" Opacity="0.7" TextWrapping="Wrap" VerticalAlignment="Center"/>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </muxc:ItemsRepeater.ItemTemplate>
@@ -675,7 +691,7 @@
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Heroes/icon_cooldown.png"/>
                                                     </Border.Background>
                                                 </Border>
-                                                <TextBlock Text="{x:Bind Cooldowns}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind Cooldowns,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                                <TextBlock Text="{x:Bind Cooldowns}" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,16,12,0" Visibility="{x:Bind Cooldowns,Converter={StaticResource EmptyToVisibilityConverter}}"/>
 
                                                 <!--ManaCosts-->
                                                 <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind ManaCosts,Converter={StaticResource EmptyToVisibilityConverter}}">
@@ -688,7 +704,7 @@
                                                         </LinearGradientBrush>
                                                     </Border.Background>
                                                 </Border>
-                                                <TextBlock Text="{x:Bind ManaCosts}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind ManaCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                                <TextBlock Text="{x:Bind ManaCosts}" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,16,12,0" Visibility="{x:Bind ManaCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
 
                                                 <!--HealthCosts-->
                                                 <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind HealthCosts,Converter={StaticResource EmptyToVisibilityConverter}}">
@@ -701,7 +717,7 @@
                                                         </LinearGradientBrush>
                                                     </Border.Background>
                                                 </Border>
-                                                <TextBlock Text="{x:Bind HealthCosts}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind HealthCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                                <TextBlock Text="{x:Bind HealthCosts}" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,16,12,0" Visibility="{x:Bind HealthCosts,Converter={StaticResource EmptyToVisibilityConverter}}"/>
 
                                                 <!--CastRanges-->
                                                 <Border Width="14" Height="14" Margin="0,16,4,0" CornerRadius="3" BorderBrush="#141727" BorderThickness="1" Visibility="{x:Bind CastRanges,Converter={StaticResource EmptyToVisibilityConverter}}">
@@ -709,16 +725,17 @@
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/Heroes/icon_castrange.png"/>
                                                     </Border.Background>
                                                 </Border>
-                                                <TextBlock Text="{x:Bind CastRanges}" FontWeight="Medium" FontSize="13" Margin="0,14,12,0" Visibility="{x:Bind CastRanges,Converter={StaticResource EmptyToVisibilityConverter}}"/>
+                                                <TextBlock Text="{x:Bind CastRanges}" FontFamily="{ThemeResource RadianceSemiBold}" Margin="0,16,12,0" Visibility="{x:Bind CastRanges,Converter={StaticResource EmptyToVisibilityConverter}}"/>
 
                                             </StackPanel>
 
                                             <!--Lore-->
-                                            <Grid Grid.Row="7" Padding="12,6,12,8" Margin="0,16,0,0" CornerRadius="4" Visibility="{x:Bind Lore,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Left">
-                                                <Grid.Background>
-                                                    <SolidColorBrush Color="{ThemeResource DotaholdItemBackgroundColor}"/>
-                                                </Grid.Background>
-                                                <TextBlock Text="{x:Bind Lore}" FontSize="13" FontStyle="Italic" Opacity="0.6" TextWrapping="Wrap"/>
+                                            <Grid Grid.Row="7" Padding="12,6,12,8" Margin="0,16,0,0" CornerRadius="4" Visibility="{x:Bind Lore,Converter={StaticResource EmptyToVisibilityConverter}}"
+                                                  BorderThickness="1,1,1,1.7" HorizontalAlignment="Stretch">
+                                                <Grid.BorderBrush>
+                                                    <SolidColorBrush Color="{ThemeResource DotaholdApplicationForeground}" Opacity="0.05"/>
+                                                </Grid.BorderBrush>
+                                                <TextBlock Text="{x:Bind Lore}" FontSize="13" FontStyle="Italic" Opacity="0.5" TextWrapping="Wrap"/>
                                             </Grid>
 
                                         </Grid>

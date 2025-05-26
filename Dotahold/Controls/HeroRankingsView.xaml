@@ -31,7 +31,7 @@
         <ScrollViewer x:Name="RankingsScrollViewer" Grid.Row="1" Visibility="Collapsed" Padding="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <muxc:ItemsRepeater x:Name="RankingsItemsRepeater" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
-                    <muxc:StackLayout Orientation="Vertical" DisableVirtualization="True"/>
+                    <muxc:StackLayout Orientation="Vertical"/>
                 </muxc:ItemsRepeater.Layout>
                 <muxc:ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="models:HeroRankingModel">
