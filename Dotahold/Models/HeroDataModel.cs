@@ -106,7 +106,7 @@ namespace Dotahold.Models
                     if (ability.ability_is_innate)
                     {
                         this.Name = ability.name_loc;
-                        this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(ability.desc_loc, ability.special_values));
+                        this.Description = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(ability.desc_loc, ability.special_values));
                         break;
                     }
                 }
@@ -141,7 +141,7 @@ namespace Dotahold.Models
             {
                 foreach (var talent in talents)
                 {
-                    talent.name_loc = StringFormatter.FormatPlainText(StringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities, facetAbilities));
+                    talent.name_loc = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatTalentSpecialValues(talent.name_loc, talent.name, talent.special_values, abilities, facetAbilities));
                 }
 
                 this.TalentNameRightLevel10 = talents.Length > 0 ? (talents[0]?.name_loc ?? string.Empty) : string.Empty;
@@ -201,7 +201,7 @@ namespace Dotahold.Models
 
             this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, _defaultFacetImageSource72);
             this.Name = facetData.title_loc;
-            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
+            this.Description = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
             this.BackgroundBrush = AbilityColorsHelper.GetFacetGradientBrush($"FacetColor{AbilityColorsHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
             this.Index = facetData.index;
         }
@@ -347,11 +347,11 @@ namespace Dotahold.Models
 
             this.IconImage = new AsyncImage(!abilityData.ability_is_innate ? $"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/abilities/{abilityData.name}.png" : string.Empty, 0, 72, _defaultAbilityImageSource128);
             this.Name = abilityData.name_loc;
-            this.Description = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.desc_loc, abilityData.special_values));
-            this.Lore = StringFormatter.FormatPlainText(abilityData.lore_loc);
-            this.Notes = StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.notes_loc?.Length > 0 ? string.Join("\n", abilityData.notes_loc) : string.Empty, abilityData.special_values));
-            this.ShardDescription = abilityData.ability_has_shard ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.shard_loc, abilityData.special_values)) : string.Empty;
-            this.ScepterDescription = abilityData.ability_has_scepter ? StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.scepter_loc, abilityData.special_values)) : string.Empty;
+            this.Description = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(abilityData.desc_loc, abilityData.special_values));
+            this.Lore = AbilityStringFormatter.FormatPlainText(abilityData.lore_loc);
+            this.Notes = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(abilityData.notes_loc?.Length > 0 ? string.Join("\n", abilityData.notes_loc) : string.Empty, abilityData.special_values));
+            this.ShardDescription = abilityData.ability_has_shard ? AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(abilityData.shard_loc, abilityData.special_values)) : string.Empty;
+            this.ScepterDescription = abilityData.ability_has_scepter ? AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(abilityData.scepter_loc, abilityData.special_values)) : string.Empty;
 
             if (abilityData.facets_loc?.Length > 0)
             {
@@ -362,7 +362,7 @@ namespace Dotahold.Models
                         var facet = facets.FirstOrDefault(x => x.Index == i);
                         if (facet is not null)
                         {
-                            this.FacetsDescriptions.Add(new HeroAbilityFacetUpgradeModel(facet, StringFormatter.FormatPlainText(StringFormatter.FormatAbilitySpecialValues(abilityData.facets_loc[i], abilityData.special_values))));
+                            this.FacetsDescriptions.Add(new HeroAbilityFacetUpgradeModel(facet, AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatAbilitySpecialValues(abilityData.facets_loc[i], abilityData.special_values))));
                         }
                     }
                 }
@@ -441,7 +441,7 @@ namespace Dotahold.Models
 
                     if (specialValue.name.StartsWith('#') && string.IsNullOrEmpty(specialValue.heading_loc))
                     {
-                        specialValue.heading_loc = StringFormatter.FormatSpecialValueNameWithHashSign(specialValue.name);
+                        specialValue.heading_loc = AbilityStringFormatter.FormatSpecialValueNameWithHashSign(specialValue.name);
                     }
 
                     if (!string.IsNullOrEmpty(specialValue.heading_loc))
@@ -462,7 +462,7 @@ namespace Dotahold.Models
                     }
                 }
 
-                this.SpecialValueDescription = StringFormatter.FormatPlainText(specialValuesDescriptionStringBuilder.ToString().TrimEnd('\n'));
+                this.SpecialValueDescription = AbilityStringFormatter.FormatPlainText(specialValuesDescriptionStringBuilder.ToString().TrimEnd('\n'));
             }
 
             this.IsGrantedByScepter = abilityData.ability_is_granted_by_scepter;
@@ -491,7 +491,7 @@ namespace Dotahold.Models
         public string Description { get; private set; } = description;
     }
 
-    public static partial class StringFormatter
+    public static partial class AbilityStringFormatter
     {
         [System.Text.RegularExpressions.GeneratedRegex("<.*?>")]
         private static partial System.Text.RegularExpressions.Regex RegexHTMLTags();
@@ -499,9 +499,8 @@ namespace Dotahold.Models
         [System.Text.RegularExpressions.GeneratedRegex("&[^;]+;")]
         private static partial System.Text.RegularExpressions.Regex RegexSpecialCharacters();
 
-
         [System.Text.RegularExpressions.GeneratedRegex(@"\{s:[^}]+\}")]
-        private static partial System.Text.RegularExpressions.Regex RegexPlaceholder();
+        private static partial System.Text.RegularExpressions.Regex RegexValuePlaceholder();
 
         public static string FormatPlainText(string originalString)
         {
@@ -522,7 +521,7 @@ namespace Dotahold.Models
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"FormatString Error: {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"FormatString Error: {ex.Message}, original string is {originalString}", LogCourier.LogType.Error);
             }
 
             return result;
@@ -560,13 +559,13 @@ namespace Dotahold.Models
                                        .Replace($"%{specialValue.name.ToLower()}%", value);
                         result = result.Replace("%%", "%");
 
-                        result = RegexPlaceholder().Replace(result, "?");
+                        result = RegexValuePlaceholder().Replace(result, "?");
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"FormatAbilitySpecialValues Error: {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"FormatAbilitySpecialValues Error: {ex.Message}, original string is {originalString}", LogCourier.LogType.Error);
             }
 
             return result;
@@ -665,12 +664,12 @@ namespace Dotahold.Models
 
                     result = result.Replace("%%", "%");
 
-                    result = RegexPlaceholder().Replace(result, "?");
+                    result = RegexValuePlaceholder().Replace(result, "?");
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"FormatTalentSpecialValues Error: {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"FormatTalentSpecialValues Error: {ex.Message}, original string is {originalString}", LogCourier.LogType.Error);
             }
 
             return result;
@@ -848,12 +847,12 @@ namespace Dotahold.Models
                                    .Replace("{s:facet_ability_name}", facet.title_loc)
                                    .Replace("%%", "%");
 
-                    result = RegexPlaceholder().Replace(result, "?");
+                    result = RegexValuePlaceholder().Replace(result, "?");
                 }
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"FormatFacetSpecialValues Error: {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"FormatFacetSpecialValues Error: {ex.Message}, original string is {originalString}", LogCourier.LogType.Error);
             }
 
             return result;
@@ -883,7 +882,7 @@ namespace Dotahold.Models
             }
             catch (Exception ex)
             {
-                LogCourier.Log($"FormatSpecialValueName Error: {ex.Message}", LogCourier.LogType.Error);
+                LogCourier.Log($"FormatSpecialValueName Error: {ex.Message}, original string is {originalString}", LogCourier.LogType.Error);
             }
 
             return result;
