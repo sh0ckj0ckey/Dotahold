@@ -516,7 +516,7 @@
                                                 <Image Height="24" Width="24" Source="{x:Bind IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Border>
 
-                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Bind Name}" FontFamily="{ThemeResource ReaverBold}" Foreground="#FFFFFF" FontSize="18" Margin="0,2,16,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         </Grid>
 
                                         <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind Description}" FontFamily="{ThemeResource Radiance}" FontSize="17" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
