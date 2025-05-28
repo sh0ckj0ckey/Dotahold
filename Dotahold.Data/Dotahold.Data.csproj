@@ -15,24 +15,20 @@
 		<None Remove="DataShop\ConstantsJsons\ability_ids.json" />
 		<None Remove="DataShop\ConstantsJsons\heroes.json" />
 		<None Remove="DataShop\ConstantsJsons\items.json" />
-		<None Remove="DataShop\ConstantsJsons\item_colors.json" />
 		<None Remove="DataShop\ConstantsJsons\permanent_buffs.json" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="DataShop\ConstantsJsons\ability_ids.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 		<Content Include="DataShop\ConstantsJsons\heroes.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 		<Content Include="DataShop\ConstantsJsons\items.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="DataShop\ConstantsJsons\item_colors.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 		<Content Include="DataShop\ConstantsJsons\permanent_buffs.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
