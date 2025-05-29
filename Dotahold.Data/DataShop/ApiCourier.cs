@@ -32,7 +32,7 @@ namespace Dotahold.Data.DataShop
                     return heroDataResponse.result.data.heroes[0];
                 }
             }
-            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetHeroData({heroId}_{language}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
         }
@@ -60,9 +60,33 @@ namespace Dotahold.Data.DataShop
                     throw new Exception($"Hero ID mismatch, {heroId} != {heroDataResponse?.hero_id}");
                 }
             }
-            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetHeroRankings({heroId}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
+        }
+
+        /// <summary>
+        /// 获取Steam游戏当前在线玩家数量
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <returns></returns>
+        public static async Task<int> GetNumberOfCurrentPlayers(string appid = "570")
+        {
+            string url = $"http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid={appid}&format=json";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.SteamNumberOfCurrentPlayersResponse);
+                if (result?.response?.result == 1)
+                {
+                    return result.response.player_count;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetNumberOfCurrentPlayers error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return -1;
         }
     }
 }

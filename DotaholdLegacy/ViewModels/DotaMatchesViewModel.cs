@@ -329,33 +329,6 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// 获取当前在线人数
-        /// </summary>
-        /// <returns></returns>
-        private async void GetNumberOfCurrentPlayersAsync()
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Going to GetNumberOfCurrentPlayers ---> " + DateTime.Now.Ticks);
-
-                string url = "http://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=570&format=json";
-                DotaOnlinePlayersModel online = null;
-
-                try
-                {
-                    online = await GetResponseAsync<DotaOnlinePlayersModel>(url, _playerInfoHttpClient);
-                }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
-                if (online?.response?.result == 1)
-                {
-                    sOnlilnePlayersCount = online.response.player_count.ToString();
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
         /// 加载所有比赛的列表
         /// </summary>
         public async Task<List<DotaRecentMatchModel>> GetAllMatchesAsync()
