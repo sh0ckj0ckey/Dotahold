@@ -5,9 +5,10 @@
     xmlns:local="using:Dotahold.Pages.Matches"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:controls="using:Dotahold.Controls"
+    mc:Ignorable="d" NavigationCacheMode="Required">
 
     <Grid>
-
+        <controls:SteamConnectView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

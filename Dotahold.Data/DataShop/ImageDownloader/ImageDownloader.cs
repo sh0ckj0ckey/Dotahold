@@ -64,7 +64,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
             }
             catch (Exception ex)
             {
-                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
+                LogCourier.Log($"Load image({url}_{width}x{height}_{shouldCache}) error: {ex.Message}", LogCourier.LogType.Error);
             }
 
             return null;
