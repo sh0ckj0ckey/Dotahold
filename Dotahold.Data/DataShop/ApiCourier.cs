@@ -88,5 +88,77 @@ namespace Dotahold.Data.DataShop
 
             return -1;
         }
+
+        /// <summary>
+        /// 获取玩家的胜负场数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<Tuple<int, int>?> GetPlayerWinLose(string id)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}/wl";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerWinLoseModel);
+                if (result is not null)
+                {
+                    return new Tuple<int, int>(result.win, result.lose);
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerWinLose error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 获取玩家的全期数据表现
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformance(string id)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}/totals";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerOverallPerformanceModelArray);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerOverallPerformance error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return [];
+        }
+
+        /// <summary>
+        /// 获取玩家的全期英雄胜率表现
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformance(string id)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}/heroes";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerHeroPerformanceModelArray);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerHeroPerformance error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return [];
+        }
     }
 }
