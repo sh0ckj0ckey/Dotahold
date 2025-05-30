@@ -31,17 +31,19 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Padding="20,8,12,8" ColumnSpacing="4" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Connect your Dota 2 ID" Margin="0,2,0,-2" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Opacity="0.9" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                <Button Grid.Column="1" Width="42" Height="42" FontSize="18" Content="&#xE9CE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Background="Transparent" BorderBrush="Transparent" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Button Grid.Column="2" Width="42" Height="42" FontSize="18" Content="&#xE624;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Background="Transparent" BorderBrush="Transparent" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <BitmapIcon Grid.Column="0" UriSource="ms-appx:///Assets/icon_dota2.png" Height="24" Margin="0,0,6,0" ShowAsMonochrome="True"/>
+                <TextBlock Grid.Column="1" Text="Connect your Dota 2 ID" Margin="0,2,0,-2" FontFamily="{ThemeResource ReaverBold}" FontSize="18" Opacity="0.9" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <Button Grid.Column="2" Width="42" Height="42" FontSize="18" Content="&#xE9CE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Background="Transparent" BorderBrush="Transparent" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Grid.Column="3" Width="42" Height="42" FontSize="18" Content="&#xE624;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Background="Transparent" BorderBrush="Transparent" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
             <Grid Grid.Row="2" Padding="12" ColumnSpacing="4" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <TextBox Padding="12,10,12,8" FontSize="18" FontFamily="Consolas" PlaceholderText="Enter your Steam ID" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <TextBox Padding="12,10,12,8" FontSize="18" FontFamily="Consolas" PlaceholderText="Enter your Dota 2 ID" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
             <Button Grid.Row="3" Height="48" Margin="12,0,12,12" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Button.Content>
