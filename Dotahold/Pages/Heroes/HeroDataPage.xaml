@@ -560,7 +560,7 @@
                                         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="{ThemeResource DotaholdItemBackgroundColor}"/>
 
                                         <!--Ability Icon-->
-                                        <Grid Grid.Row="0" Grid.Column="0" CornerRadius="4" Height="64" Width="64" Margin="16,16,8,16" controls:UIElementExtensions.ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Grid Grid.Row="0" Grid.Column="0" CornerRadius="4" Height="64" Width="64" Margin="16,16,8,16" community:UIElementExtensions.ClipToBounds="True" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="{x:Bind IconImage.Image,Mode=OneWay}" Visibility="{x:Bind IsInnateAbility,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <Image Height="42" Width="42" Stretch="UniformToFill" Source="/Assets/Heroes/icon_innate.png" Visibility="{x:Bind IsInnateAbility,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             <Image Height="64" Width="64" Stretch="UniformToFill" Source="/Assets/Heroes/hero_ability_aghs_scepter.png" ToolTipService.ToolTip="Granted by Scepter" Visibility="{x:Bind IsGrantedByScepter,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
