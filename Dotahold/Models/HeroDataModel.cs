@@ -68,7 +68,7 @@ namespace Dotahold.Models
             {
                 for (int i = 0; i < this.DotaHeroData.facet_abilities.Length; i++)
                 {
-                    FacetAbilityData facetAbility = this.DotaHeroData.facet_abilities[i];
+                    DotaHeroFacetAbility facetAbility = this.DotaHeroData.facet_abilities[i];
 
                     if (facetAbility.abilities is not null)
                     {
@@ -97,7 +97,7 @@ namespace Dotahold.Models
         /// </summary>
         public string Description { get; private set; } = string.Empty;
 
-        public HeroInnateModel(AbilityData[]? abilities)
+        public HeroInnateModel(DotaHeroAbility[]? abilities)
         {
             if (abilities is not null && abilities.Length > 0)
             {
@@ -135,7 +135,7 @@ namespace Dotahold.Models
 
         public string TalentNameRightLevel25 { get; private set; } = string.Empty;
 
-        public HeroTalentsModel(AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        public HeroTalentsModel(DotaHeroAbility[]? talents, DotaHeroAbility[]? abilities, DotaHeroFacetAbility[]? facetAbilities)
         {
             if (talents is not null && talents.Length > 0)
             {
@@ -191,7 +191,7 @@ namespace Dotahold.Models
         /// </summary>
         public int Index { get; private set; } = -1;
 
-        public HeroFacetModel(FacetData facetData, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
+        public HeroFacetModel(DotaHeroFacet facetData, DotaHeroAbility[]? talents, DotaHeroAbility[]? abilities, DotaHeroFacetAbility? facetAbility)
         {
             _defaultFacetImageSource72 ??= new BitmapImage(new Uri("ms-appx:///Assets/icon_dota2.png"))
             {
@@ -337,7 +337,7 @@ namespace Dotahold.Models
         /// </summary>
         public HeroFacetModel? GrantedFacet { get; private set; }
 
-        public HeroAbilityModel(AbilityData abilityData, List<HeroFacetModel> facets, HeroFacetModel? grantedFacet = null)
+        public HeroAbilityModel(DotaHeroAbility abilityData, List<HeroFacetModel> facets, HeroFacetModel? grantedFacet = null)
         {
             _defaultAbilityImageSource128 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder_square.png"))
             {
@@ -437,7 +437,7 @@ namespace Dotahold.Models
 
                 for (int i = 0; i < abilityData.special_values.Length; i++)
                 {
-                    SpecialValueData specialValue = abilityData.special_values[i];
+                    DotaHeroSpecialValue specialValue = abilityData.special_values[i];
 
                     if (specialValue.name.StartsWith('#') && string.IsNullOrEmpty(specialValue.heading_loc))
                     {
@@ -527,7 +527,7 @@ namespace Dotahold.Models
             return result;
         }
 
-        public static string FormatAbilitySpecialValues(string originalString, SpecialValueData[]? specialValues)
+        public static string FormatAbilitySpecialValues(string originalString, DotaHeroSpecialValue[]? specialValues)
         {
             string result = originalString;
 
@@ -571,7 +571,7 @@ namespace Dotahold.Models
             return result;
         }
 
-        public static string FormatTalentSpecialValues(string originalString, string talentName, SpecialValueData[]? specialValues, AbilityData[]? abilities, FacetAbilityData[]? facetAbilities)
+        public static string FormatTalentSpecialValues(string originalString, string talentName, DotaHeroSpecialValue[]? specialValues, DotaHeroAbility[]? abilities, DotaHeroFacetAbility[]? facetAbilities)
         {
             string result = originalString;
 
@@ -675,7 +675,7 @@ namespace Dotahold.Models
             return result;
         }
 
-        public static string FormatFacetSpecialValues(string originalString, FacetData facet, AbilityData[]? talents, AbilityData[]? abilities, FacetAbilityData? facetAbility)
+        public static string FormatFacetSpecialValues(string originalString, DotaHeroFacet facet, DotaHeroAbility[]? talents, DotaHeroAbility[]? abilities, DotaHeroFacetAbility? facetAbility)
         {
             string result = originalString;
 

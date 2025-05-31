@@ -28,7 +28,7 @@ namespace Dotahold.Data.Models
 
         public string bio_loc { get; set; } = string.Empty;
 
-        public FacetData[]? facets { get; set; } = [];
+        public DotaHeroFacet[]? facets { get; set; } = [];
 
         public double str_base { get; set; }
 
@@ -72,14 +72,14 @@ namespace Dotahold.Data.Models
 
         public double mana_regen { get; set; }
 
-        public AbilityData[]? abilities { get; set; } = [];
+        public DotaHeroAbility[]? abilities { get; set; } = [];
 
-        public AbilityData[]? talents { get; set; } = [];
+        public DotaHeroAbility[]? talents { get; set; } = [];
 
-        public FacetAbilityData[]? facet_abilities { get; set; } = [];
+        public DotaHeroFacetAbility[]? facet_abilities { get; set; } = [];
     }
 
-    public class FacetData
+    public class DotaHeroFacet
     {
         public int color { get; set; }
 
@@ -96,7 +96,7 @@ namespace Dotahold.Data.Models
         public int index { get; set; }
     }
 
-    public class AbilityData
+    public class DotaHeroAbility
     {
         public int id { get; set; }
 
@@ -150,7 +150,7 @@ namespace Dotahold.Data.Models
 
         public double[]? health_costs { get; set; } = [];
 
-        public SpecialValueData[]? special_values { get; set; } = [];
+        public DotaHeroSpecialValue[]? special_values { get; set; } = [];
 
         public bool ability_has_scepter { get; set; }
 
@@ -163,7 +163,7 @@ namespace Dotahold.Data.Models
         public bool ability_is_innate { get; set; }
     }
 
-    public class SpecialValueData
+    public class DotaHeroSpecialValue
     {
         public string name { get; set; } = string.Empty;
 
@@ -173,25 +173,25 @@ namespace Dotahold.Data.Models
 
         public string heading_loc { get; set; } = string.Empty;
 
-        public BonusData[]? bonuses { get; set; } = [];
+        public DotaHeroSpecialValueBonus[]? bonuses { get; set; } = [];
 
         public double[]? values_shard { get; set; } = [];
 
         public double[]? values_scepter { get; set; } = [];
 
-        public FacetBonusData? facet_bonus { get; set; }
+        public DotaHeroSpecialValueFacetBonus? facet_bonus { get; set; }
 
         public string required_facet { get; set; } = string.Empty;
     }
 
-    public class BonusData
+    public class DotaHeroSpecialValueBonus
     {
         public string name { get; set; } = string.Empty;
         public double value { get; set; }
         public int operation { get; set; }
     }
 
-    public class FacetBonusData
+    public class DotaHeroSpecialValueFacetBonus
     {
         public string name { get; set; } = string.Empty;
 
@@ -200,8 +200,8 @@ namespace Dotahold.Data.Models
         public int operation { get; set; }
     }
 
-    public class FacetAbilityData
+    public class DotaHeroFacetAbility
     {
-        public AbilityData[]? abilities { get; set; } = [];
+        public DotaHeroAbility[]? abilities { get; set; } = [];
     }
 }

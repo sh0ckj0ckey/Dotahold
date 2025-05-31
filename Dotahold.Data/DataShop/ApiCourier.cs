@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Dotahold.Data.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dotahold.Data.DataShop
 {
@@ -159,6 +160,50 @@ namespace Dotahold.Data.DataShop
             catch (Exception ex) { LogCourier.Log($"GetPlayerHeroPerformance error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
+        }
+
+        /// <summary>
+        /// 获取玩家的个人信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static async Task<DotaPlayerProfileModel?> GetPlayerProfile(string id)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url));
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerProfileModel);
+                if (result is not null)
+                {
+                    if (result.leaderboard_rank > 0 && result.rank_tier >= 80)
+                    {
+                        if (result.leaderboard_rank == 1)
+                        {
+                            result.rank_tier = 84;
+                        }
+                        else if (result.leaderboard_rank <= 10)
+                        {
+                            result.rank_tier = 83;
+                        }
+                        else if (result.leaderboard_rank <= 100)
+                        {
+                            result.rank_tier = 82;
+                        }
+                        else if (result.leaderboard_rank <= 1000)
+                        {
+                            result.rank_tier = 81;
+                        }
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerProfile error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return null;
         }
     }
 }

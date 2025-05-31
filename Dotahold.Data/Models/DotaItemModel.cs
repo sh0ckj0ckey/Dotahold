@@ -116,15 +116,15 @@ namespace Dotahold.Data.Models
         /// <summary>
         /// 属性加成详情
         /// </summary>
-        public Attrib[]? attrib { get; set; } = [];
+        public DotaItemAttrib[]? attrib { get; set; } = [];
 
         /// <summary>
         /// 物品技能详情
         /// </summary>
-        public Ability[]? abilities { get; set; } = [];
+        public DotaItemAbility[]? abilities { get; set; } = [];
     }
 
-    public class Attrib
+    public class DotaItemAttrib
     {
         /// <summary>
         /// 物品加成的属性名字，例如 "bonus_int", 需要二次加工用于显示
@@ -145,7 +145,7 @@ namespace Dotahold.Data.Models
         public string value { get; set; } = string.Empty;
     }
 
-    public class Ability
+    public class DotaItemAbility
     {
         /// <summary>
         /// 技能类型, 例如 "active"

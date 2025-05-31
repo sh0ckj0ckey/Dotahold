@@ -12,10 +12,10 @@ namespace Dotahold.Converters
         {
             try
             {
-                if (value is Attrib[] attribs && attribs?.Length > 0)
+                if (value is DotaItemAttrib[] attribs && attribs?.Length > 0)
                 {
                     var attribsStringBuider = new StringBuilder();
-                    foreach (Attrib attrib in attribs)
+                    foreach (DotaItemAttrib attrib in attribs)
                     {
                         if (!string.IsNullOrWhiteSpace(attrib.display))
                         {
