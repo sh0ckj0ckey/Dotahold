@@ -11,6 +11,8 @@ namespace Dotahold.ViewModels
 
         public ItemsViewModel ItemsViewModel { get; } = new ItemsViewModel();
 
+        public ProfileViewModel ProfileViewModel { get; } = new ProfileViewModel();
+
         private int _tabIndex = 0;
 
         private string _appVersion = string.Empty;
