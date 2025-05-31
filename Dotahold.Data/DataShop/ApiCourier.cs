@@ -2,7 +2,6 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Dotahold.Data.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Dotahold.Data.DataShop
 {
