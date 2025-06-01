@@ -34,10 +34,6 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                ConnectingProgressRing.IsActive = true;
-
                 if (string.IsNullOrWhiteSpace(steamId))
                 {
                     ConnectionFailedInfoBar.Message = "Dota 2 ID cannot be empty.";
@@ -70,12 +66,6 @@ namespace Dotahold.Pages.Matches
                 }
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
-            finally
-            {
-                ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ConnectingProgressRing.IsActive = false;
-            }
         }
 
         private void ConnectHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -90,7 +80,11 @@ namespace Dotahold.Pages.Matches
 
         private void CloseButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(OverviewPage)))
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+            else
             {
                 this.Frame.Navigate(typeof(OverviewPage));
                 this.Frame.BackStack.Clear();

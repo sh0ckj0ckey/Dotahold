@@ -5,9 +5,73 @@
     xmlns:local="using:Dotahold.Pages.Matches"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Dotahold.Converters"
     NavigationCacheMode="Required" Loaded="Page_Loaded">
 
-    <Grid>
+    <Page.Resources>
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
 
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="360"/>
+            <ColumnDefinition Width="1.7*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Padding="16,38,16,16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Player Avatar-->
+                <Border Grid.Column="0" Height="36" Width="36" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Border.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.AvatarImage.Image,Mode=OneWay}"/>
+                    </Border.Background>
+                </Border>
+
+                <!--Player Name-->
+                <TextBlock Grid.Column="1" Margin="0,2,8,-2" Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.personaname,Mode=OneWay}"
+                           FontSize="20" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                <!--Menu Button-->
+                <Button Grid.Column="2" Width="36" Height="36" Padding="0,0,0,0" Content="&#xE700;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                        Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="Menu" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Text="Steam Profile" Click="VisitSteamProfileMenuFlyoutItem_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE910;" Margin="0,4,0,0"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Change Account" Click="ChangeAccountMenuFlyoutItem_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE748;" Margin="0,4,0,0"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator Opacity="0.5"/>
+                            <MenuFlyoutItem Text="Refresh" Click="RefreshProfileMenuFlyoutItem_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE777;" Margin="0,4,0,0"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+            <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
+        </Grid>
+
+        <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Grid>
     </Grid>
 </Page>

@@ -60,7 +60,7 @@
 
         <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
-                <RowDefinition Height="42"/>
+                <RowDefinition Height="38"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 

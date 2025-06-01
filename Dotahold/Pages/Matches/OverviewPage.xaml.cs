@@ -1,4 +1,5 @@
 ﻿using System;
+using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
 
@@ -20,16 +21,51 @@ namespace Dotahold.Pages.Matches
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
+            try
             {
-                if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(SteamConnectPage)))
+                if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
-                    this.Frame.Navigate(typeof(SteamConnectPage));
-                    this.Frame.BackStack.Clear();
+                    if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(SteamConnectPage)))
+                    {
+                        this.Frame.Navigate(typeof(SteamConnectPage));
+                        this.Frame.BackStack.Clear();
+                    }
+                }
+                else if (_viewModel.ProfileViewModel.PlayerProfile is null)
+                {
+                    await _viewModel.ProfileViewModel.GetPlayerProfile(_viewModel.AppSettings.SteamID);
                 }
             }
+            catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private async void VisitSteamProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            try
+            {
+                var url = _viewModel.ProfileViewModel.PlayerProfile?.DotaPlayerProfile.profile?.profileurl;
+                if (!string.IsNullOrWhiteSpace(url))
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"VisitSteamProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private void ChangeAccountMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            try
+            {
+                this.Frame.Navigate(typeof(SteamConnectPage));
+            }
+            catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private void RefreshProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -13,7 +13,18 @@ namespace Dotahold.ViewModels
     {
         private bool _loadedPlayerConnectRecords = false;
 
+        private bool _loadingPlayerProfile;
+
         private PlayerProfileModel? _playerProfile;
+
+        /// <summary>
+        /// Indicates whether is currently fetching the player's profile
+        /// </summary>
+        public bool LoadingProfile
+        {
+            get => _loadingPlayerProfile;
+            set => SetProperty(ref _loadingPlayerProfile, value);
+        }
 
         /// <summary>
         /// Current player's profile
@@ -24,12 +35,17 @@ namespace Dotahold.ViewModels
             set => SetProperty(ref _playerProfile, value);
         }
 
+        /// <summary>
+        /// List of player connect records, used to show the last few players who connected to the game
+        /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
         public async Task<bool> GetPlayerProfile(string steamId)
         {
             try
             {
+                this.LoadingProfile = true;
+
                 if (steamId.Length > 14)
                 {
                     if (decimal.TryParse(steamId, out decimal id64))
@@ -48,6 +64,10 @@ namespace Dotahold.ViewModels
                 }
             }
             catch (Exception ex) { LogCourier.Log($"GetPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingProfile = false;
+            }
 
             return false;
         }
