@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,6 +11,8 @@ namespace Dotahold.ViewModels
 {
     internal partial class ProfileViewModel : ObservableObject
     {
+        private bool _loadedPlayerConnectRecords = false;
+
         private PlayerProfileModel? _playerProfile;
 
         /// <summary>
@@ -22,14 +24,9 @@ namespace Dotahold.ViewModels
             set => SetProperty(ref _playerProfile, value);
         }
 
-        public readonly ObservableCollection<PlayerConnectRecord> PlayerConnectRecords = [];
+        public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
-        public ProfileViewModel()
-        {
-            _ = LoadPlayerConnectRecords();
-        }
-
-        public async Task<PlayerProfileModel?> GetPlayerProfile(string steamId)
+        public async Task<bool> GetPlayerProfile(string steamId)
         {
             try
             {
@@ -45,20 +42,58 @@ namespace Dotahold.ViewModels
                 if (profile?.profile is not null)
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
+                    _ = this.PlayerProfile.AvatarImage.LoadImageAsync();
                     RecordPlayerConnect(profile.profile.avatarfull, this.PlayerProfile.DotaPlayerProfile.profile?.personaname ?? string.Empty, steamId);
-                    return this.PlayerProfile;
+                    return true;
                 }
             }
             catch (Exception ex) { LogCourier.Log($"GetPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
 
-            return null;
+            return false;
+        }
+
+        public async Task LoadPlayerConnectRecords()
+        {
+            try
+            {
+                if (_loadedPlayerConnectRecords)
+                {
+                    return;
+                }
+
+                _loadedPlayerConnectRecords = true;
+
+                string json = await StorageFilesCourier.ReadFileAsync("dotaidbindhistory");
+
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    return;
+                }
+
+                var records = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.ListPlayerConnectRecord);
+
+                if (records is null || records.Count <= 0)
+                {
+                    return;
+                }
+
+                this.PlayerConnectRecords.Clear();
+
+                foreach (var record in records)
+                {
+                    var recordModel = new PlayerConnectRecordModel(record.SteamId, record.Avatar, record.Name);
+                    this.PlayerConnectRecords.Add(recordModel);
+                    _ = recordModel.AvatarImage.LoadImageAsync();
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
         private void RecordPlayerConnect(string avatar, string name, string steamId)
         {
             try
             {
-                PlayerConnectRecord? removing = null;
+                PlayerConnectRecordModel? removing = null;
                 foreach (var item in this.PlayerConnectRecords)
                 {
                     if (item.SteamId == steamId)
@@ -78,45 +113,30 @@ namespace Dotahold.ViewModels
                     this.PlayerConnectRecords.RemoveAt(this.PlayerConnectRecords.Count - 1);
                 }
 
-                this.PlayerConnectRecords.Insert(0, new PlayerConnectRecord
-                {
-                    SteamId = steamId,
-                    Avatar = avatar,
-                    Name = name,
-                });
+                var recordModel = new PlayerConnectRecordModel(steamId, avatar, name);
+                this.PlayerConnectRecords.Insert(0, recordModel);
+                _ = recordModel.AvatarImage.LoadImageAsync();
 
                 _ = SavePlayerConnectRecords();
             }
             catch (Exception ex) { LogCourier.Log($"RecordPlayerConnect error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
-        private async Task LoadPlayerConnectRecords()
-        {
-            try
-            {
-                this.PlayerConnectRecords.Clear();
-
-                string json = await StorageFilesCourier.ReadFileAsync("dotaidbindhistory");
-                var records = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.ListPlayerConnectRecord);
-
-                if (records is null || records.Count <= 0)
-                {
-                    return;
-                }
-
-                foreach (var record in records)
-                {
-                    this.PlayerConnectRecords.Add(record);
-                }
-            }
-            catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
         private async Task SavePlayerConnectRecords()
         {
             try
             {
-                var records = this.PlayerConnectRecords.ToList();
+                List<PlayerConnectRecord> records = [];
+                foreach (var item in this.PlayerConnectRecords)
+                {
+                    records.Add(new PlayerConnectRecord
+                    {
+                        SteamId = item.SteamId,
+                        Avatar = item.Avatar,
+                        Name = item.Name
+                    });
+                }
+
                 string json = JsonSerializer.Serialize(records, SourceGenerationContext.Default.ListPlayerConnectRecord);
                 await StorageFilesCourier.WriteFileAsync("dotaidbindhistory", json);
             }
