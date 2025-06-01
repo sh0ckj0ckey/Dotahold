@@ -348,11 +348,12 @@ namespace Dotahold.Data.DataShop
             return true;
         }
 
-        private static async void LoadConstantsGottenDate()
+        private static void LoadConstantsGottenDate()
         {
             try
             {
-                string json = await StorageFilesCourier.ReadFileAsync("constantsgottendate");
+                //string json = await StorageFilesCourier.ReadFileAsync("constantsgottendate");
+                string json = ApplicationData.Current.LocalSettings.Values["constants_update_date"] as string ?? string.Empty;
                 if (!string.IsNullOrWhiteSpace(json))
                 {
                     _dictConstantsGottenDate = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringInt64);
@@ -360,17 +361,18 @@ namespace Dotahold.Data.DataShop
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
 
-            _dictConstantsGottenDate ??= new Dictionary<string, long>();
+            _dictConstantsGottenDate ??= [];
         }
 
-        private static async void SaveConstantsGottenDate()
+        private static void SaveConstantsGottenDate()
         {
             try
             {
                 var json = JsonSerializer.Serialize(_dictConstantsGottenDate, SourceGenerationContext.Default.DictionaryStringInt64);
                 if (!string.IsNullOrWhiteSpace(json))
                 {
-                    await StorageFilesCourier.WriteFileAsync("constantsgottendate", json);
+                    //await StorageFilesCourier.WriteFileAsync("constantsgottendate", json);
+                    ApplicationData.Current.LocalSettings.Values["constants_update_date"] = json;
                 }
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }

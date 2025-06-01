@@ -57,7 +57,7 @@ namespace Dotahold.Data.DataShop
             set
             {
                 SetProperty(ref _appearanceIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_APPEARANCE] = _appearanceIndex;
+                _localSettings.Values[SETTING_APPEARANCE] = _appearanceIndex;
                 AppearanceSettingChanged?.Invoke(this, _appearanceIndex);
             }
         }
@@ -98,7 +98,7 @@ namespace Dotahold.Data.DataShop
             set
             {
                 SetProperty(ref _startupPageIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_STARTUP] = _startupPageIndex;
+                _localSettings.Values[SETTING_STARTUP] = _startupPageIndex;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Dotahold.Data.DataShop
             set
             {
                 SetProperty(ref _imageSourceCDNIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_CDN] = _imageSourceCDNIndex;
+                _localSettings.Values[SETTING_CDN] = _imageSourceCDNIndex;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Dotahold.Data.DataShop
             set
             {
                 SetProperty(ref _languageIndex, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_LANGUAGE] = _languageIndex;
+                _localSettings.Values[SETTING_LANGUAGE] = _languageIndex;
             }
         }
 
@@ -210,7 +210,7 @@ namespace Dotahold.Data.DataShop
             set
             {
                 SetProperty(ref _steamID, value);
-                ApplicationData.Current.LocalSettings.Values[SETTING_STEAMID] = _steamID;
+                _localSettings.Values[SETTING_STEAMID] = _steamID;
             }
         }
     }
