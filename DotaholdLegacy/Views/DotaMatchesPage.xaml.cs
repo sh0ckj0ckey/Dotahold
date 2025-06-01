@@ -39,29 +39,6 @@ namespace Dotahold.Views
         }
 
         /// <summary>
-        /// 重写导航至此页面的代码,显示动画
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            try
-            {
-                base.OnNavigatedTo(e);
-
-                if (e.Parameter is NavigationTransitionInfo transition)
-                {
-                    navigationTransition.DefaultNavigationTransitionInfo = transition;
-                }
-
-                if (string.IsNullOrWhiteSpace(DotaMatchesViewModel.Instance.sSteamId))
-                {
-                    BindAccount();
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
         /// 点击查看常用英雄
         /// </summary>
         /// <param name="sender"></param>
@@ -143,57 +120,7 @@ namespace Dotahold.Views
             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        /// <summary>
-        /// 点击绑定历史账号
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickDotaIdHistory(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (sender is Button btn && btn.DataContext is Models.DotaIdBindHistoryModel steamId)
-                {
-                    if (steamId.SteamId != ViewModel.sSteamId)
-                    {
-                        ViewModel.SetSteamID(steamId.SteamId);
-                        ViewModel.InitialDotaMatches();
-                        MatchFrame.Navigate(typeof(BlankPage));
-                    }
-                    HideBindingAccountGrid();
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
         #region 菜单
-
-        /// <summary>
-        /// 查看社区主页
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void SteamCommunityLinkMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string url = ViewModel.PlayerProfile.profile.profileurl;
-                if (!string.IsNullOrEmpty(url.Trim()))
-                {
-                    if (!string.IsNullOrEmpty(url) && !url.StartsWith("http"))
-                    {
-                        url = "https://" + url;
-                    }
-                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
-                    return;
-                }
-                else
-                {
-                    SteamCommunityLinkMenuFlyoutItem.IsEnabled = false;
-                }
-            }
-            catch { SteamCommunityLinkMenuFlyoutItem.IsEnabled = false; }
-        }
 
         /// <summary>
         /// 刷新数据
@@ -213,36 +140,6 @@ namespace Dotahold.Views
         }
 
         /// <summary>
-        /// 点击复制ID
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GameIDMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Windows.ApplicationModel.DataTransfer.DataPackage dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
-                dataPackage.SetText(ViewModel.sSteamId);
-                Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 更改绑定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                BindAccount();
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
         /// 刷新页面
         /// </summary>
         /// <param name="sender"></param>
@@ -253,129 +150,6 @@ namespace Dotahold.Views
             {
                 ViewModel.InitialDotaMatches();
                 MatchFrame.Navigate(typeof(BlankPage));
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        #endregion
-
-        #region 游戏ID绑定
-
-        /// <summary>
-        /// 输入内容
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SteamIDTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                string input = SteamIDTextBox.Text;
-                if (input.Length > 0 && Regex.IsMatch(input, @"^\d+$"))
-                {
-                    OKButton.IsEnabled = true;
-                }
-                else
-                {
-                    OKButton.IsEnabled = false;
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 按下回车确认
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SteamIDTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            try
-            {
-                if (e.Key == Windows.System.VirtualKey.Enter)
-                {
-                    SetInputSteamId();
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 确认绑定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SetInputSteamId();
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 显示绑定新账号窗口
-        /// </summary>
-        public void BindAccount()
-        {
-            try
-            {
-                BindGrid.Visibility = Visibility.Visible;
-                BindingGridPopIn.Begin();
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 取消绑定
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BackAppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HideBindingAccountGrid();
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        private void BindingGridPopOut_Completed(object sender, object e)
-        {
-            try
-            {
-                BindGrid.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        private void SetInputSteamId()
-        {
-            try
-            {
-                string input = SteamIDTextBox.Text;
-                if (input.Length > 0 && Regex.IsMatch(input, @"^\d+$"))
-                {
-                    try
-                    {
-                        ViewModel.SetSteamID(input);
-                        ViewModel.InitialDotaMatches();
-                        HideBindingAccountGrid();
-                        MatchFrame.Navigate(typeof(BlankPage));
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        private void HideBindingAccountGrid()
-        {
-            try
-            {
-                SteamIDTextBox.Text = "";
-                BindingGridPopOut.Begin();
             }
             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }

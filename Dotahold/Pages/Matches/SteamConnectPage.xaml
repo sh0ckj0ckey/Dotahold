@@ -82,7 +82,7 @@
                 </HyperlinkButton>
                 <StackPanel Grid.Row="3" Height="42" Margin="12,0,12,12" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
                     <muxc:ProgressRing IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}" Width="14" Height="14" VerticalAlignment="Center"/>
-                    <TextBlock Text="Connecting" FontSize="16" Margin="0,0,8,-2" FontFamily="{ThemeResource ReaverBold}" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Connecting" FontSize="16" Margin="0,2,8,-2" FontFamily="{ThemeResource ReaverBold}" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
 

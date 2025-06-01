@@ -72,6 +72,8 @@ namespace Dotahold.ViewModels
             return false;
         }
 
+        #region Player Connect Records
+
         public async Task LoadPlayerConnectRecords()
         {
             try
@@ -162,5 +164,8 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex) { LogCourier.Log($"SavePlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
         }
+
+        #endregion
+
     }
 }
