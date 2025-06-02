@@ -42,7 +42,7 @@ namespace Dotahold.Pages.Heroes
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
                 DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
-                FacetsGrid.Width = RootGrid.ActualWidth - 128;
+                FacetsGrid.Width = RootGrid.ActualWidth - 120;
                 AbilitiesGrid.Width = RootGrid.ActualWidth - 128;
             };
 
@@ -90,7 +90,7 @@ namespace Dotahold.Pages.Heroes
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
-            FacetsGrid.Width = RootGrid.ActualWidth - 128;
+            FacetsGrid.Width = RootGrid.ActualWidth - 120;
             AbilitiesGrid.Width = RootGrid.ActualWidth - 128;
         }
 
