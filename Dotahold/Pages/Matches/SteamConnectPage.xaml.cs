@@ -57,7 +57,11 @@ namespace Dotahold.Pages.Matches
                     return;
                 }
 
-                _viewModel.AppSettings.SteamID = _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile?.account_id ?? string.Empty;
+                _viewModel.AppSettings.SteamID = _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.account_id;
+
+                _viewModel.ProfileViewModel.RecordPlayerConnect(_viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.avatarfull,
+                                                                _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.personaname,
+                                                                _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.steamid);
 
                 if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(OverviewPage)))
                 {

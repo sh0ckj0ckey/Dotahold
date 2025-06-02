@@ -59,7 +59,6 @@ namespace Dotahold.ViewModels
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
                     _ = this.PlayerProfile.AvatarImage.LoadImageAsync();
-                    RecordPlayerConnect(profile.profile.avatarfull, this.PlayerProfile.DotaPlayerProfile.profile?.personaname ?? string.Empty, steamId);
                     return true;
                 }
             }
@@ -111,7 +110,7 @@ namespace Dotahold.ViewModels
             catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
-        private void RecordPlayerConnect(string avatar, string name, string steamId)
+        public void RecordPlayerConnect(string avatar, string name, string steamId)
         {
             try
             {
