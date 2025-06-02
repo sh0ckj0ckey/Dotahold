@@ -12,6 +12,11 @@ namespace Dotahold.ViewModels
     internal partial class ItemsViewModel : ObservableObject
     {
         /// <summary>
+        /// Task to load items, used to prevent multiple simultaneous loads
+        /// </summary>
+        private Task? _loadItemsTask = null;
+
+        /// <summary>
         /// ItemId to ItemModel
         /// </summary>
         private readonly Dictionary<string, ItemModel> _itemModels = [];
@@ -49,6 +54,26 @@ namespace Dotahold.ViewModels
         }
 
         public async Task LoadItems()
+        {
+            if (_loadItemsTask is not null)
+            {
+                await _loadItemsTask;
+                return;
+            }
+
+            _loadItemsTask = LoadItemsInternal();
+
+            try
+            {
+                await _loadItemsTask;
+            }
+            finally
+            {
+                _loadItemsTask = null;
+            }
+        }
+
+        private async Task LoadItemsInternal()
         {
             try
             {

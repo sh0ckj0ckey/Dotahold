@@ -11,6 +11,11 @@ namespace Dotahold.ViewModels
     internal partial class HeroesViewModel : ObservableObject
     {
         /// <summary>
+        /// Task to load heroes, used to prevent multiple simultaneous loads
+        /// </summary>
+        private Task? _loadHeroesTask = null;
+
+        /// <summary>
         /// HeroId to HeroModel
         /// </summary>
         private readonly Dictionary<string, HeroModel> _heroModels = [];
@@ -85,6 +90,26 @@ namespace Dotahold.ViewModels
         }
 
         public async Task LoadHeroes()
+        {
+            if (_loadHeroesTask is not null)
+            {
+                await _loadHeroesTask;
+                return;
+            }
+
+            _loadHeroesTask = LoadHeroesInternal();
+
+            try
+            {
+                await _loadHeroesTask;
+            }
+            finally
+            {
+                _loadHeroesTask = null;
+            }
+        }
+
+        private async Task LoadHeroesInternal()
         {
             try
             {
