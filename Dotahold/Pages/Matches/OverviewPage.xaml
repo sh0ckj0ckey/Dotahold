@@ -5,6 +5,7 @@
     xmlns:local="using:Dotahold.Pages.Matches"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:converters="using:Dotahold.Converters"
     NavigationCacheMode="Required" Loaded="Page_Loaded">
 
@@ -33,14 +34,19 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Player Avatar-->
-                <Border Grid.Column="0" Height="36" Width="36" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <muxc:ProgressRing Grid.Column="0" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                   Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" BorderThickness="1" Width="28" Height="28" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Border Grid.Column="0" Height="36" Width="36" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}"
+                        Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Border.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.AvatarImage.Image,Mode=OneWay}"/>
                     </Border.Background>
                 </Border>
 
                 <!--Player Name-->
-                <TextBlock Grid.Column="1" Margin="0,2,8,-2" Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.personaname,Mode=OneWay}"
+                <TextBlock Grid.Column="1" Margin="0,2,8,-2" Text="Connecting" Opacity="0.7" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                           FontSize="20" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Margin="0,2,8,-2" Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.personaname,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}"
                            FontSize="20" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <!--Menu Button-->
