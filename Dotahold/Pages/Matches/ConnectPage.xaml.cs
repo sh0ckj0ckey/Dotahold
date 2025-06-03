@@ -11,7 +11,7 @@ namespace Dotahold.Pages.Matches
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class SteamConnectPage : Page
+    public sealed partial class ConnectPage : Page
     {
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex SteamIdRegex();
@@ -20,7 +20,7 @@ namespace Dotahold.Pages.Matches
 
         private readonly MainViewModel _viewModel;
 
-        public SteamConnectPage()
+        public ConnectPage()
         {
             _viewModel = App.Current.MainViewModel;
 
@@ -78,7 +78,6 @@ namespace Dotahold.Pages.Matches
                 }
 
                 _viewModel.AppSettings.SteamID = profile.profile.account_id;
-
                 _viewModel.ProfileViewModel.RecordPlayerConnect(profile.profile.avatarfull, profile.profile.personaname, profile.profile.account_id);
 
                 if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(OverviewPage)))

@@ -29,9 +29,9 @@ namespace Dotahold.Pages.Matches
             {
                 if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
-                    if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(SteamConnectPage)))
+                    if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(ConnectPage)))
                     {
-                        this.Frame.Navigate(typeof(SteamConnectPage));
+                        this.Frame.Navigate(typeof(ConnectPage));
                         this.Frame.ForwardStack.Clear();
                         this.Frame.BackStack.Clear();
                     }
@@ -75,7 +75,7 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                this.Frame.Navigate(typeof(SteamConnectPage));
+                this.Frame.Navigate(typeof(ConnectPage));
             }
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -99,7 +99,8 @@ namespace Dotahold.Pages.Matches
                     return;
                 }
 
-                await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
+                _currentSteamId = _viewModel.AppSettings.SteamID;
+                await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }

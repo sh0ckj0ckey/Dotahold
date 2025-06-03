@@ -93,10 +93,10 @@ namespace Dotahold.ViewModels
 
                 this.IsOverviewLoading = true;
 
-                await Task.WhenAll([
-                    LoadPlayerProfile(steamId),
-                    LoadPlayerWinLose(steamId),
-                ]);
+                var profileTask = LoadPlayerProfile(steamId);
+                var winLoseTask = LoadPlayerWinLose(steamId);
+
+                await Task.WhenAll(profileTask, winLoseTask);
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
             finally
