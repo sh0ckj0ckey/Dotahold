@@ -13,10 +13,12 @@ namespace Dotahold.Pages.Matches
     /// </summary>
     public sealed partial class SteamConnectPage : Page
     {
-        private readonly MainViewModel _viewModel;
-
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex SteamIdRegex();
+
+        private static bool _loadedPlayerConnectRecords = false;
+
+        private readonly MainViewModel _viewModel;
 
         public SteamConnectPage()
         {
@@ -27,7 +29,11 @@ namespace Dotahold.Pages.Matches
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await _viewModel.ProfileViewModel.LoadPlayerConnectRecords();
+            if (!_loadedPlayerConnectRecords)
+            {
+                _loadedPlayerConnectRecords = true;
+                await _viewModel.ProfileViewModel.LoadPlayerConnectRecords();
+            }
         }
 
         private async void ConnectSteamId(string steamId)
@@ -48,28 +54,38 @@ namespace Dotahold.Pages.Matches
                     return;
                 }
 
-                bool success = await _viewModel.ProfileViewModel.LoadPlayerProfile(steamId);
+                if (steamId.Length > 14)
+                {
+                    if (decimal.TryParse(steamId, out decimal id64))
+                    {
+                        steamId = (id64 - 76561197960265728).ToString();
+                    }
+                    else
+                    {
+                        ConnectionFailedInfoBar.Message = "Invalid Dota 2 ID. Please check and try again.";
+                        ConnectionFailedInfoBar.IsOpen = true;
+                        return;
+                    }
+                }
 
-                if (!success || _viewModel.ProfileViewModel.PlayerProfile?.DotaPlayerProfile.profile is null)
+                var profile = await ApiCourier.GetPlayerProfile(steamId);
+
+                if (profile?.profile is null)
                 {
                     ConnectionFailedInfoBar.Message = "Failed to retrieve player profile. Please check the Dota 2 ID and try again.";
                     ConnectionFailedInfoBar.IsOpen = true;
                     return;
                 }
 
-                _viewModel.AppSettings.SteamID = _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.account_id;
+                _viewModel.AppSettings.SteamID = profile.profile.account_id;
 
-                _viewModel.ProfileViewModel.RecordPlayerConnect(_viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.avatarfull,
-                                                                _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.personaname,
-                                                                _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile!.steamid);
+                _viewModel.ProfileViewModel.RecordPlayerConnect(profile.profile.avatarfull, profile.profile.personaname, profile.profile.account_id);
 
                 if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(OverviewPage)))
                 {
                     this.Frame.Navigate(typeof(OverviewPage));
                     this.Frame.BackStack.Clear();
                 }
-
-                _ = _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
         }
@@ -89,10 +105,13 @@ namespace Dotahold.Pages.Matches
             if (this.Frame.CanGoBack)
             {
                 this.Frame.GoBack();
+                this.Frame.ForwardStack.Clear();
+                this.Frame.BackStack.Clear();
             }
             else
             {
                 this.Frame.Navigate(typeof(OverviewPage));
+                this.Frame.ForwardStack.Clear();
                 this.Frame.BackStack.Clear();
             }
         }

@@ -12,6 +12,8 @@ namespace Dotahold.Pages.Matches
     /// </summary>
     public sealed partial class OverviewPage : Page
     {
+        private static string _currentSteamId = string.Empty;
+
         private readonly MainViewModel _viewModel;
 
         public OverviewPage()
@@ -30,13 +32,17 @@ namespace Dotahold.Pages.Matches
                     if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(SteamConnectPage)))
                     {
                         this.Frame.Navigate(typeof(SteamConnectPage));
+                        this.Frame.ForwardStack.Clear();
                         this.Frame.BackStack.Clear();
                     }
                 }
-                else if (_viewModel.ProfileViewModel.PlayerProfile is null)
+                else
                 {
-                    await _viewModel.ProfileViewModel.LoadPlayerProfile(_viewModel.AppSettings.SteamID);
-                    await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
+                    if (_currentSteamId != _viewModel.AppSettings.SteamID)
+                    {
+                        _currentSteamId = _viewModel.AppSettings.SteamID;
+                        await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                    }
                 }
             }
             catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
@@ -83,7 +89,16 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                await _viewModel.ProfileViewModel.LoadPlayerProfile(_viewModel.AppSettings.SteamID);
+                if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
+                {
+                    throw new InvalidOperationException("SteamID is not set.");
+                }
+
+                if (_viewModel.ProfileViewModel.IsOverviewLoading)
+                {
+                    return;
+                }
+
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }

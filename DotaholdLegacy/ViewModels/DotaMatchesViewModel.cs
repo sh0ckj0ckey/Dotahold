@@ -149,33 +149,6 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// 网络请求
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="url"></param>
-        /// <param name="httpClient"></param>
-        /// <returns></returns>
-        private async Task<T> GetResponseAsync<T>(string url, Windows.Web.Http.HttpClient httpClient)
-        {
-            try
-            {
-                var response = await httpClient.GetAsync(new Uri(url));
-                var jsonMessage = await response.Content.ReadAsStringAsync();
-
-                JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore,
-                };
-
-                var result = JsonConvert.DeserializeObject<T>(jsonMessage, jsonSerializerSettings);
-                return result;
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            return default;
-        }
-
-        /// <summary>
         /// 获得用户的胜局败局数
         /// </summary>
         /// <param name="id"></param>

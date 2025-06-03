@@ -15,13 +15,24 @@ namespace Dotahold.ViewModels
 
         private readonly ItemsViewModel _itemsViewModel = itemsViewModel;
 
-        private bool _loadedPlayerConnectRecords = false;
+        private bool _loadingHeroesAndItems = false;
 
         private bool _loadingPlayerProfile;
 
-        private bool _loadingHeroesAndItems = false;
+        private bool _loadingPlayerWinLose = false;
 
         private PlayerProfileModel? _playerProfile;
+
+        private PlayerWinLoseModel? _playerWinLose;
+
+        /// <summary>
+        /// Indicates whether is currently fetching heroes and items data, overview loading will be blocked until this is done
+        /// </summary>
+        public bool LoadingHeroesAndItems
+        {
+            get => _loadingHeroesAndItems;
+            set => SetProperty(ref _loadingHeroesAndItems, value);
+        }
 
         /// <summary>
         /// Indicates whether is currently fetching the player's profile
@@ -33,12 +44,12 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// Indicates whether is currently fetching heroes and items data, overview loading will be blocked until this is done
+        /// Indicates whether is currently fetching the player's win/loss data
         /// </summary>
-        public bool LoadingHeroesAndItems
+        public bool LoadingPlayerWinLose
         {
-            get => _loadingHeroesAndItems;
-            set => SetProperty(ref _loadingHeroesAndItems, value);
+            get => _loadingPlayerWinLose;
+            set => SetProperty(ref _loadingPlayerWinLose, value);
         }
 
         /// <summary>
@@ -51,49 +62,88 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
+        /// Current player's win-lose data
+        /// </summary>
+        public PlayerWinLoseModel? PlayerWinLose
+        {
+            get => _playerWinLose;
+            set => SetProperty(ref _playerWinLose, value);
+        }
+
+        /// <summary>
+        /// Indicates whether the overview is currently loading.
+        /// </summary>
+        public bool IsOverviewLoading { get; set; } = false;
+
+        /// <summary>
         /// List of player connect records, used to show the last few players who connected to the game
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
-        public async Task<bool> LoadPlayerProfile(string steamId)
+        public async Task LoadPlayerOverview(string steamId)
+        {
+            try
+            {
+                this.LoadingHeroesAndItems = true;
+
+                await _heroesViewModel.LoadHeroes();
+                await _itemsViewModel.LoadItems();
+
+                this.LoadingHeroesAndItems = false;
+
+                this.IsOverviewLoading = true;
+
+                await Task.WhenAll([
+                    LoadPlayerProfile(steamId),
+                    LoadPlayerWinLose(steamId),
+                ]);
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.IsOverviewLoading = false;
+            }
+        }
+
+        private async Task LoadPlayerProfile(string steamId)
         {
             try
             {
                 this.LoadingProfile = true;
-
-                if (steamId.Length > 14)
-                {
-                    if (decimal.TryParse(steamId, out decimal id64))
-                    {
-                        steamId = (id64 - 76561197960265728).ToString();
-                    }
-                }
+                this.PlayerProfile = null;
 
                 var profile = await ApiCourier.GetPlayerProfile(steamId);
                 if (profile?.profile is not null)
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
                     _ = this.PlayerProfile.AvatarImage.LoadImageAsync();
-                    return true;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
             finally
             {
                 this.LoadingProfile = false;
             }
-
-            return false;
         }
 
-        public async Task LoadPlayerOverview(string steamId)
+        private async Task LoadPlayerWinLose(string steamId)
         {
-            this.LoadingHeroesAndItems = true;
+            try
+            {
+                this.LoadingPlayerWinLose = true;
+                this.PlayerWinLose = null;
 
-            await _heroesViewModel.LoadHeroes();
-            await _itemsViewModel.LoadItems();
-
-            this.LoadingHeroesAndItems = false;
+                var winLose = await ApiCourier.GetPlayerWinLose(steamId);
+                if (winLose is not null)
+                {
+                    this.PlayerWinLose = new PlayerWinLoseModel(winLose.Item1, winLose.Item2);
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerWinLose({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerWinLose = false;
+            }
         }
 
         #region Player Connect Records
@@ -102,13 +152,6 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (_loadedPlayerConnectRecords)
-                {
-                    return;
-                }
-
-                _loadedPlayerConnectRecords = true;
-
                 string json = await StorageFilesCourier.ReadFileAsync("dotaidbindhistory");
 
                 if (string.IsNullOrWhiteSpace(json))
