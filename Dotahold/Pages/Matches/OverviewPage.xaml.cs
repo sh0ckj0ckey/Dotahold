@@ -35,12 +35,18 @@ namespace Dotahold.Pages.Matches
                 }
                 else if (_viewModel.ProfileViewModel.PlayerProfile is null)
                 {
-                    await _viewModel.ProfileViewModel.GetPlayerProfile(_viewModel.AppSettings.SteamID);
+                    await _viewModel.ProfileViewModel.LoadPlayerProfile(_viewModel.AppSettings.SteamID);
+                    await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
+        /// <summary>
+        /// Visit player's Steam Profile website
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void VisitSteamProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
@@ -54,6 +60,11 @@ namespace Dotahold.Pages.Matches
             catch (Exception ex) { LogCourier.Log($"VisitSteamProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
+        /// <summary>
+        /// Navigate to SteamConnectPage to change account
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChangeAccountMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
@@ -63,9 +74,19 @@ namespace Dotahold.Pages.Matches
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
-        private void RefreshProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        /// <summary>
+        /// Re-fetch player profile data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void RefreshProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            try
+            {
+                await _viewModel.ProfileViewModel.LoadPlayerProfile(_viewModel.AppSettings.SteamID);
+                await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
+            }
+            catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
     }
 }

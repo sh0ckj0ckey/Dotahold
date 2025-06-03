@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
@@ -11,6 +12,11 @@ namespace Dotahold.ViewModels
 {
     internal partial class ItemsViewModel : ObservableObject
     {
+        /// <summary>
+        /// A semaphore used to limit concurrent access to image loading operations.
+        /// </summary>
+        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+
         /// <summary>
         /// Task to load items, used to prevent multiple simultaneous loads
         /// </summary>
@@ -51,6 +57,19 @@ namespace Dotahold.ViewModels
         {
             get => _selectedItem;
             set => SetProperty(ref _selectedItem, value);
+        }
+
+        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
+        {
+            await _imageLoadSemaphore.WaitAsync();
+            try
+            {
+                await loadImageFunc();
+            }
+            finally
+            {
+                _imageLoadSemaphore.Release();
+            }
         }
 
         public async Task LoadItems()
@@ -114,7 +133,7 @@ namespace Dotahold.ViewModels
 
                 foreach (var item in _allItems)
                 {
-                    await item.ItemImage.LoadImageAsync();
+                    _ = SafeLoadImageAsync(() => item.ItemImage.LoadImageAsync());
                 }
             }
             catch (Exception ex)

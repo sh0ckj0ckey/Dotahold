@@ -9,11 +9,17 @@ using Dotahold.Models;
 
 namespace Dotahold.ViewModels
 {
-    internal partial class ProfileViewModel : ObservableObject
+    internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel) : ObservableObject
     {
+        private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
+
+        private readonly ItemsViewModel _itemsViewModel = itemsViewModel;
+
         private bool _loadedPlayerConnectRecords = false;
 
         private bool _loadingPlayerProfile;
+
+        private bool _loadingHeroesAndItems = false;
 
         private PlayerProfileModel? _playerProfile;
 
@@ -24,6 +30,15 @@ namespace Dotahold.ViewModels
         {
             get => _loadingPlayerProfile;
             set => SetProperty(ref _loadingPlayerProfile, value);
+        }
+
+        /// <summary>
+        /// Indicates whether is currently fetching heroes and items data, overview loading will be blocked until this is done
+        /// </summary>
+        public bool LoadingHeroesAndItems
+        {
+            get => _loadingHeroesAndItems;
+            set => SetProperty(ref _loadingHeroesAndItems, value);
         }
 
         /// <summary>
@@ -40,7 +55,7 @@ namespace Dotahold.ViewModels
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
-        public async Task<bool> GetPlayerProfile(string steamId)
+        public async Task<bool> LoadPlayerProfile(string steamId)
         {
             try
             {
@@ -69,6 +84,16 @@ namespace Dotahold.ViewModels
             }
 
             return false;
+        }
+
+        public async Task LoadPlayerOverview(string steamId)
+        {
+            this.LoadingHeroesAndItems = true;
+
+            await _heroesViewModel.LoadHeroes();
+            await _itemsViewModel.LoadItems();
+
+            this.LoadingHeroesAndItems = false;
         }
 
         #region Player Connect Records

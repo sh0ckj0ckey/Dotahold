@@ -48,7 +48,7 @@ namespace Dotahold.Pages.Matches
                     return;
                 }
 
-                bool success = await _viewModel.ProfileViewModel.GetPlayerProfile(steamId);
+                bool success = await _viewModel.ProfileViewModel.LoadPlayerProfile(steamId);
 
                 if (!success || _viewModel.ProfileViewModel.PlayerProfile?.DotaPlayerProfile.profile is null)
                 {
@@ -68,6 +68,8 @@ namespace Dotahold.Pages.Matches
                     this.Frame.Navigate(typeof(OverviewPage));
                     this.Frame.BackStack.Clear();
                 }
+
+                _ = _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
         }

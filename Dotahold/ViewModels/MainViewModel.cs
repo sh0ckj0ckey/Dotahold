@@ -5,13 +5,13 @@ namespace Dotahold.ViewModels
 {
     internal partial class MainViewModel : ObservableObject
     {
-        public SettingsCourier AppSettings { get; } = new SettingsCourier();
+        public SettingsCourier AppSettings { get; private set; }
 
-        public HeroesViewModel HeroesViewModel { get; } = new HeroesViewModel();
+        public HeroesViewModel HeroesViewModel { get; private set; }
 
-        public ItemsViewModel ItemsViewModel { get; } = new ItemsViewModel();
+        public ItemsViewModel ItemsViewModel { get; private set; }
 
-        public ProfileViewModel ProfileViewModel { get; } = new ProfileViewModel();
+        public ProfileViewModel ProfileViewModel { get; private set; }
 
         private int _tabIndex = 0;
 
@@ -40,6 +40,14 @@ namespace Dotahold.ViewModels
 
                 return _appVersion;
             }
+        }
+
+        public MainViewModel()
+        {
+            this.AppSettings = new SettingsCourier();
+            this.HeroesViewModel = new HeroesViewModel();
+            this.ItemsViewModel = new ItemsViewModel();
+            this.ProfileViewModel = new ProfileViewModel(this.HeroesViewModel, this.ItemsViewModel);
         }
     }
 }

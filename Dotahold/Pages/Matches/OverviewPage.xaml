@@ -35,7 +35,7 @@
 
                 <!--Player Avatar-->
                 <muxc:ProgressRing Grid.Column="0" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" BorderThickness="1" Width="28" Height="28" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                   Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" Width="28" Height="28" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Border Grid.Column="0" Height="36" Width="36" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}"
                         Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Border.Background>
@@ -75,6 +75,10 @@
                 </Button>
             </Grid>
             <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
+
+            <muxc:ProgressRing Grid.Row="2" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingHeroesAndItems,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingHeroesAndItems,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                               Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
         </Grid>
 
         <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
