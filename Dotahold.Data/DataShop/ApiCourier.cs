@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Dotahold.Data.Models;
 
@@ -18,14 +19,14 @@ namespace Dotahold.Data.DataShop
         /// <param name="heroId"></param>
         /// <param name="language"></param>
         /// <returns></returns>
-        public static async Task<DotaHeroDataModel?> GetHeroData(int heroId, string language = "english")
+        public static async Task<DotaHeroDataModel?> GetHeroData(int heroId, string language = "english", CancellationToken cancellationToken = default)
         {
             string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var heroDataResponse = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaHeroDataResponse);
                 if (heroDataResponse?.result?.status == 1 && heroDataResponse.result.data?.heroes?.Length > 0)
                 {
@@ -42,14 +43,14 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="heroId"></param>
         /// <returns></returns>
-        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId)
+        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId, CancellationToken cancellationToken = default)
         {
             string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var heroDataResponse = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaHeroRankingResponse);
                 if (heroDataResponse?.hero_id == heroId && heroDataResponse.rankings is not null)
                 {
@@ -94,14 +95,14 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerProfileModel?> GetPlayerProfile(string id)
+        public static async Task<DotaPlayerProfileModel?> GetPlayerProfile(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}";
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerProfileModel);
                 if (result is not null)
                 {
@@ -138,14 +139,14 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<Tuple<int, int>?> GetPlayerWinLose(string id)
+        public static async Task<Tuple<int, int>?> GetPlayerWinLose(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/wl";
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerWinLoseModel);
                 if (result is not null)
                 {
@@ -162,14 +163,14 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformance(string id)
+        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformance(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/totals";
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerOverallPerformanceModelArray);
                 if (result is not null)
                 {
@@ -186,14 +187,14 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformance(string id)
+        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformance(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/heroes";
 
             try
             {
-                var response = await _apiHttpClient.GetAsync(new Uri(url));
-                var json = await response.Content.ReadAsStringAsync();
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
                 var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerHeroPerformanceModelArray);
                 if (result is not null)
                 {

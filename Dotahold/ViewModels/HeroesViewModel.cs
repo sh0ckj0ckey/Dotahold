@@ -233,7 +233,7 @@ namespace Dotahold.ViewModels
                 }
                 else
                 {
-                    var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language);
+                    var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language, CancellationToken.None);
                     if (dotaHeroDataModel is not null)
                     {
                         if (!_heroDataModels.TryGetValue(languageIndex, out _))

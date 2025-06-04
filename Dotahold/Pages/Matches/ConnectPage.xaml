@@ -11,7 +11,7 @@
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls"
     xmlns:models="using:Dotahold.Models"
-    NavigationCacheMode="Disabled" Loaded="Page_Loaded">
+    NavigationCacheMode="Disabled" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Page.Resources>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
@@ -71,8 +71,8 @@
                 <Grid Grid.Row="2" Padding="12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox x:Name="SteamIdTextBox" Padding="12,10,12,8" FontSize="18" FontFamily="Consolas" PlaceholderText="Enter your Dota 2 ID" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </Grid>
-                <HyperlinkButton Grid.Row="3" Height="42" Margin="12,0,12,12" Padding="0" Click="ConnectHyperlinkButton_Click"
-                                 Visibility="{}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <HyperlinkButton x:Name="ConnectHyperlinkButton" Grid.Row="3" Height="42" Margin="12,0,12,12" Padding="0" Click="ConnectHyperlinkButton_Click"
+                                 Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <HyperlinkButton.Content>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBlock Text="Connect" FontSize="16" Margin="0,0,0,-2" FontFamily="{ThemeResource ReaverBold}" VerticalAlignment="Center"/>
@@ -80,8 +80,8 @@
                         </StackPanel>
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
-                <StackPanel Grid.Row="3" Height="42" Margin="12,0,12,12" Visibility="{}" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
-                    <muxc:ProgressRing IsActive="{}" Foreground="{ThemeResource DotaholdApplicationForeground}" Width="14" Height="14" VerticalAlignment="Center"/>
+                <StackPanel x:Name="ConnectingStackPanel" Grid.Row="3" Height="42" Margin="12,0,12,12" Visibility="Collapsed" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                    <muxc:ProgressRing x:Name="ConnectingProgressRing" IsActive="False" Foreground="{ThemeResource DotaholdApplicationForeground}" Width="14" Height="14" VerticalAlignment="Center"/>
                     <TextBlock Text="Connecting" FontSize="16" Margin="0,2,8,-2" FontFamily="{ThemeResource ReaverBold}" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>

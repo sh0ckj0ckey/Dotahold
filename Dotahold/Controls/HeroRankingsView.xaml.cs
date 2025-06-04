@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
@@ -15,16 +16,25 @@ namespace Dotahold.Controls
 
         private readonly HeroModel _heroModel;
 
-        private bool _unloaded = false;
+        private CancellationTokenSource? _cancellationTokenSource;
 
         public HeroRankingsView(HeroModel heroModel)
         {
             _heroModel = heroModel;
 
-            this.Loaded += (_, _) => _ = LoadHeroRankings(_heroModel.DotaHeroAttributes.id);
-            this.Unloaded += (_, _) => _unloaded = true;
-
             this.InitializeComponent();
+        }
+
+        private async void UserControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await LoadHeroRankings(_heroModel.DotaHeroAttributes.id);
+        }
+
+        private void UserControl_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
         }
 
         private async Task LoadHeroRankings(int heroId)
@@ -34,6 +44,11 @@ namespace Dotahold.Controls
                 RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 LoadingProgressRing.IsActive = true;
+
+                _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var token = _cancellationTokenSource?.Token ?? CancellationToken.None;
 
                 List<HeroRankingModel>? heroRankings = null;
 
@@ -45,11 +60,22 @@ namespace Dotahold.Controls
                 else
                 {
                     heroRankings = [];
-                    var dotaHeroRankingModels = await ApiCourier.GetHeroRankings(heroId);
+                    var dotaHeroRankingModels = await ApiCourier.GetHeroRankings(heroId, token);
+
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
                     if (dotaHeroRankingModels is not null)
                     {
                         for (int i = 0; i < dotaHeroRankingModels.Length; i++)
                         {
+                            if (token.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
                             heroRankings.Add(new HeroRankingModel(dotaHeroRankingModels[i], i + 1));
                         }
 
@@ -59,29 +85,25 @@ namespace Dotahold.Controls
 
                 RankingsItemsRepeater.ItemsSource = heroRankings;
 
-                RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                LoadingProgressRing.IsActive = false;
-
                 foreach (var heroRanking in heroRankings)
                 {
                     await heroRanking.AvatarImage.LoadImageAsync();
 
-                    if (_unloaded)
+                    if (token.IsCancellationRequested)
                     {
-                        break;
+                        return;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                LogCourier.Log($"Loading hero rankings failed: {ex}", LogCourier.LogType.Error);
-            }
+            catch (Exception ex) { LogCourier.Log($"Loading hero rankings failed: {ex}", LogCourier.LogType.Error); }
             finally
             {
-                if (!_unloaded)
+                if (RankingsScrollViewer is not null)
                 {
                     RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                if (LoadingProgressRing is not null)
+                {
                     LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     LoadingProgressRing.IsActive = false;
                 }

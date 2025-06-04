@@ -185,7 +185,7 @@ namespace Dotahold.Data.Models
             {
                 if (reader.TokenType == JsonTokenType.StartArray)
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
+                    StringBuilder stringBuilder = new();
                     bool first = true;
 
                     while (reader.Read())

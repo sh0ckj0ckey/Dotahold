@@ -94,11 +94,6 @@ namespace Dotahold.Pages.Matches
                     throw new InvalidOperationException("SteamID is not set.");
                 }
 
-                if (_viewModel.ProfileViewModel.IsOverviewLoading)
-                {
-                    return;
-                }
-
                 _currentSteamId = _viewModel.AppSettings.SteamID;
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
             }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
@@ -20,6 +22,8 @@ namespace Dotahold.Pages.Matches
 
         private readonly MainViewModel _viewModel;
 
+        private CancellationTokenSource? _cancellationTokenSource;
+
         public ConnectPage()
         {
             _viewModel = App.Current.MainViewModel;
@@ -29,6 +33,8 @@ namespace Dotahold.Pages.Matches
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            SteamIdTextBox.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+
             if (!_loadedPlayerConnectRecords)
             {
                 _loadedPlayerConnectRecords = true;
@@ -36,10 +42,21 @@ namespace Dotahold.Pages.Matches
             }
         }
 
-        private async void ConnectSteamId(string steamId)
+        private void Page_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        private async Task ConnectSteamId(string steamId)
         {
             try
             {
+                ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                ConnectingProgressRing.IsActive = true;
+
                 if (string.IsNullOrWhiteSpace(steamId))
                 {
                     ConnectionFailedInfoBar.Message = "Dota 2 ID cannot be empty.";
@@ -68,7 +85,17 @@ namespace Dotahold.Pages.Matches
                     }
                 }
 
-                var profile = await ApiCourier.GetPlayerProfile(steamId);
+                _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var token = _cancellationTokenSource?.Token ?? CancellationToken.None;
+
+                var profile = await ApiCourier.GetPlayerProfile(steamId, token);
+
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
 
                 if (profile?.profile is null)
                 {
@@ -87,16 +114,31 @@ namespace Dotahold.Pages.Matches
                 }
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            finally
+            {
+                if (ConnectHyperlinkButton is not null)
+                {
+                    ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                if (ConnectingStackPanel is not null)
+                {
+                    ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
+                if (ConnectingProgressRing is not null)
+                {
+                    ConnectingProgressRing.IsActive = false;
+                }
+            }
         }
 
-        private void ConnectHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void ConnectHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ConnectSteamId(SteamIdTextBox.Text);
+            await ConnectSteamId(SteamIdTextBox.Text);
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ConnectSteamId((sender as Button)?.Tag?.ToString() ?? string.Empty);
+            await ConnectSteamId((sender as Button)?.Tag?.ToString() ?? string.Empty);
         }
 
         private void CloseButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

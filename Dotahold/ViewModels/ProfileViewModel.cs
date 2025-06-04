@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
@@ -11,6 +12,8 @@ namespace Dotahold.ViewModels
 {
     internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel) : ObservableObject
     {
+        private CancellationTokenSource? _cancellationTokenSource;
+
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
 
         private readonly ItemsViewModel _itemsViewModel = itemsViewModel;
@@ -71,11 +74,6 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// Indicates whether the overview is currently loading.
-        /// </summary>
-        public bool IsOverviewLoading { get; set; } = false;
-
-        /// <summary>
         /// List of player connect records, used to show the last few players who connected to the game
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
@@ -84,6 +82,11 @@ namespace Dotahold.ViewModels
         {
             try
             {
+                _cancellationTokenSource?.Cancel();
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
+
                 this.LoadingHeroesAndItems = true;
 
                 await _heroesViewModel.LoadHeroes();
@@ -91,59 +94,61 @@ namespace Dotahold.ViewModels
 
                 this.LoadingHeroesAndItems = false;
 
-                this.IsOverviewLoading = true;
-
-                var profileTask = LoadPlayerProfile(steamId);
-                var winLoseTask = LoadPlayerWinLose(steamId);
+                var profileTask = LoadPlayerProfile(steamId, cancellationToken);
+                var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
 
                 await Task.WhenAll(profileTask, winLoseTask);
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
-            finally
-            {
-                this.IsOverviewLoading = false;
-            }
         }
 
-        private async Task LoadPlayerProfile(string steamId)
+        private async Task LoadPlayerProfile(string steamId, CancellationToken cancellationToken)
         {
             try
             {
                 this.LoadingProfile = true;
                 this.PlayerProfile = null;
 
-                var profile = await ApiCourier.GetPlayerProfile(steamId);
+                var profile = await ApiCourier.GetPlayerProfile(steamId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 if (profile?.profile is not null)
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
                     _ = this.PlayerProfile.AvatarImage.LoadImageAsync();
                 }
-            }
-            catch (Exception ex) { LogCourier.Log($"LoadPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
-            finally
-            {
+
                 this.LoadingProfile = false;
             }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
-        private async Task LoadPlayerWinLose(string steamId)
+        private async Task LoadPlayerWinLose(string steamId, CancellationToken cancellationToken)
         {
             try
             {
                 this.LoadingPlayerWinLose = true;
                 this.PlayerWinLose = null;
 
-                var winLose = await ApiCourier.GetPlayerWinLose(steamId);
+                var winLose = await ApiCourier.GetPlayerWinLose(steamId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 if (winLose is not null)
                 {
                     this.PlayerWinLose = new PlayerWinLoseModel(winLose.Item1, winLose.Item2);
                 }
-            }
-            catch (Exception ex) { LogCourier.Log($"LoadPlayerWinLose({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
-            finally
-            {
+
                 this.LoadingPlayerWinLose = false;
             }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerWinLose({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
         #region Player Connect Records
