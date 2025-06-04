@@ -88,11 +88,11 @@ namespace Dotahold.Pages.Matches
                 _cancellationTokenSource?.Cancel();
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = new CancellationTokenSource();
-                var token = _cancellationTokenSource?.Token ?? CancellationToken.None;
+                var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
 
-                var profile = await ApiCourier.GetPlayerProfile(steamId, token);
+                var profile = await ApiCourier.GetPlayerProfile(steamId, cancellationToken);
 
-                if (token.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }

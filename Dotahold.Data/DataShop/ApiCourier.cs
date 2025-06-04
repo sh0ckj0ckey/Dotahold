@@ -187,7 +187,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformance(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroesPerformance(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/heroes";
 

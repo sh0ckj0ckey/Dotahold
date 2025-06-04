@@ -24,9 +24,15 @@ namespace Dotahold.ViewModels
 
         private bool _loadingPlayerWinLose = false;
 
+        private bool _loadingPlayerOverallPerformance = false;
+
+        private bool _loadingPlayerHeroesPerformance = false;
+
         private PlayerProfileModel? _playerProfile;
 
         private PlayerWinLoseModel? _playerWinLose;
+
+        private int _currentPlayersNumber = 0;
 
         /// <summary>
         /// Indicates whether is currently fetching heroes and items data, overview loading will be blocked until this is done
@@ -56,6 +62,24 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
+        /// Indicates whether is currently fetching the player's overall performance data
+        /// </summary>
+        public bool LoadingPlayerOverallPerformance
+        {
+            get => _loadingPlayerOverallPerformance;
+            set => SetProperty(ref _loadingPlayerOverallPerformance, value);
+        }
+
+        /// <summary>
+        /// Indicates whether is currently fetching the player's heroes performance data
+        /// </summary>
+        public bool LoadingPlayerHeroesPerformance
+        {
+            get => _loadingPlayerHeroesPerformance;
+            set => SetProperty(ref _loadingPlayerHeroesPerformance, value);
+        }
+
+        /// <summary>
         /// Current player's profile
         /// </summary>
         public PlayerProfileModel? PlayerProfile
@@ -71,6 +95,15 @@ namespace Dotahold.ViewModels
         {
             get => _playerWinLose;
             set => SetProperty(ref _playerWinLose, value);
+        }
+
+        /// <summary>
+        /// Current number of players in Dota 2
+        /// </summary>
+        public int CurrentPlayersNumber
+        {
+            get => _currentPlayersNumber;
+            set => SetProperty(ref _currentPlayersNumber, value);
         }
 
         /// <summary>
@@ -96,8 +129,11 @@ namespace Dotahold.ViewModels
 
                 var profileTask = LoadPlayerProfile(steamId, cancellationToken);
                 var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
+                var overallPerformanceTask = LoadPlayerOverallPerformance(steamId, cancellationToken);
+                var heroesPerformanceTask = LoadPlayerHeroesPerformance(steamId, cancellationToken);
+                var currentPlayersTask = LoadCurrentPlayersNumber();
 
-                await Task.WhenAll(profileTask, winLoseTask);
+                await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, currentPlayersTask);
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -149,6 +185,71 @@ namespace Dotahold.ViewModels
                 this.LoadingPlayerWinLose = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerWinLose({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private async Task LoadPlayerOverallPerformance(string steamId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                this.LoadingPlayerOverallPerformance = true;
+
+
+                var overallPerformance = await ApiCourier.GetPlayerOverallPerformance(steamId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (overallPerformance is not null)
+                {
+
+                }
+
+                this.LoadingPlayerOverallPerformance = false;
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerOverallPerformance({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private async Task LoadPlayerHeroesPerformance(string steamId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                this.LoadingPlayerHeroesPerformance = true;
+
+
+                var heroesPerformance = await ApiCourier.GetPlayerHeroesPerformance(steamId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (heroesPerformance is not null)
+                {
+
+                }
+
+                this.LoadingPlayerHeroesPerformance = false;
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerHeroesPerformance({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private async Task LoadCurrentPlayersNumber()
+        {
+            try
+            {
+                this.CurrentPlayersNumber = 0;
+
+                var number = await ApiCourier.GetNumberOfCurrentPlayers();
+
+
+                if (number > 0)
+                {
+                    this.CurrentPlayersNumber = number;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadCurrentPlayersNumber error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
         #region Player Connect Records
