@@ -1,28 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dotahold.Data.Models;
 
 namespace Dotahold.Models
 {
-    public class PlayerOverallPerformanceModel
+    public class PlayerOverallPerformanceModel(DotaPlayerOverallPerformanceModel overall)
     {
-        public string FieldName { get; private set; }
-
-        public string FieldIcon { get; private set; }
-
-        public double Average { get; private set; }
-
-        public PlayerOverallPerformanceModel(DotaPlayerOverallPerformanceModel overall)
+        private static readonly Dictionary<string, string> _fieldNames = new()
         {
-            this.FieldName = overall.field;
-            this.FieldIcon = overall.field switch
-            {
-                "kills" => "",
-                "deaths" => "",
-                "assists" => "",
-                _ => "",
-            };
+            {"kills", "Kills"},
+            {"deaths", "Deaths"},
+            {"assists", "Assists"},
+            {"gold_per_min", "GPM"},
+            {"xp_per_min", "XPM"},
+            {"last_hits", "Last Hits"},
+            {"denies", "Denies"},
+            {"level", "Level"},
+            {"hero_damage", "Hero Damage"},
+            {"tower_damage", "Tower Damage"},
+            {"hero_healing", "Hero Healing"}
+        };
 
-            this.Average = overall.n > 0 ? Math.Floor((overall.sum / overall.n) * 10) / 10 : Math.Floor(overall.sum * 10) / 10;
-        }
+        public string FieldName { get; private set; } = _fieldNames.TryGetValue(overall.field, out string? fieldName) ? fieldName : overall.field.ToUpper().Replace("_", " ");
+
+        public string FieldIcon { get; private set; } = overall.field switch
+        {
+            "kills" => "\uE8F0",
+            "deaths" => "\uF78A",
+            "assists" => "\uE8E1",
+            "gold_per_min" => "\uE9D9",
+            "xp_per_min" => "\uE9D9",
+            "last_hits" => "\uF138",
+            "denies" => "\uEDB1",
+            "level" => "\uEA41",
+            "hero_damage" => "\uEA92",
+            "tower_damage" => "\uECAD",
+            "hero_healing" => "\uF10E",
+            "KDA" => "\uE81E",
+            _ => "",
+        };
+
+        public double Average { get; private set; } = overall.n > 0 ? Math.Floor((overall.sum / overall.n) * 10) / 10 : Math.Floor(overall.sum * 10) / 10;
     }
 }
