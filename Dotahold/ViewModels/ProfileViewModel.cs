@@ -98,6 +98,11 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
+        /// List of player overall performance data
+        /// </summary>
+        public readonly ObservableCollection<PlayerOverallPerformanceModel> PlayerOverallPerformances = [];
+
+        /// <summary>
         /// Current number of players in Dota 2
         /// </summary>
         public int CurrentPlayersNumber
@@ -179,7 +184,7 @@ namespace Dotahold.ViewModels
 
                 if (winLose is not null)
                 {
-                    this.PlayerWinLose = new PlayerWinLoseModel(winLose.Item1, winLose.Item2);
+                    this.PlayerWinLose = new PlayerWinLoseModel(winLose);
                 }
 
                 this.LoadingPlayerWinLose = false;
@@ -192,18 +197,40 @@ namespace Dotahold.ViewModels
             try
             {
                 this.LoadingPlayerOverallPerformance = true;
+                this.PlayerOverallPerformances.Clear();
 
-
-                var overallPerformance = await ApiCourier.GetPlayerOverallPerformance(steamId, cancellationToken);
+                var overallPerformances = await ApiCourier.GetPlayerOverallPerformances(steamId, cancellationToken);
 
                 if (cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }
 
-                if (overallPerformance is not null)
+                if (overallPerformances is not null)
                 {
+                    double kills = -1, deaths = -1, assists = -1;
 
+                    foreach (var performance in overallPerformances)
+                    {
+                        if (performance.field == "kills") kills = performance.n;
+                        if (performance.field == "deaths") deaths = performance.n;
+                        if (performance.field == "assists") assists = performance.n;
+                    }
+
+                    if (kills >= 0 && deaths >= 0 && assists >= 0)
+                    {
+                        this.PlayerOverallPerformances.Add(new PlayerOverallPerformanceModel(new Data.Models.DotaPlayerOverallPerformanceModel
+                        {
+                            field = "KDA",
+                            n = deaths,
+                            sum = kills + assists,
+                        }));
+                    }
+
+                    foreach (var performance in overallPerformances)
+                    {
+                        this.PlayerOverallPerformances.Add(new PlayerOverallPerformanceModel(performance));
+                    }
                 }
 
                 this.LoadingPlayerOverallPerformance = false;
@@ -218,7 +245,7 @@ namespace Dotahold.ViewModels
                 this.LoadingPlayerHeroesPerformance = true;
 
 
-                var heroesPerformance = await ApiCourier.GetPlayerHeroesPerformance(steamId, cancellationToken);
+                var heroesPerformance = await ApiCourier.GetPlayerHeroesPerformances(steamId, cancellationToken);
 
                 if (cancellationToken.IsCancellationRequested)
                 {

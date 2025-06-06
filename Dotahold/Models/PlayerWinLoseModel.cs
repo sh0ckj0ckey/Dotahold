@@ -1,4 +1,6 @@
-﻿namespace Dotahold.Models
+﻿using Dotahold.Data.Models;
+
+namespace Dotahold.Models
 {
     public class PlayerWinLoseModel
     {
@@ -8,11 +10,11 @@
 
         public string WinRate { get; private set; }
 
-        public PlayerWinLoseModel(int win, int lose)
+        public PlayerWinLoseModel(DotaPlayerWinLoseModel winLose)
         {
-            this.Win = win;
-            this.Lose = lose;
-            this.WinRate = Lose == 0 ? "100%" : $"{(double)win / (win + lose) * 100:F2}%";
+            this.Win = winLose.win;
+            this.Lose = winLose.lose;
+            this.WinRate = this.Lose == 0 ? "100%" : $"{(double)this.Win / (this.Win + this.Lose) * 100:F2}%";
         }
     }
 }

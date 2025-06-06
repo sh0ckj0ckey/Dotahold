@@ -139,7 +139,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<Tuple<int, int>?> GetPlayerWinLose(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerWinLoseModel?> GetPlayerWinLose(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/wl";
 
@@ -150,7 +150,7 @@ namespace Dotahold.Data.DataShop
                 var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaPlayerWinLoseModel);
                 if (result is not null)
                 {
-                    return new Tuple<int, int>(result.win, result.lose);
+                    return result;
                 }
             }
             catch (Exception ex) { LogCourier.Log($"GetPlayerWinLose error: {ex.Message}", LogCourier.LogType.Error); }
@@ -163,7 +163,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformance(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformances(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/totals";
 
@@ -187,7 +187,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroesPerformance(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroesPerformances(string id, CancellationToken cancellationToken = default)
         {
             string url = $"https://api.opendota.com/api/players/{id}/heroes";
 
