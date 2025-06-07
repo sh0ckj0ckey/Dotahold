@@ -7,20 +7,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:converters="using:Dotahold.Converters"
+    xmlns:controls="using:Dotahold.Controls"
     NavigationCacheMode="Required" Loaded="Page_Loaded">
 
     <Page.Resources>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:PlayerRankToMedalImageConverter x:Key="PlayerRankToMedalImageConverter"/>
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MaxWidth="360"/>
+            <ColumnDefinition Width="*" MaxWidth="360" MinWidth="180"/>
             <ColumnDefinition Width="1.7*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid x:Name="PlayerOverviewGrid" Grid.Column="0" BorderThickness="0,0,1,0" SizeChanged="PlayerOverviewGrid_SizeChanged" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -79,6 +81,35 @@
             <muxc:ProgressRing Grid.Row="2" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingHeroesAndItems,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingHeroesAndItems,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+            <Grid Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
+                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid x:Name="PlayerProfileGrid" Margin="0,20" ColumnSpacing="12" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Width="64" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Grid Grid.Column="0" Width="64" Height="64" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
+                                <Image Source="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource PlayerRankToMedalImageConverter},ConverterParameter=128}" Height="64" Width="64" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" FontFamily="{ThemeResource ReaverBold}" FontWeight="Bold" FontSize="9" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                           Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"/>
+                            </Grid>
+
+                            <Border Grid.Column="1" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                            <Grid Grid.Column="1" Height="64" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                                  Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
+                                <controls:WinLoseControl Margin="20,0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                         WinValue="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.Win,Mode=OneWay}"
+                                                         LoseValue="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.Lose,Mode=OneWay}"
+                                                         WinRate="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.WinRate,Mode=OneWay}"/>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
 
         <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

@@ -1,0 +1,78 @@
+﻿<UserControl
+    x:Class="Dotahold.Controls.WinLoseControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations">
+    <UserControl.Resources>
+        <Storyboard x:Name="ShowWinLoseTextBlockStoryboard">
+            <DoubleAnimation Storyboard.TargetName="WinLoseTextBlock" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="WinLoseTextBlockTranslation" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="WinRateTextBlock" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="WinRateTextBlockTranslation" Storyboard.TargetProperty="Y" To="-8" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="ShowWinRateTextBlockStoryboard">
+            <DoubleAnimation Storyboard.TargetName="WinRateTextBlock" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="WinRateTextBlockTranslation" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="WinLoseTextBlock" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="WinLoseTextBlockTranslation" Storyboard.TargetProperty="Y" To="8" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="WinLoseGrid" Background="Transparent" RowSpacing="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" PointerEntered="WinLoseGrid_PointerEntered" PointerExited="WinLoseGrid_PointerExited">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border x:Name="AllWinBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#89FF89" Height="16" CornerRadius="4"/>
+            <Border x:Name="AllLoseBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#FF4534" Height="16" CornerRadius="4"/>
+            <Grid x:Name="WinLoseBarGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Transparent" Height="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="WinColumn" Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition x:Name="LoseColumn" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <PathIcon Grid.Column="1" Data="F1 M 0,0 0,16 2,16 8,0" Foreground="#89FF89" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <PathIcon Grid.Column="1" Data="F1 M 0,16 8,16 8,0 6,0" Foreground="#FF4534" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Border Grid.Column="0" Height="16" Margin="0,0,-1,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="4,0,0,4" Background="#89FF89"/>
+                <Border Grid.Column="2" Height="16" Margin="-1,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="0,4,4,0" Background="#FF4534"/>
+            </Grid>
+        </Grid>
+        <TextBlock x:Name="WinRateTextBlock" Grid.Row="1" Opacity="1.0" TextTrimming="CharacterEllipsis" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="WinRateTextBlockTranslation" Y="0"/>
+            </TextBlock.RenderTransform>
+            <Run Text="Win Rate" Foreground="#999999" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind WinRate,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+        </TextBlock>
+        <TextBlock x:Name="WinLoseTextBlock" Grid.Row="1" Opacity="0.0" TextTrimming="CharacterEllipsis" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="WinLoseTextBlockTranslation" Y="8"/>
+            </TextBlock.RenderTransform>
+            <Run Text="Win" Foreground="#89FF89" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind WinValue,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+            <Run Text=" " FontWeight="Medium" FontSize="12"/>
+            <Run Text="Lose" Foreground="#FF4534" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind LoseValue,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+        </TextBlock>
+    </Grid>
+</UserControl>
