@@ -93,7 +93,7 @@
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Image Stretch="UniformToFill" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Button>
                                 </DataTemplate>
@@ -123,7 +123,7 @@
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Image Stretch="UniformToFill" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Button>
                                 </DataTemplate>
@@ -153,7 +153,7 @@
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Image Stretch="UniformToFill" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Button>
                                 </DataTemplate>
@@ -183,7 +183,7 @@
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Image Stretch="UniformToFill" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Button>
                                 </DataTemplate>

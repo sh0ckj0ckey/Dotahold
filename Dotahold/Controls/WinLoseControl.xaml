@@ -43,18 +43,18 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border x:Name="AllWinBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#89FF89" Height="16" CornerRadius="4"/>
-            <Border x:Name="AllLoseBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="#FF4534" Height="16" CornerRadius="4"/>
+            <Border x:Name="AllWinBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="ForestGreen" Height="16" CornerRadius="4"/>
+            <Border x:Name="AllLoseBorder" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Firebrick" Height="16" CornerRadius="4"/>
             <Grid x:Name="WinLoseBarGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Transparent" Height="16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="WinColumn" Width="*"/>
                     <ColumnDefinition Width="14"/>
                     <ColumnDefinition x:Name="LoseColumn" Width="*"/>
                 </Grid.ColumnDefinitions>
-                <PathIcon Grid.Column="1" Data="F1 M 0,0 0,16 2,16 8,0" Foreground="#89FF89" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <PathIcon Grid.Column="1" Data="F1 M 0,16 8,16 8,0 6,0" Foreground="#FF4534" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                <Border Grid.Column="0" Height="16" Margin="0,0,-1,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="4,0,0,4" Background="#89FF89"/>
-                <Border Grid.Column="2" Height="16" Margin="-1,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="0,4,4,0" Background="#FF4534"/>
+                <PathIcon Grid.Column="1" Data="F1 M 0,0 0,16 2,16 8,0" Foreground="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <PathIcon Grid.Column="1" Data="F1 M 0,16 8,16 8,0 6,0" Foreground="Firebrick" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Border Grid.Column="0" Height="16" Margin="0,0,-1,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="4,0,0,4" Background="ForestGreen"/>
+                <Border Grid.Column="2" Height="16" Margin="-1,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" CornerRadius="0,4,4,0" Background="Firebrick"/>
             </Grid>
         </Grid>
         <TextBlock x:Name="WinRateTextBlock" Grid.Row="1" Opacity="1.0" TextTrimming="CharacterEllipsis" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
@@ -68,10 +68,10 @@
             <TextBlock.RenderTransform>
                 <TranslateTransform x:Name="WinLoseTextBlockTranslation" Y="8"/>
             </TextBlock.RenderTransform>
-            <Run Text="Win" Foreground="#89FF89" FontWeight="Medium" FontSize="12"/>
+            <Run Text="Win" Foreground="ForestGreen" FontWeight="Medium" FontSize="12"/>
             <Run Text="{x:Bind WinValue,Mode=OneWay}" FontWeight="Medium" FontSize="13" FontFamily="{ThemeResource RadianceSemiBold}"/>
             <Run Text=" " FontWeight="Medium" FontSize="12"/>
-            <Run Text="Lose" Foreground="#FF4534" FontWeight="Medium" FontSize="12"/>
+            <Run Text="Lose" Foreground="Firebrick" FontWeight="Medium" FontSize="12"/>
             <Run Text="{x:Bind LoseValue,Mode=OneWay}" FontWeight="Medium" FontSize="13" FontFamily="{ThemeResource RadianceSemiBold}"/>
         </TextBlock>
     </Grid>
