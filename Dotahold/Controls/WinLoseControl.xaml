@@ -61,18 +61,18 @@
             <TextBlock.RenderTransform>
                 <TranslateTransform x:Name="WinRateTextBlockTranslation" Y="0"/>
             </TextBlock.RenderTransform>
-            <Run Text="Win Rate" Foreground="#999999" FontWeight="Medium" FontSize="12"/>
-            <Run Text="{x:Bind WinRate,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+            <Run Text="Win Rate" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind WinRate,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontWeight="Medium" FontSize="13"/>
         </TextBlock>
         <TextBlock x:Name="WinLoseTextBlock" Grid.Row="1" Opacity="0.0" TextTrimming="CharacterEllipsis" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
             <TextBlock.RenderTransform>
                 <TranslateTransform x:Name="WinLoseTextBlockTranslation" Y="8"/>
             </TextBlock.RenderTransform>
             <Run Text="Win" Foreground="#89FF89" FontWeight="Medium" FontSize="12"/>
-            <Run Text="{x:Bind WinValue,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind WinValue,Mode=OneWay}" FontWeight="Medium" FontSize="13" FontFamily="{ThemeResource RadianceSemiBold}"/>
             <Run Text=" " FontWeight="Medium" FontSize="12"/>
             <Run Text="Lose" Foreground="#FF4534" FontWeight="Medium" FontSize="12"/>
-            <Run Text="{x:Bind LoseValue,Mode=OneWay}" FontWeight="Medium" FontSize="12"/>
+            <Run Text="{x:Bind LoseValue,Mode=OneWay}" FontWeight="Medium" FontSize="13" FontFamily="{ThemeResource RadianceSemiBold}"/>
         </TextBlock>
     </Grid>
 </UserControl>

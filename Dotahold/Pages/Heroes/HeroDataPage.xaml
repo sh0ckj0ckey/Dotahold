@@ -273,8 +273,7 @@
                            IsActive="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-        <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
+        <Grid Grid.Row="3" Visibility="{x:Bind _viewModel.HeroesViewModel.LoadingHeroData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                           HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">

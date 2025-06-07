@@ -6,6 +6,8 @@ namespace Dotahold.Models
 {
     public class PlayerOverallPerformanceModel(DotaPlayerOverallPerformanceModel overall)
     {
+        public static bool IsFieldAvailable(string fieldName) => _fieldNames.ContainsKey(fieldName);
+
         private static readonly Dictionary<string, string> _fieldNames = new()
         {
             {"kills", "Kills"},
@@ -18,7 +20,8 @@ namespace Dotahold.Models
             {"level", "Level"},
             {"hero_damage", "Hero Damage"},
             {"tower_damage", "Tower Damage"},
-            {"hero_healing", "Hero Healing"}
+            {"hero_healing", "Hero Healing"},
+            {"KDA", "KDA"},
         };
 
         public string FieldName { get; private set; } = _fieldNames.TryGetValue(overall.field, out string? fieldName) ? fieldName : overall.field.ToUpper().Replace("_", " ");
@@ -26,16 +29,16 @@ namespace Dotahold.Models
         public string FieldIcon { get; private set; } = overall.field switch
         {
             "kills" => "\uE8F0",
-            "deaths" => "\uF78A",
+            "deaths" => "\uE624",
             "assists" => "\uE8E1",
             "gold_per_min" => "\uE9D9",
             "xp_per_min" => "\uE9D9",
             "last_hits" => "\uF138",
-            "denies" => "\uEDB1",
-            "level" => "\uEA41",
+            "denies" => "\uE783",
+            "level" => "\uE752",
             "hero_damage" => "\uEA92",
             "tower_damage" => "\uECAD",
-            "hero_healing" => "\uF10E",
+            "hero_healing" => "\uF1E8",
             "KDA" => "\uE81E",
             _ => "",
         };

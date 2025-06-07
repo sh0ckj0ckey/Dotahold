@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:converters="using:Dotahold.Converters"
-    xmlns:controls="using:Dotahold.Controls"
+    xmlns:controls="using:Dotahold.Controls" 
+    xmlns:models="using:Dotahold.Models"
     NavigationCacheMode="Required" Loaded="Page_Loaded">
 
     <Page.Resources>
@@ -86,7 +87,9 @@
                               HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                               HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                        <Grid x:Name="PlayerProfileGrid" Margin="0,20" ColumnSpacing="12" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                        <!--Player Rank and Win Rate-->
+                        <Grid x:Name="PlayerProfileGrid" ColumnSpacing="12" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -101,12 +104,42 @@
                             <Border Grid.Column="1" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                             <Grid Grid.Column="1" Height="64" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
-                                <controls:WinLoseControl Margin="20,0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                <controls:WinLoseControl Margin="20,4,20,-4" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                          WinValue="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.Win,Mode=OneWay}"
                                                          LoseValue="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.Lose,Mode=OneWay}"
                                                          WinRate="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.WinRate,Mode=OneWay}"/>
                             </Grid>
                         </Grid>
+
+                        <!--Player Overall Fileds-->
+                        <Border Margin="16,8,16,0" Height="48" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                                      Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
+                            <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerOverallPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="4" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <muxc:ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="models:PlayerOverallPerformanceModel">
+                                        <Grid Height="48" MinWidth="96" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                                            <ToolTipService.ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="Average"/>
+                                                    <Run Text="{x:Bind FieldName}"/>
+                                                    <Run Text="per game"/>
+                                                </TextBlock>
+                                            </ToolTipService.ToolTip>
+                                            <FontIcon Glyph="{x:Bind FieldIcon}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                            <StackPanel Padding="12,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="{x:Bind FieldName}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                                <TextBlock Text="{x:Bind Average}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </muxc:ItemsRepeater.ItemTemplate>
+                            </muxc:ItemsRepeater>
+                        </ScrollViewer>
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

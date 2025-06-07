@@ -229,7 +229,10 @@ namespace Dotahold.ViewModels
 
                     foreach (var performance in overallPerformances)
                     {
-                        this.PlayerOverallPerformances.Add(new PlayerOverallPerformanceModel(performance));
+                        if (PlayerOverallPerformanceModel.IsFieldAvailable(performance.field))
+                        {
+                            this.PlayerOverallPerformances.Add(new PlayerOverallPerformanceModel(performance));
+                        }
                     }
                 }
 

@@ -28,6 +28,7 @@ namespace Dotahold.Pages.Matches
             try
             {
                 PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
+                PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
 
                 if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
@@ -48,6 +49,12 @@ namespace Dotahold.Pages.Matches
                 }
             }
             catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private void PlayerOverviewGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
+            PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
         }
 
         /// <summary>
@@ -100,11 +107,6 @@ namespace Dotahold.Pages.Matches
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        private void PlayerOverviewGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
-        {
-            PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
         }
     }
 }
