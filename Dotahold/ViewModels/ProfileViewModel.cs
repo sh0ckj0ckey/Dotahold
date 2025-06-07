@@ -103,7 +103,7 @@ namespace Dotahold.ViewModels
         public readonly ObservableCollection<PlayerOverallPerformanceModel> PlayerOverallPerformances = [];
 
         /// <summary>
-        /// Current number of players in Dota 2
+        /// Current number of players in the game
         /// </summary>
         public int CurrentPlayersNumber
         {

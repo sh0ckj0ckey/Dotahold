@@ -27,8 +27,7 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
-                PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
+                UpdateLayoutsWidth();
 
                 if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
@@ -53,8 +52,14 @@ namespace Dotahold.Pages.Matches
 
         private void PlayerOverviewGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
+            UpdateLayoutsWidth();
+        }
+
+        private void UpdateLayoutsWidth()
+        {
             PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
             PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
+            PlayerCurrentNumberGrid.MaxWidth = PlayerOverviewGrid.ActualWidth - 32;
         }
 
         /// <summary>

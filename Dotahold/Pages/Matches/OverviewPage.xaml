@@ -151,6 +151,19 @@
                             </muxc:ItemsRepeater>
                         </ScrollViewer>
 
+                        <!--Current Players Number-->
+                        <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,16,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <BitmapIcon Grid.Column="0" UriSource="/Assets/icon_dota2.png" Height="16" ShowAsMonochrome="True"/>
+                            <TextBlock Grid.Column="1" Margin="0,1,0,-1" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
+                                <Run Text="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                                <Run Text="players in game now" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                            </TextBlock>
+                        </Grid>
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
