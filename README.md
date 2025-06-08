@@ -7,9 +7,9 @@
 > Data is collected through the Steam WebAPI, as well as replay parsing of .dem files. The replay file contains much more data than the WebAPI, at the cost of additional CPU time spent to process the file. As a result, replay parsing can only be done for a subset of the matches played, while basic data from the API is collected for every public match.
 
 
-This is a third-party application for Dota 2 statistics, the match data from Steam Api and OpenDota, and the Heroes' information is from the Dota 2 official website. If you have any suggestions or violate your rights, please contact the developer yaoyiming123@live.com. 
+This is a third-party application for Dota 2 statistics, the match data from Steam API and OpenDota, and the Heroes' information is from the Dota 2 official website. If you have any suggestions or violate your rights, please contact the developer. 
 
-<a href="https://apps.microsoft.com/detail/9nskqn4v8x94?mode=direct">
+<a href="https://apps.microsoft.com/detail/9nskqn4v8x94?referrer=appbadge&cid=github&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
@@ -32,9 +32,13 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 #### Match Detail
 ![5.png](Dotahold/Assets/Store/5.png)
 
-### References
-| Name | License | Website |
-| --- | --- | --- |
-| UWP Community Toolkit | [MIT License](https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md) | [github.com/Microsoft/UWPCommunityToolkit ](https://github.com/Microsoft/UWPCommunityToolkit) |
-| Microsoft.UI.Xaml | [MIT License](https://github.com/microsoft/microsoft-ui-xaml/blob/main/LICENSE) | [github.com/Microsoft/microsoft-ui-xaml](https://github.com/Microsoft/microsoft-ui-xaml) |
-| OpenDota | [MIT License](https://github.com/odota/core/blob/master/LICENSE) | [github.com/odota](https://github.com/odota) |
+### Dota 2 Official API Quick Reference
+https://www.dota2.com/datafeed/herolist?language={language}
+https://www.dota2.com/datafeed/itemlist?language={language}
+https://www.dota2.com/datafeed/abilitylist?language={language}
+https://www.dota2.com/datafeed/herodata?language={language}&hero_id={id}
+https://www.dota2.com/datafeed/itemdata?language={language}&item_id={id}
+https://www.dota2.com/datafeed/abilitydata?language={language}&ability_id={id}
+
+### OpenDota API
+https://docs.opendota.com/
