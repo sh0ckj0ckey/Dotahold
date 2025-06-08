@@ -99,19 +99,21 @@
                               HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
 
-                        <!--Player Rank and Win Rate-->
-                        <Grid x:Name="PlayerProfileGrid" ColumnSpacing="12" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Grid x:Name="PlayerProfileGrid" ColumnSpacing="6" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="72"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" Width="64" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Grid Grid.Column="0" Width="64" Height="64" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
+
+                            <!--Player Rank-->
+                            <Border Grid.Column="0" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                            <Grid Grid.Column="0" Width="64" Height="64" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Image Source="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource PlayerRankToMedalImageConverter},ConverterParameter=128}" Height="64" Width="64" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" FontFamily="{ThemeResource ReaverBold}" FontWeight="Bold" FontSize="9" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                                            Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.leaderboard_rank,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"/>
                             </Grid>
 
+                            <!--Player Win Rate-->
                             <Border Grid.Column="1" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                             <Grid Grid.Column="1" Height="64" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
@@ -120,15 +122,25 @@
                                                          LoseValue="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.Lose,Mode=OneWay}"
                                                          WinRate="{x:Bind _viewModel.ProfileViewModel.PlayerWinLose.WinRate,Mode=OneWay}"/>
                             </Grid>
+
                         </Grid>
 
                         <!--Player Overall Fileds-->
-                        <Border Margin="16,8,16,0" Height="48" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                        <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                        <Grid Margin="16,6,16,0" Height="48" Opacity="0.5" ColumnSpacing="6" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Border Grid.Column="1" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Border Grid.Column="2" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Grid>
+                        <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,6,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerOverallPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <muxc:ItemsRepeater.Layout>
-                                    <muxc:StackLayout Orientation="Horizontal" Spacing="4" DisableVirtualization="True"/>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
                                 </muxc:ItemsRepeater.Layout>
                                 <muxc:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="models:PlayerOverallPerformanceModel">
@@ -151,7 +163,7 @@
                             </muxc:ItemsRepeater>
                         </ScrollViewer>
 
-                        <!--Player Played Heroes-->
+                        <!--Player Played Heroes Button-->
                         <HyperlinkButton Height="36" Margin="16,16,16,0" Background="Transparent" Foreground="{ThemeResource DotaholdApplicationForeground}"
                                          HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid Opacity="0.8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -162,12 +174,21 @@
                         </HyperlinkButton>
 
                         <!--Player Most Played Heroes-->
-                        <Border Margin="16,8,16,0" Height="48" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        <Grid Margin="16,8,16,0" Height="48" Opacity="0.5" ColumnSpacing="6" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Border Grid.Column="1" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Border Grid.Column="2" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Grid>
                         <ScrollViewer x:Name="PlayerHeroesScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformancesTop10,Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <muxc:ItemsRepeater.Layout>
-                                    <muxc:StackLayout Orientation="Horizontal" Spacing="4" DisableVirtualization="True"/>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
                                 </muxc:ItemsRepeater.Layout>
                                 <muxc:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="models:PlayerHeroPerformanceModel">
@@ -188,7 +209,6 @@
                                 </muxc:ItemsRepeater.ItemTemplate>
                             </muxc:ItemsRepeater>
                         </ScrollViewer>
-
 
                         <!--Current Players Number-->
                         <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,24,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
