@@ -103,6 +103,16 @@ namespace Dotahold.ViewModels
         public readonly ObservableCollection<PlayerOverallPerformanceModel> PlayerOverallPerformances = [];
 
         /// <summary>
+        /// List of player hero performance, used to show the top 10 heroes played by the player
+        /// </summary>
+        public readonly ObservableCollection<PlayerHeroPerformanceModel> PlayerHeroPerformancesTop10 = [];
+
+        /// <summary>
+        /// List of player hero performance, used to show the performance of each hero played by the player
+        /// </summary>
+        public readonly ObservableCollection<PlayerHeroPerformanceModel> PlayerHeroPerformances = [];
+
+        /// <summary>
         /// Current number of players in the game
         /// </summary>
         public int CurrentPlayersNumber
@@ -246,18 +256,28 @@ namespace Dotahold.ViewModels
             try
             {
                 this.LoadingPlayerHeroesPerformance = true;
+                this.PlayerHeroPerformances.Clear();
 
-
-                var heroesPerformance = await ApiCourier.GetPlayerHeroesPerformances(steamId, cancellationToken);
+                var heroPerformances = await ApiCourier.GetPlayerHeroPerformances(steamId, cancellationToken);
 
                 if (cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }
 
-                if (heroesPerformance is not null)
+                if (heroPerformances is not null)
                 {
+                    foreach (var heroPerformance in heroPerformances)
+                    {
+                        var hero = _heroesViewModel.GetHeroById(heroPerformance.hero_id.ToString());
+                        var performanceModel = new PlayerHeroPerformanceModel(heroPerformance, hero);
+                        this.PlayerHeroPerformances.Add(performanceModel);
 
+                        if (this.PlayerHeroPerformancesTop10.Count < 10)
+                        {
+                            this.PlayerHeroPerformancesTop10.Add(performanceModel);
+                        }
+                    }
                 }
 
                 this.LoadingPlayerHeroesPerformance = false;

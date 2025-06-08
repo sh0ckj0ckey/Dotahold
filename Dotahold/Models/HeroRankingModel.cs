@@ -13,7 +13,7 @@ namespace Dotahold.Models
 
         public DotaHeroRankingModel DotaHeroRanking { get; private set; }
 
-        public int Rank { get; set; }
+        public int Rank { get; private set; }
 
         public AsyncImage AvatarImage { get; private set; }
 

@@ -13,11 +13,11 @@ namespace Dotahold.Models
 
         public AsyncImage AvatarImage { get; private set; }
 
-        public string SteamId { get; set; } = string.Empty;
+        public string SteamId { get; private set; } = string.Empty;
 
-        public string Avatar { get; set; } = string.Empty;
+        public string Avatar { get; private set; } = string.Empty;
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         public PlayerConnectRecordModel(string steamId, string avatar, string name)
         {

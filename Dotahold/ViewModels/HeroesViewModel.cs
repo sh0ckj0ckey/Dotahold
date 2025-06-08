@@ -273,5 +273,15 @@ namespace Dotahold.ViewModels
                 this.LoadingHeroData = false;
             }
         }
+
+        public HeroModel? GetHeroById(string heroId)
+        {
+            if (_heroModels.TryGetValue(heroId, out var heroModel))
+            {
+                return heroModel;
+            }
+
+            return null;
+        }
     }
 }

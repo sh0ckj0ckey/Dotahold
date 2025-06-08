@@ -59,6 +59,7 @@ namespace Dotahold.Pages.Matches
         {
             PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 32;
             PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
+            PlayerHeroesScrollViewer.Width = PlayerOverviewGrid.ActualWidth;
             PlayerCurrentNumberGrid.MaxWidth = PlayerOverviewGrid.ActualWidth - 32;
         }
 

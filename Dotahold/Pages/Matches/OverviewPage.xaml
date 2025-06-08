@@ -151,8 +151,47 @@
                             </muxc:ItemsRepeater>
                         </ScrollViewer>
 
+                        <!--Player Played Heroes-->
+                        <HyperlinkButton Height="36" Margin="16,16,16,0" Background="Transparent" Foreground="{ThemeResource DotaholdApplicationForeground}"
+                                         HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <Grid Opacity="0.8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock Text="Heroes Played" FontSize="15" FontFamily="{ThemeResource ReaverBold}"
+                                           Margin="0,2,0,-2" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <FontIcon Glyph="&#xE970;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,1,0,-1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+                        </HyperlinkButton>
+
+                        <!--Player Most Played Heroes-->
+                        <Border Margin="16,8,16,0" Height="48" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        <ScrollViewer x:Name="PlayerHeroesScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                                      Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
+                            <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformancesTop10,Mode=OneWay}" HorizontalAlignment="Stretch">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="4" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <muxc:ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="models:PlayerHeroPerformanceModel">
+                                        <Button Height="48" MinWidth="96" Padding="12,0,16,0">
+                                            <ToolTipService.ToolTip>
+                                                <TextBlock Text="{x:Bind Hero.DotaHeroAttributes.localized_name}"/>
+                                            </ToolTipService.ToolTip>
+                                            <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Image Source="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind Games}" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                                    <LineBreak/>
+                                                    <Run Text="{x:Bind WinRate}" FontSize="13" Foreground="ForestGreen" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </muxc:ItemsRepeater.ItemTemplate>
+                            </muxc:ItemsRepeater>
+                        </ScrollViewer>
+
+
                         <!--Current Players Number-->
-                        <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,16,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,24,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
