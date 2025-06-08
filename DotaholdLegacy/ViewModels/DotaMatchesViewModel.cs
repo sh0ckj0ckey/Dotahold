@@ -445,62 +445,6 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// 获取玩家常用英雄数据
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private async void GetHeroesPlayedAsync(string id)
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Going to GetHeroesPlayed ---> " + DateTime.Now.Ticks);
-
-                bLoadingPlayed = true;
-                vMostPlayed10Heroes.Clear();
-                vMostPlayedHeroes.Clear();
-
-                string url = string.Format("https://api.opendota.com/api/players/{0}/heroes", id);
-                List<DotaMatchHeroPlayedModel> heroes = null;
-
-                try
-                {
-                    heroes = await GetResponseAsync<List<DotaMatchHeroPlayedModel>>(url, _matchHttpClient);
-                }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
-                if (heroes != null)
-                {
-                    foreach (var item in heroes)
-                    {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(item.hero_id.ToString()) == true)
-                        {
-                            item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/icons/{0}.png",
-                                DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                            item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-
-                            double rate = 0;
-                            if (item.games > 0)
-                                rate = (item.win ?? 0) / (item.games ?? 1);
-                            else
-                                rate = 1;
-                            item.sWinRate = (Math.Floor(1000 * rate) / 10).ToString() + "%";
-
-                            vMostPlayedHeroes.Add(item);
-                            if (vMostPlayed10Heroes.Count < 10)
-                                vMostPlayed10Heroes.Add(item);
-                        }
-                    }
-                    foreach (var item in vMostPlayedHeroes)
-                    {
-                        await item.LoadImageAsync(36);
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            finally { bLoadingPlayed = false; }
-        }
-
-        /// <summary>
         /// 获取指定英雄的比赛记录
         /// </summary>
         /// <param name="hero"></param>

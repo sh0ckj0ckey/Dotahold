@@ -16,23 +16,30 @@ namespace Dotahold.Data.DataShop
 
         private static Dictionary<string, long>? _dictConstantsGottenDate = null;
 
-        private const string _heroesJsonFileName = "heroesjson";
+        private const string _heroesJsonFileName = "heroes_json";
 
-        private const string _itemsJsonFileName = "itemsjson";
+        private const string _itemsJsonFileName = "items_json";
 
-        private const string _buffsJsonFileName = "permanentbuffsjson";
+        private const string _abilitiesJsonFileName = "abilities_json";
 
-        private const string _abilitiesJsonFileName = "abilitiesjson";
+        private const string _buffsJsonFileName = "permanent_buffs_json";
+
+        private const string _abilityIdsJsonFileName = "ability_ids_json";
 
         /// <summary>
         /// 英雄字典
         /// </summary>
-        private static Dictionary<string, Models.DotaHeroModel>? _dictHeroes = null;
+        private static Dictionary<string, DotaHeroModel>? _dictHeroes = null;
 
         /// <summary>
         /// 物品字典
         /// </summary>
-        private static Dictionary<string, Models.DotaItemModel>? _dictItems = null;
+        private static Dictionary<string, DotaItemModel>? _dictItems = null;
+
+        /// <summary>
+        /// 技能字典
+        /// </summary>
+        private static Dictionary<string, DotaAibilitiesModel>? _dictAbilities = null;
 
         /// <summary>
         /// 永久buff字典
@@ -119,7 +126,7 @@ namespace Dotahold.Data.DataShop
         /// 获取物品列表
         /// </summary>
         /// <returns></returns>
-        public static async Task<Dictionary<string, Models.DotaItemModel>> GetItemsConstant()
+        public static async Task<Dictionary<string, DotaItemModel>> GetItemsConstant()
         {
             if (_dictItems is null)
             {
@@ -174,6 +181,67 @@ namespace Dotahold.Data.DataShop
             _dictItems ??= [];
 
             return _dictItems;
+        }
+
+        /// <summary>
+        /// 获取技能列表
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<Dictionary<string, DotaAibilitiesModel>> GetAbilitiesConstant()
+        {
+            if (_dictAbilities is null)
+            {
+                try
+                {
+                    var json = await StorageFilesCourier.ReadFileAsync(_abilitiesJsonFileName);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                    }
+                }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            if (_dictAbilities is null)
+            {
+                try
+                {
+                    StorageFolder rootFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                    StorageFolder dataFolder = await rootFolder.GetFolderAsync("Dotahold.Data");
+                    StorageFolder dataShopFolder = await dataFolder.GetFolderAsync("DataShop");
+                    StorageFolder constantsJsonsFolder = await dataShopFolder.GetFolderAsync("ConstantsJsons");
+                    var json = await StorageFilesCourier.ReadFileAsync("hero_abilities.json", constantsJsonsFolder);
+                    if (!string.IsNullOrWhiteSpace(json))
+                    {
+                        _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                    }
+                }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            if (_dictAbilities is null || CheckNeed2UpdateJson("hero_abilities"))
+            {
+                try
+                {
+                    if (_dictAbilities is null)
+                    {
+                        var json = await GetConstant("hero_abilities", _abilitiesJsonFileName);
+                        if (!string.IsNullOrWhiteSpace(json))
+                        {
+                            _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                        }
+                    }
+                    else
+                    {
+                        _ = GetConstant("hero_abilities", _abilitiesJsonFileName);
+                    }
+                }
+                catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+            }
+
+            _dictAbilities ??= [];
+
+            return _dictAbilities;
         }
 
         /// <summary>
@@ -247,7 +315,7 @@ namespace Dotahold.Data.DataShop
             {
                 try
                 {
-                    var json = await StorageFilesCourier.ReadFileAsync(_abilitiesJsonFileName);
+                    var json = await StorageFilesCourier.ReadFileAsync(_abilityIdsJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
                         _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
@@ -279,7 +347,7 @@ namespace Dotahold.Data.DataShop
                 {
                     if (_dictAbilitiesId is null)
                     {
-                        var json = await GetConstant("ability_ids", _abilitiesJsonFileName);
+                        var json = await GetConstant("ability_ids", _abilityIdsJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
                             _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
@@ -287,7 +355,7 @@ namespace Dotahold.Data.DataShop
                     }
                     else
                     {
-                        _ = GetConstant("ability_ids", _abilitiesJsonFileName);
+                        _ = GetConstant("ability_ids", _abilityIdsJsonFileName);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
