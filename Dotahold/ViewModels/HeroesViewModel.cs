@@ -22,19 +22,9 @@ namespace Dotahold.ViewModels
         private Task? _loadHeroesTask = null;
 
         /// <summary>
-        /// Task to load abilities, used to prevent multiple simultaneous loads
-        /// </summary>
-        private Task? _loadAbilitiesTask = null;
-
-        /// <summary>
         /// HeroId to HeroModel
         /// </summary>
         private readonly Dictionary<string, HeroModel> _heroModels = [];
-
-        /// <summary>
-        /// Hero name to AbilitiesModel
-        /// </summary>
-        private readonly Dictionary<string, AbilitiesModel> _abilitiesModels = [];
 
         /// <summary>
         /// Language to HeroId to HeroDataModel
@@ -218,60 +208,6 @@ namespace Dotahold.ViewModels
             }
         }
 
-        public async Task LoadAbilities()
-        {
-            if (_loadAbilitiesTask is not null)
-            {
-                await _loadAbilitiesTask;
-                return;
-            }
-
-            _loadAbilitiesTask = LoadAbilitiesInternal();
-
-            try
-            {
-                await _loadAbilitiesTask;
-            }
-            finally
-            {
-                _loadAbilitiesTask = null;
-            }
-        }
-
-        private async Task LoadAbilitiesInternal()
-        {
-            try
-            {
-                if (_abilitiesModels.Count > 0)
-                {
-                    return;
-                }
-
-                Dictionary<string, Data.Models.DotaAibilitiesModel> abilitiesConstant = await ConstantsCourier.GetAbilitiesConstant();
-
-                foreach (var abilitiesKV in abilitiesConstant)
-                {
-                    var abilities = new AbilitiesModel(abilitiesKV.Value);
-                    _abilitiesModels[abilitiesKV.Key] = abilities;
-                }
-
-                foreach (var abilities in _abilitiesModels.Values)
-                {
-                    if (abilities.AbilitiesFacets.Length > 0)
-                    {
-                        foreach (var abilitiesFacet in abilities.AbilitiesFacets)
-                        {
-                            _ = SafeLoadImageAsync(() => abilitiesFacet.IconImage.LoadImageAsync());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogCourier.Log($"Loading abilities failed: {ex}", LogCourier.LogType.Error);
-            }
-        }
-
         public async Task PickHero(HeroModel heroModel, int languageIndex)
         {
             try
@@ -342,16 +278,6 @@ namespace Dotahold.ViewModels
             if (_heroModels.TryGetValue(heroId, out var heroModel))
             {
                 return heroModel;
-            }
-
-            return null;
-        }
-
-        public AbilitiesModel? GetAbilitiesByHeroName(string heroName)
-        {
-            if (_abilitiesModels.TryGetValue(heroName, out var abilitiesModel))
-            {
-                return abilitiesModel;
             }
 
             return null;

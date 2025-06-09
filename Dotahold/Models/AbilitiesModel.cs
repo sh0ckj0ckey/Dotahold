@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dotahold.Data.Models;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Media;
 using Dotahold.Data.DataShop;
+using Dotahold.Data.Models;
+using Dotahold.Helpers;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
@@ -79,7 +77,7 @@ namespace Dotahold.Models
             this.Name = facetData.name;
             this.Title = facetData.title;
             this.Description = facetData.description;
-            this.BackgroundBrush = AbilityColorsHelper.GetFacetGradientBrush($"FacetColor{AbilityColorsHelper.GetFacetColorName(int.TryParse(facetData.color, out int color) ? color : -1)}{facetData.gradient_id}");
+            this.BackgroundBrush = ColorHelper.GetFacetGradientBrush($"FacetColor{ColorHelper.GetFacetColorName(int.TryParse(facetData.color, out int color) ? color : -1)}{facetData.gradient_id}");
             this.Index = facetData.id;
         }
 
