@@ -138,6 +138,7 @@ namespace Dotahold.ViewModels
                 this.LoadingHeroesAndItems = true;
 
                 await _heroesViewModel.LoadHeroes();
+                await _heroesViewModel.LoadAbilities();
                 await _itemsViewModel.LoadItems();
 
                 this.LoadingHeroesAndItems = false;

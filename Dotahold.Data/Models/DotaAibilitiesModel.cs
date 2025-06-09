@@ -6,10 +6,10 @@ namespace Dotahold.Data.Models
     {
         public string[]? abilities { get; set; } = [];
 
-        public DotaAibilitiesFacets[]? facets { get; set; } = [];
+        public DotaAibilitiesFacet[]? facets { get; set; } = [];
     }
 
-    public class DotaAibilitiesFacets
+    public class DotaAibilitiesFacet
     {
         [JsonConverter(typeof(SafeIntConverter))]
         public int id { get; set; }

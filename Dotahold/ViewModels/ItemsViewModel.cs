@@ -96,14 +96,13 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (this.Loading || _itemModels.Count > 0)
+                if (_itemModels.Count > 0)
                 {
                     return;
                 }
 
                 this.Loading = true;
 
-                _itemModels.Clear();
                 _allItems.Clear();
                 this.Items.Clear();
 
