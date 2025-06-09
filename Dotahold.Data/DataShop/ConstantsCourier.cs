@@ -29,27 +29,27 @@ namespace Dotahold.Data.DataShop
         /// <summary>
         /// 英雄字典
         /// </summary>
-        private static Dictionary<string, DotaHeroModel>? _dictHeroes = null;
+        private static Dictionary<string, DotaHeroModel>? _heroes = null;
 
         /// <summary>
         /// 物品字典
         /// </summary>
-        private static Dictionary<string, DotaItemModel>? _dictItems = null;
+        private static Dictionary<string, DotaItemModel>? _items = null;
 
         /// <summary>
         /// 技能字典
         /// </summary>
-        private static Dictionary<string, DotaAibilitiesModel>? _dictAbilities = null;
+        private static Dictionary<string, DotaAibilitiesModel>? _abilities = null;
 
         /// <summary>
         /// 永久buff字典
         /// </summary>
-        private static Dictionary<string, string>? _dictPermanentBuffs = null;
+        private static Dictionary<string, string>? _permanentBuffs = null;
 
         /// <summary>
         /// 技能ID与名称字典
         /// </summary>
-        private static Dictionary<string, string>? _dictAbilitiesId = null;
+        private static Dictionary<string, string>? _abilityIds = null;
 
         /// <summary>
         /// 英雄和物品图片地址的域名
@@ -67,20 +67,20 @@ namespace Dotahold.Data.DataShop
         /// <returns></returns>
         public static async Task<Dictionary<string, DotaHeroModel>> GetHeroesConstant()
         {
-            if (_dictHeroes is null)
+            if (_heroes is null)
             {
                 try
                 {
                     var json = await StorageFilesCourier.ReadFileAsync(_heroesJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictHeroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
+                        _heroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictHeroes is null)
+            if (_heroes is null)
             {
                 try
                 {
@@ -91,22 +91,22 @@ namespace Dotahold.Data.DataShop
                     var json = await StorageFilesCourier.ReadFileAsync("heroes.json", constantsJsonsFolder);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictHeroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
+                        _heroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictHeroes is null || CheckNeed2UpdateJson("heroes"))
+            if (_heroes is null || CheckNeed2UpdateJson("heroes"))
             {
                 try
                 {
-                    if (_dictHeroes is null)
+                    if (_heroes is null)
                     {
                         var json = await GetConstant("heroes", _heroesJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
-                            _dictHeroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
+                            _heroes = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaHeroModel);
                         }
                     }
                     else
@@ -117,9 +117,9 @@ namespace Dotahold.Data.DataShop
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            _dictHeroes ??= [];
+            _heroes ??= [];
 
-            return _dictHeroes;
+            return _heroes;
         }
 
         /// <summary>
@@ -128,20 +128,20 @@ namespace Dotahold.Data.DataShop
         /// <returns></returns>
         public static async Task<Dictionary<string, DotaItemModel>> GetItemsConstant()
         {
-            if (_dictItems is null)
+            if (_items is null)
             {
                 try
                 {
                     var json = await StorageFilesCourier.ReadFileAsync(_itemsJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictItems = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
+                        _items = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictItems is null)
+            if (_items is null)
             {
                 try
                 {
@@ -152,22 +152,22 @@ namespace Dotahold.Data.DataShop
                     var json = await StorageFilesCourier.ReadFileAsync("items.json", constantsJsonsFolder);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictItems = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
+                        _items = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictItems is null || CheckNeed2UpdateJson("items"))
+            if (_items is null || CheckNeed2UpdateJson("items"))
             {
                 try
                 {
-                    if (_dictItems is null)
+                    if (_items is null)
                     {
                         var json = await GetConstant("items", _itemsJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
-                            _dictItems = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
+                            _items = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaItemModel);
                         }
                     }
                     else
@@ -178,9 +178,9 @@ namespace Dotahold.Data.DataShop
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            _dictItems ??= [];
+            _items ??= [];
 
-            return _dictItems;
+            return _items;
         }
 
         /// <summary>
@@ -189,20 +189,20 @@ namespace Dotahold.Data.DataShop
         /// <returns></returns>
         public static async Task<Dictionary<string, DotaAibilitiesModel>> GetAbilitiesConstant()
         {
-            if (_dictAbilities is null)
+            if (_abilities is null)
             {
                 try
                 {
                     var json = await StorageFilesCourier.ReadFileAsync(_abilitiesJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                        _abilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictAbilities is null)
+            if (_abilities is null)
             {
                 try
                 {
@@ -213,22 +213,22 @@ namespace Dotahold.Data.DataShop
                     var json = await StorageFilesCourier.ReadFileAsync("hero_abilities.json", constantsJsonsFolder);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                        _abilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictAbilities is null || CheckNeed2UpdateJson("hero_abilities"))
+            if (_abilities is null || CheckNeed2UpdateJson("hero_abilities"))
             {
                 try
                 {
-                    if (_dictAbilities is null)
+                    if (_abilities is null)
                     {
                         var json = await GetConstant("hero_abilities", _abilitiesJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
-                            _dictAbilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
+                            _abilities = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringDotaAibilitiesModel);
                         }
                     }
                     else
@@ -239,9 +239,9 @@ namespace Dotahold.Data.DataShop
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            _dictAbilities ??= [];
+            _abilities ??= [];
 
-            return _dictAbilities;
+            return _abilities;
         }
 
         /// <summary>
@@ -250,20 +250,20 @@ namespace Dotahold.Data.DataShop
         /// <returns></returns>
         public static async Task<Dictionary<string, string>> GetPermanentBuffsConstant()
         {
-            if (_dictPermanentBuffs is null)
+            if (_permanentBuffs is null)
             {
                 try
                 {
                     var json = await StorageFilesCourier.ReadFileAsync(_buffsJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictPermanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                        _permanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictPermanentBuffs is null)
+            if (_permanentBuffs is null)
             {
                 try
                 {
@@ -274,22 +274,22 @@ namespace Dotahold.Data.DataShop
                     var json = await StorageFilesCourier.ReadFileAsync("permanent_buffs.json", constantsJsonsFolder);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictPermanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                        _permanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictPermanentBuffs is null || CheckNeed2UpdateJson("permanent_buffs"))
+            if (_permanentBuffs is null || CheckNeed2UpdateJson("permanent_buffs"))
             {
                 try
                 {
-                    if (_dictPermanentBuffs is null)
+                    if (_permanentBuffs is null)
                     {
                         var json = await GetConstant("permanent_buffs", _buffsJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
-                            _dictPermanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                            _permanentBuffs = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                         }
                     }
                     else
@@ -300,9 +300,9 @@ namespace Dotahold.Data.DataShop
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            _dictPermanentBuffs ??= [];
+            _permanentBuffs ??= [];
 
-            return _dictPermanentBuffs;
+            return _permanentBuffs;
         }
 
         /// <summary>
@@ -311,20 +311,20 @@ namespace Dotahold.Data.DataShop
         /// <returns></returns>
         public static async Task<Dictionary<string, string>> GetAbilityIDsConstant()
         {
-            if (_dictAbilitiesId is null)
+            if (_abilityIds is null)
             {
                 try
                 {
                     var json = await StorageFilesCourier.ReadFileAsync(_abilityIdsJsonFileName);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                        _abilityIds = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictAbilitiesId is null)
+            if (_abilityIds is null)
             {
                 try
                 {
@@ -335,22 +335,22 @@ namespace Dotahold.Data.DataShop
                     var json = await StorageFilesCourier.ReadFileAsync("ability_ids.json", constantsJsonsFolder);
                     if (!string.IsNullOrWhiteSpace(json))
                     {
-                        _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                        _abilityIds = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                     }
                 }
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            if (_dictAbilitiesId is null || CheckNeed2UpdateJson("ability_ids"))
+            if (_abilityIds is null || CheckNeed2UpdateJson("ability_ids"))
             {
                 try
                 {
-                    if (_dictAbilitiesId is null)
+                    if (_abilityIds is null)
                     {
                         var json = await GetConstant("ability_ids", _abilityIdsJsonFileName);
                         if (!string.IsNullOrWhiteSpace(json))
                         {
-                            _dictAbilitiesId = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
+                            _abilityIds = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DictionaryStringString);
                         }
                     }
                     else
@@ -361,9 +361,9 @@ namespace Dotahold.Data.DataShop
                 catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
             }
 
-            _dictAbilitiesId ??= [];
+            _abilityIds ??= [];
 
-            return _dictAbilitiesId;
+            return _abilityIds;
         }
 
         /// <summary>
