@@ -15,5 +15,6 @@ namespace Dotahold.Data.Models
     [JsonSerializable(typeof(DotaPlayerOverallPerformanceModel[]))]
     [JsonSerializable(typeof(DotaPlayerHeroPerformanceModel[]))]
     [JsonSerializable(typeof(DotaPlayerProfileModel))]
+    [JsonSerializable(typeof(DotaMatchModel[]))]
     internal partial class SourceGenerationContext : JsonSerializerContext { }
 }

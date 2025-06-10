@@ -81,6 +81,72 @@ namespace Dotahold.Data.Models
         }
     }
 
+    public class SafeLongConverter : JsonConverter<long>
+    {
+        public override long Read(ref Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
+        {
+            try
+            {
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    var stringValue = reader.GetString();
+                    if (long.TryParse(stringValue, out long value))
+                    {
+                        return value;
+                    }
+                }
+                else if (reader.TokenType == JsonTokenType.Number)
+                {
+                    if (reader.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    else if (reader.TryGetDouble(out double doubleValue))
+                    {
+                        if (doubleValue > long.MaxValue || doubleValue < long.MinValue)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return (long)doubleValue;
+                        }
+                    }
+                    else if (reader.TryGetSingle(out float floatValue))
+                    {
+                        if (floatValue > long.MaxValue || floatValue < long.MinValue)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return (long)floatValue;
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    reader.Skip();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"Read error in SafeLongConverter: {ex.Message}");
+            }
+
+            return 0;
+        }
+
+        public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
+        {
+            writer.WriteNumberValue(value);
+        }
+    }
+
     public class SafeDoubleConverter : JsonConverter<double>
     {
         public override double Read(ref Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)

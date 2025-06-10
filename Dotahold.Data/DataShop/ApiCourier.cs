@@ -19,7 +19,7 @@ namespace Dotahold.Data.DataShop
         /// <param name="heroId"></param>
         /// <param name="language"></param>
         /// <returns></returns>
-        public static async Task<DotaHeroDataModel?> GetHeroData(int heroId, string language = "english", CancellationToken cancellationToken = default)
+        public static async Task<DotaHeroDataModel?> GetHeroData(int heroId, string language, CancellationToken cancellationToken)
         {
             string url = string.Format("https://www.dota2.com/datafeed/herodata?language={0}&hero_id={1}", language, heroId);
 
@@ -43,7 +43,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="heroId"></param>
         /// <returns></returns>
-        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId, CancellationToken cancellationToken = default)
+        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId, CancellationToken cancellationToken)
         {
             string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
 
@@ -95,7 +95,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerProfileModel?> GetPlayerProfile(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerProfileModel?> GetPlayerProfile(string id, CancellationToken cancellationToken)
         {
             string url = $"https://api.opendota.com/api/players/{id}";
 
@@ -139,7 +139,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerWinLoseModel?> GetPlayerWinLose(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerWinLoseModel?> GetPlayerWinLose(string id, CancellationToken cancellationToken)
         {
             string url = $"https://api.opendota.com/api/players/{id}/wl";
 
@@ -163,7 +163,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformances(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerOverallPerformanceModel[]> GetPlayerOverallPerformances(string id, CancellationToken cancellationToken)
         {
             string url = $"https://api.opendota.com/api/players/{id}/totals";
 
@@ -187,7 +187,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformances(string id, CancellationToken cancellationToken = default)
+        public static async Task<DotaPlayerHeroPerformanceModel[]> GetPlayerHeroPerformances(string id, CancellationToken cancellationToken)
         {
             string url = $"https://api.opendota.com/api/players/{id}/heroes";
 
@@ -205,5 +205,56 @@ namespace Dotahold.Data.DataShop
 
             return [];
         }
+
+        /// <summary>
+        /// 获取玩家最近的比赛记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<DotaMatchModel[]> GetPlayerRecentMatches(string id, CancellationToken cancellationToken)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}/recentMatches";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaMatchModelArray);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerRecentMatches error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return [];
+        }
+
+        /// <summary>
+        /// 获取玩家所有比赛记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<DotaMatchModel[]> GetPlayerAllMatches(string id, CancellationToken cancellationToken)
+        {
+            string url = $"https://api.opendota.com/api/players/{id}/matches";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaMatchModelArray);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerAllMatches error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return [];
+        }
+
     }
 }
