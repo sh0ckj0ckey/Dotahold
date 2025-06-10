@@ -309,7 +309,7 @@ namespace Dotahold.Data.DataShop
         /// 获取技能ID列表
         /// </summary>
         /// <returns></returns>
-        public static async Task<Dictionary<string, string>> GetAbilityIDsConstant()
+        public static async Task<Dictionary<string, string>> GetAbilityIdsConstant()
         {
             if (_abilityIds is null)
             {

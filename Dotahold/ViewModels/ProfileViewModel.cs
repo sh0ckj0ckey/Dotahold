@@ -10,25 +10,17 @@ using Dotahold.Models;
 
 namespace Dotahold.ViewModels
 {
-    internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel) : ObservableObject
+    internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel, MatchesViewModel matchesViewModel) : ObservableObject
     {
         private CancellationTokenSource? _cancellationTokenSource;
-
-        /// <summary>
-        /// Task to load abilities, used to prevent multiple simultaneous loads
-        /// </summary>
-        private Task? _loadAbilitiesTask = null;
-
-        /// <summary>
-        /// Hero name to AbilitiesModel
-        /// </summary>
-        private readonly Dictionary<string, AbilitiesModel> _abilitiesModels = [];
 
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
 
         private readonly ItemsViewModel _itemsViewModel = itemsViewModel;
 
-        private bool _loadingHeroesAndItems = false;
+        private readonly MatchesViewModel _matchesViewModel = matchesViewModel;
+
+        private bool _loadingConstants = false;
 
         private bool _loadingPlayerProfile;
 
@@ -47,10 +39,10 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Indicates whether is currently fetching heroes and items data, overview loading will be blocked until this is done
         /// </summary>
-        public bool LoadingHeroesAndItems
+        public bool LoadingConstants
         {
-            get => _loadingHeroesAndItems;
-            set => SetProperty(ref _loadingHeroesAndItems, value);
+            get => _loadingConstants;
+            set => SetProperty(ref _loadingConstants, value);
         }
 
         /// <summary>
@@ -136,49 +128,6 @@ namespace Dotahold.ViewModels
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
-        private async Task LoadAbilities()
-        {
-            if (_loadAbilitiesTask is not null)
-            {
-                await _loadAbilitiesTask;
-                return;
-            }
-
-            _loadAbilitiesTask = LoadAbilitiesInternal();
-
-            try
-            {
-                await _loadAbilitiesTask;
-            }
-            finally
-            {
-                _loadAbilitiesTask = null;
-            }
-        }
-
-        private async Task LoadAbilitiesInternal()
-        {
-            try
-            {
-                if (_abilitiesModels.Count > 0)
-                {
-                    return;
-                }
-
-                Dictionary<string, Data.Models.DotaAibilitiesModel> abilitiesConstant = await ConstantsCourier.GetAbilitiesConstant();
-
-                foreach (var abilitiesKV in abilitiesConstant)
-                {
-                    var abilities = new AbilitiesModel(abilitiesKV.Value);
-                    _abilitiesModels[abilitiesKV.Key] = abilities;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogCourier.Log($"Loading abilities failed: {ex}", LogCourier.LogType.Error);
-            }
-        }
-
         public async Task LoadPlayerOverview(string steamId)
         {
             try
@@ -188,13 +137,13 @@ namespace Dotahold.ViewModels
                 _cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
 
-                this.LoadingHeroesAndItems = true;
+                this.LoadingConstants = true;
 
                 await _heroesViewModel.LoadHeroes();
                 await _itemsViewModel.LoadItems();
-                await this.LoadAbilities();
+                await _matchesViewModel.LoadAbilities();
 
-                this.LoadingHeroesAndItems = false;
+                this.LoadingConstants = false;
 
                 var profileTask = LoadPlayerProfile(steamId, cancellationToken);
                 var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
@@ -382,21 +331,6 @@ namespace Dotahold.ViewModels
                 }
             }
             catch (Exception ex) { LogCourier.Log($"LoadCurrentPlayersNumber error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// Get specific hero's abilities by hero name
-        /// </summary>
-        /// <param name="heroName"></param>
-        /// <returns></returns>
-        public AbilitiesModel? GetAbilitiesByHeroName(string heroName)
-        {
-            if (_abilitiesModels.TryGetValue(heroName, out var abilitiesModel))
-            {
-                return abilitiesModel;
-            }
-
-            return null;
         }
 
         #region Player Connect Records

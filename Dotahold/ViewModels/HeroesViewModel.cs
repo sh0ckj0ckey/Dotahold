@@ -215,6 +215,7 @@ namespace Dotahold.ViewModels
                 this.LoadingHeroData = true;
 
                 this.PickedHero = heroModel;
+                this.PickedHeroData = null;
 
                 string language = languageIndex switch
                 {

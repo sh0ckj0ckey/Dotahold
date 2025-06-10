@@ -11,6 +11,8 @@ namespace Dotahold.ViewModels
 
         public ItemsViewModel ItemsViewModel { get; private set; }
 
+        public MatchesViewModel MatchesViewModel { get; private set; }
+
         public ProfileViewModel ProfileViewModel { get; private set; }
 
         private int _tabIndex = 0;
@@ -47,7 +49,8 @@ namespace Dotahold.ViewModels
             this.AppSettings = new SettingsCourier();
             this.HeroesViewModel = new HeroesViewModel();
             this.ItemsViewModel = new ItemsViewModel();
-            this.ProfileViewModel = new ProfileViewModel(this.HeroesViewModel, this.ItemsViewModel);
+            this.MatchesViewModel = new MatchesViewModel(this.HeroesViewModel, this.ItemsViewModel);
+            this.ProfileViewModel = new ProfileViewModel(this.HeroesViewModel, this.ItemsViewModel, this.MatchesViewModel);
         }
     }
 }

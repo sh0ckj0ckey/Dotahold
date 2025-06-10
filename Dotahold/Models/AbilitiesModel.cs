@@ -26,6 +26,21 @@ namespace Dotahold.Models
                 this.AbilitiesFacets = [];
             }
         }
+
+        public AbilitiesFacetModel? GetFacetByIndex(int index)
+        {
+            if (this.AbilitiesFacets.Length > 0)
+            {
+                var facet = this.AbilitiesFacets.FirstOrDefault(facet => facet.Index == index);
+                if (facet is not null)
+                {
+                    _ = facet.IconImage.LoadImageAsync();
+                    return facet;
+                }
+            }
+
+            return null;
+        }
     }
 
     public class AbilitiesFacetModel
