@@ -19,10 +19,15 @@ namespace Dotahold.Data.DataShop.ImageDownloader
     /// </summary>
     internal static class ImageCacheManager
     {
-        static ImageCacheManager()
-        {
-            _ = GetCacheFolderAsync();
-        }
+        /// <summary>
+        /// 存储数据的文件夹名称
+        /// </summary>
+        private const string DataFolderName = "DotaholdCache";
+
+        /// <summary>
+        /// 存储数据的文件夹对象
+        /// </summary>
+        private static StorageFolder? DataFolder = null;
 
         /// <summary>
         /// 获取图片缓存目录，如果不存在会创建
@@ -30,16 +35,8 @@ namespace Dotahold.Data.DataShop.ImageDownloader
         /// <returns></returns>
         internal static async Task<StorageFolder> GetCacheFolderAsync()
         {
-            var tempFolder = ApplicationData.Current.TemporaryFolder;
-            var cacheFolder = await tempFolder.TryGetItemAsync("DotaholdCache");
-            if (cacheFolder is null)
-            {
-                return await tempFolder.CreateFolderAsync("DotaholdCache");
-            }
-            else
-            {
-                return (cacheFolder as StorageFolder)!;
-            }
+            DataFolder ??= await ApplicationData.Current.TemporaryFolder.CreateFolderAsync(DataFolderName, CreationCollisionOption.OpenIfExists);
+            return DataFolder;
         }
 
         /// <summary>

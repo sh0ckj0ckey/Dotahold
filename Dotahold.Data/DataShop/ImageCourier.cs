@@ -10,6 +10,11 @@ namespace Dotahold.Data.DataShop
     /// </summary>
     public static class ImageCourier
     {
+        public static async Task InitializeAsync()
+        {
+            await GetCacheFolderAsync();
+        }
+
         /// <summary>
         /// 下载图片
         /// </summary>

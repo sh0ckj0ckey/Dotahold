@@ -21,11 +21,16 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         private static StorageFolder? DataFolder = null;
 
+        public static async Task InitializeAsync()
+        {
+            await GetDataFolderAsync();
+        }
+
         /// <summary>
         /// 获取存储数据的文件夹的对象
         /// </summary>
         /// <returns></returns>
-        public static async Task<StorageFolder> GetDataFolder()
+        public static async Task<StorageFolder> GetDataFolderAsync()
         {
             DataFolder ??= await ApplicationData.Current.LocalFolder.CreateFolderAsync(DataFolderName, CreationCollisionOption.OpenIfExists);
             return DataFolder;
@@ -42,7 +47,7 @@ namespace Dotahold.Data.DataShop
 
             try
             {
-                applicationFolder ??= await GetDataFolder();
+                applicationFolder ??= await GetDataFolderAsync();
 
                 if (await applicationFolder.TryGetItemAsync(fileName) is not null)
                 {
@@ -74,7 +79,7 @@ namespace Dotahold.Data.DataShop
         {
             try
             {
-                applicationFolder ??= await GetDataFolder();
+                applicationFolder ??= await GetDataFolderAsync();
 
                 var storageFile = await applicationFolder.CreateFileAsync(fileName + "Tmp", CreationCollisionOption.ReplaceExisting);
 

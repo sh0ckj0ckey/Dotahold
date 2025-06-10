@@ -69,6 +69,9 @@ namespace Dotahold
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            _ = StorageFilesCourier.InitializeAsync();
+            _ = ImageCourier.InitializeAsync();
         }
 
         /// <summary>

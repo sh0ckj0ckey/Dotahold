@@ -162,7 +162,7 @@ namespace Dotahold.Pages
         {
             try
             {
-                var folder = await StorageFilesCourier.GetDataFolder();
+                var folder = await StorageFilesCourier.GetDataFolderAsync();
                 folder = await folder.GetParentAsync();
                 await Launcher.LaunchFolderAsync(folder);
             }
@@ -181,7 +181,7 @@ namespace Dotahold.Pages
         {
             try
             {
-                var folder = await StorageFilesCourier.GetDataFolder();
+                var folder = await StorageFilesCourier.GetDataFolderAsync();
                 await Launcher.LaunchFolderAsync(folder);
             }
             catch (Exception ex)
