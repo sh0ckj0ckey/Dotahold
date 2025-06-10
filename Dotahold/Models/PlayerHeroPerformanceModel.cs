@@ -3,11 +3,11 @@ using Dotahold.Data.Models;
 
 namespace Dotahold.Models
 {
-    public class PlayerHeroPerformanceModel(DotaPlayerHeroPerformanceModel model, HeroModel? hero)
+    public class PlayerHeroPerformanceModel(DotaPlayerHeroPerformanceModel model, HeroModel hero)
     {
         public int HeroId { get; private set; } = model.hero_id;
 
-        public HeroModel? Hero { get; private set; } = hero;
+        public HeroModel Hero { get; private set; } = hero;
 
         public string LastPlayed { get; private set; } = DateTimeOffset.FromUnixTimeSeconds(model.last_played).ToString("yyyy-MM-dd");
 

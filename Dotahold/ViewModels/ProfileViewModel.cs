@@ -30,6 +30,8 @@ namespace Dotahold.ViewModels
 
         private bool _loadingPlayerHeroesPerformance = false;
 
+        private bool _loadingPlayerRecentMatches = false;
+
         private PlayerProfileModel? _playerProfile;
 
         private PlayerWinLoseModel? _playerWinLose;
@@ -82,6 +84,15 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
+        /// Indicates whether is currently fetching the player's recent matches data
+        /// </summary>
+        public bool LoadingPlayerRecentMatches
+        {
+            get => _loadingPlayerRecentMatches;
+            set => SetProperty(ref _loadingPlayerRecentMatches, value);
+        }
+
+        /// <summary>
         /// Current player's profile
         /// </summary>
         public PlayerProfileModel? PlayerProfile
@@ -115,6 +126,16 @@ namespace Dotahold.ViewModels
         public readonly ObservableCollection<PlayerHeroPerformanceModel> PlayerHeroPerformances = [];
 
         /// <summary>
+        /// List of recent matches, used to show the last 5 matches played by the player
+        /// </summary>
+        public readonly ObservableCollection<MatchModel> RecentMatchesTop5 = [];
+
+        /// <summary>
+        /// List of recent matches, used to show the last 20 matches played by the player
+        /// </summary>
+        public readonly ObservableCollection<MatchModel> RecentMatches = [];
+
+        /// <summary>
         /// Current number of players in the game
         /// </summary>
         public int CurrentPlayersNumber
@@ -124,7 +145,7 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// List of player connect records, used to show the last few players who connected to the game
+        /// List of player connect records, used to show the last 3 players who connected to the game
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
 
@@ -149,9 +170,10 @@ namespace Dotahold.ViewModels
                 var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
                 var overallPerformanceTask = LoadPlayerOverallPerformance(steamId, cancellationToken);
                 var heroesPerformanceTask = LoadPlayerHeroesPerformance(steamId, cancellationToken);
+                var recentMatchesTask = LoadPlayerRecentMatches(steamId, cancellationToken);
                 var currentPlayersTask = LoadCurrentPlayersNumber();
 
-                await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, currentPlayersTask);
+                await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, recentMatchesTask, currentPlayersTask);
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -284,6 +306,7 @@ namespace Dotahold.ViewModels
             {
                 this.LoadingPlayerHeroesPerformance = true;
                 this.PlayerHeroPerformances.Clear();
+                this.PlayerHeroPerformancesTop10.Clear();
 
                 var heroPerformances = await ApiCourier.GetPlayerHeroPerformances(steamId, cancellationToken);
 
@@ -297,6 +320,11 @@ namespace Dotahold.ViewModels
                     foreach (var heroPerformance in heroPerformances)
                     {
                         var hero = _heroesViewModel.GetHeroById(heroPerformance.hero_id.ToString());
+                        if (hero is null)
+                        {
+                            continue;
+                        }
+
                         var performanceModel = new PlayerHeroPerformanceModel(heroPerformance, hero);
                         this.PlayerHeroPerformances.Add(performanceModel);
 
@@ -310,6 +338,61 @@ namespace Dotahold.ViewModels
                 this.LoadingPlayerHeroesPerformance = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerHeroesPerformance({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        /// <summary>
+        /// Load player's recent matches
+        /// </summary>
+        /// <param name="steamId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task LoadPlayerRecentMatches(string steamId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                this.LoadingPlayerRecentMatches = true;
+                this.RecentMatches.Clear();
+                this.RecentMatchesTop5.Clear();
+
+                var recentMatches = await ApiCourier.GetPlayerRecentMatches(steamId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (recentMatches is not null)
+                {
+                    foreach (var recentMatch in recentMatches)
+                    {
+                        var hero = _heroesViewModel.GetHeroById(recentMatch.hero_id.ToString());
+                        if (hero is null)
+                        {
+                            continue;
+                        }
+
+                        var abilities = _matchesViewModel.GetAbilitiesByHeroName(hero.DotaHeroAttributes.name);
+                        if (abilities is null)
+                        {
+                            continue;
+                        }
+
+                        var abilitiesFacet = abilities.GetFacetByIndex(recentMatch.hero_variant);
+
+                        var recentMatchModel = new MatchModel(recentMatch, hero, abilitiesFacet);
+                        this.RecentMatches.Add(recentMatchModel);
+
+                        if (this.RecentMatchesTop5.Count < 5)
+                        {
+                            this.RecentMatchesTop5.Add(recentMatchModel);
+                        }
+                    }
+                }
+
+                this.LoadingPlayerRecentMatches = false;
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerRecentMatches({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+
         }
 
         /// <summary>
