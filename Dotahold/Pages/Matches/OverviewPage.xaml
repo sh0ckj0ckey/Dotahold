@@ -6,12 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls" 
     xmlns:models="using:Dotahold.Models"
     NavigationCacheMode="Required" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter" />
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -218,7 +220,7 @@
                         </HyperlinkButton>
 
                         <!--Player Recent Matches-->
-                        <Grid Margin="16,8,16,0" Opacity="0.5" ColumnSpacing="6" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid Margin="16,8,16,0" Opacity="0.5" RowSpacing="6" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
@@ -231,16 +233,16 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" RadiusX="4" RadiusY="4" Opacity="1.0" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="1" RadiusX="4" RadiusY="4" Opacity="0.9" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="2" RadiusX="4" RadiusY="4" Opacity="0.8" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="3" RadiusX="4" RadiusY="4" Opacity="0.7" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="4" RadiusX="4" RadiusY="4" Opacity="0.6" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="5" RadiusX="4" RadiusY="4" Opacity="0.5" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="6" RadiusX="4" RadiusY="4" Opacity="0.4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="7" RadiusX="4" RadiusY="4" Opacity="0.3" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="8" RadiusX="4" RadiusY="4" Opacity="0.2" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Rectangle Grid.Row="9" RadiusX="4" RadiusY="4" Opacity="0.1" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="0" Height="56" RadiusX="4" RadiusY="4" Opacity="1.0" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="1" Height="56" RadiusX="4" RadiusY="4" Opacity="0.9" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="2" Height="56" RadiusX="4" RadiusY="4" Opacity="0.8" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="3" Height="56" RadiusX="4" RadiusY="4" Opacity="0.7" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="4" Height="56" RadiusX="4" RadiusY="4" Opacity="0.6" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="5" Height="56" RadiusX="4" RadiusY="4" Opacity="0.5" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="6" Height="56" RadiusX="4" RadiusY="4" Opacity="0.4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="7" Height="56" RadiusX="4" RadiusY="4" Opacity="0.3" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="8" Height="56" RadiusX="4" RadiusY="4" Opacity="0.2" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Row="9" Height="56" RadiusX="4" RadiusY="4" Opacity="0.1" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                         <Grid x:Name="PlayerRecentMatchesGrid" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <muxc:ItemsRepeater Margin="0,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.RecentMatches,Mode=OneWay}" HorizontalAlignment="Stretch">
@@ -257,13 +259,26 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
 
+                                                <!--Hero Image-->
                                                 <Border Grid.Column="0" Width="75" Height="42" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                     <Border.Background>
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Hero.HeroImage.Image,Mode=OneWay}"/>
                                                     </Border.Background>
+                                                    <Border Height="42" Width="42" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                        <Border.Background>
+                                                            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                                                                <GradientStopCollection>
+                                                                    <GradientStop Color="#222222" Offset="0.0"/>
+                                                                    <GradientStop Color="#00222222" Offset="0.6"/>
+                                                                    <GradientStop Color="#00222222" Offset="1.0"/>
+                                                                </GradientStopCollection>
+                                                            </LinearGradientBrush>
+                                                        </Border.Background>
+                                                        <Image Height="18" Width="18" Margin="4" Opacity="0.8" Stretch="UniformToFill" Source="{x:Bind AbilitiesFacet.IconImage.Image,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                                    </Border>
                                                 </Border>
 
-                                                <!--<Grid Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                <Grid Grid.Column="1" RowSpacing="4" ColumnSpacing="2" Margin="12,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="Auto"/>
@@ -272,41 +287,52 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontFamily="{ThemeResource ReaverBold}" MaxWidth="156" FontSize="16" TextTrimming="CharacterEllipsis" CharacterSpacing="40" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                                    <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                            Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis}}">
-                                                        <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+
+                                                    <!--Hero Name-->
+                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="15" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                                    <!--Win or Lose-->
+                                                    <Border x:Name="WinBorder" x:Load="{x:Bind PlayerWin}" Grid.Row="1" Grid.Column="0" Height="14" Width="14" CornerRadius="2" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
                                                     </Border>
-                                                    <Border Height="14" Width="14" CornerRadius="2" Margin="2,10,0,0" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                            Visibility="{x:Bind bWin,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                                        <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                                    <Border x:Name="LoseBorder" x:Load="{x:Bind PlayerWin,Converter={StaticResource BoolNegationConverter}}" Grid.Row="1" Grid.Column="0" Height="14" Width="14" CornerRadius="2" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
                                                     </Border>
-                                                    <TextBlock Text="{x:Bind start_time,Converter={StaticResource Long2Time}}" MaxWidth="156" FontWeight="Medium" Margin="6,0,0,-10" FontSize="12" Opacity="0.7"
-                                                               HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" TextTrimming="CharacterEllipsis"/>
+
+                                                    <!--Start Time-->
+                                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind TimeAgo}" FontSize="12" FontWeight="Medium" Opacity="0.7" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
                                                 </Grid>
 
-                                                <Grid Grid.Column="2" Margin="12,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <Grid Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0" FontWeight="Medium" Margin="18,0,0,0" TextTrimming="CharacterEllipsis" FontSize="14" CharacterSpacing="20" HorizontalAlignment="Right">
-                                                        <Run Text="{x:Bind kills}"/>
-                                                        <Run Text="/" FontWeight="Medium"/>
-                                                        <Run Text="{x:Bind deaths}"/>
-                                                        <Run Text="/" FontWeight="Medium"/>
-                                                        <Run Text="{x:Bind assists}"/>
+
+                                                    <!--K/D/A-->
+                                                    <TextBlock Grid.Row="0" FontSize="14" FontWeight="Medium" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <Run Text="{x:Bind DotaMatch.kills}"/>
+                                                        <Run Text="/"/>
+                                                        <Run Text="{x:Bind DotaMatch.deaths}"/>
+                                                        <Run Text="/"/>
+                                                        <Run Text="{x:Bind DotaMatch.assists}"/>
                                                     </TextBlock>
-                                                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBlock Text="GPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="{ThemeResource GOLDTEXT_FR}" Opacity="0.7" VerticalAlignment="Center" CharacterSpacing="20"/>
-                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind gold_per_min}" VerticalAlignment="Center" CharacterSpacing="20"/>
+
+                                                    <!--GPM-->
+                                                    <StackPanel Grid.Row="1" Spacing="6" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <TextBlock Text="GPM" FontSize="10" FontWeight="Medium" Foreground="{ThemeResource DotaholdGoldForeground}" Opacity="0.7" VerticalAlignment="Center"/>
+                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind DotaMatch.gold_per_min}" VerticalAlignment="Center"/>
                                                     </StackPanel>
-                                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                        <TextBlock Text="XPM" FontWeight="Medium" FontSize="10" Margin="0,0,6,0" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Top" CharacterSpacing="20"/>
-                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind xp_per_min}" VerticalAlignment="Top" CharacterSpacing="20"/>
+
+                                                    <!--XPM-->
+                                                    <StackPanel Grid.Row="2" Spacing="6" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <TextBlock Text="XPM" FontSize="10" FontWeight="Medium" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Center"/>
+                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind DotaMatch.xp_per_min}" VerticalAlignment="Center"/>
                                                     </StackPanel>
-                                                </Grid>-->
+
+                                                </Grid>
 
                                             </Grid>
                                         </Button>
