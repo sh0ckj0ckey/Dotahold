@@ -58,7 +58,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="0,2,8,-2" Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.personaname,Mode=OneWay}"
                                FontSize="20" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Image Grid.Column="1" Height="20" Width="20" Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" ToolTipService.ToolTip="Dota Plus Subscriber" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Grid.Column="1" Height="20" Width="20" Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.profile.plus,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" ToolTipService.ToolTip="Dota Plus Subscriber" ToolTipService.Placement="Right" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image.Source>
                             <BitmapImage UriSource="/Assets/Profile/icon_dota_plus.png" DecodePixelType="Logical" DecodePixelWidth="40"/>
                         </Image.Source>
@@ -264,7 +264,7 @@
                                                     <Border.Background>
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Hero.HeroImage.Image,Mode=OneWay}"/>
                                                     </Border.Background>
-                                                    <Border Height="42" Width="42" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                    <Border Height="42" Width="64" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
                                                                 <GradientStopCollection>
@@ -274,34 +274,56 @@
                                                                 </GradientStopCollection>
                                                             </LinearGradientBrush>
                                                         </Border.Background>
+                                                        <ToolTipService.ToolTip>
+                                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="36"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid Grid.Row="0" ColumnSpacing="12" CornerRadius="2" Background="{x:Bind AbilitiesFacet.BackgroundBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="36"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <Border Grid.Column="0" Background="#16000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                        <Image Height="18" Width="18" Source="{x:Bind AbilitiesFacet.IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                    <TextBlock Grid.Column="1" Text="{x:Bind AbilitiesFacet.Title}" FontFamily="{ThemeResource ReaverBold}" Foreground="#FFFFFF" FontSize="16" Margin="0,2,8,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                                <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind AbilitiesFacet.Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                                            </Grid>
+                                                        </ToolTipService.ToolTip>
                                                         <Image Height="18" Width="18" Margin="4" Opacity="0.8" Stretch="UniformToFill" Source="{x:Bind AbilitiesFacet.IconImage.Image,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                                                     </Border>
                                                 </Border>
 
-                                                <Grid Grid.Column="1" RowSpacing="4" ColumnSpacing="2" Margin="12,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                                <Grid Grid.Column="1" RowSpacing="2" ColumnSpacing="4" Margin="12,2,6,-2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="Auto"/>
                                                     </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
 
                                                     <!--Hero Name-->
-                                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="15" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Row="0" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="15" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                                                    <!--Win or Lose-->
-                                                    <Border x:Name="WinBorder" x:Load="{x:Bind PlayerWin}" Grid.Row="1" Grid.Column="0" Height="14" Width="14" CornerRadius="2" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <TextBlock Text="W" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
-                                                    </Border>
-                                                    <Border x:Name="LoseBorder" x:Load="{x:Bind PlayerWin,Converter={StaticResource BoolNegationConverter}}" Grid.Row="1" Grid.Column="0" Height="14" Width="14" CornerRadius="2" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <TextBlock Text="L" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
-                                                    </Border>
+                                                    <Grid Grid.Row="1" ColumnSpacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
 
-                                                    <!--Start Time-->
-                                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind TimeAgo}" FontSize="12" FontWeight="Medium" Opacity="0.7" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                        <!--Win or Lose-->
+                                                        <Border x:Name="WinBorder" x:Load="{x:Bind PlayerWin}" Grid.Column="0" Height="12" Width="12" CornerRadius="2" Background="ForestGreen" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                            <TextBlock Text="W" FontSize="9" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
+                                                        </Border>
+                                                        <Border x:Name="LoseBorder" x:Load="{x:Bind PlayerWin,Converter={StaticResource BoolNegationConverter}}" Grid.Column="0" Height="12" Width="12" CornerRadius="2" Background="Firebrick" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                            <TextBlock Text="L" FontSize="9" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationPageBackground}"/>
+                                                        </Border>
 
+                                                        <!--Start Time-->
+                                                        <TextBlock Grid.Column="1" Text="{x:Bind TimeAgo}" FontSize="12" FontWeight="Medium" Opacity="0.5" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                                    </Grid>
                                                 </Grid>
 
                                                 <Grid Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -312,7 +334,7 @@
                                                     </Grid.RowDefinitions>
 
                                                     <!--K/D/A-->
-                                                    <TextBlock Grid.Row="0" FontSize="14" FontWeight="Medium" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <TextBlock Grid.Row="0" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                                         <Run Text="{x:Bind DotaMatch.kills}"/>
                                                         <Run Text="/"/>
                                                         <Run Text="{x:Bind DotaMatch.deaths}"/>
@@ -321,15 +343,15 @@
                                                     </TextBlock>
 
                                                     <!--GPM-->
-                                                    <StackPanel Grid.Row="1" Spacing="6" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                        <TextBlock Text="GPM" FontSize="10" FontWeight="Medium" Foreground="{ThemeResource DotaholdGoldForeground}" Opacity="0.7" VerticalAlignment="Center"/>
-                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind DotaMatch.gold_per_min}" VerticalAlignment="Center"/>
+                                                    <StackPanel Grid.Row="1" Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <TextBlock Text="GPM" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="{ThemeResource DotaholdGoldForeground}" Opacity="0.7" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{x:Bind DotaMatch.gold_per_min}" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center"/>
                                                     </StackPanel>
 
                                                     <!--XPM-->
-                                                    <StackPanel Grid.Row="2" Spacing="6" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                        <TextBlock Text="XPM" FontSize="10" FontWeight="Medium" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Center"/>
-                                                        <TextBlock FontSize="10" FontWeight="Medium" Text="{x:Bind DotaMatch.xp_per_min}" VerticalAlignment="Center"/>
+                                                    <StackPanel Grid.Row="2" Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                        <TextBlock Text="XPM" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{x:Bind DotaMatch.xp_per_min}" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center"/>
                                                     </StackPanel>
 
                                                 </Grid>

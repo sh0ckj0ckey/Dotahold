@@ -31,7 +31,7 @@ namespace Dotahold.Models
         {
             if (this.AbilitiesFacets.Length > 0)
             {
-                var facet = this.AbilitiesFacets.FirstOrDefault(facet => facet.Index == index);
+                var facet = this.AbilitiesFacets.FirstOrDefault(facet => facet.Index == index - 1);
                 if (facet is not null)
                 {
                     _ = facet.IconImage.LoadImageAsync();
@@ -92,7 +92,7 @@ namespace Dotahold.Models
             this.Name = facetData.name;
             this.Title = facetData.title;
             this.Description = facetData.description;
-            this.BackgroundBrush = ColorHelper.GetFacetGradientBrush($"FacetColor{ColorHelper.GetFacetColorName(int.TryParse(facetData.color, out int color) ? color : -1)}{facetData.gradient_id}");
+            this.BackgroundBrush = ColorHelper.GetFacetGradientBrush($"FacetColor{facetData.color}{facetData.gradient_id}");
             this.Index = facetData.id;
         }
 

@@ -10,7 +10,7 @@ namespace Dotahold.ViewModels
 {
     internal partial class MatchesViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel) : ObservableObject
     {
-        private CancellationTokenSource? _cancellationTokenSource;
+        // private CancellationTokenSource? _cancellationTokenSource;
 
         /// <summary>
         /// A semaphore used to limit concurrent access to image loading operations.
