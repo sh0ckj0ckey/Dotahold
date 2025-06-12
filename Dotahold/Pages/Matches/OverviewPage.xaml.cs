@@ -63,6 +63,7 @@ namespace Dotahold.Pages.Matches
 
         private void UpdateLayoutsWidth()
         {
+            PlayerRecentMatchesFlipView.Width = PlayerOverviewGrid.ActualWidth - 34;
             PlayerProfileGrid.Width = PlayerOverviewGrid.ActualWidth - 34;
             PlayerOverallScrollViewer.Width = PlayerOverviewGrid.ActualWidth - 2;
             PlayerHeroesScrollViewer.Width = PlayerOverviewGrid.ActualWidth - 2;

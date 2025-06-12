@@ -1,6 +1,7 @@
 ﻿using System;
 using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
@@ -145,6 +146,27 @@ namespace Dotahold.Models
                 "15" or "lobby_type_featured" => "Featured",
                 _ => lobbyType.Replace("lobby_type_", "").Replace("_", " ").ToUpper(),
             };
+        }
+    }
+
+    public class RecentMatchModel : MatchModel
+    {
+        /// <summary>
+        /// 默认英雄全身图片
+        /// </summary>
+        private static BitmapImage? _defaultHeroImageSource240 = null;
+
+        public AsyncImage HeroImage { get; private set; }
+
+        public RecentMatchModel(DotaMatchModel dotaMatch, HeroModel hero, AbilitiesFacetModel? abilitiesFacet) : base(dotaMatch, hero, abilitiesFacet)
+        {
+            _defaultHeroImageSource240 ??= new BitmapImage(new Uri("ms-appx:///Assets/Aegis.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 240
+            };
+
+            this.HeroImage = new AsyncImage($"{Dotahold.Data.DataShop.ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/heroes/crops/{hero.DotaHeroAttributes.name.Replace("npc_dota_hero_", "")}.png", 0, 240, _defaultHeroImageSource240);
         }
     }
 }

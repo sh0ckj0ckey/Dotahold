@@ -12,6 +12,11 @@ namespace Dotahold.ViewModels
 {
     internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel, MatchesViewModel matchesViewModel) : ObservableObject
     {
+        /// <summary>
+        /// A semaphore used to limit concurrent access to image loading operations.
+        /// </summary>
+        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+
         private CancellationTokenSource? _cancellationTokenSource;
 
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
@@ -128,7 +133,7 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// List of recent matches, used to show the last 5 matches played by the player
         /// </summary>
-        public readonly ObservableCollection<MatchModel> RecentMatchesTop5 = [];
+        public readonly ObservableCollection<RecentMatchModel> RecentMatchesTop5 = [];
 
         /// <summary>
         /// List of recent matches, used to show the last 20 matches played by the player
@@ -148,6 +153,19 @@ namespace Dotahold.ViewModels
         /// List of player connect records, used to show the last 3 players who connected to the game
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
+
+        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
+        {
+            await _imageLoadSemaphore.WaitAsync();
+            try
+            {
+                await loadImageFunc();
+            }
+            finally
+            {
+                _imageLoadSemaphore.Release();
+            }
+        }
 
         public async Task LoadPlayerOverview(string steamId)
         {
@@ -208,7 +226,7 @@ namespace Dotahold.ViewModels
                 if (profile?.profile is not null)
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
-                    _ = this.PlayerProfile.AvatarImage.LoadImageAsync();
+                    _ = SafeLoadImageAsync(() => this.PlayerProfile.AvatarImage.LoadImageAsync());
                 }
 
                 this.LoadingProfile = false;
@@ -386,12 +404,14 @@ namespace Dotahold.ViewModels
 
                         var abilitiesFacet = abilities.GetFacetByIndex(recentMatch.hero_variant);
 
-                        var recentMatchModel = new MatchModel(recentMatch, hero, abilitiesFacet);
-                        this.RecentMatches.Add(recentMatchModel);
+                        var matchModel = new MatchModel(recentMatch, hero, abilitiesFacet);
+                        this.RecentMatches.Add(matchModel);
 
                         if (this.RecentMatchesTop5.Count < 5)
                         {
+                            var recentMatchModel = new RecentMatchModel(recentMatch, hero, abilitiesFacet);
                             this.RecentMatchesTop5.Add(recentMatchModel);
+                            _ = SafeLoadImageAsync(() => recentMatchModel.HeroImage.LoadImageAsync());
                         }
                     }
                 }
@@ -449,7 +469,7 @@ namespace Dotahold.ViewModels
                 {
                     var recordModel = new PlayerConnectRecordModel(record.SteamId, record.Avatar, record.Name);
                     this.PlayerConnectRecords.Add(recordModel);
-                    _ = recordModel.AvatarImage.LoadImageAsync();
+                    _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
                 }
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
@@ -481,8 +501,7 @@ namespace Dotahold.ViewModels
 
                 var recordModel = new PlayerConnectRecordModel(steamId, avatar, name);
                 this.PlayerConnectRecords.Insert(0, recordModel);
-                _ = recordModel.AvatarImage.LoadImageAsync();
-
+                _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
                 _ = SavePlayerConnectRecords();
             }
             catch (Exception ex) { LogCourier.Log($"RecordPlayerConnect error: {ex.Message}", LogCourier.LogType.Error); }
