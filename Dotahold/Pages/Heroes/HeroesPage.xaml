@@ -10,7 +10,8 @@
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
     xmlns:converters="using:Dotahold.Converters"
     xmlns:models="using:Dotahold.Models"
-    mc:Ignorable="d" NavigationCacheMode="Required">
+    mc:Ignorable="d"
+    NavigationCacheMode="Required">
 
     <Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>

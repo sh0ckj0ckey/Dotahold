@@ -10,7 +10,8 @@
     xmlns:models="using:Dotahold.Models"
     xmlns:dataModels="using:Dotahold.Data.Models"
     xmlns:converters="using:Dotahold.Converters"
-    mc:Ignorable="d" NavigationCacheMode="Required">
+    mc:Ignorable="d" 
+    NavigationCacheMode="Required">
 
     <Page.Resources>
         <converters:ItemTierToColorConverter x:Key="ItemTierToColorConverter"/>

@@ -2,6 +2,7 @@
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -40,6 +41,11 @@ namespace Dotahold.Pages.Matches
                 }
                 else
                 {
+                    if (MatchesFrame.Content is null)
+                    {
+                        MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
+                    }
+
                     if (_currentSteamId != _viewModel.AppSettings.SteamID)
                     {
                         _currentSteamId = _viewModel.AppSettings.SteamID;
@@ -95,6 +101,22 @@ namespace Dotahold.Pages.Matches
             }
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
+
+        ///// <summary>
+        ///// Copy player's Dota2 ID to clipboard
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void CopyAccountIdMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
+        //        dataPackage.SetText(_viewModel.ProfileViewModel.PlayerProfile?.DotaPlayerProfile.profile?.account_id);
+        //        Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
+        //    }
+        //    catch (Exception ex) { LogCourier.Log($"CopyAccountIdMenuFlyoutItem_Click Click error: {ex.Message}", LogCourier.LogType.Error); }
+        //}
 
         /// <summary>
         /// Re-fetch player profile data

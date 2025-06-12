@@ -158,6 +158,13 @@ namespace Dotahold.ViewModels
                 _cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
 
+                this.LoadingProfile = true;
+                this.LoadingPlayerWinLose = true;
+                this.LoadingPlayerOverallPerformance = true;
+                this.LoadingPlayerHeroesPerformance = true;
+                this.LoadingPlayerRecentMatches = true;
+                this.CurrentPlayersNumber = 0;
+
                 this.LoadingConstants = true;
 
                 await _heroesViewModel.LoadHeroes();

@@ -84,6 +84,7 @@ namespace Dotahold
                         && !Type.Equals(MainFrame.CurrentSourcePageType, typeof(HeroDataPage)))
                     {
                         MainFrame.Navigate(typeof(HeroesPage));
+                        MainFrame.ForwardStack.Clear();
                         MainFrame.BackStack.Clear();
                     }
                     break;
@@ -91,20 +92,35 @@ namespace Dotahold
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(ItemsPage)))
                     {
                         MainFrame.Navigate(typeof(ItemsPage));
+                        MainFrame.ForwardStack.Clear();
                         MainFrame.BackStack.Clear();
                     }
                     break;
                 case 2:
-                    if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(OverviewPage)))
+                    if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                     {
-                        MainFrame.Navigate(typeof(OverviewPage));
-                        MainFrame.BackStack.Clear();
+                        if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(ConnectPage)))
+                        {
+                            MainFrame.Navigate(typeof(ConnectPage));
+                            MainFrame.ForwardStack.Clear();
+                            MainFrame.BackStack.Clear();
+                        }
+                    }
+                    else
+                    {
+                        if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(OverviewPage)))
+                        {
+                            MainFrame.Navigate(typeof(OverviewPage));
+                            MainFrame.ForwardStack.Clear();
+                            MainFrame.BackStack.Clear();
+                        }
                     }
                     break;
                 case 3:
                     if (!Type.Equals(MainFrame.CurrentSourcePageType, typeof(SettingsPage)))
                     {
                         MainFrame.Navigate(typeof(SettingsPage));
+                        MainFrame.ForwardStack.Clear();
                         MainFrame.BackStack.Clear();
                     }
                     break;

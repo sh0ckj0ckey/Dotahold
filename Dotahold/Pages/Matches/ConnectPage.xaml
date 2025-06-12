@@ -11,7 +11,9 @@
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls"
     xmlns:models="using:Dotahold.Models"
-    NavigationCacheMode="Disabled" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+    mc:Ignorable="d"
+    NavigationCacheMode="Disabled" 
+    Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Page.Resources>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>

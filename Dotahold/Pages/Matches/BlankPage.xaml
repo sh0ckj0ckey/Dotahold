@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="Dotahold.Pages.Matches.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Pages.Matches"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image Height="128" Width="128" Opacity="0.3" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image.Source>
+                <BitmapImage UriSource="/Assets/Dotahold.png" DecodePixelHeight="128" DecodePixelType="Logical"/>
+            </Image.Source>
+        </Image>
+    </Grid>
+</Page>

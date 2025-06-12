@@ -6,11 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls" 
     xmlns:models="using:Dotahold.Models"
-    NavigationCacheMode="Required" Loaded="Page_Loaded">
+    mc:Ignorable="d"
+    NavigationCacheMode="Required"
+    Loaded="Page_Loaded">
 
     <Page.Resources>
         <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter" />
@@ -31,6 +34,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0" Padding="16,38,16,16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
@@ -90,6 +94,7 @@
                     </Button.Flyout>
                 </Button>
             </Grid>
+            
             <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
             <Grid Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -105,7 +110,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!--Player Rank-->
-                            <Border Grid.Column="0" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                            <Rectangle Grid.Column="0" Height="64" RadiusX="4" RadiusY="4" Opacity="0.5" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                             <Grid Grid.Column="0" Width="64" Height="64" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingProfile,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Image Source="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.rank_tier,Mode=OneWay,Converter={StaticResource PlayerRankToMedalImageConverter},ConverterParameter=128}" Height="64" Width="64" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind _viewModel.ProfileViewModel.PlayerProfile.DotaPlayerProfile.leaderboard_rank,Mode=OneWay}" Foreground="White" FontFamily="{ThemeResource ReaverBold}" FontWeight="Bold" FontSize="9" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom"
@@ -113,7 +118,7 @@
                             </Grid>
 
                             <!--Player Win Rate-->
-                            <Border Grid.Column="1" Height="64" CornerRadius="4" Opacity="0.5" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                            <Rectangle Grid.Column="1" Height="64" RadiusX="4" RadiusY="4" Opacity="0.5" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                             <Grid Grid.Column="1" Height="64" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerWinLose,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                                 <controls:WinLoseControl Margin="20,4,20,-4" HorizontalAlignment="Stretch" VerticalAlignment="Center"
@@ -131,9 +136,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Border Grid.Column="1" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Border Grid.Column="2" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="0" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="1" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="2" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                         <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,6,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
@@ -179,9 +184,9 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Border Grid.Column="1" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <Border Grid.Column="2" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="0" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="1" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <Rectangle Grid.Column="2" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
                         <ScrollViewer x:Name="PlayerHeroesScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
@@ -264,7 +269,7 @@
                                                     <Border.Background>
                                                         <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Hero.HeroImage.Image,Mode=OneWay}"/>
                                                     </Border.Background>
-                                                    <Border Height="42" Width="64" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                    <Border Height="42" Width="64" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" ToolTipService.Placement="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
                                                                 <GradientStopCollection>
@@ -364,7 +369,7 @@
                         </Grid>
 
                         <!--Current Players Number-->
-                        <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,24,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Grid x:Name="PlayerCurrentNumberGrid" Margin="0,16,0,0" Opacity="0.5" ColumnSpacing="8" Visibility="{x:Bind _viewModel.ProfileViewModel.CurrentPlayersNumber,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -385,7 +390,14 @@
 
         </Grid>
 
-        <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Column="1" community:UIElementExtensions.ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Frame x:Name="MatchesFrame" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </Grid>
     </Grid>
 </Page>
