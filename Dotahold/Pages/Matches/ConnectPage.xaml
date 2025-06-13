@@ -105,7 +105,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="1" Height="48" Width="48" CornerRadius="24" HorizontalAlignment="Center">
+                                    <Border Grid.Row="1" Height="48" Width="48" CornerRadius="4" HorizontalAlignment="Center">
                                         <Border.Background>
                                             <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind AvatarImage.Image,Mode=OneWay}"/>
                                         </Border.Background>
