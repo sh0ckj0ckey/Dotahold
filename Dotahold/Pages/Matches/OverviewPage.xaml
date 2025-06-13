@@ -108,7 +108,7 @@
                         <Grid Margin="16,8,16,0" Height="144" Padding="0,0,0,20" Opacity="0.5" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                             <Rectangle Height="104" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
                         </Grid>
-                        <FlipView x:Name="PlayerRecentMatchesFlipView" Margin="0,8,0,0" Height="144" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Top"
+                        <FlipView x:Name="PlayerRecentMatchesFlipView" Margin="16,8,0,0" Height="144" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top"
                                   ItemsSource="{x:Bind _viewModel.ProfileViewModel.RecentMatchesTop5,Mode=OneWay}"
                                   Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <FlipView.ItemTemplate>
@@ -206,7 +206,7 @@
                             </FlipView.ItemTemplate>
                         </FlipView>
 
-                        <Grid x:Name="PlayerProfileGrid" ColumnSpacing="6" Margin="0,-4,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Grid x:Name="PlayerProfileGrid" ColumnSpacing="6" Margin="16,-4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="72"/>
                                 <ColumnDefinition Width="*"/>
@@ -243,7 +243,7 @@
                             <Rectangle Grid.Column="1" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             <Rectangle Grid.Column="2" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
-                        <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,12,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                        <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerOverallPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <muxc:ItemsRepeater.Layout>
@@ -291,7 +291,7 @@
                             <Rectangle Grid.Column="1" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             <Rectangle Grid.Column="2" RadiusX="4" RadiusY="4" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
-                        <ScrollViewer x:Name="PlayerHeroesScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                        <ScrollViewer x:Name="PlayerHeroesScrollViewer" Margin="0,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
                             <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformancesTop10,Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <muxc:ItemsRepeater.Layout>
@@ -352,7 +352,7 @@
                             <Rectangle Grid.Row="8" Height="56" RadiusX="4" RadiusY="4" Opacity="0.2" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             <Rectangle Grid.Row="9" Height="56" RadiusX="4" RadiusY="4" Opacity="0.1" Fill="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
-                        <Grid x:Name="PlayerRecentMatchesGrid" Margin="0,8,0,0" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Grid x:Name="PlayerRecentMatchesGrid" Margin="16,8,0,0" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerRecentMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <muxc:ItemsRepeater Margin="0,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.RecentMatches,Mode=OneWay}" HorizontalAlignment="Stretch">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Vertical" Spacing="6" DisableVirtualization="True"/>
