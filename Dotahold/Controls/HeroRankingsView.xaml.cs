@@ -85,6 +85,16 @@ namespace Dotahold.Controls
 
                 RankingsItemsRepeater.ItemsSource = heroRankings;
 
+                if (RankingsScrollViewer is not null)
+                {
+                    RankingsScrollViewer.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                if (LoadingProgressRing is not null)
+                {
+                    LoadingProgressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    LoadingProgressRing.IsActive = false;
+                }
+
                 foreach (var heroRanking in heroRankings)
                 {
                     await heroRanking.AvatarImage.LoadImageAsync();
