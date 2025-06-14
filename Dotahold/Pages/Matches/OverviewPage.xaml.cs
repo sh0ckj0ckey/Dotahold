@@ -41,15 +41,17 @@ namespace Dotahold.Pages.Matches
                 }
                 else
                 {
-                    if (MatchesFrame.Content is null)
+                    if (MatchesFrame.Content is null || _currentSteamId != _viewModel.AppSettings.SteamID)
                     {
                         MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
-                    }
+                        MatchesFrame.ForwardStack.Clear();
+                        MatchesFrame.BackStack.Clear();
 
-                    if (_currentSteamId != _viewModel.AppSettings.SteamID)
-                    {
-                        _currentSteamId = _viewModel.AppSettings.SteamID;
-                        await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                        if (_currentSteamId != _viewModel.AppSettings.SteamID)
+                        {
+                            _currentSteamId = _viewModel.AppSettings.SteamID;
+                            await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                        }
                     }
                 }
             }
@@ -133,10 +135,22 @@ namespace Dotahold.Pages.Matches
                     throw new InvalidOperationException("SteamID is not set.");
                 }
 
+                MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
+
                 _currentSteamId = _viewModel.AppSettings.SteamID;
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        private void HeroesPlayedHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
+            {
+                MatchesFrame.Navigate(typeof(HeroesPlayedPage));
+            }
         }
     }
 }

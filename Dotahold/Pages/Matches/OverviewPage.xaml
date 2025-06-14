@@ -273,7 +273,8 @@
 
                         <!--Player Played Heroes Button-->
                         <HyperlinkButton Height="36" Margin="16,16,16,0" Background="Transparent" Foreground="{ThemeResource DotaholdApplicationForeground}"
-                                         HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                         HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                         Click="HeroesPlayedHyperlinkButton_Click">
                             <Grid Opacity="0.9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <TextBlock Text="Heroes Played" FontSize="15" FontFamily="{ThemeResource ReaverBold}"
                                            Margin="0,2,0,-2" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
