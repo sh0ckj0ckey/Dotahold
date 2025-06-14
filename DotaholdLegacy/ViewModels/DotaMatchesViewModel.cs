@@ -9,42 +9,6 @@ namespace Dotahold.ViewModels
 {
     public partial class DotaMatchesViewModel : ViewModelBase
     {
-        private static Lazy<DotaMatchesViewModel> _lazyVM = new Lazy<DotaMatchesViewModel>(() => new DotaMatchesViewModel());
-        public static DotaMatchesViewModel Instance => _lazyVM.Value;
-
-        private Windows.Web.Http.HttpClient _playerInfoHttpClient = new Windows.Web.Http.HttpClient();
-        private Windows.Web.Http.HttpClient _matchHttpClient = new Windows.Web.Http.HttpClient();
-        private Windows.Web.Http.HttpClient _matchInfoHttpClient = new Windows.Web.Http.HttpClient();
-
-        // 用户胜负场数
-        private DotaMatchWinLoseModel _PlayerWinLose = null;
-        public DotaMatchWinLoseModel PlayerWinLose
-        {
-            get { return _PlayerWinLose; }
-            set { Set("PlayerWinLose", ref _PlayerWinLose, value); }
-        }
-
-        // 在线玩家数量
-        private string _sOnlilnePlayersCount = string.Empty;
-        public string sOnlilnePlayersCount
-        {
-            get { return _sOnlilnePlayersCount; }
-            set { Set("sOnlilnePlayersCount", ref _sOnlilnePlayersCount, value); }
-        }
-
-        // 最近的5场比赛
-        public ObservableCollection<DotaRecentMatchModel> vRecentMatchesForFlip = new ObservableCollection<DotaRecentMatchModel>();
-
-        // 最近的比赛
-        public ObservableCollection<DotaRecentMatchModel> vRecentMatches = new ObservableCollection<DotaRecentMatchModel>();
-
-        // 所有的比赛
-        private List<DotaRecentMatchModel> _vAllMatchesList = new List<DotaRecentMatchModel>();
-        public ObservableCollection<DotaRecentMatchModel> vAllMatches = new ObservableCollection<DotaRecentMatchModel>();
-
-        // 玩家的统计数据
-        public ObservableCollection<DotaMatchPlayerTotalModel> vPlayerTotals = new ObservableCollection<DotaMatchPlayerTotalModel>();
-
         // 是否正在加载所有比赛
         private bool _bLoadingAllMatches = false;
         public bool bLoadingAllMatches
@@ -69,14 +33,6 @@ namespace Dotahold.ViewModels
             set { Set("bLoadingOneMatchInfo", ref _bLoadingOneMatchInfo, value); }
         }
 
-        // 是否正在加载英雄和物品
-        private bool _bLoadingHeroesAndItems = false;
-        public bool bLoadingHeroesAndItems
-        {
-            get { return _bLoadingHeroesAndItems; }
-            set { Set("bLoadingHeroesAndItems", ref _bLoadingHeroesAndItems, value); }
-        }
-
         // 是否正在搜索比赛编号
         private bool _bSearchingByMatchId = false;
         public bool bSearchingByMatchId
@@ -85,132 +41,10 @@ namespace Dotahold.ViewModels
             set { Set("bSearchingByMatchId", ref _bSearchingByMatchId, value); }
         }
 
-        // 刷新胜负场次图
-        public Action<double, double> ActUpdateWinRateCapsule = null;
-
         // 是否已经拉取过所有比赛的列表
         private bool _bGottenAllMatchesList = false;
 
-        public DotaMatchesViewModel()
-        {
-            InitialDotaMatches();
-
-            LoadBindedDotaIdHistory();
-        }
-
-        public async void InitialDotaMatches()
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Going to load Matches ---> " + DateTime.Now.Ticks);
-
-                _bGottenAllMatchesList = false;
-
-                vOneHeroMatches.Clear();
-                CurrentHeroForPlayedMatches = null;
-
-                sSteamId = DotaViewModel.Instance.AppSettings.sSteamID;
-
-                bLoadingHeroesAndItems = true;
-                bool triedLoadHeroes = await DotaHeroesViewModel.Instance.LoadDotaHeroes();
-                bool triedLoadItems = await DotaItemsViewModel.Instance.LoadDotaItems();
-
-                // 先等获取完英雄和物品列表
-                if (!string.IsNullOrWhiteSpace(sSteamId))
-                {
-                    if (triedLoadHeroes && triedLoadItems)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Loading Matches ---> " + DateTime.Now.Ticks);
-
-                        bLoadingHeroesAndItems = false;
-
-                        // 玩家信息
-                        GetPlayerProfileAsync(sSteamId);
-
-                        // 胜率
-                        GetPlayerWLAsync(sSteamId);
-
-                        // 统计数据
-                        GetTotalAsync(sSteamId);
-
-                        // 处理最近的比赛
-                        GetRecentMatchAsync(sSteamId);
-
-                        // 常用英雄
-                        GetHeroesPlayedAsync(sSteamId);
-
-                        // 在线玩家数
-                        GetNumberOfCurrentPlayersAsync();
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            finally { bLoadingHeroesAndItems = false; }
-        }
-
-        /// <summary>
-        /// 获取最近20场比赛
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private async void GetRecentMatchAsync(string id)
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Going to GetRecentMatch ---> " + DateTime.Now.Ticks);
-
-                vRecentMatchesForFlip.Clear();
-                vRecentMatches.Clear();
-
-                string url = string.Format("https://api.opendota.com/api/players/{0}/recentMatches", id);
-                List<DotaRecentMatchModel> recentMatches = null;
-
-                try
-                {
-                    recentMatches = await GetResponseAsync<List<DotaRecentMatchModel>>(url, _matchHttpClient);
-                }
-                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
-                if (recentMatches != null)
-                {
-                    foreach (var item in recentMatches)
-                    {
-                        if (DotaHeroesViewModel.Instance.dictAllHeroes?.ContainsKey(item.hero_id.ToString()) == true)
-                        {
-                            item.sHeroCoverImage = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/{0}.png",
-                                DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].name.Replace("npc_dota_hero_", ""));
-                            item.sHeroName = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].localized_name;
-                            item.sHeroHorizonImage = DotaHeroesViewModel.Instance.dictAllHeroes[item.hero_id.ToString()].img;
-                            item.bWin = null;
-                            if (item.player_slot != null && item.radiant_win != null)
-                            {
-                                if (item.player_slot < 128)// 天辉
-                                    item.bWin = item.radiant_win;
-                                else if (item.player_slot >= 128)// 夜魇
-                                    item.bWin = !item.radiant_win;
-                            }
-                            vRecentMatches.Add(item);
-                            if (vRecentMatchesForFlip.Count < 5)
-                                vRecentMatchesForFlip.Add(item);
-                        }
-                    }
-
-                    foreach (var item in vRecentMatches)
-                    {
-                        await item.LoadHorizonImageAsync(64);
-                    }
-                    foreach (var item in vRecentMatchesForFlip)
-                    {
-                        await item.LoadCoverImageAsync(220);
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 加载所有比赛的列表
-        /// </summary>
+        // 加载所有比赛的列表
         public async Task<List<DotaRecentMatchModel>> GetAllMatchesAsync()
         {
             try
@@ -340,87 +174,7 @@ namespace Dotahold.ViewModels
             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
 
-        /// <summary>
-        /// 请求更新数据
-        /// </summary>
-        /// <param name="id"></param>
-        public async void PostRefreshAsync(string id)
-        {
-            try
-            {
-                string url = string.Format("https://api.opendota.com/api/players/{0}/refresh", id);
-                await _playerInfoHttpClient.PostAsync(new Uri(url), null);
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 从物品字典中查找物品，返回其图片地址
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private string GetItemImgById(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
-                    {
-                        return DotaItemsViewModel.Instance.dictIdToAllItems[id].img;
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// 从物品字典中查找物品，返回其名字
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private string GetItemNameById(string id)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(id))
-                {
-                    if (DotaItemsViewModel.Instance.dictIdToAllItems?.ContainsKey(id) == true)
-                    {
-                        return DotaItemsViewModel.Instance.dictIdToAllItems[id].dname;
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// 从物品字典中查找物品，返回其图片地址
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private string GetItemImgByName(string name)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(name))
-                {
-                    if (DotaItemsViewModel.Instance.dictNameToAllItems?.ContainsKey(name) == true)
-                    {
-                        return DotaItemsViewModel.Instance.dictNameToAllItems[name].img;
-                    }
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-            return string.Empty;
-        }
-
         #region Heroes Played
-
-        // 最常用的10个英雄
-        public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayed10Heroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
 
         // 所有的最常用英雄
         public ObservableCollection<DotaMatchHeroPlayedModel> vMostPlayedHeroes = new ObservableCollection<DotaMatchHeroPlayedModel>();
