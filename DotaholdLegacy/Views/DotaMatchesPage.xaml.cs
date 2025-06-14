@@ -1,36 +1,10 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Dotahold.Models;
-using Dotahold.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
-namespace Dotahold.Views
+﻿namespace Dotahold.Views
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class DotaMatchesPage : Page
     {
-        /// <summary>
-        /// 点击查看常用英雄
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClickMostPlayedHeroes(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MatchFrame.Navigate(typeof(MatchHeroesPlayedPage));
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
         /// <summary>
         /// 点击查看某个英雄的所有比赛
         /// </summary>
