@@ -171,7 +171,7 @@
                                             <Border Height="96" Width="96" CornerRadius="0,0,4,0" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False">
                                                 <Border.Background>
                                                     <media:RadialGradientBrush Center="1,1" RadiusX="0.5" RadiusY="0.5" GradientOrigin="1,1">
-                                                        <GradientStop Color="#FF222222" Offset="0.0"/>
+                                                        <GradientStop Color="#B2222222" Offset="0.0"/>
                                                         <GradientStop Color="#00222222" Offset="1.0"/>
                                                     </media:RadialGradientBrush>
                                                 </Border.Background>
