@@ -34,6 +34,8 @@
 
                     <Color x:Key="DotaholdItemBackgroundColor">#08FFFFFF</Color>
 
+                    <x:Double x:Key="DotaholdBlankLogoOpacity">0.2</x:Double>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -70,6 +72,8 @@
 
                     <Color x:Key="DotaholdItemBackgroundColor">#EAEAEA</Color>
 
+                    <x:Double x:Key="DotaholdBlankLogoOpacity">0.05</x:Double>
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

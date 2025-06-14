@@ -87,13 +87,13 @@
 
         <Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Image Visibility="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter},ConverterParameter=!}"
-                   Height="128" Width="128" Opacity="0.3" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                   Height="128" Width="128" Opacity="{ThemeResource DotaholdBlankLogoOpacity}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image.Source>
-                    <BitmapImage UriSource="/Assets/Dotahold.png" DecodePixelHeight="128" DecodePixelType="Logical"/>
+                    <BitmapImage UriSource="/Assets/Dotahold_gray.png" DecodePixelHeight="128" DecodePixelType="Logical"/>
                 </Image.Source>
                 <communityAnimations:Implicit.ShowAnimations>
                     <communityAnimations:CenterPointAnimation From="64,64,0" To="64,64,0"/>
-                    <communityAnimations:OpacityAnimation To="0.15" Duration="0:0:0.4"/>
+                    <communityAnimations:OpacityAnimation To="{ThemeResource DotaholdBlankLogoOpacity}" Duration="0:0:0.4"/>
                     <communityAnimations:ScaleAnimation From="0.8" To="1" EasingMode="EaseOut" EasingType="Back" Duration="0:0:0.4"/>
                 </communityAnimations:Implicit.ShowAnimations>
                 <communityAnimations:Implicit.HideAnimations>

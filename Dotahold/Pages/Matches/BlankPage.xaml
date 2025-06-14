@@ -8,9 +8,9 @@
     mc:Ignorable="d">
     
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Image Height="128" Width="128" Opacity="0.3" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Image Height="128" Width="128" Opacity="{ThemeResource DotaholdBlankLogoOpacity}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image.Source>
-                <BitmapImage UriSource="/Assets/Dotahold.png" DecodePixelHeight="128" DecodePixelType="Logical"/>
+                <BitmapImage UriSource="/Assets/Dotahold_gray.png" DecodePixelHeight="128" DecodePixelType="Logical"/>
             </Image.Source>
         </Image>
     </Grid>
