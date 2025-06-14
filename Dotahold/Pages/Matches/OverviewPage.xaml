@@ -9,6 +9,7 @@
     xmlns:media="using:Microsoft.UI.Xaml.Media"
     xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls" 
     xmlns:models="using:Dotahold.Models"
@@ -170,7 +171,7 @@
                                             <Border Height="96" Width="96" CornerRadius="0,0,4,0" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False">
                                                 <Border.Background>
                                                     <media:RadialGradientBrush Center="1,1" RadiusX="0.5" RadiusY="0.5" GradientOrigin="1,1">
-                                                        <GradientStop Color="#8C222222" Offset="0.0"/>
+                                                        <GradientStop Color="#FF222222" Offset="0.0"/>
                                                         <GradientStop Color="#00222222" Offset="1.0"/>
                                                     </media:RadialGradientBrush>
                                                 </Border.Background>
@@ -490,8 +491,25 @@
                 </ScrollViewer>
             </Grid>
 
-            <!--<muxc:ProgressRing Grid.Row="2" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingConstants,Mode=OneWay}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingConstants,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
-                               Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+            <Grid Grid.Row="2" Height="Auto" Margin="8,0" CornerRadius="8,8,0,0" Padding="0,16,0,8" RowSpacing="6" BorderThickness="1,1,1,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingConstants,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="Backdrop" FallbackColor="{ThemeResource DotaholdApplicationPageBackground}" TintColor="{ThemeResource DotaholdApplicationPageBackground}" TintOpacity="0.1" TintLuminosityOpacity="0"/>
+                </Grid.Background>
+                <!--<communityAnimations:Implicit.ShowAnimations>
+                    <communityAnimations:TranslationAnimation To="0,0,0" EasingMode="EaseOut" Delay="0:0:0.2" Duration="0:0:0.8"/>
+                    <communityAnimations:OpacityAnimation From="0" To="1" Delay="0:0:0.2" Duration="0:0:0.4"/>
+                </communityAnimations:Implicit.ShowAnimations>
+                <communityAnimations:Implicit.HideAnimations>
+                    <communityAnimations:TranslationAnimation To="0,16,0" EasingMode="EaseOut" Delay="0:0:0.2" Duration="0:0:0.8"/>
+                    <communityAnimations:OpacityAnimation From="1" To="0" Delay="0:0:0.2" Duration="0:0:0.4"/>
+                </communityAnimations:Implicit.HideAnimations>-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <muxc:ProgressBar Grid.Row="0" IsIndeterminate="{x:Bind _viewModel.ProfileViewModel.LoadingConstants,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="Loading data for heroes and items" Margin="16,0" FontWeight="Medium" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
 
         </Grid>
 
