@@ -17,6 +17,8 @@ namespace Dotahold.ViewModels
         /// </summary>
         private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
 
+        private Task? _lastOverviewTask = null;
+
         private CancellationTokenSource? _cancellationTokenSource;
 
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
@@ -172,35 +174,52 @@ namespace Dotahold.ViewModels
             try
             {
                 _cancellationTokenSource?.Cancel();
+
+                if (_lastOverviewTask is not null)
+                {
+                    try { await _lastOverviewTask; } catch { }
+                }
+
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
 
-                this.LoadingProfile = true;
-                this.LoadingPlayerWinLose = true;
-                this.LoadingPlayerOverallPerformance = true;
-                this.LoadingPlayerHeroesPerformance = true;
-                this.LoadingPlayerRecentMatches = true;
-                this.CurrentPlayersNumber = 0;
-
-                this.LoadingConstants = true;
-
-                await _heroesViewModel.LoadHeroes();
-                await _itemsViewModel.LoadItems();
-                await _matchesViewModel.LoadAbilities();
-
-                this.LoadingConstants = false;
-
-                var profileTask = LoadPlayerProfile(steamId, cancellationToken);
-                var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
-                var overallPerformanceTask = LoadPlayerOverallPerformance(steamId, cancellationToken);
-                var heroesPerformanceTask = LoadPlayerHeroesPerformance(steamId, cancellationToken);
-                var recentMatchesTask = LoadPlayerRecentMatches(steamId, cancellationToken);
-                var currentPlayersTask = LoadCurrentPlayersNumber();
-
-                await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, recentMatchesTask, currentPlayersTask);
+                _lastOverviewTask = InternalLoadPlayerOverview(steamId, cancellationToken);
+                await _lastOverviewTask;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverview({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                _lastOverviewTask = null;
+            }
+        }
+
+        private async Task InternalLoadPlayerOverview(string steamId, CancellationToken cancellationToken)
+        {
+            this.LoadingProfile = true;
+            this.LoadingPlayerWinLose = true;
+            this.LoadingPlayerOverallPerformance = true;
+            this.LoadingPlayerHeroesPerformance = true;
+            this.LoadingPlayerRecentMatches = true;
+            this.CurrentPlayersNumber = 0;
+
+            this.LoadingConstants = true;
+
+            await _heroesViewModel.LoadHeroes();
+            await _itemsViewModel.LoadItems();
+            await _matchesViewModel.LoadAbilities();
+
+            this.LoadingConstants = false;
+
+            var profileTask = LoadPlayerProfile(steamId, cancellationToken);
+            var winLoseTask = LoadPlayerWinLose(steamId, cancellationToken);
+            var overallPerformanceTask = LoadPlayerOverallPerformance(steamId, cancellationToken);
+            var heroesPerformanceTask = LoadPlayerHeroesPerformance(steamId, cancellationToken);
+            var recentMatchesTask = LoadPlayerRecentMatches(steamId, cancellationToken);
+            var currentPlayersTask = LoadCurrentPlayersNumber();
+
+            await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, recentMatchesTask, currentPlayersTask);
+
         }
 
         /// <summary>
