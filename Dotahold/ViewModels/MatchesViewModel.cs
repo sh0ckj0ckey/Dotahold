@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
+using Dotahold.Utils;
 
 namespace Dotahold.ViewModels
 {
     internal partial class MatchesViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel) : ObservableObject
     {
-        // private CancellationTokenSource? _cancellationTokenSource;
+        private readonly SerialTaskQueue _serialTaskQueue = new();
 
-        /// <summary>
-        /// A semaphore used to limit concurrent access to image loading operations.
-        /// </summary>
-        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+        private Task? _lastMatchesTask = null;
+
+        private CancellationTokenSource? _cancellationTokenSource;
 
         /// <summary>
         /// Task to load abilities, used to prevent multiple simultaneous loads
@@ -41,18 +42,21 @@ namespace Dotahold.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> _permanentBuffs = [];
 
-        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
+        private bool _loadingPlayerAllMatches = false;
+
+        /// <summary>
+        /// Indicates whether is currently fetching the player's all matches data
+        /// </summary>
+        public bool LoadingPlayerAllMatches
         {
-            await _imageLoadSemaphore.WaitAsync();
-            try
-            {
-                await loadImageFunc();
-            }
-            finally
-            {
-                _imageLoadSemaphore.Release();
-            }
+            get => _loadingPlayerAllMatches;
+            private set => SetProperty(ref _loadingPlayerAllMatches, value);
         }
+
+        /// <summary>
+        /// List of all matches, may be filtered by hero
+        /// </summary>
+        public ObservableCollection<MatchModel> AllMatches = [];
 
         public async Task LoadAbilities()
         {
@@ -159,5 +163,85 @@ namespace Dotahold.ViewModels
 
             return string.Empty;
         }
+
+        public async Task LoadPlayerAllMatches(string steamId)
+        {
+            try
+            {
+                _cancellationTokenSource?.Cancel();
+
+                if (_lastMatchesTask is not null)
+                {
+                    try { await _lastMatchesTask; } catch { }
+                }
+
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = _cancellationTokenSource.Token;
+
+                _lastMatchesTask = InternalLoadPlayerAllMatches(steamId, cancellationToken);
+                await _lastMatchesTask;
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadPlayerAllMatches({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                _lastMatchesTask = null;
+            }
+        }
+
+        /// <summary>
+        /// Load player's all matches
+        /// </summary>
+        /// <param name="steamId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        private async Task InternalLoadPlayerAllMatches(string steamId, CancellationToken cancellationToken)
+        {
+            this.LoadingPlayerAllMatches = true;
+            this.AllMatches.Clear();
+
+            var allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            if (allMatches is not null)
+            {
+                foreach (var match in allMatches)
+                {
+                    var hero = _heroesViewModel.GetHeroById(match.hero_id.ToString());
+                    if (hero is null)
+                    {
+                        continue;
+                    }
+
+                    var abilities = this.GetAbilitiesByHeroName(hero.DotaHeroAttributes.name);
+                    if (abilities is null)
+                    {
+                        continue;
+                    }
+
+                    var abilitiesFacet = abilities.GetFacetByIndex(match.hero_variant);
+
+                    var matchModel = new MatchModel(match, hero, abilitiesFacet);
+                    this.AllMatches.Add(matchModel);
+                }
+            }
+
+            this.LoadingPlayerAllMatches = false;
+        }
+
+        public void Reset()
+        {
+            this.LoadingPlayerAllMatches = false;
+            this.AllMatches.Clear();
+
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+        }
+
     }
 }

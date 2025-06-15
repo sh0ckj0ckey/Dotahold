@@ -1,0 +1,153 @@
+﻿<Page
+    x:Class="Dotahold.Pages.Matches.MatchesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Pages.Matches"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:converters="using:Dotahold.Converters"
+    xmlns:models="using:Dotahold.Models"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter"/>
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" ColumnSpacing="8" Margin="16,0,32,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="58"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Back Button-->
+            <Button Grid.Column="0" Width="58" Height="42" Margin="0,8,0,-8" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Column="1" Margin="0,10,0,-10" Text="Matches" FontFamily="{ThemeResource ReaverBold}" FontSize="22" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
+
+        <muxc:ProgressRing Grid.Row="2" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" IsActive="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Mode=OneWay}"
+                           Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ScrollViewer Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" ViewChanged="ScrollViewer_ViewChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
+            <muxc:ItemsRepeater Margin="16,28,16,16" ItemsSource="{x:Bind _viewModel.MatchesViewModel.AllMatches,Mode=OneWay}" HorizontalAlignment="Stretch">
+                <muxc:ItemsRepeater.Layout>
+                    <muxc:StackLayout Orientation="Vertical" Spacing="6"/>
+                </muxc:ItemsRepeater.Layout>
+                <muxc:ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="models:MatchModel">
+                        <Button Height="56" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="8,0">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Hero Image-->
+                                <Border Grid.Column="0" Width="75" Height="42" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind Hero.HeroImage.Image,Mode=OneWay}"/>
+                                    </Border.Background>
+
+                                    <!--Facet-->
+                                    <Border Height="42" Width="64" Visibility="{x:Bind AbilitiesFacet,Converter={StaticResource EmptyToVisibilityConverter}}" ToolTipService.Placement="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                                                <GradientStopCollection>
+                                                    <GradientStop Color="#222222" Offset="0.0"/>
+                                                    <GradientStop Color="#00222222" Offset="0.6"/>
+                                                    <GradientStop Color="#00222222" Offset="1.0"/>
+                                                </GradientStopCollection>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <ToolTipService.ToolTip>
+                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="36"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0" ColumnSpacing="12" CornerRadius="2" Background="{x:Bind AbilitiesFacet.BackgroundBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="36"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Grid.Column="0" Background="#16000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                        <Image Height="18" Width="18" Source="{x:Bind AbilitiesFacet.IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                    <TextBlock Grid.Column="1" Text="{x:Bind AbilitiesFacet.Title}" FontFamily="{ThemeResource ReaverBold}" Foreground="#FFFFFF" FontSize="16" Margin="0,2,8,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind AbilitiesFacet.Description}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                        </ToolTipService.ToolTip>
+                                        <Image Height="18" Width="18" Margin="4" Opacity="0.8" Stretch="UniformToFill" Source="{x:Bind AbilitiesFacet.IconImage.Image,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                    </Border>
+                                </Border>
+
+                                <Grid Grid.Column="1" RowSpacing="2" ColumnSpacing="4" Margin="12,2,6,-2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!--Hero Name-->
+                                    <TextBlock Grid.Row="0" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="15" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                    <TextBlock Grid.Row="1" FontSize="12" FontWeight="Medium" Opacity="0.7" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Run Text="{x:Bind GameMode}"/>
+                                        <Run Text="•" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                        <Run Text="{x:Bind LobbyType}"/>
+                                        <Run/>
+                                        <Run Text="{x:Bind TimeAgo}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                    </TextBlock>
+
+                                </Grid>
+
+                                <!--K/D/A-->
+                                <Grid Grid.Column="2" Margin="0,0,8,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" FontSize="17" Text="{x:Bind KDA}" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1" FontSize="13" FontFamily="{ThemeResource RadianceSemiBold}" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Run Text="{x:Bind DotaMatch.kills}"/>
+                                        <Run Text="/"/>
+                                        <Run Text="{x:Bind DotaMatch.deaths}"/>
+                                        <Run Text="/"/>
+                                        <Run Text="{x:Bind DotaMatch.assists}"/>
+                                    </TextBlock>
+                                </Grid>
+
+                                <!--Win or Lose-->
+                                <Border x:Name="WinBorder" x:Load="{x:Bind PlayerWin}" Grid.Column="3" Height="24" Width="24" CornerRadius="4" Background="ForestGreen" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock Text="W" FontSize="16" Foreground="{ThemeResource DotaholdApplicationPageBackground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border x:Name="LoseBorder" x:Load="{x:Bind PlayerWin,Converter={StaticResource BoolNegationConverter}}" Grid.Column="3" Height="24" Width="24" CornerRadius="4" Background="Firebrick" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock Text="L" FontSize="16" Foreground="{ThemeResource DotaholdApplicationPageBackground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </muxc:ItemsRepeater.ItemTemplate>
+            </muxc:ItemsRepeater>
+        </ScrollViewer>
+    </Grid>
+</Page>

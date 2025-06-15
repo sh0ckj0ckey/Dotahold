@@ -162,7 +162,7 @@ namespace Dotahold.ViewModels
 
                 _cancellationTokenSource?.Dispose();
                 _cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = _cancellationTokenSource?.Token ?? CancellationToken.None;
+                var cancellationToken = _cancellationTokenSource.Token;
 
                 _lastOverviewTask = InternalLoadPlayerOverview(steamId, cancellationToken);
                 await _lastOverviewTask;
@@ -182,6 +182,8 @@ namespace Dotahold.ViewModels
             this.LoadingPlayerHeroesPerformance = true;
             this.LoadingPlayerRecentMatches = true;
             this.CurrentPlayersNumber = 0;
+
+            _matchesViewModel.Reset();
 
             this.LoadingConstants = true;
 

@@ -152,5 +152,13 @@ namespace Dotahold.Pages.Matches
                 MatchesFrame.Navigate(typeof(HeroesPlayedPage));
             }
         }
+
+        private void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+            {
+                MatchesFrame.Navigate(typeof(MatchesPage), _currentSteamId);
+            }
+        }
     }
 }

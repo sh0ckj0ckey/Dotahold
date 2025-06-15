@@ -22,7 +22,9 @@ namespace Dotahold.Pages.Matches
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.GoBack();
+            this.Frame.Navigate(typeof(BlankPage));
+            this.Frame.ForwardStack.Clear();
+            this.Frame.BackStack.Clear();
         }
     }
 }
