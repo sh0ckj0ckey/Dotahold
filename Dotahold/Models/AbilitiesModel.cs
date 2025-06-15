@@ -3,6 +3,7 @@ using System.Linq;
 using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
+using Dotahold.Utils;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -10,6 +11,8 @@ namespace Dotahold.Models
 {
     public class AbilitiesModel
     {
+        private static readonly SerialTaskQueue _serialTaskQueue = new();
+
         public DotaAibilitiesModel DotaAbilities { get; private set; }
 
         public AbilitiesFacetModel[] AbilitiesFacets { get; private set; }
@@ -34,7 +37,7 @@ namespace Dotahold.Models
                 var facet = this.AbilitiesFacets.FirstOrDefault(facet => facet.Index == index - 1);
                 if (facet is not null)
                 {
-                    _ = facet.IconImage.LoadImageAsync();
+                    _ = _serialTaskQueue.EnqueueAsync(() => facet.IconImage.LoadImageAsync());
                     return facet;
                 }
             }
