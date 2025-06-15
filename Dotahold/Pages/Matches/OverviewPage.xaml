@@ -276,8 +276,7 @@
                                          HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                          Click="HeroesPlayedHyperlinkButton_Click">
                             <Grid Opacity="0.9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <TextBlock Text="Heroes Played" FontSize="15" FontFamily="{ThemeResource ReaverBold}"
-                                           Margin="0,2,0,-2" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock Text="Heroes Played" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 <FontIcon Glyph="&#xE970;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,1,0,-1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             </Grid>
                         </HyperlinkButton>
@@ -324,8 +323,7 @@
                                          HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                          Click="AllMatchesHyperlinkButton_Click">
                             <Grid Opacity="0.9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <TextBlock Text="Recent Matches" FontSize="15" FontFamily="{ThemeResource ReaverBold}"
-                                           Margin="0,2,0,-2" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock Text="Recent Matches" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 <FontIcon Glyph="&#xE970;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,1,0,-1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             </Grid>
                         </HyperlinkButton>

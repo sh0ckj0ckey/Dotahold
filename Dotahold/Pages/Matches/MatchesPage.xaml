@@ -34,7 +34,7 @@
             <Button Grid.Column="0" Width="58" Height="42" Margin="0,8,0,-8" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <TextBlock Grid.Column="1" Margin="0,10,0,-10" Text="Matches" FontFamily="{ThemeResource ReaverBold}" FontSize="22" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Margin="0,10,0,-10" Text="Recent Matches" FontFamily="{ThemeResource ReaverBold}" FontSize="22" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Grid>
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
