@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
+using Dotahold.Utils;
 
 namespace Dotahold.ViewModels
 {
     internal partial class HeroesViewModel : ObservableObject
     {
-        /// <summary>
-        /// A semaphore used to limit concurrent access to image loading operations.
-        /// </summary>
-        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+        private readonly SerialTaskQueue _serialTaskQueue = new();
 
         /// <summary>
         /// Task to load heroes, used to prevent multiple simultaneous loads
@@ -95,19 +93,6 @@ namespace Dotahold.ViewModels
             set => SetProperty(ref _pickedHeroData, value);
         }
 
-        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
-        {
-            await _imageLoadSemaphore.WaitAsync();
-            try
-            {
-                await loadImageFunc();
-            }
-            finally
-            {
-                _imageLoadSemaphore.Release();
-            }
-        }
-
         public async Task LoadHeroes()
         {
             if (_loadHeroesTask is not null)
@@ -179,23 +164,23 @@ namespace Dotahold.ViewModels
 
                 foreach (var hero in this.StrHeroes)
                 {
-                    _ = SafeLoadImageAsync(() => hero.HeroImage.LoadImageAsync());
-                    _ = SafeLoadImageAsync(() => hero.HeroIcon.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroIcon.LoadImageAsync());
                 }
                 foreach (var hero in this.AgiHeroes)
                 {
-                    _ = SafeLoadImageAsync(() => hero.HeroImage.LoadImageAsync());
-                    _ = SafeLoadImageAsync(() => hero.HeroIcon.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroIcon.LoadImageAsync());
                 }
                 foreach (var hero in this.IntHeroes)
                 {
-                    _ = SafeLoadImageAsync(() => hero.HeroImage.LoadImageAsync());
-                    _ = SafeLoadImageAsync(() => hero.HeroIcon.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroIcon.LoadImageAsync());
                 }
                 foreach (var hero in this.UniHeroes)
                 {
-                    _ = SafeLoadImageAsync(() => hero.HeroImage.LoadImageAsync());
-                    _ = SafeLoadImageAsync(() => hero.HeroIcon.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => hero.HeroIcon.LoadImageAsync());
                 }
             }
             catch (Exception ex)

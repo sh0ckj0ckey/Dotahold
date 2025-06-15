@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
+using Dotahold.Utils;
 
 namespace Dotahold.ViewModels
 {
     internal partial class ProfileViewModel(HeroesViewModel heroesViewModel, ItemsViewModel itemsViewModel, MatchesViewModel matchesViewModel) : ObservableObject
     {
-        /// <summary>
-        /// A semaphore used to limit concurrent access to image loading operations.
-        /// </summary>
-        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+        private readonly SerialTaskQueue _serialTaskQueue = new();
 
         private Task? _lastOverviewTask = null;
 
@@ -153,19 +149,6 @@ namespace Dotahold.ViewModels
 
         public readonly PlayerConnectRecordsViewModel PlayerConnectRecords = new();
 
-        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
-        {
-            await _imageLoadSemaphore.WaitAsync();
-            try
-            {
-                await loadImageFunc();
-            }
-            finally
-            {
-                _imageLoadSemaphore.Release();
-            }
-        }
-
         public async Task LoadPlayerOverview(string steamId)
         {
             try
@@ -241,7 +224,7 @@ namespace Dotahold.ViewModels
                 if (profile?.profile is not null)
                 {
                     this.PlayerProfile = new PlayerProfileModel(profile);
-                    _ = SafeLoadImageAsync(() => this.PlayerProfile.AvatarImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => this.PlayerProfile.AvatarImage.LoadImageAsync());
                 }
 
                 this.LoadingPlayerProfile = false;
@@ -426,7 +409,7 @@ namespace Dotahold.ViewModels
                         {
                             var recentMatchModel = new RecentMatchModel(recentMatch, hero, abilitiesFacet);
                             this.RecentMatchesTop5.Add(recentMatchModel);
-                            _ = SafeLoadImageAsync(() => recentMatchModel.HeroImage.LoadImageAsync());
+                            _ = _serialTaskQueue.EnqueueAsync(() => recentMatchModel.HeroImage.LoadImageAsync());
                         }
                     }
                 }
