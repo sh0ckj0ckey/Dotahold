@@ -38,7 +38,7 @@ namespace Dotahold.Pages.Matches
             if (!_loadedPlayerConnectRecords)
             {
                 _loadedPlayerConnectRecords = true;
-                await _viewModel.ProfileViewModel.LoadPlayerConnectRecords();
+                await _viewModel.ProfileViewModel.PlayerConnectRecords.LoadPlayerConnectRecords();
             }
         }
 
@@ -105,7 +105,7 @@ namespace Dotahold.Pages.Matches
                 }
 
                 _viewModel.AppSettings.SteamID = profile.profile.account_id;
-                _viewModel.ProfileViewModel.RecordPlayerConnect(profile.profile.avatarfull, profile.profile.personaname, profile.profile.account_id);
+                _viewModel.ProfileViewModel.PlayerConnectRecords.RecordPlayerConnect(profile.profile.avatarfull, profile.profile.personaname, profile.profile.account_id);
 
                 if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(OverviewPage)))
                 {

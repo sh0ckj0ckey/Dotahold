@@ -48,7 +48,7 @@
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <ScrollViewer Grid.Row="2" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
-            <muxc:ItemsRepeater Margin="16" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
+            <muxc:ItemsRepeater Margin="16,28,16,16" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
                     <muxc:StackLayout Orientation="Vertical" Spacing="6"/>
                 </muxc:ItemsRepeater.Layout>

@@ -51,16 +51,16 @@ namespace Dotahold.ViewModels
         public bool LoadingConstants
         {
             get => _loadingConstants;
-            set => SetProperty(ref _loadingConstants, value);
+            private set => SetProperty(ref _loadingConstants, value);
         }
 
         /// <summary>
         /// Indicates whether is currently fetching the player's profile
         /// </summary>
-        public bool LoadingProfile
+        public bool LoadingPlayerProfile
         {
             get => _loadingPlayerProfile;
-            set => SetProperty(ref _loadingPlayerProfile, value);
+            private set => SetProperty(ref _loadingPlayerProfile, value);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Dotahold.ViewModels
         public bool LoadingPlayerWinLose
         {
             get => _loadingPlayerWinLose;
-            set => SetProperty(ref _loadingPlayerWinLose, value);
+            private set => SetProperty(ref _loadingPlayerWinLose, value);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Dotahold.ViewModels
         public bool LoadingPlayerOverallPerformance
         {
             get => _loadingPlayerOverallPerformance;
-            set => SetProperty(ref _loadingPlayerOverallPerformance, value);
+            private set => SetProperty(ref _loadingPlayerOverallPerformance, value);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Dotahold.ViewModels
         public bool LoadingPlayerHeroesPerformance
         {
             get => _loadingPlayerHeroesPerformance;
-            set => SetProperty(ref _loadingPlayerHeroesPerformance, value);
+            private set => SetProperty(ref _loadingPlayerHeroesPerformance, value);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Dotahold.ViewModels
         public bool LoadingPlayerRecentMatches
         {
             get => _loadingPlayerRecentMatches;
-            set => SetProperty(ref _loadingPlayerRecentMatches, value);
+            private set => SetProperty(ref _loadingPlayerRecentMatches, value);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Dotahold.ViewModels
         public PlayerProfileModel? PlayerProfile
         {
             get => _playerProfile;
-            set => SetProperty(ref _playerProfile, value);
+            private set => SetProperty(ref _playerProfile, value);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Dotahold.ViewModels
         public PlayerWinLoseModel? PlayerWinLose
         {
             get => _playerWinLose;
-            set => SetProperty(ref _playerWinLose, value);
+            private set => SetProperty(ref _playerWinLose, value);
         }
 
         /// <summary>
@@ -148,13 +148,10 @@ namespace Dotahold.ViewModels
         public int CurrentPlayersNumber
         {
             get => _currentPlayersNumber;
-            set => SetProperty(ref _currentPlayersNumber, value);
+            private set => SetProperty(ref _currentPlayersNumber, value);
         }
 
-        /// <summary>
-        /// List of player connect records, used to show the last 3 players who connected to the game
-        /// </summary>
-        public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
+        public readonly PlayerConnectRecordsViewModel PlayerConnectRecords = new();
 
         private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
         {
@@ -196,7 +193,7 @@ namespace Dotahold.ViewModels
 
         private async Task InternalLoadPlayerOverview(string steamId, CancellationToken cancellationToken)
         {
-            this.LoadingProfile = true;
+            this.LoadingPlayerProfile = true;
             this.LoadingPlayerWinLose = true;
             this.LoadingPlayerOverallPerformance = true;
             this.LoadingPlayerHeroesPerformance = true;
@@ -219,7 +216,6 @@ namespace Dotahold.ViewModels
             var currentPlayersTask = LoadCurrentPlayersNumber();
 
             await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, recentMatchesTask, currentPlayersTask);
-
         }
 
         /// <summary>
@@ -232,7 +228,7 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                this.LoadingProfile = true;
+                this.LoadingPlayerProfile = true;
                 this.PlayerProfile = null;
 
                 var profile = await ApiCourier.GetPlayerProfile(steamId, cancellationToken);
@@ -248,7 +244,7 @@ namespace Dotahold.ViewModels
                     _ = SafeLoadImageAsync(() => this.PlayerProfile.AvatarImage.LoadImageAsync());
                 }
 
-                this.LoadingProfile = false;
+                this.LoadingPlayerProfile = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -438,7 +434,6 @@ namespace Dotahold.ViewModels
                 this.LoadingPlayerRecentMatches = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerRecentMatches({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
-
         }
 
         /// <summary>
@@ -461,93 +456,6 @@ namespace Dotahold.ViewModels
             }
             catch (Exception ex) { LogCourier.Log($"LoadCurrentPlayersNumber error: {ex.Message}", LogCourier.LogType.Error); }
         }
-
-        #region Player Connect Records
-
-        public async Task LoadPlayerConnectRecords()
-        {
-            try
-            {
-                string json = await StorageFilesCourier.ReadFileAsync("dotaidbindhistory");
-
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    return;
-                }
-
-                var records = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.ListPlayerConnectRecord);
-
-                if (records is null || records.Count <= 0)
-                {
-                    return;
-                }
-
-                this.PlayerConnectRecords.Clear();
-
-                foreach (var record in records)
-                {
-                    var recordModel = new PlayerConnectRecordModel(record.SteamId, record.Avatar, record.Name);
-                    this.PlayerConnectRecords.Add(recordModel);
-                    _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
-                }
-            }
-            catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        public void RecordPlayerConnect(string avatar, string name, string steamId)
-        {
-            try
-            {
-                PlayerConnectRecordModel? removing = null;
-                foreach (var item in this.PlayerConnectRecords)
-                {
-                    if (item.SteamId == steamId)
-                    {
-                        removing = item;
-                        break;
-                    }
-                }
-
-                if (removing is not null)
-                {
-                    this.PlayerConnectRecords.Remove(removing);
-                }
-
-                while (this.PlayerConnectRecords.Count > 2)
-                {
-                    this.PlayerConnectRecords.RemoveAt(this.PlayerConnectRecords.Count - 1);
-                }
-
-                var recordModel = new PlayerConnectRecordModel(steamId, avatar, name);
-                this.PlayerConnectRecords.Insert(0, recordModel);
-                _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
-                _ = SavePlayerConnectRecords();
-            }
-            catch (Exception ex) { LogCourier.Log($"RecordPlayerConnect error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        private async Task SavePlayerConnectRecords()
-        {
-            try
-            {
-                List<PlayerConnectRecord> records = [];
-                foreach (var item in this.PlayerConnectRecords)
-                {
-                    records.Add(new PlayerConnectRecord
-                    {
-                        SteamId = item.SteamId,
-                        Avatar = item.Avatar,
-                        Name = item.Name
-                    });
-                }
-
-                string json = JsonSerializer.Serialize(records, SourceGenerationContext.Default.ListPlayerConnectRecord);
-                await StorageFilesCourier.WriteFileAsync("dotaidbindhistory", json);
-            }
-            catch (Exception ex) { LogCourier.Log($"SavePlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        #endregion
 
     }
 }
