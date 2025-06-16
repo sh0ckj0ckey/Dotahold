@@ -48,7 +48,6 @@ namespace Dotahold.Pages.Matches
                         {
                             _currentSteamId = _viewModel.AppSettings.SteamID;
                             await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
-                            _viewModel.MatchesViewModel.Reset();
                         }
                     }
                 }
@@ -123,7 +122,6 @@ namespace Dotahold.Pages.Matches
 
                 _currentSteamId = _viewModel.AppSettings.SteamID;
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
-                _viewModel.MatchesViewModel.Reset();
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }

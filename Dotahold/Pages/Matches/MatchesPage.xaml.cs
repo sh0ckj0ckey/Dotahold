@@ -3,8 +3,6 @@ using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -24,35 +22,17 @@ namespace Dotahold.Pages.Matches
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (!string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
-                    
+                    await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+                    _viewModel.MatchesViewModel.LoadMoreMatches();
                 }
             }
             catch (Exception ex) { LogCourier.Log($"MatchesPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            try
-            {
-                var steamId = e.Parameter?.ToString();
-
-                if (!string.IsNullOrWhiteSpace(steamId))
-                {
-                    _ = _viewModel.MatchesViewModel.LoadPlayerAllMatches(steamId);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex.Message);
-            }
         }
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -73,7 +53,7 @@ namespace Dotahold.Pages.Matches
 
                         if (distanceToEnd <= 60)
                         {
-
+                            _viewModel.MatchesViewModel.LoadMoreMatches();
                         }
                     }
                 }

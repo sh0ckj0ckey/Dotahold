@@ -147,6 +147,9 @@ namespace Dotahold.ViewModels
             private set => SetProperty(ref _currentPlayersNumber, value);
         }
 
+        /// <summary>
+        /// Steam connect records
+        /// </summary>
         public readonly PlayerConnectRecordsViewModel PlayerConnectRecords = new();
 
         public async Task LoadPlayerOverview(string steamId)

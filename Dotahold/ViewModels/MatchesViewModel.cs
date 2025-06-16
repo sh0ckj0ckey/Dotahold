@@ -57,6 +57,11 @@ namespace Dotahold.ViewModels
         private DotaMatchModel[]? _allMatches = null;
 
         /// <summary>
+        /// Last loaded index for matches, used to load more matches incrementally
+        /// </summary>
+        private int _lastLoadedIndex = 0;
+
+        /// <summary>
         /// Matches list, may be filtered by hero
         /// </summary>
         public ObservableCollection<MatchModel> Matches = [];
@@ -202,19 +207,31 @@ namespace Dotahold.ViewModels
         {
             this.LoadingPlayerAllMatches = true;
             _allMatches = null;
+            _lastLoadedIndex = 0;
             this.Matches.Clear();
 
             _allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
+            this.LoadingPlayerAllMatches = false;
+        }
 
-            if (_allMatches is not null)
+        public void LoadMoreMatches()
+        {
+            try
             {
-                foreach (var match in _allMatches)
+                if (_allMatches is null)
                 {
+                    throw new InvalidOperationException("No matches loaded.");
+                }
+
+                int loadedCount = 0;
+                int maxToLoad = 20;
+
+                while (_lastLoadedIndex < _allMatches.Length && loadedCount < maxToLoad)
+                {
+                    var match = _allMatches[_lastLoadedIndex];
+                    _lastLoadedIndex++;
+
                     var hero = _heroesViewModel.GetHeroById(match.hero_id.ToString());
                     if (hero is null)
                     {
@@ -231,21 +248,11 @@ namespace Dotahold.ViewModels
 
                     var matchModel = new MatchModel(match, hero, abilitiesFacet);
                     this.Matches.Add(matchModel);
+
+                    loadedCount++;
                 }
             }
-
-            this.LoadingPlayerAllMatches = false;
-        }
-
-        public void Reset()
-        {
-            //this.LoadingPlayerAllMatches = false;
-            //_allMatches = null;
-            //this.Matches.Clear();
-
-            //_cancellationTokenSource?.Cancel();
-            //_cancellationTokenSource?.Dispose();
-            //_cancellationTokenSource = null;
+            catch (Exception ex) { LogCourier.Log($"LoadMoreMatches error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
     }
