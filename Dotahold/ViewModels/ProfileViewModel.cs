@@ -183,8 +183,6 @@ namespace Dotahold.ViewModels
             this.LoadingPlayerRecentMatches = true;
             this.CurrentPlayersNumber = 0;
 
-            _matchesViewModel.Reset();
-
             this.LoadingConstants = true;
 
             await _heroesViewModel.LoadHeroes();

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.DataShop;
+using Dotahold.Data.Models;
 using Dotahold.Models;
 using Dotahold.Utils;
 
@@ -14,14 +15,11 @@ namespace Dotahold.ViewModels
     {
         private readonly SerialTaskQueue _serialTaskQueue = new();
 
+        private Task? _loadAbilitiesTask = null;
+
         private Task? _lastMatchesTask = null;
 
         private CancellationTokenSource? _cancellationTokenSource;
-
-        /// <summary>
-        /// Task to load abilities, used to prevent multiple simultaneous loads
-        /// </summary>
-        private Task? _loadAbilitiesTask = null;
 
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
 
@@ -54,9 +52,14 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// List of all matches, may be filtered by hero
+        /// All matches of the player
         /// </summary>
-        public ObservableCollection<MatchModel> AllMatches = [];
+        private DotaMatchModel[]? _allMatches = null;
+
+        /// <summary>
+        /// Matches list, may be filtered by hero
+        /// </summary>
+        public ObservableCollection<MatchModel> Matches = [];
 
         public async Task LoadAbilities()
         {
@@ -198,18 +201,19 @@ namespace Dotahold.ViewModels
         private async Task InternalLoadPlayerAllMatches(string steamId, CancellationToken cancellationToken)
         {
             this.LoadingPlayerAllMatches = true;
-            this.AllMatches.Clear();
+            _allMatches = null;
+            this.Matches.Clear();
 
-            var allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
+            _allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
 
             if (cancellationToken.IsCancellationRequested)
             {
                 return;
             }
 
-            if (allMatches is not null)
+            if (_allMatches is not null)
             {
-                foreach (var match in allMatches)
+                foreach (var match in _allMatches)
                 {
                     var hero = _heroesViewModel.GetHeroById(match.hero_id.ToString());
                     if (hero is null)
@@ -226,7 +230,7 @@ namespace Dotahold.ViewModels
                     var abilitiesFacet = abilities.GetFacetByIndex(match.hero_variant);
 
                     var matchModel = new MatchModel(match, hero, abilitiesFacet);
-                    this.AllMatches.Add(matchModel);
+                    this.Matches.Add(matchModel);
                 }
             }
 
@@ -235,12 +239,13 @@ namespace Dotahold.ViewModels
 
         public void Reset()
         {
-            this.LoadingPlayerAllMatches = false;
-            this.AllMatches.Clear();
+            //this.LoadingPlayerAllMatches = false;
+            //_allMatches = null;
+            //this.Matches.Clear();
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
+            //_cancellationTokenSource?.Cancel();
+            //_cancellationTokenSource?.Dispose();
+            //_cancellationTokenSource = null;
         }
 
     }

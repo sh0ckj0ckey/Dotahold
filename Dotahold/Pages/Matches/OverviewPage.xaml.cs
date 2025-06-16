@@ -32,12 +32,9 @@ namespace Dotahold.Pages.Matches
 
                 if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
-                    if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(ConnectPage)))
-                    {
-                        this.Frame.Navigate(typeof(ConnectPage));
-                        this.Frame.ForwardStack.Clear();
-                        this.Frame.BackStack.Clear();
-                    }
+                    this.Frame.Navigate(typeof(ConnectPage));
+                    this.Frame.ForwardStack.Clear();
+                    this.Frame.BackStack.Clear();
                 }
                 else
                 {
@@ -51,6 +48,7 @@ namespace Dotahold.Pages.Matches
                         {
                             _currentSteamId = _viewModel.AppSettings.SteamID;
                             await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                            _viewModel.MatchesViewModel.Reset();
                         }
                     }
                 }
@@ -105,22 +103,6 @@ namespace Dotahold.Pages.Matches
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
-        ///// <summary>
-        ///// Copy player's Dota2 ID to clipboard
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void CopyAccountIdMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var dataPackage = new Windows.ApplicationModel.DataTransfer.DataPackage();
-        //        dataPackage.SetText(_viewModel.ProfileViewModel.PlayerProfile?.DotaPlayerProfile.profile?.account_id);
-        //        Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dataPackage);
-        //    }
-        //    catch (Exception ex) { LogCourier.Log($"CopyAccountIdMenuFlyoutItem_Click Click error: {ex.Message}", LogCourier.LogType.Error); }
-        //}
-
         /// <summary>
         /// Re-fetch player profile data
         /// </summary>
@@ -141,6 +123,7 @@ namespace Dotahold.Pages.Matches
 
                 _currentSteamId = _viewModel.AppSettings.SteamID;
                 await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                _viewModel.MatchesViewModel.Reset();
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -157,7 +140,7 @@ namespace Dotahold.Pages.Matches
         {
             if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
-                MatchesFrame.Navigate(typeof(MatchesPage), _currentSteamId);
+                MatchesFrame.Navigate(typeof(MatchesPage));
             }
         }
     }
