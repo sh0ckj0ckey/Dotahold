@@ -73,7 +73,7 @@
 
                 <!--Menu Button-->
                 <Button Grid.Column="2" Width="36" Height="36" Padding="0,0,0,0" Content="&#xE700;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}" Background="Transparent" BorderBrush="Transparent"
-                        Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingOverview,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" ToolTipService.ToolTip="Menu" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" ToolTipService.ToolTip="Menu" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <communityAnimations:Implicit.ShowAnimations>
                         <communityAnimations:CenterPointAnimation From="18,18,0" To="18,18,0"/>
                         <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.6"/>
