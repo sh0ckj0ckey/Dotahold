@@ -25,6 +25,8 @@ namespace Dotahold.ViewModels
 
         private bool _loadingConstants = false;
 
+        private bool _loadingOverview = false;
+
         private bool _loadingPlayerProfile;
 
         private bool _loadingPlayerWinLose = false;
@@ -48,6 +50,15 @@ namespace Dotahold.ViewModels
         {
             get => _loadingConstants;
             private set => SetProperty(ref _loadingConstants, value);
+        }
+
+        /// <summary>
+        /// Indicates whether is currently fetching any player's overview data, such as profile, win/loss, overall performance, heroes performance and recent matches
+        /// </summary>
+        public bool LoadingOverview
+        {
+            get => _loadingOverview;
+            private set => SetProperty(ref _loadingOverview, value);
         }
 
         /// <summary>
@@ -179,6 +190,7 @@ namespace Dotahold.ViewModels
 
         private async Task InternalLoadPlayerOverview(string steamId, CancellationToken cancellationToken)
         {
+            this.LoadingOverview = true;
             this.LoadingPlayerProfile = true;
             this.LoadingPlayerWinLose = true;
             this.LoadingPlayerOverallPerformance = true;
@@ -202,6 +214,8 @@ namespace Dotahold.ViewModels
             var currentPlayersTask = LoadCurrentPlayersNumber();
 
             await Task.WhenAll(profileTask, winLoseTask, overallPerformanceTask, heroesPerformanceTask, recentMatchesTask, currentPlayersTask);
+
+            this.LoadingOverview = false;
         }
 
         /// <summary>
@@ -229,10 +243,12 @@ namespace Dotahold.ViewModels
                     this.PlayerProfile = new PlayerProfileModel(profile);
                     _ = _serialTaskQueue.EnqueueAsync(() => this.PlayerProfile.AvatarImage.LoadImageAsync());
                 }
-
-                this.LoadingPlayerProfile = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerProfile({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerProfile = false;
+            }
         }
 
         /// <summary>
@@ -259,10 +275,12 @@ namespace Dotahold.ViewModels
                 {
                     this.PlayerWinLose = new PlayerWinLoseModel(winLose);
                 }
-
-                this.LoadingPlayerWinLose = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerWinLose({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerWinLose = false;
+            }
         }
 
         /// <summary>
@@ -314,10 +332,12 @@ namespace Dotahold.ViewModels
                         }
                     }
                 }
-
-                this.LoadingPlayerOverallPerformance = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerOverallPerformance({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerOverallPerformance = false;
+            }
         }
 
         /// <summary>
@@ -360,10 +380,12 @@ namespace Dotahold.ViewModels
                         }
                     }
                 }
-
-                this.LoadingPlayerHeroesPerformance = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerHeroesPerformance({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerHeroesPerformance = false;
+            }
         }
 
         /// <summary>
@@ -416,10 +438,12 @@ namespace Dotahold.ViewModels
                         }
                     }
                 }
-
-                this.LoadingPlayerRecentMatches = false;
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerRecentMatches({steamId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingPlayerRecentMatches = false;
+            }
         }
 
         /// <summary>
