@@ -9,8 +9,7 @@
     xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
     xmlns:converters="using:Dotahold.Converters"
     xmlns:models="using:Dotahold.Models"
-    mc:Ignorable="d"
-    Loaded="Page_Loaded">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter"/>
