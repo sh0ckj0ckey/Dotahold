@@ -56,9 +56,6 @@
                 <muxc:ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="models:PlayerHeroPerformanceModel">
                         <Button Height="56" Padding="16,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                            <ToolTipService.ToolTip>
-                                <TextBlock Text=""/>
-                            </ToolTipService.ToolTip>
                             <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="42"/>

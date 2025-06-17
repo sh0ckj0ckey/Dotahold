@@ -3,6 +3,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -40,7 +41,7 @@ namespace Dotahold.Pages.Matches
 
         private bool TryGoBack()
         {
-            this.Frame.Navigate(typeof(BlankPage));
+            this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
             this.Frame.ForwardStack.Clear();
             this.Frame.BackStack.Clear();
             return true;

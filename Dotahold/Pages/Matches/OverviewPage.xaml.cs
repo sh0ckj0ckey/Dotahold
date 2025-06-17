@@ -130,7 +130,7 @@ namespace Dotahold.Pages.Matches
         {
             if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
             {
-                MatchesFrame.Navigate(typeof(HeroesPlayedPage));
+                MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
             }
         }
 
@@ -138,7 +138,7 @@ namespace Dotahold.Pages.Matches
         {
             if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
-                MatchesFrame.Navigate(typeof(MatchesPage));
+                MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
             }
         }
     }
