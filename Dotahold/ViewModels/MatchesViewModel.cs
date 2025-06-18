@@ -57,6 +57,8 @@ namespace Dotahold.ViewModels
 
         private bool _loadingPlayerAllMatches = false;
 
+        private HeroModel? _filteredHero = null;
+
         /// <summary>
         /// Indicates whether is currently fetching the player's all matches data
         /// </summary>
@@ -64,6 +66,15 @@ namespace Dotahold.ViewModels
         {
             get => _loadingPlayerAllMatches;
             private set => SetProperty(ref _loadingPlayerAllMatches, value);
+        }
+
+        /// <summary>
+        /// Currently applied matches filter by hero ID
+        /// </summary>
+        public HeroModel? FilteredHero
+        {
+            get => _filteredHero;
+            private set => SetProperty(ref _filteredHero, value);
         }
 
         /// <summary>
@@ -233,7 +244,7 @@ namespace Dotahold.ViewModels
             this.LoadingPlayerAllMatches = false;
         }
 
-        public void LoadMoreMatches(int loadCount = 20)
+        public void LoadMoreMatches(int loadCount = 20, int filterHeroId = -1)
         {
             try
             {
@@ -248,6 +259,11 @@ namespace Dotahold.ViewModels
                 {
                     var match = _allMatches[_lastLoadedIndex];
                     _lastLoadedIndex++;
+
+                    if (filterHeroId > 0 && match.hero_id != filterHeroId)
+                    {
+                        continue;
+                    }
 
                     var hero = _heroesViewModel.GetHeroById(match.hero_id.ToString());
                     if (hero is null)
