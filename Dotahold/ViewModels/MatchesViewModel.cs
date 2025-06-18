@@ -40,6 +40,21 @@ namespace Dotahold.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> _permanentBuffs = [];
 
+        /// <summary>
+        /// Currently loaded player's Steam ID
+        /// </summary>
+        private string _currentSteamId = string.Empty;
+
+        /// <summary>
+        /// Last loaded index for matches, used to load more matches incrementally
+        /// </summary>
+        private int _lastLoadedIndex = 0;
+
+        /// <summary>
+        /// All matches of the player
+        /// </summary>
+        private DotaMatchModel[]? _allMatches = null;
+
         private bool _loadingPlayerAllMatches = false;
 
         /// <summary>
@@ -50,16 +65,6 @@ namespace Dotahold.ViewModels
             get => _loadingPlayerAllMatches;
             private set => SetProperty(ref _loadingPlayerAllMatches, value);
         }
-
-        /// <summary>
-        /// All matches of the player
-        /// </summary>
-        private DotaMatchModel[]? _allMatches = null;
-
-        /// <summary>
-        /// Last loaded index for matches, used to load more matches incrementally
-        /// </summary>
-        private int _lastLoadedIndex = 0;
 
         /// <summary>
         /// Matches list, may be filtered by hero
@@ -176,6 +181,13 @@ namespace Dotahold.ViewModels
         {
             try
             {
+                if (steamId == _currentSteamId || string.IsNullOrWhiteSpace(steamId))
+                {
+                    return;
+                }
+
+                _currentSteamId = steamId;
+
                 _cancellationTokenSource?.Cancel();
 
                 if (_lastMatchesTask is not null)
@@ -205,17 +217,23 @@ namespace Dotahold.ViewModels
         /// <returns></returns>
         private async Task InternalLoadPlayerAllMatches(string steamId, CancellationToken cancellationToken)
         {
+            if (steamId != _currentSteamId)
+            {
+                return;
+            }
+
             this.LoadingPlayerAllMatches = true;
             _allMatches = null;
             _lastLoadedIndex = 0;
             this.Matches.Clear();
 
             _allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
+            LoadMoreMatches(40);
 
             this.LoadingPlayerAllMatches = false;
         }
 
-        public void LoadMoreMatches()
+        public void LoadMoreMatches(int loadCount = 20)
         {
             try
             {
@@ -225,9 +243,8 @@ namespace Dotahold.ViewModels
                 }
 
                 int loadedCount = 0;
-                int maxToLoad = 20;
 
-                while (_lastLoadedIndex < _allMatches.Length && loadedCount < maxToLoad)
+                while (_lastLoadedIndex < _allMatches.Length && loadedCount < loadCount)
                 {
                     var match = _allMatches[_lastLoadedIndex];
                     _lastLoadedIndex++;
@@ -255,5 +272,9 @@ namespace Dotahold.ViewModels
             catch (Exception ex) { LogCourier.Log($"LoadMoreMatches error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
+        public void Reset()
+        {
+            _currentSteamId = string.Empty;
+        }
     }
 }

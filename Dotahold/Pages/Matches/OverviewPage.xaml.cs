@@ -13,8 +13,6 @@ namespace Dotahold.Pages.Matches
     /// </summary>
     public sealed partial class OverviewPage : Page
     {
-        private static string _currentSteamId = string.Empty;
-
         private readonly MainViewModel _viewModel;
 
         public OverviewPage()
@@ -38,18 +36,14 @@ namespace Dotahold.Pages.Matches
                 }
                 else
                 {
-                    if (MatchesFrame.Content is null || _currentSteamId != _viewModel.AppSettings.SteamID)
+                    if (MatchesFrame.Content is null)
                     {
                         MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
                         MatchesFrame.ForwardStack.Clear();
                         MatchesFrame.BackStack.Clear();
-
-                        if (_currentSteamId != _viewModel.AppSettings.SteamID)
-                        {
-                            _currentSteamId = _viewModel.AppSettings.SteamID;
-                            await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
-                        }
                     }
+
+                    await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
@@ -120,8 +114,9 @@ namespace Dotahold.Pages.Matches
                 MatchesFrame.ForwardStack.Clear();
                 MatchesFrame.BackStack.Clear();
 
-                _currentSteamId = _viewModel.AppSettings.SteamID;
-                await _viewModel.ProfileViewModel.LoadPlayerOverview(_currentSteamId);
+                _viewModel.ProfileViewModel.Reset();
+                _viewModel.MatchesViewModel.Reset();
+                await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }

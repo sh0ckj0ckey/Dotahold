@@ -23,6 +23,11 @@ namespace Dotahold.ViewModels
 
         private readonly MatchesViewModel _matchesViewModel = matchesViewModel;
 
+        /// <summary>
+        /// Currently loaded player's Steam ID
+        /// </summary>
+        private string _currentSteamId = string.Empty;
+
         private bool _loadingConstants = false;
 
         private bool _loadingOverview = false;
@@ -167,6 +172,13 @@ namespace Dotahold.ViewModels
         {
             try
             {
+                if (steamId == _currentSteamId || string.IsNullOrWhiteSpace(steamId))
+                {
+                    return;
+                }
+
+                _currentSteamId = steamId;
+
                 _cancellationTokenSource?.Cancel();
 
                 if (_lastOverviewTask is not null)
@@ -190,6 +202,11 @@ namespace Dotahold.ViewModels
 
         private async Task InternalLoadPlayerOverview(string steamId, CancellationToken cancellationToken)
         {
+            if (steamId != _currentSteamId)
+            {
+                return;
+            }
+
             this.LoadingOverview = true;
             this.LoadingPlayerProfile = true;
             this.LoadingPlayerWinLose = true;
@@ -467,5 +484,9 @@ namespace Dotahold.ViewModels
             catch (Exception ex) { LogCourier.Log($"LoadCurrentPlayersNumber error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
+        public void Reset()
+        {
+            _currentSteamId = string.Empty;
+        }
     }
 }

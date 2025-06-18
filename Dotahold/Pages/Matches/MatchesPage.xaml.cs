@@ -49,7 +49,6 @@ namespace Dotahold.Pages.Matches
                 if (e.NavigationMode == NavigationMode.New && !string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
                     await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-                    _viewModel.MatchesViewModel.LoadMoreMatches();
                 }
             }
             catch (Exception ex) { LogCourier.Log($"MatchesPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
@@ -61,15 +60,9 @@ namespace Dotahold.Pages.Matches
             {
                 if (sender is ScrollViewer scrollViewer)
                 {
-                    var verticalOffset = scrollViewer.VerticalOffset;
-                    var maxOffset = Math.Min(120, scrollViewer.ScrollableHeight);
-
-                    if (maxOffset <= 0) return;
-
                     if (!e.IsIntermediate)
                     {
-                        var scroller = (ScrollViewer)sender;
-                        var distanceToEnd = scroller.ExtentHeight - (scroller.VerticalOffset + scroller.ViewportHeight);
+                        var distanceToEnd = scrollViewer.ExtentHeight - (scrollViewer.VerticalOffset + scrollViewer.ViewportHeight);
 
                         if (distanceToEnd <= 60)
                         {
