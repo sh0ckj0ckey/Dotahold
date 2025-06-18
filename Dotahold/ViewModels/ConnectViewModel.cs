@@ -2,37 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
+using Dotahold.Utils;
 
 namespace Dotahold.ViewModels
 {
-    internal partial class PlayerConnectRecordsViewModel
+    internal partial class ConnectViewModel
     {
-        /// <summary>
-        /// A semaphore used to limit concurrent access to image loading operations.
-        /// </summary>
-        private static readonly SemaphoreSlim _imageLoadSemaphore = new(1);
+        private readonly SerialTaskQueue _serialTaskQueue = new();
 
         /// <summary>
         /// List of player connect records, used to show the last 3 players who connected to the game
         /// </summary>
         public readonly ObservableCollection<PlayerConnectRecordModel> PlayerConnectRecords = [];
-
-        private static async Task SafeLoadImageAsync(Func<Task> loadImageFunc)
-        {
-            await _imageLoadSemaphore.WaitAsync();
-            try
-            {
-                await loadImageFunc();
-            }
-            finally
-            {
-                _imageLoadSemaphore.Release();
-            }
-        }
 
         public async Task LoadPlayerConnectRecords()
         {
@@ -58,7 +42,7 @@ namespace Dotahold.ViewModels
                 {
                     var recordModel = new PlayerConnectRecordModel(record.SteamId, record.Avatar, record.Name);
                     this.PlayerConnectRecords.Add(recordModel);
-                    _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
+                    _ = _serialTaskQueue.EnqueueAsync(() => recordModel.AvatarImage.LoadImageAsync());
                 }
             }
             catch (Exception ex) { LogCourier.Log($"LoadPlayerConnectRecords error: {ex.Message}", LogCourier.LogType.Error); }
@@ -90,7 +74,7 @@ namespace Dotahold.ViewModels
 
                 var recordModel = new PlayerConnectRecordModel(steamId, avatar, name);
                 this.PlayerConnectRecords.Insert(0, recordModel);
-                _ = SafeLoadImageAsync(() => recordModel.AvatarImage.LoadImageAsync());
+                _ = _serialTaskQueue.EnqueueAsync(() => recordModel.AvatarImage.LoadImageAsync());
                 _ = SavePlayerConnectRecords();
             }
             catch (Exception ex) { LogCourier.Log($"RecordPlayerConnect error: {ex.Message}", LogCourier.LogType.Error); }

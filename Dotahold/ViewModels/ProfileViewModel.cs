@@ -166,7 +166,7 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Steam connect records
         /// </summary>
-        public readonly PlayerConnectRecordsViewModel PlayerConnectRecords = new();
+        public readonly ConnectViewModel PlayerConnectRecords = new();
 
         public async Task LoadPlayerOverview(string steamId)
         {
