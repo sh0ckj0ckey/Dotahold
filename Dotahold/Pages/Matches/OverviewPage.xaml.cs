@@ -1,5 +1,6 @@
 ﻿using System;
 using Dotahold.Data.DataShop;
+using Dotahold.Models;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -129,11 +130,36 @@ namespace Dotahold.Pages.Matches
             }
         }
 
-        private void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
                 MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+
+                await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                {
+                    _viewModel.MatchesViewModel.LoadMoreMatches(40);
+                }
+            }
+        }
+
+        private async void PlayerHeroPerformanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is HeroModel hero)
+            {
+                if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+                {
+                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+
+                    await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+                    if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                    {
+                        _viewModel.MatchesViewModel.LoadMoreMatches(40);
+                    }
+                }
             }
         }
     }

@@ -16,6 +16,7 @@
         <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter"/>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
     </Page.Resources>
 
     <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -29,6 +30,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="58"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!--Back Button-->
@@ -36,6 +38,10 @@
                     ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <TextBlock Grid.Column="1" Margin="0,10,0,-10" Text="Recent Matches" FontFamily="{ThemeResource ReaverBold}" FontSize="22" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="2" Visibility="{x:Bind _viewModel.MatchesViewModel.MatchesInTotal,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" Opacity="0.7" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Run Text="{x:Bind _viewModel.MatchesViewModel.MatchesInTotal,Mode=OneWay}"/>
+                <Run Text="matches in total"/>
+            </TextBlock>
         </Grid>
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>

@@ -1,12 +1,10 @@
 ﻿using System;
-using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -38,20 +36,6 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
             };
-        }
-
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            try
-            {
-                if (e.NavigationMode == NavigationMode.New && !string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
-                {
-                    await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-                }
-            }
-            catch (Exception ex) { LogCourier.Log($"MatchesPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

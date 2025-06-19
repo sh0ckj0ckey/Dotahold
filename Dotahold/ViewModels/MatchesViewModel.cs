@@ -59,6 +59,8 @@ namespace Dotahold.ViewModels
 
         private HeroModel? _filteredHero = null;
 
+        private int _matchesInTotal = 0;
+
         /// <summary>
         /// Indicates whether is currently fetching the player's all matches data
         /// </summary>
@@ -75,6 +77,15 @@ namespace Dotahold.ViewModels
         {
             get => _filteredHero;
             private set => SetProperty(ref _filteredHero, value);
+        }
+
+        /// <summary>
+        /// Total number of matches loaded for the current player
+        /// </summary>
+        public int MatchesInTotal
+        {
+            get => _matchesInTotal;
+            private set => SetProperty(ref _matchesInTotal, value);
         }
 
         /// <summary>
@@ -237,9 +248,11 @@ namespace Dotahold.ViewModels
             _allMatches = null;
             _lastLoadedIndex = 0;
             this.Matches.Clear();
+            this.MatchesInTotal = 0;
 
             _allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
-            LoadMoreMatches(40);
+
+            this.MatchesInTotal = _allMatches?.Length ?? 0;
 
             this.LoadingPlayerAllMatches = false;
         }

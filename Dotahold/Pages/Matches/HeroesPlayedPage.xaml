@@ -37,9 +37,9 @@
 
             <TextBlock Grid.Column="1" Margin="0,10,0,-10" Text="Heroes Played" FontFamily="{ThemeResource ReaverBold}" FontSize="22" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <TextBlock Grid.Column="2" Text="Win Rate" Opacity="0.7" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Column="3" Text="With Win" Opacity="0.7" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Column="4" Text="Against Win" Opacity="0.7" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Column="2" Text="Win Rate" Opacity="0.7" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Column="3" Text="With Win" Opacity="0.7" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Column="4" Text="Against Win" Opacity="0.7" FontSize="15" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </Grid>
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
