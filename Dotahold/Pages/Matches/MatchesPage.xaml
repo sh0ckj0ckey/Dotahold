@@ -55,7 +55,7 @@
                            Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        <ScrollViewer Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" ViewChanged="ScrollViewer_ViewChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
+        <ScrollViewer x:Name="MatchesScrollViewer" Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" ViewChanged="ScrollViewer_ViewChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
             <muxc:ItemsRepeater Margin="16,28,16,16" ItemsSource="{x:Bind _viewModel.MatchesViewModel.Matches,Mode=OneWay}" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
                     <muxc:StackLayout Orientation="Vertical" Spacing="6"/>

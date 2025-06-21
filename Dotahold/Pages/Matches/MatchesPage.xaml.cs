@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
@@ -28,6 +29,8 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+
+                _viewModel.MatchesViewModel.Matches.CollectionChanged += Matches_CollectionChanged;
             };
 
             this.Unloaded += (_, _) =>
@@ -35,7 +38,17 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
+
+                _viewModel.MatchesViewModel.Matches.CollectionChanged -= Matches_CollectionChanged;
             };
+        }
+
+        private void Matches_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                MatchesScrollViewer.ScrollToVerticalOffset(0);
+            }
         }
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -50,7 +63,7 @@ namespace Dotahold.Pages.Matches
 
                         if (distanceToEnd <= 60)
                         {
-                            _viewModel.MatchesViewModel.LoadMoreMatches(_viewModel.MatchesViewModel.MatchesHeroFilter?.DotaHeroAttributes.id ?? -1);
+                            _viewModel.MatchesViewModel.LoadMoreMatches(20, _viewModel.MatchesViewModel.MatchesHeroFilter?.DotaHeroAttributes.id ?? -1);
                         }
                     }
                 }
