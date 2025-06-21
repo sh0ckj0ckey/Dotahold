@@ -50,7 +50,7 @@ namespace Dotahold.Pages.Matches
 
                         if (distanceToEnd <= 60)
                         {
-                            _viewModel.MatchesViewModel.LoadMoreMatches();
+                            _viewModel.MatchesViewModel.LoadMoreMatches(_viewModel.MatchesViewModel.MatchesHeroFilter?.DotaHeroAttributes.id ?? -1);
                         }
                     }
                 }

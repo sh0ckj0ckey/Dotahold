@@ -55,7 +55,7 @@
                 </muxc:ItemsRepeater.Layout>
                 <muxc:ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="models:PlayerHeroPerformanceModel">
-                        <Button Height="56" Padding="16,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <Button Height="56" Padding="16,0" Tag="{x:Bind Hero}" Click="Button_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                             <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="42"/>

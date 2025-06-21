@@ -135,30 +135,53 @@ namespace Dotahold.Pages.Matches
             if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
                 MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+            }
 
-                await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+            HeroModel? heroFilter = null;
+            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            {
+                if (isNewFilter)
+                {
+                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                }
 
                 if (_viewModel.MatchesViewModel.Matches.Count <= 0)
                 {
-                    _viewModel.MatchesViewModel.LoadMoreMatches(40);
+                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
                 }
             }
         }
 
         private async void PlayerHeroPerformanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is HeroModel hero)
+            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
-                if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+                MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+            }
+
+            HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
+            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            {
+                if (isNewFilter)
                 {
-                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                }
 
-                    await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-
-                    if (_viewModel.MatchesViewModel.Matches.Count <= 0)
-                    {
-                        _viewModel.MatchesViewModel.LoadMoreMatches(40);
-                    }
+                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                {
+                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
                 }
             }
         }

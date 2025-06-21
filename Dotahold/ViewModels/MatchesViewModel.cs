@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -57,7 +58,7 @@ namespace Dotahold.ViewModels
 
         private bool _loadingPlayerAllMatches = false;
 
-        private HeroModel? _filteredHero = null;
+        private HeroModel? _matchesHeroFilter = null;
 
         private int _matchesInTotal = 0;
 
@@ -73,10 +74,10 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Currently applied matches filter by hero ID
         /// </summary>
-        public HeroModel? FilteredHero
+        public HeroModel? MatchesHeroFilter
         {
-            get => _filteredHero;
-            private set => SetProperty(ref _filteredHero, value);
+            get => _matchesHeroFilter;
+            set => SetProperty(ref _matchesHeroFilter, value);
         }
 
         /// <summary>
@@ -245,18 +246,17 @@ namespace Dotahold.ViewModels
             }
 
             this.LoadingPlayerAllMatches = true;
-            _allMatches = null;
-            _lastLoadedIndex = 0;
-            this.Matches.Clear();
-            this.MatchesInTotal = 0;
 
             _allMatches = await ApiCourier.GetPlayerAllMatches(steamId, cancellationToken);
-
-            this.MatchesInTotal = _allMatches?.Length ?? 0;
 
             this.LoadingPlayerAllMatches = false;
         }
 
+        /// <summary>
+        /// Show more matches filtered by Hero ID
+        /// </summary>
+        /// <param name="loadCount"></param>
+        /// <param name="filterHeroId"></param>
         public void LoadMoreMatches(int loadCount = 20, int filterHeroId = -1)
         {
             try
@@ -299,6 +299,17 @@ namespace Dotahold.ViewModels
                 }
             }
             catch (Exception ex) { LogCourier.Log($"LoadMoreMatches error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        /// <summary>
+        /// Clear the match list when a new HeroFilter is set
+        /// </summary>
+        /// <param name="filterHeroId"></param>
+        public void ClearMatches(int filterHeroId = -1)
+        {
+            _lastLoadedIndex = 0;
+            this.Matches.Clear();
+            this.MatchesInTotal = filterHeroId == -1 ? (_allMatches?.Length ?? 0) : _allMatches?.Count(m => m.hero_id == filterHeroId) ?? 0;
         }
 
         public void Reset()

@@ -1,4 +1,5 @@
-﻿using Dotahold.ViewModels;
+﻿using Dotahold.Models;
+using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -35,6 +36,31 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
             };
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+
+            HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
+            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            {
+                if (isNewFilter)
+                {
+                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                }
+
+                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                {
+                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
+                }
+            }
         }
 
         #region GoBack
