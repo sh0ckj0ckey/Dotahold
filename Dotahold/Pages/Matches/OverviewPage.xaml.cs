@@ -124,17 +124,21 @@ namespace Dotahold.Pages.Matches
 
         private void HeroesPlayedHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
+            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
             {
                 MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
             }
         }
 
         private async void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
                 MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
             }
 
             HeroModel? heroFilter = null;
@@ -160,9 +164,11 @@ namespace Dotahold.Pages.Matches
 
         private async void PlayerHeroPerformanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(this.MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
             {
                 MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
             }
 
             HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;

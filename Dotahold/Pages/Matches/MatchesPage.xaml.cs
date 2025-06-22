@@ -78,9 +78,17 @@ namespace Dotahold.Pages.Matches
 
         private bool TryGoBack()
         {
-            this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
-            this.Frame.ForwardStack.Clear();
-            this.Frame.BackStack.Clear();
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                this.Frame.ForwardStack.Clear();
+                this.Frame.BackStack.Clear();
+            }
+
             return true;
         }
 
