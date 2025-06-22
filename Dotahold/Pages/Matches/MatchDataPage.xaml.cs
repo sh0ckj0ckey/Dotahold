@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
-using Dotahold.Data.DataShop;
-using Dotahold.ViewModels;
+﻿using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -15,11 +12,11 @@ namespace Dotahold.Pages.Matches
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MatchesPage : Page
+    public sealed partial class MatchDataPage : Page
     {
         private readonly MainViewModel _viewModel;
 
-        public MatchesPage()
+        public MatchDataPage()
         {
             _viewModel = App.Current.MainViewModel;
 
@@ -30,8 +27,6 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
-
-                _viewModel.MatchesViewModel.Matches.CollectionChanged += Matches_CollectionChanged;
             };
 
             this.Unloaded += (_, _) =>
@@ -39,56 +34,7 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
-
-                _viewModel.MatchesViewModel.Matches.CollectionChanged -= Matches_CollectionChanged;
             };
-        }
-
-        private void Matches_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Reset)
-            {
-                MatchesScrollViewer.ScrollToVerticalOffset(0);
-            }
-        }
-
-        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            try
-            {
-                if (sender is ScrollViewer scrollViewer)
-                {
-                    if (!e.IsIntermediate)
-                    {
-                        var distanceToEnd = scrollViewer.ExtentHeight - (scrollViewer.VerticalOffset + scrollViewer.ViewportHeight);
-
-                        if (distanceToEnd <= 60)
-                        {
-                            _viewModel.MatchesViewModel.LoadMoreMatches(20, _viewModel.MatchesViewModel.MatchesHeroFilter?.DotaHeroAttributes.id ?? -1);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Trace.WriteLine(ex.Message);
-            }
-        }
-
-        private void MatchButton_Click(object sender, RoutedEventArgs e)
-        {
-            Data.Models.DotaMatchModel? match = (sender as Button)?.Tag as Data.Models.DotaMatchModel;
-
-            if (match is null)
-            {
-                LogCourier.Log("MatchButton Click error: DotaMatchModel is null.", LogCourier.LogType.Error);
-                return;
-            }
-
-            if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(MatchDataPage)))
-            {
-                this.Frame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
-            }
         }
 
         #region GoBack
@@ -101,7 +47,7 @@ namespace Dotahold.Pages.Matches
             }
             else
             {
-                this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
                 this.Frame.ForwardStack.Clear();
                 this.Frame.BackStack.Clear();
             }

@@ -191,5 +191,23 @@ namespace Dotahold.Pages.Matches
                 }
             }
         }
+
+        private void MatchButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Data.Models.DotaMatchModel? match = (sender as Button)?.Tag as Data.Models.DotaMatchModel;
+
+            if (match is null)
+            {
+                LogCourier.Log("MatchButton Click error: DotaMatchModel is null.", LogCourier.LogType.Error);
+                return;
+            }
+
+            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchDataPage)))
+            {
+                MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
+            }
+        }
     }
 }

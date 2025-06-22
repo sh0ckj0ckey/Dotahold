@@ -204,8 +204,18 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (steamId == _currentSteamId || string.IsNullOrWhiteSpace(steamId))
+                if (string.IsNullOrWhiteSpace(steamId))
                 {
+                    return;
+                }
+
+                if (steamId == _currentSteamId)
+                {
+                    if (_lastMatchesTask is not null)
+                    {
+                        await _lastMatchesTask;
+                    }
+
                     return;
                 }
 

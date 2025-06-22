@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="Dotahold.Pages.Matches.MatchDataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dotahold.Pages.Matches"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:muxm="using:Microsoft.UI.Xaml.Media"
+    xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:community="using:CommunityToolkit.WinUI"
+    xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
+    xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:models="using:Dotahold.Models"
+    xmlns:converters="using:Dotahold.Converters" 
+    xmlns:controls="using:Dotahold.Controls"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:StringArrayToStringConverter x:Key="StringArrayToStringConverter"/>
+        <converters:EqualToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+        <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+        <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" ColumnSpacing="8" Margin="16,0,32,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="58"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Back Button-->
+            <Button Grid.Column="0" Width="58" Height="42" Margin="0,8,0,-8" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                    ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        </Grid>
+
+        <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
+
+        <muxc:ProgressRing Grid.Row="2" IsActive="True" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </Grid>
+</Page>

@@ -120,7 +120,7 @@
                             <FlipView.ItemTemplate>
                                 <DataTemplate x:DataType="models:RecentMatchModel">
                                     <Grid Background="Transparent" Height="144" Padding="0,0,0,20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Button Height="104" Padding="20,12,20,8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                                        <Button Height="104" Padding="20,12,20,8" Tag="{x:Bind DotaMatch}" Click="MatchButton_Click" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
@@ -365,7 +365,7 @@
                                 </muxc:ItemsRepeater.Layout>
                                 <muxc:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="models:MatchModel">
-                                        <Button Height="56" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="8,0">
+                                        <Button Height="56" Padding="8,0" Tag="{x:Bind DotaMatch}" Click="MatchButton_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
