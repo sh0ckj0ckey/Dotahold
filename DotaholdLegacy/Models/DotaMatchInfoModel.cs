@@ -9,63 +9,7 @@ namespace Dotahold.Models
 {
     public class DotaMatchInfoModel
     {
-        public long? match_id { get; set; }
-        public int? dire_score { get; set; }
-        public long? duration { get; set; }
-        public long? first_blood_time { get; set; }
-        public int? game_mode { get; set; }
-        public int? lobby_type { get; set; }
-        public List<Picks_Bans> picks_bans { get; set; }
-        public List<double> radiant_gold_adv { get; set; }
-        public int? radiant_score { get; set; }
-        public bool? radiant_win { get; set; }
-        public List<double> radiant_xp_adv { get; set; }
-        public int? skill { get; set; }
-        public long? start_time { get; set; }
-        public Team radiant_team { get; set; } = null;
-        public Team dire_team { get; set; } = null;
         public List<Player> players { get; set; }
-    }
-
-    public class Picks_Bans : ViewModelBase
-    {
-        public bool? is_pick { get; set; }
-        public int? hero_id { get; set; }
-        public int? team { get; set; }  //0-radiant 1-dire
-
-        //public int order { get; set; }
-        //public int ord { get; set; }
-        //public long match_id { get; set; }
-
-        [JsonIgnore]
-        public string sHeroImage { get; set; }
-
-        [JsonIgnore]
-        public string sHeroName { get; set; }
-
-        // 比赛英雄图片
-        [JsonIgnore]
-        private BitmapImage _ImageSource = null;
-        [JsonIgnore]
-        public BitmapImage ImageSource
-        {
-            get { return _ImageSource; }
-            private set { Set("ImageSource", ref _ImageSource, value); }
-        }
-        public async Task LoadImageAsync(int decodeWidth)
-        {
-            try
-            {
-                if (this.ImageSource != null || string.IsNullOrWhiteSpace(this.sHeroImage)) return;
-
-                var imageSource = await ImageCourier.GetImageAsync(this.sHeroImage, decodeWidth, 0);
-                if (imageSource != null)
-                {
-                    this.ImageSource = imageSource;
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
     }
 
     public class Player : ViewModelBase
@@ -456,12 +400,6 @@ namespace Dotahold.Models
             }
             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
         }
-    }
-
-    public class Team
-    {
-        public string team_id { get; set; }
-        public string name { get; set; }
     }
 
     public class Additional_Units : ViewModelBase

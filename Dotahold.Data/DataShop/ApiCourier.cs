@@ -33,7 +33,7 @@ namespace Dotahold.Data.DataShop
                     return heroDataResponse.result.data.heroes[0];
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetHeroData({heroId}_{language}) error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetHeroData({heroId}, {language}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
         }
@@ -43,7 +43,7 @@ namespace Dotahold.Data.DataShop
         /// </summary>
         /// <param name="heroId"></param>
         /// <returns></returns>
-        public static async Task<DotaHeroRankingModel[]?> GetHeroRankings(int heroId, CancellationToken cancellationToken)
+        public static async Task<DotaHeroRankingModel[]> GetHeroRankings(int heroId, CancellationToken cancellationToken)
         {
             string url = string.Format("https://api.opendota.com/api/rankings?hero_id={0}", heroId);
 
@@ -129,7 +129,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerProfile error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerProfile({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
         }
@@ -153,7 +153,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerWinLose error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerWinLose({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
         }
@@ -177,7 +177,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerOverallPerformance error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerOverallPerformance({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
         }
@@ -201,7 +201,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerHeroPerformance error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerHeroPerformance({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
         }
@@ -226,7 +226,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerRecentMatches error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerRecentMatches({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
         }
@@ -251,10 +251,34 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
-            catch (Exception ex) { LogCourier.Log($"GetPlayerAllMatches error: {ex.Message}", LogCourier.LogType.Error); }
+            catch (Exception ex) { LogCourier.Log($"GetPlayerAllMatches({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
         }
 
+        /// <summary>
+        /// 获取特定比赛的详细数据
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<DotaMatchDataModel?> GetMatchData(string matchId, CancellationToken cancellationToken)
+        {
+            string url = $"https://api.opendota.com/api/matches/{matchId}";
+
+            try
+            {
+                var response = await _apiHttpClient.GetAsync(new Uri(url)).AsTask(cancellationToken);
+                var json = await response.Content.ReadAsStringAsync().AsTask(cancellationToken);
+                var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.DotaMatchDataModel);
+                if (result is not null)
+                {
+                    return result;
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"GetMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
+
+            return null;
+        }
     }
 }
