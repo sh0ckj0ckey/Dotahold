@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Dotahold.Utils
 {
-    public class SerialTaskQueue(int initialCount = 1)
+    internal class SerialTaskQueue(int initialCount = 1)
     {
         private readonly SemaphoreSlim _semaphore = new(initialCount);
 

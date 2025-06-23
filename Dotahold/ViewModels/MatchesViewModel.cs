@@ -315,10 +315,14 @@ namespace Dotahold.ViewModels
         /// Clear the match list when a new HeroFilter is set
         /// </summary>
         /// <param name="filterHeroId"></param>
-        public void ClearMatches(int filterHeroId = -1)
+        public async Task ClearMatches(int filterHeroId = -1)
         {
+            await DispatcherExtensions.CallOnMainViewUiThreadAsync(() =>
+            {
+                this.Matches.Clear();
+            }, Windows.UI.Core.CoreDispatcherPriority.Low);
+
             _lastLoadedIndex = 0;
-            this.Matches.Clear();
             this.MatchesInTotal = filterHeroId == -1 ? (_allMatches?.Length ?? 0) : _allMatches?.Count(m => m.hero_id == filterHeroId) ?? 0;
         }
 

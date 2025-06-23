@@ -311,7 +311,11 @@ namespace Dotahold.ViewModels
             try
             {
                 this.LoadingPlayerOverallPerformance = true;
-                this.PlayerOverallPerformances.Clear();
+
+                await DispatcherExtensions.CallOnMainViewUiThreadAsync(() =>
+                {
+                    this.PlayerOverallPerformances.Clear();
+                }, Windows.UI.Core.CoreDispatcherPriority.Low);
 
                 var overallPerformances = await ApiCourier.GetPlayerOverallPerformances(steamId, cancellationToken);
 
@@ -368,8 +372,12 @@ namespace Dotahold.ViewModels
             try
             {
                 this.LoadingPlayerHeroesPerformance = true;
-                this.PlayerHeroPerformances.Clear();
-                this.PlayerHeroPerformancesTop10.Clear();
+
+                await DispatcherExtensions.CallOnMainViewUiThreadAsync(() =>
+                {
+                    this.PlayerHeroPerformances.Clear();
+                    this.PlayerHeroPerformancesTop10.Clear();
+                }, Windows.UI.Core.CoreDispatcherPriority.Low);
 
                 var heroPerformances = await ApiCourier.GetPlayerHeroPerformances(steamId, cancellationToken);
 
@@ -416,8 +424,12 @@ namespace Dotahold.ViewModels
             try
             {
                 this.LoadingPlayerRecentMatches = true;
-                this.RecentMatches.Clear();
-                this.RecentMatchesTop5.Clear();
+
+                await DispatcherExtensions.CallOnMainViewUiThreadAsync(() =>
+                {
+                    this.RecentMatches.Clear();
+                    this.RecentMatchesTop5.Clear();
+                }, Windows.UI.Core.CoreDispatcherPriority.Low);
 
                 var recentMatches = await ApiCourier.GetPlayerRecentMatches(steamId, cancellationToken);
 

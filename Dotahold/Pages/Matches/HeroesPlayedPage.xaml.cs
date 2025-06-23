@@ -1,4 +1,6 @@
-﻿using Dotahold.Models;
+﻿using System;
+using Dotahold.Data.DataShop;
+using Dotahold.Models;
 using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
@@ -32,6 +34,8 @@ namespace Dotahold.Pages.Matches
 
             this.Unloaded += (_, _) =>
             {
+                PlayerHeroPerformancesItemsRepeater.ItemsSource = null;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
@@ -40,26 +44,33 @@ namespace Dotahold.Pages.Matches
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-
-            HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
-            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
-
-            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
-
-            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-
-            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            try
             {
-                if (isNewFilter)
-                {
-                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
-                }
+                this.Frame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
 
-                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
+                bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+                _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+                await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+                if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
                 {
-                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
+                    if (isNewFilter)
+                    {
+                        await _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
+
+                    if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                    {
+                        _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"HeroPlayedButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 

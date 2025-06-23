@@ -124,89 +124,114 @@ namespace Dotahold.Pages.Matches
 
         private void HeroesPlayedHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
+            try
             {
-                MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                MatchesFrame.ForwardStack.Clear();
-                MatchesFrame.BackStack.Clear();
+                if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
+                {
+                    MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                    MatchesFrame.ForwardStack.Clear();
+                    MatchesFrame.BackStack.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"HeroesPlayedHyperlinkButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 
         private async void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+            try
             {
-                MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                MatchesFrame.ForwardStack.Clear();
-                MatchesFrame.BackStack.Clear();
+                if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+                {
+                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                    MatchesFrame.ForwardStack.Clear();
+                    MatchesFrame.BackStack.Clear();
+                }
+
+                HeroModel? heroFilter = null;
+                bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+                _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+                await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+                if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+                {
+                    if (isNewFilter)
+                    {
+                        await _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
+
+                    if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                    {
+                        _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
+                }
             }
-
-            HeroModel? heroFilter = null;
-            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
-
-            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
-
-            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-
-            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            catch (Exception ex)
             {
-                if (isNewFilter)
-                {
-                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
-                }
-
-                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
-                {
-                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
-                }
+                LogCourier.Log($"AllMatchesHyperlinkButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 
         private async void PlayerHeroPerformanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+            try
             {
-                MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                MatchesFrame.ForwardStack.Clear();
-                MatchesFrame.BackStack.Clear();
+                if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
+                {
+                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                    MatchesFrame.ForwardStack.Clear();
+                    MatchesFrame.BackStack.Clear();
+                }
+
+                HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
+                bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
+
+                _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+
+                await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
+
+                if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+                {
+                    if (isNewFilter)
+                    {
+                        await _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
+
+                    if (_viewModel.MatchesViewModel.Matches.Count <= 0)
+                    {
+                        _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
+                    }
+                }
             }
-
-            HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
-            bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
-
-            _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
-
-            await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
-
-            if (_viewModel.MatchesViewModel.MatchesHeroFilter == heroFilter)
+            catch (Exception ex)
             {
-                if (isNewFilter)
-                {
-                    _viewModel.MatchesViewModel.ClearMatches(heroFilter?.DotaHeroAttributes.id ?? -1);
-                }
-
-                if (_viewModel.MatchesViewModel.Matches.Count <= 0)
-                {
-                    _viewModel.MatchesViewModel.LoadMoreMatches(40, heroFilter?.DotaHeroAttributes.id ?? -1);
-                }
+                LogCourier.Log($"MostPlayedHeroButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 
         private void MatchButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Data.Models.DotaMatchModel? match = (sender as Button)?.Tag as Data.Models.DotaMatchModel;
-
-            if (match is null)
+            try
             {
-                LogCourier.Log("MatchButton Click error: DotaMatchModel is null.", LogCourier.LogType.Error);
-                return;
+                if ((sender as Button)?.Tag is not Data.Models.DotaMatchModel match)
+                {
+                    throw new Exception("DotaMatchModel is null");
+                }
+
+                if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchDataPage)))
+                {
+                    MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
+                    MatchesFrame.ForwardStack.Clear();
+                    MatchesFrame.BackStack.Clear();
+                }
             }
-
-            if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchDataPage)))
+            catch (Exception ex)
             {
-                MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
-                MatchesFrame.ForwardStack.Clear();
-                MatchesFrame.BackStack.Clear();
+                LogCourier.Log($"RecentMatchButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
     }

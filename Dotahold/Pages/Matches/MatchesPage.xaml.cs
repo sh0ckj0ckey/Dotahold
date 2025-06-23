@@ -27,20 +27,23 @@ namespace Dotahold.Pages.Matches
 
             this.Loaded += (_, _) =>
             {
+                _viewModel.MatchesViewModel.Matches.CollectionChanged += Matches_CollectionChanged;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
-                _viewModel.MatchesViewModel.Matches.CollectionChanged += Matches_CollectionChanged;
             };
 
             this.Unloaded += (_, _) =>
             {
+                _viewModel.MatchesViewModel.Matches.CollectionChanged -= Matches_CollectionChanged;
+
+                MatchesItemsRepeater.ItemsSource = null;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
-
-                _viewModel.MatchesViewModel.Matches.CollectionChanged -= Matches_CollectionChanged;
             };
         }
 
@@ -77,17 +80,21 @@ namespace Dotahold.Pages.Matches
 
         private void MatchButton_Click(object sender, RoutedEventArgs e)
         {
-            Data.Models.DotaMatchModel? match = (sender as Button)?.Tag as Data.Models.DotaMatchModel;
-
-            if (match is null)
+            try
             {
-                LogCourier.Log("MatchButton Click error: DotaMatchModel is null.", LogCourier.LogType.Error);
-                return;
+                if ((sender as Button)?.Tag is not Data.Models.DotaMatchModel match)
+                {
+                    throw new Exception("DotaMatchModel is null");
+                }
+
+                if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(MatchDataPage)))
+                {
+                    this.Frame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                }
             }
-
-            if (!Type.Equals(this.Frame.CurrentSourcePageType, typeof(MatchDataPage)))
+            catch (Exception ex)
             {
-                this.Frame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                LogCourier.Log($"MatchButton click error: {ex.Message}", LogCourier.LogType.Error);
             }
         }
 

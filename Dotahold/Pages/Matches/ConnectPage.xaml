@@ -11,8 +11,7 @@
     xmlns:converters="using:Dotahold.Converters"
     xmlns:controls="using:Dotahold.Controls"
     xmlns:models="using:Dotahold.Models"
-    mc:Ignorable="d"
-    NavigationCacheMode="Disabled" 
+    mc:Ignorable="d" 
     Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Page.Resources>
@@ -90,7 +89,7 @@
 
             <Grid Width="396" Height="Auto" CornerRadius="8" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                   Background="{ThemeResource DotaholdApplicationPageBackground}" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
-                <muxc:ItemsRepeater Margin="4" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerConnectRecords.PlayerConnectRecords,Mode=OneWay}"
+                <muxc:ItemsRepeater x:Name="PlayerConnectRecordsItemsRepeater" Margin="4" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerConnectRecords.PlayerConnectRecords,Mode=OneWay}"
                                     Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerConnectRecords.PlayerConnectRecords.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" HorizontalAlignment="Stretch">
                     <muxc:ItemsRepeater.Layout>
                         <controls:UniformGridLayout MinItemWidth="104"/>

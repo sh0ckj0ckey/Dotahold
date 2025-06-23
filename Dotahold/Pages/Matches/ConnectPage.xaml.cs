@@ -44,6 +44,8 @@ namespace Dotahold.Pages.Matches
 
         private void Page_Unloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            PlayerConnectRecordsItemsRepeater.ItemsSource = null;
+
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;

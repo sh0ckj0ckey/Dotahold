@@ -36,7 +36,10 @@ namespace Dotahold.ViewModels
                     return;
                 }
 
-                this.PlayerConnectRecords.Clear();
+                await DispatcherExtensions.CallOnMainViewUiThreadAsync(() =>
+                {
+                    this.PlayerConnectRecords.Clear();
+                }, Windows.UI.Core.CoreDispatcherPriority.Low);
 
                 foreach (var record in records)
                 {
