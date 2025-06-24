@@ -20,7 +20,11 @@ namespace Dotahold.ViewModels
 
         private Task? _lastMatchesTask = null;
 
+        private Task? _lastMatchDataTask = null;
+
         private CancellationTokenSource? _cancellationTokenSource;
+
+        private CancellationTokenSource? _matchDataCancellationTokenSource;
 
         private readonly HeroesViewModel _heroesViewModel = heroesViewModel;
 
@@ -47,6 +51,11 @@ namespace Dotahold.ViewModels
         private string _currentSteamId = string.Empty;
 
         /// <summary>
+        /// Currently selected match ID
+        /// </summary>
+        private string _currentMatchId = string.Empty;
+
+        /// <summary>
         /// Last loaded index for matches, used to load more matches incrementally
         /// </summary>
         private int _lastLoadedIndex = 0;
@@ -58,9 +67,13 @@ namespace Dotahold.ViewModels
 
         private bool _loadingPlayerAllMatches = false;
 
+        private int _matchesInTotal = 0;
+
         private HeroModel? _matchesHeroFilter = null;
 
-        private int _matchesInTotal = 0;
+        private bool _loadingMatchData = false;
+
+        private MatchDataModel? _matchDataModel = null;
 
         /// <summary>
         /// Indicates whether is currently fetching the player's all matches data
@@ -72,21 +85,39 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
-        /// Currently applied matches filter by hero ID
-        /// </summary>
-        public HeroModel? MatchesHeroFilter
-        {
-            get => _matchesHeroFilter;
-            set => SetProperty(ref _matchesHeroFilter, value);
-        }
-
-        /// <summary>
         /// Total number of matches loaded for the current player
         /// </summary>
         public int MatchesInTotal
         {
             get => _matchesInTotal;
             private set => SetProperty(ref _matchesInTotal, value);
+        }
+
+        /// <summary>
+        /// Currently applied matches filter by hero ID
+        /// </summary>
+        public HeroModel? MatchesHeroFilter
+        {
+            get => _matchesHeroFilter;
+            private set => SetProperty(ref _matchesHeroFilter, value);
+        }
+
+        /// <summary>
+        /// Indicates whether is currently fetching match data
+        /// </summary>
+        public bool LoadingMatchData
+        {
+            get => _loadingMatchData;
+            private set => SetProperty(ref _loadingMatchData, value);
+        }
+
+        /// <summary>
+        /// Match data model for the currently selected match
+        /// </summary>
+        public MatchDataModel? MatchDataModel
+        {
+            get => _matchDataModel;
+            private set => SetProperty(ref _matchDataModel, value);
         }
 
         /// <summary>
@@ -200,6 +231,12 @@ namespace Dotahold.ViewModels
             return string.Empty;
         }
 
+        /// <summary>
+        /// Load player's all matches
+        /// </summary>
+        /// <param name="steamId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task LoadPlayerAllMatches(string steamId)
         {
             try
@@ -242,12 +279,6 @@ namespace Dotahold.ViewModels
             }
         }
 
-        /// <summary>
-        /// Load player's all matches
-        /// </summary>
-        /// <param name="steamId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         private async Task InternalLoadPlayerAllMatches(string steamId, CancellationToken cancellationToken)
         {
             if (steamId != _currentSteamId)
@@ -324,6 +355,74 @@ namespace Dotahold.ViewModels
 
             _lastLoadedIndex = 0;
             this.MatchesInTotal = filterHeroId == -1 ? (_allMatches?.Length ?? 0) : _allMatches?.Count(m => m.hero_id == filterHeroId) ?? 0;
+        }
+
+        /// <summary>
+        /// Load match data for a specific match ID
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <returns></returns>
+        public async Task LoadMatchData(string matchId)
+        {
+            try
+            {
+                if (matchId == _currentMatchId || string.IsNullOrWhiteSpace(matchId))
+                {
+                    return;
+                }
+
+                _currentMatchId = matchId;
+
+                _matchDataCancellationTokenSource?.Cancel();
+
+                if (_lastMatchDataTask is not null)
+                {
+                    try { await _lastMatchDataTask; } catch { }
+                }
+
+                _matchDataCancellationTokenSource?.Dispose();
+                _matchDataCancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = _matchDataCancellationTokenSource.Token;
+
+                _lastMatchDataTask = InternalLoadMatchData(matchId, cancellationToken);
+                await _lastMatchDataTask;
+            }
+            catch (Exception ex) { LogCourier.Log($"LoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                _lastMatchDataTask = null;
+            }
+        }
+
+        private async Task InternalLoadMatchData(string matchId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (matchId != _currentMatchId)
+                {
+                    return;
+                }
+
+                this.LoadingMatchData = true;
+                this.MatchDataModel = null;
+
+                var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
+                {
+                    this.MatchDataModel = new MatchDataModel(matchData);
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
+            finally
+            {
+                this.LoadingMatchData = false;
+            }
         }
 
         public void Reset()

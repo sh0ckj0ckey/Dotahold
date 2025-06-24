@@ -7,8 +7,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Dotahold.Helpers
 {
-
-    public static partial class ColorHelper
+    public static class AbilityColorHelper
     {
         private static readonly Dictionary<string, LinearGradientBrush> _facetGradientBrushes = [];
 
@@ -144,14 +143,14 @@ namespace Dotahold.Helpers
             hex = hex.TrimStart('#');
             if (hex.Length == 6)
             {
-                byte r = Convert.ToByte(hex.Substring(0, 2), 16);
+                byte r = Convert.ToByte(hex[..2], 16);
                 byte g = Convert.ToByte(hex.Substring(2, 2), 16);
                 byte b = Convert.ToByte(hex.Substring(4, 2), 16);
                 return Color.FromArgb(255, r, g, b);
             }
             else if (hex.Length == 8)
             {
-                byte a = Convert.ToByte(hex.Substring(0, 2), 16);
+                byte a = Convert.ToByte(hex[..2], 16);
                 byte r = Convert.ToByte(hex.Substring(2, 2), 16);
                 byte g = Convert.ToByte(hex.Substring(4, 2), 16);
                 byte b = Convert.ToByte(hex.Substring(6, 2), 16);

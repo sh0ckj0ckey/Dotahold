@@ -95,7 +95,7 @@ namespace Dotahold.Models
             this.Name = facetData.name;
             this.Title = facetData.title;
             this.Description = facetData.description;
-            this.BackgroundBrush = ColorHelper.GetFacetGradientBrush($"FacetColor{facetData.color}{facetData.gradient_id}");
+            this.BackgroundBrush = AbilityColorHelper.GetFacetGradientBrush($"FacetColor{facetData.color}{facetData.gradient_id}");
             this.Index = facetData.id;
         }
 

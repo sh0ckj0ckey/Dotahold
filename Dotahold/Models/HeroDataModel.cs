@@ -201,7 +201,7 @@ namespace Dotahold.Models
             this.IconImage = new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/icons/facets/{facetData.icon}.png", 0, 72, _defaultFacetImageSource72);
             this.Name = facetData.title_loc;
             this.Description = AbilityStringFormatter.FormatPlainText(AbilityStringFormatter.FormatFacetSpecialValues(facetData.description_loc, facetData, talents, abilities, facetAbility));
-            this.BackgroundBrush = ColorHelper.GetFacetGradientBrush($"FacetColor{ColorHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
+            this.BackgroundBrush = AbilityColorHelper.GetFacetGradientBrush($"FacetColor{AbilityColorHelper.GetFacetColorName(facetData.color)}{facetData.gradient_id}");
             this.Index = facetData.index;
         }
     }
@@ -405,7 +405,7 @@ namespace Dotahold.Models
                 _ => string.Empty,
             };
 
-            this.DamageTypeForeground = ColorHelper.GetDamageTypeColor(abilityData.damage);
+            this.DamageTypeForeground = AbilityColorHelper.GetDamageTypeColor(abilityData.damage);
 
             this.ImmunityDescription = abilityData.immunity switch
             {
