@@ -228,6 +228,8 @@ namespace Dotahold.Pages.Matches
                     MatchesFrame.ForwardStack.Clear();
                     MatchesFrame.BackStack.Clear();
                 }
+
+                _ = _viewModel.MatchesViewModel.LoadMatchData(match.match_id.ToString());
             }
             catch (Exception ex)
             {

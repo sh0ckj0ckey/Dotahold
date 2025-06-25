@@ -42,108 +42,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--比赛信息-->
-        <Grid Grid.Row="0" HorizontalAlignment="Stretch" Padding="16,38,24,16" 
-              Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Margin="0,0,8,0" Width="42" Height="48" HorizontalAlignment="Left" ToolTipService.ToolTip="Go Back" Click="OnClickGoBack">
-                <Button.Content>
-                    <FontIcon Glyph="&#xE652;" FontSize="16"/>
-                </Button.Content>
-            </Button>
-            <!--天辉获胜-->
-            <Grid Grid.Column="1" Height="48" HorizontalAlignment="Left" CornerRadius="4" Background="#4a7954" BorderBrush="#518a5a" BorderThickness="1.5" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},Mode=OneWay}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Image Height="30" Margin="12,0,12,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image.Source>
-                        <BitmapImage UriSource="/Assets/Icons/Match/icon_radiant_66bb6a.png" DecodePixelHeight="30" DecodePixelType="Logical"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Grid.Column="1" Text="Radiant Victory" Foreground="#dfece0" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="0,0,16,0"/>
-            </Grid>
-            <!--夜魇获胜-->
-            <Grid Grid.Column="1" Height="48" HorizontalAlignment="Left" CornerRadius="4" Background="#9e3c44" BorderBrush="#b74046" BorderThickness="1.5" Visibility="{x:Bind ViewModel.CurrentMatchInfo.radiant_win,Converter={StaticResource Bool2Vis},ConverterParameter=-,Mode=OneWay}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Image Height="30" Margin="12,0,12,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image.Source>
-                        <BitmapImage UriSource="/Assets/Icons/Match/icon_dire_ff4c4c.png" DecodePixelHeight="30" DecodePixelType="Logical"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Grid.Column="1" Text="Dire Victory" Foreground="#280f11" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" CharacterSpacing="40" Margin="0,0,16,0"/>
-            </Grid>
-
-            <!--比赛ID和比分-->
-            <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <!--比赛ID-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
-                            Visibility="{x:Bind ViewModel.CurrentMatchInfo.match_id,Mode=OneWay,Converter={StaticResource Null2Vis}}">
-                    <TextBlock Text="MATCH ID" Opacity="0.5" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="12" FontWeight="Medium" CharacterSpacing="20" Margin="0,0,6,0"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.match_id,Mode=OneWay}" Opacity="0.7" HorizontalAlignment="Center" FontSize="12" FontWeight="Medium" IsTextSelectionEnabled="True" CharacterSpacing="40"/>
-                </StackPanel>
-                <!--比分-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.radiant_score,Mode=OneWay}" Foreground="#66bb6a" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="26" FontWeight="Bold" CharacterSpacing="60"/>
-                    <TextBlock Text=":" Opacity="0.7" Margin="12,-2,12,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.dire_score,Mode=OneWay}" Foreground="#ff4c4c" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" FontSize="26" FontWeight="Bold" CharacterSpacing="60"/>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
         <!--数据统计和BP-->
         <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
             <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,0,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
                 <StackPanel Orientation="Horizontal" Padding="16,0">
-                    <!--Game Mode-->
-                    <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                        <FontIcon Glyph="&#xE7FC;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Game Mode" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.game_mode,Mode=OneWay,Converter={StaticResource Int2GameMode}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
-                        </StackPanel>
-                    </Grid>
-                    <!--Lobby Type-->
-                    <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                        <FontIcon Glyph="&#xE80F;" Margin="4,2" FontSize="20" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Lobby Type" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.lobby_type,Mode=OneWay,Converter={StaticResource Int2LobbyType}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
-                        </StackPanel>
-                    </Grid>
-                    <!--第一滴血时间-->
-                    <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6"
-                                      Visibility="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                        <FontIcon Glyph="&#xEB42;" Margin="4,3" FontSize="18" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="First Blood" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.first_blood_time,Mode=OneWay,Converter={StaticResource Long2Min}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
-                        </StackPanel>
-                    </Grid>
-                    <!--比赛时长-->
-                    <Grid Margin="0,0,8,0" MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                        <FontIcon Glyph="&#xE916;" Margin="4,2" FontSize="19" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Duration" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.duration,Mode=OneWay,Converter={StaticResource Long2Min}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
-                        </StackPanel>
-                    </Grid>
-                    <!--评级(N H VH)-->
-                    <Grid Margin="0,0,8,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.skill,Mode=OneWay,Converter={StaticResource Null2Vis}}"
-                                      MinWidth="86" Width="Auto" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6">
-                        <FontIcon Glyph="&#xF272;" Margin="2,2" FontSize="28" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                        <StackPanel Padding="12,2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="Skill" FontSize="13" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                            <TextBlock Text="{x:Bind ViewModel.CurrentMatchInfo.skill,Mode=OneWay,Converter={StaticResource Int2Skill}}" HorizontalAlignment="Center" Opacity="0.7" FontSize="12" FontWeight="Medium"/>
-                        </StackPanel>
-                    </Grid>
+                    
 
                     <!--分割线-->
                     <Grid Height="36" Width="1.5" Background="{ThemeResource APPLICATION_FR}" Margin="0,0,8,0" Opacity="0.05"

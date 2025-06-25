@@ -73,7 +73,7 @@ namespace Dotahold.ViewModels
 
         private bool _loadingMatchData = false;
 
-        private MatchDataModel? _matchDataModel = null;
+        private MatchDataModel? _selectedMatchData = null;
 
         /// <summary>
         /// Indicates whether is currently fetching the player's all matches data
@@ -114,10 +114,10 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Match data model for the currently selected match
         /// </summary>
-        public MatchDataModel? MatchDataModel
+        public MatchDataModel? SelectedMatchData
         {
-            get => _matchDataModel;
-            private set => SetProperty(ref _matchDataModel, value);
+            get => _selectedMatchData;
+            private set => SetProperty(ref _selectedMatchData, value);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Dotahold.ViewModels
                 }
 
                 this.LoadingMatchData = true;
-                this.MatchDataModel = null;
+                this.SelectedMatchData = null;
 
                 var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
 
@@ -424,7 +424,7 @@ namespace Dotahold.ViewModels
 
                 if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
                 {
-                    this.MatchDataModel = new MatchDataModel(matchData);
+                    this.SelectedMatchData = new MatchDataModel(matchData);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }

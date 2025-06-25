@@ -11,6 +11,7 @@
     xmlns:community="using:CommunityToolkit.WinUI"
     xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
+    xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
     xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
     xmlns:models="using:Dotahold.Models"
     xmlns:converters="using:Dotahold.Converters" 
@@ -18,6 +19,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter"/>
         <converters:StringArrayToStringConverter x:Key="StringArrayToStringConverter"/>
         <converters:EqualToVisibilityConverter x:Key="EqualToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -33,23 +35,119 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" ColumnSpacing="8" Margin="16,0,32,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <Grid Grid.Row="0" ColumnSpacing="8" Margin="16,8,32,-8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="58"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!--Back Button-->
-            <Button Grid.Column="0" Width="58" Height="42" Margin="0,8,0,-8" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            <Button Grid.Column="0" Width="58" Height="42" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
+            <!--Radiant Win-->
+            <Grid x:Name="RadiantWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay}"
+                  Grid.Column="1" Height="42" Padding="8,0,16,0" ColumnSpacing="8" HorizontalAlignment="Left" CornerRadius="4" Background="#4A7954" BorderBrush="#518A5A" BorderThickness="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.Source>
+                        <BitmapImage UriSource="/Assets/Matches/icon_radiant_66bb6a.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock Grid.Column="1" Text="Radiant Victory" Margin="0,2,0,-2" Foreground="#DFECE0" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!--Dire Win-->
+            <Grid x:Name="DireWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}"
+                  Grid.Column="1" Height="42" Padding="8,0,16,0" ColumnSpacing="8" HorizontalAlignment="Left" CornerRadius="4" Background="#9E3C44" BorderBrush="#B74046" BorderThickness="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.Source>
+                        <BitmapImage UriSource="/Assets/Matches/icon_dire_ff4c4c.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock Grid.Column="1" Text="Dire Victory" Margin="0,2,0,-2" Foreground="#280F11" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!--Score-->
+            <TextBlock Grid.Column="2" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A"/>
+                <Run Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C"/>
+            </TextBlock>
+
+            <!--Match ID-->
+            <!--<TextBlock IsTextSelectionEnabled="True" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Run Text="MATCH ID" FontWeight="Medium" FontSize="12" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                    <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.match_id,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="14"/>
+                </TextBlock>-->
         </Grid>
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <!--<muxc:ProgressRing Grid.Row="2" IsActive="True" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        <muxc:ProgressRing Grid.Row="2" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsActive="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay}"
+                           Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-        <controls:LineChartControl Grid.Row="2" Height="256" Width="500" HorizontalAlignment="Stretch" ChartColor="{ThemeResource DotaholdApplicationForeground}" Series="{x:Bind _viewModel.MatchesViewModel.MatchDataModel.RadiantAdvantage,Mode=OneWay}"/>
+        <Grid Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
+                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
+                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="64,16" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                            <!--Game Mode-->
+                            <Grid Height="56" MinWidth="142" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                                <FontIcon Glyph="&#xE7FC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="16,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="Game Mode" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                    <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.GameMode,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--Lobby Type-->
+                            <Grid Height="56" MinWidth="142" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                                <FontIcon Glyph="&#xE80F;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="16,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="Lobby Type" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                    <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.LobbyType,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--First Blood-->
+                            <Grid Height="56" MinWidth="142" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                                <FontIcon Glyph="&#xEB42;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="16,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="First Blood" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                    <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.FirstBloodTime,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!--Match Duration-->
+                            <Grid Height="56" MinWidth="142" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                                <FontIcon Glyph="&#xE916;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Padding="16,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="Duration" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                    <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.Duration,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                </StackPanel>
+                            </Grid>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <controls:LineChartControl Height="256" Width="Auto" HorizontalAlignment="Stretch" ChartColor="{ThemeResource DotaholdApplicationForeground}" Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
 
     </Grid>
 </Page>
