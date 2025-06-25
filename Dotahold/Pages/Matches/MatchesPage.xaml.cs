@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.System;
@@ -91,6 +92,8 @@ namespace Dotahold.Pages.Matches
                 {
                     this.Frame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                 }
+
+                _ = _viewModel.MatchesViewModel.LoadMatchData(match.match_id.ToString());
             }
             catch (Exception ex)
             {

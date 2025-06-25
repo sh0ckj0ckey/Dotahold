@@ -47,7 +47,9 @@
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <muxc:ProgressRing Grid.Row="2" IsActive="True" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--<muxc:ProgressRing Grid.Row="2" IsActive="True" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+
+        <controls:LineChartControl Grid.Row="2" Height="256" Width="500" HorizontalAlignment="Stretch" ChartColor="{ThemeResource DotaholdApplicationForeground}" Series="{x:Bind _viewModel.MatchesViewModel.MatchDataModel.RadiantAdvantage,Mode=OneWay}"/>
 
     </Grid>
 </Page>
