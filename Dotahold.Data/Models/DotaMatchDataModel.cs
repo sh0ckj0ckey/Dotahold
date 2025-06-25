@@ -24,16 +24,16 @@ namespace Dotahold.Data.Models
         public long first_blood_time { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public long lobby_type { get; set; }
+        public int lobby_type { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public long game_mode { get; set; }
+        public int game_mode { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public long radiant_score { get; set; }
+        public int radiant_score { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public long dire_score { get; set; }
+        public int dire_score { get; set; }
 
         public DotaMatchBanPick[]? picks_bans { get; set; } = [];
 
