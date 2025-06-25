@@ -343,6 +343,15 @@ namespace Dotahold.ViewModels
         }
 
         /// <summary>
+        /// Sets the filter to match the specified hero.
+        /// </summary>
+        /// <param name="hero">The hero to filter matches by. Can be <see langword="null"/> to clear the filter.</param>
+        public void SetMatchesHeroFilter(HeroModel? hero)
+        {
+            this.MatchesHeroFilter = hero;
+        }
+
+        /// <summary>
         /// Clear the match list when a new HeroFilter is set
         /// </summary>
         /// <param name="filterHeroId"></param>

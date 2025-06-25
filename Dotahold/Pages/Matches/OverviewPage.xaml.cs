@@ -153,7 +153,7 @@ namespace Dotahold.Pages.Matches
                 HeroModel? heroFilter = null;
                 bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
 
-                _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+                _viewModel.MatchesViewModel.SetMatchesHeroFilter(heroFilter);
 
                 await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
 
@@ -190,7 +190,7 @@ namespace Dotahold.Pages.Matches
                 HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
                 bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
 
-                _viewModel.MatchesViewModel.MatchesHeroFilter = heroFilter;
+                _viewModel.MatchesViewModel.SetMatchesHeroFilter(heroFilter);
 
                 await _viewModel.MatchesViewModel.LoadPlayerAllMatches(_viewModel.AppSettings.SteamID);
 
