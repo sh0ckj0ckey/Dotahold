@@ -13,13 +13,10 @@ namespace Dotahold.Models
     {
         private static readonly SerialTaskQueue _serialTaskQueue = new();
 
-        public DotaAibilitiesModel DotaAbilities { get; private set; }
-
         public AbilitiesFacetModel[] AbilitiesFacets { get; private set; }
 
         public AbilitiesModel(DotaAibilitiesModel abilities)
         {
-            this.DotaAbilities = abilities;
             if (abilities.facets is not null && abilities.facets.Length > 0)
             {
                 this.AbilitiesFacets = [.. abilities.facets.Select(facet => new AbilitiesFacetModel(facet))];

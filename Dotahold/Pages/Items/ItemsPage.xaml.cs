@@ -115,7 +115,7 @@ namespace Dotahold.Pages.Items
                     {
                         foreach (var itemKey in _viewModel.ItemsViewModel.SelectedItem.DotaItemAttributes.components!)
                         {
-                            var item = _viewModel.ItemsViewModel.GetItemModel(itemKey);
+                            var item = _viewModel.ItemsViewModel.GetItemByName(itemKey);
                             if (item is not null)
                             {
                                 _components.Add(item);

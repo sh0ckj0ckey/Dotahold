@@ -20,7 +20,7 @@ namespace Dotahold.ViewModels
         private Task? _loadHeroesTask = null;
 
         /// <summary>
-        /// HeroId to HeroModel
+        /// Hero Id to HeroModel
         /// </summary>
         private readonly Dictionary<string, HeroModel> _heroModels = [];
 

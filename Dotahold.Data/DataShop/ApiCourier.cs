@@ -33,6 +33,7 @@ namespace Dotahold.Data.DataShop
                     return heroDataResponse.result.data.heroes[0];
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetHeroData({heroId}, {language}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
@@ -61,6 +62,7 @@ namespace Dotahold.Data.DataShop
                     throw new Exception($"Hero ID mismatch, {heroId} != {heroDataResponse?.hero_id}");
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetHeroRankings({heroId}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
@@ -129,6 +131,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerProfile({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
@@ -153,6 +156,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerWinLose({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;
@@ -177,6 +181,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerOverallPerformance({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
@@ -201,6 +206,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerHeroPerformance({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
@@ -226,6 +232,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerRecentMatches({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
@@ -251,6 +258,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetPlayerAllMatches({id}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return [];
@@ -276,6 +284,7 @@ namespace Dotahold.Data.DataShop
                     return result;
                 }
             }
+            catch (TaskCanceledException) { }
             catch (Exception ex) { LogCourier.Log($"GetMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
 
             return null;

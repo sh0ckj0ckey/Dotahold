@@ -20,7 +20,7 @@ namespace Dotahold.ViewModels
         private Task? _loadItemsTask = null;
 
         /// <summary>
-        /// ItemId to ItemModel
+        /// Item name to ItemModel
         /// </summary>
         private readonly Dictionary<string, ItemModel> _itemModels = [];
 
@@ -157,7 +157,7 @@ namespace Dotahold.ViewModels
             }
         }
 
-        public ItemModel? GetItemModel(string itemName)
+        public ItemModel? GetItemByName(string itemName)
         {
             if (_itemModels.TryGetValue(itemName, out ItemModel? itemModel))
             {

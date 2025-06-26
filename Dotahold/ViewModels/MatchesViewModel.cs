@@ -325,13 +325,7 @@ namespace Dotahold.ViewModels
                         continue;
                     }
 
-                    var abilities = this.GetAbilitiesByHeroName(hero.DotaHeroAttributes.name);
-                    if (abilities is null)
-                    {
-                        continue;
-                    }
-
-                    var abilitiesFacet = abilities.GetFacetByIndex(match.hero_variant);
+                    var abilitiesFacet = this.GetAbilitiesByHeroName(hero.DotaHeroAttributes.name)?.GetFacetByIndex(match.hero_variant);
 
                     var matchModel = new MatchModel(match, hero, abilitiesFacet);
                     this.Matches.Add(matchModel);
