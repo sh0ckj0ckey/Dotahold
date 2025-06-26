@@ -24,6 +24,8 @@ namespace Dotahold.Pages.Matches
 
             this.Loaded += (_, _) =>
             {
+                UpdateLayoutsWidth();
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
@@ -35,6 +37,16 @@ namespace Dotahold.Pages.Matches
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
             };
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateLayoutsWidth();
+        }
+
+        private void UpdateLayoutsWidth()
+        {
+            MatchDataOverviewScrollViewer.Width = RootGrid.ActualWidth;
         }
 
         #region GoBack
@@ -88,6 +100,5 @@ namespace Dotahold.Pages.Matches
         }
 
         #endregion
-
     }
 }

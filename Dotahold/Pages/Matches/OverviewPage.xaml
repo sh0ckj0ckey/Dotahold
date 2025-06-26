@@ -246,7 +246,7 @@
                         </Grid>
                         <ScrollViewer x:Name="PlayerOverallScrollViewer" Margin="0,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
                                       Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerOverallPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}">
-                            <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerOverallPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">
+                            <muxc:ItemsRepeater Margin="16,0" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerOverallPerformances,Mode=OneWay}">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
                                 </muxc:ItemsRepeater.Layout>

@@ -418,7 +418,12 @@ namespace Dotahold.ViewModels
 
                 if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
                 {
-                    this.SelectedMatchData = new MatchDataModel(matchData);
+                    this.SelectedMatchData = new MatchDataModel(matchData,
+                        _heroesViewModel.GetHeroById,
+                        _itemsViewModel.GetItemByName,
+                        this.GetAbilitiesByHeroName,
+                        this.GetAbilityNameById,
+                        this.GetPermanentBuffNameById);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
