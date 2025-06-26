@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
 
@@ -20,7 +21,12 @@ namespace Dotahold.Models
 
         public List<LineSeries> RadiantAdvantage { get; private set; } = [];
 
-        public MatchDataModel(DotaMatchDataModel matchData)
+        public MatchDataModel(DotaMatchDataModel matchData,
+            Func<string, HeroModel?> getHeroById,
+            Func<string, ItemModel?> getItemByName,
+            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
+            Func<string, string> getAbilityNameById,
+            Func<string, string> getPermanentBuffNameById)
         {
             this.DotaMatchData = matchData;
 
@@ -34,9 +40,19 @@ namespace Dotahold.Models
             {
                 this.RadiantAdvantage.Add(new LineSeries
                 {
-                    Title = "Radiant Advantage",
+                    Title = "Radiant Gold Advantage",
                     Data = this.DotaMatchData.radiant_gold_adv,
-                    LineColor = Windows.UI.Colors.Green,
+                    LineColor = Windows.UI.Colors.Goldenrod,
+                });
+            }
+
+            if (this.DotaMatchData.radiant_xp_adv?.Length > 0)
+            {
+                this.RadiantAdvantage.Add(new LineSeries
+                {
+                    Title = "Radiant XP Advantage",
+                    Data = this.DotaMatchData.radiant_xp_adv,
+                    LineColor = Windows.UI.Colors.MediumOrchid,
                 });
             }
         }
