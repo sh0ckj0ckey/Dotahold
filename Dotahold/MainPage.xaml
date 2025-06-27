@@ -21,6 +21,8 @@
 
         <Button Height="0" Width="0" UseSystemFocusVisuals="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
+        <Grid x:Name="AppTitleBarGrid" Grid.ColumnSpan="2" Background="Transparent" Height="38" HorizontalAlignment="Stretch" VerticalAlignment="Top" Canvas.ZIndex="1"/>
+
         <!--Tab Buttons-->
         <StackPanel Orientation="Vertical" Spacing="16" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Width="54" Height="54" Background="Transparent" BorderBrush="Transparent" Click="HeroesTabButton_Click" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -58,22 +60,14 @@
             </muxc:AnimatedIcon>
         </Button>
 
-        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="38"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Frame x:Name="MainFrame" Grid.Row="0" Grid.RowSpan="2" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Frame x:Name="MainFrame" Padding="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-
-            <Grid x:Name="AppTitleBarGrid" Grid.Row="0" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Canvas.ZIndex="1"/>
-
         </Grid>
     </Grid>
 </Page>

@@ -14,7 +14,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Page.Resources>
 
-    <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
             <RowDefinition Height="Auto"/>
