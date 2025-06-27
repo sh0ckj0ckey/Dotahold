@@ -76,7 +76,7 @@ namespace Dotahold.Models
     {
         public HeroModel Hero { get; private set; } = hero;
 
-        public string Order { get; private set; } = $"#{banPick.order}";
+        public string Order { get; private set; } = $"# {banPick.order}";
 
         public string Team { get; private set; } = banPick.team == 1 ? "Dire" : "Radiant";
 

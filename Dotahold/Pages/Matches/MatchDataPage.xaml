@@ -109,7 +109,7 @@
                             <!--Game Mode-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                                 <FontIcon Glyph="&#xE7FC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                <StackPanel Padding="32,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="Game Mode" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                     <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.GameMode,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                 </StackPanel>
@@ -118,7 +118,7 @@
                             <!--Lobby Type-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                                 <FontIcon Glyph="&#xE80F;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                <StackPanel Padding="32,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="Lobby Type" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                     <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.LobbyType,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                 </StackPanel>
@@ -127,7 +127,7 @@
                             <!--First Blood-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                                 <FontIcon Glyph="&#xEB42;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                <StackPanel Padding="32,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="First Blood" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                     <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.FirstBloodTime,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                 </StackPanel>
@@ -136,17 +136,19 @@
                             <!--Match Duration-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                                 <FontIcon Glyph="&#xE916;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                <StackPanel Padding="32,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="Duration" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                     <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.Duration,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                 </StackPanel>
                             </Grid>
 
+                            <Rectangle Height="34" Width="1" Fill="{ThemeResource DotaholdSeparatorColor}" VerticalAlignment="Center"/>
+
                             <!--BanPick-->
                             <Grid Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
-                                  Width="56" Height="48" Padding="4,6" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="Ban Pick">
-                                <FontIcon Glyph="&#xF0AD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="22" Margin="4,2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <FontIcon Glyph="&#xF0AE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="22" Margin="4,2" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                  Width="52" Height="48" Padding="4,6" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="Ban Pick">
+                                <FontIcon Glyph="&#xF0AD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="4,2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <FontIcon Glyph="&#xF0AE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="4,2" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                             </Grid>
 
                             <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans,Mode=OneWay}">
@@ -155,20 +157,30 @@
                                 </muxc:ItemsRepeater.Layout>
                                 <muxc:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="models:MatchBanPickModel">
-                                        <Grid Width="86" Height="48" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}">
+                                        <Grid Width="86" Height="48" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.Placement="Bottom">
                                             <ToolTipService.ToolTip>
-                                                <StackPanel Orientation="Vertical">
-                                                    <Image Source="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock FontFamily="{ThemeResource ReaverBold}" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <Run Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="16"/>
-                                                        <LineBreak/>
-                                                        <Run Text="{x:Bind Order}"/>
+                                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <StackPanel Spacing="8" Margin="0,0,0,8" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <TextBlock Text="{x:Bind Order}" FontSize="18" FontFamily="{ThemeResource ReaverBold}" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                        <Image Source="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Row="1" Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="16" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Row="2" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
                                                         <Run Text="{x:Bind Team}"/>
                                                         <Run Text="{x:Bind Action}"/>
                                                     </TextBlock>
-                                                </StackPanel>
+                                                </Grid>
                                             </ToolTipService.ToolTip>
-                                            <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind Hero.HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                                            <!--Hero Image-->
+                                            <Image Width="86" Height="48" Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind Hero.HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                            <!--BanPick Team-->
                                             <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch">
                                                 <Grid.Background>
                                                     <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
@@ -181,9 +193,11 @@
                                                 <FontIcon x:Name="RadiantPickIcon" x:Load="{x:Bind IsRadiant}" Glyph="&#xEDDB;" FontSize="14" Margin="4" Foreground="#66BB6A" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                                                 <FontIcon x:Name="DirePickIcon" x:Load="{x:Bind IsRadiant,Converter={StaticResource BoolNegationConverter}}" Glyph="&#xEDDC;" FontSize="14" Margin="4" Foreground="#FF4C4C" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                                             </Grid>
-                                            <!--<Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind is_pick,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
+
+                                            <!--Banned Mask-->
+                                            <Border x:Name="HeroBannedBorder" x:Load="{x:Bind IsBan}" Width="86" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Border.Background>
-                                                    <ToolkitMedia:BackdropSaturationBrush Saturation="0"/>
+                                                    <communityMedia:BackdropSaturationBrush Saturation="0"/>
                                                 </Border.Background>
                                                 <Line StrokeThickness="2" X2="86" Y2="48">
                                                     <Line.Stroke>
@@ -197,7 +211,7 @@
                                                         </LinearGradientBrush>
                                                     </Line.Stroke>
                                                 </Line>
-                                            </Border>-->
+                                            </Border>
                                         </Grid>
                                     </DataTemplate>
                                 </muxc:ItemsRepeater.ItemTemplate>
