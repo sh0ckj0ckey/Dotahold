@@ -224,7 +224,17 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <controls:LineChartControl Height="256" Width="Auto" HorizontalAlignment="Stretch" ChartColor="{ThemeResource DotaholdApplicationForeground}" Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
+                    <!--Advantages Chart Header-->
+                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE9D2;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Advantages" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!--Advantages Chart-->
+                    <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                                               XAxisStep="5" YAxisStep="10000" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" ChartColor="{ThemeResource DotaholdApplicationForeground}" 
+                                               Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
+
 
                 </StackPanel>
             </ScrollViewer>
