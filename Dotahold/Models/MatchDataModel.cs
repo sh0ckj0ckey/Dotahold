@@ -2,11 +2,22 @@
 using System.Collections.Generic;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
 {
     public class MatchDataModel
     {
+        /// <summary>
+        /// 默认经济图标
+        /// </summary>
+        private static BitmapImage? _defaultGoldImageSource32 = null;
+
+        /// <summary>
+        /// 默认经验图标
+        /// </summary>
+        private static BitmapImage? _defaultExperienceImageSource32 = null;
+
         public DotaMatchDataModel DotaMatchData { get; private set; }
 
         public string StartDateTime { get; private set; }
@@ -30,6 +41,18 @@ namespace Dotahold.Models
             Func<string, string> getAbilityNameById,
             Func<string, string> getPermanentBuffNameById)
         {
+            _defaultGoldImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_gold_stack.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 32
+            };
+
+            _defaultExperienceImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_tome_of_knowledge.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 32
+            };
+
             this.DotaMatchData = matchData;
 
             this.StartDateTime = MatchDataHelper.GetWhen(this.DotaMatchData.start_time);
@@ -54,9 +77,11 @@ namespace Dotahold.Models
             {
                 this.RadiantAdvantage.Add(new LineSeries
                 {
-                    Title = "Radiant Gold Advantage",
-                    Data = this.DotaMatchData.radiant_gold_adv,
+                    Icon = new AsyncImage(string.Empty, 0, 0, _defaultGoldImageSource32),
+                    Title = "Radiant Gold Adv.",
+                    NegativeTitle = "Dire Gold Adv.",
                     LineColor = Windows.UI.Colors.Goldenrod,
+                    Data = this.DotaMatchData.radiant_gold_adv,
                 });
             }
 
@@ -64,9 +89,11 @@ namespace Dotahold.Models
             {
                 this.RadiantAdvantage.Add(new LineSeries
                 {
-                    Title = "Radiant XP Advantage",
-                    Data = this.DotaMatchData.radiant_xp_adv,
+                    Icon = new AsyncImage(string.Empty, 0, 0, _defaultExperienceImageSource32),
+                    Title = "Radiant XP Adv.",
+                    NegativeTitle = "Dire XP Adv.",
                     LineColor = Windows.UI.Colors.MediumOrchid,
+                    Data = this.DotaMatchData.radiant_xp_adv,
                 });
             }
         }

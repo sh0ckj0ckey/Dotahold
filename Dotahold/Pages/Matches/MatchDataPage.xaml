@@ -227,7 +227,8 @@
 
                     <!--Advantages Chart-->
                     <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
-                                               XAxisStep="5" YAxisStep="10000" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" ChartColor="{ThemeResource DotaholdApplicationForeground}" 
+                                               XAxisStep="5" YAxisStep="10000" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
+                                               ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
 
                     <!--Gold Graph Chart Header-->

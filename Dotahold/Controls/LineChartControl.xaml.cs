@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Dotahold.Data.Models;
 using Dotahold.Models;
 using Windows.Foundation;
 using Windows.UI;
@@ -15,9 +15,20 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Dotahold.Controls
 {
+    internal class LineSeriesTooltipModel(string title, int data, AsyncImage? icon = null)
+    {
+        public AsyncImage? Icon { get; set; } = icon;
+
+        public string Title { get; set; } = title;
+
+        public int Data { get; set; } = data;
+    }
+
     public sealed partial class LineChartControl : UserControl
     {
         public static readonly DependencyProperty ChartColorProperty = DependencyProperty.Register(nameof(ChartColor), typeof(Color), typeof(LineChartControl), new PropertyMetadata(Colors.Gray, ChartColorChanged));
+
+        public static readonly DependencyProperty TooltipBackgroundColorProperty = DependencyProperty.Register(nameof(TooltipBackgroundColor), typeof(Color), typeof(LineChartControl), new PropertyMetadata(Color.FromArgb(140, 0, 0, 0)));
 
         public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register(nameof(Series), typeof(List<LineSeries>), typeof(LineChartControl), new PropertyMetadata(null, SeriesChanged));
 
@@ -33,12 +44,17 @@ namespace Dotahold.Controls
 
         public static new readonly DependencyProperty FontFamilyProperty = DependencyProperty.Register(nameof(FontFamily), typeof(FontFamily), typeof(LineChartControl), new PropertyMetadata(Application.Current.Resources["ContentControlThemeFontFamily"] as FontFamily ?? new FontFamily("Segoe UI"), FontFamilyChanged));
 
-        private readonly List<UIElement> _highlightPoints = [];
-
         private readonly double _topMargin = 1;
+
         private readonly double _bottomMargin = 49;
+
         private readonly double _leftMargin = 1;
+
         private readonly double _rightMargin = 1;
+
+        private readonly List<UIElement> _hoverHighlightPoints = [];
+
+        private UIElement? _hoverVerticalLine = null;
 
         /// <summary>
         /// Color of the chart lines and axes
@@ -47,6 +63,15 @@ namespace Dotahold.Controls
         {
             get => (Color)GetValue(ChartColorProperty);
             set => SetValue(ChartColorProperty, value);
+        }
+
+        /// <summary>
+        /// Color of tooltip background
+        /// </summary>
+        public Color TooltipBackgroundColor
+        {
+            get => (Color)GetValue(TooltipBackgroundColorProperty);
+            set => SetValue(TooltipBackgroundColorProperty, value);
         }
 
         /// <summary>
@@ -114,6 +139,7 @@ namespace Dotahold.Controls
 
         public LineChartControl()
         {
+            this.DataContext = this;
             this.InitializeComponent();
         }
 
@@ -155,11 +181,9 @@ namespace Dotahold.Controls
         private void DrawChart()
         {
             ChartCanvas.Children.Clear();
+            HideTooltip();
 
-            _highlightPoints.Clear();
-            Tooltip.Visibility = Visibility.Collapsed;
-
-            if (this.Series is null || this.Series.Count <= 0)
+            if (this.Series is null || this.Series.Count <= 0 || this.Series.Max(s => s.Data.Length) <= 1)
             {
                 return;
             }
@@ -370,33 +394,34 @@ namespace Dotahold.Controls
 
         private void ChartCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            if (this.Series is null || this.Series.Count <= 0)
+            if (this.Series is null || this.Series.Count <= 0 || this.Series.Max(s => s.Data.Length) <= 1)
             {
+                HideTooltip();
                 return;
             }
 
+            // Get the actual size of the chart area
             double width = ChartCanvas.ActualWidth;
             double height = ChartCanvas.ActualHeight;
             if (width <= 0 || height <= 0)
             {
+                HideTooltip();
                 return;
             }
 
             double chartWidth = width - _leftMargin - _rightMargin;
             double chartHeight = height - _topMargin - _bottomMargin;
 
-            var strokeColorBrush = new SolidColorBrush(this.ChartColor);
-
             Point pos = e.GetCurrentPoint(ChartCanvas).Position;
             if (pos.X <= _leftMargin || pos.X >= _leftMargin + chartWidth)
             {
-                Tooltip.Visibility = Visibility.Collapsed;
-                RemoveHighlightPoints();
-                RemoveVerticalLine();
+                HideTooltip();
                 return;
             }
 
-            // 计算Y轴范围
+            var strokeColorBrush = new SolidColorBrush(this.ChartColor);
+
+            // Compute the Y-axis range based on the data in all series
             int minData = this.Series.SelectMany(s => s.Data).DefaultIfEmpty(0).Min();
             int maxData = this.Series.SelectMany(s => s.Data).DefaultIfEmpty(0).Max();
             int maxAbs = Math.Max(Math.Abs(minData), Math.Abs(maxData));
@@ -414,85 +439,132 @@ namespace Dotahold.Controls
             int index = (int)Math.Round((pos.X - _leftMargin) / xStep);
             index = Math.Max(0, Math.Min(maxLen - 1, index));
 
-            // 绘制竖线
-            RemoveVerticalLine();
             double x = _leftMargin + index * xStep;
-            ChartCanvas.Children.Add(new Line
-            {
-                X1 = x,
-                Y1 = _topMargin,
-                X2 = x,
-                Y2 = _topMargin + chartHeight,
-                Stroke = strokeColorBrush,
-                StrokeDashArray = [2, 2],
-                StrokeThickness = 1,
-                Opacity = 0.5,
-                Tag = "VerticalLine",
-            });
 
-            // 显示所有线的数值
-            RemoveHighlightPoints();
-            StringBuilder sb = new();
-            for (int i = 0; i < this.Series.Count; i++)
+            // Draw the vertical line at the hovered index
             {
-                var s = this.Series[i];
-                if (index < s.Data.Length)
+                RemoveHoverVerticalLine();
+
+                _hoverVerticalLine = new Line
                 {
-                    sb.AppendLine($"{s.Title ?? $"Line{i + 1}"}: {s.Data[index]}");
+                    X1 = x,
+                    Y1 = _topMargin,
+                    X2 = x,
+                    Y2 = _topMargin + chartHeight,
+                    Stroke = strokeColorBrush,
+                    StrokeDashArray = [2, 2],
+                    StrokeThickness = 1,
+                    Opacity = 0.5,
+                };
 
-                    // 绘制高亮点
-                    double yScale = chartHeight / (max - min);
-                    double xStepThis = chartWidth / (s.Data.Length - 1);
-                    double px = _leftMargin + index * xStepThis;
-                    double py = _topMargin + chartHeight - (s.Data[index] - min) * yScale;
-
-                    var ellipse = new Ellipse
-                    {
-                        Width = 12,
-                        Height = 12,
-                        Fill = new SolidColorBrush(s.LineColor),
-                        Stroke = strokeColorBrush,
-                        StrokeThickness = 2
-                    };
-
-                    Canvas.SetLeft(ellipse, px - 6);
-                    Canvas.SetTop(ellipse, py - 6);
-                    ChartCanvas.Children.Add(ellipse);
-                    _highlightPoints.Add(ellipse);
-                }
+                ChartCanvas.Children.Add(_hoverVerticalLine);
             }
 
-            TooltipText.Text = sb.ToString().TrimEnd();
-            Tooltip.Visibility = Visibility.Visible;
+            // Draw points of all series at the hovered index
+            {
+                RemoveHoverHighlightPoints();
 
-            // Tooltip位置
-            double tooltipX = x + 10;
-            double tooltipY = _topMargin + 10;
-            if (tooltipX + Tooltip.ActualWidth > width)
-                tooltipX = x - Tooltip.ActualWidth - 10;
-            Tooltip.Margin = new Thickness(tooltipX, tooltipY, 0, 0);
+                List<LineSeriesTooltipModel> tooltipData = [];
+                for (int i = 0; i < this.Series.Count; i++)
+                {
+                    var s = this.Series[i];
+                    if (s is not null && index < s.Data.Length)
+                    {
+                        int data = s.Data[index];
+                        string title = (data < 0 && !string.IsNullOrEmpty(s.NegativeTitle)) ? s.NegativeTitle : s.Title;
+                        AsyncImage? icon = (data < 0 && s.NegativeIcon is not null) ? s.NegativeIcon : s.Icon;
+                        tooltipData.Add(new LineSeriesTooltipModel(title, (!string.IsNullOrEmpty(s.NegativeTitle)) ? Math.Abs(data) : data, icon));
+
+                        // Draw the highlight point
+                        double yScale = chartHeight / (max - min);
+                        double xStepThis = chartWidth / (s.Data.Length - 1);
+                        double px = _leftMargin + index * xStepThis;
+                        double py = _topMargin + chartHeight - (s.Data[index] - min) * yScale;
+
+                        var ellipse = new Ellipse
+                        {
+                            Width = 12,
+                            Height = 12,
+                            Fill = new SolidColorBrush(s.LineColor),
+                            Stroke = strokeColorBrush,
+                            StrokeThickness = 2
+                        };
+
+                        Canvas.SetLeft(ellipse, px - 6);
+                        Canvas.SetTop(ellipse, py - 6);
+                        ChartCanvas.Children.Add(ellipse);
+
+                        _hoverHighlightPoints.Add(ellipse);
+                    }
+                }
+
+                // Sort tooltipData DESC
+                tooltipData.Sort((a, b) => b.Data.CompareTo(a.Data));
+
+                TooltipTitle.Text = string.Format(this.XAxisLabelFormat, index);
+                TooltipDataList.ItemsSource = tooltipData;
+                Tooltip.Visibility = Visibility.Visible;
+            }
+
+            // Update position of the tooltip
+            {
+                double tooltipX;
+                double tooltipY = _topMargin + 8;
+                double actualWidth = Tooltip.ActualWidth > 0 ? Tooltip.ActualWidth : 196;
+
+                if (x <= width / 2)
+                {
+                    // Tooltip on the left side
+                    tooltipX = x + 8;
+                }
+                else
+                {
+                    // Tooltip on the right side
+                    tooltipX = x - 8 - actualWidth;
+                }
+
+                if (tooltipX + actualWidth + 8 > width)
+                {
+                    tooltipX = width - actualWidth - 8;
+                }
+
+                if (tooltipX < 0)
+                {
+                    tooltipX = 8;
+                }
+
+                Tooltip.Margin = new Thickness(tooltipX, tooltipY, 0, 0);
+            }
         }
 
         private void ChartCanvas_PointerExited(object sender, PointerRoutedEventArgs e)
         {
+            HideTooltip();
+        }
+
+        private void HideTooltip()
+        {
             Tooltip.Visibility = Visibility.Collapsed;
-            RemoveHighlightPoints();
-            RemoveVerticalLine();
+            RemoveHoverHighlightPoints();
+            RemoveHoverVerticalLine();
         }
 
-        private void RemoveHighlightPoints()
+        private void RemoveHoverHighlightPoints()
         {
-            foreach (var el in _highlightPoints)
-                ChartCanvas.Children.Remove(el);
-            _highlightPoints.Clear();
-        }
-
-        private void RemoveVerticalLine()
-        {
-            for (int i = ChartCanvas.Children.Count - 1; i >= 0; i--)
+            foreach (var el in _hoverHighlightPoints)
             {
-                if (ChartCanvas.Children[i] is Line l && l.Tag as string == "VerticalLine")
-                    ChartCanvas.Children.RemoveAt(i);
+                ChartCanvas.Children.Remove(el);
+            }
+
+            _hoverHighlightPoints.Clear();
+        }
+
+        private void RemoveHoverVerticalLine()
+        {
+            if (_hoverVerticalLine is not null)
+            {
+                ChartCanvas.Children.Remove(_hoverVerticalLine);
+                _hoverVerticalLine = null;
             }
         }
     }
