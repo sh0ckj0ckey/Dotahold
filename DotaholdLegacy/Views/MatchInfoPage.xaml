@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="Dotahold.Views.MatchInfoPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,116 +14,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d" NavigationCacheMode="Required" Background="Transparent" d:RequestedTheme="Dark">
 
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/ThemeResource/ThemeDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-            <cvt:BoolToVisibilityConverter x:Key="Bool2Vis"/>
-            <cvt:NullOrEmptyToVisibilityConverter x:Key="Null2Vis"/>
-            <cvt:LongToTimeAgoConverter x:Key="Long2Time"/>
-            <cvt:IntToVisibilityConverter x:Key="Int2Vis"/>
-            <cvt:IntToGameModeConverter x:Key="Int2GameMode"/>
-            <cvt:IntToLobbyTypeConverter x:Key="Int2LobbyType"/>
-            <cvt:IntToSkillConverter x:Key="Int2Skill"/>
-            <cvt:LongToMinutesConverter x:Key="Long2Min"/>
-            <cvt:EqualToVisibilityConverter x:Key="Eql2Vis"/>
-            <cvt:LongToTimeConverter x:Key="Long2Date"/>
-            <cvt:PlayerSlotToForegroundConverter x:Key="Slot2Color"/>
-            <cvt:NullToVisibilityConverter x:Key="IsNull2Vis"/>
-            <cvt:RankTierToImageConverter x:Key="Rank2Image"/>
-        </ResourceDictionary>
-    </Page.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <!--数据统计和BP-->
-        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-            <ScrollViewer x:Name="BanPickScrollViewer" Margin="0,0,0,16" HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
-                <StackPanel Orientation="Horizontal" Padding="16,0">
-                    
-
-                    <!--分割线-->
-                    <Grid Height="36" Width="1.5" Background="{ThemeResource APPLICATION_FR}" Margin="0,0,8,0" Opacity="0.05"
-                                      Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"/>
-
-                    <!--BanPick-->
-                    <Grid Margin="0,0,8,0" Visibility="{x:Bind ViewModel.CurrentMatchInfo.picks_bans.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}"
-                                      Width="34" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="Ban Pick">
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="4,6">
-                            <FontIcon Glyph="&#xF0AD;" Margin="0" FontSize="18" Opacity="0.3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <FontIcon Glyph="&#xF0AE;" Margin="0" FontSize="18" Opacity="0.3" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                        </Grid>
-                        <!--<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <TextBlock Text="Ban" FontSize="12" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                                        <TextBlock Text="Pick" FontSize="12" Margin="0,2,0,0" HorizontalAlignment="Center" FontWeight="Medium" CharacterSpacing="40"/>
-                                    </StackPanel>-->
-                    </Grid>
-                    <!--英雄BanPick顺序-->
-                    <ListView IsItemClickEnabled="False" SelectionMode="None" ItemsSource="{x:Bind ViewModel.CurrentMatchInfo.picks_bans,Mode=OneWay}"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollMode="Enabled" 
-                                          ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollMode="Disabled"
-                                          Margin="0,0,10,0">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ToolkitUICtrl:WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.Template>
-                            <ControlTemplate>
-                                <ItemsPresenter />
-                            </ControlTemplate>
-                        </ListView.Template>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Picks_Bans">
-                                <Grid Margin="-20,0,0,0" Width="86" Height="48" Background="{ThemeResource HEROINFO_LISTITEM_BK}" CornerRadius="6" ToolTipService.ToolTip="{x:Bind sHeroName}">
-                                    <Image Source="{x:Bind ImageSource}" Width="86" Height="48" Stretch="UniformToFill"/>
-                                    <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch">
-                                        <Grid.Background>
-                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
-                                                <GradientStopCollection>
-                                                    <GradientStop Offset="0.0" Color="#80000000"/>
-                                                    <GradientStop Offset="0.9" Color="#00000000"/>
-                                                </GradientStopCollection>
-                                            </LinearGradientBrush>
-                                        </Grid.Background>
-                                        <FontIcon Glyph="&#xEDDB;" FontSize="14" Margin="4" Foreground="#66bb6a" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                                              Visibility="{x:Bind team,Converter={StaticResource Eql2Vis},ConverterParameter=0}"/>
-                                        <FontIcon Glyph="&#xEDDC;" FontSize="14" Margin="4" Foreground="#ff4c4c" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                                              Visibility="{x:Bind team,Converter={StaticResource Eql2Vis},ConverterParameter=1}"/>
-                                    </Grid>
-                                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind is_pick,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
-                                        <Border.Background>
-                                            <ToolkitMedia:BackdropSaturationBrush Saturation="0"/>
-                                        </Border.Background>
-                                        <Line StrokeThickness="2" X2="86" Y2="48">
-                                            <Line.Stroke>
-                                                <LinearGradientBrush>
-                                                    <GradientStopCollection>
-                                                        <GradientStop Offset="0.0" Color="#10FF0000"/>
-                                                        <GradientStop Offset="0.3" Color="#E6FF0000"/>
-                                                        <GradientStop Offset="0.7" Color="#E6FF0000"/>
-                                                        <GradientStop Offset="1.0" Color="#10FF0000"/>
-                                                    </GradientStopCollection>
-                                                </LinearGradientBrush>
-                                            </Line.Stroke>
-                                        </Line>
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-        <!--分割线-->
-        <Border Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1" Background="{ThemeResource ControlElevationBorderBrush}"
-                Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}"/>
         <!--比赛数据-->
         <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.bLoadingOneMatchInfo,Mode=OneWay,Converter={StaticResource Bool2Vis},ConverterParameter=-}">
             <ScrollViewer x:Name="MatchInfoScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto" Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis}}">
@@ -656,34 +547,8 @@
                         </Grid>
                     </Grid>
 
-                    <!--比赛开始时间-->
-                    <Grid Padding="12,18,12,24">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource APPLICATION_FR}"/>
-                        <Rectangle Grid.Column="3" Margin="16,0" Opacity="0.1" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{ThemeResource APPLICATION_FR}"/>
-                        <FontIcon Grid.Column="1" Glyph="&#xE823;" FontSize="14" Opacity="0.5" VerticalAlignment="Center" Margin="0,0,6,-2"/>
-                        <TextBlock Grid.Column="2" Opacity="0.5" Text="{x:Bind ViewModel.CurrentMatchInfo.start_time,Mode=OneWay,Converter={StaticResource Long2Date}}" VerticalAlignment="Center" CharacterSpacing="40" FontSize="15" FontWeight="Medium"/>
-                    </Grid>
-
-                    <!--前往网页端查看-->
-                    <Button Margin="16,0,16,16" Height="42" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="OnClickVisitWebsite">
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <TextBlock FontWeight="Medium" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Run Text="Visit"/>
-                                <Run Text="www.opendota.com" Foreground="CornflowerBlue"/>
-                                <Run Text="for more data"/>
-                            </TextBlock>
-                            <FontIcon Glyph="&#xE8A7;" HorizontalAlignment="Right" FontSize="16" Margin="0,0,12,0"/>
-                        </Grid>
-                    </Button>
                 </StackPanel>
             </ScrollViewer>
-            <ui:SomethingWrongControl Visibility="{x:Bind ViewModel.CurrentMatchInfo,Mode=OneWay,Converter={StaticResource Null2Vis},ConverterParameter=-}"/>
         </Grid>
 
         <!--加载中-->

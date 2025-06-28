@@ -63,41 +63,6 @@ namespace Dotahold.Views
         }
 
         /// <summary>
-        /// 离开当前页面时关闭图表
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            try
-            {
-                base.OnNavigatedFrom(e);
-
-                RadiantAdvToggleButton.IsChecked = false;
-                PlayersGoldToggleButton.IsChecked = false;
-                PlayersExpToggleButton.IsChecked = false;
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 打开opendota网页查看更多比赛信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void OnClickVisitWebsite(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ViewModel.CurrentMatchId > 0)
-                {
-                    string url = "https://www.opendota.com/matches/" + ViewModel.CurrentMatchId;
-                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
-                }
-            }
-            catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
         /// 点击玩家查看其详细数据
         /// </summary>
         /// <param name="sender"></param>
@@ -113,26 +78,6 @@ namespace Dotahold.Views
                 }
             }
             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        /// <summary>
-        /// 点击显示或折叠天辉优势图
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnRadiantAdvToggleChecked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.LoadRadiantAdvSeries();
-        }
-
-        private void OnPlayersGoldToggleChecked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.LoadPlayersGoldSeries();
-        }
-
-        private void OnPlayersExpToggleChecked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.LoadPlayersXpSeries();
         }
     }
 }

@@ -79,17 +79,12 @@
             </Grid>
 
             <!--Score-->
-            <TextBlock Grid.Column="2" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}"
+            <TextBlock Grid.Column="2" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}" Margin="0,2,0,-2"
                        FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="3" Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Opacity="0.7" Margin="0,-2,0,2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="4" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}"
+            <TextBlock Grid.Column="3" Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="4" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}" Margin="0,2,0,-2"
                        FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <!--Match ID-->
-            <!--<TextBlock IsTextSelectionEnabled="True" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Run Text="MATCH ID" FontWeight="Medium" FontSize="12" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
-                    <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.match_id,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="14"/>
-                </TextBlock>-->
         </Grid>
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
@@ -98,8 +93,8 @@
                            IsActive="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-        <Grid Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
+        <Grid x:Name="MatchDataGrid" Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ScrollViewer x:Name="MatchDataScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                     <ScrollViewer x:Name="MatchDataOverviewScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
@@ -235,10 +230,55 @@
                                                XAxisStep="5" YAxisStep="10000" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" ChartColor="{ThemeResource DotaholdApplicationForeground}" 
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
 
+                    <!--Gold Graph Chart Header-->
+                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Gold Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!--Experience Graph Chart Header-->
+                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Experience Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Grid x:Name="MatchIdAndDateGrid" Padding="20" ColumnSpacing="16" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Match ID-->
+                        <TextBlock Grid.Column="0" IsTextSelectionEnabled="True" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Run Text="MATCH ID" FontSize="14" FontWeight="Medium" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                            <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.match_id,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="14"/>
+                        </TextBlock>
+
+                        <!--Match Start DateTime-->
+                        <Grid Grid.Column="1" ColumnSpacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Grid.Column="0" Glyph="&#xEC92;" FontSize="14" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.StartDateTime,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="14" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+
+                    <!--Visit OpenDota website-->
+                    <Button x:Name="VisitOpenDotaButton" Padding="20,12" Click="VisitOpenDotaButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <TextBlock Margin="0,0,48,0" FontSize="14" FontWeight="Medium" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Run Text="Visit"/>
+                                <Run Text="www.opendota.com" Foreground="CornflowerBlue"/>
+                                <Run Text="for More Data"/>
+                            </TextBlock>
+                            <FontIcon Glyph="&#xE8A7;" HorizontalAlignment="Right" FontSize="16" Margin="0,0,12,0"/>
+                        </Grid>
+                    </Button>
 
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-
     </Grid>
 </Page>

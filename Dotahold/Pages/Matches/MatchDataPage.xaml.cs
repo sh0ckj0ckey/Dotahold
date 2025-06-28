@@ -1,4 +1,7 @@
-﻿using Dotahold.ViewModels;
+﻿using System;
+using System.ComponentModel;
+using Dotahold.Data.DataShop;
+using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -16,6 +19,8 @@ namespace Dotahold.Pages.Matches
     {
         private readonly MainViewModel _viewModel;
 
+        private INotifyPropertyChanged? _registeredNpc;
+
         public MatchDataPage()
         {
             _viewModel = App.Current.MainViewModel;
@@ -26,6 +31,12 @@ namespace Dotahold.Pages.Matches
             {
                 UpdateLayoutsWidth();
 
+                if (_viewModel?.MatchesViewModel is INotifyPropertyChanged npc)
+                {
+                    npc.PropertyChanged += MatchesViewModel_PropertyChanged;
+                    _registeredNpc = npc;
+                }
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
@@ -33,10 +44,32 @@ namespace Dotahold.Pages.Matches
 
             this.Unloaded += (_, _) =>
             {
+                if (_registeredNpc is not null)
+                {
+                    _registeredNpc.PropertyChanged -= MatchesViewModel_PropertyChanged;
+                    _registeredNpc = null;
+                }
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= System_BackRequested;
             };
+        }
+
+        private void MatchesViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if (e.PropertyName == nameof(_viewModel.MatchesViewModel.SelectedMatchData))
+                {
+                    MatchDataScrollViewer?.ScrollToVerticalOffset(0);
+                    MatchDataOverviewScrollViewer?.ScrollToHorizontalOffset(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"Error in MatchesViewModel_PropertyChanged: {ex.Message}");
+            }
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -47,6 +80,22 @@ namespace Dotahold.Pages.Matches
         private void UpdateLayoutsWidth()
         {
             MatchDataOverviewScrollViewer.Width = RootGrid.ActualWidth;
+            MatchIdAndDateGrid.Width = RootGrid.ActualWidth;
+            VisitOpenDotaButton.Width = RootGrid.ActualWidth - 32;
+        }
+
+        private async void VisitOpenDotaButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_viewModel.MatchesViewModel.SelectedMatchData?.DotaMatchData is not null)
+                {
+                    string url = $"https://www.opendota.com/matches/{_viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.match_id}";
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"VisitSteamProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
+
         }
 
         #region GoBack

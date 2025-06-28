@@ -46,7 +46,7 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                this.Frame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+                this.Frame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
 
                 HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
                 bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
