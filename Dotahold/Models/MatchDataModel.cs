@@ -20,6 +20,8 @@ namespace Dotahold.Models
 
         public DotaMatchDataModel DotaMatchData { get; private set; }
 
+        public bool IsLeague { get; private set; } = false;
+
         public string StartDateTime { get; private set; }
 
         public string Duration { get; private set; }
@@ -55,6 +57,7 @@ namespace Dotahold.Models
 
             this.DotaMatchData = matchData;
 
+            this.IsLeague = !string.IsNullOrWhiteSpace(this.DotaMatchData.league?.name);
             this.StartDateTime = MatchDataHelper.GetWhen(this.DotaMatchData.start_time);
             this.Duration = MatchDataHelper.GetHowLong(this.DotaMatchData.duration);
             this.FirstBloodTime = MatchDataHelper.GetHowLong(this.DotaMatchData.first_blood_time);

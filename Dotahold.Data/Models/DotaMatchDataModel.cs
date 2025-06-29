@@ -37,6 +37,10 @@ namespace Dotahold.Data.Models
 
         public DotaMatchBanPick[]? picks_bans { get; set; } = [];
 
+        public DotaMatchOpenDotaData? od_data { get; set; } = null;
+
+        public DotaMatchLeague? league { get; set; } = null;
+
         public DotaMatchTeam? radiant_team { get; set; } = null;
 
         public DotaMatchTeam? dire_team { get; set; } = null;

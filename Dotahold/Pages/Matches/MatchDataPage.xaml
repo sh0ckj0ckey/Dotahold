@@ -16,7 +16,8 @@
     xmlns:models="using:Dotahold.Models"
     xmlns:converters="using:Dotahold.Converters" 
     xmlns:controls="using:Dotahold.Controls"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    NavigationCacheMode="Enabled">
 
     <Page.Resources>
         <communityConverters:BoolNegationConverter x:Key="BoolNegationConverter"/>
@@ -97,9 +98,28 @@
             <ScrollViewer x:Name="MatchDataScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+                    <!--Match Data Not Parsed-->
+                    <muxc:InfoBar x:Name="DataNotParsedInfoBar" IsOpen="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.od_data.has_parsed,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}"
+                                  Margin="16,8,16,8" Severity="Warning" Message="The replay for this match has not yet been parsed. Not all data may be available."/>
+
+                    <!--League Name-->
+                    <Grid x:Name="LeagueNameGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.IsLeague,Mode=OneWay}" Margin="24,0,8,16" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="/Assets/Matches/icon_dpc.png" DecodePixelHeight="48" DecodePixelType="Logical"/>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Grid.Column="1" Margin="8,2,0,-2" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.league.name,Mode=OneWay}" FontSize="18" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+
                     <ScrollViewer x:Name="MatchDataOverviewScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
                                   HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
-                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="16" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="16,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                             <!--Game Mode-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
@@ -141,9 +161,9 @@
 
                             <!--BanPick-->
                             <Grid Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
-                                  Width="52" Height="48" Padding="4,6" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="Ban Pick">
-                                <FontIcon Glyph="&#xF0AD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="4,2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <FontIcon Glyph="&#xF0AE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="4,2" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                  Width="48" Height="48" Padding="4,6" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="Ban Pick">
+                                <FontIcon Glyph="&#xF0AD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="2" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <FontIcon Glyph="&#xF0AE;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Margin="2" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                             </Grid>
 
                             <muxc:ItemsRepeater ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans,Mode=OneWay}">
@@ -220,25 +240,25 @@
                     </ScrollViewer>
 
                     <!--Advantages Chart Header-->
-                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <FontIcon Glyph="&#xE9D2;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Advantages" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!--Advantages Chart-->
                     <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
-                                               XAxisStep="5" YAxisStep="10000" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
+                                               XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
 
                     <!--Gold Graph Chart Header-->
-                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Gold Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!--Experience Graph Chart Header-->
-                    <StackPanel Padding="24,0,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Experience Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -267,7 +287,7 @@
                     </Grid>
 
                     <!--Visit OpenDota website-->
-                    <Button x:Name="VisitOpenDotaButton" Padding="20,12" Click="VisitOpenDotaButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button x:Name="VisitOpenDotaButton" Padding="20,12" Background="Transparent" Click="VisitOpenDotaButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <TextBlock Margin="0,0,48,0" FontSize="14" FontWeight="Medium" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Run Text="Visit"/>

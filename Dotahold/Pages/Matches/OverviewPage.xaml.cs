@@ -93,6 +93,10 @@ namespace Dotahold.Pages.Matches
             try
             {
                 this.Frame.Navigate(typeof(ConnectPage));
+
+                MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
             }
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }

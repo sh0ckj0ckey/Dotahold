@@ -79,6 +79,12 @@ namespace Dotahold.Pages.Matches
 
         private void UpdateLayoutsWidth()
         {
+            if (LeagueNameGrid is not null)
+            {
+                LeagueNameGrid.Width = RootGrid.ActualWidth - 32;
+            }
+
+            DataNotParsedInfoBar.Width = RootGrid.ActualWidth - 32;
             MatchDataOverviewScrollViewer.Width = RootGrid.ActualWidth;
             MatchIdAndDateGrid.Width = RootGrid.ActualWidth;
             VisitOpenDotaButton.Width = RootGrid.ActualWidth - 32;
