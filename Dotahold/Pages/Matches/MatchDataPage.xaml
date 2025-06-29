@@ -240,28 +240,46 @@
                     </ScrollViewer>
 
                     <!--Advantages Chart Header-->
-                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                         <FontIcon Glyph="&#xE9D2;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Advantages" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <!--Advantages Chart-->
                     <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                                               Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
                                                XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage,Mode=OneWay}"/>
 
                     <!--Gold Graph Chart Header-->
-                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                         <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Gold Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
+                    <!--Gold Graph Chart-->
+                    <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                                               Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
+                                               XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
+                                               ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
+                                               Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold,Mode=OneWay}"/>
+
                     <!--Experience Graph Chart Header-->
-                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                         <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Experience Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
+
+                    <!--Experience Graph Chart-->
+                    <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                                               Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
+                                               XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
+                                               ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
+                                               Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience,Mode=OneWay}"/>
 
                     <Grid x:Name="MatchIdAndDateGrid" Padding="20" ColumnSpacing="16" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>

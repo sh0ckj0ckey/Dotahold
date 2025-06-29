@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Dotahold.Data.Models;
 using Dotahold.Models;
 using Windows.Foundation;
@@ -15,9 +16,15 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Dotahold.Controls
 {
-    internal class LineSeriesTooltipModel(string title, int data, AsyncImage? icon = null)
+    internal class LineSeriesTooltipModel : ObservableObject
     {
-        public AsyncImage? Icon { get; set; } = icon;
+        private AsyncImage? icon = null;
+
+        public AsyncImage? Icon
+        {
+            get => icon;
+            private set => SetProperty(ref icon, value);
+        }
 
         public string Title { get; set; } = title;
 
@@ -52,9 +59,13 @@ namespace Dotahold.Controls
 
         private readonly double _rightMargin = 1;
 
+        private int? _lastHoverIndex = null;
+
         private readonly List<UIElement> _hoverHighlightPoints = [];
 
         private UIElement? _hoverVerticalLine = null;
+
+        private List<LineSeriesTooltipModel> _tooltipData = [];
 
         /// <summary>
         /// Color of the chart lines and axes
@@ -507,8 +518,6 @@ namespace Dotahold.Controls
                 return;
             }
 
-            var strokeColorBrush = new SolidColorBrush(this.ChartColor);
-
             // Compute the Y-axis range based on the data in all series
             int minData = this.Series.SelectMany(s => s.Data).DefaultIfEmpty(0).Min();
             int maxData = this.Series.SelectMany(s => s.Data).DefaultIfEmpty(0).Max();
@@ -527,7 +536,17 @@ namespace Dotahold.Controls
             int index = (int)Math.Round((pos.X - _leftMargin) / xStep);
             index = Math.Max(0, Math.Min(maxLen - 1, index));
 
+            // Only update the tooltip if the hovered index has changed
+            if (_lastHoverIndex.HasValue && _lastHoverIndex.Value == index)
+            {
+                return;
+            }
+
+            _lastHoverIndex = index;
+
             double x = _leftMargin + index * xStep;
+
+            var strokeColorBrush = new SolidColorBrush(this.ChartColor);
 
             // Draw the vertical line at the hovered index
             {
@@ -552,7 +571,21 @@ namespace Dotahold.Controls
             {
                 RemoveHoverHighlightPoints();
 
-                List<LineSeriesTooltipModel> tooltipData = [];
+                if (_tooltipData.Count != this.Series.Count)
+                {
+                    if (_tooltipData.Count > this.Series.Count)
+                    {
+                        _tooltipData.RemoveRange(this.Series.Count, _tooltipData.Count - this.Series.Count);
+                    }
+                    else
+                    {
+                        for (int i = _tooltipData.Count; i < this.Series.Count; i++)
+                        {
+                            _tooltipData.Add(new LineSeriesTooltipModel(string.Empty, 0));
+                        }
+                    }
+                }
+
                 for (int i = 0; i < this.Series.Count; i++)
                 {
                     var s = this.Series[i];
@@ -561,7 +594,9 @@ namespace Dotahold.Controls
                         int data = s.Data[index];
                         string title = (data < 0 && !string.IsNullOrEmpty(s.NegativeTitle)) ? s.NegativeTitle : s.Title;
                         AsyncImage? icon = (data < 0 && s.NegativeIcon is not null) ? s.NegativeIcon : s.Icon;
-                        tooltipData.Add(new LineSeriesTooltipModel(title, (!string.IsNullOrEmpty(s.NegativeTitle)) ? Math.Abs(data) : data, icon));
+                        _tooltipData[i].Icon = icon;
+                        _tooltipData[i].Title = title;
+                        _tooltipData[i].Data = (!string.IsNullOrEmpty(s.NegativeTitle)) ? Math.Abs(data) : data;
 
                         // Draw the highlight point
                         double yScale = chartHeight / (max - min);
@@ -587,10 +622,10 @@ namespace Dotahold.Controls
                 }
 
                 // Sort tooltipData DESC
-                tooltipData.Sort((a, b) => b.Data.CompareTo(a.Data));
+                _tooltipData.Sort((a, b) => b.Data.CompareTo(a.Data));
 
                 TooltipTitle.Text = string.Format(this.XAxisLabelFormat, index);
-                TooltipDataList.ItemsSource = tooltipData;
+                TooltipDataList.ItemsSource = _tooltipData;
                 Tooltip.Visibility = Visibility.Visible;
             }
 
@@ -623,6 +658,8 @@ namespace Dotahold.Controls
 
                 Tooltip.Margin = new Thickness(tooltipX, tooltipY, 0, 0);
             }
+
+            System.Diagnostics.Debug.WriteLine("XXXXXXXXXXXXXXXXXX");
         }
 
         private void ChartCanvas_PointerExited(object sender, PointerRoutedEventArgs e)
@@ -635,6 +672,7 @@ namespace Dotahold.Controls
             Tooltip.Visibility = Visibility.Collapsed;
             RemoveHoverHighlightPoints();
             RemoveHoverVerticalLine();
+            _lastHoverIndex = null;
         }
 
         private void RemoveHoverHighlightPoints()

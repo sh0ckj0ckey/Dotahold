@@ -36,6 +36,10 @@ namespace Dotahold.Models
 
         public List<LineSeries> RadiantAdvantage { get; private set; } = [];
 
+        public List<LineSeries> PlayersGold { get; private set; } = [];
+
+        public List<LineSeries> PlayersExperience { get; private set; } = [];
+
         public MatchDataModel(DotaMatchDataModel matchData,
             Func<string, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,

@@ -23,7 +23,7 @@
             <TextBlock x:Name="TooltipTitle" Margin="4" FontSize="16" FontFamily="{Binding FontFamily}" FontWeight="Medium" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <muxc:ItemsRepeater x:Name="TooltipDataList" Grid.Row="1" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
-                    <muxc:StackLayout Orientation="Vertical"/>
+                    <muxc:StackLayout Orientation="Vertical" DisableVirtualization="True"/>
                 </muxc:ItemsRepeater.Layout>
                 <muxc:ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="local:LineSeriesTooltipModel">
