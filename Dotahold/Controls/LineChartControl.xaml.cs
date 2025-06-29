@@ -46,7 +46,7 @@ namespace Dotahold.Controls
 
         private readonly double _topMargin = 1;
 
-        private readonly double _bottomMargin = 49;
+        private readonly double _bottomMargin = 37;
 
         private readonly double _leftMargin = 1;
 
@@ -234,7 +234,7 @@ namespace Dotahold.Controls
             }
 
             // Draw the zero line if negative area is shown
-            if (this.ShowNegativeArea)
+            if (this.ShowNegativeArea && this.YAxisStep > 0)
             {
                 double zeroY = _topMargin + chartHeight - (0 - min) * chartHeight / (max - min);
                 ChartCanvas.Children.Add(new Line
@@ -289,7 +289,7 @@ namespace Dotahold.Controls
                     double labelWidth = label.DesiredSize.Width;
                     double labelHeight = label.DesiredSize.Height;
 
-                    Canvas.SetLeft(label, 4);
+                    Canvas.SetLeft(label, _leftMargin + 4);
                     Canvas.SetTop(label, y - labelHeight / 2);
                     ChartCanvas.Children.Add(label);
 
@@ -305,6 +305,60 @@ namespace Dotahold.Controls
                         Opacity = 0.1,
                     });
                 }
+            }
+            else
+            {
+                if (this.XAxisStep > 0 && !this.ShowNegativeArea)
+                {
+                    double zeroTick = _topMargin + chartHeight;
+                    var zeroLabel = new TextBlock
+                    {
+                        Text = string.Format(this.YAxisLabelFormat, 0),
+                        Opacity = 0.7,
+                        FontSize = 14,
+                        Foreground = strokeColorBrush,
+                        FontFamily = this.FontFamily,
+                    };
+
+                    zeroLabel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    double zeroLabelHeight = zeroLabel.DesiredSize.Height;
+                    Canvas.SetLeft(zeroLabel, _leftMargin + 4);
+                    Canvas.SetTop(zeroLabel, zeroTick - zeroLabelHeight - 6);
+                    ChartCanvas.Children.Add(zeroLabel);
+                }
+
+                if (this.ShowNegativeArea)
+                {
+                    double minTick = _topMargin + chartHeight;
+                    var minLabel = new TextBlock
+                    {
+                        Text = string.Format(this.YAxisLabelFormat, min),
+                        Opacity = 0.7,
+                        FontSize = 14,
+                        Foreground = strokeColorBrush,
+                        FontFamily = this.FontFamily,
+                    };
+
+                    minLabel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    double minLabelHeight = minLabel.DesiredSize.Height;
+                    Canvas.SetLeft(minLabel, _leftMargin + 4);
+                    Canvas.SetTop(minLabel, minTick - minLabelHeight - 6);
+                    ChartCanvas.Children.Add(minLabel);
+                }
+
+                double maxTick = _topMargin;
+                var maxLabel = new TextBlock
+                {
+                    Text = string.Format(this.YAxisLabelFormat, max),
+                    Opacity = 0.7,
+                    FontSize = 14,
+                    Foreground = strokeColorBrush,
+                    FontFamily = this.FontFamily,
+                };
+
+                Canvas.SetLeft(maxLabel, _leftMargin + 4);
+                Canvas.SetTop(maxLabel, maxTick + 6);
+                ChartCanvas.Children.Add(maxLabel);
             }
 
             // Draw X-axis ticks
@@ -362,6 +416,40 @@ namespace Dotahold.Controls
                         Opacity = 0.1,
                     });
                 }
+            }
+            else
+            {
+                int maxLen = this.Series.Max(s => s.Data.Length);
+
+                double zeroTick = _leftMargin;
+                var zeroLabel = new TextBlock
+                {
+                    Text = string.Format(this.XAxisLabelFormat, 0),
+                    Opacity = 0.7,
+                    FontSize = 14,
+                    Foreground = strokeColorBrush,
+                    FontFamily = this.FontFamily,
+                };
+
+                Canvas.SetLeft(zeroLabel, zeroTick + 4);
+                Canvas.SetTop(zeroLabel, _topMargin + chartHeight + 6);
+                ChartCanvas.Children.Add(zeroLabel);
+
+                double maxTick = _leftMargin + chartWidth;
+                var maxLabel = new TextBlock
+                {
+                    Text = string.Format(this.XAxisLabelFormat, maxLen),
+                    Opacity = 0.7,
+                    FontSize = 14,
+                    Foreground = strokeColorBrush,
+                    FontFamily = this.FontFamily,
+                };
+
+                maxLabel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                double maxLabelWidth = maxLabel.DesiredSize.Width;
+                Canvas.SetLeft(maxLabel, maxTick - maxLabelWidth - 4);
+                Canvas.SetTop(maxLabel, _topMargin + chartHeight + 6);
+                ChartCanvas.Children.Add(maxLabel);
             }
 
             // Draw the chart lines for each series
