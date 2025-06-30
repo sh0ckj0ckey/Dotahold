@@ -685,7 +685,7 @@ namespace Dotahold.Controls
                 }
             }
 
-            TooltipTitle.Text = string.Format(this.XAxisLabelFormat, index) + "sssssssssssssssssssssssss";
+            TooltipTitle.Text = string.Format(this.XAxisLabelFormat, index);
             Tooltip.Visibility = Visibility.Visible;
 
             // Update position of the tooltip
@@ -713,7 +713,8 @@ namespace Dotahold.Controls
                     tooltipX = 8;
                 }
 
-                Tooltip.Margin = new Thickness(tooltipX, tooltipY, 0, 0);
+                Canvas.SetLeft(Tooltip, tooltipX);
+                Canvas.SetTop(Tooltip, tooltipY);
             }
         }
 
