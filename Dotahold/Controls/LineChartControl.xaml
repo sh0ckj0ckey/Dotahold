@@ -21,7 +21,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="TooltipTitle" Margin="4" FontSize="16" FontFamily="{Binding FontFamily}" FontWeight="Medium" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-            <muxc:ItemsRepeater x:Name="TooltipDataList" Grid.Row="1" HorizontalAlignment="Stretch">
+            <muxc:ItemsRepeater x:Name="TooltipDataList" Grid.Row="1" ItemsSource="{x:Bind _tooltipData,Mode=OneWay}" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
                     <muxc:StackLayout Orientation="Vertical" DisableVirtualization="True"/>
                 </muxc:ItemsRepeater.Layout>
@@ -34,8 +34,8 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Image Grid.Column="0" Source="{x:Bind Icon.Image,Mode=OneWay}" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind Title}" Opacity="0.7" FontSize="14" FontFamily="{Binding FontFamily}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind Data}" FontSize="14" FontFamily="{Binding FontFamily}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Title,Mode=OneWay}" Opacity="0.7" FontSize="14" FontFamily="{Binding FontFamily}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind Data,Mode=OneWay}" FontSize="14" FontFamily="{Binding FontFamily}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
                 </muxc:ItemsRepeater.ItemTemplate>
