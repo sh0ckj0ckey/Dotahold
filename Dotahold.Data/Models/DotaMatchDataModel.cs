@@ -7,10 +7,6 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeLongConverter))]
         public long match_id { get; set; }
 
-        public int[]? radiant_gold_adv { get; set; } = [];
-
-        public int[]? radiant_xp_adv { get; set; } = [];
-
         [JsonConverter(typeof(SafeLongConverter))]
         public long start_time { get; set; }
 
@@ -35,6 +31,10 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int dire_score { get; set; }
 
+        public int[]? radiant_gold_adv { get; set; } = [];
+
+        public int[]? radiant_xp_adv { get; set; } = [];
+
         public DotaMatchBanPick[]? picks_bans { get; set; } = [];
 
         public DotaMatchOpenDotaData? od_data { get; set; } = null;
@@ -44,6 +44,8 @@ namespace Dotahold.Data.Models
         public DotaMatchTeam? radiant_team { get; set; } = null;
 
         public DotaMatchTeam? dire_team { get; set; } = null;
+
+        public DotaMatchPlayer[]? players { get; set; } = [];
     }
 
     public class DotaMatchBanPick
@@ -77,5 +79,24 @@ namespace Dotahold.Data.Models
         public string? name { get; set; } = string.Empty;
 
         public string? logo_url { get; set; } = string.Empty;
+    }
+
+    public class DotaMatchPlayer
+    {
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int player_slot { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int hero_id { get; set; }
+
+        public int[]? times { get; set; } = [];
+
+        public int[]? gold_t { get; set; } = [];
+
+        public int[]? lh_t { get; set; } = [];
+
+        public int[]? dn_t { get; set; } = [];
+
+        public int[]? xp_t { get; set; } = [];
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Dotahold.Data.DataShop;
+using Windows.UI;
 
 namespace Dotahold.Helpers
 {
@@ -140,6 +141,36 @@ namespace Dotahold.Helpers
                 "14" or "lobby_type_new_player" => "New Player",
                 "15" or "lobby_type_featured" => "Featured",
                 _ => lobbyType.Replace("lobby_type_", "").Replace("_", " ").ToUpper(),
+            };
+        }
+
+        private static Color _slot0Color = new() { R = 51, G = 117, B = 255, A = 255 };
+        private static Color _slot1Color = new() { R = 102, G = 255, B = 191, A = 255 };
+        private static Color _slot2Color = new() { R = 191, G = 0, B = 191, A = 255 };
+        private static Color _slot3Color = new() { R = 243, G = 240, B = 11, A = 255 };
+        private static Color _slot4Color = new() { R = 255, G = 107, B = 0, A = 255 };
+        private static Color _slot128Color = new() { R = 254, G = 134, B = 194, A = 255 };
+        private static Color _slot129Color = new() { R = 161, G = 180, B = 71, A = 255 };
+        private static Color _slot130Color = new() { R = 101, G = 217, B = 247, A = 255 };
+        private static Color _slot131Color = new() { R = 0, G = 131, B = 33, A = 255 };
+        private static Color _slot132Color = new() { R = 164, G = 105, B = 0, A = 255 };
+        private static Color _slotXColor = new() { R = 128, G = 128, B = 128, A = 255 };
+
+        public static Color GetSlotColor(int slot)
+        {
+            return slot switch
+            {
+                0 => _slot0Color,
+                1 => _slot1Color,
+                2 => _slot2Color,
+                3 => _slot3Color,
+                4 => _slot4Color,
+                128 => _slot128Color,
+                129 => _slot129Color,
+                130 => _slot130Color,
+                131 => _slot131Color,
+                132 => _slot132Color,
+                _ => _slotXColor,
             };
         }
     }

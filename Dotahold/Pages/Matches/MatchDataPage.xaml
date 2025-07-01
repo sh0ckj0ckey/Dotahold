@@ -261,7 +261,7 @@
                     </StackPanel>
 
                     <!--Gold Graph Chart-->
-                    <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                    <controls:LineChartControl Margin="16,0" Height="296" Width="Auto" HorizontalAlignment="Stretch"
                                                Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
                                                XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
@@ -275,7 +275,7 @@
                     </StackPanel>
 
                     <!--Experience Graph Chart-->
-                    <controls:LineChartControl Margin="16,0" Height="272" Width="Auto" HorizontalAlignment="Stretch"
+                    <controls:LineChartControl Margin="16,0" Height="296" Width="Auto" HorizontalAlignment="Stretch"
                                                Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
                                                XAxisStep="5" YAxisStep="10000" ShowNegativeArea="True" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"

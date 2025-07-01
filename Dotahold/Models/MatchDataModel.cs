@@ -111,11 +111,36 @@ namespace Dotahold.Models
                 });
             }
 
-            // Players Gold
-            // ...
+            // Players Gold and Experience
+            if (this.DotaMatchData.players is not null)
+            {
+                foreach (var player in this.DotaMatchData.players)
+                {
+                    var hero = getHeroById(player.hero_id.ToString());
 
-            // Players Experience
-            // ...
+                    if (hero is not null && player.gold_t?.Length > 0)
+                    {
+                        this.PlayersGold.Add(new LineSeries
+                        {
+                            Icon = hero.HeroIcon,
+                            Title = hero.DotaHeroAttributes.localized_name,
+                            LineColor = MatchDataHelper.GetSlotColor(player.player_slot),
+                            Data = player.gold_t,
+                        });
+                    }
+
+                    if (hero is not null && player.xp_t?.Length > 0)
+                    {
+                        this.PlayersExperience.Add(new LineSeries
+                        {
+                            Icon = hero.HeroIcon,
+                            Title = hero.DotaHeroAttributes.localized_name,
+                            LineColor = MatchDataHelper.GetSlotColor(player.player_slot),
+                            Data = player.xp_t,
+                        });
+                    }
+                }
+            }
 
             // Radiant Team
             if (this.DotaMatchData.radiant_team is not null)
@@ -128,6 +153,7 @@ namespace Dotahold.Models
             {
                 this.DireTeam = new MatchTeamModel(this.DotaMatchData.dire_team);
             }
+
         }
     }
 
@@ -153,4 +179,8 @@ namespace Dotahold.Models
         public AsyncImage LogoImage { get; private set; } = new AsyncImage(team.logo_url ?? string.Empty, 0, 64);
     }
 
+    public class MatchPlayerModel(DotaMatchPlayer player)
+    {
+        public int PlayerSlot { get; private set; } = player.player_slot;
+    }
 }
