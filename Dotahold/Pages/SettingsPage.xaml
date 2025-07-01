@@ -90,7 +90,7 @@
                     </StackPanel>
                 </communityControls:SettingsCard>
 
-                <communityControls:SettingsCard Header="Image Source" Description="Select the source for loading images">
+                <communityControls:SettingsCard Header="Image Source" Description="Try switching sources if images aren’t loading correctly">
                     <communityControls:SettingsCard.HeaderIcon>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE7C5;"/>
                     </communityControls:SettingsCard.HeaderIcon>

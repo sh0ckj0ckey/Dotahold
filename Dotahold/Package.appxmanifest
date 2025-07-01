@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="22189NoMewing.Dota2"
+    Name="22189NoMewing.Dota2.dev"
     Publisher="CN=NoMewing"
     Version="5.0.0.0" />
 
