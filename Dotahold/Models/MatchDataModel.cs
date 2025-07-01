@@ -40,6 +40,10 @@ namespace Dotahold.Models
 
         public List<LineSeries> PlayersExperience { get; private set; } = [];
 
+        public MatchTeamModel? RadiantTeam { get; private set; }
+
+        public MatchTeamModel? DireTeam { get; private set; }
+
         public MatchDataModel(DotaMatchDataModel matchData,
             Func<string, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,
@@ -68,9 +72,10 @@ namespace Dotahold.Models
             this.GameMode = MatchDataHelper.GetGameMode(this.DotaMatchData.game_mode.ToString());
             this.LobbyType = MatchDataHelper.GetLobbyType(this.DotaMatchData.lobby_type.ToString());
 
-            if (matchData.picks_bans is not null)
+            // Ban Pick
+            if (this.DotaMatchData.picks_bans is not null)
             {
-                foreach (var banPick in matchData.picks_bans)
+                foreach (var banPick in this.DotaMatchData.picks_bans)
                 {
                     var hero = getHeroById(banPick.hero_id.ToString());
                     if (hero is not null)
@@ -80,6 +85,7 @@ namespace Dotahold.Models
                 }
             }
 
+            // Radiant Gold Advantage
             if (this.DotaMatchData.radiant_gold_adv?.Length > 0)
             {
                 this.RadiantAdvantage.Add(new LineSeries
@@ -92,6 +98,7 @@ namespace Dotahold.Models
                 });
             }
 
+            // Radiant Experience Advantage
             if (this.DotaMatchData.radiant_xp_adv?.Length > 0)
             {
                 this.RadiantAdvantage.Add(new LineSeries
@@ -102,6 +109,24 @@ namespace Dotahold.Models
                     LineColor = Windows.UI.Colors.MediumOrchid,
                     Data = this.DotaMatchData.radiant_xp_adv,
                 });
+            }
+
+            // Players Gold
+            // ...
+
+            // Players Experience
+            // ...
+
+            // Radiant Team
+            if (this.DotaMatchData.radiant_team is not null)
+            {
+                this.RadiantTeam = new MatchTeamModel(this.DotaMatchData.radiant_team);
+            }
+
+            // Dire Team
+            if (this.DotaMatchData.dire_team is not null)
+            {
+                this.DireTeam = new MatchTeamModel(this.DotaMatchData.dire_team);
             }
         }
     }
@@ -120,4 +145,12 @@ namespace Dotahold.Models
 
         public bool IsRadiant { get; private set; } = banPick.team != 1;
     }
+
+    public class MatchTeamModel(DotaMatchTeam team)
+    {
+        public string Name { get; private set; } = team.name ?? string.Empty;
+
+        public AsyncImage LogoImage { get; private set; } = new AsyncImage(team.logo_url ?? string.Empty, 0, 64);
+    }
+
 }

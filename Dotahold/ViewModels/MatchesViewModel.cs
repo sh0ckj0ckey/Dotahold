@@ -424,6 +424,9 @@ namespace Dotahold.ViewModels
                         this.GetAbilitiesByHeroName,
                         this.GetAbilityNameById,
                         this.GetPermanentBuffNameById);
+
+                    _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
+                    _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
