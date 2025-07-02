@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Models
@@ -93,7 +95,7 @@ namespace Dotahold.Models
                     Icon = new AsyncImage(string.Empty, 0, 0, _defaultGoldImageSource32),
                     Title = "Radiant Gold Adv.",
                     NegativeTitle = "Dire Gold Adv.",
-                    LineColor = Windows.UI.Colors.Goldenrod,
+                    LineColorBrush = new SolidColorBrush(Colors.Goldenrod),
                     Data = this.DotaMatchData.radiant_gold_adv,
                 });
             }
@@ -106,7 +108,7 @@ namespace Dotahold.Models
                     Icon = new AsyncImage(string.Empty, 0, 0, _defaultExperienceImageSource32),
                     Title = "Radiant XP Adv.",
                     NegativeTitle = "Dire XP Adv.",
-                    LineColor = Windows.UI.Colors.MediumOrchid,
+                    LineColorBrush = new SolidColorBrush(Colors.MediumOrchid),
                     Data = this.DotaMatchData.radiant_xp_adv,
                 });
             }
@@ -124,7 +126,7 @@ namespace Dotahold.Models
                         {
                             Icon = hero.HeroIcon,
                             Title = hero.DotaHeroAttributes.localized_name,
-                            LineColor = MatchDataHelper.GetSlotColor(player.player_slot),
+                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(player.player_slot),
                             Data = player.gold_t,
                         });
                     }
@@ -135,7 +137,7 @@ namespace Dotahold.Models
                         {
                             Icon = hero.HeroIcon,
                             Title = hero.DotaHeroAttributes.localized_name,
-                            LineColor = MatchDataHelper.GetSlotColor(player.player_slot),
+                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(player.player_slot),
                             Data = player.xp_t,
                         });
                     }

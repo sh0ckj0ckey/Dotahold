@@ -1,6 +1,7 @@
 ﻿using System;
 using Dotahold.Data.DataShop;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace Dotahold.Helpers
 {
@@ -144,34 +145,78 @@ namespace Dotahold.Helpers
             };
         }
 
-        private static Color _slot0Color = new() { R = 51, G = 117, B = 255, A = 255 };
-        private static Color _slot1Color = new() { R = 102, G = 255, B = 191, A = 255 };
-        private static Color _slot2Color = new() { R = 191, G = 0, B = 191, A = 255 };
-        private static Color _slot3Color = new() { R = 243, G = 240, B = 11, A = 255 };
-        private static Color _slot4Color = new() { R = 255, G = 107, B = 0, A = 255 };
-        private static Color _slot128Color = new() { R = 254, G = 134, B = 194, A = 255 };
-        private static Color _slot129Color = new() { R = 161, G = 180, B = 71, A = 255 };
-        private static Color _slot130Color = new() { R = 101, G = 217, B = 247, A = 255 };
-        private static Color _slot131Color = new() { R = 0, G = 131, B = 33, A = 255 };
-        private static Color _slot132Color = new() { R = 164, G = 105, B = 0, A = 255 };
-        private static Color _slotXColor = new() { R = 128, G = 128, B = 128, A = 255 };
+        private static SolidColorBrush? _slot0ColorBrush;
+        private static SolidColorBrush? _slot1ColorBrush;
+        private static SolidColorBrush? _slot2ColorBrush;
+        private static SolidColorBrush? _slot3ColorBrush;
+        private static SolidColorBrush? _slot4ColorBrush;
+        private static SolidColorBrush? _slot128ColorBrush;
+        private static SolidColorBrush? _slot129ColorBrush;
+        private static SolidColorBrush? _slot130ColorBrush;
+        private static SolidColorBrush? _slot131ColorBrush;
+        private static SolidColorBrush? _slot132ColorBrush;
+        private static SolidColorBrush? _slotXColorBrush;
 
-        public static Color GetSlotColor(int slot)
+        public static SolidColorBrush GetSlotColorBrush(int slot)
         {
-            return slot switch
+            switch (slot)
             {
-                0 => _slot0Color,
-                1 => _slot1Color,
-                2 => _slot2Color,
-                3 => _slot3Color,
-                4 => _slot4Color,
-                128 => _slot128Color,
-                129 => _slot129Color,
-                130 => _slot130Color,
-                131 => _slot131Color,
-                132 => _slot132Color,
-                _ => _slotXColor,
-            };
+                case 0:
+                    {
+                        _slot0ColorBrush ??= new(new Color() { R = 51, G = 117, B = 255, A = 255 });
+                        return _slot0ColorBrush;
+                    }
+                case 1:
+                    {
+                        _slot1ColorBrush ??= new(new Color() { R = 102, G = 255, B = 191, A = 255 });
+                        return _slot1ColorBrush;
+                    }
+                case 2:
+                    {
+                        _slot2ColorBrush ??= new(new Color() { R = 191, G = 0, B = 191, A = 255 });
+                        return _slot2ColorBrush;
+                    }
+                case 3:
+                    {
+                        _slot3ColorBrush ??= new(new Color() { R = 243, G = 240, B = 11, A = 255 });
+                        return _slot3ColorBrush;
+                    }
+                case 4:
+                    {
+                        _slot4ColorBrush ??= new(new Color() { R = 255, G = 107, B = 0, A = 255 });
+                        return _slot4ColorBrush;
+                    }
+                case 128:
+                    {
+                        _slot128ColorBrush ??= new(new Color() { R = 254, G = 134, B = 194, A = 255 });
+                        return _slot128ColorBrush;
+                    }
+                case 129:
+                    {
+                        _slot129ColorBrush ??= new(new Color() { R = 161, G = 180, B = 71, A = 255 });
+                        return _slot129ColorBrush;
+                    }
+                case 130:
+                    {
+                        _slot130ColorBrush ??= new(new Color() { R = 101, G = 217, B = 247, A = 255 });
+                        return _slot130ColorBrush;
+                    }
+                case 131:
+                    {
+                        _slot131ColorBrush ??= new(new Color() { R = 0, G = 131, B = 33, A = 255 });
+                        return _slot131ColorBrush;
+                    }
+                case 132:
+                    {
+                        _slot132ColorBrush ??= new(new Color() { R = 164, G = 105, B = 0, A = 255 });
+                        return _slot132ColorBrush;
+                    }
+                default:
+                    {
+                        _slotXColorBrush ??= new(new Color() { R = 128, G = 128, B = 128, A = 255 });
+                        return _slotXColorBrush;
+                    }
+            }
         }
     }
 }

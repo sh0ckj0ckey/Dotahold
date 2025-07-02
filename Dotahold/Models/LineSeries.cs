@@ -1,5 +1,5 @@
 ﻿using Dotahold.Data.Models;
-using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace Dotahold.Models
 {
@@ -26,9 +26,9 @@ namespace Dotahold.Models
         public string NegativeTitle { get; set; } = string.Empty;
 
         /// <summary>
-        /// The color of the line in the series
+        /// The color brush of the line in the series
         /// </summary>
-        public Color LineColor { get; set; }
+        public SolidColorBrush? LineColorBrush { get; set; }
 
         /// <summary>
         /// The data points in the series

@@ -19,11 +19,15 @@ namespace Dotahold.Controls
 {
     internal partial class LineSeriesTooltipModel : ObservableObject
     {
+        private static readonly SolidColorBrush _defaultColorBrush = new(Colors.Gray);
+
         private AsyncImage? _icon = null;
 
         private string _title = string.Empty;
 
         private int _data = 0;
+
+        private SolidColorBrush _colorBrush = _defaultColorBrush;
 
         public AsyncImage? Icon
         {
@@ -42,6 +46,12 @@ namespace Dotahold.Controls
             get => _data;
             set => SetProperty(ref _data, value);
         }
+
+        public SolidColorBrush ColorBrush
+        {
+            get => _colorBrush;
+            set => SetProperty(ref _colorBrush, value);
+        }
     }
 
     internal static class LineSeriesTooltipModelExtensions
@@ -54,6 +64,7 @@ namespace Dotahold.Controls
             (other.Icon, self.Icon) = (self.Icon, other.Icon);
             (other.Title, self.Title) = (self.Title, other.Title);
             (other.Data, self.Data) = (self.Data, other.Data);
+            (other.ColorBrush, self.ColorBrush) = (self.ColorBrush, other.ColorBrush);
         }
     }
 
@@ -525,7 +536,7 @@ namespace Dotahold.Controls
 
                 Polyline polyline = new()
                 {
-                    Stroke = new SolidColorBrush(series.LineColor),
+                    Stroke = series.LineColorBrush,
                     StrokeThickness = 1,
                 };
 
@@ -634,6 +645,7 @@ namespace Dotahold.Controls
                         _tooltipData[i].Icon = (series.Data[index] < 0 && series.NegativeIcon is not null) ? series.NegativeIcon : series.Icon;
                         _tooltipData[i].Title = (series.Data[index] < 0 && !string.IsNullOrEmpty(series.NegativeTitle)) ? series.NegativeTitle : series.Title;
                         _tooltipData[i].Data = (!string.IsNullOrEmpty(series.NegativeTitle)) ? Math.Abs(series.Data[index]) : series.Data[index];
+                        _tooltipData[i].ColorBrush = series.LineColorBrush ?? strokeColorBrush;
 
                         // Draw the highlight point
                         double yScale = chartHeight / (_maxYAxis - _minYAxis);
@@ -645,7 +657,7 @@ namespace Dotahold.Controls
                         {
                             Width = 12,
                             Height = 12,
-                            Fill = new SolidColorBrush(series.LineColor),
+                            Fill = series.LineColorBrush,
                             Stroke = strokeColorBrush,
                             StrokeThickness = 2
                         };
