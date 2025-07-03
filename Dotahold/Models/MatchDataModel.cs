@@ -36,6 +36,10 @@ namespace Dotahold.Models
 
         public List<MatchBanPickModel> PicksBans { get; private set; } = [];
 
+        public List<MatchPlayerModel> RadiantPlayers { get; private set; } = [];
+
+        public List<MatchPlayerModel> DirePlayers { get; private set; } = [];
+
         public List<LineSeries> RadiantAdvantage { get; private set; } = [];
 
         public List<LineSeries> PlayersGold { get; private set; } = [];
@@ -113,32 +117,41 @@ namespace Dotahold.Models
                 });
             }
 
-            // Players Gold and Experience
+            // Players and their Gold & Experience
             if (this.DotaMatchData.players is not null)
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var hero = getHeroById(player.hero_id.ToString());
+                    var playerModel = new MatchPlayerModel(player, getHeroById, getItemByName, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
 
-                    if (hero is not null && player.gold_t?.Length > 0)
+                    if (playerModel.DotaMatchPlayer.player_slot >= 128)
+                    {
+                        this.DirePlayers.Add(playerModel);
+                    }
+                    else
+                    {
+                        this.RadiantPlayers.Add(playerModel);
+                    }
+
+                    if (playerModel.DotaMatchPlayer.gold_t?.Length > 0)
                     {
                         this.PlayersGold.Add(new LineSeries
                         {
-                            Icon = hero.HeroIcon,
-                            Title = hero.DotaHeroAttributes.localized_name,
-                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(player.player_slot),
-                            Data = player.gold_t,
+                            Icon = playerModel.Hero?.HeroIcon,
+                            Title = playerModel.Hero?.DotaHeroAttributes.localized_name ?? $"Unknown Hero {playerModel.DotaMatchPlayer.hero_id}",
+                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(playerModel.DotaMatchPlayer.player_slot),
+                            Data = playerModel.DotaMatchPlayer.gold_t,
                         });
                     }
 
-                    if (hero is not null && player.xp_t?.Length > 0)
+                    if (playerModel.DotaMatchPlayer.xp_t?.Length > 0)
                     {
                         this.PlayersExperience.Add(new LineSeries
                         {
-                            Icon = hero.HeroIcon,
-                            Title = hero.DotaHeroAttributes.localized_name,
-                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(player.player_slot),
-                            Data = player.xp_t,
+                            Icon = playerModel.Hero?.HeroIcon,
+                            Title = playerModel.Hero?.DotaHeroAttributes.localized_name ?? $"Unknown Hero {playerModel.DotaMatchPlayer.hero_id}",
+                            LineColorBrush = MatchDataHelper.GetSlotColorBrush(playerModel.DotaMatchPlayer.player_slot),
+                            Data = playerModel.DotaMatchPlayer.xp_t,
                         });
                     }
                 }
@@ -178,11 +191,31 @@ namespace Dotahold.Models
     {
         public string Name { get; private set; } = team.name ?? string.Empty;
 
-        public AsyncImage LogoImage { get; private set; } = new AsyncImage(team.logo_url ?? string.Empty, 0, 64);
+        public AsyncImage LogoImage { get; private set; } = new AsyncImage(team.logo_url ?? string.Empty, 0, 72);
     }
 
-    public class MatchPlayerModel(DotaMatchPlayer player)
+    public class MatchPlayerModel
     {
-        public int PlayerSlot { get; private set; } = player.player_slot;
+        public DotaMatchPlayer DotaMatchPlayer { get; private set; }
+
+        public HeroModel? Hero { get; private set; }
+
+        public AbilitiesFacetModel? AbilitiesFacet { get; private set; }
+
+        public SolidColorBrush? SlotColorBrush { get; set; }
+
+        public MatchPlayerModel(DotaMatchPlayer player,
+            Func<string, HeroModel?> getHeroById,
+            Func<string, ItemModel?> getItemByName,
+            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
+            Func<string, string> getAbilityNameById,
+            Func<string, string> getPermanentBuffNameById)
+        {
+            this.DotaMatchPlayer = player;
+            this.Hero = getHeroById(this.DotaMatchPlayer.hero_id.ToString());
+            this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
+            this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
+        }
+
     }
 }
