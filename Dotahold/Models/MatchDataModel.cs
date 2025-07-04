@@ -123,7 +123,7 @@ namespace Dotahold.Models
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var playerModel = new MatchPlayerModel(player, getHeroById, getItemByName, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
+                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemByName, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
 
                     if (playerModel.DotaMatchPlayer.player_slot >= 128)
                     {
@@ -205,6 +205,8 @@ namespace Dotahold.Models
 
         public SolidColorBrush? SlotColorBrush { get; private set; }
 
+        public bool HasParsed { get; private set; }
+
         public ItemModel? Item0 { get; private set; }
 
         public ItemModel? Item1 { get; private set; }
@@ -227,7 +229,11 @@ namespace Dotahold.Models
 
         public ItemModel? ItemNeutralEnhancement { get; private set; }
 
-        public MatchPlayerModel(DotaMatchPlayer player,
+        public bool HasAghanimScepter { get; private set; }
+
+        public bool HasAghanimShard { get; private set; }
+
+        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed,
             Func<int, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,
             Func<int, ItemModel?> getItemById,
@@ -239,6 +245,7 @@ namespace Dotahold.Models
             this.Hero = getHeroById(this.DotaMatchPlayer.hero_id);
             this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
             this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
+            this.HasParsed = hasParsed;
 
             this.Item0 = getItemById(this.DotaMatchPlayer.item_0);
             this.Item1 = getItemById(this.DotaMatchPlayer.item_1);
@@ -251,6 +258,8 @@ namespace Dotahold.Models
             this.Backpack2 = getItemById(this.DotaMatchPlayer.backpack_2);
             this.ItemNeutral = getItemById(this.DotaMatchPlayer.item_neutral);
             this.ItemNeutralEnhancement = getItemById(this.DotaMatchPlayer.item_neutral2);
+            this.HasAghanimScepter = this.DotaMatchPlayer.aghanims_scepter > 0;
+            this.HasAghanimShard = this.DotaMatchPlayer.aghanims_shard > 0;
         }
 
     }

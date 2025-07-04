@@ -86,6 +86,10 @@ namespace Dotahold.Pages.Matches
 
             DataNotParsedInfoBar.Width = RootGrid.ActualWidth - 32;
             MatchDataOverviewScrollViewer.Width = RootGrid.ActualWidth;
+            RadiantPlayersHeaderGrid.Width = RootGrid.ActualWidth;
+            RadiantPlayersGrid.Width = RootGrid.ActualWidth - 32;
+            DirePlayersHeaderGrid.Width = RootGrid.ActualWidth;
+            DirePlayersGrid.Width = RootGrid.ActualWidth - 32;
             MatchIdAndDateGrid.Width = RootGrid.ActualWidth;
             VisitOpenDotaButton.Width = RootGrid.ActualWidth - 32;
         }
