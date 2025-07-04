@@ -22,7 +22,12 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Item name to ItemModel
         /// </summary>
-        private readonly Dictionary<string, ItemModel> _itemModels = [];
+        private readonly Dictionary<string, ItemModel> _itemNameToModels = [];
+
+        /// <summary>
+        /// Item Id to ItemModel
+        /// </summary>
+        private readonly Dictionary<int, ItemModel> _itemIdToModels = [];
 
         /// <summary>
         /// All items
@@ -80,7 +85,7 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (_itemModels.Count > 0)
+                if (_allItems.Count > 0)
                 {
                     return;
                 }
@@ -107,7 +112,8 @@ namespace Dotahold.ViewModels
                     var itemModel = new ItemModel(item.Value);
 
                     _allItems.Add(itemModel);
-                    _itemModels[item.Key] = itemModel;
+                    _itemNameToModels[item.Key] = itemModel;
+                    _itemIdToModels[item.Value.id] = itemModel;
                 }
 
                 this.Loading = false;
@@ -159,7 +165,17 @@ namespace Dotahold.ViewModels
 
         public ItemModel? GetItemByName(string itemName)
         {
-            if (_itemModels.TryGetValue(itemName, out ItemModel? itemModel))
+            if (_itemNameToModels.TryGetValue(itemName, out ItemModel? itemModel))
+            {
+                return itemModel;
+            }
+
+            return null;
+        }
+
+        public ItemModel? GetItemById(int itemId)
+        {
+            if (_itemIdToModels.TryGetValue(itemId, out ItemModel? itemModel))
             {
                 return itemModel;
             }

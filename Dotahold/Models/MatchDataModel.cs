@@ -51,8 +51,9 @@ namespace Dotahold.Models
         public MatchTeamModel? DireTeam { get; private set; }
 
         public MatchDataModel(DotaMatchDataModel matchData,
-            Func<string, HeroModel?> getHeroById,
+            Func<int, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,
+            Func<int, ItemModel?> getItemById,
             Func<string, AbilitiesModel?> getAbilitiesByHeroName,
             Func<string, string> getAbilityNameById,
             Func<string, string> getPermanentBuffNameById)
@@ -83,7 +84,7 @@ namespace Dotahold.Models
             {
                 foreach (var banPick in this.DotaMatchData.picks_bans)
                 {
-                    var hero = getHeroById(banPick.hero_id.ToString());
+                    var hero = getHeroById(banPick.hero_id);
                     if (hero is not null)
                     {
                         this.PicksBans.Add(new MatchBanPickModel(banPick, hero));
@@ -122,7 +123,7 @@ namespace Dotahold.Models
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var playerModel = new MatchPlayerModel(player, getHeroById, getItemByName, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
+                    var playerModel = new MatchPlayerModel(player, getHeroById, getItemByName, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
 
                     if (playerModel.DotaMatchPlayer.player_slot >= 128)
                     {
@@ -205,14 +206,15 @@ namespace Dotahold.Models
         public SolidColorBrush? SlotColorBrush { get; set; }
 
         public MatchPlayerModel(DotaMatchPlayer player,
-            Func<string, HeroModel?> getHeroById,
+            Func<int, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,
+            Func<int, ItemModel?> getItemById,
             Func<string, AbilitiesModel?> getAbilitiesByHeroName,
             Func<string, string> getAbilityNameById,
             Func<string, string> getPermanentBuffNameById)
         {
             this.DotaMatchPlayer = player;
-            this.Hero = getHeroById(this.DotaMatchPlayer.hero_id.ToString());
+            this.Hero = getHeroById(this.DotaMatchPlayer.hero_id);
             this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
             this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
         }

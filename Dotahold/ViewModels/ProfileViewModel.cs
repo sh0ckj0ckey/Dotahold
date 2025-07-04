@@ -390,7 +390,7 @@ namespace Dotahold.ViewModels
                 {
                     foreach (var heroPerformance in heroPerformances)
                     {
-                        var hero = _heroesViewModel.GetHeroById(heroPerformance.hero_id.ToString());
+                        var hero = _heroesViewModel.GetHeroById(heroPerformance.hero_id);
                         if (hero is null)
                         {
                             continue;
@@ -442,7 +442,7 @@ namespace Dotahold.ViewModels
                 {
                     foreach (var recentMatch in recentMatches)
                     {
-                        var hero = _heroesViewModel.GetHeroById(recentMatch.hero_id.ToString());
+                        var hero = _heroesViewModel.GetHeroById(recentMatch.hero_id);
                         if (hero is null)
                         {
                             continue;

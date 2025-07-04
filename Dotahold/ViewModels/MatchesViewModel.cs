@@ -319,7 +319,7 @@ namespace Dotahold.ViewModels
                         continue;
                     }
 
-                    var hero = _heroesViewModel.GetHeroById(match.hero_id.ToString());
+                    var hero = _heroesViewModel.GetHeroById(match.hero_id);
                     if (hero is null)
                     {
                         continue;
@@ -421,6 +421,7 @@ namespace Dotahold.ViewModels
                     this.SelectedMatchData = new MatchDataModel(matchData,
                         _heroesViewModel.GetHeroById,
                         _itemsViewModel.GetItemByName,
+                        _itemsViewModel.GetItemById,
                         this.GetAbilitiesByHeroName,
                         this.GetAbilityNameById,
                         this.GetPermanentBuffNameById);

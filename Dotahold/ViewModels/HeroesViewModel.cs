@@ -22,7 +22,7 @@ namespace Dotahold.ViewModels
         /// <summary>
         /// Hero Id to HeroModel
         /// </summary>
-        private readonly Dictionary<string, HeroModel> _heroModels = [];
+        private readonly Dictionary<int, HeroModel> _heroModels = [];
 
         /// <summary>
         /// Language to HeroId to HeroDataModel
@@ -157,7 +157,7 @@ namespace Dotahold.ViewModels
                         this.UniHeroes.Add(heroModel);
                     }
 
-                    _heroModels[heroModel.DotaHeroAttributes.id.ToString()] = heroModel;
+                    _heroModels[heroModel.DotaHeroAttributes.id] = heroModel;
                 }
 
                 this.Loading = false;
@@ -259,7 +259,7 @@ namespace Dotahold.ViewModels
             }
         }
 
-        public HeroModel? GetHeroById(string heroId)
+        public HeroModel? GetHeroById(int heroId)
         {
             if (_heroModels.TryGetValue(heroId, out var heroModel))
             {
