@@ -78,18 +78,18 @@
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem Text="Steam Profile" Click="VisitSteamProfileMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE910;" Margin="0,4,0,0"/>
+                                    <FontIcon Glyph="&#xE910;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,4,0,0"/>
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem Text="Change Account" Click="ChangeAccountMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE748;" Margin="0,4,0,0"/>
+                                    <FontIcon Glyph="&#xE748;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,4,0,0"/>
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                             <MenuFlyoutSeparator Opacity="0.7"/>
                             <MenuFlyoutItem Text="Refresh" Click="RefreshProfileMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE777;" Margin="0,4,0,0"/>
+                                    <FontIcon Glyph="&#xE777;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,4,0,0"/>
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                         </MenuFlyout>

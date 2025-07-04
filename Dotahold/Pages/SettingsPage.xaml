@@ -82,7 +82,7 @@
                         <Button IsEnabled="True" Margin="12,0,0,0" MinWidth="128" VerticalAlignment="Center" Click="ClearCacheButton_Click">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                    <FontIcon Glyph="&#xEA99;" FontSize="15" VerticalAlignment="Center"/>
+                                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEA99;" FontSize="15" VerticalAlignment="Center"/>
                                     <TextBlock Text="Clear Cache" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button.Content>
@@ -187,7 +187,7 @@
                             <Button Click="ViewLogButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                        <FontIcon Glyph="&#xE9D9;" FontSize="15" VerticalAlignment="Center"/>
+                                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE9D9;" FontSize="15" VerticalAlignment="Center"/>
                                         <TextBlock Text="Log Files" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button.Content>
@@ -197,7 +197,7 @@
                             <Button Click="DataFolerButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                        <FontIcon Glyph="&#xED43;" FontSize="15" VerticalAlignment="Center"/>
+                                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xED43;" FontSize="15" VerticalAlignment="Center"/>
                                         <TextBlock Text="Data Folder" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button.Content>
@@ -207,7 +207,7 @@
                             <Button Click="ImageCacheFolderButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                        <FontIcon Glyph="&#xEB9F;" FontSize="15" VerticalAlignment="Center"/>
+                                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xEB9F;" FontSize="15" VerticalAlignment="Center"/>
                                         <TextBlock Text="Image Cache Folder" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button.Content>
@@ -217,7 +217,7 @@
                             <Button Click="ForceUpdateButton_Click">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                                        <FontIcon Glyph="&#xE72C;" FontSize="15" VerticalAlignment="Center"/>
+                                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72C;" FontSize="15" VerticalAlignment="Center"/>
                                         <TextBlock Text="Refresh" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Button.Content>

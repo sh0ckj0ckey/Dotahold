@@ -298,6 +298,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
                                             <!--Hero Image-->
@@ -373,7 +374,21 @@
 
                                                     <!--Player Name-->
                                                     <TextBlock Grid.Column="1" Text="{x:Bind DotaMatchPlayer.personaname}" FontSize="16" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}"
-                                                               Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter}}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                               Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter}}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <ToolTipService.ToolTip>
+                                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <TextBlock Grid.Row="0" Text="{x:Bind DotaMatchPlayer.personaname}" FontSize="14" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                                <StackPanel x:Name="PlayerNameStackPanel" x:Load="{x:Bind DotaMatchPlayer.name,Converter={StaticResource EmptyStringToBoolConverter}}" Grid.Row="1" Spacing="4" Margin="0,4,0,0" Opacity="0.7" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                                    <FontIcon Glyph="&#xE930;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                                    <TextBlock Text="{x:Bind DotaMatchPlayer.name}" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
                                                     <TextBlock Grid.Column="1" Text="Anonymous" Opacity="0.5" FontSize="16" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}"
                                                                Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter},ConverterParameter=!}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                                 </Grid>
@@ -408,6 +423,7 @@
                                                 </Grid>
                                             </Grid>
 
+
                                         </Grid>
                                     </Button>
                                 </DataTemplate>
@@ -418,7 +434,7 @@
                     <!--Advantages Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <FontIcon Glyph="&#xE9D2;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <FontIcon Glyph="&#xE9D2;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Advantages" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -432,7 +448,7 @@
                     <!--Gold Graph Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Gold Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -446,7 +462,7 @@
                     <!--Experience Graph Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <FontIcon Glyph="&#xEAFC;" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Experience Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -488,7 +504,7 @@
                                 <Run Text="www.opendota.com" Foreground="CornflowerBlue"/>
                                 <Run Text="for More Data"/>
                             </TextBlock>
-                            <FontIcon Glyph="&#xE8A7;" HorizontalAlignment="Right" FontSize="16" Margin="0,0,12,0"/>
+                            <FontIcon Glyph="&#xE8A7;" FontFamily="{ThemeResource SymbolThemeFontFamily}" HorizontalAlignment="Right" FontSize="16" Margin="0,0,12,0"/>
                         </Grid>
                     </Button>
 

@@ -203,7 +203,29 @@ namespace Dotahold.Models
 
         public AbilitiesFacetModel? AbilitiesFacet { get; private set; }
 
-        public SolidColorBrush? SlotColorBrush { get; set; }
+        public SolidColorBrush? SlotColorBrush { get; private set; }
+
+        public ItemModel? Item0 { get; private set; }
+
+        public ItemModel? Item1 { get; private set; }
+
+        public ItemModel? Item2 { get; private set; }
+
+        public ItemModel? Item3 { get; private set; }
+
+        public ItemModel? Item4 { get; private set; }
+
+        public ItemModel? Item5 { get; private set; }
+
+        public ItemModel? Backpack0 { get; private set; }
+
+        public ItemModel? Backpack1 { get; private set; }
+
+        public ItemModel? Backpack2 { get; private set; }
+
+        public ItemModel? ItemNeutral { get; private set; }
+
+        public ItemModel? ItemNeutralEnhancement { get; private set; }
 
         public MatchPlayerModel(DotaMatchPlayer player,
             Func<int, HeroModel?> getHeroById,
@@ -217,6 +239,18 @@ namespace Dotahold.Models
             this.Hero = getHeroById(this.DotaMatchPlayer.hero_id);
             this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
             this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
+
+            this.Item0 = getItemById(this.DotaMatchPlayer.item_0);
+            this.Item1 = getItemById(this.DotaMatchPlayer.item_1);
+            this.Item2 = getItemById(this.DotaMatchPlayer.item_2);
+            this.Item3 = getItemById(this.DotaMatchPlayer.item_3);
+            this.Item4 = getItemById(this.DotaMatchPlayer.item_4);
+            this.Item5 = getItemById(this.DotaMatchPlayer.item_5);
+            this.Backpack0 = getItemById(this.DotaMatchPlayer.backpack_0);
+            this.Backpack1 = getItemById(this.DotaMatchPlayer.backpack_1);
+            this.Backpack2 = getItemById(this.DotaMatchPlayer.backpack_2);
+            this.ItemNeutral = getItemById(this.DotaMatchPlayer.item_neutral);
+            this.ItemNeutralEnhancement = getItemById(this.DotaMatchPlayer.item_neutral2);
         }
 
     }
