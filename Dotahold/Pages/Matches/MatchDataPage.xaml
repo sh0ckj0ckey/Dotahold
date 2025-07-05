@@ -827,6 +827,155 @@
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience,Mode=OneWay}"/>
 
+                    <!--Players Damage Ratio Compare Header-->
+                    <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <FontIcon Glyph="&#xE8A4;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Performances" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!--Players Damage Ratio Compare-->
+                    <Grid HorizontalAlignment="Stretch" ColumnSpacing="8" RowSpacing="8" Margin="16,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="DamageRatioCompareGrid" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2" ColumnSpacing="8" RowSpacing="16" Padding="16" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Margin="-16,-16,-16,0" Padding="16,8" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <TextBlock Text="Damage Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+
+                            <muxc:ItemsRepeater Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantPlayerDamageRatios,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:MatchPlayerRatioModel">
+                                    <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="42"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="13" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind Value}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                        <muxc:ProgressBar Grid.Column="1" Maximum="100" Value="{x:Bind Value}" Foreground="{x:Bind SlotColorBrush}" Background="{ThemeResource DotaholdSeparatorColor}" FlowDirection="RightToLeft" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="2" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+
+                            <muxc:ItemsRepeater Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DirePlayerDamageRatios,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:MatchPlayerRatioModel">
+                                    <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="42"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <muxc:ProgressBar Grid.Column="1" Maximum="100" Value="{x:Bind Value}" Foreground="{x:Bind SlotColorBrush}" Background="{ThemeResource DotaholdSeparatorColor}" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="13" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind Value}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+                        </Grid>
+
+                        <Grid x:Name="TeamfightRatioCompareGrid" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2" ColumnSpacing="8" RowSpacing="16" Padding="16" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Margin="-16,-16,-16,0" Padding="16,8" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <TextBlock Text="Teamfight Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+
+                            <muxc:ItemsRepeater Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantPlayerTeamfightRatios,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:MatchPlayerRatioModel">
+                                    <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="42"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="13" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind Value}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                        <muxc:ProgressBar Grid.Column="1" Maximum="100" Value="{x:Bind Value}" Foreground="{x:Bind SlotColorBrush}" Background="{ThemeResource DotaholdSeparatorColor}" FlowDirection="RightToLeft" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="2" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+
+                            <muxc:ItemsRepeater Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DirePlayerTeamfightRatios,Mode=OneWay}">
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
+                                </muxc:ItemsRepeater.Layout>
+                                <DataTemplate x:DataType="models:MatchPlayerRatioModel">
+                                    <Grid ColumnSpacing="8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="42"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Border.Background>
+                                                <ImageBrush ImageSource="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <muxc:ProgressBar Grid.Column="1" Maximum="100" Value="{x:Bind Value}" Foreground="{x:Bind SlotColorBrush}" Background="{ThemeResource DotaholdSeparatorColor}" FlowDirection="LeftToRight" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="13" Opacity="0.7" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Run Text="{x:Bind Value}"/>
+                                            <Run Text="%"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </muxc:ItemsRepeater>
+                        </Grid>
+                    </Grid>
+
+                    <!--Match Extra Info-->
                     <Grid x:Name="MatchIdAndDateGrid" Padding="20" ColumnSpacing="16" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -865,5 +1014,40 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1040"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.RowSpan)" Value="2"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.Column)" Value="1"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.RowSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.Row)" Value="0"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="DamageRatioCompareGrid.(Grid.RowSpan)" Value="1"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.Row)" Value="1"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="TeamfightRatioCompareGrid.(Grid.RowSpan)" Value="1"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

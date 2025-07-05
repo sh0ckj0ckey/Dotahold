@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
 using Windows.UI;
@@ -49,6 +50,14 @@ namespace Dotahold.Models
         public MatchTeamModel? RadiantTeam { get; private set; }
 
         public MatchTeamModel? DireTeam { get; private set; }
+
+        public List<MatchPlayerRatioModel> RadiantPlayerDamageRatios { get; private set; }
+
+        public List<MatchPlayerRatioModel> DirePlayerDamageRatios { get; private set; }
+
+        public List<MatchPlayerRatioModel> RadiantPlayerTeamfightRatios { get; private set; }
+
+        public List<MatchPlayerRatioModel> DirePlayerTeamfightRatios { get; private set; }
 
         public MatchDataModel(DotaMatchDataModel matchData,
             Func<int, HeroModel?> getHeroById,
@@ -158,6 +167,41 @@ namespace Dotahold.Models
                 }
             }
 
+            // Player Damage Ratios
+            {
+                double radiantTotalDamage = this.RadiantPlayers.Sum(player => player.DotaMatchPlayer.hero_damage);
+                this.RadiantPlayerDamageRatios = [.. this.RadiantPlayers
+                        .Select(player => new MatchPlayerRatioModel(
+                            player.Hero,
+                            player.SlotColorBrush,
+                            radiantTotalDamage > 0 ? Math.Floor(1000 * (player.DotaMatchPlayer.hero_damage / radiantTotalDamage)) / 10 : 0.0
+                        )).OrderByDescending(player => player.Value)];
+
+                double direTotalDamage = this.DirePlayers.Sum(player => player.DotaMatchPlayer.hero_damage);
+                this.DirePlayerDamageRatios = [.. this.DirePlayers
+                        .Select(player => new MatchPlayerRatioModel(
+                            player.Hero,
+                            player.SlotColorBrush,
+                            direTotalDamage > 0 ? Math.Floor(1000 * (player.DotaMatchPlayer.hero_damage / direTotalDamage)) / 10 : 0.0
+                        )).OrderByDescending(player => player.Value)];
+
+                double radiantTotalKills = this.RadiantPlayers.Sum(player => player.DotaMatchPlayer.kills);
+                this.RadiantPlayerTeamfightRatios = [.. this.RadiantPlayers
+                        .Select(player => new MatchPlayerRatioModel(
+                            player.Hero,
+                            player.SlotColorBrush,
+                            radiantTotalKills > 0 ? Math.Floor(1000 * ((player.DotaMatchPlayer.kills + player.DotaMatchPlayer.assists) / radiantTotalKills)) / 10 : 0.0
+                        )).OrderByDescending(player => player.Value)];
+
+                double direTotalKills = this.DirePlayers.Sum(player => player.DotaMatchPlayer.kills);
+                this.DirePlayerTeamfightRatios = [.. this.DirePlayers
+                        .Select(player => new MatchPlayerRatioModel(
+                            player.Hero,
+                            player.SlotColorBrush,
+                            direTotalKills > 0 ? Math.Floor(1000 * ((player.DotaMatchPlayer.kills + player.DotaMatchPlayer.assists) / direTotalKills)) / 10 : 0.0
+                        )).OrderByDescending(player => player.Value)];
+            }
+
             // Radiant Team
             if (this.DotaMatchData.radiant_team is not null)
             {
@@ -203,7 +247,7 @@ namespace Dotahold.Models
 
         public AbilitiesFacetModel? AbilitiesFacet { get; private set; }
 
-        public SolidColorBrush? SlotColorBrush { get; private set; }
+        public SolidColorBrush SlotColorBrush { get; private set; }
 
         public bool HasParsed { get; private set; }
 
@@ -262,5 +306,14 @@ namespace Dotahold.Models
             this.HasAghanimShard = this.DotaMatchPlayer.aghanims_shard > 0;
         }
 
+    }
+
+    public class MatchPlayerRatioModel(HeroModel? hero, SolidColorBrush solidColorBrush, double value)
+    {
+        public HeroModel? Hero { get; private set; } = hero;
+
+        public SolidColorBrush SlotColorBrush { get; private set; } = solidColorBrush;
+
+        public double Value { get; private set; } = value;
     }
 }
