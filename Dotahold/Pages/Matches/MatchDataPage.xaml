@@ -105,7 +105,7 @@
 
                     <!--Match Data Not Parsed-->
                     <muxc:InfoBar x:Name="DataNotParsedInfoBar" IsOpen="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.od_data.has_parsed,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}"
-                                  Margin="16,8,16,8" Severity="Warning" Message="The replay for this match has not yet been parsed. Not all data may be available."/>
+                                  Margin="16,8,16,8" Message="The replay for this match has not yet been parsed. Not all data may be available."/>
 
                     <!--League Name-->
                     <Grid x:Name="LeagueNameGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.IsLeague,Mode=OneWay}" Margin="24,0,8,16" HorizontalAlignment="Stretch">
@@ -259,7 +259,7 @@
                                     </ImageBrush>
                                 </Border.Background>
                             </Border>
-                            <TextBlock Grid.Column="1" Margin="8,2,0,-2" Text="Radiant" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Margin="8,2,0,-2" Text="Radiant" FontSize="16" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid x:Name="RadiantTeamHeader" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantTeam,Mode=OneWay,Converter={StaticResource NullToBoolConverter}}" Margin="24,16,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -530,7 +530,7 @@
                                     </ImageBrush>
                                 </Border.Background>
                             </Border>
-                            <TextBlock Grid.Column="1" Margin="8,2,0,-2" Text="Dire" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Margin="8,2,0,-2" Text="Dire" FontSize="16" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid x:Name="DireTeamHeader" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DireTeam,Mode=OneWay,Converter={StaticResource NullToBoolConverter}}" Margin="24,16,8,8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
