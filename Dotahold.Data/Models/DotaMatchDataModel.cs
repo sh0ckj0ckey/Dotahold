@@ -101,6 +101,9 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int party_id { get; set; }
 
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int party_size { get; set; }
+
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int hero_id { get; set; }

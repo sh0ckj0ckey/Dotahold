@@ -418,13 +418,7 @@ namespace Dotahold.ViewModels
 
                 if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
                 {
-                    this.SelectedMatchData = new MatchDataModel(matchData,
-                        _heroesViewModel.GetHeroById,
-                        _itemsViewModel.GetItemByName,
-                        _itemsViewModel.GetItemById,
-                        this.GetAbilitiesByHeroName,
-                        this.GetAbilityNameById,
-                        this.GetPermanentBuffNameById);
+                    this.SelectedMatchData = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
 
                     _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
                     _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);

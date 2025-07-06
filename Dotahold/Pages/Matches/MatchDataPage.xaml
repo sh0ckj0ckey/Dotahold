@@ -33,7 +33,7 @@
         <converters:ItemTierToColorConverter x:Key="ItemTierToColorConverter"/>
 
         <DataTemplate x:DataType="models:MatchPlayerModel" x:Key="MatchPlayerItemTemplate">
-            <Button Height="72" Padding="8,0" Tag="{x:Bind DotaMatchPlayer}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Button MinHeight="72" Padding="8" Tag="{x:Bind DotaMatchPlayer}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -134,15 +134,16 @@
                                        Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter},ConverterParameter=!}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
 
-                        <Grid Grid.Row="1" ColumnSpacing="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
                             <!--K/D/A-->
-                            <TextBlock Grid.Column="0" Margin="0,0,4,0" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <TextBlock Grid.Column="0" Margin="0,0,8,0" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Right" VerticalAlignment="Center">
                                 <Run Text="{x:Bind DotaMatchPlayer.kills}" Foreground="#63916C"/>
                                 <Run Text="/"/>
                                 <Run Text="{x:Bind DotaMatchPlayer.deaths}" Foreground="#C55357"/>
@@ -150,14 +151,21 @@
                                 <Run Text="{x:Bind DotaMatchPlayer.assists}" Foreground="#647E8E"/>
                             </TextBlock>
 
+                            <!--Party-->
+                            <StackPanel x:Name="PlayerPartyIdStackPanel" x:Load="{x:Bind PartyId,Converter={StaticResource EmptyStringToBoolConverter}}"
+                                        Grid.Column="1" Spacing="4" Orientation="Horizontal" Height="20" Margin="0,0,4,0" Padding="4,0,4,-2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" CornerRadius="4" ToolTipService.ToolTip="Party" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE716;" FontSize="12" FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource DotaholdApplicationForeground}" Opacity="0.7" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind PartyId}" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" Opacity="0.7" VerticalAlignment="Center"/>
+                            </StackPanel>
+
                             <!--GPM-->
-                            <StackPanel Grid.Column="1" Spacing="4" Orientation="Horizontal" Height="20" Padding="4,0,4,-2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" CornerRadius="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="2" Spacing="4" Orientation="Horizontal" Height="20" Margin="0,0,4,0" Padding="4,0,4,-2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <TextBlock Text="GPM" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="{ThemeResource DotaholdGoldForeground}" Opacity="0.7" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind DotaMatchPlayer.gold_per_min}" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <!--XPM-->
-                            <StackPanel Grid.Column="2" Spacing="4" Orientation="Horizontal" Height="20" Padding="4,0,4,-2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" CornerRadius="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="3" Spacing="4" Orientation="Horizontal" Height="20" Margin="0,0,4,0" Padding="4,0,4,-2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" CornerRadius="4" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <TextBlock Text="XPM" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="MediumOrchid" Opacity="0.7" VerticalAlignment="Center"/>
                                 <TextBlock Text="{x:Bind DotaMatchPlayer.xp_per_min}" FontSize="12" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center"/>
                             </StackPanel>

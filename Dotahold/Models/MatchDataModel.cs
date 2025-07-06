@@ -59,13 +59,7 @@ namespace Dotahold.Models
 
         public List<MatchPlayerRatioModel> DirePlayerTeamfightRatios { get; private set; }
 
-        public MatchDataModel(DotaMatchDataModel matchData,
-            Func<int, HeroModel?> getHeroById,
-            Func<string, ItemModel?> getItemByName,
-            Func<int, ItemModel?> getItemById,
-            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
-            Func<string, string> getAbilityNameById,
-            Func<string, string> getPermanentBuffNameById)
+        public MatchDataModel(DotaMatchDataModel matchData, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName)
         {
             _defaultGoldImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_gold_stack.png"))
             {
@@ -132,7 +126,7 @@ namespace Dotahold.Models
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemByName, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
+                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemById, getAbilitiesByHeroName);
 
                     if (playerModel.DotaMatchPlayer.player_slot >= 128)
                     {
@@ -243,13 +237,15 @@ namespace Dotahold.Models
     {
         public DotaMatchPlayer DotaMatchPlayer { get; private set; }
 
+        public bool HasParsed { get; private set; }
+
         public HeroModel? Hero { get; private set; }
 
         public AbilitiesFacetModel? AbilitiesFacet { get; private set; }
 
         public SolidColorBrush SlotColorBrush { get; private set; }
 
-        public bool HasParsed { get; private set; }
+        public string PartyId { get; private set; }
 
         public ItemModel? Item0 { get; private set; }
 
@@ -279,19 +275,26 @@ namespace Dotahold.Models
 
         public MatchPlayerAdditionalUnitModel? AdditionalUnit { get; private set; } = null;
 
-        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed,
-            Func<int, HeroModel?> getHeroById,
-            Func<string, ItemModel?> getItemByName,
-            Func<int, ItemModel?> getItemById,
-            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
-            Func<string, string> getAbilityNameById,
-            Func<string, string> getPermanentBuffNameById)
+        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName)
         {
             this.DotaMatchPlayer = player;
+            this.HasParsed = hasParsed;
             this.Hero = getHeroById(this.DotaMatchPlayer.hero_id);
             this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
             this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
-            this.HasParsed = hasParsed;
+            this.PartyId = this.DotaMatchPlayer.party_size > 1 && this.DotaMatchPlayer.party_size < 10 ? (this.DotaMatchPlayer.party_id) switch
+            {
+                1 => "Ⅰ",
+                2 => "Ⅱ",
+                3 => "Ⅲ",
+                4 => "Ⅳ",
+                5 => "Ⅴ",
+                6 => "Ⅵ",
+                7 => "Ⅶ",
+                8 => "Ⅷ",
+                9 => "Ⅸ",
+                _ => string.Empty,
+            } : string.Empty;
 
             this.Item0 = getItemById(this.DotaMatchPlayer.item_0);
             this.Item1 = getItemById(this.DotaMatchPlayer.item_1);
