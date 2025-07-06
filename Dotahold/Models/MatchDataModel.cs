@@ -307,7 +307,7 @@ namespace Dotahold.Models
             this.HasAghanimScepter = this.DotaMatchPlayer.aghanims_scepter > 0;
             this.HasAghanimShard = this.DotaMatchPlayer.aghanims_shard > 0;
 
-            if (this.DotaMatchPlayer.additional_units?.Length > 0)
+            if (this.DotaMatchPlayer.additional_units?.Length > 0 && !string.IsNullOrWhiteSpace(this.DotaMatchPlayer.additional_units[0].unitname))
             {
                 this.AdditionalUnit = new MatchPlayerAdditionalUnitModel(this.DotaMatchPlayer.additional_units[0], getItemById);
             }
