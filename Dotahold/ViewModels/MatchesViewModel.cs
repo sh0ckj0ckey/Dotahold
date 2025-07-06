@@ -46,6 +46,11 @@ namespace Dotahold.ViewModels
         private readonly Dictionary<string, string> _permanentBuffs = [];
 
         /// <summary>
+        /// Match ID to MatchDataModel
+        /// </summary>
+        private readonly Dictionary<string, MatchDataModel> _matchDataModels = [];
+
+        /// <summary>
         /// Currently loaded player's Steam ID
         /// </summary>
         private string _currentSteamId = string.Empty;
@@ -409,19 +414,27 @@ namespace Dotahold.ViewModels
                 this.LoadingMatchData = true;
                 this.SelectedMatchData = null;
 
-                var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
-
-                if (cancellationToken.IsCancellationRequested)
+                if (_matchDataModels.TryGetValue(matchId, out var cachedMatchData))
                 {
-                    return;
+                    await Task.Delay(600, cancellationToken);
+                    this.SelectedMatchData = cachedMatchData;
                 }
-
-                if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
+                else
                 {
-                    this.SelectedMatchData = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
+                    var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
+                    if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
+                    {
+                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
+                        this.SelectedMatchData = _matchDataModels[matchData.match_id.ToString()];
 
-                    _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
-                    _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
+                        _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
+                        _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
+                    }
                 }
             }
             catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
