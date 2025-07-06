@@ -277,6 +277,8 @@ namespace Dotahold.Models
 
         public bool HasAghanimShard { get; private set; }
 
+        public MatchPlayerAdditionalUnitModel? AdditionalUnit { get; private set; } = null;
+
         public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed,
             Func<int, HeroModel?> getHeroById,
             Func<string, ItemModel?> getItemByName,
@@ -304,6 +306,11 @@ namespace Dotahold.Models
             this.ItemNeutralEnhancement = getItemById(this.DotaMatchPlayer.item_neutral2);
             this.HasAghanimScepter = this.DotaMatchPlayer.aghanims_scepter > 0;
             this.HasAghanimShard = this.DotaMatchPlayer.aghanims_shard > 0;
+
+            if (this.DotaMatchPlayer.additional_units?.Length > 0)
+            {
+                this.AdditionalUnit = new MatchPlayerAdditionalUnitModel(this.DotaMatchPlayer.additional_units[0], getItemById);
+            }
         }
 
     }
@@ -315,5 +322,83 @@ namespace Dotahold.Models
         public SolidColorBrush SlotColorBrush { get; private set; } = solidColorBrush;
 
         public double Value { get; private set; } = value;
+    }
+
+    public class MatchPlayerAdditionalUnitModel
+    {
+        /// <summary>
+        /// 附加单位-熊灵 的图标
+        /// </summary>
+        private static BitmapImage? _additionalUnitSpiritBearIconSource40 = null;
+
+        /// <summary>
+        /// 附加单位-熊灵 的肖像图
+        /// </summary>
+        private static BitmapImage? _additionalUnitSpiritBearImageSource96 = null;
+
+        public AsyncImage AdditionalUnitIcon { get; private set; }
+
+        public AsyncImage AdditionalUnitImage { get; private set; }
+
+        public string AdditionalUnitName { get; private set; }
+
+        public ItemModel? Item0 { get; private set; }
+
+        public ItemModel? Item1 { get; private set; }
+
+        public ItemModel? Item2 { get; private set; }
+
+        public ItemModel? Item3 { get; private set; }
+
+        public ItemModel? Item4 { get; private set; }
+
+        public ItemModel? Item5 { get; private set; }
+
+        public ItemModel? Backpack0 { get; private set; }
+
+        public ItemModel? Backpack1 { get; private set; }
+
+        public ItemModel? Backpack2 { get; private set; }
+
+        public ItemModel? ItemNeutral { get; private set; }
+
+        public MatchPlayerAdditionalUnitModel(DotaMatchPlayerAdditionalUnit additionalUnit, Func<int, ItemModel?> getItemById)
+        {
+            if (additionalUnit.unitname == "spirit_bear")
+            {
+                _additionalUnitSpiritBearIconSource40 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/icon_spirit_bear.png"))
+                {
+                    DecodePixelType = DecodePixelType.Logical,
+                    DecodePixelHeight = 40
+                };
+
+                _additionalUnitSpiritBearImageSource96 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/img_spirit_bear_large.png"))
+                {
+                    DecodePixelType = DecodePixelType.Logical,
+                    DecodePixelHeight = 96
+                };
+
+                this.AdditionalUnitIcon = new AsyncImage(string.Empty, 0, 32, _additionalUnitSpiritBearIconSource40);
+                this.AdditionalUnitImage = new AsyncImage(string.Empty, 0, 96, _additionalUnitSpiritBearImageSource96);
+                this.AdditionalUnitName = "Spirit Bear";
+            }
+            else
+            {
+                this.AdditionalUnitIcon = new AsyncImage(string.Empty, 0, 40);
+                this.AdditionalUnitImage = new AsyncImage(string.Empty, 0, 96);
+                this.AdditionalUnitName = additionalUnit.unitname.Replace("_", " ");
+            }
+
+            this.Item0 = getItemById(additionalUnit.item_0);
+            this.Item1 = getItemById(additionalUnit.item_1);
+            this.Item2 = getItemById(additionalUnit.item_2);
+            this.Item3 = getItemById(additionalUnit.item_3);
+            this.Item4 = getItemById(additionalUnit.item_4);
+            this.Item5 = getItemById(additionalUnit.item_5);
+            this.Backpack0 = getItemById(additionalUnit.backpack_0);
+            this.Backpack1 = getItemById(additionalUnit.backpack_1);
+            this.Backpack2 = getItemById(additionalUnit.backpack_2);
+            this.ItemNeutral = getItemById(additionalUnit.item_neutral);
+        }
     }
 }

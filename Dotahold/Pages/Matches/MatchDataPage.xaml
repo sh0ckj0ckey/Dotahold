@@ -455,6 +455,72 @@
 
                                                 <StackPanel Grid.Row="1" Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
+                                                    <!--Additional Unit-->
+                                                    <Button x:Name="AdditionalUnitButton" x:Load="{x:Bind AdditionalUnit,Converter={StaticResource NullToBoolConverter}}" Height="26" Width="26" Padding="0" Margin="0,0,4,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                                        <Image Source="{x:Bind AdditionalUnit.AdditionalUnitIcon.Image,Mode=OneWay}" Height="20" Width="20" Stretch="UniformToFill"/>
+                                                        <Button.Flyout>
+                                                            <Flyout Placement="Left">
+                                                                <Flyout.FlyoutPresenterStyle>
+                                                                    <Style TargetType="FlyoutPresenter">
+                                                                        <Setter Property="CornerRadius" Value="6"/>
+                                                                        <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                                                        <Setter Property="Background" Value="{ThemeResource DotaholdApplicationPageBackground}"/>
+                                                                    </Style>
+                                                                </Flyout.FlyoutPresenterStyle>
+                                                                <Grid HorizontalAlignment="Center">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Border Grid.Row="0" Height="48" Width="48" CornerRadius="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                        <Border.Background>
+                                                                            <ImageBrush ImageSource="{x:Bind AdditionalUnit.AdditionalUnitImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                                                        </Border.Background>
+                                                                    </Border>
+                                                                    <TextBlock Grid.Row="0" Text="{x:Bind AdditionalUnit.AdditionalUnitName}" FontFamily="{ThemeResource ReaverBold}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                                                                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item0.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item0.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item1.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item1.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item2.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item2.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,4">
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item3.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item3.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item4.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item4.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item5.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item5.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                    <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="4" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                        <Border Margin="0,0,2,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.ItemNeutral.DotaItemAttributes.dname}">
+                                                                            <Image Width="35" Height="26" Source="{x:Bind AdditionalUnit.ItemNeutral.ItemImage.Image,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack0.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack0.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack1.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack1.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack2.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack2.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Flyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+
                                                     <!--NeutralItems-->
                                                     <Border Width="26" Height="26" CornerRadius="13,3,3,13" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind ItemNeutral.DotaItemAttributes.dname}">
                                                         <Image Width="35" Height="26" Source="{x:Bind ItemNeutral.ItemImage.Image,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
@@ -726,6 +792,72 @@
 
                                                 <StackPanel Grid.Row="1" Spacing="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
+                                                    <!--Additional Unit-->
+                                                    <Button x:Name="AdditionalUnitButton" x:Load="{x:Bind AdditionalUnit,Converter={StaticResource NullToBoolConverter}}" Height="26" Width="26" Padding="0" Margin="0,0,4,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                                        <Image Source="{x:Bind AdditionalUnit.AdditionalUnitIcon.Image,Mode=OneWay}" Height="20" Width="20" Stretch="UniformToFill"/>
+                                                        <Button.Flyout>
+                                                            <Flyout Placement="Left">
+                                                                <Flyout.FlyoutPresenterStyle>
+                                                                    <Style TargetType="FlyoutPresenter">
+                                                                        <Setter Property="CornerRadius" Value="6"/>
+                                                                        <Setter Property="IsDefaultShadowEnabled" Value="False"/>
+                                                                        <Setter Property="Background" Value="{ThemeResource DotaholdApplicationPageBackground}"/>
+                                                                    </Style>
+                                                                </Flyout.FlyoutPresenterStyle>
+                                                                <Grid HorizontalAlignment="Center">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Border Grid.Row="0" Height="48" Width="48" CornerRadius="4" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                        <Border.Background>
+                                                                            <ImageBrush ImageSource="{x:Bind AdditionalUnit.AdditionalUnitImage.Image,Mode=OneWay}" Stretch="UniformToFill"/>
+                                                                        </Border.Background>
+                                                                    </Border>
+                                                                    <TextBlock Grid.Row="0" Text="{x:Bind AdditionalUnit.AdditionalUnitName}" FontFamily="{ThemeResource ReaverBold}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                                                                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item0.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item0.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item1.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item1.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item2.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item2.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,6,0,4">
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item3.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item3.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="8,0,8,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item4.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item4.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="32" Width="44" Margin="0,0,0,0" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Item5.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Item5.ItemImage.Image,Mode=OneWay}" Height="32" Width="44" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                    <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="4" Margin="0,4,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                        <Border Margin="0,0,2,0" Width="26" Height="26" CornerRadius="13" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.ItemNeutral.DotaItemAttributes.dname}">
+                                                                            <Image Width="35" Height="26" Source="{x:Bind AdditionalUnit.ItemNeutral.ItemImage.Image,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack0.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack0.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack1.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack1.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                        <Border Height="26" Width="35" CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind AdditionalUnit.Backpack2.DotaItemAttributes.dname}">
+                                                                            <Image Source="{x:Bind AdditionalUnit.Backpack2.ItemImage.Image,Mode=OneWay}" Height="26" Width="35" Stretch="UniformToFill" Opacity="0.7"/>
+                                                                        </Border>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Flyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+
                                                     <!--NeutralItems-->
                                                     <Border Width="26" Height="26" CornerRadius="13,3,3,13" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind ItemNeutral.DotaItemAttributes.dname}">
                                                         <Image Width="35" Height="26" Source="{x:Bind ItemNeutral.ItemImage.Image,Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
@@ -827,13 +959,13 @@
                                                ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                                Series="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience,Mode=OneWay}"/>
 
-                    <!--Players Damage Ratio Compare Header-->
+                    <!--Players Ratio Compare Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <FontIcon Glyph="&#xE8A4;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Performances" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <!--Players Damage Ratio Compare-->
+                    <!--Players Ratio Compare-->
                     <Grid HorizontalAlignment="Stretch" ColumnSpacing="8" RowSpacing="8" Margin="16,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -844,6 +976,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
+                        <!--Players Damage Ratio Compare-->
                         <Grid x:Name="DamageRatioCompareGrid" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2" ColumnSpacing="8" RowSpacing="16" Padding="16" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -858,6 +991,7 @@
                                 <TextBlock Text="Damage Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                             </Grid>
 
+                            <!--Radiant Players Damage Ratio-->
                             <muxc:ItemsRepeater Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantPlayerDamageRatios,Mode=OneWay}">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
@@ -883,6 +1017,7 @@
                                 </DataTemplate>
                             </muxc:ItemsRepeater>
 
+                            <!--Dire Players Damage Ratio-->
                             <muxc:ItemsRepeater Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DirePlayerDamageRatios,Mode=OneWay}">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
@@ -909,6 +1044,7 @@
                             </muxc:ItemsRepeater>
                         </Grid>
 
+                        <!--Players Teamfight Ratio Compare-->
                         <Grid x:Name="TeamfightRatioCompareGrid" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2" ColumnSpacing="8" RowSpacing="16" Padding="16" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -923,6 +1059,7 @@
                                 <TextBlock Text="Teamfight Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                             </Grid>
 
+                            <!--Radiant Players Teamfight Ratio-->
                             <muxc:ItemsRepeater Grid.Row="1" Grid.Column="0" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantPlayerTeamfightRatios,Mode=OneWay}">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
@@ -948,6 +1085,7 @@
                                 </DataTemplate>
                             </muxc:ItemsRepeater>
 
+                            <!--Dire Players Teamfight Ratio-->
                             <muxc:ItemsRepeater Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DirePlayerTeamfightRatios,Mode=OneWay}">
                                 <muxc:ItemsRepeater.Layout>
                                     <muxc:StackLayout Orientation="Vertical" Spacing="8" DisableVirtualization="True"/>
@@ -1019,7 +1157,7 @@
             <VisualStateGroup>
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1040"/>
+                        <AdaptiveTrigger MinWindowWidth="1240"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="DamageRatioCompareGrid.(Grid.Column)" Value="0"/>

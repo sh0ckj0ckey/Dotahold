@@ -75,57 +75,8 @@
                                 }
                                 catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
-                                // 额外单位，目前只处理德鲁伊(hero_id=80)的熊灵
-                                try
-                                {
-                                    player.SpiritBear = null;
-                                    if (player.hero_id == 80 && player.additional_units != null && player.additional_units.Length > 0)
-                                    {
-                                        foreach (var item in player.additional_units)
-                                        {
-                                            if (item.unitname.Contains("spirit_bear"))
-                                            {
-                                                player.SpiritBear = item;
-                                                break;
-                                            }
-                                        }
-
-                                        if (player.SpiritBear != null)
-                                        {
-                                            player.SpiritBear.sItem0 = GetItemImgById(player.SpiritBear.item_0?.ToString());
-                                            player.SpiritBear.sItem1 = GetItemImgById(player.SpiritBear.item_1?.ToString());
-                                            player.SpiritBear.sItem2 = GetItemImgById(player.SpiritBear.item_2?.ToString());
-                                            player.SpiritBear.sItem3 = GetItemImgById(player.SpiritBear.item_3?.ToString());
-                                            player.SpiritBear.sItem4 = GetItemImgById(player.SpiritBear.item_4?.ToString());
-                                            player.SpiritBear.sItem5 = GetItemImgById(player.SpiritBear.item_5?.ToString());
-                                            player.SpiritBear.sItemB0 = GetItemImgById(player.SpiritBear.backpack_0?.ToString());
-                                            player.SpiritBear.sItemB1 = GetItemImgById(player.SpiritBear.backpack_1?.ToString());
-                                            player.SpiritBear.sItemB2 = GetItemImgById(player.SpiritBear.backpack_2?.ToString());
-                                            player.SpiritBear.sItemN = GetItemImgById(player.SpiritBear.item_neutral?.ToString());
-                                            player.SpiritBear.sNameItem0 = GetItemNameById(player.SpiritBear.item_0?.ToString());
-                                            player.SpiritBear.sNameItem1 = GetItemNameById(player.SpiritBear.item_1?.ToString());
-                                            player.SpiritBear.sNameItem2 = GetItemNameById(player.SpiritBear.item_2?.ToString());
-                                            player.SpiritBear.sNameItem3 = GetItemNameById(player.SpiritBear.item_3?.ToString());
-                                            player.SpiritBear.sNameItem4 = GetItemNameById(player.SpiritBear.item_4?.ToString());
-                                            player.SpiritBear.sNameItem5 = GetItemNameById(player.SpiritBear.item_5?.ToString());
-                                            player.SpiritBear.sNameItemB0 = GetItemNameById(player.SpiritBear.backpack_0?.ToString());
-                                            player.SpiritBear.sNameItemB1 = GetItemNameById(player.SpiritBear.backpack_1?.ToString());
-                                            player.SpiritBear.sNameItemB2 = GetItemNameById(player.SpiritBear.backpack_2?.ToString());
-                                            player.SpiritBear.sNameItemN = GetItemNameById(player.SpiritBear.item_neutral?.ToString());
-                                        }
-                                    }
-                                }
-                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
                             }
                             catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                        }
-
-                        foreach (var player in matchInfo.players)
-                        {
-                            if (player.SpiritBear != null)
-                            {
-                                await player.SpiritBear?.LoadItemsImageAsync(44, 35, 134);
-                            }
                         }
                     }
                     catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }

@@ -254,6 +254,7 @@ namespace Dotahold.Data.Models
 
         public int[]? xp_t { get; set; } = [];
 
+        public DotaMatchPlayerAdditionalUnit[]? additional_units { get; set; }
 
         public DotaMatchPlayerLog[]? purchase_log { get; set; }
 
@@ -268,6 +269,42 @@ namespace Dotahold.Data.Models
         public DotaMatchPlayerPermanentBuff[]? permanent_buffs { get; set; }
 
         public System.Collections.Generic.Dictionary<string, DotaMatchPlayerBenchmark?>? benchmarks { get; set; }
+    }
+
+    public class DotaMatchPlayerAdditionalUnit
+    {
+        [JsonConverter(typeof(SafeStringConverter))]
+        public string unitname { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_0 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_1 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_2 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_3 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_4 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_5 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int backpack_0 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int backpack_1 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int backpack_2 { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int item_neutral { get; set; }
     }
 
     public class DotaMatchPlayerLog
