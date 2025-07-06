@@ -343,50 +343,57 @@
                 <ColumnDefinition Width="58"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <!--Back Button-->
             <Button Grid.Column="0" Width="58" Height="42" Padding="0" Background="Transparent" Content="&#xE652;" FontSize="16" FontFamily="{ThemeResource SymbolThemeFontFamily}"
                     ToolTipService.ToolTip="Go Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <!--Radiant Win-->
-            <Grid x:Name="RadiantWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay}"
-                  Grid.Column="1" Height="42" MaxWidth="268" Padding="8,0,0,0" HorizontalAlignment="Left" CornerRadius="4" Background="#4A7954" BorderBrush="#518A5A" BorderThickness="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image.Source>
-                        <BitmapImage UriSource="/Assets/Matches/icon_radiant_66bb6a.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Grid.Column="1" Text="Radiant Victory" Margin="8,2,16,-2" Foreground="#DFECE0" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            </Grid>
+            <!--Loading-->
+            <TextBlock Grid.Column="1" Text="Loading Match Data" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                       Margin="8,2,16,-2" Opacity="0.7" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <!--Dire Win-->
-            <Grid x:Name="DireWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}"
-                  Grid.Column="1" Height="42" MaxWidth="224" Padding="8,0,0,0" HorizontalAlignment="Left" CornerRadius="4" Background="#9E3C44" BorderBrush="#B74046" BorderThickness="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image.Source>
-                        <BitmapImage UriSource="/Assets/Matches/icon_dire_ff4c4c.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Grid.Column="1" Text="Dire Victory" Margin="8,2,16,-2" Foreground="#280F11" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <!--Match Result-->
+            <Grid Grid.Column="1" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <!--Radiant Win-->
+                <Grid x:Name="RadiantWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay}"
+                      Height="42" MaxWidth="268" Padding="8,0,0,0" HorizontalAlignment="Left" CornerRadius="4" Background="#4A7954" BorderBrush="#518A5A" BorderThickness="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Assets/Matches/icon_radiant_66bb6a.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Grid.Column="1" Text="Radiant Victory" Margin="8,2,16,-2" Foreground="#DFECE0" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+
+                <!--Dire Win-->
+                <Grid x:Name="DireWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay,Converter={StaticResource BoolNegationConverter}}"
+                      Height="42" MaxWidth="224" Padding="8,0,0,0" HorizontalAlignment="Left" CornerRadius="4" Background="#9E3C44" BorderBrush="#B74046" BorderThickness="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Height="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image.Source>
+                            <BitmapImage UriSource="/Assets/Matches/icon_dire_ff4c4c.png" DecodePixelHeight="56" DecodePixelType="Logical"/>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Grid.Column="1" Text="Dire Victory" Margin="8,2,16,-2" Foreground="#280F11" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
             </Grid>
 
             <!--Score-->
-            <TextBlock Grid.Column="2" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}" Margin="0,2,0,-2"
-                       FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="3" Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="4" Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}" Margin="0,2,0,-2"
-                       FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="2" Spacing="8" Orientation="Horizontal" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}" Margin="0,2,0,-2"
+                           FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}" Margin="0,2,0,-2"
+                           FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
 
         </Grid>
 
@@ -459,7 +466,7 @@
                                 </StackPanel>
                             </Grid>
 
-                            <Rectangle Height="34" Width="1" Fill="{ThemeResource DotaholdSeparatorColor}" VerticalAlignment="Center"/>
+                            <Rectangle Height="34" Width="1" Fill="{ThemeResource DotaholdSeparatorColor}" Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}" VerticalAlignment="Center"/>
 
                             <!--BanPick-->
                             <Grid Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PicksBans.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}"
@@ -698,7 +705,7 @@
                     </StackPanel>
 
                     <!--Players Ratio Compare-->
-                    <Grid HorizontalAlignment="Stretch" ColumnSpacing="8" RowSpacing="8" Margin="16,0">
+                    <Grid x:Name="PlayersRatioComparingGrid" HorizontalAlignment="Left" ColumnSpacing="8" RowSpacing="8" Margin="16,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -854,7 +861,7 @@
 
                         <!--Match ID-->
                         <TextBlock Grid.Column="0" IsTextSelectionEnabled="True" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Run Text="MATCH ID" FontSize="14" FontWeight="Medium" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                            <Run Text="Match ID" FontSize="14" FontWeight="Medium" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
                             <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.match_id,Mode=OneWay}" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="14"/>
                         </TextBlock>
 

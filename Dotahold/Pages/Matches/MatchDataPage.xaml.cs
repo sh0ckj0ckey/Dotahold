@@ -90,6 +90,7 @@ namespace Dotahold.Pages.Matches
             RadiantPlayersGrid.Width = RootGrid.ActualWidth - 32;
             DirePlayersHeaderGrid.Width = RootGrid.ActualWidth;
             DirePlayersGrid.Width = RootGrid.ActualWidth - 32;
+            PlayersRatioComparingGrid.Width = RootGrid.ActualWidth - 32;
             MatchIdAndDateGrid.Width = RootGrid.ActualWidth;
             VisitOpenDotaButton.Width = RootGrid.ActualWidth - 32;
         }
