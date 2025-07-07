@@ -23,7 +23,7 @@ namespace Dotahold.Pages.Matches
             this.InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Dotahold.Pages.Matches
 
                 if (string.IsNullOrWhiteSpace(_viewModel.AppSettings.SteamID))
                 {
-                    this.Frame.Navigate(typeof(ConnectPage));
+                    this.Frame.Navigate(typeof(ConnectPage), null, new SuppressNavigationTransitionInfo());
                     this.Frame.ForwardStack.Clear();
                     this.Frame.BackStack.Clear();
                 }
@@ -39,12 +39,12 @@ namespace Dotahold.Pages.Matches
                 {
                     if (MatchesFrame.Content is null)
                     {
-                        MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
+                        MatchesFrame.Navigate(typeof(BlankPage), null, new SuppressNavigationTransitionInfo());
                         MatchesFrame.ForwardStack.Clear();
                         MatchesFrame.BackStack.Clear();
                     }
 
-                    await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
+                    _ = _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
                 }
             }
             catch (Exception ex) { LogCourier.Log($"OverviewPage Loaded error: {ex.Message}", LogCourier.LogType.Error); }
@@ -92,11 +92,11 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                this.Frame.Navigate(typeof(ConnectPage));
-
-                MatchesFrame.Navigate(typeof(BlankPage), null, new DrillInNavigationTransitionInfo());
+                MatchesFrame.Navigate(typeof(BlankPage), null, new SuppressNavigationTransitionInfo());
                 MatchesFrame.ForwardStack.Clear();
                 MatchesFrame.BackStack.Clear();
+
+                this.Frame.Navigate(typeof(ConnectPage), null, new DrillInNavigationTransitionInfo());
             }
             catch (Exception ex) { LogCourier.Log($"ChangeAccountMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -106,7 +106,7 @@ namespace Dotahold.Pages.Matches
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void RefreshProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void RefreshProfileMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace Dotahold.Pages.Matches
 
                 _viewModel.ProfileViewModel.Reset();
                 _viewModel.MatchesViewModel.Reset();
-                await _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
+                _ = _viewModel.ProfileViewModel.LoadPlayerOverview(_viewModel.AppSettings.SteamID);
             }
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
@@ -132,10 +132,11 @@ namespace Dotahold.Pages.Matches
             {
                 if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(HeroesPlayedPage)))
                 {
-                    MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                    MatchesFrame.ForwardStack.Clear();
-                    MatchesFrame.BackStack.Clear();
+                    MatchesFrame.Navigate(typeof(HeroesPlayedPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                 }
+
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
             }
             catch (Exception ex)
             {
@@ -149,10 +150,11 @@ namespace Dotahold.Pages.Matches
             {
                 if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
                 {
-                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                    MatchesFrame.ForwardStack.Clear();
-                    MatchesFrame.BackStack.Clear();
+                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                 }
+
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
 
                 HeroModel? heroFilter = null;
                 bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
@@ -186,10 +188,11 @@ namespace Dotahold.Pages.Matches
             {
                 if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchesPage)))
                 {
-                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
-                    MatchesFrame.ForwardStack.Clear();
-                    MatchesFrame.BackStack.Clear();
+                    MatchesFrame.Navigate(typeof(MatchesPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                 }
+
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
 
                 HeroModel? heroFilter = (sender as Button)?.Tag as HeroModel;
                 bool isNewFilter = _viewModel.MatchesViewModel.MatchesHeroFilter != heroFilter;
@@ -228,10 +231,11 @@ namespace Dotahold.Pages.Matches
 
                 if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchDataPage)))
                 {
-                    MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
-                    MatchesFrame.ForwardStack.Clear();
-                    MatchesFrame.BackStack.Clear();
+                    MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                 }
+
+                MatchesFrame.ForwardStack.Clear();
+                MatchesFrame.BackStack.Clear();
 
                 _ = _viewModel.MatchesViewModel.LoadMatchData(match.match_id.ToString());
             }

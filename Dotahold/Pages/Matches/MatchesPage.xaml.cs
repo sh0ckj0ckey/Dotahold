@@ -110,7 +110,7 @@ namespace Dotahold.Pages.Matches
             }
             else
             {
-                this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                this.Frame.Navigate(typeof(BlankPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
                 this.Frame.ForwardStack.Clear();
                 this.Frame.BackStack.Clear();
             }
