@@ -374,7 +374,7 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (matchId == _currentMatchId || string.IsNullOrWhiteSpace(matchId))
+                if (/*matchId == _currentMatchId || */string.IsNullOrWhiteSpace(matchId))
                 {
                     return;
                 }
@@ -416,12 +416,20 @@ namespace Dotahold.ViewModels
 
                 if (_matchDataModels.TryGetValue(matchId, out var cachedMatchData))
                 {
-                    await Task.Delay(600, cancellationToken);
+                    await Task.Delay(800, cancellationToken);
                     this.SelectedMatchData = cachedMatchData;
                 }
                 else
                 {
+                    var start = DateTimeOffset.Now;
                     var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
+                    var elapsed = DateTimeOffset.Now - start;
+                    var minDelay = TimeSpan.FromMilliseconds(800);
+                    if (elapsed < minDelay)
+                    {
+                        await Task.Delay(minDelay - elapsed, cancellationToken);
+                    }
+
                     if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
                     {
                         _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
