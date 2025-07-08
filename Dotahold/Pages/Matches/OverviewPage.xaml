@@ -76,6 +76,12 @@
                         Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerProfile,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" ToolTipService.ToolTip="Menu" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Button.Flyout>
                         <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Text="Search Match" Click="SearchMenuFlyoutItem_Click">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE71E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,4,0,0"/>
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator Opacity="0.7"/>
                             <MenuFlyoutItem Text="Steam Profile" Click="VisitSteamProfileMenuFlyoutItem_Click">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE910;" FontFamily="{ThemeResource SymbolThemeFontFamily}" Margin="0,4,0,0"/>

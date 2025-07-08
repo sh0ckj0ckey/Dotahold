@@ -1,7 +1,9 @@
 ﻿using System;
+using Dotahold.Controls;
 using Dotahold.Data.DataShop;
 using Dotahold.Models;
 using Dotahold.ViewModels;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -66,6 +68,48 @@ namespace Dotahold.Pages.Matches
         }
 
         /// <summary>
+        /// Search by Match ID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void SearchMenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            try
+            {
+                var contentDialog = new ContentDialog
+                {
+                    XamlRoot = this.XamlRoot,
+                    RequestedTheme = this.ActualTheme,
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    IsPrimaryButtonEnabled = false,
+                    IsSecondaryButtonEnabled = false,
+                };
+
+                var matchSearchView = new MatchSearchView(() => { contentDialog?.Hide(); });
+
+                contentDialog.Content = matchSearchView;
+
+                await contentDialog.ShowAsync();
+
+                string matchId = matchSearchView.GetMatchId();
+
+                if (!string.IsNullOrWhiteSpace(matchId))
+                {
+                    if (!Type.Equals(MatchesFrame.CurrentSourcePageType, typeof(MatchDataPage)))
+                    {
+                        MatchesFrame.Navigate(typeof(MatchDataPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                    }
+
+                    MatchesFrame.ForwardStack.Clear();
+                    MatchesFrame.BackStack.Clear();
+
+                    _ = _viewModel.MatchesViewModel.LoadMatchData(matchId);
+                }
+            }
+            catch (Exception ex) { LogCourier.Log($"SearchMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
+        /// <summary>
         /// Visit player's Steam Profile website
         /// </summary>
         /// <param name="sender"></param>
@@ -126,6 +170,11 @@ namespace Dotahold.Pages.Matches
             catch (Exception ex) { LogCourier.Log($"RefreshProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
         }
 
+        /// <summary>
+        /// Navigate to HeroesPlayedPage to view all heroes played
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HeroesPlayedHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
@@ -144,6 +193,11 @@ namespace Dotahold.Pages.Matches
             }
         }
 
+        /// <summary>
+        /// Navigate to MatchesPage to view all matches
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void AllMatchesHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
@@ -182,6 +236,11 @@ namespace Dotahold.Pages.Matches
             }
         }
 
+        /// <summary>
+        /// Navigate to MatchesPage with a specific hero filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void PlayerHeroPerformanceButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try
@@ -220,6 +279,11 @@ namespace Dotahold.Pages.Matches
             }
         }
 
+        /// <summary>
+        /// Navigate to MatchDataPage with the selected match data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MatchButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             try

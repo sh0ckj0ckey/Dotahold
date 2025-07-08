@@ -37,13 +37,11 @@ namespace Dotahold.Pages.Heroes
 
             this.Loaded += (_, _) =>
             {
+                UpdateLayoutsWidth();
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
-
-                DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
-                FacetsGrid.Width = RootGrid.ActualWidth - 120;
-                AbilitiesGrid.Width = RootGrid.ActualWidth - 128;
             };
 
             this.Unloaded += (_, _) =>
@@ -88,6 +86,11 @@ namespace Dotahold.Pages.Heroes
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateLayoutsWidth();
+        }
+
+        private void UpdateLayoutsWidth()
         {
             DataAttributesScrollViewer.Width = RootGrid.ActualWidth;
             FacetsGrid.Width = RootGrid.ActualWidth - 120;
