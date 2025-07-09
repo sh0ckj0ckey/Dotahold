@@ -434,22 +434,64 @@ namespace Dotahold.ViewModels
                     {
                         _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
                         this.SelectedMatchData = _matchDataModels[matchData.match_id.ToString()];
-
-                        if (cancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
-
-                        _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
-                        _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
                     }
                 }
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.RadiantTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
+                _ = _serialTaskQueue.EnqueueAsync(() => this.SelectedMatchData?.DireTeam?.LogoImage?.LoadImageAsync() ?? Task.CompletedTask);
             }
             catch (Exception ex) { LogCourier.Log($"InternalLoadMatchData({matchId}) error: {ex.Message}", LogCourier.LogType.Error); }
             finally
             {
                 this.LoadingMatchData = false;
             }
+        }
+
+        /// <summary>
+        /// Checks if the MatchId returns valid match data
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<bool> VerifyMatchId(string matchId, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrWhiteSpace(matchId))
+            {
+                return false;
+            }
+
+            if (_matchDataModels.TryGetValue(matchId, out var matchDataModel))
+            {
+                await Task.Delay(400, cancellationToken);
+                return true;
+            }
+            try
+            {
+                var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
+
+                if (matchData is not null && matchData.match_id.ToString() == matchId)
+                {
+                    _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
+
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log($"VerifyMatchId({matchId}) error: {ex.Message}", LogCourier.LogType.Error);
+            }
+
+            return false;
         }
 
         public void Reset()
