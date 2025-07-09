@@ -751,7 +751,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Margin="-16,-16,-16,0" Padding="16,8" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                <TextBlock Text="Damage Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="Damage Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                             </Grid>
 
                             <!--Radiant Players Damage Ratio-->
@@ -819,7 +819,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Margin="-16,-16,-16,0" Padding="16,8" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                <TextBlock Text="Teamfight Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="Teamfight Ratio" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="17" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                             </Grid>
 
                             <!--Radiant Players Teamfight Ratio-->
