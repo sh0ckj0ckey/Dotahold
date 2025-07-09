@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
 using Windows.UI.Xaml;
@@ -45,25 +46,11 @@ namespace Dotahold.Controls
 
         public string GetMatchId() => _matchId;
 
-        private void MatchIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                if (ErrorTextBlock.Visibility == Visibility.Visible)
-                {
-                    GoToNormalState();
-                }
-            }
-            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
-        }
-
-        private async void SearchHyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private async Task SearchMatch(string matchId)
         {
             try
             {
                 GoToSearchingState();
-
-                string matchId = MatchIdTextBox.Text.Trim();
 
                 if (string.IsNullOrWhiteSpace(matchId))
                 {
@@ -86,16 +73,50 @@ namespace Dotahold.Controls
 
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    GoToNormalState();
                     return;
                 }
 
-                if (verified)
+                if (!verified)
                 {
-                    _matchId = matchId;
-                    _hideDialogContent.Invoke();
+                    GoToErrorState("Match ID not found or invalid");
+                    return;
+                }
+
+                _matchId = matchId;
+                _hideDialogContent.Invoke();
+            }
+            catch (Exception ex)
+            {
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
+                GoToNormalState();
+            }
+        }
+
+        private void MatchIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (SearchingErrorStackPanel.Visibility == Visibility.Visible)
+                {
+                    GoToNormalState();
                 }
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+        }
+
+        private async void MatchIdTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                e.Handled = true;
+                await SearchMatch(MatchIdTextBox.Text.Trim());
+            }
+        }
+
+        private async void SearchHyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            await SearchMatch(MatchIdTextBox.Text.Trim());
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -116,7 +137,7 @@ namespace Dotahold.Controls
                 SearchingStackPanel.Visibility = Visibility.Collapsed;
                 SearchingProgressRing.IsActive = false;
 
-                ErrorTextBlock.Visibility = Visibility.Collapsed;
+                SearchingErrorStackPanel.Visibility = Visibility.Collapsed;
                 ErrorTextBlock.Text = "";
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
@@ -133,7 +154,7 @@ namespace Dotahold.Controls
                 SearchingStackPanel.Visibility = Visibility.Visible;
                 SearchingProgressRing.IsActive = true;
 
-                ErrorTextBlock.Visibility = Visibility.Collapsed;
+                SearchingErrorStackPanel.Visibility = Visibility.Collapsed;
                 ErrorTextBlock.Text = "";
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
@@ -151,7 +172,7 @@ namespace Dotahold.Controls
                 SearchingStackPanel.Visibility = Visibility.Collapsed;
                 SearchingProgressRing.IsActive = false;
 
-                ErrorTextBlock.Visibility = Visibility.Visible;
+                SearchingErrorStackPanel.Visibility = Visibility.Visible;
                 ErrorTextBlock.Text = errorMessage;
             }
             catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }

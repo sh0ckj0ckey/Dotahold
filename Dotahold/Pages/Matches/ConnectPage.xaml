@@ -70,7 +70,8 @@
                 </Grid>
                 <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
                 <Grid Grid.Row="2" Padding="12" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <TextBox x:Name="SteamIdTextBox" Padding="12,10,12,8" FontSize="18" FontFamily="Consolas" PlaceholderText="Enter your Dota 2 ID" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBox x:Name="SteamIdTextBox" Padding="12,10,12,8" FontSize="18" FontFamily="Consolas" PlaceholderText="Enter your Dota 2 ID" 
+                             TextChanged="SteamIdTextBox_TextChanged" KeyDown="SteamIdTextBox_KeyDown" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </Grid>
                 <HyperlinkButton x:Name="ConnectHyperlinkButton" Grid.Row="3" Height="42" Margin="12,0,12,12" Padding="0" Click="ConnectHyperlinkButton_Click"
                                  Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Center">

@@ -460,30 +460,33 @@ namespace Dotahold.ViewModels
         /// <returns></returns>
         public async Task<bool> VerifyMatchId(string matchId, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(matchId))
-            {
-                return false;
-            }
-
-            if (_matchDataModels.TryGetValue(matchId, out var matchDataModel))
-            {
-                await Task.Delay(400, cancellationToken);
-                return true;
-            }
             try
             {
-                var matchData = await ApiCourier.GetMatchData(_currentMatchId, cancellationToken);
-
-                if (matchData is not null && matchData.match_id.ToString() == matchId)
+                if (string.IsNullOrWhiteSpace(matchId))
                 {
-                    _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
+                    return false;
+                }
 
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        return false;
-                    }
-
+                if (_matchDataModels.TryGetValue(matchId, out var matchDataModel))
+                {
+                    await Task.Delay(400, cancellationToken);
                     return true;
+                }
+                else
+                {
+                    var matchData = await ApiCourier.GetMatchData(matchId, cancellationToken);
+
+                    if (matchData is not null && matchData.match_id.ToString() == matchId)
+                    {
+                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName);
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    }
                 }
             }
             catch (Exception ex)

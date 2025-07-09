@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dotahold.Data.DataShop;
 using Dotahold.ViewModels;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -33,7 +34,7 @@ namespace Dotahold.Pages.Matches
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            SteamIdTextBox.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+            GoToNormalState();
 
             if (!_loadedPlayerConnectRecords)
             {
@@ -55,14 +56,13 @@ namespace Dotahold.Pages.Matches
         {
             try
             {
-                ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                ConnectingProgressRing.IsActive = true;
+                GoToConnectingState();
 
                 if (string.IsNullOrWhiteSpace(steamId))
                 {
                     ConnectionFailedInfoBar.Message = "Dota 2 ID cannot be empty.";
                     ConnectionFailedInfoBar.IsOpen = true;
+                    GoToNormalState();
                     return;
                 }
 
@@ -70,6 +70,7 @@ namespace Dotahold.Pages.Matches
                 {
                     ConnectionFailedInfoBar.Message = "Invalid Dota 2 ID format. Please enter a valid numeric ID.";
                     ConnectionFailedInfoBar.IsOpen = true;
+                    GoToNormalState();
                     return;
                 }
 
@@ -83,6 +84,7 @@ namespace Dotahold.Pages.Matches
                     {
                         ConnectionFailedInfoBar.Message = "Invalid Dota 2 ID. Please check and try again.";
                         ConnectionFailedInfoBar.IsOpen = true;
+                        GoToNormalState();
                         return;
                     }
                 }
@@ -96,13 +98,15 @@ namespace Dotahold.Pages.Matches
 
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    GoToNormalState();
                     return;
                 }
 
-                if (profile?.profile is null)
+                if (profile?.profile is null || profile.profile.account_id != steamId)
                 {
                     ConnectionFailedInfoBar.Message = "Failed to retrieve player profile. Please check the Dota 2 ID and try again.";
                     ConnectionFailedInfoBar.IsOpen = true;
+                    GoToNormalState();
                     return;
                 }
 
@@ -115,27 +119,37 @@ namespace Dotahold.Pages.Matches
                     this.Frame.BackStack.Clear();
                 }
             }
-            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
-            finally
+            catch (Exception ex)
             {
-                if (ConnectHyperlinkButton is not null)
+                LogCourier.Log(ex.Message, LogCourier.LogType.Error);
+                GoToNormalState();
+            }
+        }
+
+        private void SteamIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (ConnectionFailedInfoBar.IsOpen)
                 {
-                    ConnectHyperlinkButton.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    ConnectionFailedInfoBar.IsOpen = false;
                 }
-                if (ConnectingStackPanel is not null)
-                {
-                    ConnectingStackPanel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                }
-                if (ConnectingProgressRing is not null)
-                {
-                    ConnectingProgressRing.IsActive = false;
-                }
+            }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+        }
+
+        private async void SteamIdTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                e.Handled = true;
+                await ConnectSteamId(SteamIdTextBox.Text.Trim());
             }
         }
 
         private async void ConnectHyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            await ConnectSteamId(SteamIdTextBox.Text);
+            await ConnectSteamId(SteamIdTextBox.Text.Trim());
         }
 
         private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -157,6 +171,35 @@ namespace Dotahold.Pages.Matches
                 this.Frame.ForwardStack.Clear();
                 this.Frame.BackStack.Clear();
             }
+        }
+
+        private void GoToNormalState()
+        {
+            try
+            {
+                SteamIdTextBox.IsEnabled = true;
+                SteamIdTextBox.Focus(FocusState.Keyboard);
+
+                ConnectHyperlinkButton.Visibility = Visibility.Visible;
+
+                ConnectingStackPanel.Visibility = Visibility.Collapsed;
+                ConnectingProgressRing.IsActive = false;
+            }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
+        }
+
+        private void GoToConnectingState()
+        {
+            try
+            {
+                SteamIdTextBox.IsEnabled = false;
+
+                ConnectHyperlinkButton.Visibility = Visibility.Collapsed;
+
+                ConnectingStackPanel.Visibility = Visibility.Visible;
+                ConnectingProgressRing.IsActive = true;
+            }
+            catch (Exception ex) { LogCourier.Log(ex.Message, LogCourier.LogType.Error); }
         }
     }
 }

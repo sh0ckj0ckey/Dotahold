@@ -85,7 +85,7 @@ namespace Dotahold.Pages.Matches
                     IsSecondaryButtonEnabled = false,
                 };
 
-                var matchSearchView = new MatchSearchView(() => { contentDialog?.Hide(); });
+                var matchSearchView = new MatchSearchView(_viewModel.MatchesViewModel, () => { contentDialog?.Hide(); });
 
                 contentDialog.Content = matchSearchView;
 
