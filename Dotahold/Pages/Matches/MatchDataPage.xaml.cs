@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Dotahold.Data.DataShop;
+using Dotahold.Models;
 using Dotahold.ViewModels;
 using Windows.System;
 using Windows.UI.Core;
@@ -95,6 +96,16 @@ namespace Dotahold.Pages.Matches
             VisitOpenDotaButton.Width = RootGrid.ActualWidth - 32;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var player = (sender as Button)?.Tag as MatchPlayerModel;
+                this.Frame.Navigate(typeof(MatchDataPlayerPage), player, new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
+            }
+            catch (Exception ex) { LogCourier.Log($"PlayerButton Click error: {ex.Message}", LogCourier.LogType.Error); }
+        }
+
         private async void VisitOpenDotaButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -106,7 +117,6 @@ namespace Dotahold.Pages.Matches
                 }
             }
             catch (Exception ex) { LogCourier.Log($"VisitSteamProfileMenuFlyoutItem Click error: {ex.Message}", LogCourier.LogType.Error); }
-
         }
 
         #region GoBack

@@ -33,7 +33,7 @@
         <converters:ItemTierToColorConverter x:Key="ItemTierToColorConverter"/>
 
         <DataTemplate x:DataType="models:MatchPlayerModel" x:Key="MatchPlayerItemTemplate">
-            <Button MinHeight="72" Padding="8" Tag="{x:Bind DotaMatchPlayer}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Button MinHeight="72" Padding="8" Tag="{x:Bind }" Click="Button_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -115,14 +115,14 @@
 
                             <!--Player Name-->
                             <TextBlock Grid.Column="1" Text="{x:Bind DotaMatchPlayer.personaname}" FontSize="16" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}"
-                                       Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter}}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                       Visibility="{x:Bind DotaMatchPlayer.account_id,Converter={StaticResource EmptyToVisibilityConverter}}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <ToolTipService.ToolTip>
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="{x:Bind DotaMatchPlayer.personaname}" FontSize="14" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="0" Text="{x:Bind DotaMatchPlayer.personaname}" FontSize="16" FontWeight="Bold" FontFamily="{ThemeResource RadianceSemiBold}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         <StackPanel x:Name="PlayerNameStackPanel" x:Load="{x:Bind DotaMatchPlayer.name,Converter={StaticResource EmptyStringToBoolConverter}}" Grid.Row="1" Spacing="4" Margin="0,4,0,0" Opacity="0.7" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <FontIcon Glyph="&#xE930;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             <TextBlock Text="{x:Bind DotaMatchPlayer.name}" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -131,7 +131,7 @@
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                             <TextBlock Grid.Column="1" Text="Anonymous" Opacity="0.5" FontSize="16" FontWeight="Bold" FontFamily="{ThemeResource ReaverBold}"
-                                       Visibility="{x:Bind DotaMatchPlayer.personaname,Converter={StaticResource EmptyToVisibilityConverter},ConverterParameter=!}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                       Visibility="{x:Bind DotaMatchPlayer.account_id,Converter={StaticResource EmptyToVisibilityConverter},ConverterParameter=!}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
 
                         <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -606,7 +606,7 @@
                                 </Border.Background>
                             </Border>
                             <TextBlock Grid.Column="1" Margin="8,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantTeam.Name,Mode=OneWay}" FontSize="15"/>
+                                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantTeam.Name,Mode=OneWay}" FontSize="15" FontWeight="Bold"/>
                                 <LineBreak/>
                                 <Run Text="Radiant" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="13"/>
                             </TextBlock>
@@ -660,7 +660,7 @@
                                 </Border.Background>
                             </Border>
                             <TextBlock Grid.Column="1" Margin="8,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DireTeam.Name,Mode=OneWay}" FontSize="15"/>
+                                <Run Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DireTeam.Name,Mode=OneWay}" FontSize="15" FontWeight="Bold"/>
                                 <LineBreak/>
                                 <Run Text="Dire" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="13"/>
                             </TextBlock>

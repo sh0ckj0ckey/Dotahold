@@ -44,10 +44,16 @@ namespace Dotahold.Data.Models
             }
         }
 
-        public async Task LoadImageAsync()
+        public async Task LoadImageAsync(bool skipEmptyUrl = false)
         {
             if (this.Loaded)
             {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_url) && skipEmptyUrl)
+            {
+                this.Loaded = true;
                 return;
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dotahold.Data.DataShop;
 using Dotahold.Data.Models;
 using Dotahold.Helpers;
 using Windows.UI;
@@ -59,7 +60,7 @@ namespace Dotahold.Models
 
         public List<MatchPlayerRatioModel> DirePlayerTeamfightRatios { get; private set; }
 
-        public MatchDataModel(DotaMatchDataModel matchData, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName)
+        public MatchDataModel(DotaMatchDataModel matchData, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
         {
             _defaultGoldImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_gold_stack.png"))
             {
@@ -126,7 +127,7 @@ namespace Dotahold.Models
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemById, getAbilitiesByHeroName);
+                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
 
                     if (playerModel.DotaMatchPlayer.player_slot >= 128)
                     {
@@ -245,6 +246,8 @@ namespace Dotahold.Models
 
         public SolidColorBrush SlotColorBrush { get; private set; }
 
+        public double KDA { get; private set; }
+
         public string PartyId { get; private set; }
 
         public ItemModel? Item0 { get; private set; }
@@ -275,13 +278,18 @@ namespace Dotahold.Models
 
         public MatchPlayerAdditionalUnitModel? AdditionalUnit { get; private set; } = null;
 
-        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName)
+        public List<MatchPlayerAbilityUpgradeModel> AbilityUpgrades { get; private set; } = [];
+
+        public List<MatchPlayerPermenentBuffModel> PermenentBuffs { get; private set; } = [];
+
+        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
         {
             this.DotaMatchPlayer = player;
             this.HasParsed = hasParsed;
             this.Hero = getHeroById(this.DotaMatchPlayer.hero_id);
             this.AbilitiesFacet = this.Hero is not null ? getAbilitiesByHeroName(this.Hero.DotaHeroAttributes.name)?.GetFacetByIndex(this.DotaMatchPlayer.hero_variant) : null;
             this.SlotColorBrush = MatchDataHelper.GetSlotColorBrush(this.DotaMatchPlayer.player_slot);
+            this.KDA = player.deaths > 0 ? Math.Floor(((double)(player.kills + player.assists) / player.deaths) * 10) / 10 : Math.Floor((double)(player.kills + player.assists) * 10) / 10;
             this.PartyId = this.DotaMatchPlayer.party_size > 1 && this.DotaMatchPlayer.party_size < 10 ? (this.DotaMatchPlayer.party_id) switch
             {
                 1 => "Ⅰ",
@@ -313,6 +321,22 @@ namespace Dotahold.Models
             if (this.DotaMatchPlayer.additional_units?.Length > 0 && !string.IsNullOrWhiteSpace(this.DotaMatchPlayer.additional_units[0].unitname))
             {
                 this.AdditionalUnit = new MatchPlayerAdditionalUnitModel(this.DotaMatchPlayer.additional_units[0], getItemById);
+            }
+
+            if (this.DotaMatchPlayer.ability_upgrades_arr?.Length > 0)
+            {
+                foreach (var abilityId in this.DotaMatchPlayer.ability_upgrades_arr)
+                {
+                    this.AbilityUpgrades.Add(new MatchPlayerAbilityUpgradeModel(abilityId, getAbilityNameById));
+                }
+            }
+
+            if (this.DotaMatchPlayer.permanent_buffs?.Length > 0)
+            {
+                foreach (var permanentBuff in this.DotaMatchPlayer.permanent_buffs)
+                {
+                    this.PermenentBuffs.Add(new MatchPlayerPermenentBuffModel(permanentBuff, getPermanentBuffNameById));
+                }
             }
         }
 
@@ -402,6 +426,125 @@ namespace Dotahold.Models
             this.Backpack1 = getItemById(additionalUnit.backpack_1);
             this.Backpack2 = getItemById(additionalUnit.backpack_2);
             this.ItemNeutral = getItemById(additionalUnit.item_neutral);
+        }
+    }
+
+    public class MatchPlayerAbilityUpgradeModel
+    {
+        /// <summary>
+        /// 默认技能图标
+        /// </summary>
+        private static BitmapImage? _defaultAbilityImageSource84 = null;
+
+        /// <summary>
+        /// 天赋树图标
+        /// </summary>
+        private static BitmapImage? _talentImageSource84 = null;
+
+        /// <summary>
+        /// 技能图标
+        /// </summary>
+        public AsyncImage IconImage { get; private set; }
+
+        /// <summary>
+        /// 技能名称
+        /// </summary>
+        public string Name { get; private set; }
+
+        public MatchPlayerAbilityUpgradeModel(int abilityId, Func<string, string> getAbilityNameById)
+        {
+            _defaultAbilityImageSource84 ??= new BitmapImage(new Uri("ms-appx:///Assets/img_placeholder_square.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 84,
+            };
+
+            _talentImageSource84 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/icon_talent_tree.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 84,
+            };
+
+            string abilityName = getAbilityNameById(abilityId.ToString());
+            bool isTalent = abilityName.StartsWith("special_bonus_");
+
+            this.IconImage = !isTalent ? new AsyncImage($"{ConstantsCourier.ImageSourceDomain}/apps/dota2/images/dota_react/abilities/{abilityName}.png", 0, 84, _defaultAbilityImageSource84)
+                                       : new AsyncImage(string.Empty, 0, 84, _talentImageSource84);
+            this.Name = !isTalent ? abilityName.Replace('_', ' ').ToUpper()
+                                  : abilityName.Replace("special_bonus_", "Talent ").Replace('_', ' ').ToUpper();
+        }
+    }
+
+    public class MatchPlayerPermenentBuffModel
+    {
+        private static readonly Dictionary<string, BitmapImage> _buffIcons = [];
+
+        /// <summary>
+        /// 默认 Buff 图标
+        /// </summary>
+        private static BitmapImage? _defaultBuffImageSource84 = null;
+
+        /// <summary>
+        /// Buff 图标
+        /// </summary>
+        public AsyncImage IconImage { get; private set; }
+
+        /// <summary>
+        /// Buff 名称
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Buff 层数
+        /// </summary>
+        public string Stack { get; private set; }
+
+        public MatchPlayerPermenentBuffModel(DotaMatchPlayerPermanentBuff permanentBuff, Func<string, string> getPermanentBuffNameById)
+        {
+            _defaultBuffImageSource84 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/PermanentBuffs/buff_placeholder.png"))
+            {
+                DecodePixelType = DecodePixelType.Logical,
+                DecodePixelHeight = 84,
+            };
+
+            string buffName = getPermanentBuffNameById(permanentBuff.permanent_buff.ToString());
+
+            this.Name = buffName.Replace('_', ' ').ToUpper();
+            this.Stack = permanentBuff.stack_count > 1 ? permanentBuff.stack_count.ToString() : string.Empty;
+
+            if (buffName == "moon_shard" ||
+                buffName == "ultimate_scepter" ||
+                buffName == "silencer_glaives_of_wisdom" ||
+                buffName == "pudge_flesh_heap" ||
+                buffName == "legion_commander_duel" ||
+                buffName == "tome_of_knowledge" ||
+                buffName == "lion_finger_of_death" ||
+                buffName == "slark_essence_shift" ||
+                buffName == "abyssal_underlord_atrophy_aura" ||
+                buffName == "bounty_hunter_jinada" ||
+                buffName == "aghanims_shard" ||
+                buffName == "axe_culling_blade" ||
+                buffName == "necrolyte_reapers_scythe" ||
+                buffName == "muerta_pierce_the_veil")
+            {
+                if (!_buffIcons.ContainsKey(buffName))
+                {
+                    _buffIcons[buffName] = new BitmapImage(new Uri($"ms-appx:///Assets/Matches/PermanentBuffs/{buffName}.png"))
+                    {
+                        DecodePixelType = DecodePixelType.Logical,
+                        DecodePixelHeight = 84,
+                    };
+                }
+            }
+
+            if (_buffIcons.TryGetValue(buffName, out var buffIcon))
+            {
+                this.IconImage = new AsyncImage(string.Empty, 0, 84, buffIcon);
+            }
+            else
+            {
+                this.IconImage = new AsyncImage(string.Empty, 0, 84, _defaultBuffImageSource84);
+            }
         }
     }
 }

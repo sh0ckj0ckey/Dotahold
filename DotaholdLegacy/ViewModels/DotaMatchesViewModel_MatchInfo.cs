@@ -12,19 +12,6 @@
             {
                 if (player != null)
                 {
-                    // kda
-                    try
-                    {
-                        if (string.IsNullOrEmpty(player.sKDA))
-                        {
-                            double ka = (player.kills ?? 0) + (player.assists ?? 0);
-                            double d = ((player.deaths ?? 0) <= 0) ? 1.0 : (double)player.deaths;
-                            double kda = ka / d;
-                            player.sKDA = (Math.Floor(100 * kda) / 100).ToString("f2");
-                        }
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
                     // buffs
                     try
                     {
@@ -59,51 +46,6 @@
                                     buff?.LoadBuffImageAsync(36);
                                 }
                                 catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                            }
-                        }
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
-                    // abilities
-                    try
-                    {
-                        if (player.vAbilitiesUpgrade == null) player.vAbilitiesUpgrade = new ObservableCollection<AbilityUpgrade>();
-
-                        if (player.vAbilitiesUpgrade.Count <= 0)
-                        {
-                            if (player.ability_upgrades_arr != null && player.ability_upgrades_arr.Count > 0)
-                            {
-                                player.vAbilitiesUpgrade.Clear();
-                                Dictionary<string, string> dictAbilities = await ConstantsCourier.Instance.GetAbilityIDsConstant();
-                                foreach (var ability in player.ability_upgrades_arr)
-                                {
-                                    try
-                                    {
-                                        if (ability != null && dictAbilities.ContainsKey(ability.ToString()))
-                                        {
-                                            var abilityUp = new AbilityUpgrade();
-                                            string abiName = dictAbilities[ability.ToString()];
-
-                                            if (abiName.StartsWith("special_bonus_"))
-                                                abilityUp.bIsTalent = true;
-                                            else
-                                                abilityUp.sAbilityUrl = string.Format("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/abilities/{0}.png", abiName);
-
-                                            abilityUp.sAbilityName = abiName.Replace('_', ' ').ToUpper();
-
-                                            player.vAbilitiesUpgrade.Add(abilityUp);
-                                        }
-                                    }
-                                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                                }
-                                foreach (var ability in player.vAbilitiesUpgrade)
-                                {
-                                    try
-                                    {
-                                        ability?.LoadAbilityImageAsync(48);
-                                    }
-                                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                                }
                             }
                         }
                     }
