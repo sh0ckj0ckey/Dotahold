@@ -34,7 +34,7 @@ namespace Dotahold.Models
             "gold_per_min" => "\uE9D9",
             "xp_per_min" => "\uE9D9",
             "last_hits" => "\uF138",
-            "denies" => "\uE783",
+            "denies" => "\uE8C9",
             "level" => "\uE752",
             "hero_damage" => "\uEA92",
             "tower_damage" => "\uECAD",

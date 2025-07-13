@@ -12,45 +12,6 @@
             {
                 if (player != null)
                 {
-                    // buffs
-                    try
-                    {
-                        if (player.permanent_buffs == null) player.permanent_buffs = new List<Permanent_Buffs>();
-
-                        if (player.permanent_buffs.Count > 0)
-                        {
-                            Dictionary<string, string> dictBuffs = await ConstantsCourier.Instance.GetPermanentBuffsConstant();
-                            foreach (var buff in player.permanent_buffs)
-                            {
-                                try
-                                {
-                                    if (buff == null) continue;
-
-                                    if (buff?.permanent_buff != null && dictBuffs.ContainsKey(buff.permanent_buff.ToString()))
-                                    {
-                                        buff.sBuff = dictBuffs[buff.permanent_buff.ToString()];
-                                    }
-                                    else
-                                    {
-                                        // 字典里没有这个buff，则显示默认图
-                                        buff.permanent_buff = -99;
-                                        buff.sBuff = "buff_placeholder";
-                                    }
-                                }
-                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                            }
-                            foreach (var buff in player.permanent_buffs)
-                            {
-                                try
-                                {
-                                    buff?.LoadBuffImageAsync(36);
-                                }
-                                catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-                            }
-                        }
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
                     // benchmarks
                     try
                     {

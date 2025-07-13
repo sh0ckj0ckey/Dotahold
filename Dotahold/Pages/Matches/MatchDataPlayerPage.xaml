@@ -49,55 +49,6 @@
                 <Grid.Background>
                     <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind MatchPlayerModel.Hero.HeroImage.Image,Mode=OneWay}"/>
                 </Grid.Background>
-
-                <!--Level-->
-                <Grid Height="36" Width="36" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Polygon Points="0,0,36,0,0,36">
-                        <Polygon.Fill>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStopCollection>
-                                    <GradientStop Color="#222222" Offset="0"/>
-                                    <GradientStop Color="#00222222" Offset="0.6"/>
-                                    <GradientStop Color="#00222222" Offset="1.0"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush>
-                        </Polygon.Fill>
-                    </Polygon>
-                    <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.level,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" Foreground="#FADA9E" Margin="2" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                </Grid>
-
-                <!--Facet-->
-                <Border Height="42" Width="64" Visibility="{x:Bind MatchPlayerModel.AbilitiesFacet,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}" ToolTipService.Placement="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
-                            <GradientStopCollection>
-                                <GradientStop Color="#222222" Offset="0.0"/>
-                                <GradientStop Color="#00222222" Offset="0.6"/>
-                                <GradientStop Color="#00222222" Offset="1.0"/>
-                            </GradientStopCollection>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <ToolTipService.ToolTip>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="36"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" ColumnSpacing="12" CornerRadius="2" Background="{x:Bind MatchPlayerModel.AbilitiesFacet.BackgroundBrush,Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="36"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#16000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Image Height="18" Width="18" Source="{x:Bind MatchPlayerModel.AbilitiesFacet.IconImage.Image,Mode=OneWay}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <TextBlock Grid.Column="1" Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Title,Mode=OneWay}" FontFamily="{ThemeResource ReaverBold}" Foreground="#FFFFFF" FontSize="16" Margin="0,2,8,-2" FontWeight="Bold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            </Grid>
-                            <TextBlock Grid.Row="1" Margin="12" Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                        </Grid>
-                    </ToolTipService.ToolTip>
-                    <Image Height="18" Width="18" Margin="4" Opacity="0.8" Stretch="UniformToFill" Source="{x:Bind MatchPlayerModel.AbilitiesFacet.IconImage.Image,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                </Border>
             </Grid>
 
             <!--Player Name and ID-->
@@ -141,6 +92,54 @@
 
         <ScrollViewer Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="PlayerDataStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,4,0,12">
+
+                <!--Overview-->
+                <ScrollViewer x:Name="OverviewScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
+                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Horizontal" Margin="20,24,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <!--Facet-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" Background="{x:Bind MatchPlayerModel.AbilitiesFacet.BackgroundBrush,Mode=OneWay}"
+                              Visibility="{x:Bind MatchPlayerModel.AbilitiesFacet,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}">
+                            <Image Height="24" Width="24" Source="{x:Bind MatchPlayerModel.AbilitiesFacet.IconImage.Image,Mode=OneWay}" Margin="4" Opacity="0.2" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Facet" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Title,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="15" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                            <ToolTipService.ToolTip>
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock Grid.Row="1" Margin="4" Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Description,Mode=OneWay}" FontFamily="{ThemeResource Radiance}" FontSize="15" Opacity="0.7" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </ToolTipService.ToolTip>
+                        </Grid>
+
+                        <!--KDA-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock HorizontalAlignment="Center" FontSize="14" FontWeight="Medium">
+                                    <Run Text="KDA" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                    <Run Text="{x:Bind MatchPlayerModel.KDA,Mode=OneWay}"/>
+                                </TextBlock>
+                                <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}">
+                                    <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.kills}" Foreground="#63916C"/>
+                                    <Run Text="/"/>
+                                    <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.deaths}" Foreground="#C55357"/>
+                                    <Run Text="/"/>
+                                    <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.assists}" Foreground="#647E8E"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--Level-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xE752;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Level" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.level,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
 
                 <!--Items Header-->
                 <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -304,12 +303,12 @@
                         </communityControls:SegmentedItem>
                         <communityControls:SegmentedItem ToolTipService.ToolTip="Last Hits">
                             <communityControls:SegmentedItem.Icon>
-                                <FontIcon Glyph="&#xF138;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                                <FontIcon Glyph="&#xF138;" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
                             </communityControls:SegmentedItem.Icon>
                         </communityControls:SegmentedItem>
                         <communityControls:SegmentedItem ToolTipService.ToolTip="Denies">
                             <communityControls:SegmentedItem.Icon>
-                                <FontIcon Glyph="&#xE8C9;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                                <FontIcon Glyph="&#xE8C9;" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
                             </communityControls:SegmentedItem.Icon>
                         </communityControls:SegmentedItem>
                     </communityControls:Segmented>
