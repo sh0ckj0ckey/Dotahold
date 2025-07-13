@@ -282,6 +282,8 @@ namespace Dotahold.Models
 
         public List<MatchPlayerPermenentBuffModel> PermenentBuffs { get; private set; } = [];
 
+        public bool HasGraphs { get; private set; }
+
         public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
         {
             this.DotaMatchPlayer = player;
@@ -338,6 +340,11 @@ namespace Dotahold.Models
                     this.PermenentBuffs.Add(new MatchPlayerPermenentBuffModel(permanentBuff, getPermanentBuffNameById));
                 }
             }
+
+            this.HasGraphs = this.DotaMatchPlayer.gold_t?.Length > 0
+                           || this.DotaMatchPlayer.xp_t?.Length > 0
+                           || this.DotaMatchPlayer.lh_t?.Length > 0
+                           || this.DotaMatchPlayer.dn_t?.Length > 0;
         }
 
     }

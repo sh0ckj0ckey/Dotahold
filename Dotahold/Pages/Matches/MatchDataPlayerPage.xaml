@@ -7,13 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:Dotahold.Controls"
     xmlns:models="using:Dotahold.Models"
-    xmlns:converters="using:Dotahold.Converters" 
+    xmlns:converters="using:Dotahold.Converters"
     mc:Ignorable="d"
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
         <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
         <converters:EmptyStringToBoolConverter x:Key="EmptyStringToBoolConverter"/>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
@@ -279,6 +281,46 @@
                         </Grid>
                     </DataTemplate>
                 </muxc:ItemsRepeater>
+
+                <!--Graph Charts Header-->
+                <Grid Padding="24,16,16,8" Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <FontIcon Grid.Column="0" Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="Graphs" Margin="12,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <communityControls:Segmented x:Name="GraphChartsSegmented" Grid.Column="2" SelectionChanged="GraphChartsSegmented_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Right" SelectedIndex="0">
+                        <communityControls:SegmentedItem ToolTipService.ToolTip="Gold">
+                            <communityControls:SegmentedItem.Icon>
+                                <BitmapIcon UriSource="/Assets/Matches/icon_gold.png" ShowAsMonochrome="True"/>
+                            </communityControls:SegmentedItem.Icon>
+                        </communityControls:SegmentedItem>
+                        <communityControls:SegmentedItem ToolTipService.ToolTip="Experience">
+                            <communityControls:SegmentedItem.Icon>
+                                <BitmapIcon UriSource="/Assets/Matches/icon_xp.png" ShowAsMonochrome="True"/>
+                            </communityControls:SegmentedItem.Icon>
+                        </communityControls:SegmentedItem>
+                        <communityControls:SegmentedItem ToolTipService.ToolTip="Last Hits">
+                            <communityControls:SegmentedItem.Icon>
+                                <FontIcon Glyph="&#xF138;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                            </communityControls:SegmentedItem.Icon>
+                        </communityControls:SegmentedItem>
+                        <communityControls:SegmentedItem ToolTipService.ToolTip="Denies">
+                            <communityControls:SegmentedItem.Icon>
+                                <FontIcon Glyph="&#xE8C9;" FontWeight="Bold" FontFamily="{ThemeResource SymbolThemeFontFamily}"/>
+                            </communityControls:SegmentedItem.Icon>
+                        </communityControls:SegmentedItem>
+                    </communityControls:Segmented>
+                </Grid>
+
+                <!--Graph Charts-->
+                <controls:LineChartControl Margin="16,0" Height="296" HorizontalAlignment="Stretch"
+                                           Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
+                                           XAxisStep="5" ShowNegativeArea="False" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
+                                           ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
+                                           Series="{x:Bind PlayerSelectedGraph,Mode=OneWay}"/>
 
             </StackPanel>
         </ScrollViewer>

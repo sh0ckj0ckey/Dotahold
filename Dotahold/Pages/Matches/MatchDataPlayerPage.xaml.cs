@@ -1,9 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using CommunityToolkit.WinUI.Controls;
 using Dotahold.Models;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -33,6 +37,20 @@ namespace Dotahold.Pages.Matches
             }
         }
 
+        private List<LineSeries> _playerSelectedGraph = [];
+        public List<LineSeries> PlayerSelectedGraph
+        {
+            get => _playerSelectedGraph;
+            set
+            {
+                if (_playerSelectedGraph != value)
+                {
+                    _playerSelectedGraph = value;
+                    OnPropertyChanged(nameof(PlayerSelectedGraph));
+                }
+            }
+        }
+
         public MatchDataPlayerPage()
         {
             this.DataContext = this;
@@ -41,6 +59,8 @@ namespace Dotahold.Pages.Matches
             this.Loaded += (_, _) =>
             {
                 UpdateLayoutsWidth();
+                GraphChartsSegmented.SelectedIndex = -1;
+                GraphChartsSegmented.SelectedIndex = 0;
 
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
@@ -130,5 +150,53 @@ namespace Dotahold.Pages.Matches
 
         #endregion
 
+        private void GraphChartsSegmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is Segmented segmented && this.MatchPlayerModel is not null)
+            {
+                int selectedIndex = segmented.SelectedIndex;
+                switch (selectedIndex)
+                {
+                    case 0:
+                        this.PlayerSelectedGraph = [new LineSeries
+                        {
+                            Icon = this.MatchPlayerModel.Hero?.HeroIcon,
+                            Title = "Gold",
+                            LineColorBrush = new SolidColorBrush(Colors.Goldenrod),
+                            Data = this.MatchPlayerModel.DotaMatchPlayer.gold_t ?? [],
+                        }];
+                        break;
+                    case 1:
+                        this.PlayerSelectedGraph = [new LineSeries
+                        {
+                            Icon = this.MatchPlayerModel.Hero?.HeroIcon,
+                            Title = "XP",
+                            LineColorBrush = new SolidColorBrush(Colors.MediumOrchid),
+                            Data = this.MatchPlayerModel.DotaMatchPlayer.xp_t ?? [],
+                        }];
+                        break;
+                    case 2:
+                        this.PlayerSelectedGraph = [new LineSeries
+                        {
+                            Icon = this.MatchPlayerModel.Hero?.HeroIcon,
+                            Title = "Last Hits",
+                            LineColorBrush = this.MatchPlayerModel.SlotColorBrush,
+                            Data = this.MatchPlayerModel.DotaMatchPlayer.lh_t ?? [],
+                        }];
+                        break;
+                    case 3:
+                        this.PlayerSelectedGraph = [new LineSeries
+                        {
+                            Icon = this.MatchPlayerModel.Hero?.HeroIcon,
+                            Title = "Denies",
+                            LineColorBrush = this.MatchPlayerModel.SlotColorBrush,
+                            Data = this.MatchPlayerModel.DotaMatchPlayer.dn_t ?? [],
+                        }];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
