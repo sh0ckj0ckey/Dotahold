@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -46,6 +47,11 @@
         <muxc:ProgressRing Grid.Row="2" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" IsActive="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Border Grid.Row="2" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock Text="NothingToShow" Opacity="0.3" FontSize="24" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Visibility="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformances.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter},ConverterParameter=!}"/>
+        </Border>
 
         <ScrollViewer Grid.Row="2" Visibility="{x:Bind _viewModel.ProfileViewModel.LoadingPlayerHeroesPerformance,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
             <muxc:ItemsRepeater x:Name="PlayerHeroPerformancesItemsRepeater" Margin="16,28,16,16" ItemsSource="{x:Bind _viewModel.ProfileViewModel.PlayerHeroPerformances,Mode=OneWay}" HorizontalAlignment="Stretch">

@@ -54,6 +54,11 @@
                            Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+        <Border Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock Text="NothingToShow" Opacity="0.3" FontSize="24" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Visibility="{x:Bind _viewModel.MatchesViewModel.Matches.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter},ConverterParameter=!}"/>
+        </Border>
+
         <ScrollViewer x:Name="MatchesScrollViewer" Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingPlayerAllMatches,Converter={StaticResource BoolToVisibilityConverter},Mode=OneWay,ConverterParameter=!}" ViewChanged="ScrollViewer_ViewChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto">
             <muxc:ItemsRepeater x:Name="MatchesItemsRepeater" Margin="16,28,16,16" ItemsSource="{x:Bind _viewModel.MatchesViewModel.Matches,Mode=OneWay}" HorizontalAlignment="Stretch">
                 <muxc:ItemsRepeater.Layout>
