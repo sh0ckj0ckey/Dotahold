@@ -200,6 +200,9 @@ namespace Dotahold.Data.Models
         public int buyback_count { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
+        public int courier_kills { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
         public int purchase_tpscroll { get; set; }
 
 
@@ -215,9 +218,6 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int sentry_kills { get; set; }
 
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int courier_kills { get; set; }
-
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int creeps_stacked { get; set; }
@@ -227,6 +227,9 @@ namespace Dotahold.Data.Models
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int neutral_kills { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int ancient_kills { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int roshan_kills { get; set; }

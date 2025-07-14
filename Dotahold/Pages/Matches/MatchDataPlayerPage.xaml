@@ -90,7 +90,7 @@
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <ScrollViewer Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer x:Name="PlayerDataScrollViewer" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="PlayerDataStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,4,0,12">
 
                 <!--Overview-->
@@ -183,7 +183,7 @@
                                 <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.denies,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                             </StackPanel>
                         </Grid>
-                        
+
                         <!--Hero Damage-->
                         <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xEA92;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
@@ -210,6 +210,91 @@
                                 <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.hero_healing,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                             </StackPanel>
                         </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+                <ScrollViewer x:Name="StatisticsScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.HasParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Horizontal" Margin="20,12,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <!--Creeps Stacked-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_creep.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Creeps Stacked" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.creeps_stacked,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Camps Stacked-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_small_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Camps Stacked" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.camps_stacked,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Neutral Kills-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_medium_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Neutral Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.neutral_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Ancient Kills-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Ancient Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.ancient_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Roshan Kills-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_roshan.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Roshan Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.roshan_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Tower Kills-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_tower.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Tower Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.tower_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
 
                     </StackPanel>
                 </ScrollViewer>

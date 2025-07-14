@@ -61,6 +61,9 @@ namespace Dotahold.Pages.Matches
                 UpdateLayoutsWidth();
                 GraphChartsSegmented.SelectedIndex = -1;
                 GraphChartsSegmented.SelectedIndex = 0;
+                PlayerDataScrollViewer.ScrollToVerticalOffset(0);
+                OverviewScrollViewer.ScrollToHorizontalOffset(0);
+                StatisticsScrollViewer.ScrollToHorizontalOffset(0);
 
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
