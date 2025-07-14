@@ -138,6 +138,79 @@
                                 <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.level,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                             </StackPanel>
                         </Grid>
+
+                        <!--GPM-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="GPM" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.gold_per_min,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--XPM-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="XPM" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.xp_per_min,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--NET Worth-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xEE94;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="NET Worth" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.net_worth,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--Last Hits-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xF138;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Last Hits" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.last_hits,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--Denies-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xE8C9;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Denies" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.denies,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <!--Hero Damage-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xEA92;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Hero Damage" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.hero_damage,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--Tower Damage-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xECAD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Tower Damage" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.tower_damage,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--Hero Healing-->
+                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xF1E8;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="Hero Healing" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.hero_healing,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                            </StackPanel>
+                        </Grid>
+
                     </StackPanel>
                 </ScrollViewer>
 
@@ -315,7 +388,7 @@
                 </Grid>
 
                 <!--Graph Charts-->
-                <controls:LineChartControl Margin="16,0" Height="296" HorizontalAlignment="Stretch"
+                <controls:LineChartControl Margin="16,0" Height="256" HorizontalAlignment="Stretch"
                                            Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                            XAxisStep="5" ShowNegativeArea="False" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                            ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"

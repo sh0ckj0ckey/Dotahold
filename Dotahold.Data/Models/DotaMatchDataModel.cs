@@ -146,6 +146,13 @@ namespace Dotahold.Data.Models
 
 
         [JsonConverter(typeof(SafeIntConverter))]
+        public int aghanims_scepter { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int aghanims_shard { get; set; }
+
+
+        [JsonConverter(typeof(SafeIntConverter))]
         public int kills { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
@@ -174,20 +181,26 @@ namespace Dotahold.Data.Models
 
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public int aghanims_scepter { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int aghanims_shard { get; set; }
-
-
-        [JsonConverter(typeof(SafeIntConverter))]
         public int hero_damage { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int tower_damage { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int hero_healing { get; set; }
 
+
         [JsonConverter(typeof(SafeIntConverter))]
-        public int tower_damage { get; set; }
+        public int firstblood_claimed { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int rune_pickups { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int buyback_count { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int purchase_tpscroll { get; set; }
 
 
         [JsonConverter(typeof(SafeIntConverter))]
@@ -202,49 +215,24 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int sentry_kills { get; set; }
 
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int buyback_count { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int purchase_tpscroll { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int rune_pickups { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int actions_per_min { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int firstblood_claimed { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int lane { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int pings { get; set; }
-
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int tower_kills { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int roshan_kills { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int ancient_kills { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int neutral_kills { get; set; }
-
         [JsonConverter(typeof(SafeIntConverter))]
         public int courier_kills { get; set; }
+
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int creeps_stacked { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int camps_stacked { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int neutral_kills { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int roshan_kills { get; set; }
+
+        [JsonConverter(typeof(SafeIntConverter))]
+        public int tower_kills { get; set; }
 
 
         public int[]? times { get; set; } = [];
