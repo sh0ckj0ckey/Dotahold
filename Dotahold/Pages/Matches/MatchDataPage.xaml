@@ -474,7 +474,7 @@
 
                             <!--First Blood-->
                             <Grid Height="48" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
-                                <FontIcon Glyph="&#xEB42;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <FontIcon Glyph="&#xF1BB;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="First Blood" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                     <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.FirstBloodTime,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
