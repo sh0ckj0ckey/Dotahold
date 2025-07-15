@@ -62,6 +62,12 @@
             <muxc:ProgressRing Grid.Row="3" Height="36" Width="36" Foreground="{ThemeResource DotaholdApplicationForeground}" IsActive="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay}"
                                Visibility="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" 
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Border Grid.Row="3" Visibility="{x:Bind _viewModel.ItemsViewModel.Loading,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TextBlock Text="NothingToShow" Opacity="0.3" FontSize="24" FontFamily="{ThemeResource RadianceSemiBold}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{x:Bind _viewModel.ItemsViewModel.Items.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter},ConverterParameter=!}"/>
+            </Border>
+            
             <ListView x:Name="ItemsListView" Grid.Row="3" ItemsSource="{x:Bind _viewModel.ItemsViewModel.Items,Mode=OneWay}" 
                       SelectedItem="{x:Bind _viewModel.ItemsViewModel.SelectedItem,Mode=OneWay}" 
                       SelectionChanged="ListView_SelectionChanged" Padding="4,8,4,8" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
