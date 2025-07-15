@@ -122,9 +122,9 @@
                                 </TextBlock>
                                 <TextBlock HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}">
                                     <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.kills}" Foreground="#63916C"/>
-                                    <Run Text="/"/>
+                                    <Run Text="/" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
                                     <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.deaths}" Foreground="#C55357"/>
-                                    <Run Text="/"/>
+                                    <Run Text="/" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
                                     <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.assists}" Foreground="#647E8E"/>
                                 </TextBlock>
                             </StackPanel>
@@ -219,7 +219,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20,12,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                         <!--First Blood-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
                                     Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.firstblood_claimed,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
@@ -229,8 +229,80 @@
                             <TextBlock Text="First Blood" FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                         </StackPanel>
 
+                        <!--Rune Pickups-->
+                        <StackPanel Orientation="Horizontal" Spacing="2" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                                    Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.rune_pickups,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_rune.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Rune Pickups" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.rune_pickups,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Buyback Count-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                                    Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.buyback_count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_gold_stack.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Buyback Count" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.buyback_count,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Courier Kills-->
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                                    Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.courier_kills,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_courier.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Courier Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.courier_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Observer Ward-->
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="16" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_observer_ward.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Observer Ward" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.obs_placed,Mode=OneWay}" Foreground="#63916C"/>
+                                <Run Text="/" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.observer_kills,Mode=OneWay}" Foreground="#C55357"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!--Sentry Ward-->
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="16" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_sentry_ward.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
+                                <Run Text="Sentry Ward" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.sen_placed,Mode=OneWay}" Foreground="#63916C"/>
+                                <Run Text="/" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.sentry_kills,Mode=OneWay}" Foreground="#C55357"/>
+                            </TextBlock>
+                        </StackPanel>
+
                         <!--Creeps Stacked-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_creep.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -243,7 +315,7 @@
                         </StackPanel>
 
                         <!--Camps Stacked-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_small_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -256,10 +328,10 @@
                         </StackPanel>
 
                         <!--Neutral Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
-                            <Image Height="18" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <Image Height="16" VerticalAlignment="Center">
                                 <Image.Source>
-                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
                                 </Image.Source>
                             </Image>
                             <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
@@ -269,7 +341,7 @@
                         </StackPanel>
 
                         <!--Roshan Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_roshan.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -282,7 +354,7 @@
                         </StackPanel>
 
                         <!--Tower Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_tower.png" DecodePixelType="Logical" DecodePixelHeight="18"/>

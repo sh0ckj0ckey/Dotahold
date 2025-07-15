@@ -202,9 +202,6 @@ namespace Dotahold.Data.Models
         [JsonConverter(typeof(SafeIntConverter))]
         public int courier_kills { get; set; }
 
-        [JsonConverter(typeof(SafeIntConverter))]
-        public int purchase_tpscroll { get; set; }
-
 
         [JsonConverter(typeof(SafeIntConverter))]
         public int obs_placed { get; set; }
