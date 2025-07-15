@@ -65,6 +65,7 @@ namespace Dotahold.Pages.Matches
                 {
                     MatchDataScrollViewer?.ScrollToVerticalOffset(0);
                     MatchDataOverviewScrollViewer?.ScrollToHorizontalOffset(0);
+                    ShowMatchDataStoryboard?.Begin();
                 }
             }
             catch (Exception ex)

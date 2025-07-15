@@ -12,7 +12,6 @@
     xmlns:communityControls="using:CommunityToolkit.WinUI.Controls"
     xmlns:communityMedia="using:CommunityToolkit.WinUI.Media"
     xmlns:communityConverters="using:CommunityToolkit.WinUI.Converters"
-    xmlns:communityAnimations="using:CommunityToolkit.WinUI.Animations"
     xmlns:models="using:Dotahold.Models"
     xmlns:converters="using:Dotahold.Converters" 
     xmlns:controls="using:Dotahold.Controls"
@@ -329,6 +328,29 @@
             </Button>
         </DataTemplate>
 
+        <Storyboard x:Name="ShowMatchDataStoryboard">
+            <DoubleAnimation Storyboard.TargetName="MatchResultGrid" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.6"/>
+            <DoubleAnimation Storyboard.TargetName="MatchResultGridTranslation" Storyboard.TargetProperty="X" From="-16" To="0" Duration="0:0:0.6">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="ScoreStackPanel" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
+            <DoubleAnimation Storyboard.TargetName="ScoreStackPanelTranslation" Storyboard.TargetProperty="X" From="16" To="0" Duration="0:0:0.6">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <DoubleAnimation Storyboard.TargetName="MatchDataGrid" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
+            <DoubleAnimation Storyboard.TargetName="MatchDataGridTranslation" Storyboard.TargetProperty="Y" From="48" To="0" Duration="0:0:0.6">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
     </Page.Resources>
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -354,11 +376,10 @@
                        Margin="8,2,16,-2" Opacity="0.7" FontFamily="{ThemeResource ReaverBold}" FontSize="20" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
             <!--Match Result-->
-            <Grid Grid.Column="1" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <communityAnimations:Implicit.ShowAnimations>
-                    <communityAnimations:TranslationAnimation From="-16,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1"/>
-                    <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.8"/>
-                </communityAnimations:Implicit.ShowAnimations>
+            <Grid x:Name="MatchResultGrid" Grid.Column="1" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Grid.RenderTransform>
+                    <TranslateTransform x:Name="MatchResultGridTranslation" X="-16"/>
+                </Grid.RenderTransform>
 
                 <!--Radiant Win-->
                 <Grid x:Name="RadiantWinGrid" x:Load="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_win,Mode=OneWay}"
@@ -392,27 +413,16 @@
             </Grid>
 
             <!--Score-->
-            <StackPanel Grid.Column="2" Spacing="8" Orientation="Horizontal" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}" Margin="0,2,0,-2"
-                           Opacity="0" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <communityAnimations:Implicit.ShowAnimations>
-                        <communityAnimations:TranslationAnimation From="16,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1" Delay="0:0:0.1"/>
-                        <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.8" Delay="0:0:0.1"/>
-                    </communityAnimations:Implicit.ShowAnimations>
-                </TextBlock>
-                <TextBlock Text=":" Opacity="0" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <communityAnimations:Implicit.ShowAnimations>
-                        <communityAnimations:TranslationAnimation From="16,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1" Delay="0:0:0.15"/>
-                        <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.8" Delay="0:0:0.15"/>
-                    </communityAnimations:Implicit.ShowAnimations>
-                </TextBlock>
-                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}" Margin="0,2,0,-2"
-                           Opacity="0" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <communityAnimations:Implicit.ShowAnimations>
-                        <communityAnimations:TranslationAnimation From="16,0,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1" Delay="0:0:0.2"/>
-                        <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.8" Delay="0:0:0.2"/>
-                    </communityAnimations:Implicit.ShowAnimations>
-                </TextBlock>
+            <StackPanel x:Name="ScoreStackPanel" Grid.Column="2" Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}">
+                <StackPanel.RenderTransform>
+                    <TranslateTransform x:Name="ScoreStackPanelTranslation" X="0"/>
+                </StackPanel.RenderTransform>
+                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.radiant_score,Mode=OneWay}"
+                           Margin="0,2,0,-2" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#66BB6A" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text=":" FontFamily="{ThemeResource ReaverBold}" FontSize="22" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.DotaMatchData.dire_score,Mode=OneWay}"
+                           Margin="0,2,0,-2" FontFamily="{ThemeResource ReaverBold}" FontSize="28" Foreground="#FF4C4C" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
 
         </Grid>
@@ -423,11 +433,10 @@
                            IsActive="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay}"
                            Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-        <Grid x:Name="MatchDataGrid" Grid.Row="2" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <communityAnimations:Implicit.ShowAnimations>
-                <communityAnimations:TranslationAnimation From="0,48,0" To="0,0,0" EasingMode="EaseOut" Duration="0:0:1"/>
-                <communityAnimations:OpacityAnimation From="0" To="1" Duration="0:0:0.8"/>
-            </communityAnimations:Implicit.ShowAnimations>
+        <Grid x:Name="MatchDataGrid" Grid.Row="2" Opacity="0" Visibility="{x:Bind _viewModel.MatchesViewModel.LoadingMatchData,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter},ConverterParameter=!}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RenderTransform>
+                <TranslateTransform x:Name="MatchDataGridTranslation" Y="48"/>
+            </Grid.RenderTransform>
             <ScrollViewer x:Name="MatchDataScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
