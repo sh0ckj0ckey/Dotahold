@@ -229,9 +229,6 @@ namespace Dotahold.Data.Models
         public int neutral_kills { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]
-        public int ancient_kills { get; set; }
-
-        [JsonConverter(typeof(SafeIntConverter))]
         public int roshan_kills { get; set; }
 
         [JsonConverter(typeof(SafeIntConverter))]

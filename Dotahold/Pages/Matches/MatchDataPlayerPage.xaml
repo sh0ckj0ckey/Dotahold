@@ -103,8 +103,8 @@
                               Visibility="{x:Bind MatchPlayerModel.AbilitiesFacet,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}">
                             <Image Height="24" Width="24" Source="{x:Bind MatchPlayerModel.AbilitiesFacet.IconImage.Image,Mode=OneWay}" Margin="4" Opacity="0.2" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="Facet" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
-                                <TextBlock Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Title,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="15" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                <TextBlock Text="Facet" HorizontalAlignment="Center" Opacity="0.7" Foreground="#FFFFFF" FontSize="14" FontWeight="Medium"/>
+                                <TextBlock Text="{x:Bind MatchPlayerModel.AbilitiesFacet.Title,Mode=OneWay}" HorizontalAlignment="Center" Foreground="#FFFFFF" FontSize="15" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
                             </StackPanel>
                             <ToolTipService.ToolTip>
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -218,6 +218,17 @@
                               Visibility="{x:Bind MatchPlayerModel.HasParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal" Margin="20,12,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
+                        <!--First Blood-->
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                                    Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.firstblood_claimed,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                            <Image Height="18" VerticalAlignment="Center">
+                                <Image.Source>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_blood.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                </Image.Source>
+                            </Image>
+                            <TextBlock Text="First Blood" FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
+                        </StackPanel>
+
                         <!--Creeps Stacked-->
                         <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
@@ -248,25 +259,12 @@
                         <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
-                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_medium_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
+                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
                                 </Image.Source>
                             </Image>
                             <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
                                 <Run Text="Neutral Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
                                 <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.neutral_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
-                            </TextBlock>
-                        </StackPanel>
-
-                        <!--Ancient Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
-                            <Image Height="18" VerticalAlignment="Center">
-                                <Image.Source>
-                                    <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
-                                </Image.Source>
-                            </Image>
-                            <TextBlock FontSize="14" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}" VerticalAlignment="Center">
-                                <Run Text="Ancient Kills" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
-                                <Run Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.ancient_kills,Mode=OneWay}" Foreground="{ThemeResource DotaholdApplicationForeground}"/>
                             </TextBlock>
                         </StackPanel>
 
