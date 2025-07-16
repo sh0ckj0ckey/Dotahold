@@ -282,6 +282,8 @@ namespace Dotahold.Models
 
         public List<MatchPlayerPermenentBuffModel> PermenentBuffs { get; private set; } = [];
 
+        public List<MatchPlayerRuneModel> Runes { get; private set; } = [];
+
         public bool HasGraphs { get; private set; }
 
         public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
@@ -338,6 +340,14 @@ namespace Dotahold.Models
                 foreach (var permanentBuff in this.DotaMatchPlayer.permanent_buffs)
                 {
                     this.PermenentBuffs.Add(new MatchPlayerPermenentBuffModel(permanentBuff, getPermanentBuffNameById));
+                }
+            }
+
+            if (this.DotaMatchPlayer.runes_log?.Length > 0)
+            {
+                foreach (var log in this.DotaMatchPlayer.runes_log)
+                {
+                    this.Runes.Add(new MatchPlayerRuneModel(log.key, log.time));
                 }
             }
 
@@ -553,5 +563,14 @@ namespace Dotahold.Models
                 this.IconImage = new AsyncImage(string.Empty, 0, 84, _defaultBuffImageSource84);
             }
         }
+    }
+
+    public class MatchPlayerRuneModel(string runeId, int time)
+    {
+        public string RuneName { get; private set; } = MatchDataHelper.GetRuneName(runeId);
+
+        public BitmapImage? RuneIcon { get; private set; } = MatchDataHelper.GetRuneImage(runeId);
+
+        public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
     }
 }

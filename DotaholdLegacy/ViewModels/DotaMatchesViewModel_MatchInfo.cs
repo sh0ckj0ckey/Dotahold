@@ -45,13 +45,6 @@
                     }
                     catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
 
-                    // runes
-                    try
-                    {
-                        if (player.runes_log == null) player.runes_log = new List<Runes_Log>();
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
                     // purchase log
                     try
                     {

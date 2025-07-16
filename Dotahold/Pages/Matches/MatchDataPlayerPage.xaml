@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <!--Rank Tier-->
-        <Image Grid.Row="0" Source="{x:Bind MatchPlayerModel.DotaMatchPlayer.rank_tier,Mode=OneWay,Converter={StaticResource PlayerRankToMedalImageConverter},ConverterParameter=128}" Height="64" Width="64" Opacity="0.8" Margin="8" Stretch="UniformToFill" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        <Image Grid.Row="0" Source="{x:Bind MatchPlayerModel.DotaMatchPlayer.rank_tier,Mode=OneWay,Converter={StaticResource PlayerRankToMedalImageConverter},ConverterParameter=128}" Height="64" Width="64" Margin="8" Stretch="UniformToFill" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
         <Grid Grid.Row="0" ColumnSpacing="8" Margin="16,8,20,-8" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -90,7 +90,7 @@
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <ScrollViewer x:Name="PlayerDataScrollViewer" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer x:Name="PlayerDataScrollViewer" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
             <StackPanel x:Name="PlayerDataStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,4,0,12">
 
                 <!--Overview-->
@@ -99,7 +99,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20,24,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                         <!--Facet-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" Background="{x:Bind MatchPlayerModel.AbilitiesFacet.BackgroundBrush,Mode=OneWay}"
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" Background="{x:Bind MatchPlayerModel.AbilitiesFacet.BackgroundBrush,Mode=OneWay}"
                               Visibility="{x:Bind MatchPlayerModel.AbilitiesFacet,Mode=OneWay,Converter={StaticResource EmptyToVisibilityConverter}}">
                             <Image Height="24" Width="24" Source="{x:Bind MatchPlayerModel.AbilitiesFacet.IconImage.Image,Mode=OneWay}" Margin="4" Opacity="0.2" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -114,7 +114,7 @@
                         </Grid>
 
                         <!--KDA-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xF272;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontWeight="Medium">
@@ -132,7 +132,7 @@
                         </Grid>
 
                         <!--Level-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xE752;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Level" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -141,7 +141,7 @@
                         </Grid>
 
                         <!--GPM-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="GPM" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -150,7 +150,7 @@
                         </Grid>
 
                         <!--XPM-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="XPM" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -159,7 +159,7 @@
                         </Grid>
 
                         <!--NET Worth-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xEE94;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="NET Worth" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -168,7 +168,7 @@
                         </Grid>
 
                         <!--Last Hits-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xF138;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Last Hits" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -177,7 +177,7 @@
                         </Grid>
 
                         <!--Denies-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xE8C9;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Denies" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -186,7 +186,7 @@
                         </Grid>
 
                         <!--Hero Damage-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xEA92;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Hero Damage" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -195,7 +195,7 @@
                         </Grid>
 
                         <!--Tower Damage-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xECAD;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Tower Damage" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -204,7 +204,7 @@
                         </Grid>
 
                         <!--Hero Healing-->
-                        <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <Grid Height="48" MinWidth="96" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <FontIcon Glyph="&#xE95E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Hero Healing" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
@@ -220,7 +220,7 @@
                     <StackPanel Orientation="Horizontal" Margin="20,12,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
                         <!--First Blood-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
                                     Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.firstblood_claimed,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
@@ -231,7 +231,7 @@
                         </StackPanel>
 
                         <!--Rune Pickups-->
-                        <StackPanel Orientation="Horizontal" Spacing="2" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                        <StackPanel Orientation="Horizontal" Spacing="2" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
                                     Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.rune_pickups,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
@@ -245,7 +245,7 @@
                         </StackPanel>
 
                         <!--Buyback Count-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
                                     Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.buyback_count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
@@ -259,7 +259,7 @@
                         </StackPanel>
 
                         <!--Courier Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent"
                                     Visibility="{x:Bind MatchPlayerModel.DotaMatchPlayer.courier_kills,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
@@ -273,7 +273,7 @@
                         </StackPanel>
 
                         <!--Observer Ward-->
-                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="16" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_observer_ward.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
@@ -288,7 +288,7 @@
                         </StackPanel>
 
                         <!--Sentry Ward-->
-                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="16" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_sentry_ward.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
@@ -303,7 +303,7 @@
                         </StackPanel>
 
                         <!--Creeps Stacked-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_creep.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -316,7 +316,7 @@
                         </StackPanel>
 
                         <!--Camps Stacked-->
-                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="4" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="8,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_small_camps.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -329,7 +329,7 @@
                         </StackPanel>
 
                         <!--Neutral Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="16" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_ancient_camps.png" DecodePixelType="Logical" DecodePixelHeight="16"/>
@@ -342,7 +342,7 @@
                         </StackPanel>
 
                         <!--Roshan Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="8" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="12,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_roshan.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -355,7 +355,7 @@
                         </StackPanel>
 
                         <!--Tower Kills-->
-                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,12,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Spacing="6" Height="32" CornerRadius="16" Margin="0,0,8,0" Padding="10,0,16,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
                             <Image Height="18" VerticalAlignment="Center">
                                 <Image.Source>
                                     <BitmapImage UriSource="/Assets/Matches/Data/icon_tower.png" DecodePixelType="Logical" DecodePixelHeight="18"/>
@@ -476,17 +476,19 @@
                 </StackPanel>
 
                 <!--Ability Upgrades-->
-                <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.AbilityUpgrades,Mode=OneWay}"
-                                    Visibility="{x:Bind MatchPlayerModel.AbilityUpgrades.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                    <muxc:ItemsRepeater.Layout>
-                        <muxc:UniformGridLayout MinColumnSpacing="4" MinRowSpacing="4"/>
-                    </muxc:ItemsRepeater.Layout>
-                    <DataTemplate x:DataType="models:MatchPlayerAbilityUpgradeModel">
-                        <Grid Height="42" Width="42" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Name}">
-                            <Image Source="{x:Bind IconImage.Image,Mode=OneWay}" Height="42" Width="42" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </muxc:ItemsRepeater>
+                <ScrollViewer x:Name="AbilityUpgradesScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.AbilityUpgrades.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.AbilityUpgrades,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerAbilityUpgradeModel">
+                            <Grid Height="42" Width="42" CornerRadius="4" ToolTipService.ToolTip="{x:Bind Name}">
+                                <Image Source="{x:Bind IconImage.Image,Mode=OneWay}" Height="42" Width="42" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
                 <!--Permanent Buffs Header-->
                 <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -496,22 +498,24 @@
                 </StackPanel>
 
                 <!--Permanent Buffs-->
-                <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.PermenentBuffs,Mode=OneWay}"
-                                    Visibility="{x:Bind MatchPlayerModel.PermenentBuffs.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                    <muxc:ItemsRepeater.Layout>
-                        <muxc:UniformGridLayout MinColumnSpacing="4" MinRowSpacing="4"/>
-                    </muxc:ItemsRepeater.Layout>
-                    <DataTemplate x:DataType="models:MatchPlayerPermenentBuffModel">
-                        <Grid Height="42" Width="42" CornerRadius="21" ToolTipService.ToolTip="{x:Bind Name}">
-                            <Image Source="{x:Bind IconImage.Image,Mode=OneWay}" Height="42" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Margin="0,0,-3,-3" Text="{x:Bind Stack}" Foreground="#8C000000" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Text="{x:Bind Stack}" Foreground="White" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </muxc:ItemsRepeater>
+                <ScrollViewer x:Name="PermanentBuffsScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.PermenentBuffs.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.PermenentBuffs,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerPermenentBuffModel">
+                            <Grid Height="42" Width="42" CornerRadius="21" ToolTipService.ToolTip="{x:Bind Name}">
+                                <Image Source="{x:Bind IconImage.Image,Mode=OneWay}" Height="42" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Margin="0,0,-3,-3" Text="{x:Bind Stack}" Foreground="#8C000000" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind Stack}" Foreground="White" FontFamily="{ThemeResource RadianceSemiBold}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
                 <!--Graph Charts Header-->
-                <Grid Padding="24,16,16,8" Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid Padding="24,16,20,8" Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -544,11 +548,42 @@
                 </Grid>
 
                 <!--Graph Charts-->
-                <controls:LineChartControl Margin="16,0" Height="256" HorizontalAlignment="Stretch"
+                <controls:LineChartControl Margin="20,0" Height="256" HorizontalAlignment="Stretch"
                                            Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}"
                                            XAxisStep="5" ShowNegativeArea="False" XAxisLabelFormat="{}{0}:00" FontFamily="{ThemeResource RadianceSemiBold}" 
                                            ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                            Series="{x:Bind PlayerSelectedGraph,Mode=OneWay}"/>
+
+                <!--Runes Header-->
+                <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <FontIcon Glyph="&#xF159;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Runes" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!--Runes-->
+                <ScrollViewer x:Name="RunesScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Runes,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerRuneModel">
+                            <Grid Height="48" MinWidth="96" ColumnSpacing="12" Padding="12,0,16,0" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="{x:Bind RuneName}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{x:Bind RuneIcon}" Height="24" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Run Text="{x:Bind RuneName}" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                    <LineBreak/>
+                                    <Run Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
             </StackPanel>
         </ScrollViewer>

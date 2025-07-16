@@ -2,6 +2,7 @@
 using Dotahold.Data.DataShop;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Dotahold.Helpers
 {
@@ -142,6 +143,86 @@ namespace Dotahold.Helpers
                 "14" or "lobby_type_new_player" => "New Player",
                 "15" or "lobby_type_featured" => "Featured",
                 _ => lobbyType.Replace("lobby_type_", "").Replace("_", " ").ToUpper(),
+            };
+        }
+
+        private static BitmapImage? _doubleRune;
+        private static BitmapImage? _hasteRune;
+        private static BitmapImage? _illusionRune;
+        private static BitmapImage? _invisibilityRune;
+        private static BitmapImage? _regenerationRune;
+        private static BitmapImage? _bountyRune;
+        private static BitmapImage? _arcaneRune;
+        private static BitmapImage? _waterRune;
+        private static BitmapImage? _wisdomRune;
+        private static BitmapImage? _shieldRune;
+        private static BitmapImage? _unknownRune;
+
+        public static BitmapImage GetRuneImage(string runeId)
+        {
+            switch (runeId)
+            {
+                case "0":
+                    _doubleRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_0.png"));
+                    return _doubleRune;
+
+                case "1":
+                    _hasteRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_1.png"));
+                    return _hasteRune;
+
+                case "2":
+                    _illusionRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_2.png"));
+                    return _illusionRune;
+
+                case "3":
+                    _invisibilityRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_3.png"));
+                    return _invisibilityRune;
+
+                case "4":
+                    _regenerationRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_4.png"));
+                    return _regenerationRune;
+
+                case "5":
+                    _bountyRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_5.png"));
+                    return _bountyRune;
+
+                case "6":
+                    _arcaneRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_6.png"));
+                    return _arcaneRune;
+
+                case "7":
+                    _waterRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_7.png"));
+                    return _waterRune;
+
+                case "8":
+                    _wisdomRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_8.png"));
+                    return _wisdomRune;
+
+                case "9":
+                    _shieldRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Runes/img_rune_9.png"));
+                    return _shieldRune;
+
+                default:
+                    _unknownRune ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_rune.png"));
+                    return _unknownRune;
+            }
+        }
+
+        public static string GetRuneName(string runeId)
+        {
+            return runeId switch
+            {
+                "0" => "Double Damage",
+                "1" => "Haste",
+                "2" => "Illusion",
+                "3" => "Invisibility",
+                "4" => "Regeneration",
+                "5" => "Bounty",
+                "6" => "Arcane",
+                "7" => "Water",
+                "8" => "Wisdom",
+                "9" => "Shield",
+                _ => "Unknown Rune"
             };
         }
 
