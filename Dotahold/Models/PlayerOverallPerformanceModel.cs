@@ -38,8 +38,8 @@ namespace Dotahold.Models
             "level" => "\uE752",
             "hero_damage" => "\uEA92",
             "tower_damage" => "\uECAD",
-            "hero_healing" => "\uF1E8",
-            "KDA" => "\uE81E",
+            "hero_healing" => "\uE95E",
+            "KDA" => "\uF272",
             _ => "",
         };
 

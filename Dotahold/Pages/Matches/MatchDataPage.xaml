@@ -692,7 +692,7 @@
                     <!--Advantages Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.RadiantAdvantage.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <FontIcon Glyph="&#xE9D2;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <FontIcon Glyph="&#xE9D9;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="Advantages" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -706,8 +706,8 @@
                     <!--Gold Graph Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersGold.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <!--<FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-                        <BitmapIcon UriSource="/Assets/Matches/icon_gold.png" Margin="2,0,0,0" Height="18" Width="18" ShowAsMonochrome="True"/>
+                        <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <!--<BitmapIcon UriSource="/Assets/Matches/icon_gold.png" Margin="2,0,0,0" Height="18" Width="18" ShowAsMonochrome="True"/>-->
                         <TextBlock Text="Gold Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -721,8 +721,8 @@
                     <!--Experience Graph Chart Header-->
                     <StackPanel Padding="24,16,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Visibility="{x:Bind _viewModel.MatchesViewModel.SelectedMatchData.PlayersExperience.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                        <!--<FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-                        <BitmapIcon UriSource="/Assets/Matches/icon_xp.png" Margin="2,0,0,0" Height="18" Width="18" ShowAsMonochrome="True"/>
+                        <FontIcon Glyph="&#xEAFC;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <!--<BitmapIcon UriSource="/Assets/Matches/icon_xp.png" Margin="2,0,0,0" Height="18" Width="18" ShowAsMonochrome="True"/>-->
                         <TextBlock Text="Experience Graph" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </StackPanel>
 

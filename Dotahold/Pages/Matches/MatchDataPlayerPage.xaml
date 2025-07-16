@@ -115,6 +115,7 @@
 
                         <!--KDA-->
                         <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
+                            <FontIcon Glyph="&#xF272;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock HorizontalAlignment="Center" FontSize="14" FontWeight="Medium">
                                     <Run Text="KDA" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
@@ -204,7 +205,7 @@
 
                         <!--Hero Healing-->
                         <Grid Height="48" CornerRadius="4" Margin="0,0,8,0" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent">
-                            <FontIcon Glyph="&#xF1E8;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <FontIcon Glyph="&#xE95E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="26" Margin="4,2" Opacity="0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             <StackPanel Padding="24,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Text="Hero Healing" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" FontSize="14" FontWeight="Medium"/>
                                 <TextBlock Text="{x:Bind MatchPlayerModel.DotaMatchPlayer.hero_healing,Mode=OneWay}" HorizontalAlignment="Center" Foreground="{ThemeResource DotaholdApplicationForeground}" FontSize="13" FontWeight="Medium" FontFamily="{ThemeResource RadianceSemiBold}"/>
