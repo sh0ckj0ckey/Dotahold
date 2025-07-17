@@ -44,51 +44,6 @@
                         </DataTemplate>
                     </muxc:ItemsRepeater>
                 </ScrollViewer>
-
-                <!--Benchmarks-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="26,16,0,4"
-                            Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <FontIcon Glyph="&#xED5E;" Margin="0,0,8,0" FontSize="20"/>
-                    <TextBlock Text="Benchmarks" FontWeight="Bold" Margin="0,6" FontSize="16" FontFamily="/Fonts/Reaver-Bold.ttf#Reaver" CharacterSpacing="20"/>
-                </StackPanel>
-                <ListView HorizontalContentAlignment="Stretch" Margin="22,0,22,12"
-                          SelectionMode="None" IsItemClickEnabled="False"
-                          ItemsSource="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks,Mode=OneWay}"
-                          Visibility="{x:Bind ViewModel.CurrentMatchPlayer.vBenchmarks.Count,Mode=OneWay,Converter={StaticResource Int2Vis}}">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="mdl:Benchmark">
-                            <Grid CornerRadius="4" Margin="-10,0,-10,8" MinWidth="120" Padding="10,6,10,6" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock FontSize="12" Opacity="0.7" Margin="4,0,4,0" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <Run Text="{x:Bind Name}"/>
-                                    <Run Text=":"/>
-                                    <Run Text="{x:Bind raw}" Foreground="{x:Bind pct,Converter={StaticResource Benchmark2Color}}"/>
-                                </TextBlock>
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Margin="4,4,2,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="8" Width="120" CornerRadius="3" Background="{ThemeResource MATCHPLAYER_DATA_BK}">
-                                        <Border HorizontalAlignment="Left" Height="8" Width="{x:Bind BarWidth}" CornerRadius="3" Background="{x:Bind pct,Converter={StaticResource Benchmark2Color}}"/>
-                                    </Border>
-                                    <TextBlock Grid.Column="1" FontSize="12" Opacity="0.5" Margin="4,0,2,-1" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <Run Text="{x:Bind pct}"/>
-                                        <Run Text="%"/>
-                                    </TextBlock>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -67,6 +67,7 @@ namespace Dotahold.Pages.Matches
                 AbilityUpgradesScrollViewer.ScrollToHorizontalOffset(0);
                 PermanentBuffsScrollViewer.ScrollToHorizontalOffset(0);
                 RunesScrollViewer.ScrollToHorizontalOffset(0);
+                BenchmarksScrollViewer.ScrollToHorizontalOffset(0);
 
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
@@ -102,9 +103,6 @@ namespace Dotahold.Pages.Matches
         private void UpdateLayoutsWidth()
         {
             PlayerDataStackPanel.Width = RootGrid.ActualWidth;
-            AbilityUpgradesScrollViewer.Width = RootGrid.ActualWidth;
-            PermanentBuffsScrollViewer.Width = RootGrid.ActualWidth;
-            RunesScrollViewer.Width = RootGrid.ActualWidth;
         }
 
         #region GoBack

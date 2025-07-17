@@ -215,6 +215,7 @@
                     </StackPanel>
                 </ScrollViewer>
 
+                <!--Statistics-->
                 <ScrollViewer x:Name="StatisticsScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
                               Visibility="{x:Bind MatchPlayerModel.HasParsed,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal" Margin="20,12,12,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -513,6 +514,37 @@
                         </DataTemplate>
                     </muxc:ItemsRepeater>
                 </ScrollViewer>
+                
+                <!--Runes Header-->
+                <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <FontIcon Glyph="&#xF159;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Runes" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!--Runes-->
+                <ScrollViewer x:Name="RunesScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Runes,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerRuneModel">
+                            <Grid Height="48" MinWidth="96" ColumnSpacing="12" Padding="12,0,16,0" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="{x:Bind RuneName}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{x:Bind RuneIcon}" Height="24" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Run Text="{x:Bind RuneName}" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                    <LineBreak/>
+                                    <Run Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
 
                 <!--Graph Charts Header-->
                 <Grid Padding="24,16,20,8" Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
@@ -554,32 +586,42 @@
                                            ChartColor="{ThemeResource DotaholdApplicationForeground}" TooltipBackgroundColor="{ThemeResource DotaholdApplicationPageBackground}"
                                            Series="{x:Bind PlayerSelectedGraph,Mode=OneWay}"/>
 
-                <!--Runes Header-->
+                <!--Benchmarks Header-->
                 <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
-                            Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                    <FontIcon Glyph="&#xF159;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="Runes" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            Visibility="{x:Bind MatchPlayerModel.Benchmarks.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <FontIcon Glyph="&#xED5E;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Benchmarks" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <!--Runes-->
-                <ScrollViewer x:Name="RunesScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
-                              Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
-                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Runes,Mode=OneWay}">
+                <!--Benchmarks-->
+                <ScrollViewer x:Name="BenchmarksScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.Benchmarks.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Benchmarks,Mode=OneWay}">
                         <muxc:ItemsRepeater.Layout>
                             <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
                         </muxc:ItemsRepeater.Layout>
-                        <DataTemplate x:DataType="models:MatchPlayerRuneModel">
-                            <Grid Height="48" MinWidth="96" ColumnSpacing="12" Padding="12,0,16,0" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="{x:Bind RuneName}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{x:Bind RuneIcon}" Height="24" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <Run Text="{x:Bind RuneName}" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
-                                    <LineBreak/>
-                                    <Run Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                        <DataTemplate x:DataType="models:MatchPlayerBenchmarkModel">
+                            <Grid MinHeight="48" MinWidth="156" RowSpacing="4" Padding="16,8,16,8" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="{x:Bind Name}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" FontSize="14" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Run Text="{x:Bind Name}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                    <Run Text=":" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                    <Run Text="{x:Bind Value}" FontSize="15" Foreground="{ThemeResource DotaholdApplicationForeground}" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                 </TextBlock>
+                                <Grid Grid.Row="1" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <muxc:ProgressBar Maximum="100" Value="{x:Bind Percentage}" Foreground="{x:Bind ForegroundColorBrush}" Background="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" FontSize="14" FontFamily="{ThemeResource RadianceSemiBold}" Foreground="{x:Bind ForegroundColorBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Run Text="{x:Bind Percentage}"/>
+                                        <Run Text="%"/>
+                                    </TextBlock>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </muxc:ItemsRepeater>

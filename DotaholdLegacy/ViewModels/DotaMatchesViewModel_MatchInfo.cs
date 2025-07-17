@@ -12,39 +12,6 @@
             {
                 if (player != null)
                 {
-                    // benchmarks
-                    try
-                    {
-                        if (player.vBenchmarks == null) player.vBenchmarks = new ObservableCollection<Benchmark>();
-
-                        var benchmarks = player.benchmarks;
-                        if (benchmarks != null && benchmarks.Count > 0 && player.vBenchmarks.Count <= 0)
-                        {
-                            player.vBenchmarks.Clear();
-                            foreach (var benchmark in benchmarks)
-                            {
-                                if (benchmark.Value == null)
-                                    continue;
-
-                                string name = benchmark.Key;
-                                StringBuilder nameSb = new StringBuilder();
-                                name = name.Replace('_', ' ');
-                                name = name.ToUpper();
-                                benchmark.Value.Name = name;
-
-                                benchmark.Value.raw = Math.Floor(benchmark.Value.raw * 100) / 100;
-                                benchmark.Value.pct = Math.Floor(benchmark.Value.pct * 100);
-
-                                benchmark.Value.BarWidth = 1.2/*进度条长度120*/* benchmark.Value.pct;
-                                if (benchmark.Value.BarWidth < 0) benchmark.Value.BarWidth = 0;
-                                if (benchmark.Value.BarWidth > 120) benchmark.Value.BarWidth = 120;
-
-                                player.vBenchmarks.Add(benchmark.Value);
-                            }
-                        }
-                    }
-                    catch (Exception ex) { LogCourier.LogAsync(ex.Message, LogCourier.LogType.Error); }
-
                     // purchase log
                     try
                     {

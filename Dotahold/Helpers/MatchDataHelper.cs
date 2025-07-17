@@ -299,5 +299,41 @@ namespace Dotahold.Helpers
                     }
             }
         }
+
+        private static SolidColorBrush? _benchmarkLowColorBrush;
+        private static SolidColorBrush? _benchmarkMediumLowColorBrush;
+        private static SolidColorBrush? _benchmarkMediumColorBrush;
+        private static SolidColorBrush? _benchmarkMediumHighColorBrush;
+        private static SolidColorBrush? _benchmarkHighColorBrush;
+
+        public static SolidColorBrush GetBenchmarkColorBrush(double benchmark)
+        {
+            if (benchmark < 20)
+            {
+                _benchmarkLowColorBrush ??= new SolidColorBrush(Colors.Crimson);
+                return _benchmarkLowColorBrush;
+            }
+            else if (benchmark < 40)
+            {
+                _benchmarkMediumLowColorBrush ??= new SolidColorBrush(Colors.Tomato);
+                return _benchmarkMediumLowColorBrush;
+            }
+            else if (benchmark < 60)
+            {
+                _benchmarkMediumColorBrush ??= new SolidColorBrush(Colors.Peru);
+                return _benchmarkMediumColorBrush;
+            }
+            else if (benchmark < 80)
+            {
+                _benchmarkMediumHighColorBrush ??= new SolidColorBrush(Colors.DodgerBlue);
+                return _benchmarkMediumHighColorBrush;
+            }
+            else
+            {
+                _benchmarkHighColorBrush ??= new SolidColorBrush(Colors.ForestGreen);
+                return _benchmarkHighColorBrush;
+            }
+        }
+
     }
 }

@@ -284,6 +284,8 @@ namespace Dotahold.Models
 
         public List<MatchPlayerRuneModel> Runes { get; private set; } = [];
 
+        public List<MatchPlayerBenchmarkModel> Benchmarks { get; private set; } = [];
+
         public bool HasGraphs { get; private set; }
 
         public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
@@ -348,6 +350,17 @@ namespace Dotahold.Models
                 foreach (var log in this.DotaMatchPlayer.runes_log)
                 {
                     this.Runes.Add(new MatchPlayerRuneModel(log.key, log.time));
+                }
+            }
+
+            if (this.DotaMatchPlayer.benchmarks?.Count > 0)
+            {
+                foreach (var benchmark in this.DotaMatchPlayer.benchmarks)
+                {
+                    if (benchmark.Value is not null && !string.IsNullOrWhiteSpace(benchmark.Key))
+                    {
+                        this.Benchmarks.Add(new MatchPlayerBenchmarkModel(benchmark.Value, benchmark.Key));
+                    }
                 }
             }
 
@@ -573,4 +586,16 @@ namespace Dotahold.Models
 
         public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
     }
+
+    public class MatchPlayerBenchmarkModel(DotaMatchPlayerBenchmark benchmark, string name)
+    {
+        public string Name { get; private set; } = name.Replace('_', ' ').ToUpper();
+
+        public double Value { get; private set; } = Math.Floor(benchmark.raw * 100) / 100;
+
+        public double Percentage { get; private set; } = Math.Floor(benchmark.pct * 1000) / 10;
+
+        public SolidColorBrush ForegroundColorBrush { get; private set; } = MatchDataHelper.GetBenchmarkColorBrush(Math.Floor(benchmark.pct * 1000) / 10);
+    }
+
 }
