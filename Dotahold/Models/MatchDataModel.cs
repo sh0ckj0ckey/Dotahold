@@ -60,7 +60,15 @@ namespace Dotahold.Models
 
         public List<MatchPlayerRatioModel> DirePlayerTeamfightRatios { get; private set; }
 
-        public MatchDataModel(DotaMatchDataModel matchData, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
+        public MatchDataModel(
+            DotaMatchDataModel matchData,
+            Func<int, HeroModel?> getHeroById,
+            Func<string, HeroModel?> getHeroByName,
+            Func<int, ItemModel?> getItemById,
+            Func<string, ItemModel?> getItemByName,
+            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
+            Func<string, string> getAbilityNameById,
+            Func<string, string> getPermanentBuffNameById)
         {
             _defaultGoldImageSource32 ??= new BitmapImage(new Uri("ms-appx:///Assets/Matches/Data/icon_gold_stack.png"))
             {
@@ -127,7 +135,16 @@ namespace Dotahold.Models
             {
                 foreach (var player in this.DotaMatchData.players)
                 {
-                    var playerModel = new MatchPlayerModel(player, this.DotaMatchData.od_data?.has_parsed ?? true, getHeroById, getItemById, getAbilitiesByHeroName, getAbilityNameById, getPermanentBuffNameById);
+                    var playerModel = new MatchPlayerModel(
+                        player,
+                        this.DotaMatchData.od_data?.has_parsed ?? true,
+                        getHeroById,
+                        getHeroByName,
+                        getItemById,
+                        getItemByName,
+                        getAbilitiesByHeroName,
+                        getAbilityNameById,
+                        getPermanentBuffNameById);
 
                     if (playerModel.DotaMatchPlayer.player_slot >= 128)
                     {
@@ -284,11 +301,22 @@ namespace Dotahold.Models
 
         public List<MatchPlayerRuneModel> Runes { get; private set; } = [];
 
+        public List<MatchPlayerKillModel> Kills { get; private set; } = [];
+
         public List<MatchPlayerBenchmarkModel> Benchmarks { get; private set; } = [];
 
         public bool HasGraphs { get; private set; }
 
-        public MatchPlayerModel(DotaMatchPlayer player, bool hasParsed, Func<int, HeroModel?> getHeroById, Func<int, ItemModel?> getItemById, Func<string, AbilitiesModel?> getAbilitiesByHeroName, Func<string, string> getAbilityNameById, Func<string, string> getPermanentBuffNameById)
+        public MatchPlayerModel(
+            DotaMatchPlayer player,
+            bool hasParsed,
+            Func<int, HeroModel?> getHeroById,
+            Func<string, HeroModel?> getHeroByName,
+            Func<int, ItemModel?> getItemById,
+            Func<string, ItemModel?> getItemByName,
+            Func<string, AbilitiesModel?> getAbilitiesByHeroName,
+            Func<string, string> getAbilityNameById,
+            Func<string, string> getPermanentBuffNameById)
         {
             this.DotaMatchPlayer = player;
             this.HasParsed = hasParsed;
@@ -350,6 +378,18 @@ namespace Dotahold.Models
                 foreach (var log in this.DotaMatchPlayer.runes_log)
                 {
                     this.Runes.Add(new MatchPlayerRuneModel(log.key, log.time));
+                }
+            }
+
+            if (this.DotaMatchPlayer.kills_log?.Length > 0)
+            {
+                foreach (var log in this.DotaMatchPlayer.kills_log)
+                {
+                    var hero = getHeroByName(log.key);
+                    if (hero is not null)
+                    {
+                        this.Kills.Add(new MatchPlayerKillModel(hero, log.time));
+                    }
                 }
             }
 
@@ -583,6 +623,13 @@ namespace Dotahold.Models
         public string RuneName { get; private set; } = MatchDataHelper.GetRuneName(runeId);
 
         public BitmapImage? RuneIcon { get; private set; } = MatchDataHelper.GetRuneImage(runeId);
+
+        public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
+    }
+
+    public class MatchPlayerKillModel(HeroModel hero, int time)
+    {
+        public HeroModel Hero { get; private set; } = hero;
 
         public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
     }

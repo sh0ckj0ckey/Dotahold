@@ -432,7 +432,7 @@ namespace Dotahold.ViewModels
 
                     if (matchData is not null && matchData.match_id.ToString() == _currentMatchId)
                     {
-                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName, this.GetAbilityNameById, this.GetPermanentBuffNameById);
+                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _heroesViewModel.GetHeroByName, _itemsViewModel.GetItemById, _itemsViewModel.GetItemByName, this.GetAbilitiesByHeroName, this.GetAbilityNameById, this.GetPermanentBuffNameById);
                         this.SelectedMatchData = _matchDataModels[matchData.match_id.ToString()];
                     }
                 }
@@ -478,7 +478,7 @@ namespace Dotahold.ViewModels
 
                     if (matchData is not null && matchData.match_id.ToString() == matchId)
                     {
-                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _itemsViewModel.GetItemById, this.GetAbilitiesByHeroName, this.GetAbilityNameById, this.GetPermanentBuffNameById);
+                        _matchDataModels[matchData.match_id.ToString()] = new MatchDataModel(matchData, _heroesViewModel.GetHeroById, _heroesViewModel.GetHeroByName, _itemsViewModel.GetItemById, _itemsViewModel.GetItemByName, this.GetAbilitiesByHeroName, this.GetAbilityNameById, this.GetPermanentBuffNameById);
 
                         if (cancellationToken.IsCancellationRequested)
                         {

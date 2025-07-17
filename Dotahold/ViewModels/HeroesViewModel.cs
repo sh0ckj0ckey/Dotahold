@@ -20,9 +20,14 @@ namespace Dotahold.ViewModels
         private Task? _loadHeroesTask = null;
 
         /// <summary>
+        /// Hero name to HeroModel
+        /// </summary>
+        private readonly Dictionary<string, HeroModel> _heroNameToModels = [];
+
+        /// <summary>
         /// Hero Id to HeroModel
         /// </summary>
-        private readonly Dictionary<int, HeroModel> _heroModels = [];
+        private readonly Dictionary<int, HeroModel> _heroIdToModels = [];
 
         /// <summary>
         /// Language to HeroId to HeroDataModel
@@ -117,7 +122,7 @@ namespace Dotahold.ViewModels
         {
             try
             {
-                if (_heroModels.Count > 0)
+                if (_heroNameToModels.Count > 0 && _heroIdToModels.Count > 0)
                 {
                     return;
                 }
@@ -157,7 +162,8 @@ namespace Dotahold.ViewModels
                         this.UniHeroes.Add(heroModel);
                     }
 
-                    _heroModels[heroModel.DotaHeroAttributes.id] = heroModel;
+                    _heroNameToModels[heroModel.DotaHeroAttributes.name] = heroModel;
+                    _heroIdToModels[heroModel.DotaHeroAttributes.id] = heroModel;
                 }
 
                 this.Loading = false;
@@ -259,9 +265,19 @@ namespace Dotahold.ViewModels
             }
         }
 
+        public HeroModel? GetHeroByName(string heroName)
+        {
+            if (_heroNameToModels.TryGetValue(heroName, out HeroModel? heroModel))
+            {
+                return heroModel;
+            }
+
+            return null;
+        }
+
         public HeroModel? GetHeroById(int heroId)
         {
-            if (_heroModels.TryGetValue(heroId, out var heroModel))
+            if (_heroIdToModels.TryGetValue(heroId, out HeroModel? heroModel))
             {
                 return heroModel;
             }

@@ -90,8 +90,8 @@
 
         <Rectangle Grid.Row="1" Height="1" Fill="{ThemeResource DotaholdSeparatorColor}" HorizontalAlignment="Stretch"/>
 
-        <ScrollViewer x:Name="PlayerDataScrollViewer" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <StackPanel x:Name="PlayerDataStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,4,0,12">
+        <ScrollViewer x:Name="PlayerDataScrollViewer" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="PlayerDataStackPanel" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,4,0,24">
 
                 <!--Overview-->
                 <ScrollViewer x:Name="OverviewScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled"
@@ -514,7 +514,7 @@
                         </DataTemplate>
                     </muxc:ItemsRepeater>
                 </ScrollViewer>
-                
+
                 <!--Runes Header-->
                 <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
                             Visibility="{x:Bind MatchPlayerModel.Runes.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
@@ -538,6 +538,37 @@
                                 <Image Grid.Column="0" Source="{x:Bind RuneIcon}" Height="24" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Run Text="{x:Bind RuneName}" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
+                                    <LineBreak/>
+                                    <Run Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
+
+                <!--Kills Header-->
+                <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Visibility="{x:Bind MatchPlayerModel.Kills.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <FontIcon Glyph="&#xE8F0;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Kills" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!--Kills-->
+                <ScrollViewer x:Name="KillsScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.Kills.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Kills,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="6" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerKillModel">
+                            <Grid Height="48" MinWidth="96" ColumnSpacing="12" Padding="12,0,16,0" CornerRadius="4" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}" Background="Transparent" ToolTipService.ToolTip="{x:Bind Hero.DotaHeroAttributes.localized_name}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{x:Bind Hero.HeroIcon.Image,Mode=OneWay}" Height="32" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Run Text="{x:Bind Hero.DotaHeroAttributes.localized_name}" FontSize="16" FontFamily="{ThemeResource RadianceSemiBold}"/>
                                     <LineBreak/>
                                     <Run Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}"/>
                                 </TextBlock>

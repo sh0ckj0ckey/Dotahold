@@ -438,7 +438,7 @@
                 <TranslateTransform x:Name="MatchDataGridTranslation" Y="48"/>
             </Grid.RenderTransform>
             <ScrollViewer x:Name="MatchDataScrollViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollMode="Disabled" VerticalScrollMode="Auto"
-                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                 <StackPanel Orientation="Vertical" Margin="0,0,0,16" HorizontalAlignment="Stretch" VerticalAlignment="Top">
 
                     <!--Match Data Not Parsed-->
