@@ -165,7 +165,7 @@ namespace Dotahold.ViewModels
 
         public ItemModel? GetItemByName(string itemName)
         {
-            if (_itemNameToModels.TryGetValue(itemName, out ItemModel? itemModel))
+            if (!string.IsNullOrWhiteSpace(itemName) && _itemNameToModels.TryGetValue(itemName, out ItemModel? itemModel))
             {
                 return itemModel;
             }

@@ -267,7 +267,7 @@ namespace Dotahold.ViewModels
 
         public HeroModel? GetHeroByName(string heroName)
         {
-            if (_heroNameToModels.TryGetValue(heroName, out HeroModel? heroModel))
+            if (!string.IsNullOrWhiteSpace(heroName) && _heroNameToModels.TryGetValue(heroName, out HeroModel? heroModel))
             {
                 return heroModel;
             }

@@ -68,6 +68,7 @@ namespace Dotahold.Pages.Matches
                 PermanentBuffsScrollViewer.ScrollToHorizontalOffset(0);
                 RunesScrollViewer.ScrollToHorizontalOffset(0);
                 KillsScrollViewer.ScrollToHorizontalOffset(0);
+                PurchaseScrollViewer.ScrollToHorizontalOffset(0);
                 BenchmarksScrollViewer.ScrollToHorizontalOffset(0);
 
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;

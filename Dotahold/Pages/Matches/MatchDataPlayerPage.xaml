@@ -577,6 +577,38 @@
                     </muxc:ItemsRepeater>
                 </ScrollViewer>
 
+                <!--Purchase Header-->
+                <StackPanel Padding="24,24,8,16" Spacing="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Visibility="{x:Bind MatchPlayerModel.Purchases.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <FontIcon Glyph="&#xE7BF;" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="Purchase" Margin="0,2,0,-2" FontSize="15" FontFamily="{ThemeResource ReaverBold}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!--Purchase-->
+                <ScrollViewer x:Name="PurchaseScrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"
+                              Visibility="{x:Bind MatchPlayerModel.Purchases.Count,Mode=OneWay,Converter={StaticResource IntToVisibilityConverter}}">
+                    <muxc:ItemsRepeater Margin="20,0,20,0" ItemsSource="{x:Bind MatchPlayerModel.Purchases,Mode=OneWay}">
+                        <muxc:ItemsRepeater.Layout>
+                            <muxc:StackLayout Orientation="Horizontal" Spacing="8" DisableVirtualization="True"/>
+                        </muxc:ItemsRepeater.Layout>
+                        <DataTemplate x:DataType="models:MatchPlayerPurchaseModel">
+                            <Grid Background="Transparent" ToolTipService.ToolTip="{x:Bind Item.DotaItemAttributes.dname}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" Height="36" Width="50" CornerRadius="4,4,0,0" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" ToolTipService.ToolTip="{x:Bind Item.DotaItemAttributes.dname}">
+                                    <Image Source="{x:Bind Item.ItemImage.Image,Mode=OneWay}" Height="36" Width="50" Stretch="UniformToFill"/>
+                                </Border>
+                                <Border Grid.Row="2" CornerRadius="0,0,4,4" Padding="0,2" BorderThickness="1" BorderBrush="{ThemeResource DotaholdSeparatorColor}">
+                                    <TextBlock Text="{x:Bind Time}" FontSize="14" FontFamily="{ThemeResource Radiance}" Foreground="{ThemeResource DotaholdApplicationDimmedForeground}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
+
                 <!--Graph Charts Header-->
                 <Grid Padding="24,16,20,8" Visibility="{x:Bind MatchPlayerModel.HasGraphs,Mode=OneWay,Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>

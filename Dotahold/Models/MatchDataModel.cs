@@ -303,6 +303,8 @@ namespace Dotahold.Models
 
         public List<MatchPlayerKillModel> Kills { get; private set; } = [];
 
+        public List<MatchPlayerPurchaseModel> Purchases { get; private set; } = [];
+
         public List<MatchPlayerBenchmarkModel> Benchmarks { get; private set; } = [];
 
         public bool HasGraphs { get; private set; }
@@ -389,6 +391,36 @@ namespace Dotahold.Models
                     if (hero is not null)
                     {
                         this.Kills.Add(new MatchPlayerKillModel(hero, log.time));
+                    }
+                }
+            }
+
+            if (this.DotaMatchPlayer.purchase_log?.Length > 0)
+            {
+                foreach (var log in this.DotaMatchPlayer.purchase_log)
+                {
+                    var item = getItemByName(log.key);
+                    if (item is not null)
+                    {
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, log.time < 0 ? 0 : log.time));
+                    }
+                }
+            }
+
+            if (this.DotaMatchPlayer.neutral_item_history?.Length > 0)
+            {
+                foreach (var history in this.DotaMatchPlayer.neutral_item_history)
+                {
+                    var item = getItemByName(history.item_neutral);
+                    if (item is not null)
+                    {
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, history.time < 0 ? 0 : history.time));
+                    }
+
+                    var itemEnhancement = getItemByName(history.item_neutral_enhancement);
+                    if (itemEnhancement is not null)
+                    {
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(itemEnhancement, history.time < 0 ? 0 : history.time));
                     }
                 }
             }
@@ -630,6 +662,13 @@ namespace Dotahold.Models
     public class MatchPlayerKillModel(HeroModel hero, int time)
     {
         public HeroModel Hero { get; private set; } = hero;
+
+        public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
+    }
+
+    public class MatchPlayerPurchaseModel(ItemModel item, int time)
+    {
+        public ItemModel Item { get; private set; } = item;
 
         public string Time { get; private set; } = MatchDataHelper.GetHowLong(time);
     }
