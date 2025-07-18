@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="22189NoMewing.Dota2.dev"
+    Name="22189NoMewing.Dota2"
     Publisher="CN=NoMewing"
     Version="5.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="12b0330a-d940-4a33-82cf-cc8ef899432a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="9e9f3426-d2ed-4333-a6e6-16aea232d9cf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Dotahold</DisplayName>
@@ -35,7 +35,7 @@
         DisplayName="Dotahold"
         Square150x150Logo="Assets\Manifest\Square150x150Logo.png"
         Square44x44Logo="Assets\Manifest\Square44x44Logo.png"
-        Description="Dota 2 Statistics powered by OpenDota"
+        Description="Dota2 statistics app powered by Dota2.com and OpenDota, provides the up-to-date data on heroes, items and matches."
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Manifest\Wide310x150Logo.png" Square310x310Logo="Assets\Manifest\LargeTile.png" Square71x71Logo="Assets\Manifest\SmallTile.png" ShortName="Dotahold">
           <uap:ShowNameOnTiles>
