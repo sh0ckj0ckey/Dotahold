@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -151,7 +152,7 @@ namespace Dotahold.ViewModels
             }
             else
             {
-                string regex = ".*" + string.Join(".*", keyword.ToCharArray()) + ".*";
+                string regex = ".*" + string.Join(".*", keyword.ToCharArray().Select(c => Regex.Escape(c.ToString()))) + ".*";
 
                 foreach (var item in _allItems)
                 {
