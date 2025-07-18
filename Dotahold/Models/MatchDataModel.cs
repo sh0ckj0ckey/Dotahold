@@ -395,33 +395,39 @@ namespace Dotahold.Models
                 }
             }
 
-            if (this.DotaMatchPlayer.purchase_log?.Length > 0)
+            int i = 0, j = 0;
+            var itemPurchases = this.DotaMatchPlayer.purchase_log ?? [];
+            var neutralHistories = this.DotaMatchPlayer.neutral_item_history ?? [];
+            while (i < itemPurchases.Length || j < neutralHistories.Length)
             {
-                foreach (var log in this.DotaMatchPlayer.purchase_log)
+                int purchaseTime = i < itemPurchases.Length ? itemPurchases[i].time : int.MaxValue;
+                int historyTime = j < neutralHistories.Length ? neutralHistories[j].time : int.MaxValue;
+
+                if (purchaseTime <= historyTime)
                 {
-                    var item = getItemByName(log.key);
+                    var item = getItemByName(itemPurchases[i].key);
                     if (item is not null)
                     {
-                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, log.time < 0 ? 0 : log.time));
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, itemPurchases[i].time < 0 ? 0 : itemPurchases[i].time));
                     }
+
+                    i++;
                 }
-            }
-
-            if (this.DotaMatchPlayer.neutral_item_history?.Length > 0)
-            {
-                foreach (var history in this.DotaMatchPlayer.neutral_item_history)
+                else
                 {
-                    var item = getItemByName(history.item_neutral);
+                    var item = getItemByName(neutralHistories[j].item_neutral);
                     if (item is not null)
                     {
-                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, history.time < 0 ? 0 : history.time));
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(item, neutralHistories[j].time < 0 ? 0 : neutralHistories[j].time));
                     }
 
-                    var itemEnhancement = getItemByName(history.item_neutral_enhancement);
+                    var itemEnhancement = getItemByName(neutralHistories[j].item_neutral_enhancement);
                     if (itemEnhancement is not null)
                     {
-                        this.Purchases.Add(new MatchPlayerPurchaseModel(itemEnhancement, history.time < 0 ? 0 : history.time));
+                        this.Purchases.Add(new MatchPlayerPurchaseModel(itemEnhancement, neutralHistories[j].time < 0 ? 0 : neutralHistories[j].time));
                     }
+
+                    j++;
                 }
             }
 
