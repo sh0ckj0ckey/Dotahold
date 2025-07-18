@@ -29,6 +29,8 @@ namespace Dotahold.Pages.Matches
             {
                 _viewModel.MatchesViewModel.Matches.CollectionChanged += Matches_CollectionChanged;
 
+                MatchesItemsRepeater.ItemsSource = _viewModel.MatchesViewModel.Matches;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;

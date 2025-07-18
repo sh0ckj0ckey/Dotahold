@@ -27,6 +27,8 @@ namespace Dotahold.Pages.Matches
 
             this.Loaded += (_, _) =>
             {
+                PlayerHeroPerformancesItemsRepeater.ItemsSource = _viewModel.ProfileViewModel.PlayerHeroPerformances;
+
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
                 SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
