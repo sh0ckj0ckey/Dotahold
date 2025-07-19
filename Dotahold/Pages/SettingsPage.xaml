@@ -110,8 +110,8 @@
                     </communityControls:SettingsCard.HeaderIcon>
                     <Button Click="GitHubPageButton_Click" ToolTipService.ToolTip="https://github.com/sh0ckj0ckey/Dotahold">
                         <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Center">
-                            <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_github.png" Width="24" Height="24" ShowAsMonochrome="True" VerticalAlignment="Center"/>
-                            <TextBlock Text="GitHub Repository" VerticalAlignment="Center"/>
+                            <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_github.png" Width="24" Height="24" Foreground="{ThemeResource DotaholdApplicationForeground}" ShowAsMonochrome="True" VerticalAlignment="Center"/>
+                            <TextBlock Text="GitHub Repository" Foreground="{ThemeResource DotaholdApplicationForeground}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </communityControls:SettingsCard>
