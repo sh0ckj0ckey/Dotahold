@@ -33,12 +33,19 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 ![5.png](Dotahold/Assets/Store/5.png)
 
 ### Dota 2 Official API Quick Reference
+
 https://www.dota2.com/datafeed/herolist?language={language}
+
 https://www.dota2.com/datafeed/itemlist?language={language}
+
 https://www.dota2.com/datafeed/abilitylist?language={language}
+
 https://www.dota2.com/datafeed/herodata?language={language}&hero_id={id}
+
 https://www.dota2.com/datafeed/itemdata?language={language}&item_id={id}
+
 https://www.dota2.com/datafeed/abilitydata?language={language}&ability_id={id}
 
 ### OpenDota API
+
 https://docs.opendota.com/
