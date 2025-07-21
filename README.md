@@ -19,6 +19,7 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 
 - [ ] Counter Picker / BanPick Simulator
 - [ ] Customizable profile layout (visibility & order)
+- [ ] Top playes' item builds
 
 ### Screenshots
 
