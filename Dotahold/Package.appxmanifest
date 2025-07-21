@@ -9,7 +9,7 @@
   <Identity
     Name="22189NoMewing.Dota2"
     Publisher="CN=E6D8FAFA-3EF4-4E47-B885-52144C67BFF5"
-    Version="5.0.0.0" />
+    Version="5.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9e9f3426-d2ed-4333-a6e6-16aea232d9cf" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
