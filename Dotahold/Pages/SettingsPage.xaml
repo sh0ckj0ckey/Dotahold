@@ -137,14 +137,14 @@
                                 </StackPanel>
                             </communityControls:SettingsCard.Description>
                         </communityControls:SettingsCard>
-                        <communityControls:SettingsCard>
+                        <!--<communityControls:SettingsCard>
                             <communityControls:SettingsCard.Description>
                                 <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                                     <BitmapIcon UriSource="ms-appx:///Assets/Settings/icon_dotapedia.png" Width="32" Height="32" ShowAsMonochrome="False" VerticalAlignment="Center"/>
                                     <HyperlinkButton Padding="8" FontSize="14" NavigateUri="https://dota2.gamepedia.com/Dota_2_Wiki" Content="dota2.gamepedia.com" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </communityControls:SettingsCard.Description>
-                        </communityControls:SettingsCard>
+                        </communityControls:SettingsCard>-->
                     </communityControls:SettingsExpander.Items>
                 </communityControls:SettingsExpander>
 
