@@ -18,6 +18,7 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 ### Todo List
 
 - [ ] Counter Picker / BanPick Simulator
+- [ ] Customizable profile layout (visibility & order)
 
 ### Screenshots
 
