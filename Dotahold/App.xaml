@@ -12,7 +12,7 @@
 
                 <ResourceDictionary>
 
-                    <FontFamily x:Key="SymbolThemeFontFamily">Segoe Fluent Icons</FontFamily>
+                    <FontFamily x:Key="SymbolThemeFontFamily">/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
                     <FontFamily x:Key="ReaverBold">/Fonts/Reaver-Bold.ttf#Reaver Bold</FontFamily>
                     <FontFamily x:Key="RadianceSemiBold">/Fonts/Radiance-SemiBold.ttf#Radiance-SemiBold</FontFamily>
                     <FontFamily x:Key="Radiance">/Fonts/Radiance.ttf#Radiance</FontFamily>
