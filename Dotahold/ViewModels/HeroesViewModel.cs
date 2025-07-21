@@ -224,7 +224,15 @@ namespace Dotahold.ViewModels
                 }
                 else
                 {
+                    var start = DateTimeOffset.Now;
                     var dotaHeroDataModel = await ApiCourier.GetHeroData(heroModel.DotaHeroAttributes.id, language, CancellationToken.None);
+                    var elapsed = DateTimeOffset.Now - start;
+                    var minDelay = TimeSpan.FromMilliseconds(600);
+                    if (elapsed < minDelay)
+                    {
+                        await Task.Delay(minDelay - elapsed);
+                    }
+
                     if (dotaHeroDataModel is not null)
                     {
                         if (!_heroDataModels.TryGetValue(languageIndex, out _))

@@ -92,7 +92,7 @@
                                 <DataTemplate x:DataType="models:HeroModel">
                                     <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Tag="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
@@ -122,7 +122,7 @@
                                 <DataTemplate x:DataType="models:HeroModel">
                                     <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Tag="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
@@ -152,7 +152,7 @@
                                 <DataTemplate x:DataType="models:HeroModel">
                                     <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Tag="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
@@ -182,7 +182,7 @@
                                 <DataTemplate x:DataType="models:HeroModel">
                                     <Button Padding="0" BorderThickness="0" CornerRadius="0" ToolTipService.ToolTip="{x:Bind DotaHeroAttributes.localized_name}"
                                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Click="Button_Click">
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{x:Bind }" Tag="{x:Bind }" Click="Button_Click">
                                         <Border CornerRadius="4" Background="{ThemeResource DotaholdPlaceholderBackgroundColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <Image Stretch="UniformToFill" UseLayoutRounding="False" Source="{x:Bind HeroImage.Image, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>

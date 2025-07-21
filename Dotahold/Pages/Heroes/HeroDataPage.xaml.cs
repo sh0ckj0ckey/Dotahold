@@ -27,6 +27,8 @@ namespace Dotahold.Pages.Heroes
 
         private HeroModel? _heroModel;
 
+        private bool _needConnectedAnimation = true;
+
         public HeroDataPage()
         {
             _viewModel = App.Current.MainViewModel;
@@ -59,6 +61,7 @@ namespace Dotahold.Pages.Heroes
             try
             {
                 ConnectedAnimation? animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Hero");
+                _needConnectedAnimation = animation is not null;
                 animation?.TryStart(HeroImageBorder);
 
                 _heroModel = e.Parameter as HeroModel;
@@ -76,7 +79,7 @@ namespace Dotahold.Pages.Heroes
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
+            if (e.NavigationMode == NavigationMode.Back && _needConnectedAnimation)
             {
                 ConnectedAnimationService.GetForCurrentView().DefaultDuration = TimeSpan.FromSeconds(0.3);
                 ConnectedAnimationService.GetForCurrentView().DefaultEasingFunction = CompositionEasingFunction.CreateCubicBezierEasingFunction(_visual.Compositor, new(0.41f, 0.52f), new(0.0f, 0.94f));

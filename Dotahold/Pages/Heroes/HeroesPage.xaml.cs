@@ -51,16 +51,39 @@ namespace Dotahold.Pages.Heroes
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (sender is Button button && button?.DataContext is HeroModel heroModel && heroModel is not null)
+            if (sender is Button button)
             {
-                _connectedAnimationButton = button;
+                HeroModel? heroModel = (button?.DataContext as HeroModel) ?? (button?.Tag as HeroModel);
 
-                ConnectedAnimationService.GetForCurrentView().DefaultDuration = TimeSpan.FromSeconds(0.4);
-                ConnectedAnimationService.GetForCurrentView().DefaultEasingFunction = CompositionEasingFunction.CreateCubicBezierEasingFunction(_visual.Compositor, new(0.41f, 0.52f), new(0.0f, 0.94f));
-                ConnectedAnimation heroAnimation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Hero", _connectedAnimationButton);
-                heroAnimation.Configuration = new BasicConnectedAnimationConfiguration();
+                if (heroModel is null)
+                {
+                    return;
+                }
 
-                this.Frame.Navigate(typeof(HeroDataPage), heroModel, new SuppressNavigationTransitionInfo());
+                try
+                {
+                    _connectedAnimationButton = button;
+
+                    ConnectedAnimationService.GetForCurrentView().DefaultDuration = TimeSpan.FromSeconds(0.4);
+                    ConnectedAnimationService.GetForCurrentView().DefaultEasingFunction = CompositionEasingFunction.CreateCubicBezierEasingFunction(_visual.Compositor, new(0.41f, 0.52f), new(0.0f, 0.94f));
+                    ConnectedAnimation heroAnimation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Hero", _connectedAnimationButton);
+                    heroAnimation.Configuration = new BasicConnectedAnimationConfiguration();
+
+                    this.Frame.Navigate(typeof(HeroDataPage), heroModel, new SuppressNavigationTransitionInfo());
+                }
+                catch
+                {
+                    try
+                    {
+                        _connectedAnimationButton = null;
+
+                        this.Frame.Navigate(typeof(HeroDataPage), heroModel);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }
