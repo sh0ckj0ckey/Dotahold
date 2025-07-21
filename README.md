@@ -32,6 +32,10 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 #### Match Detail
 ![5.png](Dotahold/Assets/Store/5.png)
 
+#### Todo List
+
+- [ ] Counter Picker / BanPick Simulator;
+
 ### Dota 2 Official API Quick Reference
 
 https://www.dota2.com/datafeed/herolist?language={language}
