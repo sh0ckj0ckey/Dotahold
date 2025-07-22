@@ -29,11 +29,13 @@
 		<None Remove="Fonts\Radiance-SemiBold.ttf" />
 		<None Remove="Fonts\Radiance.ttf" />
 		<None Remove="Fonts\Reaver-Bold.ttf" />
+		<None Remove="Fonts\Segoe Fluent Icons.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Fonts\Radiance-SemiBold.ttf" />
 		<Content Include="Fonts\Radiance.ttf" />
 		<Content Include="Fonts\Reaver-Bold.ttf" />
+		<Content Include="Fonts\Segoe Fluent Icons.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Uwp.Animations" Version="8.2.250402" />
