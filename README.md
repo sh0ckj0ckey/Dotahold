@@ -21,7 +21,16 @@ This is a third-party application for Dota 2 statistics, the match data from Ste
 - [ ] Customizable profile layout (visibility & order)
 - [ ] Top playes' item builds
 - [ ] Local Replay Parser
-- [ ] https://imgur.com/a/dotahoard-feedback-from-uncledandota-dujyQID
+- [ ] feedback-from-uncledandota
+	- [ ] Optimize horizontal scroll, add fade-out effect or replace with left/right arrow buttons
+    - [ ] Add a "Parse" button to the Unparsed Matches page
+	- [ ] Add a "View Profile" button at the top of the Player Performance page
+	- [ ] Add a filter for Turbo Mode on the Match List page
+	- [ ] Add filters for match mode, result, and date, plus stats like highest kills/deaths at the top of the Hero Match List page
+	- [ ] Add a clear indicator on the Player Performance page to show which match is being viewed
+	- [ ] Update the Match Data pages after parsing
+	- [ ] Integrate more data such as player cosmetics and fighting logs
+	- [ ] Show an error message when match data request fails, instead of displaying the previous match
 
 ### Screenshots
 
