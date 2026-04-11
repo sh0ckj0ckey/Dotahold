@@ -33,7 +33,7 @@ namespace Dotahold.Data.DataShop.ImageDownloader
 
                 string imgKey = $"{url}_{width}_{height}";
 
-                if (_imageCache.TryGetValue(url, out BitmapImage? value))
+                if (_imageCache.TryGetValue(imgKey, out BitmapImage? value))
                 {
                     return value;
                 }
